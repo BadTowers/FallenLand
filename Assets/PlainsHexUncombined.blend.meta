@@ -1,33 +1,35 @@
 fileFormatVersion: 2
-guid: 45db091bb9ccb2740ae640379c0feee2
-timeCreated: 1511753610
+guid: 6839613082a237149a00ede6dcc9bbf3
+timeCreated: 1512020323
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Cylinder_001
-    100002: //RootNode
-    100004: Torus
-    400000: Cylinder_001
-    400002: //RootNode
-    400004: Torus
-    2300000: Cylinder_001
-    2300002: //RootNode
-    2300004: Torus
-    3300000: Cylinder_001
-    3300002: //RootNode
-    3300004: Torus
-    4300000: Cylinder
-    4300002: Cylinder_001
-    4300004: Torus
+    100000: Object_1
+    100002: Object_2
+    100004: //RootNode
+    400000: Object_1
+    400002: Object_2
+    400004: //RootNode
+    2300000: Object_1
+    2300002: Object_2
+    3300000: Object_1
+    3300002: Object_2
+    4300000: Object_2
+    4300002: Object_1
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: unnamed
-    second: {fileID: 2100000, guid: ee21e70a133a90d4190e1a5a9c5b4e3b, type: 2}
+      name: Black__gray_jpg
+    second: {fileID: 2100000, guid: 83a67e69fa429c74dba20fa3a11f8f45, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White__paperbag_jpg
+    second: {fileID: 2100000, guid: dc4398fda62907649ab6a7c6ed80a1e9, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
