@@ -17,6 +17,8 @@ ModelImporter:
     3300002: Object_2
     4300000: Object_2
     4300002: Object_1
+    6400000: Object_1
+    6400002: Object_2
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
@@ -24,17 +26,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Black__gray_jpg
-    second: {fileID: 2100000, guid: b3a77f1ec20c1c447b226450aad165e2, type: 2}
+    second: {fileID: 2100000, guid: b9f9a9f68407cde4e8d71a02112d5761, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: White__paperbag_jpg
-    second: {fileID: 2100000, guid: ac186ef75a95a5a4e82091503b440a58, type: 2}
+    second: {fileID: 2100000, guid: cd87a1ebfd3814546a472cfa8a14c407, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -61,7 +63,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
