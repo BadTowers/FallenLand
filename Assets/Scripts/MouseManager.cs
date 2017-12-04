@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseManager : MonoBehaviour {
+
+	//GameObject
 
 	// Use this for initialization
 	void Start() {
@@ -11,6 +14,12 @@ public class MouseManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
+		//If we are over a Unity UI element
+		//if (EventSystem.current.IsPointerOverGameObject ()) {
+			//It is, so let's not do any game click code
+		//	return;
+		//}
+
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Get a vector called a Ray from the mouse through the world
 
 		RaycastHit objectHitInfo; //Object the raycast hit, if any
@@ -19,6 +28,11 @@ public class MouseManager : MonoBehaviour {
 		if(Physics.Raycast(ray, out objectHitInfo))
 		{
 			GameObject ourHitObject = objectHitInfo.collider.transform.gameObject; //Get the object the mouse is over
+
+			//Moused over a hex
+			if (ourHitObject.GetComponent<HexInformation> () != null) {
+
+			}
 
 			//We know here what we are mousing over, so we could show a tooltip
 			//TODO

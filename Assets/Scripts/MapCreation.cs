@@ -28,12 +28,15 @@ public class MapCreation : MonoBehaviour {
 				curHex.name = "Hex_" + LR + "_" + UD; //Name the hex
 				curHex.transform.SetParent (this.transform); //Put the hex into the map object
 				curHex.isStatic = true; //The hex won't be moving
-				curHex.AddComponent<HexInformation>(); //Add hex information object to current hex
-				curHex.GetComponent<HexInformation>().x = LR; //Set X location for hex
-				curHex.GetComponent<HexInformation>().y = UD; //Set Y location for hex
 
-				MeshRenderer curMR = curHex.GetComponentInChildren<MeshRenderer>(); //Get the mesh of the current hex
-				curMR.material.color = Color.white; //Set the color to be white initially
+				//Add location information to the hex
+				curHex.AddComponent<HexInformation>();
+				curHex.GetComponent<HexInformation>().x = LR;
+				curHex.GetComponent<HexInformation>().y = UD;
+
+				//Set the start color of the hex
+				MeshRenderer curMR = curHex.GetComponentInChildren<MeshRenderer>();
+				curMR.material.color = Color.white;
 			}
 		}
 	}
