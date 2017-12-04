@@ -8,17 +8,29 @@ ModelImporter:
     100000: //RootNode
     100002: Object_1
     100004: Object_2
+    100006: InnerHex
+    100008: OuterHex
     400000: //RootNode
     400002: Object_1
     400004: Object_2
+    400006: InnerHex
+    400008: OuterHex
     2300000: Object_1
     2300002: Object_2
+    2300004: InnerHex
+    2300006: OuterHex
     3300000: Object_1
     3300002: Object_2
+    3300004: InnerHex
+    3300006: OuterHex
     4300000: Object_2
     4300002: Object_1
+    4300004: OuterHex
+    4300006: InnerHex
     6400000: Object_1
     6400002: Object_2
+    6400004: InnerHex
+    6400006: OuterHex
     7400000: Default Take
     9500000: //RootNode
   externalObjects:

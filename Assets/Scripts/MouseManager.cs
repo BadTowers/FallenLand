@@ -29,19 +29,10 @@ public class MouseManager : MonoBehaviour {
 		{
 			GameObject ourHitObject = objectHitInfo.collider.transform.gameObject; //Get the object the mouse is over
 
-			//Moused over a hex
-			if (ourHitObject.GetComponent<HexInformation> () != null) {
-
-			}
-
-			//We know here what we are mousing over, so we could show a tooltip
-			//TODO
-
-			//We can check if we are clicking on the thing the raycast hit, we can interpret that here
-			if (Input.GetMouseButtonDown(0)) {
-				MeshRenderer[] mr = ourHitObject.GetComponentsInChildren<MeshRenderer>();
-
-				toggleColor(mr[0]);
+			//We know here what we are mousing over
+			if (ourHitObject.name != null) {
+				Debug.Log ("Mousing over hex");
+				HexOver(ourHitObject);
 			}
 		}
 	}
@@ -53,6 +44,24 @@ public class MouseManager : MonoBehaviour {
 			mr.material.color = Color.blue;
 		} else {
 			mr.material.color = Color.white;
+		}
+	}
+
+	//Moused over a hex
+	void HexOver(GameObject go)
+	{
+		//If left clicking
+		if (Input.GetMouseButtonDown(0)) {
+			MeshRenderer[] mr;
+			if (go.name == "OuterHex") {
+				Debug.Log ("outer hex clicked");
+				mr = go.transform.parent.Find("InnerHex").GetComponentsInChildren<MeshRenderer> ();
+			} else {
+				Debug.Log ("inner hex clicked");
+				mr = go.GetComponentsInChildren<MeshRenderer>();
+			}
+
+			toggleColor(mr[0]);
 		}
 	}
 }
