@@ -31,7 +31,6 @@ public class MouseManager : MonoBehaviour {
 
 			//We know here what we are mousing over
 			if (ourHitObject.name != null) {
-				Debug.Log ("Mousing over hex");
 				HexOver(ourHitObject);
 			}
 		}
@@ -54,10 +53,8 @@ public class MouseManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)) {
 			MeshRenderer[] mr;
 			if (go.name == "OuterHex") {
-				Debug.Log ("outer hex clicked");
 				mr = go.transform.parent.Find("InnerHex").GetComponentsInChildren<MeshRenderer> ();
 			} else {
-				Debug.Log ("inner hex clicked");
 				mr = go.GetComponentsInChildren<MeshRenderer>();
 			}
 

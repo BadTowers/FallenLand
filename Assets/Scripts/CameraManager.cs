@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MoveCamera : MonoBehaviour 
+public class CameraManager : MonoBehaviour 
 {
 	//
 	// VARIABLES
@@ -15,9 +15,8 @@ public class MoveCamera : MonoBehaviour
 	public float zoomSpeed = 4.0f;		// Speed of the camera going back and forth
 
 	private Vector3 mouseOrigin;	// Position of cursor when mouse dragging starts
-	private bool isPanning;		// Is the camera being panned?
-	private bool isRotating;	// Is the camera being rotated?
-	private bool isZooming;		// Is the camera zooming?
+	private bool isPanning = false;		// Is the camera being panned?
+	private bool isRotating = false;	// Is the camera being rotated?
 
 	//
 	// UPDATE
@@ -25,18 +24,12 @@ public class MoveCamera : MonoBehaviour
 
 	void Update () 
 	{
-		// Get the left mouse button
-		if(Input.GetMouseButtonDown(0))
+		// Get the right mouse button
+		if(Input.GetMouseButtonDown(1))
 		{
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
 			isPanning = true;
-		}
-
-		// Get the right mouse button
-		if(Input.GetMouseButtonDown(1))
-		{
-			
 		}
 
 		// Get the middle mouse button
@@ -44,16 +37,16 @@ public class MoveCamera : MonoBehaviour
 		{
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
-			isPanning = true;
+			isRotating = true;
 		}
 
 		// Disable movements on button release
-		if (!Input.GetMouseButton(0)) isPanning=false;
-		//if (!Input.GetMouseButton(1)) isPanning=false;
-		//if (!Input.GetMouseButton(2)) isPanning=false;
+		//if (!Input.GetMouseButton(0)) isRotating=false;
+		if (!Input.GetMouseButton(1)) isPanning=false;
+		if (!Input.GetMouseButton(2)) isRotating=false;
 
 		// Rotate camera along X and Y axis
-		if (isRotating)
+		if (isRotating && !isPanning)
 		{
 			Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
 
@@ -62,22 +55,20 @@ public class MoveCamera : MonoBehaviour
 		}
 
 		// Move the camera on it's XY plane
-		if (isPanning)
+		if (isPanning && !isRotating)
 		{
 			Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
 
-			Vector3 move = new Vector3(pos.x * panSpeed * -1, pos.y * panSpeed * -1, 0);
+			Vector3 move = new Vector3(pos.x * panSpeed, pos.y * panSpeed, 0);
 			transform.Translate(move, Space.Self);
-			mouseOrigin = Input.mousePosition;
 		}
 
-		// Move the camera linearly along Z axis
-		if (isZooming)
-		{
-			Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
-
-			Vector3 move = pos.y * zoomSpeed * transform.forward; 
-			transform.Translate(move, Space.World);
+		// Zoom via scrollwheel TODO: Add zoom out and zoom in limits
+		if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+			GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y - .3f, transform.position.z + .2f);
+		}
+		else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+			GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y + .3f, transform.position.z - .2f);
 		}
 	}
 }
