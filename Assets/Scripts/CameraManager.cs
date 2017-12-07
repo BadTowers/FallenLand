@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
 		{
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
-			isPanning = true;
+			isRotating = true;
 		}
 
 		// Get the middle mouse button
@@ -37,13 +37,13 @@ public class CameraManager : MonoBehaviour
 		{
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
-			isRotating = true;
+			isPanning = true;
 		}
 
 		// Disable movements on button release
 		//if (!Input.GetMouseButton(0)) isRotating=false;
-		if (!Input.GetMouseButton(1)) isPanning=false;
-		if (!Input.GetMouseButton(2)) isRotating=false;
+		if (!Input.GetMouseButton(1)) isRotating=false;
+		if (!Input.GetMouseButton(2)) isPanning=false;
 
 		// Rotate camera along X and Y axis
 		if (isRotating && !isPanning)
