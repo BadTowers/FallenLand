@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MouseManager : MonoBehaviour {
 
-	//GameObject
+	//GameObject currentlySelected TODO
 
 	// Use this for initialization
 	void Start() {

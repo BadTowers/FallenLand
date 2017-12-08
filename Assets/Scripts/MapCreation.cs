@@ -6,7 +6,7 @@ public class MapCreation : MonoBehaviour {
 
 	public GameObject hexTilePrefab;
 	private int height = 21;
-	private int width = 31;
+	private int width = 33;
 	private float LROffset = .860f;
 	private float UDOffset = .740f;
 
@@ -39,10 +39,5 @@ public class MapCreation : MonoBehaviour {
 				curMR.material.color = Color.white;
 			}
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
