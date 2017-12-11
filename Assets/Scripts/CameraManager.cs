@@ -25,7 +25,7 @@ public class CameraManager : MonoBehaviour
 
 	void Update () 
 	{
-		// Get the right mouse button TODO
+		// Get the right mouse button
 		if(Input.GetMouseButtonDown(1))
 		{
 			isRotating = true;
@@ -89,7 +89,7 @@ public class CameraManager : MonoBehaviour
 		}
 	}
 
-	void ZoomIn()
+	private void ZoomIn()
 	{
 		Camera.main.fieldOfView -= zoomSpeed;
 		if (Camera.main.fieldOfView < minZoomFOV)
@@ -98,7 +98,7 @@ public class CameraManager : MonoBehaviour
 		}
 	}
 
-	void ZoomOut()
+	private void ZoomOut()
 	{
 		Camera.main.fieldOfView += zoomSpeed;
 		if (Camera.main.fieldOfView > maxZoomFOV)

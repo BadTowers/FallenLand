@@ -13,6 +13,4 @@
 	bool isWater();
 
 	bool isFactionBase();
-
-	Faction getFactionBase();
 }

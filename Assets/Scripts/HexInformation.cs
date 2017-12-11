@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexInformation : MonoBehaviour, HexInterface {
-
+public class HexInformation : MonoBehaviour {
 	public int x;
 	public int y;
 	private bool city;
@@ -13,7 +12,7 @@ public class HexInformation : MonoBehaviour, HexInterface {
 	private bool randomNumber;
 	private bool water;
 	private bool factionBase;
-	private Faction factionName;
+	private Factions faction;
 
 	public HexInformation()
 	{
@@ -53,11 +52,5 @@ public class HexInformation : MonoBehaviour, HexInterface {
 	public bool isFactionBase()
 	{
 		return factionBase;
-	}
-
-	public Faction getFactionBase()
-	{
-		//TODO
-		return new Faction();
 	}
 }

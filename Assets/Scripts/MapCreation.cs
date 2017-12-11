@@ -40,4 +40,9 @@ public class MapCreation : MonoBehaviour {
 			}
 		}
 	}
+
+	private void createDefaultMap()
+	{
+		
+	}
 }
