@@ -12,7 +12,7 @@
 
 	bool isWater();
 
-	bool isFaction();
+	bool isFactionBase();
 
-	Faction getFaction();
+	Faction getFactionBase();
 }

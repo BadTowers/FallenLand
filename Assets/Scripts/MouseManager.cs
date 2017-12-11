@@ -52,6 +52,7 @@ public class MouseManager : MonoBehaviour {
 		//If left clicking
 		if (Input.GetMouseButtonDown(0)) {
 			MeshRenderer[] mr;
+			//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
 			if (go.name == "OuterHex") {
 				mr = go.transform.parent.Find("InnerHex").GetComponentsInChildren<MeshRenderer> ();
 			} else {
