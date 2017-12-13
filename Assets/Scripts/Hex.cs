@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexInformation : MonoBehaviour {
+public class Hex : MonoBehaviour, HexInterface{
 	public int x;
 	public int y;
 	private bool city;
@@ -11,14 +11,10 @@ public class HexInformation : MonoBehaviour {
 	private bool plains;
 	private bool randomNumber;
 	private bool water;
+	private bool resource;
 	private bool factionBase;
 	private Factions faction;
-
-	//Empty constructor
-	public HexInformation()
-	{
-
-	}
+	private bool visible;
 
 	public bool isCity()
 	{
@@ -80,6 +76,16 @@ public class HexInformation : MonoBehaviour {
 		this.water = water;
 	}
 
+	public bool isResource()
+	{
+		return this.resource;
+	}
+
+	public void setIsResource(bool resource)
+	{
+		this.resource = resource;
+	}
+
 	public bool isFactionBase()
 	{
 		return factionBase;
@@ -90,8 +96,23 @@ public class HexInformation : MonoBehaviour {
 		this.factionBase = fb;
 	}
 
+	public Factions getFaction()
+	{
+		return this.faction;
+	}
+
 	public void setFaction(Factions f)
 	{
 		this.faction = f;
+	}
+
+	public bool isVisible()
+	{
+		return this.visible;
+	}
+
+	public void setIsVisible(bool vis)
+	{
+		this.visible = vis;
 	}
 }
