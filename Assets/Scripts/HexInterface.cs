@@ -27,9 +27,9 @@ public interface HexInterface {
 	bool isResource();
 	void setIsResource(bool resource);
 
-	Factions getFaction();
-	void setFaction(Factions f);
+	Factions.name getFaction();
+	void setFaction(Factions.name f);
 
-	bool isVisible();
-	void setIsVisible( bool vis);
+	bool isHexInGame();
+	void setIsHexInGame( bool valid);
 }

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hex : MonoBehaviour, HexInterface{
-	public int x;
-	public int y;
+	private Coordinates coords;
 	private bool city;
 	private bool rad;
 	private bool mountain;
@@ -13,8 +12,37 @@ public class Hex : MonoBehaviour, HexInterface{
 	private bool water;
 	private bool resource;
 	private bool factionBase;
-	private Factions faction;
-	private bool visible;
+	private Factions.name faction = Factions.name.NULL;
+	private bool valid;
+
+	//CONSTRUCTORS
+	public Hex()
+	{
+
+	}
+	public Hex(Coordinates coords)
+	{
+		this.coords = coords;
+	}
+	public Hex(int x, int y)
+	{
+		this.coords = new Coordinates (x, y);
+	}
+
+	public void setCoordinates(Coordinates coords)
+	{
+		this.coords = coords;
+	}
+
+	public void setCoordinates(int x, int y)
+	{
+		this.coords = new Coordinates (x, y);
+	}
+
+	public Coordinates getCoordinates()
+	{
+		return this.coords;
+	}
 
 	public bool isCity()
 	{
@@ -96,23 +124,23 @@ public class Hex : MonoBehaviour, HexInterface{
 		this.factionBase = fb;
 	}
 
-	public Factions getFaction()
+	public Factions.name getFaction()
 	{
 		return this.faction;
 	}
 
-	public void setFaction(Factions f)
+	public void setFaction(Factions.name f)
 	{
 		this.faction = f;
 	}
 
-	public bool isVisible()
+	public bool isHexInGame()
 	{
-		return this.visible;
+		return this.valid;
 	}
 
-	public void setIsVisible(bool vis)
+	public void setIsHexInGame(bool valid)
 	{
-		this.visible = vis;
+		this.valid = valid;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class MapCreation : MonoBehaviour {
@@ -10,6 +11,7 @@ public class MapCreation : MonoBehaviour {
 	private const float LROffset = .860f;
 	private const float UDOffset = .740f;
 	private GameObject[,] mapOfHexes;
+	private MapLayout ml;
 
 	// Use this for initialization
 	void Start () {
@@ -33,8 +35,11 @@ public class MapCreation : MonoBehaviour {
 
 				GameObject curHex = null;
 
+				//Can be changed to RandomMapLayout later if desired
+				ml = new DefaultMapLayout();
+
 				//Create a hex and change its starting information
-				if (DefaultMapLayout.isHexInGame(LR, UD))
+				if (ml.isHexInGame(LR, UD))
 				{
 					curHex = (GameObject)Instantiate (hexTilePrefab, new Vector3(lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
 					configureHex(curHex, LR, UD);
@@ -47,25 +52,34 @@ public class MapCreation : MonoBehaviour {
 		}
 	}
 
-	private void configureHex(GameObject hex, int x, int y)
+	private void configureHex(GameObject go, int x, int y)
 	{
-		hex.name = "Hex_" + x + "_" + y; //Name the hex
-		hex.transform.SetParent (this.transform); //Put the hex into the map object
-		hex.isStatic = true; //The hex won't be moving
+		go.name = "Hex_" + x + "_" + y; //Name the hex
+		go.transform.SetParent (this.transform); //Put the hex into the map object
+		go.isStatic = true; //The hex won't be moving
 
 		//Define the hex's attributes
-		hex.AddComponent<Hex>();
-		hex.GetComponent<Hex>().x = x;
-		hex.GetComponent<Hex>().y = y;
-		hex.GetComponent<Hex>().setIsCity(DefaultMapLayout.isCity(x, y));
-		hex.GetComponent<Hex>().setIsMountain(DefaultMapLayout.isMountain(x, y));
-		hex.GetComponent<Hex>().setIsRad(DefaultMapLayout.isRad(x, y));
-		hex.GetComponent<Hex>().setIsFactionBase(DefaultMapLayout.isFactionBase(x, y));
-		hex.GetComponent<Hex>().setIsPlains(DefaultMapLayout.isPlains(x, y));
-		hex.GetComponent<Hex>().setIsRandomNumber(DefaultMapLayout.isRandomNumber(x, y));
-		hex.GetComponent<Hex>().setIsWater(DefaultMapLayout.isWater(x, y));
-		//hex.GetComponent<Hex>().setFaction(DefaultMapLayout.faction(x, y));
-		hex.GetComponent<Hex>().setIsResource(DefaultMapLayout.isResource(x, y));
-		hex.GetComponent<Hex>().setIsVisible(DefaultMapLayout.isVisible(x, y));
+		Coordinates coords = new Coordinates(x, y);
+		go.AddComponent<Hex>();
+		go.GetComponent<Hex>().setCoordinates(coords);
+		go.GetComponent<Hex>().setIsCity(ml.isCity(coords));
+		go.GetComponent<Hex>().setIsMountain(ml.isMountain(coords));
+		go.GetComponent<Hex>().setIsRad(ml.isRad(coords));
+		go.GetComponent<Hex>().setIsFactionBase(ml.isFactionBase(coords));
+		go.GetComponent<Hex>().setIsPlains(ml.isPlains(coords));
+		go.GetComponent<Hex>().setIsRandomNumber(ml.isRandomNumber(coords));
+		go.GetComponent<Hex>().setIsWater(ml.isWater(coords));
+		go.GetComponent<Hex>().setIsResource(ml.isResource(coords));
+		go.GetComponent<Hex>().setIsHexInGame(ml.isHexInGame(coords));
+
+		//Set the faction base, if needed
+		if(go.GetComponent<Hex>().isFactionBase())
+		{
+			foreach (Factions.name fac in Enum.GetValues((typeof(Factions.name)))) {
+				if (DefaultFactionLocations.FACTION_LOCATIONS[fac].Equals(go.GetComponent<Hex>().getCoordinates())) {
+					go.GetComponent<Hex>().setFaction(fac);
+				}
+			}
+		}
 	}
 }
