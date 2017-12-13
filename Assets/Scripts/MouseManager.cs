@@ -6,11 +6,6 @@ using UnityEngine.EventSystems;
 public class MouseManager : MonoBehaviour {
 
 	//GameObject currentlySelected TODO
-
-	// Use this for initialization
-	void Start() {
-		
-	}
 	
 	// Update is called once per frame
 	void Update() {
