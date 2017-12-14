@@ -27,4 +27,9 @@
 			return false;
 		}
 	}
+
+	public override string ToString ()
+	{
+		return "(x, y) = (" + x + ", " + y + ")"; 
+	}
 }

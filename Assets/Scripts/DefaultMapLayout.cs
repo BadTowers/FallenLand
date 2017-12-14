@@ -14,7 +14,7 @@ public class DefaultMapLayout : MapLayout {
 
 		tempDict = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, true}, 
-			{hexType.BASE, false}, {hexType.RAND_NUM, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+			{hexType.BASE, true}, {hexType.RAND_NUM, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 
 		for (int x = 0; x < MapCreation.width; x++) {

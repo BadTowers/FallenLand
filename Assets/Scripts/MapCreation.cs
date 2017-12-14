@@ -18,6 +18,9 @@ public class MapCreation : MonoBehaviour {
 		mapOfHexes = new GameObject[width, height];
 
 		createDefaultMap();
+
+		//go.GetComponentInChildren<MeshRenderer> ().material.SetColor ("_Color", Color.red);
+		//mapOfHexes[0, 0].GetComponentInChildren<MeshRenderer> ().material.color = Color.blue;
 	}
 
 	private void createDefaultMap()
@@ -33,21 +36,19 @@ public class MapCreation : MonoBehaviour {
 					lrPos += LROffset / 2f;
 				}
 
-				GameObject curHex = null;
-
 				//Can be changed to RandomMapLayout later if desired
 				ml = new DefaultMapLayout();
 
-				//Create a hex and change its starting information
-				if (ml.isHexInGame(LR, UD))
-				{
-					curHex = (GameObject)Instantiate (hexTilePrefab, new Vector3(lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
-					configureHex(curHex, LR, UD);
+				GameObject curHex = null;
 
-					//Set the start color of the hex
-					MeshRenderer curMR = curHex.GetComponentInChildren<MeshRenderer>();
-					curMR.material.color = Color.white;
+				//Create a hex and change its starting information
+				if (ml.isHexInGame (LR, UD)) {
+					curHex = (GameObject)Instantiate (hexTilePrefab, new Vector3 (lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
+					configureHex (curHex, LR, UD);
 				}
+
+				//Store the hex
+				mapOfHexes[LR, UD] = curHex;
 			}
 		}
 	}
@@ -73,13 +74,18 @@ public class MapCreation : MonoBehaviour {
 		go.GetComponent<Hex>().setIsHexInGame(ml.isHexInGame(coords));
 
 		//Set the faction base, if needed
-		if(go.GetComponent<Hex>().isFactionBase())
-		{
+		if (go.GetComponent<Hex> ().isFactionBase ()) {
 			foreach (Factions.name fac in Enum.GetValues((typeof(Factions.name)))) {
-				if (DefaultFactionLocations.FACTION_LOCATIONS[fac].Equals(go.GetComponent<Hex>().getCoordinates())) {
-					go.GetComponent<Hex>().setFaction(fac);
+				if (DefaultFactionLocations.FACTION_LOCATIONS [fac].Equals (go.GetComponent<Hex> ().getCoordinates ())) {
+					go.GetComponent<Hex> ().setFaction (fac);
+					go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+					//go.GetComponentInChildren<MeshRenderer> ().material.color = Color.red;
+					//Destroy(go);
 				}
 			}
 		}
+
+		//Set the start color of the hex
+		go.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
 	}
 }

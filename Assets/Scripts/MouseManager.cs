@@ -31,6 +31,23 @@ public class MouseManager : MonoBehaviour {
 		}
 	}
 
+	//Moused over a hex
+	void HexOver(GameObject go)
+	{
+		//If left clicking
+		if (Input.GetMouseButtonDown(0)) {
+			MeshRenderer mr;
+			//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
+			if (go.name == "OuterHex") {
+				mr = go.transform.parent.Find("InnerHex").GetComponentInChildren<MeshRenderer> ();
+			} else {
+				mr = go.GetComponentInChildren<MeshRenderer>();
+			}
+
+			toggleColor(mr);
+		}
+	}
+
 	//Toggle the color of the mesh render sent in
 	void toggleColor(MeshRenderer mr)
 	{
@@ -38,23 +55,6 @@ public class MouseManager : MonoBehaviour {
 			mr.material.color = Color.blue;
 		} else {
 			mr.material.color = Color.white;
-		}
-	}
-
-	//Moused over a hex
-	void HexOver(GameObject go)
-	{
-		//If left clicking
-		if (Input.GetMouseButtonDown(0)) {
-			MeshRenderer[] mr;
-			//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
-			if (go.name == "OuterHex") {
-				mr = go.transform.parent.Find("InnerHex").GetComponentsInChildren<MeshRenderer> ();
-			} else {
-				mr = go.GetComponentsInChildren<MeshRenderer>();
-			}
-
-			toggleColor(mr[0]);
 		}
 	}
 }
