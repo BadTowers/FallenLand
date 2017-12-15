@@ -7,6 +7,8 @@ public static class DefaultRandomNumberLocations {
 	{
 		{1, new Coordinates(2,20)},
 		{2, new Coordinates(3,21)},
+		{23, new Coordinates(1,18)},
+		{41, new Coordinates(1, 16)},
 		{58, new Coordinates(0,13)},
 		{73, new Coordinates(1, 10)},
 		{-1, new Coordinates(-1,-1)} //An invalid location
