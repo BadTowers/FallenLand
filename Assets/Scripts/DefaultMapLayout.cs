@@ -648,6 +648,215 @@ public class DefaultMapLayout : MapLayout {
 
 		/**************** COLUMN 7 ****************/
 		// (7, 0)
+		setHexOutOfMapBounds(7, 0);
+		// (7, 1)
+		setHexOutOfMapBounds(7, 1);
+		// (7, 2)
+		setHexOutOfMapBounds(7, 2);
+		// (7, 3)
+		setHexOutOfMapBounds(7, 3);
+		// (7, 4)
+		setHexOutOfMapBounds(7, 4);
+		// (7, 5)
+		arrayOfHexes[7, 5] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 6)
+		arrayOfHexes[7, 6] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 7)
+		arrayOfHexes[7, 7] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 8)
+		arrayOfHexes[7, 8] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 9)
+		arrayOfHexes[7, 9] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 10)
+		arrayOfHexes[7, 10] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 11)
+		arrayOfHexes[7, 11] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 12)
+		arrayOfHexes[7, 12] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 13)
+		arrayOfHexes[7, 13] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 14)
+		arrayOfHexes[7, 14] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 15)
+		arrayOfHexes[7, 15] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, true}, {hexType.VALID, true}
+		};
+		// (7, 16)
+		arrayOfHexes[7, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 17)
+		arrayOfHexes[7, 17] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 18)
+		arrayOfHexes[7, 18] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 19)
+		arrayOfHexes[7, 19] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 20)
+		arrayOfHexes[7, 20] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 21)
+		arrayOfHexes[7, 21] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (7, 22)
+		setHexOutOfMapBounds(7, 22);
+
+		/**************** COLUMN 8 ****************/
+		// (8, 0)
+		setHexOutOfMapBounds(8, 0);
+		// (8, 1)
+		setHexOutOfMapBounds(8, 1);
+		// (8, 2)
+		setHexOutOfMapBounds(8, 2);
+		// (8, 3)
+		setHexOutOfMapBounds(8, 3);
+		// (8, 4)
+		setHexOutOfMapBounds(8, 4);
+		// (8, 5)
+		arrayOfHexes[8, 5] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 6)
+		arrayOfHexes[8, 6] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 7)
+		arrayOfHexes[8, 7] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 8)
+		arrayOfHexes[8, 8] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 9)
+		arrayOfHexes[8, 9] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 10)
+		arrayOfHexes[8, 10] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 11)
+		arrayOfHexes[8, 11] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 12)
+		arrayOfHexes[8, 12] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 13)
+		arrayOfHexes[8, 13] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 14)
+		arrayOfHexes[8, 14] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 15)
+		arrayOfHexes[8, 15] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 16)
+		arrayOfHexes[8, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 17)
+		arrayOfHexes[8, 17] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 18)
+		arrayOfHexes[8, 18] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 19)
+		arrayOfHexes[8, 19] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 20)
+		arrayOfHexes[8, 20] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 21)
+		arrayOfHexes[8, 21] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (8, 22)
+		setHexOutOfMapBounds(8, 22);
+
+		/**************** COLUMN 9 ****************/
+		// (9, 0)
+		setHexOutOfMapBounds(9, 0);
+		// (9, 1)
+		setHexOutOfMapBounds(9, 1);
+		// (9, 2)
+		setHexOutOfMapBounds(9, 2);
+		// (9, 3)
+		setHexOutOfMapBounds(9, 3);
+		// (9, 4)
+		setHexOutOfMapBounds(9, 4);
+		// (9, 5)
+
 	}
 
 
