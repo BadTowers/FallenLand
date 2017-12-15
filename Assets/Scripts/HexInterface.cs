@@ -15,8 +15,8 @@ public interface HexInterface {
 	bool isPlains();
 	void setIsPlains(bool plains);
 
-	bool isRandomNumber();
-	void setIsRandomNumber(bool rand);
+	bool isRandomLocation();
+	void setIsRandomLocation(bool rand);
 
 	bool isWater();
 	void setIsWater(bool water);
@@ -29,6 +29,9 @@ public interface HexInterface {
 
 	Factions.name getFaction();
 	void setFaction(Factions.name f);
+
+	int getRandomLocation();
+	void setRandomLocation(int loc);
 
 	bool isHexInGame();
 	void setIsHexInGame( bool valid);

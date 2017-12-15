@@ -8,11 +8,12 @@ public class Hex : MonoBehaviour, HexInterface{
 	private bool rad;
 	private bool mountain;
 	private bool plains;
-	private bool randomNumber;
+	private bool randomLocation;
 	private bool water;
 	private bool resource;
 	private bool factionBase;
 	private Factions.name faction = Factions.name.NULL;
+	private int locationNumber;
 	private bool valid;
 
 	//CONSTRUCTORS
@@ -84,14 +85,14 @@ public class Hex : MonoBehaviour, HexInterface{
 		this.plains = plains;
 	}
 
-	public bool isRandomNumber()
+	public bool isRandomLocation()
 	{
-		return randomNumber;
+		return randomLocation;
 	}
 
-	public void setIsRandomNumber(bool rn)
+	public void setIsRandomLocation(bool rl)
 	{
-		this.randomNumber = rn;
+		this.randomLocation = rl;
 	}
 
 	public bool isWater()
@@ -132,6 +133,16 @@ public class Hex : MonoBehaviour, HexInterface{
 	public void setFaction(Factions.name f)
 	{
 		this.faction = f;
+	}
+
+	public int getRandomLocation()
+	{
+		return this.locationNumber;
+	}
+
+	public void setRandomLocation(int loc)
+	{
+		this.locationNumber = loc;
 	}
 
 	public bool isHexInGame()

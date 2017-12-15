@@ -2,7 +2,7 @@
 
 public abstract class MapLayout {
 
-	protected enum hexType{CITY, RAD, MOUNTAIN, PLAINS, WATER, BASE, RAND_NUM, RESOURCE, VALID};
+	protected enum hexType{CITY, RAD, MOUNTAIN, PLAINS, WATER, BASE, RAND_LOC, RESOURCE, VALID};
 
 	protected Dictionary<hexType, bool>[,] arrayOfHexes = new Dictionary<hexType, bool>[MapCreation.width, MapCreation.height]; //2D array of dictionaries that map an int from the enum above -> boolean
 
@@ -79,12 +79,12 @@ public abstract class MapLayout {
 
 	public bool isRandomNumber(int x, int y)
 	{
-		return arrayOfHexes[x, y][hexType.RAND_NUM];
+		return arrayOfHexes[x, y][hexType.RAND_LOC];
 	}
 
-	public bool isRandomNumber(Coordinates coords)
+	public bool isRandomLocation(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.RAND_NUM];
+		return arrayOfHexes[coords.getX(), coords.getY()][hexType.RAND_LOC];
 	}
 
 	public bool isResource(int x, int y)

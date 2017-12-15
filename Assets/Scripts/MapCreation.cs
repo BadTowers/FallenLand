@@ -10,6 +10,7 @@ public class MapCreation : MonoBehaviour {
 	public const int width = 33;
 	private const float LROffset = .860f;
 	private const float UDOffset = .740f;
+	private const int NUM_RANDOM_LOCATIONS = 100;
 	private GameObject[,] mapOfHexes;
 	private MapLayout ml;
 
@@ -18,9 +19,6 @@ public class MapCreation : MonoBehaviour {
 		mapOfHexes = new GameObject[width, height];
 
 		createDefaultMap();
-
-		//go.GetComponentInChildren<MeshRenderer> ().material.SetColor ("_Color", Color.red);
-		//mapOfHexes[0, 0].GetComponentInChildren<MeshRenderer> ().material.color = Color.blue;
 	}
 
 	private void createDefaultMap()
@@ -68,19 +66,29 @@ public class MapCreation : MonoBehaviour {
 		go.GetComponent<Hex>().setIsRad(ml.isRad(coords));
 		go.GetComponent<Hex>().setIsFactionBase(ml.isFactionBase(coords));
 		go.GetComponent<Hex>().setIsPlains(ml.isPlains(coords));
-		go.GetComponent<Hex>().setIsRandomNumber(ml.isRandomNumber(coords));
+		go.GetComponent<Hex>().setIsRandomLocation(ml.isRandomLocation(coords));
 		go.GetComponent<Hex>().setIsWater(ml.isWater(coords));
 		go.GetComponent<Hex>().setIsResource(ml.isResource(coords));
 		go.GetComponent<Hex>().setIsHexInGame(ml.isHexInGame(coords));
 
 		//Set the faction base, if needed
-		if (go.GetComponent<Hex> ().isFactionBase ()) {
+		if (go.GetComponent<Hex>().isFactionBase()) {
 			foreach (Factions.name fac in Enum.GetValues((typeof(Factions.name)))) {
-				if (DefaultFactionLocations.FACTION_LOCATIONS [fac].Equals (go.GetComponent<Hex> ().getCoordinates ())) {
-					go.GetComponent<Hex> ().setFaction (fac);
+				if (DefaultFactionLocations.FACTION_LOCATIONS[fac].Equals (go.GetComponent<Hex>().getCoordinates ())) {
+					go.GetComponent<Hex>().setFaction (fac);
 					go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
-					//go.GetComponentInChildren<MeshRenderer> ().material.color = Color.red;
-					//Destroy(go);
+				}
+			}
+		}
+
+		//Set random location number, if needed
+		if(go.GetComponent<Hex>().isRandomLocation())
+		{
+			for(int loc = 1; loc <= NUM_RANDOM_LOCATIONS; loc++){
+				if (DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[loc].Equals(go.GetComponentInChildren<Hex>().getCoordinates ())) {
+					go.GetComponent<Hex>().setRandomLocation(loc);
+					go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
+					break;
 				}
 			}
 		}
