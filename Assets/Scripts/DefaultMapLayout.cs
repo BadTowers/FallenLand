@@ -942,6 +942,8 @@ public class DefaultMapLayout : MapLayout {
 		};
 		// (9, 21)
 		setHexOutOfMapBounds(9, 21);
+		// (9, 22)
+		setHexOutOfMapBounds(9, 22);
 
 		/**************** COLUMN 10 ****************/
 		// (10, 0)
@@ -1354,7 +1356,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 		// (13, 21)
 		setHexOutOfMapBounds(13, 21);
-		// (13, 21)
+		// (13, 22)
 		setHexOutOfMapBounds(13, 22);
 
 		/**************** COLUMN 14 ****************/
@@ -1579,7 +1581,7 @@ public class DefaultMapLayout : MapLayout {
 		// (15, 22)
 		setHexOutOfMapBounds(15, 22);
 
-		//Col 16
+		/**************** COLUMN 16 ****************/
 		// (16, 0)
 		setHexOutOfMapBounds(16, 0);
 		// (16, 1)
@@ -1684,7 +1686,7 @@ public class DefaultMapLayout : MapLayout {
 		// (16, 22)
 		setHexOutOfMapBounds(16, 22);
 
-		//COL 17
+		/**************** COLUMN 17 ****************/
 		// (17, 0)
 		setHexOutOfMapBounds(17, 0);
 		// (17, 1)
@@ -1743,7 +1745,7 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (17, 12)
-		arrayOfHexes[17, 11] = new Dictionary<hexType, bool> () {
+		arrayOfHexes[17, 12] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
@@ -1792,7 +1794,7 @@ public class DefaultMapLayout : MapLayout {
 		// (17, 22)
 		setHexOutOfMapBounds(17, 22);
 
-		//COL 18
+		/**************** COLUMN 18 ****************/
 		// (18, 0)
 		setHexOutOfMapBounds(18, 0);
 		// (18, 1)
@@ -1885,7 +1887,7 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (18, 20)
-		arrayOfHexes[18, 10] = new Dictionary<hexType, bool> () {
+		arrayOfHexes[18, 20] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
@@ -1894,7 +1896,7 @@ public class DefaultMapLayout : MapLayout {
 		// (18, 22)
 		setHexOutOfMapBounds(18, 22);
 
-		// COL 19
+		/**************** COLUMN 19 ****************/
 		// (19, 0)
 		setHexOutOfMapBounds(19, 0);
 		// (19, 1)
@@ -1993,7 +1995,7 @@ public class DefaultMapLayout : MapLayout {
 		// (19, 22)
 		setHexOutOfMapBounds(19, 22);
 
-		// COL 20
+		/**************** COLUMN 20 ****************/
 		// (20, 0)
 		setHexOutOfMapBounds(20, 0);
 		// (20, 1)
@@ -2095,7 +2097,7 @@ public class DefaultMapLayout : MapLayout {
 		// (20, 22)
 		setHexOutOfMapBounds(20, 22);
 
-		// COL 21
+		/**************** COLUMN 21 ****************/
 		// (21, 0)
 		setHexOutOfMapBounds(21, 0);
 		// (21, 1)
@@ -2197,7 +2199,7 @@ public class DefaultMapLayout : MapLayout {
 		// (21, 22)
 		setHexOutOfMapBounds(21, 22);
 
-		//COL 22
+		/**************** COLUMN 22 ****************/
 		// (22, 0)
 		setHexOutOfMapBounds(22, 0);
 		// (22, 1)
@@ -2293,7 +2295,7 @@ public class DefaultMapLayout : MapLayout {
 		// (22, 22)
 		setHexOutOfMapBounds(22, 22);
 
-		//COL 23
+		/**************** COLUMN 23 ****************/
 		// (23, 0)
 		setHexOutOfMapBounds(23, 0);
 		// (23, 1)
@@ -2378,7 +2380,7 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (23, 19)
-		arrayOfHexes[23, 10] = new Dictionary<hexType, bool> () {
+		arrayOfHexes[23, 19] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
@@ -2389,7 +2391,7 @@ public class DefaultMapLayout : MapLayout {
 		// (23, 22)
 		setHexOutOfMapBounds(23, 22);
 
-		// COL 24
+		/**************** COLUMN 24 ****************/
 		// (24, 0)
 		setHexOutOfMapBounds(24, 0);
 		// (24, 1)
@@ -2479,7 +2481,7 @@ public class DefaultMapLayout : MapLayout {
 		// (24, 22)
 		setHexOutOfMapBounds(24, 22);
 
-		// COL 25
+		/**************** COLUMN 25 ****************/
 		// (25, 0)
 		setHexOutOfMapBounds(25, 0);
 		// (25, 1)
@@ -2572,7 +2574,7 @@ public class DefaultMapLayout : MapLayout {
 		// (25, 22)
 		setHexOutOfMapBounds(25, 22);
 
-		// COL 26
+		/**************** COLUMN 26 ****************/
 		// (26, 0)
 		setHexOutOfMapBounds(26, 0);
 		// (26, 1)
@@ -2671,7 +2673,7 @@ public class DefaultMapLayout : MapLayout {
 		// (26, 22)
 		setHexOutOfMapBounds(26, 22);
 
-		// COL 27
+		/**************** COLUMN 27 ****************/
 		// (27, 0)
 		arrayOfHexes[27, 0] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
@@ -2764,7 +2766,7 @@ public class DefaultMapLayout : MapLayout {
 		// (27, 22)
 		setHexOutOfMapBounds(27, 22);
 
-		//COL 28
+		/**************** COLUMN 28 ****************/
 		// (28, 0)
 		arrayOfHexes[28, 0] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
@@ -2851,7 +2853,7 @@ public class DefaultMapLayout : MapLayout {
 		// (28, 22)
 		setHexOutOfMapBounds(28, 22);
 
-		//COL 29
+		/**************** COLUMN 29 ****************/
 		// (29, 0)
 		setHexOutOfMapBounds(29, 0);
 		// (29, 1)
@@ -2905,12 +2907,12 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (29, 17)
-		arrayOfHexes[29, 10] = new Dictionary<hexType, bool> () {
+		arrayOfHexes[29, 17] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (29, 18)
-		arrayOfHexes[29, 10] = new Dictionary<hexType, bool> () {
+		arrayOfHexes[29, 18] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
@@ -2923,7 +2925,7 @@ public class DefaultMapLayout : MapLayout {
 		// (29, 22)
 		setHexOutOfMapBounds(29, 22);
 
-		//COL 30
+		/**************** COLUMN 30 ****************/
 		// (30, 0)
 		setHexOutOfMapBounds(30, 0);
 		// (30, 1)
@@ -2989,7 +2991,7 @@ public class DefaultMapLayout : MapLayout {
 		// (30, 22)
 		setHexOutOfMapBounds(30, 22);
 
-		//COL 31
+		/**************** COLUMN 31 ****************/
 		// (31, 0)
 		setHexOutOfMapBounds(31, 0);
 		// (31, 1)
@@ -3052,7 +3054,7 @@ public class DefaultMapLayout : MapLayout {
 		// (31, 22)
 		setHexOutOfMapBounds(31, 22);
 
-		//COL 32
+		/**************** COLUMN 32 ****************/
 		// (32, 0)
 		setHexOutOfMapBounds(32, 0);
 		// (32, 1)
@@ -3098,26 +3100,12 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.CITY, true}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
-		// (31, 21)
-		setHexOutOfMapBounds(31, 21);
-		// (31, 22)
-		setHexOutOfMapBounds(31, 22);
+		// (32, 21)
+		setHexOutOfMapBounds(32, 21);
+		// (32, 22)
+		setHexOutOfMapBounds(32, 22);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
 
 	private void setHexOutOfMapBounds(int x, int y)
 	{

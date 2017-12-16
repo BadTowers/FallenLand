@@ -18,6 +18,9 @@ public class MapCreation : MonoBehaviour {
 	void Start () {
 		mapOfHexes = new GameObject[width, height];
 
+		//Can be changed to RandomMapLayout later if desired
+		ml = new DefaultMapLayout();
+
 		createDefaultMap();
 	}
 
@@ -34,12 +37,10 @@ public class MapCreation : MonoBehaviour {
 					lrPos += LROffset / 2f;
 				}
 
-				//Can be changed to RandomMapLayout later if desired
-				ml = new DefaultMapLayout();
-
 				GameObject curHex = null;
 
 				//Create a hex and change its starting information
+				//Debug.Log("x: " + LR + "   y: " + UD);
 				if (ml.isHexInGame (LR, UD)) {
 					curHex = (GameObject)Instantiate (hexTilePrefab, new Vector3 (lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
 					configureHex (curHex, LR, UD);
