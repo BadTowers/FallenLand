@@ -21,10 +21,15 @@ public class MapCreation : MonoBehaviour {
 		//Can be changed to RandomMapLayout later if desired
 		ml = new DefaultMapLayout();
 
-		createDefaultMap();
+		//Assign the hexes their properties
+		createMap();
+
+		//Center the camera
+		Camera.main.transform.Translate(new Vector3(12, 2, 2), Space.World);
+		Camera.main.transform.eulerAngles = new Vector3(45, 0, 0);
 	}
 
-	private void createDefaultMap()
+	private void createMap()
 	{
 		for (int LR = 0; LR < width; LR++) { //Left/right
 			for (int UD = 0; UD < height; UD++) { //Up/down
