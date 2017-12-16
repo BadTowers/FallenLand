@@ -2777,6 +2777,331 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, true}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
+		// (28, 3)
+		setHexOutOfMapBounds(28, 3);
+		// (28, 4)
+		setHexOutOfMapBounds(28, 4);
+		// (28, 5)
+		setHexOutOfMapBounds(28, 5);
+		// (28, 6)
+		setHexOutOfMapBounds(28, 6);
+		// (28, 7)
+		setHexOutOfMapBounds(28, 7);
+		// (28, 8)
+		arrayOfHexes[28, 8] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 9)
+		arrayOfHexes[28, 9] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 10)
+		arrayOfHexes[28, 10] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 11)
+		arrayOfHexes[28, 11] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 12)
+		arrayOfHexes[28, 12] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 13)
+		arrayOfHexes[28, 13] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 14)
+		arrayOfHexes[28, 14] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 15)
+		arrayOfHexes[28, 15] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 16)
+		arrayOfHexes[28, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 17)
+		arrayOfHexes[28, 17] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, true}, {hexType.VALID, true}
+		};
+		// (28, 18)
+		arrayOfHexes[28, 18] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (28, 19)
+		setHexOutOfMapBounds(28, 19);
+		// (28, 20)
+		setHexOutOfMapBounds(28, 20);
+		// (28, 21)
+		setHexOutOfMapBounds(28, 21);
+		// (28, 22)
+		setHexOutOfMapBounds(28, 22);
+
+		//COL 29
+		// (29, 0)
+		setHexOutOfMapBounds(29, 0);
+		// (29, 1)
+		setHexOutOfMapBounds(29, 1);
+		// (29, 2)
+		setHexOutOfMapBounds(29, 2);
+		// (29, 3)
+		setHexOutOfMapBounds(29, 3);
+		// (29, 4)
+		setHexOutOfMapBounds(29, 4);
+		// (29, 5)
+		setHexOutOfMapBounds(29, 5);
+		// (29, 6)
+		setHexOutOfMapBounds(29, 6);
+		// (29, 7)
+		setHexOutOfMapBounds(29, 7);
+		// (29, 8)
+		setHexOutOfMapBounds(29, 8);
+		// (29, 9)
+		setHexOutOfMapBounds(29, 9);
+		// (29, 10)
+		arrayOfHexes[29, 10] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 11)
+		setHexOutOfMapBounds(29, 11);
+		// (29, 12)
+		arrayOfHexes[29, 12] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 13)
+		arrayOfHexes[29, 13] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 14)
+		arrayOfHexes[29, 14] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 15)
+		arrayOfHexes[29, 15] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 16)
+		arrayOfHexes[29, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 17)
+		arrayOfHexes[29, 10] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 18)
+		arrayOfHexes[29, 10] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (29, 19)
+		setHexOutOfMapBounds(29, 19);
+		// (29, 20)
+		setHexOutOfMapBounds(29, 20);
+		// (29, 21)
+		setHexOutOfMapBounds(29, 21);
+		// (29, 22)
+		setHexOutOfMapBounds(29, 22);
+
+		//COL 30
+		// (30, 0)
+		setHexOutOfMapBounds(30, 0);
+		// (30, 1)
+		setHexOutOfMapBounds(30, 1);
+		// (30, 2)
+		setHexOutOfMapBounds(30, 2);
+		// (30, 3)
+		setHexOutOfMapBounds(30, 3);
+		// (30, 4)
+		setHexOutOfMapBounds(30, 4);
+		// (30, 5)
+		setHexOutOfMapBounds(30, 5);
+		// (30, 6)
+		setHexOutOfMapBounds(30, 6);
+		// (30, 7)
+		setHexOutOfMapBounds(30, 7);
+		// (30, 8)
+		setHexOutOfMapBounds(30, 8);
+		// (30, 9)
+		setHexOutOfMapBounds(30, 9);
+		// (30, 10)
+		setHexOutOfMapBounds(30, 10);
+		// (30, 11)
+		setHexOutOfMapBounds(30, 11);
+		// (30, 12)
+		setHexOutOfMapBounds(30, 12);
+		// (30, 13)
+		setHexOutOfMapBounds(30, 13);
+		// (30, 14)
+		setHexOutOfMapBounds(30, 14);
+		// (30, 15)
+		arrayOfHexes[30, 15] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (30, 16)
+		arrayOfHexes[30, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (30, 17)
+		arrayOfHexes[30, 17] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (30, 18)
+		arrayOfHexes[30, 18] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (30, 19)
+		arrayOfHexes[30, 19] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (30, 20)
+		setHexOutOfMapBounds(30,20);
+		// (30, 21)
+		arrayOfHexes[30, 21] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (30, 22)
+		setHexOutOfMapBounds(30, 22);
+
+		//COL 31
+		// (31, 0)
+		setHexOutOfMapBounds(31, 0);
+		// (31, 1)
+		setHexOutOfMapBounds(31, 1);
+		// (31, 2)
+		setHexOutOfMapBounds(31, 2);
+		// (31, 3)
+		setHexOutOfMapBounds(31, 3);
+		// (31, 4)
+		setHexOutOfMapBounds(31, 4);
+		// (31, 5)
+		setHexOutOfMapBounds(31, 5);
+		// (31, 6)
+		setHexOutOfMapBounds(31, 6);
+		// (31, 7)
+		setHexOutOfMapBounds(31, 7);
+		// (31, 8)
+		setHexOutOfMapBounds(31, 8);
+		// (31, 9)
+		setHexOutOfMapBounds(31, 9);
+		// (31, 10)
+		setHexOutOfMapBounds(31, 10);
+		// (31, 11)
+		setHexOutOfMapBounds(31, 11);
+		// (31, 12)
+		setHexOutOfMapBounds(31, 12);
+		// (31, 13)
+		setHexOutOfMapBounds(31, 13);
+		// (31, 14)
+		setHexOutOfMapBounds(31, 14);
+		// (31, 15)
+		setHexOutOfMapBounds(31, 15);
+		// (31, 16)
+		arrayOfHexes[31, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (31, 17)
+		setHexOutOfMapBounds(31, 17);
+		// (31, 18)
+		arrayOfHexes[31, 18] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (31, 19)
+		arrayOfHexes[31, 19] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, true}, {hexType.VALID, true}
+		};
+		// (31, 20)
+		arrayOfHexes[31, 20] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, true}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (31, 21)
+		arrayOfHexes[31, 21] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (31, 22)
+		setHexOutOfMapBounds(31, 22);
+
+		//COL 32
+		// (32, 0)
+		setHexOutOfMapBounds(32, 0);
+		// (32, 1)
+		setHexOutOfMapBounds(32, 1);
+		// (32, 2)
+		setHexOutOfMapBounds(32, 2);
+		// (32, 3)
+		setHexOutOfMapBounds(32, 3);
+		// (32, 4)
+		setHexOutOfMapBounds(32, 4);
+		// (32, 5)
+		setHexOutOfMapBounds(32, 5);
+		// (32, 6)
+		setHexOutOfMapBounds(32, 6);
+		// (32, 7)
+		setHexOutOfMapBounds(32, 7);
+		// (32, 8)
+		setHexOutOfMapBounds(32, 8);
+		// (32, 9)
+		setHexOutOfMapBounds(32, 9);
+		// (32, 10)
+		setHexOutOfMapBounds(32, 10);
+		// (32, 11)
+		setHexOutOfMapBounds(32, 11);
+		// (32, 12)
+		setHexOutOfMapBounds(32, 12);
+		// (32, 13)
+		setHexOutOfMapBounds(32, 13);
+		// (32, 14)
+		setHexOutOfMapBounds(32, 14);
+		// (32, 15)
+		setHexOutOfMapBounds(32, 15);
+		// (32, 16)
+		setHexOutOfMapBounds(32, 16);
+		// (32, 17)
+		setHexOutOfMapBounds(32, 17);
+		// (32, 18)
+		setHexOutOfMapBounds(32, 18);
+		// (32, 19)
+		setHexOutOfMapBounds(32, 19);
+		// (32, 20)
+		arrayOfHexes[32, 20] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, true}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
+		// (31, 21)
+		setHexOutOfMapBounds(31, 21);
+		// (31, 22)
+		setHexOutOfMapBounds(31, 22);
 	}
 
 
