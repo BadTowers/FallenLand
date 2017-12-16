@@ -21,6 +21,7 @@ public static class DefaultRandomNumberLocations {
 		{15, new Coordinates(23,15)},
 		{14, new Coordinates(22,17)},
 		{16, new Coordinates(22,13)},
+		{17, new Coordinates(25,12)},
 		{23, new Coordinates(1,18)},
 		{24, new Coordinates(3,17)},
 		{25, new Coordinates(5,17)},
@@ -51,6 +52,7 @@ public static class DefaultRandomNumberLocations {
 		{52, new Coordinates(20,10)},
 		{53, new Coordinates(21,9)},
 		{54, new Coordinates(23,8)},
+		{55, new Coordinates(25,8)},
 		{58, new Coordinates(0,13)},
 		{59, new Coordinates(2,12)},
 		{60, new Coordinates(4,12)},
@@ -80,6 +82,7 @@ public static class DefaultRandomNumberLocations {
 		{85, new Coordinates(20,6)},
 		{86, new Coordinates(20,4)},
 		{87, new Coordinates(21,3)},
+		{88, new Coordinates(25,5)},
 		{89, new Coordinates(2,8)},
 		{90, new Coordinates(6,6)},
 		{91, new Coordinates(10,5)},
@@ -89,6 +92,7 @@ public static class DefaultRandomNumberLocations {
 		{95, new Coordinates(15,2)},
 		{96, new Coordinates(17,3)},
 		{97, new Coordinates(17,1)},
+		{98, new Coordinates(25,1)},
 		{-1, new Coordinates(-1,-1)} //An invalid location
 	};
 
