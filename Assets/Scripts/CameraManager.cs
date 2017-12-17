@@ -7,10 +7,10 @@ using System.Collections;
 public class CameraManager : MonoBehaviour 
 {
 	public float rotateSpeed = 4.0f;	// Speed of camera turning when mouse moves in along an axis
-	public float panSpeed = 0.5f;		// Speed of the camera when being panned
+	public float panSpeed = 0.6f;		// Speed of the camera when being panned
 	public float zoomSpeed = 4.0f;		// Speed of the camera going back and forth
 	public float minZoomFOV = 20.0f;
-	public float maxZoomFOV = 70.0f;
+	public float maxZoomFOV = 90.0f;
 	private bool isPanning = false;		// Is the camera being panned?
 	private bool isRotating = false;	// Is the camera being rotated?
 
@@ -73,9 +73,12 @@ public class CameraManager : MonoBehaviour
 			Vector3 movement = Vector3.zero;
 			movement.x = oldLocation.x - newLocation.x; //Set side to side move equal to the left/right move of mouse
 			movement.z = oldLocation.y - newLocation.y; //Set front to back move (z plane) equal to the up/down move of the mouse
+			movement = Camera.main.transform.TransformDirection(movement); //Account for camera facing different direction than default
+			movement.y = 0; //Don't change in the y direction
+			movement.x *= panSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 
 			//Update the camera
-			transform.Translate(movement * panSpeed * Time.deltaTime, Space.World);
+			transform.Translate(movement * Time.deltaTime, Space.World);
 		}
 
 		// Zoom via scrollwheel TODO: Add zoom out and zoom in limits

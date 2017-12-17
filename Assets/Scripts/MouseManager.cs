@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class MouseManager : MonoBehaviour {
 
 	//GameObject currentlySelected TODO
+	string toolTipText = "";
 	
 	// Update is called once per frame
 	void Update() {
@@ -26,25 +27,29 @@ public class MouseManager : MonoBehaviour {
 
 			//We know here what we are mousing over
 			if (ourHitObject.name != null) {
-				HexOver(ourHitObject);
+				MouseOverHex (ourHitObject);
+			} else {
+				toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
 			}
 		}
 	}
 
 	//Moused over a hex
-	void HexOver(GameObject go)
+	void MouseOverHex(GameObject go)
 	{
 		//If left clicking
-		if (Input.GetMouseButtonDown(0)) {
+		if (Input.GetMouseButtonDown (0)) {
 			MeshRenderer mr;
 			//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
 			if (go.name == "OuterHex") {
 				mr = go.transform.parent.Find("InnerHex").GetComponentInChildren<MeshRenderer> ();
 			} else {
-				mr = go.GetComponentInChildren<MeshRenderer>();
+				mr = go.GetComponentInChildren<MeshRenderer> ();
 			}
 
-			toggleColor(mr);
+			toggleColor (mr);
+		} else {
+			toolTipText = go.transform.GetComponentInParent<Hex>().name;
 		}
 	}
 
@@ -55,6 +60,14 @@ public class MouseManager : MonoBehaviour {
 			mr.material.color = Color.blue;
 		} else {
 			mr.material.color = Color.white;
+		}
+	}
+
+	void OnGUI()
+	{
+		if (toolTipText != "") {
+			GUI.backgroundColor = Color.black;
+			GUI.Label (new Rect (0, Screen.height-100, 100, 100), toolTipText);
 		}
 	}
 }
