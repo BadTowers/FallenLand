@@ -6,11 +6,11 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour 
 {
-	public float rotateSpeed = 4.0f;	// Speed of camera turning when mouse moves in along an axis
-	public float panSpeed = 0.6f;		// Speed of the camera when being panned
-	public float zoomSpeed = 4.0f;		// Speed of the camera going back and forth
-	public float minZoomFOV = 20.0f;
-	public float maxZoomFOV = 90.0f;
+	public float rotateSpeed;	// Speed of camera turning when mouse moves in along an axis
+	public float panSpeed;		// Speed of the camera when being panned
+	public float zoomSpeed;		// Speed of the camera going back and forth
+	public float minZoomFOV;
+	public float maxZoomFOV;
 	private bool isPanning = false;		// Is the camera being panned?
 	private bool isRotating = false;	// Is the camera being rotated?
 
@@ -52,8 +52,22 @@ public class CameraManager : MonoBehaviour
 		{
 			x = Input.GetAxis("Mouse X");
 			y = Input.GetAxis("Mouse Y");
-			rotateValue = new Vector3 (y, x * -1, 0);
-			transform.eulerAngles = transform.eulerAngles - (rotateValue * rotateSpeed);
+			rotateValue = new Vector3(y, x * -1, 0); //Create the rotation vector
+			transform.eulerAngles = transform.eulerAngles - (rotateValue * rotateSpeed); //Adjust for rotating speed
+			//This chunk of code restrict the rotation angles in the LEFT/RIGHT directions
+			float newRotY = transform.eulerAngles.y;
+			if (transform.eulerAngles.y > 50 && transform.eulerAngles.y < 310) { // If the y is outside of the allowed range
+				//If it's closer to 310 than it is to 50
+				if (Mathf.Abs (310 - transform.eulerAngles.y) < Mathf.Abs (50 - transform.eulerAngles.y)) {
+					newRotY = 310;
+				} else { //Else, it's closer to 50 than 310
+					newRotY = 50;
+				}
+			}
+			//This chunk of code restricts the rotation angles in the UP/DOWN directions
+			float newRotX = Mathf.Clamp(transform.eulerAngles.x, 20, 80);
+			//Set the new rotation, res
+			transform.eulerAngles = new Vector3(newRotX, newRotY, transform.eulerAngles.z); //Clamp the rotational x value range
 		}
 
 		// Pan the camera on its XZ plane
@@ -73,9 +87,9 @@ public class CameraManager : MonoBehaviour
 			Vector3 movement = Vector3.zero;
 			movement.x = oldLocation.x - newLocation.x; //Set side to side move equal to the left/right move of mouse
 			movement.z = oldLocation.y - newLocation.y; //Set front to back move (z plane) equal to the up/down move of the mouse
+			movement.x *= panSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 			movement = Camera.main.transform.TransformDirection(movement); //Account for camera facing different direction than default
 			movement.y = 0; //Don't change in the y direction
-			movement.x *= panSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 
 			//Update the camera
 			transform.Translate(movement * Time.deltaTime, Space.World);

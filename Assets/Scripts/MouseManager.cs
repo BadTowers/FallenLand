@@ -2,35 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MouseManager : MonoBehaviour {
 
+	public GameObject hexInformationBackground;
+	public GameObject hexInformationText;
+
 	//GameObject currentlySelected TODO
-	string toolTipText = "";
+	private string toolTipText = "";
+
+	void Start() {
+		// Start the tooltips for hex information as hidden
+		hexInformationText.SetActive (false);
+		hexInformationBackground.SetActive (false);
+	}
 	
 	// Update is called once per frame
 	void Update() {
 		//If we are over a Unity UI element
-		//if (EventSystem.current.IsPointerOverGameObject ()) {
+		if (EventSystem.current.IsPointerOverGameObject()) {
 			//It is, so let's not do any game click code
-		//	return;
-		//}
+			return;
+		}
 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Get a vector called a Ray from the mouse through the world
 
 		RaycastHit objectHitInfo; //Object the raycast hit, if any
 
 		//Check if the ray hit any colliders
-		if(Physics.Raycast(ray, out objectHitInfo))
-		{
+		if (Physics.Raycast (ray, out objectHitInfo)) {
 			GameObject ourHitObject = objectHitInfo.collider.transform.gameObject; //Get the object the mouse is over
 
 			//We know here what we are mousing over
 			if (ourHitObject.name != null) {
 				MouseOverHex (ourHitObject);
-			} else {
-				toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
 			}
+		} else {
+			toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
+			hexInformationText.SetActive (false);
+			hexInformationBackground.SetActive (false);
 		}
 	}
 
@@ -50,6 +61,8 @@ public class MouseManager : MonoBehaviour {
 			toggleColor (mr);
 		} else {
 			toolTipText = go.transform.GetComponentInParent<Hex>().name;
+			hexInformationText.SetActive (true);
+			hexInformationBackground.SetActive (true);
 		}
 	}
 
@@ -66,8 +79,7 @@ public class MouseManager : MonoBehaviour {
 	void OnGUI()
 	{
 		if (toolTipText != "") {
-			GUI.backgroundColor = Color.black;
-			GUI.Label (new Rect (0, Screen.height-100, 100, 100), toolTipText);
+			hexInformationText.GetComponent<Text> ().text = toolTipText;
 		}
 	}
 }
