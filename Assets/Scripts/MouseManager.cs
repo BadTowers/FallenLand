@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -39,9 +41,7 @@ public class MouseManager : MonoBehaviour {
 				MouseOverHex (ourHitObject);
 			}
 		} else {
-			toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
-			hexInformationText.SetActive (false);
-			hexInformationBackground.SetActive (false);
+			disableHexInfo();
 		}
 	}
 
@@ -60,9 +60,8 @@ public class MouseManager : MonoBehaviour {
 
 			toggleColor (mr);
 		} else {
-			toolTipText = go.transform.GetComponentInParent<Hex>().name;
-			hexInformationText.SetActive (true);
-			hexInformationBackground.SetActive (true);
+			string info = getHexInfoString(go.transform.GetComponentInParent<Hex>());
+			enableHexInfo(info);
 		}
 	}
 
@@ -76,10 +75,58 @@ public class MouseManager : MonoBehaviour {
 		}
 	}
 
+	void enableHexInfo(string text)
+	{
+		toolTipText = text;
+		hexInformationText.SetActive (true);
+		hexInformationBackground.SetActive (true);
+	}
+
+	void disableHexInfo()
+	{
+		toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
+		hexInformationText.SetActive (false);
+		hexInformationBackground.SetActive (false);
+	}
+
+	string getHexInfoString(Hex hex)
+	{
+		StringBuilder toReturn = new StringBuilder();
+		toReturn.Append(hex.name);
+		toReturn.Append(Environment.NewLine);
+		if (hex.isRad ()) {
+			toReturn.Append("Rad" + Environment.NewLine);
+		}
+		if (hex.isCity ()) {
+			toReturn.Append("City" + Environment.NewLine);
+		}
+		if (hex.isMountain ()) {
+			toReturn.Append ("Mountain" + Environment.NewLine);
+		}
+		if (hex.isPlains ()) {
+			toReturn.Append ("Plains" + Environment.NewLine);
+		}
+		if (hex.isRandomLocation ()) {
+			toReturn.Append("Random: ");
+			toReturn.Append(hex.getRandomLocation());
+			toReturn.Append (Environment.NewLine);
+		}
+		if (hex.isResource ()) {
+			toReturn.Append ("Resource" + Environment.NewLine);
+		}
+		if(hex.isFactionBase()){
+			toReturn.Append("Faction: ");
+			toReturn.Append(hex.getFaction());
+			toReturn.Append(Environment.NewLine);
+		}
+
+		return toReturn.ToString ();
+	}
+
 	void OnGUI()
 	{
 		if (toolTipText != "") {
-			hexInformationText.GetComponent<Text> ().text = toolTipText;
+			hexInformationText.GetComponent<Text>().text = toolTipText;
 		}
 	}
 }
