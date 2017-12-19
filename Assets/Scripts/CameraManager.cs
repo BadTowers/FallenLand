@@ -90,9 +90,14 @@ public class CameraManager : MonoBehaviour
 			movement.x *= panSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 			movement = Camera.main.transform.TransformDirection(movement); //Account for camera facing different direction than default
 			movement.y = 0; //Don't change in the y direction
-
-			//Update the camera
-			transform.Translate(movement * Time.deltaTime, Space.World);
+			transform.Translate(movement * Time.deltaTime, Space.World); //Update the camera
+			//Ensure we are still in the the map bounds
+			float newPanX = transform.position.x;
+			float newPanZ = transform.position.z;
+			newPanX = Mathf.Clamp(newPanX, -1, 25);
+			newPanZ = Mathf.Clamp(newPanZ, -5, 14);
+			//Update the camera if we went over the bounds
+			transform.position = new Vector3 (newPanX, transform.position.y, newPanZ);
 		}
 
 		// Zoom via scrollwheel TODO: Add zoom out and zoom in limits
