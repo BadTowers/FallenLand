@@ -53,7 +53,7 @@ public class CameraManager : MonoBehaviour
 			x = Input.GetAxis("Mouse X");
 			y = Input.GetAxis("Mouse Y");
 			rotateValue = new Vector3(y, x * -1, 0); //Create the rotation vector
-			transform.eulerAngles = transform.eulerAngles - (rotateValue * rotateSpeed); //Adjust for rotating speed
+			transform.eulerAngles = transform.eulerAngles - (rotateValue * rotateSpeed * MapCreation.scale); //Adjust for rotating speed
 			//This chunk of code restrict the rotation angles in the LEFT/RIGHT directions
 			float newRotY = transform.eulerAngles.y;
 			if (transform.eulerAngles.y > 50 && transform.eulerAngles.y < 310) { // If the y is outside of the allowed range
@@ -90,12 +90,12 @@ public class CameraManager : MonoBehaviour
 			movement.x *= panSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 			movement = Camera.main.transform.TransformDirection(movement); //Account for camera facing different direction than default
 			movement.y = 0; //Don't change in the y direction
-			transform.Translate(movement * Time.deltaTime, Space.World); //Update the camera
+			transform.Translate(movement * Time.deltaTime * MapCreation.scale, Space.World); //Update the camera
 			//Ensure we are still in the the map bounds
 			float newPanX = transform.position.x;
 			float newPanZ = transform.position.z;
-			newPanX = Mathf.Clamp(newPanX, -1, 25);
-			newPanZ = Mathf.Clamp(newPanZ, -5, 14);
+			newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.scale, 25 * MapCreation.scale);
+			newPanZ = Mathf.Clamp(newPanZ, -5 * MapCreation.scale, 14 * MapCreation.scale);
 			//Update the camera if we went over the bounds
 			transform.position = new Vector3 (newPanX, transform.position.y, newPanZ);
 		}

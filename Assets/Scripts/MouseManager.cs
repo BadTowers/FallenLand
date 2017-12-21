@@ -22,12 +22,6 @@ public class MouseManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		//If we are over a Unity UI element
-		if (EventSystem.current.IsPointerOverGameObject()) {
-			//It is, so let's not do any game click code
-			return;
-		}
-
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Get a vector called a Ray from the mouse through the world
 
 		RaycastHit objectHitInfo; //Object the raycast hit, if any
@@ -50,6 +44,12 @@ public class MouseManager : MonoBehaviour {
 	{
 		//If left clicking
 		if (Input.GetMouseButtonDown (0)) {
+			//If we clicked a Unity UI element
+			if (EventSystem.current.IsPointerOverGameObject()) {
+				//It is, so let's not do any game click code
+				return;
+			}
+
 			MeshRenderer mr;
 			//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
 			if (go.name == "OuterHex") {

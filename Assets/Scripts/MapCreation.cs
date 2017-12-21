@@ -8,8 +8,9 @@ public class MapCreation : MonoBehaviour {
 	public GameObject hexTilePrefab;
 	public const int height = 23;
 	public const int width = 33;
-	private const float LROffset = .860f;
-	private const float UDOffset = .740f;
+	public const int scale = 3;
+	private const float LROffset = .860f * scale;
+	private const float UDOffset = .740f * scale;
 	private const int NUM_RANDOM_LOCATIONS = 100;
 	private GameObject[,] mapOfHexes;
 	private MapLayout ml;
@@ -25,7 +26,7 @@ public class MapCreation : MonoBehaviour {
 		createMap();
 
 		//Center the camera
-		Camera.main.transform.Translate(new Vector3(12, 2, 2), Space.World);
+		Camera.main.transform.Translate(new Vector3(12 * MapCreation.scale, 2 * MapCreation.scale, 2 * MapCreation.scale), Space.World);
 		Camera.main.transform.eulerAngles = new Vector3(60, 0, 0);
 	}
 

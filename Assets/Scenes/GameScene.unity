@@ -272,8 +272,8 @@ MonoBehaviour:
   rotateSpeed: 4
   panSpeed: 0.6
   zoomSpeed: 4
-  minZoomFOV: 20
-  maxZoomFOV: 90
+  minZoomFOV: 45
+  maxZoomFOV: 95
 --- !u!1 &416579924
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +412,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1086098258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -416.8889, y: 8, z: 0}
+  m_LocalPosition: {x: -421.8889, y: 35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1231899947}
@@ -421,7 +421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 8}
+  m_AnchoredPosition: {x: -5, y: 35}
   m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1086098260
