@@ -83,7 +83,7 @@ public class MapCreation : MonoBehaviour {
 			foreach (Factions.name fac in Enum.GetValues((typeof(Factions.name)))) {
 				if (DefaultFactionLocations.FACTION_LOCATIONS[fac].Equals (go.GetComponent<Hex>().getCoordinates ())) {
 					go.GetComponent<Hex>().setFaction (fac);
-					go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
 				}
 			}
 		}
@@ -94,7 +94,7 @@ public class MapCreation : MonoBehaviour {
 			for(int loc = 1; loc <= NUM_RANDOM_LOCATIONS; loc++){
 				if (DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[loc].Equals(go.GetComponentInChildren<Hex>().getCoordinates ())) {
 					go.GetComponent<Hex>().setRandomLocation(loc);
-					go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
+					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
 					break;
 				}
 			}
@@ -102,5 +102,10 @@ public class MapCreation : MonoBehaviour {
 
 		//Set the start color of the hex
 		go.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+		go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+
+		//Set the texture of the hex
+		string fileName = "Hexes/Hex_" + x.ToString() + "_" + y.ToString();
+		go.GetComponentInChildren<Renderer>().material.mainTexture = Resources.Load(fileName) as Texture;
 	}
 }
