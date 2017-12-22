@@ -27,7 +27,6 @@ public class MapCreation : MonoBehaviour {
 
 		//Center the camera
 		Camera.main.transform.Translate(new Vector3(12 * MapCreation.scale, 2 * MapCreation.scale, 2 * MapCreation.scale), Space.World);
-		Camera.main.transform.eulerAngles = new Vector3(60, 0, 0);
 	}
 
 	private void createMap()

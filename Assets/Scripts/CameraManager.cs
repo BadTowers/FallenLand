@@ -6,72 +6,32 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour 
 {
-	public float rotateSpeed;	// Speed of camera turning when mouse moves in along an axis
 	public float panSpeed;		// Speed of the camera when being panned
 	public float zoomSpeed;		// Speed of the camera going back and forth
 	public float minZoomFOV;
 	public float maxZoomFOV;
 	private bool isPanning = false;		// Is the camera being panned?
-	private bool isRotating = false;	// Is the camera being rotated?
 
 	//For panning
 	private Vector3 oldLocation = new Vector3(-1, -1, -1);
 	private Vector3 newLocation = new Vector3 (-1, -1, -1);
 
-	//For rotating
-	private float x;
-	private float y;
-	private Vector3 rotateValue;
-
-	void Update () 
-	{
+	void Update() {
 		// Get the right mouse button
 		if(Input.GetMouseButtonDown(1))
-		{
-			isRotating = true;
-		}
-
-		// Get the middle mouse button
-		if(Input.GetMouseButtonDown(2))
 		{
 			isPanning = true;
 		}
 
 		// Disable movements on button release
 		if (!Input.GetMouseButton(1)) {
-			isRotating = false;
-		}
-		if (!Input.GetMouseButton(2)) {
 			isPanning = false;
 			oldLocation = new Vector3(-1, -1, -1);
 			newLocation = new Vector3(-1, -1, -1);
 		}
 
-		// Rotate camera along X and Y axis
-		if (isRotating && !isPanning)
-		{
-			x = Input.GetAxis("Mouse X");
-			y = Input.GetAxis("Mouse Y");
-			rotateValue = new Vector3(y, x * -1, 0); //Create the rotation vector
-			transform.eulerAngles = transform.eulerAngles - (rotateValue * rotateSpeed); //Adjust for rotating speed
-			//This chunk of code restrict the rotation angles in the LEFT/RIGHT directions
-			float newRotY = transform.eulerAngles.y;
-			if (transform.eulerAngles.y > 50 && transform.eulerAngles.y < 310) { // If the y is outside of the allowed range
-				//If it's closer to 310 than it is to 50
-				if (Mathf.Abs (310 - transform.eulerAngles.y) < Mathf.Abs (50 - transform.eulerAngles.y)) {
-					newRotY = 310;
-				} else { //Else, it's closer to 50 than 310
-					newRotY = 50;
-				}
-			}
-			//This chunk of code restricts the rotation angles in the UP/DOWN directions
-			float newRotX = Mathf.Clamp(transform.eulerAngles.x, 20, 80);
-			//Set the new rotation, res
-			transform.eulerAngles = new Vector3(newRotX, newRotY, transform.eulerAngles.z); //Clamp the rotational x value range
-		}
-
 		// Pan the camera on its XZ plane
-		if (isPanning && !isRotating)
+		if (isPanning)
 		{
 			//Update the mouse location from one frame ago.
 			oldLocation = newLocation;
