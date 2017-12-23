@@ -26,7 +26,7 @@ public class MapCreation : MonoBehaviour {
 		createMap();
 
 		//Center the camera
-		Camera.main.transform.Translate(new Vector3(12 * MapCreation.scale, 2 * MapCreation.scale, 2 * MapCreation.scale), Space.World);
+		Camera.main.transform.Translate(new Vector3(12 * MapCreation.scale, 2 * MapCreation.scale, 5 * MapCreation.scale), Space.World);
 	}
 
 	private void createMap()
@@ -82,7 +82,7 @@ public class MapCreation : MonoBehaviour {
 			foreach (Factions.name fac in Enum.GetValues((typeof(Factions.name)))) {
 				if (DefaultFactionLocations.FACTION_LOCATIONS[fac].Equals (go.GetComponent<Hex>().getCoordinates ())) {
 					go.GetComponent<Hex>().setFaction (fac);
-					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white; //Debug thingy
 				}
 			}
 		}
@@ -93,18 +93,19 @@ public class MapCreation : MonoBehaviour {
 			for(int loc = 1; loc <= NUM_RANDOM_LOCATIONS; loc++){
 				if (DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[loc].Equals(go.GetComponentInChildren<Hex>().getCoordinates ())) {
 					go.GetComponent<Hex>().setRandomLocation(loc);
-					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan;
+					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan; //Debug thingy
 					break;
 				}
 			}
 		}
 
 		//Set the start color of the hex
-		go.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
-		go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+		//go.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+		go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.gray;
 
 		//Set the texture of the hex
 		string fileName = "Hexes/Hex_" + x.ToString() + "_" + y.ToString();
-		go.GetComponentInChildren<Renderer>().material.mainTexture = Resources.Load(fileName) as Texture;
+		Texture2D loadTex = Resources.Load (fileName) as Texture2D;
+		go.GetComponentInChildren<Renderer> ().material.mainTexture = loadTex;
 	}
 }
