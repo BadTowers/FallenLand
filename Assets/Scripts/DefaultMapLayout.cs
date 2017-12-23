@@ -237,7 +237,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 		// (2, 19)
 		arrayOfHexes[2, 19] = new Dictionary<hexType, bool> () {
-			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (2, 20)
