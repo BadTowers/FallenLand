@@ -940,8 +940,6 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
-		// (9, 21)
-		setHexOutOfMapBounds(9, 21);
 		// (9, 22)
 		setHexOutOfMapBounds(9, 22);
 
