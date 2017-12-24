@@ -107,7 +107,7 @@ public class MouseManager : MonoBehaviour {
 			toReturn.Append ("Plains" + Environment.NewLine);
 		}
 		if (hex.isRandomLocation ()) {
-			toReturn.Append("Random: ");
+			toReturn.Append("R: ");
 			toReturn.Append(hex.getRandomLocation());
 			toReturn.Append (Environment.NewLine);
 		}
@@ -115,7 +115,7 @@ public class MouseManager : MonoBehaviour {
 			toReturn.Append ("Resource" + Environment.NewLine);
 		}
 		if(hex.isFactionBase()){
-			toReturn.Append("Faction: ");
+			toReturn.Append("F: ");
 			toReturn.Append(hex.getFaction());
 			toReturn.Append(Environment.NewLine);
 		}
