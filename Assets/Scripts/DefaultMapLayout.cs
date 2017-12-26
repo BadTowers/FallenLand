@@ -2569,7 +2569,10 @@ public class DefaultMapLayout : MapLayout {
 		// (25, 16)
 		setHexOutOfMapBounds(25, 16);
 		// (25, 17)
-		setHexOutOfMapBounds(25, 17);
+		arrayOfHexes[25, 17] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, true}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (25, 18)
 		arrayOfHexes[25, 18] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, true}, 
@@ -3098,7 +3101,10 @@ public class DefaultMapLayout : MapLayout {
 		// (32, 15)
 		setHexOutOfMapBounds(32, 15);
 		// (32, 16)
-		setHexOutOfMapBounds(32, 16);
+		arrayOfHexes[32, 16] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, true}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (32, 17)
 		setHexOutOfMapBounds(32, 17);
 		// (32, 18)

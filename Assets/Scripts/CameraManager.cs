@@ -60,7 +60,7 @@ public class CameraManager : MonoBehaviour
 			transform.position = new Vector3 (newPanX, transform.position.y, newPanZ);
 		}
 
-		// Zoom via scrollwheel TODO: Add zoom out and zoom in limits
+		// Zoom via scrollwheel
 		if (Input.GetAxis("Mouse ScrollWheel") > 0) {
 			//GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y - .3f, transform.position.z + .2f);
 			ZoomIn();
