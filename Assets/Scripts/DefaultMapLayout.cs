@@ -2390,10 +2390,7 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (23, 19)
-		arrayOfHexes[23, 19] = new Dictionary<hexType, bool> () {
-			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
-			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
-		};
+		setHexOutOfMapBounds(23, 19);
 		// (23, 20)
 		setHexOutOfMapBounds(23, 20);
 		// (23, 21)
