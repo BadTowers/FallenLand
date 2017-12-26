@@ -273,8 +273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panSpeed: 0.6
   zoomSpeed: 4
-  minZoomFOV: 55
-  maxZoomFOV: 95
+  minZoom: 10
+  maxZoom: 52
 --- !u!1 &416579924
 GameObject:
   m_ObjectHideFlags: 0

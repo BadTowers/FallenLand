@@ -8,13 +8,18 @@ public class CameraManager : MonoBehaviour
 {
 	public float panSpeed;		// Speed of the camera when being panned
 	public float zoomSpeed;		// Speed of the camera going back and forth
-	public float minZoomFOV;
-	public float maxZoomFOV;
+	public float minZoom;
+	public float maxZoom;
 	private bool isPanning = false;		// Is the camera being panned?
 
 	//For panning
 	private Vector3 oldLocation = new Vector3(-1, -1, -1);
 	private Vector3 newLocation = new Vector3 (-1, -1, -1);
+
+	void Start(){
+		//Center the camera
+		Camera.main.transform.position = new Vector3(12 * MapCreation.scale, minZoom, 5 * MapCreation.scale);
+	}
 
 	void Update() {
 		// Get the right mouse button
@@ -73,19 +78,21 @@ public class CameraManager : MonoBehaviour
 
 	private void ZoomIn()
 	{
-		Camera.main.fieldOfView -= zoomSpeed;
-		if (Camera.main.fieldOfView < minZoomFOV)
+		float newY = Camera.main.transform.position.y - zoomSpeed;
+		if (newY < minZoom)
 		{
-			Camera.main.fieldOfView = minZoomFOV;
+			newY = minZoom;
 		}
+		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
 	}
 
 	private void ZoomOut()
 	{
-		Camera.main.fieldOfView += zoomSpeed;
-		if (Camera.main.fieldOfView > maxZoomFOV)
+		float newY = zoomSpeed + Camera.main.transform.position.y;
+		if (newY > maxZoom)
 		{
-			Camera.main.fieldOfView = maxZoomFOV;
+			newY = maxZoom;
 		}
+		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
 	}
 }

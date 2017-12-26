@@ -24,9 +24,6 @@ public class MapCreation : MonoBehaviour {
 
 		//Assign the hexes their properties
 		createMap();
-
-		//Center the camera
-		Camera.main.transform.Translate(new Vector3(12 * MapCreation.scale, 2 * MapCreation.scale, 5 * MapCreation.scale), Space.World);
 	}
 
 	private void createMap()
