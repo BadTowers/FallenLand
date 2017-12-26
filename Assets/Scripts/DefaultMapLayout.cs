@@ -1041,7 +1041,10 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (10, 21)
-		setHexOutOfMapBounds(10, 21);
+		arrayOfHexes[10, 21] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (10, 22)
 		setHexOutOfMapBounds(10, 22);
 
@@ -1987,7 +1990,10 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (19, 20)
-		setHexOutOfMapBounds(19, 20);
+		arrayOfHexes[19, 20] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (19, 21)
 		setHexOutOfMapBounds(19, 21);
 		// (19, 22)
@@ -2287,7 +2293,10 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (22, 20)
-		setHexOutOfMapBounds(22, 20);
+		arrayOfHexes[22, 20] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, true}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (22, 21)
 		setHexOutOfMapBounds(22, 21);
 		// (22, 22)

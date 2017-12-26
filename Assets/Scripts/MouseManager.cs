@@ -119,6 +119,9 @@ public class MouseManager : MonoBehaviour {
 			toReturn.Append(hex.getFaction());
 			toReturn.Append(Environment.NewLine);
 		}
+		if (hex.isWater ()) {
+			toReturn.Append ("Water" + Environment.NewLine);
+		}
 
 		return toReturn.ToString ();
 	}
