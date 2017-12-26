@@ -54,7 +54,7 @@ public class CameraManager : MonoBehaviour
 			//Ensure we are still in the the map bounds
 			float newPanX = transform.position.x;
 			float newPanZ = transform.position.z;
-			newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.scale, 25 * MapCreation.scale);
+			newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.scale, 27 * MapCreation.scale);
 			newPanZ = Mathf.Clamp(newPanZ, -1 * MapCreation.scale, 16 * MapCreation.scale);
 			//Update the camera if we went over the bounds
 			transform.position = new Vector3 (newPanX, transform.position.y, newPanZ);
