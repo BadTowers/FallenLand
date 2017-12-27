@@ -86,7 +86,10 @@ public class DefaultMapLayout : MapLayout {
 		// (1, 8)
 		setHexOutOfMapBounds(x, y++);
 		// (1, 9)
-		setHexOutOfMapBounds(x, y++);
+		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (1, 10)
 		setHexOutOfMapBounds(x, y++);
 		// (1, 11)
