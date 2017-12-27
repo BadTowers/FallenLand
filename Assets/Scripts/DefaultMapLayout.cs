@@ -3006,7 +3006,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 		// (30, 10)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
-			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, true}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (30, 11)
