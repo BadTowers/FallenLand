@@ -5,7 +5,7 @@ public static class DefaultFactionLocations {
 
 	public static Dictionary<Factions.name, Coordinates> FACTION_LOCATIONS = new Dictionary<Factions.name, Coordinates>()
 	{
-		{Factions.name.COALITION, new Coordinates(14,18)},
+		{Factions.name.COALITION, new Coordinates(19,13)},
 		{Factions.name.ENCLAVE, new Coordinates(10,20)},
 		{Factions.name.SYNDICATE, new Coordinates(4,15)},
 		{Factions.name.SWAMP_RUNNERS, new Coordinates(20,4)},
