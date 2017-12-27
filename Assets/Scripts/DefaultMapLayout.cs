@@ -44,7 +44,10 @@ public class DefaultMapLayout : MapLayout {
 		// (0, 14)
 		setHexOutOfMapBounds(x, y++);
 		// (0, 15)
-		setHexOutOfMapBounds(x, y++);
+		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (0, 16)
 		setHexOutOfMapBounds(x, y++);
 		// (0, 17)
@@ -62,7 +65,7 @@ public class DefaultMapLayout : MapLayout {
 
 
 		/**************** COLUMN 1 ****************/
-		x = 1;
+		x++;
 		y = 0;
 		// (1, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -130,7 +133,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 2 ****************/
-		x = 2;
+		x++;
 		y = 0;
 		// (2, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -216,7 +219,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 3 ****************/
-		x = 3;
+		x++;
 		y = 0;
 		// (3, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -314,7 +317,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 
 		/**************** COLUMN 4 ****************/
-		x = 4;
+		x++;
 		y = 0;
 		// (4, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -412,7 +415,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 
 		/**************** COLUMN 5 ****************/
-		x = 5;
+		x++;
 		y = 0;
 		// (5, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -510,7 +513,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 
 		/**************** COLUMN 6 ****************/
-		x = 6;
+		x++;
 		y = 0;
 		// (6, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -611,7 +614,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 
 		/**************** COLUMN 7 ****************/
-		x = 7;
+		x++;
 		y = 0;
 		// (7, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -712,7 +715,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 8 ****************/
-		x = 8;
+		x++;
 		y = 0;
 		// (8, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -813,7 +816,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 9 ****************/
-		x = 9;
+		x++;
 		y = 0;
 		// (9, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -914,7 +917,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 10 ****************/
-		x = 10;
+		x++;
 		y = 0;
 		// (10, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1015,7 +1018,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 11 ****************/
-		x = 11;
+		x++;
 		y = 0;
 		// (11, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1122,7 +1125,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 12 ****************/
-		x = 12;
+		x++;
 		y = 0;
 		// (12, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1229,7 +1232,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 13 ****************/
-		x = 13;
+		x++;
 		y = 0;
 		// (13, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1333,7 +1336,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 14 ****************/
-		x = 14;
+		x++;
 		y = 0;
 		// (14, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1443,7 +1446,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 15 ****************/
-		x = 15;
+		x++;
 		y = 0;
 		// (15, 0)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
@@ -1556,7 +1559,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 16 ****************/
-		x = 16;
+		x++;
 		y = 0;
 		// (16, 0)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
@@ -1669,7 +1672,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 17 ****************/
-		x = 17;
+		x++;
 		y = 0;
 		// (17, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1776,7 +1779,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 18 ****************/
-		x = 18;
+		x++;
 		y = 0;
 		// (18, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1886,7 +1889,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 19 ****************/
-		x = 19;
+		x++;
 		y = 0;
 		// (19, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -1990,7 +1993,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 20 ****************/
-		x = 20;
+		x++;
 		y = 0;
 		// (20, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2094,7 +2097,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 21 ****************/
-		x = 21;
+		x++;
 		y = 0;
 		// (21, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2198,7 +2201,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 22 ****************/
-		x = 22;
+		x++;
 		y = 0;
 		// (22, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2302,7 +2305,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 23 ****************/
-		x = 23;
+		x++;
 		y = 0;
 		// (23, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2403,7 +2406,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 24 ****************/
-		x = 24;
+		x++;
 		y = 0;
 		// (24, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2498,7 +2501,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 25 ****************/
-		x = 25;
+		x++;
 		y = 0;
 		// (25, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2593,7 +2596,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 26 ****************/
-		x = 26;
+		x++;
 		y = 0;
 		// (26, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2691,7 +2694,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 27 ****************/
-		x = 27;
+		x++;
 		y = 0;
 		// (27, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -2792,7 +2795,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 28 ****************/
-		x = 28;
+		x++;
 		y = 0;
 		// (28, 0)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
@@ -2887,7 +2890,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 29 ****************/
-		x = 29;
+		x++;
 		y = 0;
 		// (29, 0)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
@@ -2976,7 +2979,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 30 ****************/
-		x = 30;
+		x++;
 		y = 0;
 		// (30, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -3050,7 +3053,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 31 ****************/
-		x = 31;
+		x++;
 		y = 0;
 		// (31, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -3118,7 +3121,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 32 ****************/
-		x = 32;
+		x++;
 		y = 0;
 		// (32, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -3183,7 +3186,7 @@ public class DefaultMapLayout : MapLayout {
 		setHexOutOfMapBounds(x, y++);
 
 		/**************** COLUMN 33 ****************/
-		x = 33;
+		x++;
 		y = 0;
 		// (33, 0)
 		setHexOutOfMapBounds(x, y++);

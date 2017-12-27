@@ -50,7 +50,6 @@ public class MapCreation : MonoBehaviour {
 
 				//Store the hex
 				mapOfHexes[LR, UD] = curHex;
-				Debug.Log (LR.ToString() + " " + UD.ToString ());
 			}
 		}
 	}
