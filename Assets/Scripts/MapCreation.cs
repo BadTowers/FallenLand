@@ -7,7 +7,7 @@ public class MapCreation : MonoBehaviour {
 
 	public GameObject hexTilePrefab;
 	public const int height = 23;
-	public const int width = 33;
+	public const int width = 34;
 	public const int scale = 3;
 	private const float LROffset = .860f * scale;
 	private const float UDOffset = .740f * scale;
@@ -50,6 +50,7 @@ public class MapCreation : MonoBehaviour {
 
 				//Store the hex
 				mapOfHexes[LR, UD] = curHex;
+				Debug.Log (LR.ToString() + " " + UD.ToString ());
 			}
 		}
 	}
