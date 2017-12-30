@@ -10,8 +10,10 @@ public class DefaultMapLayout : MapLayout {
 		
 	public override void InitializeMapOfHexes()
 	{
+		int x = -1;
+
 		/**************** COLUMN 0 ****************/
-		int x = 0;
+		x++;
 		int y = 0;
 		// (0, 0)
 		setHexOutOfMapBounds(x, y++);
@@ -215,14 +217,20 @@ public class DefaultMapLayout : MapLayout {
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (2, 20)
-		setHexOutOfMapBounds(x, y++);
+		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (2, 21)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (2, 22)
-		setHexOutOfMapBounds(x, y++);
+		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 
 		/**************** COLUMN 3 ****************/
 		x++;
