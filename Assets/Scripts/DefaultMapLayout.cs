@@ -1475,7 +1475,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 		// (15, 1)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
-			{hexType.CITY, false}, {hexType.RAD, false}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (15, 2)
@@ -2124,7 +2124,10 @@ public class DefaultMapLayout : MapLayout {
 		// (21, 1)
 		setHexOutOfMapBounds(x, y++);
 		// (21, 2)
-		setHexOutOfMapBounds(x, y++);
+		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (21, 3)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
@@ -2228,7 +2231,10 @@ public class DefaultMapLayout : MapLayout {
 		// (22, 1)
 		setHexOutOfMapBounds(x, y++);
 		// (22, 2)
-		setHexOutOfMapBounds(x, y++);
+		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
+			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
+			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
+		};
 		// (22, 3)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
 			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, false}, {hexType.WATER, false}, 
@@ -2830,7 +2836,7 @@ public class DefaultMapLayout : MapLayout {
 		};
 		// (28, 1)
 		arrayOfHexes[x, y++] = new Dictionary<hexType, bool> () {
-			{hexType.CITY, false}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
+			{hexType.CITY, true}, {hexType.RAD, true}, {hexType.MOUNTAIN, false}, {hexType.PLAINS, true}, {hexType.WATER, false}, 
 			{hexType.BASE, false}, {hexType.RAND_LOC, false}, {hexType.RESOURCE, false}, {hexType.VALID, true}
 		};
 		// (28, 2)
