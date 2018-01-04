@@ -1,0 +1,14 @@
+
+
+		GameObject card = (GameObject)Instantiate (cardPrefab, new Vector3 (0, 0, 0), Quaternion.identity); //Create hexTile, at given vector, with no rotation
+		string fileName = "Cards/ActionCards/ActionCardFront0";
+		Texture2D front = Resources.Load(fileName) as Texture2D;
+		fileName = "Cards/ActionCards/ActionCardBack";
+		Texture2D back = Resources.Load(fileName) as Texture2D;MeshRenderer mr;
+		//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
+		card.transform.Find("Front").GetComponentInChildren<Renderer>().material.mainTexture = front;
+		card.transform.Find("Back").GetComponentInChildren<Renderer>().material.mainTexture = back;
+		card.transform.Find("Bottom").GetComponentInChildren<Renderer>().material.color = Color.black;
+		card.transform.Find("Left").GetComponentInChildren<Renderer>().material.color = Color.black;
+		card.transform.Find("Right").GetComponentInChildren<Renderer>().material.color = Color.black;
+		card.transform.Find("Top").GetComponentInChildren<Renderer>().material.color = Color.black;
