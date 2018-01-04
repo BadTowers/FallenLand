@@ -70,20 +70,24 @@ public class UIManager : MonoBehaviour {
 	// When new game button is pressed
 	public void onNewGame(){
 		Debug.Log ("New game");
+		currentState = MenuStates.NewGame;
 	}
 
 	// When continue game button is pressed
 	public void onContinueGame() {
+		currentState = MenuStates.ContinueGame;
 		Debug.Log ("Continue game");
 	}
 
 	// When options button is pressed
 	public void onOptions() {
+		currentState = MenuStates.Options;
 		Debug.Log ("Options");
 	}
 
 	// When multiplayer button is pressed
 	public void onMultiplayer() {
+		currentState = MenuStates.MultiplayerGame;
 		Debug.Log ("Multiplayer");
 	}
 
