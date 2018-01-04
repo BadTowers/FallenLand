@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4055243798344694}
   - component: {fileID: 65162564477751220}
   m_Layer: 0
-  m_Name: Cube 1
+  m_Name: CardUniqueMeshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
