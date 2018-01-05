@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
@@ -13,6 +14,21 @@ public class UIManager : MonoBehaviour {
 	public GameObject newGameMenu;
 	public GameObject continueGameMenu;
 	public GameObject multiplayerMenu;
+
+	public Image townPlayMatImage;
+
+	//For new game menu
+	private int curTownPlayMatNum;
+	private bool isFront;
+	private bool wasChanged;
+	public int numFactions;
+
+	void Start() {
+		curTownPlayMatNum = 1;
+		isFront = true;
+		wasChanged = true;
+		updateTownPlayMatDisplay();
+	}
 
 	//When script first starts
 	void Awake(){
@@ -30,11 +46,12 @@ public class UIManager : MonoBehaviour {
 				multiplayerMenu.SetActive(false);
 				break;
 			case MenuStates.NewGame:
-				mainMenu.SetActive(false);
-				optionsMenu.SetActive(false);
-				newGameMenu.SetActive(true);
-				continueGameMenu.SetActive(false);
-				multiplayerMenu.SetActive(false);
+				mainMenu.SetActive (false);
+				optionsMenu.SetActive (false);
+				newGameMenu.SetActive (true);
+				continueGameMenu.SetActive (false);
+				multiplayerMenu.SetActive (false);
+				if(wasChanged) updateTownPlayMatDisplay (); //Update which town play mat is currently displaying if changes were made
 				break;
 			case MenuStates.Options:
 				mainMenu.SetActive(false);
@@ -107,12 +124,32 @@ public class UIManager : MonoBehaviour {
 	 */
 	//When the previous town play mat arrow is pressed
 	public void onPreviousTPM(){
-		Debug.Log ("Previous TPM");
+		//Decrement the current mat number
+		if (curTownPlayMatNum == 1) {
+			curTownPlayMatNum = numFactions;
+		} else {
+			curTownPlayMatNum--;
+		}
+		isFront = true; //Show the front of the new card
+		wasChanged = true; //Mark that changes were made
 	}
 
 	//When the next town play mat arrow is pressed
 	public void onNextTPM() {
-		Debug.Log ("Next TPM");
+		//Increment the current mat number
+		if (curTownPlayMatNum == numFactions) {
+			curTownPlayMatNum = 1;
+		} else {
+			curTownPlayMatNum++;
+		}
+		isFront = true; //Show the front of the new card
+		wasChanged = true; //NMark that changes were made
+	}
+
+	//When flip card button is pressed
+	public void onFlip() {
+		isFront = !isFront; //Flip the state
+		wasChanged = true;
 	}
 
 
@@ -128,6 +165,26 @@ public class UIManager : MonoBehaviour {
 	// Used to load a scene by name TODO: Put inside helper function file?
 	private void asyncSceneLoad(string name){
 		SceneManager.LoadSceneAsync(name);
+	}
+
+	// Used to load in new town play mat and display it
+	public void updateTownPlayMatDisplay() {
+		//Form string for file name
+		string name = "TownPlayMats/TPM" + curTownPlayMatNum.ToString();
+		if (isFront) {
+			name += "Front";
+		} else {
+			name += "Back";
+		}
+
+		//Laod it
+		Sprite img = (Sprite)Resources.Load<Sprite>(name);
+
+		//Apply it
+		townPlayMatImage.sprite = img;
+
+		//No more changes to account for
+		wasChanged = false;
 	}
 }
 
