@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour {
 	public void onNewGame(){
 		Debug.Log ("New game");
 		currentState = MenuStates.NewGame;
-		asyncSceneLoad("GameScene");
+		//asyncSceneLoad("GameScene");
 	}
 
 	// When continue game button is pressed
