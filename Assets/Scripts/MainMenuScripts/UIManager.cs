@@ -67,6 +67,10 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
+
+	/*
+	 * MAIN MENU METHODS
+	 */
 	// When new game button is pressed
 	public void onNewGame(){
 		Debug.Log ("New game");
@@ -93,11 +97,33 @@ public class UIManager : MonoBehaviour {
 	}
 
 	// When quit button is pressed
-	public void OnQuit() {
+	public void onQuit() {
 		Debug.Log ("Quit");
 	}
 
 
+	/*
+	 * NEW GAME METHODS
+	 */
+	//When the previous town play mat arrow is pressed
+	public void onPreviousTPM(){
+		Debug.Log ("Previous TPM");
+	}
+
+	//When the next town play mat arrow is pressed
+	public void onNextTPM() {
+		Debug.Log ("Next TPM");
+	}
+
+
+
+	/*
+	 * UNIVERSAL METHODS
+	 */
+	//When the back button is pressed
+	public void onBack(){
+		currentState = MenuStates.Main;
+	}
 
 	// Used to load a scene by name TODO: Put inside helper function file?
 	private void asyncSceneLoad(string name){
