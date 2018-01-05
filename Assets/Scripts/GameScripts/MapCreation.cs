@@ -22,6 +22,14 @@ public class MapCreation : MonoBehaviour {
 		//Can be changed to RandomMapLayout later if desired
 		ml = new DefaultMapLayout();
 
+		//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
+		GameObject newGameState = GameObject.Find("GameCreation");
+		/* TODO actually do something with this information */
+		//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode);
+		newGameState.GetComponent<GameCreation>().wasRead = true; //Mark as read so the game object can be deleted
+
+		//Debug.Log (newGameState.GetComponent("GameCreation").gameMode);
+
 		//Assign the hexes their properties
 		createMap();
 	}

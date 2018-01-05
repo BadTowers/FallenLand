@@ -71,6 +71,7 @@ public class UIManager : MonoBehaviour {
 	public void onNewGame(){
 		Debug.Log ("New game");
 		currentState = MenuStates.NewGame;
+		asyncSceneLoad("GameScene");
 	}
 
 	// When continue game button is pressed
@@ -101,6 +102,7 @@ public class UIManager : MonoBehaviour {
 	// Used to load a scene by name TODO: Put inside helper function file?
 	private void asyncSceneLoad(string name){
 		SceneManager.LoadSceneAsync(name);
+		DontDestroyOnLoad(transform.gameObject);
 	}
 }
 
