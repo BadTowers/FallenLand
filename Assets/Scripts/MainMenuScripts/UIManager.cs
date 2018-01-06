@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject multiplayerMenu;
 
 	public Image townPlayMatImage;
+	public Image townMapImage;
 
 	//For new game menu
 	private int curTownPlayMatNum;
@@ -169,7 +170,7 @@ public class UIManager : MonoBehaviour {
 
 	// Used to load in new town play mat and display it
 	public void updateTownPlayMatDisplay() {
-		//Form string for file name
+		//Form string for play mat name
 		string name = "TownPlayMats/TPM" + curTownPlayMatNum.ToString();
 		if (isFront) {
 			name += "Front";
@@ -177,11 +178,20 @@ public class UIManager : MonoBehaviour {
 			name += "Back";
 		}
 
-		//Laod it
+		//Load it
 		Sprite img = (Sprite)Resources.Load<Sprite>(name);
 
 		//Apply it
 		townPlayMatImage.sprite = img;
+
+		//Form string for map image
+		name = "FactionMapLocations/Map" + curTownPlayMatNum.ToString();
+
+		//Load it
+		img = (Sprite)Resources.Load<Sprite>(name);
+
+		//Apply it
+		townMapImage.sprite = img;
 
 		//No more changes to account for
 		wasChanged = false;
