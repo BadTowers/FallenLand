@@ -466,9 +466,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '1) During the TOWN EVENTS PHASE, you must roll 1d6. 1-3: receive 5 salvage
-    coins from the bank. 6: you must disvard 7 salvage coins or its equivilent value
-    in spoils cards'
+  m_Text: 1) asdf asd fasdf asdfasdfaisdrj;klasd;ausdklaj sdkltj ;klasjdflka;sudfklan34l5j;
+    asdklfjas dfa;sdlkfjasdkl;fjas dfasjd;fasdf
 --- !u!222 &171860655
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2811,7 +2810,15 @@ MonoBehaviour:
   townLogoImage: {fileID: 656381214}
   townSymbolImage: {fileID: 1910327465}
   townMapImage: {fileID: 0}
+  townTech1Image: {fileID: 1228271173}
+  townTech2Image: {fileID: 1099610950}
   numFactions: 10
+  townNameAndLocation: {fileID: 1825569859}
+  specificPerk1Text: {fileID: 171860654}
+  specificPerk2Text: {fileID: 362277231}
+  specificPerk3Text: {fileID: 715938232}
+  specificPerk4Text: {fileID: 676917136}
+  loreText: {fileID: 1694082733}
 --- !u!4 &1125402274
 Transform:
   m_ObjectHideFlags: 0
@@ -4258,7 +4265,7 @@ GameObject:
   - component: {fileID: 1694082734}
   - component: {fileID: 1694082733}
   m_Layer: 5
-  m_Name: Text
+  m_Name: LoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4652,7 +4659,7 @@ GameObject:
   - component: {fileID: 1825569860}
   - component: {fileID: 1825569859}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TownInfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,7 +15,7 @@ public class Factions {
 		NULL
 	}
 
-	string getName(Factions.name faction)
+	public static string getName(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -45,7 +45,7 @@ public class Factions {
 		}
 	}
 
-	Factions.name getFaction(int num){
+	public static Factions.name getFaction(int num){
 		switch (num) {
 		case 1:
 			return name.COALITION;
@@ -72,7 +72,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk1Title(Factions.name faction)
+	public static string getPerk1Title(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -102,7 +102,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk1Text(Factions.name faction)
+	public static string getPerk1Text(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -132,7 +132,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk2Title(Factions.name faction)
+	public static string getPerk2Title(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -162,7 +162,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk2Text(Factions.name faction)
+	public static string getPerk2Text(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -192,7 +192,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk3Title(Factions.name faction)
+	public static string getPerk3Title(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -222,7 +222,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk3Text(Factions.name faction)
+	public static string getPerk3Text(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -252,7 +252,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk4Title(Factions.name faction)
+	public static string getPerk4Title(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -282,7 +282,7 @@ public class Factions {
 		}
 	}
 
-	string getPerk4Text(Factions.name faction)
+	public static string getPerk4Text(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -312,7 +312,7 @@ public class Factions {
 		}
 	}
 
-	string getStartingLocation(Factions.name faction)
+	public static string getStartingLocation(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -343,7 +343,7 @@ public class Factions {
 	}
 
 	//TODO
-	string getLore(Factions.name faction)
+	public static string getLore(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -376,7 +376,7 @@ public class Factions {
 	}
 
 	//TODO
-	string getTownTech1(Factions.name faction)
+	public static string getTownTech1(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
@@ -407,7 +407,7 @@ public class Factions {
 	}
 
 	//TODO
-	string getTownTech2(Factions.name faction)
+	public static string getTownTech2(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:

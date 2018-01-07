@@ -9,25 +9,34 @@ public class UIManager : MonoBehaviour {
 	public enum MenuStates {Main, Options, NewGame, ContinueGame, MultiplayerGame};
 	public MenuStates currentState;
 
+	//Menu game objects
 	public GameObject mainMenu;
 	public GameObject optionsMenu;
 	public GameObject newGameMenu;
 	public GameObject continueGameMenu;
 	public GameObject multiplayerMenu;
 
+	//List of all menu game objects
+	private List<GameObject> menus;
+
+	//For new game
 	public Image townLogoImage;
 	public Image townSymbolImage;
 	public Image townMapImage;
-
-	private List<GameObject> menus;
-
-	//For new game menu
-	private int curFactionNum;
-	private bool wasChanged;
+	public Image townTech1Image;
+	public Image townTech2Image;
 	public int numFactions;
+	public Text townNameAndLocation;
+	public Text specificPerk1Text;
+	public Text specificPerk2Text;
+	public Text specificPerk3Text;
+	public Text specificPerk4Text;
+	public Text loreText;
 	public const string FACTION_MAP_LOCATION_URI = "Factions/FactionMapLocations/";
 	public const string FACTION_IMAGE_URI = "Factions/FactionImage/";
 	public const string FACTION_SYMBOL_URI = "Factions/FactionSymbols/";
+	private int curFactionNum;
+	private bool wasChanged;
 
 	void Start() {
 		//Initialize default values
@@ -191,6 +200,44 @@ public class UIManager : MonoBehaviour {
 			townMapImage.sprite = img;
 		} else {
 			Debug.Log ("Town map image container not set");
+		}
+
+		Factions.name curFac = Factions.getFaction(curFactionNum);
+
+		//Set up town name and location
+		if (townNameAndLocation != null) {
+			townNameAndLocation.text = Factions.getName(curFac) + "\n" + Factions.getStartingLocation(curFac);
+		} else {
+			Debug.Log("Town name and location container not set");
+		}
+
+		//Set up the perk texts
+		if (specificPerk1Text != null) {
+			specificPerk1Text.text = Factions.getPerk1Title(curFac) + ": " + Factions.getPerk1Text(curFac);
+		} else {
+			Debug.Log("Perk 1 text container not set");
+		}
+		if (specificPerk2Text != null) {
+			specificPerk2Text.text = Factions.getPerk2Title(curFac) + ": " + Factions.getPerk2Text(curFac);
+		} else {
+			Debug.Log("Perk 2 text container not set");
+		}
+		if (specificPerk3Text != null) {
+			specificPerk3Text.text = Factions.getPerk3Title(curFac) + ": " + Factions.getPerk3Text(curFac);
+		} else {
+			Debug.Log("Perk 3 text container not set");
+		}
+		if (specificPerk4Text != null) {
+			specificPerk4Text.text = Factions.getPerk4Title(curFac) + ": " + Factions.getPerk4Text(curFac);
+		} else {
+			Debug.Log("Perk 4 text container not set");
+		}
+
+		//Set up town lore
+		if (loreText != null) {
+			loreText.text = Factions.getLore(curFac);
+		} else {
+			Debug.Log("Lore text container not set");
 		}
 
 		//No more changes to account for
