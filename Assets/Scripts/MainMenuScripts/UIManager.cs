@@ -147,12 +147,6 @@ public class UIManager : MonoBehaviour {
 		wasChanged = true; //NMark that changes were made
 	}
 
-	//When flip card button is pressed
-	public void onFlip() {
-		isFront = !isFront; //Flip the state
-		wasChanged = true;
-	}
-
 
 
 	/*
@@ -170,6 +164,10 @@ public class UIManager : MonoBehaviour {
 
 	// Used to load in new town play mat and display it
 	public void updateTownPlayMatDisplay() {
+		//TODO redo for new menu
+		wasChanged = false;
+
+		/*
 		//Form string for play mat name
 		string name = "TownPlayMats/TPM" + curTownPlayMatNum.ToString();
 		if (isFront) {
@@ -195,6 +193,7 @@ public class UIManager : MonoBehaviour {
 
 		//No more changes to account for
 		wasChanged = false;
+		*/
 	}
 }
 
