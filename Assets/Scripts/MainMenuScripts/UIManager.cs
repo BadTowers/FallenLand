@@ -15,20 +15,35 @@ public class UIManager : MonoBehaviour {
 	public GameObject continueGameMenu;
 	public GameObject multiplayerMenu;
 
-	public Image townPlayMatImage;
+	public Image townLogoImage;
+	public Image townSymbolImage;
 	public Image townMapImage;
 
+	private List<GameObject> menus;
+
 	//For new game menu
-	private int curTownPlayMatNum;
-	private bool isFront;
+	private int curFactionNum;
 	private bool wasChanged;
 	public int numFactions;
+	public const string FACTION_MAP_LOCATION_URI = "Factions/FactionMapLocations/";
+	public const string FACTION_IMAGE_URI = "Factions/FactionImage/";
+	public const string FACTION_SYMBOL_URI = "Factions/FactionSymbols/";
 
 	void Start() {
-		curTownPlayMatNum = 1;
-		isFront = true;
+		//Initialize default values
+		curFactionNum = 1;
 		wasChanged = true;
-		updateTownPlayMatDisplay();
+		menus = new List<GameObject>();
+
+		//Add all of the menu game objects to the array list
+		menus.Add(mainMenu);
+		menus.Add(optionsMenu);
+		menus.Add(newGameMenu);
+		menus.Add(continueGameMenu);
+		menus.Add(multiplayerMenu);
+
+		//Set the display up
+		updateFactionDisplay();
 	}
 
 	//When script first starts
@@ -40,48 +55,34 @@ public class UIManager : MonoBehaviour {
 		//Checks current menu state
 		switch (currentState) {
 			case MenuStates.Main:
-				mainMenu.SetActive(true);
-				optionsMenu.SetActive(false);
-				newGameMenu.SetActive(false);
-				continueGameMenu.SetActive(false);
-				multiplayerMenu.SetActive(false);
+				setActiveMenu(mainMenu);
 				break;
 			case MenuStates.NewGame:
-				mainMenu.SetActive (false);
-				optionsMenu.SetActive (false);
-				newGameMenu.SetActive (true);
-				continueGameMenu.SetActive (false);
-				multiplayerMenu.SetActive (false);
-				if(wasChanged) updateTownPlayMatDisplay (); //Update which town play mat is currently displaying if changes were made
+				setActiveMenu(newGameMenu);
+				if(wasChanged) updateFactionDisplay (); //Update which town play mat is currently displaying if changes were made
 				break;
 			case MenuStates.Options:
-				mainMenu.SetActive(false);
-				optionsMenu.SetActive(true);
-				newGameMenu.SetActive(false);
-				continueGameMenu.SetActive(false);
-				multiplayerMenu.SetActive(false);
+				setActiveMenu(optionsMenu);
 				break;
 			case MenuStates.ContinueGame:
-				mainMenu.SetActive(false);
-				optionsMenu.SetActive(false);
-				newGameMenu.SetActive(false);
-				continueGameMenu.SetActive(true);
-				multiplayerMenu.SetActive(false);
+				setActiveMenu(continueGameMenu);
 				break;
 			case MenuStates.MultiplayerGame:
-				mainMenu.SetActive(false);
-				optionsMenu.SetActive(false);
-				newGameMenu.SetActive(false);
-				continueGameMenu.SetActive(false);
-				multiplayerMenu.SetActive(true);
+				setActiveMenu(multiplayerMenu);
 				break;
 			default:
 				//Default will be to show the main menu in case of error
-				mainMenu.SetActive(true);
-				optionsMenu.SetActive(false);
-				newGameMenu.SetActive(false);
-				continueGameMenu.SetActive(false);
+				setActiveMenu(mainMenu);
 				break;
+		}
+	}
+
+	private void setActiveMenu(GameObject go) {
+		go.SetActive(true);
+		foreach (GameObject other in menus) {
+			if (!other.Equals(go)) {
+				other.SetActive (false);
+			}
 		}
 	}
 
@@ -124,26 +125,24 @@ public class UIManager : MonoBehaviour {
 	 * NEW GAME METHODS
 	 */
 	//When the previous town play mat arrow is pressed
-	public void onPreviousTPM(){
+	public void onPrevious(){
 		//Decrement the current mat number
-		if (curTownPlayMatNum == 1) {
-			curTownPlayMatNum = numFactions;
+		if (curFactionNum == 1) {
+			curFactionNum = numFactions;
 		} else {
-			curTownPlayMatNum--;
+			curFactionNum--;
 		}
-		isFront = true; //Show the front of the new card
 		wasChanged = true; //Mark that changes were made
 	}
 
 	//When the next town play mat arrow is pressed
-	public void onNextTPM() {
+	public void onNext() {
 		//Increment the current mat number
-		if (curTownPlayMatNum == numFactions) {
-			curTownPlayMatNum = 1;
+		if (curFactionNum == numFactions) {
+			curFactionNum = 1;
 		} else {
-			curTownPlayMatNum++;
+			curFactionNum++;
 		}
-		isFront = true; //Show the front of the new card
 		wasChanged = true; //NMark that changes were made
 	}
 
@@ -162,38 +161,40 @@ public class UIManager : MonoBehaviour {
 		SceneManager.LoadSceneAsync(name);
 	}
 
-	// Used to load in new town play mat and display it
-	public void updateTownPlayMatDisplay() {
-		//TODO redo for new menu
-		wasChanged = false;
+	// Used to load in new faction and display it
+	public void updateFactionDisplay() {
+		//Load it
+		Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + curFactionNum.ToString());
 
-		/*
-		//Form string for play mat name
-		string name = "TownPlayMats/TPM" + curTownPlayMatNum.ToString();
-		if (isFront) {
-			name += "Front";
+		//Apply it
+		if (townLogoImage != null) {
+			townLogoImage.sprite = img;
 		} else {
-			name += "Back";
+			Debug.Log ("Town logo image container not set");
 		}
 
 		//Load it
-		Sprite img = (Sprite)Resources.Load<Sprite>(name);
+		img = (Sprite)Resources.Load<Sprite>(FACTION_SYMBOL_URI + "FactionSymbol" + curFactionNum.ToString());
 
 		//Apply it
-		townPlayMatImage.sprite = img;
-
-		//Form string for map image
-		name = "FactionMapLocations/Map" + curTownPlayMatNum.ToString();
+		if (townSymbolImage != null) {
+			townSymbolImage.sprite = img;
+		} else {
+			Debug.Log ("Town symbol image container not set");
+		}
 
 		//Load it
-		img = (Sprite)Resources.Load<Sprite>(name);
+		img = (Sprite)Resources.Load<Sprite>(FACTION_MAP_LOCATION_URI + "Map" + curFactionNum.ToString());
 
 		//Apply it
-		townMapImage.sprite = img;
+		if (townMapImage != null) {
+			townMapImage.sprite = img;
+		} else {
+			Debug.Log ("Town map image container not set");
+		}
 
 		//No more changes to account for
 		wasChanged = false;
-		*/
 	}
 }
 

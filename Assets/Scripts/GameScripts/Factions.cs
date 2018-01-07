@@ -45,6 +45,33 @@ public class Factions {
 		}
 	}
 
+	Factions.name getFaction(int num){
+		switch (num) {
+		case 1:
+			return name.COALITION;
+		case 2:
+			return name.ENCLAVE;
+		case 3:
+			return name.SYNDICATE;
+		case 4:
+			return name.SWAMP_RUNNERS;
+		case 5:
+			return name.NEW_FEDERALISTS;
+		case 6:
+			return name.REGULATORS;
+		case 7:
+			return name.HIGHWAYMEN;
+		case 8:
+			return name.BROTHERHOOD;
+		case 9:
+			return name.SONS_OF_NEPTUNE;
+		case 10:
+			return name.SIGMA;
+		default:
+			return name.NULL;
+		}
+	}
+
 	string getPerk1Title(Factions.name faction)
 	{
 		switch (faction) {
@@ -308,6 +335,39 @@ public class Factions {
 			return "Grand Haven, Michigan";
 		case name.SIGMA:
 			return "Emporium, Pennsylvania";
+		case name.NULL:
+			return "NULL";
+		default:
+			return "Error";
+		}
+	}
+
+	//TODO
+	string getLore(Factions.name faction)
+	{
+		switch (faction) {
+		case name.COALITION:
+			return "The residents of Iowa City panicked with the onset of the Great War, as many feared they would be targeted in the nuclear exchanged, because of defense contractors, hospitals, and colleges. However, the anticipated hammer stroke never fell. Even when Des Moines was dusted and the ashen fallout drift down like snow, Iowa City was again spared. But their luck eventually ran out.\n\n" +
+					"As a crossroads in the Midwest, the city was quickly inundated with fleeing refugees during the Maddening. Iowa City residents were thoroughly unprepared for the many horrors the outsiders brought with them, especially those afflicted by the biological weapons used during the war. Disease and starvation also struck hard, followed by rioting that destroyed the city east of the river. As chaos and desperation increased, so did the interest from robing bands of armed marauders, who staged a series of devastating raids. Out of options, a large group of survivors retreated into the ruinous hospital sprawl near the stadium. Working together, they fortified the buildings and created a new town--one they could defend. Once the area was secure, the survivors formed Coalition of the Black Angel. Throughout the Emergence, the town has continued to prosper. It now features both learning and medical centers and an intricate array of rooftop conservatories. It is also considered one of the last remaining intellectual bastions in the Fallen Lands.\n\n" +
+					"Led by the Grand Mayor, who is elected from a council of elites, Coalition of the Black Angel has made the preservation of pre-war knowledge a priority as they continue to expand and reclaim buildings. Priding themselves in maintaining strong diplomatic ties with the other factions, Coalition of the Black Angel is often at the foregront of the devision making within the Council of the Ten Towns. Frequently playing the role of peackeeper and brokering deals among the other Factions; they prefer to assert themselves through the use of soft power. While they are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.";
+		case name.ENCLAVE:
+			return "LORE\n\nLORE";
+		case name.SYNDICATE:
+			return "LORE\n\nLORE";
+		case name.SWAMP_RUNNERS:
+			return "LORE\n\nLORE";
+		case name.NEW_FEDERALISTS:
+			return "LORE\n\nLORE";
+		case name.REGULATORS:
+			return "LORE\n\nLORE";
+		case name.HIGHWAYMEN:
+			return "LORE\n\nLORE";
+		case name.BROTHERHOOD:
+			return "LORE\n\nLORE";
+		case name.SONS_OF_NEPTUNE:
+			return "LORE\n\nLORE";
+		case name.SIGMA:
+			return "LORE\n\nLORE";
 		case name.NULL:
 			return "NULL";
 		default:
