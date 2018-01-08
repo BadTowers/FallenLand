@@ -45,7 +45,7 @@ public class Factions {
 		}
 	}
 
-	public static Factions.name getFaction(int num){
+	public static Factions.name getFactionName(int num){
 		switch (num) {
 		case 1:
 			return name.COALITION;
@@ -69,6 +69,36 @@ public class Factions {
 			return name.SIGMA;
 		default:
 			return name.NULL;
+		}
+	}
+
+	public static int getFactionNumber(Factions.name faction)
+	{
+		switch (faction) {
+		case name.COALITION:
+			return 1;
+		case name.ENCLAVE:
+			return 2;
+		case name.SYNDICATE:
+			return 3;
+		case name.SWAMP_RUNNERS:
+			return 4;
+		case name.NEW_FEDERALISTS:
+			return 5;
+		case name.REGULATORS:
+			return 6;
+		case name.HIGHWAYMEN:
+			return 7;
+		case name.BROTHERHOOD:
+			return 8;
+		case name.SONS_OF_NEPTUNE:
+			return 9;
+		case name.SIGMA:
+			return 10;
+		case name.NULL:
+			return -1;
+		default:
+			return -1;
 		}
 	}
 
@@ -374,66 +404,64 @@ public class Factions {
 			return "Error";
 		}
 	}
-
-	//TODO
-	public static string getTownTech1(Factions.name faction)
+		
+	public static TownTechs.name getTownTech1(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
-			return "";
+			return TownTechs.name.MEDICAL_CENTER;
 		case name.ENCLAVE:
-			return "";
+			return TownTechs.name.ENERGY_PRODUCTION;
 		case name.SYNDICATE:
-			return "";
+			return TownTechs.name.ENERGY_PRODUCTION;
 		case name.SWAMP_RUNNERS:
-			return "";
+			return TownTechs.name.MEDICAL_CENTER;
 		case name.NEW_FEDERALISTS:
-			return "";
+			return TownTechs.name.GARRISON;
 		case name.REGULATORS:
-			return "";
+			return TownTechs.name.MACHINIST_SHOP;
 		case name.HIGHWAYMEN:
-			return " ";
+			return TownTechs.name.MACHINIST_SHOP;
 		case name.BROTHERHOOD:
-			return " ";
+			return TownTechs.name.ENERGY_PRODUCTION;
 		case name.SONS_OF_NEPTUNE:
-			return "";
+			return TownTechs.name.COMMUNICATION_CENTER;
 		case name.SIGMA:
-			return "";
+			return TownTechs.name.COMMUNICATION_CENTER;
 		case name.NULL:
-			return "NULL";
+			return TownTechs.name.NULL;
 		default:
-			return "Error";
+			return TownTechs.name.NULL;
 		}
 	}
-
-	//TODO
-	public static string getTownTech2(Factions.name faction)
+		
+	public static TownTechs.name getTownTech2(Factions.name faction)
 	{
 		switch (faction) {
 		case name.COALITION:
-			return "";
+			return TownTechs.name.LEARNING_CENTER;
 		case name.ENCLAVE:
-			return "";
+			return TownTechs.name.WATER_AND_SUPPLIES;
 		case name.SYNDICATE:
-			return "";
+			return TownTechs.name.MACHINIST_SHOP;
 		case name.SWAMP_RUNNERS:
-			return "";
+			return TownTechs.name.COMMUNICATION_CENTER;
 		case name.NEW_FEDERALISTS:
-			return "";
+			return TownTechs.name.LEARNING_CENTER;
 		case name.REGULATORS:
-			return "";
+			return TownTechs.name.WATER_AND_SUPPLIES;
 		case name.HIGHWAYMEN:
-			return " ";
+			return TownTechs.name.GARRISON;
 		case name.BROTHERHOOD:
-			return " ";
+			return TownTechs.name.WATER_AND_SUPPLIES;
 		case name.SONS_OF_NEPTUNE:
-			return "";
+			return TownTechs.name.WATER_AND_SUPPLIES;
 		case name.SIGMA:
-			return "";
+			return TownTechs.name.LEARNING_CENTER;
 		case name.NULL:
-			return "NULL";
+			return TownTechs.name.NULL;
 		default:
-			return "Error";
+			return TownTechs.name.NULL;
 		}
 	}
 }

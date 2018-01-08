@@ -45,7 +45,7 @@ public class TownTechs {
 		}
 	}
 
-	public static TownTechs.name getFaction(int num){
+	public static TownTechs.name getTownTechName(int num){
 		switch (num) {
 		case 1:
 			return name.ENERGY_PRODUCTION;
@@ -67,6 +67,31 @@ public class TownTechs {
 			return name.WATER_AND_SUPPLIES;
 		default:
 			return name.NULL;
+		}
+	}
+
+	public static int getTownTechNumber(TownTechs.name tech){
+		switch (tech) {
+		case name.ENERGY_PRODUCTION:
+			return 1;
+		case name.GARRISON:
+			return 2;
+		case name.LAW_AND_ORDER:
+			return 3;
+		case name.LEARNING_CENTER:
+			return 4;
+		case name.MACHINIST_SHOP:
+			return 5;
+		case name.MARKETPLACE:
+			return 6;
+		case name.MEDICAL_CENTER:
+			return 7;
+		case name.COMMUNICATION_CENTER:
+			return 8;
+		case name.WATER_AND_SUPPLIES:
+			return 9;
+		default:
+			return -1;
 		}
 	}
 }

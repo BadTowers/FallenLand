@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour {
 	public const string FACTION_MAP_LOCATION_URI = "Factions/FactionMapLocations/";
 	public const string FACTION_IMAGE_URI = "Factions/FactionImage/";
 	public const string FACTION_SYMBOL_URI = "Factions/FactionSymbols/";
+	public const string TOWN_TECH_IMAGE_URI = "Chips/TownTechs/";
 	private int curFactionNum;
 	private bool wasChanged;
 
@@ -202,7 +203,7 @@ public class UIManager : MonoBehaviour {
 			Debug.Log ("Town map image container not set");
 		}
 
-		Factions.name curFac = Factions.getFaction(curFactionNum);
+		Factions.name curFac = Factions.getFactionName(curFactionNum);
 
 		//Set up town name and location
 		if (townNameAndLocation != null) {
@@ -238,6 +239,46 @@ public class UIManager : MonoBehaviour {
 			loreText.text = Factions.getLore(curFac);
 		} else {
 			Debug.Log("Lore text container not set");
+		}
+
+
+
+
+
+
+		//Load it
+		img = (Sprite)Resources.Load<Sprite>(FACTION_MAP_LOCATION_URI + "Map" + curFactionNum.ToString());
+
+		//Apply it
+		if (townMapImage != null) {
+			townMapImage.sprite = img;
+		} else {
+			Debug.Log ("Town map image container not set");
+		}
+
+
+
+
+
+
+
+
+		//Set up town techs
+		//Load tech 1
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + TownTechs.getTownTechNumber(Factions.getTownTech1(curFac)).ToString());
+		//Apply it
+		if (townTech1Image != null) {
+			townTech1Image.sprite = img;
+		} else {
+			Debug.Log ("Town tech image 1 container not set");
+		}
+		//Load tech 2
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + TownTechs.getTownTechNumber(Factions.getTownTech2(curFac)).ToString());
+		//Apply it
+		if (townTech2Image != null) {
+			townTech2Image.sprite = img;
+		} else {
+			Debug.Log ("Town tech image 2 container not set");
 		}
 
 		//No more changes to account for
