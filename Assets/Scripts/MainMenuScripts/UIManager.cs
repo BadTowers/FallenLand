@@ -6,20 +6,21 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-	public enum MenuStates {Main, Options, NewGame, ContinueGame, MultiplayerGame};
+	public enum MenuStates {Main, Options, NewGame, SetUpNewGame, ContinueGame, MultiplayerGame};
 	public MenuStates currentState;
 
 	//Menu game objects
 	public GameObject mainMenu;
 	public GameObject optionsMenu;
 	public GameObject newGameMenu;
+	public GameObject setUpNewGameMenu;
 	public GameObject continueGameMenu;
 	public GameObject multiplayerMenu;
 
 	//List of all menu game objects
 	private List<GameObject> menus;
 
-	//For new game
+	//For set up new game
 	public Image townLogoImage;
 	public Image townSymbolImage;
 	public Image townMapImage;
@@ -49,6 +50,7 @@ public class UIManager : MonoBehaviour {
 		menus.Add(mainMenu);
 		menus.Add(optionsMenu);
 		menus.Add(newGameMenu);
+		menus.Add(setUpNewGameMenu);
 		menus.Add(continueGameMenu);
 		menus.Add(multiplayerMenu);
 
@@ -68,7 +70,10 @@ public class UIManager : MonoBehaviour {
 				setActiveMenu(mainMenu);
 				break;
 			case MenuStates.NewGame:
-				setActiveMenu(newGameMenu);
+				setActiveMenu (newGameMenu);
+				break;
+			case MenuStates.SetUpNewGame:
+				setActiveMenu(setUpNewGameMenu);
 				if(wasChanged) updateFactionDisplay (); //Update which town play mat is currently displaying if changes were made
 				break;
 			case MenuStates.Options:
@@ -130,9 +135,35 @@ public class UIManager : MonoBehaviour {
 		Debug.Log ("Quit");
 	}
 
-
 	/*
 	 * NEW GAME METHODS
+	 */
+	//When start default game button is pressed
+	public void onStartDefault(){
+		//TODO
+		Debug.Log("Start default");
+	}
+
+	//When set up new game button is pressed
+	public void onSetUpGame() {
+		currentState = MenuStates.SetUpNewGame;
+	}
+
+	//When load game button is pressed
+	public void onLoadGame() {
+		//TODO
+		Debug.Log ("Load game");
+	}
+
+	//When tutorial button is pressed
+	public void onTutorial() {
+		//TODO
+		Debug.Log("Tutorial");
+	}
+
+
+	/*
+	 * SET UP NEW GAME METHODS
 	 */
 	//When the previous town play mat arrow is pressed
 	public void onPrevious(){
