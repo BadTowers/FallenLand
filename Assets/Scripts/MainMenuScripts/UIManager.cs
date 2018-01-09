@@ -37,13 +37,20 @@ public class UIManager : MonoBehaviour {
 	public const string FACTION_IMAGE_URI = "Factions/FactionImage/";
 	public const string FACTION_SYMBOL_URI = "Factions/FactionSymbols/";
 	public const string TOWN_TECH_IMAGE_URI = "Chips/TownTechs/";
+	public GameObject gameModeToggleGroup;
+	public Text gameModeInfoText;
+	public GameObject soloIIDifficultyToggleGroup;
+	public const int SOLO_I_BUTTON_NUM = 0;
+	public const int SOLO_II_BUTTON_NUM = 1;
 	private int curFactionNum;
-	private bool wasChanged;
+	private bool factionWasChanged;
+	private bool gameModeWasChanged;
 
 	void Start() {
 		//Initialize default values
 		curFactionNum = 1;
-		wasChanged = true;
+		factionWasChanged = true;
+		gameModeWasChanged = true;
 		menus = new List<GameObject>();
 
 		//Add all of the menu game objects to the array list
@@ -74,7 +81,8 @@ public class UIManager : MonoBehaviour {
 				break;
 			case MenuStates.SetUpNewGame:
 				setActiveMenu(setUpNewGameMenu);
-				if(wasChanged) updateFactionDisplay (); //Update which town play mat is currently displaying if changes were made
+				if(factionWasChanged) updateFactionDisplay (); //Update which faction is currently displaying if a new one was selected
+				if(gameModeWasChanged) updateGameModeDisplay(); //Update the game mode information if a different one was selected
 				break;
 			case MenuStates.Options:
 				setActiveMenu(optionsMenu);
@@ -173,7 +181,7 @@ public class UIManager : MonoBehaviour {
 		} else {
 			curFactionNum--;
 		}
-		wasChanged = true; //Mark that changes were made
+		factionWasChanged = true; //Mark that changes were made
 	}
 
 	//When the next town play mat arrow is pressed
@@ -184,7 +192,11 @@ public class UIManager : MonoBehaviour {
 		} else {
 			curFactionNum++;
 		}
-		wasChanged = true; //NMark that changes were made
+		factionWasChanged = true; //NMark that changes were made
+	}
+	//When game mode toggle changes
+	public void onGameModeChange(){
+		gameModeWasChanged = true;
 	}
 
 
@@ -203,7 +215,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 	// Used to load in new faction and display it
-	public void updateFactionDisplay() {
+	private void updateFactionDisplay() {
 		//Load it
 		Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + curFactionNum.ToString());
 
@@ -272,28 +284,6 @@ public class UIManager : MonoBehaviour {
 			Debug.Log("Lore text container not set");
 		}
 
-
-
-
-
-
-		//Load it
-		img = (Sprite)Resources.Load<Sprite>(FACTION_MAP_LOCATION_URI + "Map" + curFactionNum.ToString());
-
-		//Apply it
-		if (townMapImage != null) {
-			townMapImage.sprite = img;
-		} else {
-			Debug.Log ("Town map image container not set");
-		}
-
-
-
-
-
-
-
-
 		//Set up town techs
 		//Load tech 1
 		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + TownTechs.getTownTechNumber(Factions.getTownTech1(curFac)).ToString());
@@ -313,7 +303,28 @@ public class UIManager : MonoBehaviour {
 		}
 
 		//No more changes to account for
-		wasChanged = false;
+		factionWasChanged = false;
+	}
+
+	private void updateGameModeDisplay() {
+		//If solo I is selected
+		if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_I_BUTTON_NUM].isOn) {
+			//Don't display the solo II difficulties
+			soloIIDifficultyToggleGroup.SetActive (false);
+
+			//Update the text to describe the game mode
+			gameModeInfoText.text = GameCreation.getRules(GameCreation.GameType.SoloI);
+		}
+		//If solo II is selected
+		else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn) {
+			soloIIDifficultyToggleGroup.SetActive(true);
+
+			//Update the text to describe the game mode
+			gameModeInfoText.text = GameCreation.getRules(GameCreation.GameType.SoloII);
+		}
+
+		//No more changes to account for
+		gameModeWasChanged = false;
 	}
 }
 

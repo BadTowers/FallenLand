@@ -54,4 +54,18 @@ public class GameCreation : MonoBehaviour {
 			return "NULL";
 		}
 	}
+
+	public static string getRules(GameType gt){
+		switch (gt) {
+		case GameType.SoloI:
+			return "This solo variation of the game works essentially the same as a normal multiplayer game, but every other faction is neutral. " +
+				"The aim is to reach the victory condition in as few of turns as possible. " +
+				"How quickly can you raise your faction to the top?";
+		case GameType.SoloII:
+			return "This solo variation of the game pits you against \"AI\" players that are dictated by a seperate town events chart." +
+			"Do you have what it takes to survive against all odds?";
+		default:
+			return "ERROR";
+		}
+	}
 }
