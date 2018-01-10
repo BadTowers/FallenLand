@@ -317,6 +317,7 @@ public class UIManager : MonoBehaviour {
 		}
 		//If solo II is selected
 		else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn) {
+			//Display the solo II difficulties
 			soloIIDifficultyToggleGroup.SetActive(true);
 
 			//Update the text to describe the game mode
