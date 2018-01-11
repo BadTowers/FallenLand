@@ -20,7 +20,7 @@ public class GameCreation : MonoBehaviour {
 		modifiers = new ArrayList();
 	}
 
-	void Awake(){
+	void Update(){
 		if (!wasRead) {
 			DontDestroyOnLoad (this.gameObject);
 		} else {
