@@ -14,10 +14,17 @@ public class ToggleDependency : MonoBehaviour {
 
 	public Toggle parentModifier;
 
+	void Update() {
+		checkIfParentActive();
+	}
+
 	public void checkIfParentActive() {
 		//A dependent modifier can't be on if the parent isn't on
 		if (!parentModifier.isOn) {
-			this.transform.GetComponentInChildren<Toggle>().isOn = false;
+			this.transform.GetComponentInChildren<Toggle> ().isOn = false;
+			this.transform.GetComponentInChildren<Toggle> ().interactable = false;
+		} else {
+			this.transform.GetComponentInChildren<Toggle> ().interactable = true;
 		}
 	}
 
