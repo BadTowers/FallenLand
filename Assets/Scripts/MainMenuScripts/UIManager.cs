@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,13 +22,17 @@ public class UIManager : MonoBehaviour {
 	//List of all menu game objects
 	private List<GameObject> menus;
 
+	//List of all things to randomize
+
 	//For set up new game
 	public Image townLogoImage;
 	public Image townSymbolImage;
-	public Image townMapImage;
+	//public Image townMapImage; //Currently unused
 	public Image townTech1Image;
 	public Image townTech2Image;
 	public int numFactions;
+	public int numSinglePlayerGameModes;
+	public int numSoloIIDifficulties;
 	public Text townNameAndLocation;
 	public Text specificPerk1Text;
 	public Text specificPerk2Text;
@@ -42,6 +48,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject soloIIDifficultyToggleGroup;
 	public const int SOLO_I_BUTTON_NUM = 0;
 	public const int SOLO_II_BUTTON_NUM = 1;
+	public GameObject modifiersContainer;
 	private int curFactionNum;
 	private bool factionWasChanged;
 	private bool gameModeWasChanged;
@@ -53,7 +60,7 @@ public class UIManager : MonoBehaviour {
 		gameModeWasChanged = true;
 		menus = new List<GameObject>();
 
-		//Add all of the menu game objects to the array list
+		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 		menus.Add(mainMenu);
 		menus.Add(optionsMenu);
 		menus.Add(newGameMenu);
@@ -194,11 +201,74 @@ public class UIManager : MonoBehaviour {
 		}
 		factionWasChanged = true; //NMark that changes were made
 	}
+
 	//When game mode toggle changes
 	public void onGameModeChange(){
 		gameModeWasChanged = true;
 	}
+	//When randomize button is pressed (on secure random numbers https://stackify.com/csharp-random-numbers/)
+	public void onRandomize() {
 
+		//Collect all the modifier toggles from the container
+		Toggle[] modifierToggles = modifiersContainer.GetComponentsInChildren<Toggle> ();
+
+		/* Randomly pick a faction */
+		RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+		byte[] byteArray = new byte[1];
+		provider.GetBytes (byteArray);
+		int randInt = Convert.ToInt32(byteArray[0]);
+		curFactionNum = Math.Abs(((randInt) % (numFactions)) + 1);
+		Debug.Log ("FAC: " + curFactionNum.ToString ());
+		factionWasChanged = true;
+
+		/* Randomly pick game mode */
+		//Game mode first
+		provider = new RNGCryptoServiceProvider();
+		byteArray = new byte[1];
+		provider.GetBytes (byteArray);
+		randInt = Convert.ToInt32(byteArray[0]);
+		int randNum = Math.Abs((randInt) % numSinglePlayerGameModes);
+		Debug.Log ("MODE: " + randNum.ToString ());
+		gameModeToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
+		//Difficulty too (if not needed, it won't show up in the UI)
+		//Turn them all off first
+		foreach (Toggle diffToggle in soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()) {
+			diffToggle.isOn = false;
+		}
+		byteArray = new byte[1];
+		provider.GetBytes (byteArray);
+		randInt = Convert.ToInt32(byteArray[0]);
+		randNum = Math.Abs((randInt) % numSoloIIDifficulties);
+		Debug.Log ("DIFF: " + randNum.ToString ());
+		soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
+		gameModeWasChanged = true;
+
+		/* Randomly pick the modifiers */
+		foreach (Toggle modifier in modifierToggles) {
+			//First turn off the modifer
+			modifier.isOn = false;
+
+			//Generate a random number to determine if we should turn on a modifer
+			provider = new RNGCryptoServiceProvider();
+			byteArray = new byte[1];
+			provider.GetBytes(byteArray);
+			randInt = Convert.ToInt32(byteArray[0]);
+			if(randInt % 2 == 0) {
+				modifier.isOn = true;
+				//If this modifier toggle is dependent on another, the checkIfParentActive method checks that the parent is on before turning the dependent child on
+				if (modifier.GetComponentInChildren<ToggleDependency>() != null) {
+					modifier.GetComponentInChildren<ToggleDependency> ().checkIfParentActive ();
+				}
+			}
+		}
+
+		//Collect all dependent modifiers
+	}
+	//When start button is pressed
+	public void onStartGameFromSetup() {
+		//TODO
+		Debug.Log("Start from game setup");
+	}
 
 
 	/*
@@ -216,6 +286,9 @@ public class UIManager : MonoBehaviour {
 
 	// Used to load in new faction and display it
 	private void updateFactionDisplay() {
+		//Set the current faction
+		Factions.name curFac = Factions.getFactionName(curFactionNum);
+
 		//Load it
 		Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + curFactionNum.ToString());
 
@@ -236,6 +309,7 @@ public class UIManager : MonoBehaviour {
 			Debug.Log ("Town symbol image container not set");
 		}
 
+		/*
 		//Load it
 		img = (Sprite)Resources.Load<Sprite>(FACTION_MAP_LOCATION_URI + "Map" + curFactionNum.ToString());
 
@@ -246,14 +320,13 @@ public class UIManager : MonoBehaviour {
 			Debug.Log ("Town map image container not set");
 		}
 
-		Factions.name curFac = Factions.getFactionName(curFactionNum);
-
 		//Set up town name and location
 		if (townNameAndLocation != null) {
 			townNameAndLocation.text = Factions.getName(curFac) + "\n" + Factions.getStartingLocation(curFac);
 		} else {
 			Debug.Log("Town name and location container not set");
 		}
+		*/
 
 		//Set up the perk texts
 		if (specificPerk1Text != null) {
