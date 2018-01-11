@@ -326,6 +326,7 @@ public class UIManager : MonoBehaviour {
 		} else {
 			Debug.Log ("Town map image container not set");
 		}
+		*/
 
 		//Set up town name and location
 		if (townNameAndLocation != null) {
@@ -333,7 +334,6 @@ public class UIManager : MonoBehaviour {
 		} else {
 			Debug.Log("Town name and location container not set");
 		}
-		*/
 
 		//Set up the perk texts
 		if (specificPerk1Text != null) {

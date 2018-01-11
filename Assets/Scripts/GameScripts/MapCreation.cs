@@ -28,6 +28,7 @@ public class MapCreation : MonoBehaviour {
 		//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode);
 		if (newGameState != null) {
 			newGameState.GetComponent<GameCreation> ().wasRead = true; //Mark as read so the game object can be deleted
+			Debug.Log(newGameState.GetComponent<GameCreation>().faction);
 		} else {
 			Debug.Log ("Game info not received from game setup");
 		}
