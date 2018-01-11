@@ -9,14 +9,15 @@ public class GameCreation : MonoBehaviour {
 								Demo, DemoMod1, Timed, Expert, Short, Veteran};
 	public enum SoloII {Null, SoloIIStandard, SoloIIModerate, SoloIIDifficult, SoloIIUltimate};
 
-	public GameType gameMode;
-	public ArrayList allModifiers;
+	public Factions.name faction;
+	public GameType mode;
+	public ArrayList modifiers;
 	public bool wasRead = false;
 
 
 
 	void Start() {
-		allModifiers = new ArrayList();
+		modifiers = new ArrayList();
 	}
 
 	void Awake(){

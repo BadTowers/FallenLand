@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-	public enum MenuStates {Main, Options, NewGame, SetUpNewGame, ContinueGame, MultiplayerGame};
+	public enum MenuStates {Main, Options, SinglePlayer, SetUpNewGame, MultiplayerGame};
 	public MenuStates currentState;
 
 	//Menu game objects
@@ -81,7 +81,7 @@ public class UIManager : MonoBehaviour {
 			case MenuStates.Main:
 				setActiveMenu(mainMenu);
 				break;
-			case MenuStates.NewGame:
+			case MenuStates.SinglePlayer:
 				setActiveMenu (singlePlayerMenu);
 				break;
 			case MenuStates.SetUpNewGame:
@@ -118,7 +118,7 @@ public class UIManager : MonoBehaviour {
 	// When new game button is pressed
 	public void onSinglePlayer(){
 		Debug.Log ("Single Player");
-		currentState = MenuStates.NewGame;
+		currentState = MenuStates.SinglePlayer;
 		//asyncSceneLoad("GameScene");
 	}
 
@@ -256,18 +256,25 @@ public class UIManager : MonoBehaviour {
 	//When start button is pressed
 	public void onStartGameFromSetup() {
 		/* Pass all information from this screen into the game creation object*/
-		//Faction
-		//TODO
+		//Faction (Find the game creation object in the scene and then get the script from it
+		GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().faction = Factions.getFactionName(curFactionNum);
 
 		//Game mode
 		foreach (Toggle mode in gameModeToggleGroup.GetComponentsInChildren<Toggle>()) {
 			if (mode.isOn) {
-
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().mode = mode.GetComponentInChildren<ToggleInformation>().mode;
 			}
 		}
 
 		//Game modifiers
-		//TODO
+		foreach (Toggle modifier in modifiersContainer.GetComponentsInChildren<Toggle>()) {
+			if (modifier.isOn) {
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().modifiers.Add(modifier.GetComponentInChildren<ToggleInformation>().modifier);
+			}
+		}
+
+		//Load the next scene to start the game
+		asyncSceneLoad("GameScene");
 	}
 
 

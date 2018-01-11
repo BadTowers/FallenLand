@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 0
+  modifier: 0
   soloIIDifficult: 3
 --- !u!1 &39955938
 GameObject:
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 9
+  modifier: 0
   soloIIDifficult: 0
 --- !u!114 &81645441
 MonoBehaviour:
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 7
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &110635419
 GameObject:
@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 0
+  modifier: 0
   soloIIDifficult: 2
 --- !u!1 &128999596
 GameObject:
@@ -1422,7 +1422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 11
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &189771656
 GameObject:
@@ -1714,7 +1714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 1
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &245285915
 GameObject:
@@ -1821,7 +1821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 2
-  modifer: 0
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &282390950
 GameObject:
@@ -2568,7 +2568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 6
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &397070029
 GameObject:
@@ -3925,7 +3925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 10
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &633458289
 GameObject:
@@ -4021,7 +4021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 9
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &656381212
 GameObject:
@@ -5343,7 +5343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 0
+  modifier: 0
   soloIIDifficult: 1
 --- !u!1 &964153670
 GameObject:
@@ -5594,7 +5594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 5
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &1046908813
 GameObject:
@@ -6872,7 +6872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ba12555b9d4a040ba97a85aceade02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 0
+  faction: 10
+  mode: 0
   wasRead: 0
 --- !u!4 &1196913381
 Transform:
@@ -7055,7 +7056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 2
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &1204704607
 GameObject:
@@ -7522,7 +7523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 2
-  modifer: 0
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &1321956912
 GameObject:
@@ -7753,7 +7754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 4
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &1359125176
 GameObject:
@@ -8783,7 +8784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 8
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &1495748544
 GameObject:
@@ -11054,7 +11055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 0
+  modifier: 0
   soloIIDifficult: 4
 --- !u!1 &1854126233
 GameObject:
@@ -12448,7 +12449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  modifer: 3
+  modifier: 0
   soloIIDifficult: 0
 --- !u!1 &2080600207
 GameObject:

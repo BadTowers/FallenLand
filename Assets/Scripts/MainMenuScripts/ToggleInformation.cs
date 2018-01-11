@@ -5,7 +5,7 @@ using UnityEngine;
 public class ToggleInformation : MonoBehaviour {
 
 	public GameCreation.GameType mode;
-	public GameCreation.GameModifiers modifer;
+	public GameCreation.GameModifiers modifier;
 	public GameCreation.SoloII soloIIDifficult;
 
 }
