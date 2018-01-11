@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameCreation : MonoBehaviour {
 
-	public enum GameType {NormalGame, SoloI, SoloII};
-	public enum GameModifiers {ProjectGodsHammer, Ronin, HarshReality, TownTechUpgradesCountDouble, StartWithFewerCards, 
-								DemoGamePurchase, DemoGameTradeBeforeGame, Timed, Expert, Short, Veteran, Demo};
-	public enum SoloII {SoloIIStandard, SoloIIModerate, SoloIIDifficult, SoloIIUltimate};
+	public enum GameType {Null, NormalGame, SoloI, SoloII};
+	public enum GameModifiers {Null, ProjectGodsHammer, Ronin, HarshReality, HarshRealityMod1, HarshRealityMod2, 
+								Demo, DemoMod1, Timed, Expert, Short, Veteran};
+	public enum SoloII {Null, SoloIIStandard, SoloIIModerate, SoloIIDifficult, SoloIIUltimate};
 
 	public GameType gameMode;
 	public ArrayList allModifiers;

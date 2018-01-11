@@ -14,9 +14,8 @@ public class UIManager : MonoBehaviour {
 	//Menu game objects
 	public GameObject mainMenu;
 	public GameObject optionsMenu;
-	public GameObject newGameMenu;
+	public GameObject singlePlayerMenu;
 	public GameObject setUpNewGameMenu;
-	public GameObject continueGameMenu;
 	public GameObject multiplayerMenu;
 
 	//List of all menu game objects
@@ -63,9 +62,8 @@ public class UIManager : MonoBehaviour {
 		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 		menus.Add(mainMenu);
 		menus.Add(optionsMenu);
-		menus.Add(newGameMenu);
+		menus.Add(singlePlayerMenu);
 		menus.Add(setUpNewGameMenu);
-		menus.Add(continueGameMenu);
 		menus.Add(multiplayerMenu);
 
 		//Set the display up
@@ -84,7 +82,7 @@ public class UIManager : MonoBehaviour {
 				setActiveMenu(mainMenu);
 				break;
 			case MenuStates.NewGame:
-				setActiveMenu (newGameMenu);
+				setActiveMenu (singlePlayerMenu);
 				break;
 			case MenuStates.SetUpNewGame:
 				setActiveMenu(setUpNewGameMenu);
@@ -93,9 +91,6 @@ public class UIManager : MonoBehaviour {
 				break;
 			case MenuStates.Options:
 				setActiveMenu(optionsMenu);
-				break;
-			case MenuStates.ContinueGame:
-				setActiveMenu(continueGameMenu);
 				break;
 			case MenuStates.MultiplayerGame:
 				setActiveMenu(multiplayerMenu);
@@ -121,16 +116,10 @@ public class UIManager : MonoBehaviour {
 	 * MAIN MENU METHODS
 	 */
 	// When new game button is pressed
-	public void onNewGame(){
-		Debug.Log ("New game");
+	public void onSinglePlayer(){
+		Debug.Log ("Single Player");
 		currentState = MenuStates.NewGame;
 		//asyncSceneLoad("GameScene");
-	}
-
-	// When continue game button is pressed
-	public void onContinueGame() {
-		currentState = MenuStates.ContinueGame;
-		Debug.Log ("Continue game");
 	}
 
 	// When options button is pressed
@@ -218,7 +207,7 @@ public class UIManager : MonoBehaviour {
 		provider.GetBytes (byteArray);
 		int randInt = Convert.ToInt32(byteArray[0]);
 		curFactionNum = Math.Abs(((randInt) % (numFactions)) + 1);
-		Debug.Log ("FAC: " + curFactionNum.ToString ());
+		//Debug.Log ("FAC: " + curFactionNum.ToString ());
 		factionWasChanged = true;
 
 		/* Randomly pick game mode */
@@ -228,7 +217,7 @@ public class UIManager : MonoBehaviour {
 		provider.GetBytes (byteArray);
 		randInt = Convert.ToInt32(byteArray[0]);
 		int randNum = Math.Abs((randInt) % numSinglePlayerGameModes);
-		Debug.Log ("MODE: " + randNum.ToString ());
+		//Debug.Log ("MODE: " + randNum.ToString ());
 		gameModeToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
 		//Difficulty too (if not needed, it won't show up in the UI)
 		//Turn them all off first
@@ -239,7 +228,7 @@ public class UIManager : MonoBehaviour {
 		provider.GetBytes (byteArray);
 		randInt = Convert.ToInt32(byteArray[0]);
 		randNum = Math.Abs((randInt) % numSoloIIDifficulties);
-		Debug.Log ("DIFF: " + randNum.ToString ());
+		//Debug.Log ("DIFF: " + randNum.ToString ());
 		soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
 		gameModeWasChanged = true;
 
@@ -266,8 +255,19 @@ public class UIManager : MonoBehaviour {
 	}
 	//When start button is pressed
 	public void onStartGameFromSetup() {
+		/* Pass all information from this screen into the game creation object*/
+		//Faction
 		//TODO
-		Debug.Log("Start from game setup");
+
+		//Game mode
+		foreach (Toggle mode in gameModeToggleGroup.GetComponentsInChildren<Toggle>()) {
+			if (mode.isOn) {
+
+			}
+		}
+
+		//Game modifiers
+		//TODO
 	}
 
 
