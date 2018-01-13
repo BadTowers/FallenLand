@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour {
 	public Text specificPerk3Text;
 	public Text specificPerk4Text;
 	public Text loreText;
+	public Scrollbar loreScrollBar;
 	public const string FACTION_MAP_LOCATION_URI = "Factions/FactionMapLocations/";
 	public const string FACTION_IMAGE_URI = "Factions/FactionImage/";
 	public const string FACTION_SYMBOL_URI = "Factions/FactionSymbols/";
@@ -363,6 +364,8 @@ public class UIManager : MonoBehaviour {
 		} else {
 			Debug.Log("Lore text container not set");
 		}
+		//Move the lore back to the top when the faction switches
+		loreScrollBar.value = 1;
 
 		//Set up town techs
 		//Load tech 1
