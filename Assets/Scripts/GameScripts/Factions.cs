@@ -417,7 +417,18 @@ public class Factions {
 				"Covertly purchasing businesses within the other nine Factions, they plot to overthrow the leadership of the other nine Factions from within and, by doing so, establish an overarching feudal " +
 				"system.\n";
 		case name.SWAMP_RUNNERS:
-			return "LORE\n\nLORE";
+			return "Shreveport sustained mass casualties from the biological weapons used in the Great War. Many residents suffered horrible deaths, while others looted and pillaged the city gripped by " +
+				"madness and set it ablaze. Other horrors followed, like radiation sickness and cannibalism. When several damns upriver failed, they unleased the power of the mighty Mississippi. Mother " +
+				"Nature almost seemed to rejoice at the prospect of washing away the blight and pestilence, as countless river towns were smashed and washed downstream. When the unstoppable river torrent " +
+				"finally crashed into Shreveport, much of the habitable area around the river basin was turned into a massive delta of swamp lands.\n\nDespite these challenges, many of the survivors in " +
+				"Southern Louisiana made the grim pilgrimage north, settling in the abandoned husk of Shreveport. Forming clans of scavengers, they began to slowly rebuild. Over the years, these clans " +
+				"merged until they united under the banner of the Swamp Runners. With their combined ingenuity and resourcefulness, they sank hundreds of wooden posts into the muck and constructed a town " +
+				"on top of the water. Accessible only by fan boat, it features an impressive array of docks, fortified warehouses and buildings constructed out of metal cargo containers. The infrastructure " +
+				"is connected by an intricate network of boardwalks, bridges, and ziplines.\n\nSurprisingly, the Swamp Runners control the largest territory of the Ten Towns, despite having the fewest " +
+				"citizens. Notorious for their smuggling and spy networks, they specialize in acquisition and purvey hard to find items to the highest bidder. Commodities like fuel, medical supplies, " +
+				"and drugs often top their list and it is whispered they even delve in human trafficking. The leader of the Swamp Runners has traditionally ben the Baroness. Favoring thugs and hired " +
+				"guns over a large militia, she uses them to strike at her enemies, often in unique ways. Although many regard the Swamp Runners as unmanageable rogues, their services are utilized by " +
+				"all. Their strategy is to continue to play the other Factions off of one another and establish dominance over the Ten Towns.\n";
 		case name.NEW_FEDERALISTS:
 			return "LORE\n\nLORE";
 		case name.REGULATORS:
