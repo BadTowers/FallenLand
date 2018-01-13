@@ -377,13 +377,45 @@ public class Factions {
 	{
 		switch (faction) {
 		case name.COALITION:
-			return "The residents of Iowa City panicked with the onset of the Great War, as many feared they would be targeted in the nuclear exchange, because of defense contractors, hospitals, and colleges. However, the anticipated hammer stroke never fell. Even when Des Moines was dusted and the ashen fallout drift down like snow, Iowa City was again spared. But their luck eventually ran out.\n\n" +
-					"As a crossroads in the Midwest, the city was quickly inundated with fleeing refugees during the Maddening. Iowa City residents were thoroughly unprepared for the many horrors the outsiders brought with them, especially those afflicted by the biological weapons used during the war. Disease and starvation also struck hard, followed by rioting that destroyed the city east of the river. As chaos and desperation increased, so did the interest from robing bands of armed marauders, who staged a series of devastating raids. Out of options, a large group of survivors retreated into the ruinous hospital sprawl near the stadium. Working together, they fortified the buildings and created a new town--one they could defend. Once the area was secure, the survivors formed Coalition of the Black Angel. Throughout the Emergence, the town has continued to prosper. It now features both learning and medical centers and an intricate array of rooftop conservatories. It is also considered one of the last remaining intellectual bastions in the Fallen Lands.\n\n" +
-					"Led by the Grand Mayor, who is elected from a council of elites, Coalition of the Black Angel has made the preservation of pre-war knowledge a priority as they continue to expand and reclaim buildings. Priding themselves in maintaining strong diplomatic ties with the other factions, Coalition of the Black Angel is often at the foregront of the devision making within the Council of the Ten Towns. Frequently playing the role of peackeeper and brokering deals among the other Factions; they prefer to assert themselves through the use of soft power. While they are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.";
+			return "The residents of Iowa City panicked with the onset of the Great War, as many feared they would be targeted in the nuclear exchanged because of defense contractors, hospitals, " +
+				"and colleges. However, the anticipated hammer stroke never fell. Even when Des Moines was dusted and the ashen fallout drifted down like snow, Iowa City was again spared. " +
+				"But their luck eventually ran out.\n\nAs a crossroads in the Midwest, the city was quickly inundated with fleeing refugees during the Maddening. Iowa City residents were thoroughly " +
+				"unprepared for the many horrors the outsiders brought with them, especially those afflicted by the biological weapons used during the war. Disease and starvation also struck hard, " +
+				"followed by rioting that destroyed the city east of the river. As chaos and desperation increased, so did the interest from roving bands of armed marauders, who staged a series of " +
+				"devastating raids. Out of options, a large group of survivors retreated into the ruinous hospital sprawl near the stadium. Working together, they fortified the buildings and created a " +
+				"new town--one they could defend. Once the area was secure, the survivors formed Coalition of the Black Angel. Throughout the Emergence, the town has continued to prosper. It now features " +
+				"both learning and medical centers and an intricate array of rooftop conservatories. It is also considered one of the last remaining intellectual bastions in the Fallen Lands.\n\nLed by " +
+				"the Grand Mayor, who is elected from a council of elites, Coalition of the Black Angel has made the preservation of pre-war knowledge a priority as they continue to expand and reclaim " +
+				"buildings. Priding themselves in maintaining strong diplomatic ties with the other factions, Coalition of the Black Angel is often at the forefront of the decision making within the Council " +
+				"of the Ten Towns. Frequently playing the role of peacekeeper and brokering deals among the other Factions, they prefer to assert themselves through the use of soft power. While they " +
+				"are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.\n";
 		case name.ENCLAVE:
-			return "LORE\n\nLORE";
+			return "The remote location of Great Falls spared it from the nuclear exchange that destroyed civilization. However, as supplies became scarce during the dark years of the Maddening, many " +
+				"militia groups in the region turned to raiding settlements. The raider’s swift attacks devastated and outgunned the small communities. To bring the fight to the raiders, the Blackfoot " +
+				"and Sioux Nations rallied the small settlements to them. Utilizing guerrilla tactics to harass and punish the raiders for years, their decisive victory was finally achieved at Battle " +
+				"Gorge. Most of the raiders were killed, but those that survived were scattered to the four winds. Talks soon turned to establishing a sage community where all participants could rebuild " +
+				"and prosper. Being at one with the land and returning to the customs of their forefathers also resonated with the newly unified group.\n\nSurrounded by a sea of tall blue prairie grass, " +
+				"the leaders of the two Indian Nations and the survivor groups met on a bluff overlooking the Great Falls Dam. It was there they vowed to work together and formed the Enclave of Terra. The " +
+				"dam became the faction’s stronghold and provides them with electricity. Over the years, a massive frontier-style palisade has been built to protect the town, lending to the rustic old-world " +
+				"atmosphere. Highlighted by the breathtaking backdrop of the giant dam, many visitors agree it is the most visually stunning view within the Ten Towns.\n\nThe enclave of Terra is led by the " +
+				"High Elder, who is supported by a small council. With the best energy and water purification capabilities within the Ten Towns, their alliances and trade partners have continued to grow. As " +
+				"strong proponents of expanding the power of the Council of the Ten Towns, they hope to create equality for all factions and broaden representation to include smaller settlements. For this to " +
+				"happen, they will have to take a leadership role and share their wisdom with the other factions.\n";
 		case name.SYNDICATE:
-			return "LORE\n\nLORE";
+			return "The local warning sirens wailed across the mining community as death rained from the skies. Only the residents that fled to the mines survived. Within its depths, the survivors found " +
+				"shelter and safety from the fallout. During the long, dark years of the Maddening, as chaos reigned in the wastes, the survivors that chose to reside in the mine continued to prosper. " +
+				"However, the situation took a turn for the worse when a well-armed group calling themselves Syndicate arrived and demanded entry.\n\nA long and bloody battle for the mine ensued. When " +
+				"the outsiders finally gained control, they rounded up the residents and publicly executed their leaders. After that, no one questioned their authority and the remaining survivors were " +
+				"indoctrinated. Beginning salvage operations in Sacramento and Reno, they returned with truckload and truckload of gaming machines, artwork, and other pre-war treasures. As Syndicate grew, " +
+				"so did their territory and reach. Still located in the deep underground labyrinth of the pre-war gold mine, the town has continued to grow, and work is always underway to expand its maze " +
+				"of corridors and rooms. The town is unsurpassed in its exciting nightlife and entertainment within the Ten Towns. Unfortunately, it has become a haven for criminals and a den of vices. It " +
+				"is often referred to by its nickname, Little Vegas. Nowhere in the Fallen Lands is gambling, alcohol, drugs, and prostitution more prevalent. Darker still are the rumors of people " +
+				"disappearing and being sold to slavers…\n\nProne to violence, the descendants from the Mafia, Cartels, Yakuza, and Vory v Zakone familis that united during the Maddening to form Syndicate " +
+				"remain volatile, clannish, and esoteric. Only allying out of desperation to survive the Maddening, each family now has a seat at the table and oversees a guild within the Faction: gaming, " +
+				"drugs, security, or commerce. They also vote to elect the Commissioner, who they believe will best represent their financial and business interests. Although the Commissioner has the final " +
+				"say in all matters, the families often jockey to consolidate their own power and influence. However, since the Emergence, Syndicate has been more united than ever and focused on the future. " +
+				"Covertly purchasing businesses within the other nine Factions, they plot to overthrow the leadership of the other nine Factions from within and, by doing so, establish an overarching feudal " +
+				"system.\n";
 		case name.SWAMP_RUNNERS:
 			return "LORE\n\nLORE";
 		case name.NEW_FEDERALISTS:
