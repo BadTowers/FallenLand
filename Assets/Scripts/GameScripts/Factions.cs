@@ -447,7 +447,20 @@ public class Factions {
 				"Federalists are tolerated by the other Factions because they supply them with weapons—and for the right price, muscle. Often overshadowed by the pre-war military culture, a group " +
 				"of citizens here hopes to promote change by rewriting old history books and reeducating the population of the Ten Towns with their hubris and propaganda.\n";
 		case name.REGULATORS:
-			return "LORE\n\nLORE";
+			return "By the time the radioactive fallout drifted across the plains, the US government was already gone and the country’s infrastructure had collapsed. No help was coming. The " +
+				"nuclear and biological warheads used in The Great War had darkened the skies, and this lack of sunshine combined with unprecedented chaos and violence became known as The " +
+				"Maddening. Most of the ranchers in the Texas Panhandle attempted to find safety by moving their cattle operations closer to Amarillo. The arduous journey claimed many lives, " +
+				"but those that survived were bound together by hardship. Establishing Tent City near the ruins of Amarillo, the ranchers eked out a harsh existence. However, when a mass exodus " +
+				"of survivors fleeing the nuked-out coastal cities arrived, life took a turn for the worse. The outsiders rioted over food shortages and Tent City was burned to the ground. The " +
+				"tragic bloodshed that followed was dubbed the Canvas Massacre and had a profound impact on their future.\n\nHoping to reestablish security and order, the Regulators were formed. " +
+				"Despite the many challenges, they had learned their hard lessons and strived to maintain their democratic roots. In the future, they knew they would have to work harder to integrate " +
+				"newcomers into their rancher lifestyle. They also decided mobility was paramount to their safety and security. Scavenging campers and trucks from nearby factories, they repaired " +
+				"and retrofitted their fleet with armor and supplies before hitting the road. Their mobile town is assembled by circling the RVs and other vehicles, which provides an outer wall of " +
+				"defenses. The new Tent City is erected inside, with the most vital assets at its center. Their quick assemble tents, portable generators, and customized amenities allow them to " +
+				"disassemble the town and relocate it within a few hours. However, despite their clever gadgets, The Regulators are renowned for their horsemanship and sharpshooter skills. Being a " +
+				"culture of nomads, they have perfected the art of maintaining their herd of cattle on the go, which many Factions have come to rely on.\n\nThe Regulators’ core values are freedom, " +
+				"self-sufficiency, integrity, and fair trade. Theft is the most egregious crime in their eyes and is punishable by death. The Regulators are led by The First Marshal, a spokesman for " +
+				"the council of oligarchs—the heads of the Faction’s most prominent cattle families. Their vision of the future is to convert the other Factions to a more nomadic frontier lifestyle.\n";
 		case name.HIGHWAYMEN:
 			return "LORE\n\nLORE";
 		case name.BROTHERHOOD:
