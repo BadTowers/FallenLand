@@ -430,7 +430,22 @@ public class Factions {
 				"guns over a large militia, she uses them to strike at her enemies, often in unique ways. Although many regard the Swamp Runners as unmanageable rogues, their services are utilized by " +
 				"all. Their strategy is to continue to play the other Factions off of one another and establish dominance over the Ten Towns.\n";
 		case name.NEW_FEDERALISTS:
-			return "LORE\n\nLORE";
+			return "In the early hours of the Great War, Albany braced for attack. Washington D.C. was already gone, and the long list of dusted cities just kept growing. The first missiles targeting " +
+				"Albany were destroyed by THAAD missile defense batteries. The next round was detonated in the atmosphere and caused a series of electromagnetic pulses that knocked out power and " +
+				"electronics all across the Eastern seaboard. With the chain of command broken, the base commander panicked. Recalling troops and their families, the base was ordered on lockdown " +
+				"and its defenses were reinforced. It remained closed to the outside during the Maddening, and when refugees arrived at the gates begging for assistance, they were turned away empty " +
+				"handed. The situation often turned violent and the angry refugees eventually grew to outnumber the defenders. Forming a gang, these refugees eventually lay siege to the base. The " +
+				"trapped defenders were forced to strike a deal with the consortium of Bounty Hunters called The Death’s Head Mercs. Their devastating counter-attack eliminated the threat and broke " +
+				"the siege.\n\nOver the years, the defenders came to call themselves the New Federalists and a prosperous town grew inside their crumbling base. Protected by rusty chain link fences " +
+				"and razor wire, the lichen-choked concrete is littered with jagged patina-covered buildings, fortified bunkers, and watchtowers. The New Federalists are considered the premier weapon " +
+				"outfitters in the Fallen Land, and as a result, the town has become a haven for mercenaries and marauders. A hefty tax is collected from each of these visiting groups, which is paid " +
+				"in pillaged supplies and scavenged tech. In return, they are granted access for R&R, trade, and to negotiate their mercenary contracts. Many powerful organizations come here to hire " +
+				"them. Because these mercenaries are a rowdy and dangerous bunch, they must be kept in check by a large heavily-armed militia. However, despite these safeguards, the town has a " +
+				"distinct Wild West feel to it, with nightly gunfights in the streets between rival mercenary outfits.\n\nUnlike many Factions, the New Federalists are not what they seem. Although " +
+				"their banner resembles Old Glory and implies ties to the former United States, their leader The Colonel, is more of a ruthless warlord and autocrat than a force for order. Hoping to " +
+				"unite the Ten Towns under an iron dictatorship, the New Federalists forces are always bolstering their militia through forced conscription from the outlying farmsteads. The New " +
+				"Federalists are tolerated by the other Factions because they supply them with weapons—and for the right price, muscle. Often overshadowed by the pre-war military culture, a group " +
+				"of citizens here hopes to promote change by rewriting old history books and reeducating the population of the Ten Towns with their hubris and propaganda.\n";
 		case name.REGULATORS:
 			return "LORE\n\nLORE";
 		case name.HIGHWAYMEN:
