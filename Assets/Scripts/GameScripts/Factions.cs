@@ -477,7 +477,20 @@ public class Factions {
 				"and motorcycle culture. The President’s strategy when dealing with the other Factions has been to become indispensable. They are always gathering intelligence on their enemies and analyzing " +
 				"their weaknesses. Unfortunately, many members of the Highwaymen believe “might makes right” and that they should meet violence with violence, which often stands in the way of progress.\n";
 		case name.BROTHERHOOD:
-			return "LORE\n\nLORE";
+			return "The red sandstone bluffs surrounding Saint George provided little reprieve from the fallout of the dusted West Coast cities. Isolated and forgotten, the windswept town of Saint George " +
+				"was forced to turn inward and became more and more xenophobic of “out-dwellers”. For a while, the arid soil provided subsistence farming. When this failed, scouting parties were dispatched " +
+				"to locate what they needed to survive. The mysterious Yucca Mountain facility was discovered during one such excursion. Stockpiled with decommissioned nuclear weapons and radioactive waste, " +
+				"the massive complex had a profound effect on their society and things were never the same. Perhaps it was their prolonged exposure during its exploration. Perhaps it was something else " +
+				"entirely. But it changed them; warped their minds. The once devout populace of Saint George began down a dark and sinister path that day when they formed their cult. With each passing " +
+				"generation, the Brotherhood of the Apocalypse’s history and secrets became more shrouded in mystery.\n\nWherever they traveled, the Brotherhood attempts to spread their faith, which " +
+				"frequently makes them targets and only serves to radicalize their ranks. Believing they are the “divine saviors” of the Great War and worshipping the Almighty Bomb (some whisper death itself), " +
+				"most outsiders consider them a scourge and savage enigma. Often feared because of their appearance, they are recognizable by their long desert garb, hooded cloaks, and gas masks, which afford " +
+				"them protection from the radioactive sandstorms common in their region. Leaders in their community carry the long-curved daggers displayed on their banner. Their town is cleverly designed to " +
+				"blend in with its desert surroundings. Constructed out of sandstone slabs and junk, the insides of their buildings are the exact opposite; pristine sanctuaries illuminated by natural light " +
+				"from stained glass windows made from scavenged glass.\n\nLed by their High Cleric, the Brotherhood demanded a place on the Council. When their initial request was ignored, they appealed to " +
+				"the accepting natures of the Coalition of the Black Angel and Enclave of Terra. When this again failed, they threatened war. After much deliberation, the Council of the Ten Towns admitted them " +
+				"to keep the peace, although the vote was later disputed. The Brotherhood has grand designs to establish clandestine cults within each of the factions. Eventually, they hope to bolster their " +
+				"numbers until they can overthrow each faction’s leadership and establishing an overarching theocracy.\n";
 		case name.SONS_OF_NEPTUNE:
 			return "LORE\n\nLORE";
 		case name.SIGMA:
