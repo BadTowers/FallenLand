@@ -383,10 +383,10 @@ public class Factions {
 				"unprepared for the many horrors the outsiders brought with them, especially those afflicted by the biological weapons used during the war. Disease and starvation also struck hard, " +
 				"followed by rioting that destroyed the city east of the river. As chaos and desperation increased, so did the interest from roving bands of armed marauders, who staged a series of " +
 				"devastating raids. Out of options, a large group of survivors retreated into the ruinous hospital sprawl near the stadium. Working together, they fortified the buildings and created a " +
-				"new town--one they could defend. Once the area was secure, the survivors formed Coalition of the Black Angel. Throughout the Emergence, the town has continued to prosper. It now features " +
+				"new town--one they could defend. Once the area was secure, the survivors formed the Coalition of the Black Angel. Throughout the Emergence, the town has continued to prosper. It now features " +
 				"both learning and medical centers and an intricate array of rooftop conservatories. It is also considered one of the last remaining intellectual bastions in the Fallen Lands.\n\nLed by " +
-				"the Grand Mayor, who is elected from a council of elites, Coalition of the Black Angel has made the preservation of pre-war knowledge a priority as they continue to expand and reclaim " +
-				"buildings. Priding themselves in maintaining strong diplomatic ties with the other factions, Coalition of the Black Angel is often at the forefront of the decision making within the Council " +
+				"the Grand Mayor, who is elected from a council of elites, the Coalition of the Black Angel has made the preservation of pre-war knowledge a priority as they continue to expand and reclaim " +
+				"buildings. Priding themselves in maintaining strong diplomatic ties with the other factions, the Coalition of the Black Angel is often at the forefront of the decision making within the Council " +
 				"of the Ten Towns. Frequently playing the role of peacekeeper and brokering deals among the other Factions, they prefer to assert themselves through the use of soft power. While they " +
 				"are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.\n";
 		case name.ENCLAVE:
@@ -492,9 +492,38 @@ public class Factions {
 				"to keep the peace, although the vote was later disputed. The Brotherhood has grand designs to establish clandestine cults within each of the factions. Eventually, they hope to bolster their " +
 				"numbers until they can overthrow each faction’s leadership and establishing an overarching theocracy.\n";
 		case name.SONS_OF_NEPTUNE:
-			return "LORE\n\nLORE";
+			return "In the early hours of the Great War, Chicago and Detroit were hit simultaneously by multiple ICBMs. But above them on the peninsula, a last-minute shift in the winds saved Grand " +
+				"Haven, “Coast Guard City USA”. Still, many people with boards fled to the water of the Great Lakes to survive. The old adage “safety in numbers” proved true during the Maddening, " +
+				"which resulted in the survivors forming flotillas, only returning to shore to scavenge supplies. Eventually, the two largest flotillas on the lakes combined forces to form the Sons " +
+				"of Neptune. Within months, the remaining groups united under the blue trident banner. Hardened sailors, their new society was one born of the waves.\n\nTheir territory and reach " +
+				"continued to grow, as did their fleet, scavenging abilities, and economic influence. As the second faction to establish themselves within the Fallen Land, the Sons of Neptune’s rise " +
+				"to power signaled the end of the Maddening and the beginning of a new era called the Emergence. Inspired by their many successes, the next few years saw eight other factions step " +
+				"forward. Seizing this opportunity, the Sons of Neptune created a trade and economic forum. Capping its membership at ten, they only invited the largest survivor groups, called " +
+				"factions, to join. Over time, the council expanded its authority and power to become the Council of the Ten Towns.\n\nFocusing on trade, Grand Haven is often the middleman when " +
+				"it comes to commodities within the Ten Towns. Specializing in trade and logistics, they often lord the knowledge they have gained from old technologies looted from the ruinous " +
+				"metropolitan areas over the other factions. Their economic success has also fueled many inter-faction rivalries and competition for scant resources. Always bustling with activity, " +
+				"their town is comprised of three massive cargo ships that are tethered together and serviced by a unique menagerie of other watercraft.\n\nGrand Haven is a representative " +
+				"democracy, guided by the Council of Captains, but steered by the Admiral. Preferring logical policies achieved by subtlety and discipline, the Admiral’s map for the future " +
+				"includes the restoration of social order by any and all means necessary. Grand Haven intends to become the premier economic power in the Fallen Lands and hopes to eventually " +
+				"reestablish overseas trade. The other factions will then have no choice but to unite under the Sons of Neptune.\n";
 		case name.SIGMA:
-			return "LORE\n\nLORE";
+			return "After 9/11 and the ensuing “war on terror”, Emporium, Pennsylvania found itself the thirteenth site of the U.S. government’s top-secret Sigma Series program. Fearing " +
+				"a catastrophe loomed on the horizon, these new state-of-the-art bunkers were designed to survive a nuclear war, biological catastrophe, or extinction level event. A vast " +
+				"improvement over their obsolete predecessors from the Cold War, they were created to safeguard government institutions. The Emporium Bunker’s primary mission was to harbor " +
+				"members of Congress. Its secondary mission was to preserve a digital copy of the Library of Congress and the files for the mysterious project God’s Hammer. The private " +
+				"security firm that landed this superfluous contract was Sigma Corporation. Dominating the industry, they absorbed their rivals Darkwater Security and Holli-Barton. " +
+				"Everything was on schedule until the Great War began.\n\nThe massive EMP strike near Albany that knocked out the power and electronics across the Eastern Seaboard also " +
+				"corrupted the data download from the Library of Congress and the bunker’s main communication array. In a desperate act of self-preservation, the technicians inside sealed " +
+				"the blast door prematurely. Helicopters continued to arrive low on fuel with members of Congress. As ICBMs struck nearby, those trapped outside perished. However, those " +
+				"who had made it inside enjoyed the bunker’s safety during the long, dark years of the Maddening; two hundred feet below the surface encased in solid bedrock. Later, when " +
+				"supplies ran low, the bunker’s Security Chief seized power. Implementing a host of authoritarian policies, he took on the title Illuminarious and quickly and quietly silenced " +
+				"his opposition. It was only recently during the Emergence that the mysterious Sigma Corporation came out of the shadows. When it did, the bunker grew into a small town " +
+				"with a state-of-the-art learning facility and a revamped communication array that is unparalleled within the Ten Towns. As the smallest of the Ten Towns, many of its " +
+				"citizens still distrust outsiders, who are still denied access to the lower levels.\n\nBecause Sigma Corporation purposefully remained hidden for so long, no one really " +
+				"trusts them, and they remain at the apex of conspiracy theories within the Ten Towns. As the last faction to join the council, they have had to skillfully expand their sphere " +
+				"of influence through a series of backroom dealings, which only perpetuates the general distrust of Sigma Corporation. As long as the Illuminarious can continue to influence " +
+				"the Council of the Ten Towns, it remains useful. Their clandestine agenda is to locate the other Sigma Series Bunkers and consolidate their own power. From there, they hope " +
+				"to rebuild the military industrial complex, seek out the enemies of the former United States, and eliminate them and anyone else who stands in their way with extreme prejudice.\n";
 		case name.NULL:
 			return "NULL";
 		default:
