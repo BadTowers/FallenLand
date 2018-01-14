@@ -462,7 +462,20 @@ public class Factions {
 				"self-sufficiency, integrity, and fair trade. Theft is the most egregious crime in their eyes and is punishable by death. The Regulators are led by The First Marshal, a spokesman for " +
 				"the council of oligarchs—the heads of the Faction’s most prominent cattle families. Their vision of the future is to convert the other Factions to a more nomadic frontier lifestyle.\n";
 		case name.HIGHWAYMEN:
-			return "LORE\n\nLORE";
+			return "After the bombs fells, the motorcycle clubs that survived were forced to rely on mobility and safety in numbers. Those that escaped the gridlock and chaos made the pilgrimage to " +
+				"the mecca of motorcycle culture, Sturgis, South Dakota. Many motorcycle clubs (MCs) were represented there and most put aside their long-standing rivalries. A vision emerged to unite " +
+				"themselves into a single MC, the Highwaymen. Those that refused to join were cast out and formed the Outlaws. Comprised mostly of the criminal element, bounties were placed on their " +
+				"heads. During the long, dark years of the Maddening, several bloody road wars were waged against the renegade Outlaw charters. Although the Highwaymen often prevailed, their victories " +
+				"came at a steep cost. The Outlaws that escaped became even more cunning, and continue to wreak havoc on the roads, remaining a thorn in the side of the Council of the Ten Towns.\n\n" +
+				"Historians agree that the Highwaymen were the first Faction to come into power as they already had the numbers, firepower, and MCs before the war. As their sphere of influence increased, " +
+				"so did their power. As the most travelled of all the Factions, the Highwaymen are frequently consulted to plan caravan routes and, for the right price, will even provide an armed escort. " +
+				"Although sheet metal fortifications have been constructed around the town for protection, much of Sturgis remains as it did before the war. The highwaymen often brag of their factory, " +
+				"scavenged from the ruins of Milwaukee and meticulously reassembled in Sturgis. Although they specialize in the production and restoration of motorcycles, those with enough credits can " +
+				"also order their custom road war vehicles. With travel being so dangerous, these tricked-out rides are in high demand, especially for merchant outfits like the famous I-80 Caravanners. " +
+				"Featuring high-performance engines, armor, and a vast array of weaponry, this endeavor has proved incredibly lucrative. Their only real competition is Jackie’s Topless Garage, which " +
+				"surpasses their ingenuity, but cannot match their production capabilities.\n\nThe Highwaymen are led by their President, a charismatic demagogue whose priorities are loyalty, profits, " +
+				"and motorcycle culture. The President’s strategy when dealing with the other Factions has been to become indispensable. They are always gathering intelligence on their enemies and analyzing " +
+				"their weaknesses. Unfortunately, many members of the Highwaymen believe “might makes right” and that they should meet violence with violence, which often stands in the way of progress.\n";
 		case name.BROTHERHOOD:
 			return "LORE\n\nLORE";
 		case name.SONS_OF_NEPTUNE:
