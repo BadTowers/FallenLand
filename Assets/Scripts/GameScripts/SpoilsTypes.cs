@@ -1,0 +1,22 @@
+﻿
+public enum SpoilsTypes { //TODO finish
+	Ally,
+	Armor,
+	Book,
+	Bow,
+	Clothing,
+	Diplomacy,
+	Equipment, 
+	Event, 
+	Handgun,
+	Heavy, 
+	Mechanical,
+	Party_Equipment,
+	Permenant, 
+	Ranged_Weapon, 
+	Stowable,
+	Submachine_Gun,
+	Survival,
+	Vehicle, 
+	Vehicle_Equipment,
+}

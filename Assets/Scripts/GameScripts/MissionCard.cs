@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class MissionCard : EncounterCard {
 
-	string specialInstructions "Things such as moving to specific hex, etc"; //TODO
+	string specialInstructions = "Things such as moving to specific hex, etc"; //TODO NOT A STRING
 
 }
