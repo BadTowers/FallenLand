@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MountainCard : EncounterCard {
 
+	MountainCard(string title) : base(title) {
 
+	}
 
 }

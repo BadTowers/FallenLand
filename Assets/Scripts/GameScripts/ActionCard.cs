@@ -8,4 +8,16 @@ public class ActionCard : NonpartyCard {
 	//phase. This is the phase the card can be played in
 	//Actions. The list of actions the card can do. Sometimes this is one thing. Sometimes this is a list of things and can pick one. TODO
 
+	public ActionCard(string title) : base(title) {
+
+	}
+
+	public void setSellValue(int sv){
+		this.sellValue = sv;
+	}
+
+	public int getSellValue() {
+		return this.sellValue;
+	}
+
 }

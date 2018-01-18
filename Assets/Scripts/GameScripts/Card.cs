@@ -4,8 +4,14 @@ using UnityEngine;
 
 public abstract class Card : MonoBehaviour {
 
-	private string name;
+	private string title;
 
+	public Card(string title){
+		this.title = title;
+	}
 
+	public string getTitle(){
+		return title;
+	}
 
 }
