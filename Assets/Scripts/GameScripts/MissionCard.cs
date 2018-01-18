@@ -17,6 +17,14 @@ public class MissionCard : EncounterCard {
 	public MissionCard(string title, Dictionary<Skills, int> optionalSkillChecks) : base(title) {
 		this.optionalSkillChecks = optionalSkillChecks;
 	}
+
+	public void setOptionalSkillChecks(Dictionary<Skills, int> osc){
+		this.optionalSkillChecks = osc;
+	}
+
+	public Dictionary<Skills, int> getOptionalSkillChecks(){
+		return this.optionalSkillChecks;
+	}
 		
 	public void setOptionalSuccessText(string text){
 		this.optionalSuccessText = text;
