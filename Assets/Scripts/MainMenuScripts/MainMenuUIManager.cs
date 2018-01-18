@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour {
+public class MainMenuUIManager : MonoBehaviour {
 
 	public enum MenuStates {Main, Options, SinglePlayer, SetUpNewGame, MultiplayerGame};
 	public MenuStates currentState;

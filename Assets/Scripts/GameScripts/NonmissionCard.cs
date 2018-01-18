@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class NonmissionCard : EncounterCard {
 
-
+	string image = "These cards contain images"; //TODO
 
 }
