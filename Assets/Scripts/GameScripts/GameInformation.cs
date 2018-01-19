@@ -18,19 +18,4 @@ public class GameInformation : MonoBehaviour {
 		Both,
 	}
 
-	public static int getStartingValue(GameValues stat){
-		switch (stat) {
-		case GameValues.Starting_Salvage:
-			return 10;
-		case GameValues.Starting_Prestige:
-			return 1;
-		case GameValues.Starting_Town_Health:
-			return 30;
-		case GameValues.Win_Prestige:
-			return 20;
-		case GameValues.Win_Town_Health:
-			return 80;
-		}
-	}
-
 }
