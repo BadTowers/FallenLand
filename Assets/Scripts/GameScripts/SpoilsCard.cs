@@ -22,6 +22,12 @@ public class SpoilsCard : PartyCard {
 		this.types = types;
 	}
 
+	public void setTypes(params SpoilsTypes[] types){
+		foreach(SpoilsTypes item in types) {
+			this.types.Add(item);
+		}
+	}
+
 	public List<SpoilsTypes> getTypes() {
 		return this.types;
 	}

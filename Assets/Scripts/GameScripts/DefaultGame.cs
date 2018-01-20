@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public static class DefaultGame {
+public class DefaultGame {
 
 	//The number of each thing a player starts with
-	public static Dictionary<GameInformation.GameValues, int>startingNumbers = new Dictionary<GameInformation.GameValues, int>{
+	public Dictionary<GameInformation.GameValues, int> startingNumbers = new Dictionary<GameInformation.GameValues, int>{
 		{GameInformation.GameValues.Starting_Town_Health, 30},
 		{GameInformation.GameValues.Starting_Prestige, 1},
 		{GameInformation.GameValues.Starting_Salvage, 10},
@@ -39,7 +39,7 @@ public static class DefaultGame {
 		}
 	};
 	 * */
-	public static List<Dictionary<GameInformation.WinConditions, int>> winConditions = new List<Dictionary<GameInformation.WinConditions, int>>() {
+	public List<Dictionary<GameInformation.WinConditions, int>> winConditions = new List<Dictionary<GameInformation.WinConditions, int>>() {
 		//Option 1: 20 prestige
 		new Dictionary<GameInformation.WinConditions, int>()
 		{
