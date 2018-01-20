@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class DefaultGame {
+public static class DefaultGame {
 
 	//The number of each thing a player starts with
-	public Dictionary<GameInformation.GameValues, int> defaultStartingNumbers = new Dictionary<GameInformation.GameValues, int>{
+	public static Dictionary<GameInformation.GameValues, int> defaultStartingNumbers = new Dictionary<GameInformation.GameValues, int>{
 		{GameInformation.GameValues.Starting_Town_Health, 30},
 		{GameInformation.GameValues.Starting_Prestige, 1},
 		{GameInformation.GameValues.Starting_Salvage, 10},
@@ -13,7 +13,7 @@ public class DefaultGame {
 		{GameInformation.GameValues.Starting_Spoils_Cards, 10}
 	};
 		
-	public Dictionary<GameInformation.GameValues, int> defaultWinNumbers = new Dictionary<GameInformation.GameValues, int> {
+	public static Dictionary<GameInformation.GameValues, int> defaultWinNumbers = new Dictionary<GameInformation.GameValues, int> {
 		{GameInformation.GameValues.Win_Prestige, 20},
 		{GameInformation.GameValues.Win_Town_Health, 80}
 	};
@@ -27,7 +27,7 @@ public class DefaultGame {
 	 * THE THIRD WIN CONDITION: You must have a certain amount of spoils cards (Made up)
 	 * NOTE:
 	 * 	THE VALUES for the win conditions are specified in a dictionary in this class.
-	 * public List<List<GameInformation.WinConditions>> winConditions = new List<List<GameInformation.WinConditions>>() [
+	 * public List<List<GameInformation.WinConditions>> winConditions = new List<List<GameInformation.WinConditions>>() {
 		new List<GameInformation.WinConditions>()
 		{
 			GameInformation.WinConditions.Prestige,
@@ -41,9 +41,9 @@ public class DefaultGame {
 		{
 			GameInformation.WinConditions.Spoils (made up)
 		}
-	];
+	};
 	 * */
-	public List<List<GameInformation.WinConditions>> winConditions = new List<List<GameInformation.WinConditions>>() [
+	public static List<List<GameInformation.WinConditions>> winConditions = new List<List<GameInformation.WinConditions>>() {
 		new List<GameInformation.WinConditions>()
 		{
 			GameInformation.WinConditions.Prestige
@@ -52,5 +52,5 @@ public class DefaultGame {
 		{
 			GameInformation.WinConditions.Town_Health
 		}
-	];
+	};
 }
