@@ -19,6 +19,7 @@ public class DefaultCards : MonoBehaviour{
 		curCard.setCarryWeight(2);
 		curCard.setSellValue(6);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{{Skills.Diplomacy, 3}, {Skills.Medical, 1}});
+		//Special. Discard after a successful Encounter or Mission card to draw 2 Spoils or 2 Action cards
 		spoilsCards.Add(curCard);
 	}
 }
