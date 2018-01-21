@@ -45,6 +45,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			true, //Set 1
 			true //Set 2
 		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
 		spoilsCards.Add(curCard); //Add the card to the list of all cards
 
 
@@ -70,12 +73,47 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setNumberOfUses(new List<Uses> {
 			//No actives
 		});
-		curCard.setDiscard(new List<bool> {
+		curCard.setDiscard(
 			//No actives
-		});
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
 		spoilsCards.Add(curCard);
 
 
 		curCard = new SpoilsCard("Fernando the Chauffer");
+		curCard.setTypes(SpoilsTypes.Ally);
+		curCard.setCarryWeight();
+		curCard.setSellValue();
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 3},
+			{Skills.Mechanical, 4},
+			{Skills.Medical, 2}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2},
+			{Gains.Gain_Carry_Weight, 4},
+			{Gains.Prevent_Distruction, -1}, //int value of -1 means nothing in this case
+			{Gains.Prevent_Theft, -1} //int value of -1 means nothing in this case
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Pay_Salvage, 5}
+		});
+		curCard.setWhenUsable(new List<Times> {
+			{Times.Immediately}
+		});
+		curCard.setNumberOfUses(new List<Uses> {
+			{Uses.Once}
+		});
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(
+			Restrictions.Equip_To_Vehicle
+		);
+		spoilsCards.Add(curCard);
 	}
 }

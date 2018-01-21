@@ -8,5 +8,7 @@ public enum Restrictions  {
 	Not_Bicycles,
 	Not_Horses,
 
+	//Allies
+	Equip_To_Vehicle,
 
 }

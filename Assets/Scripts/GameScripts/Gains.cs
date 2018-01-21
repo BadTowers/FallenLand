@@ -42,9 +42,15 @@ public enum Gains {
 	//Clothing
 	Can_Combine_With_Armor,
 
+	//Vehicles
+	Prevent_Theft,
+	Prevent_Distruction,
+
 	//Character
 	Gain_Psych_Resistence,
 	Lose_Psych_Resistence,
+	Gain_Carry_Weight,
+	Lose_Carry_Weight,
 
 	//Cards
 	Gain_Spoils_Cards,
@@ -53,5 +59,8 @@ public enum Gains {
 	Lose_Spoils_Cards,
 	Lose_Action_Cards,
 	Lose_Character_Cards,
+
+	//Hiring
+	Pay_Salvage,
 
 }
