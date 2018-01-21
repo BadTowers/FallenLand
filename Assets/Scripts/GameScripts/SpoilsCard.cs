@@ -6,13 +6,13 @@ public class SpoilsCard : PartyCard {
 	private List<SpoilsTypes> types; //The list of all spoils types the card qualifies as
 	private int sellValue; //The value of the card when sold to the bank
 	private int carryWeight; //The weight of the item
-	private List<List<Gains>> activeGains; //TODO getters and setters
+	private List<List<Gains>> activeGains; //List of different active ability choices the player has
 	private List<Gains> passiveGains;
 	private List<Restrictions> restrictions;
-	private List<List<Times>> whenUsable; //TODO getters and setters
+	private List<List<Times>> whenUsable; //List of lists denoting different use times for different active choices
 	private Uses uses; 
 
-	public SpoilsCard(string title) : base(title) {
+	private void initLists(){
 		types = new List<SpoilsTypes>();
 		activeGains = new List<List<Gains>>();
 		passiveGains = new List<Gains>();
@@ -20,8 +20,20 @@ public class SpoilsCard : PartyCard {
 		whenUsable = new List<List<Times>>();
 	}
 
+	public SpoilsCard(string title) : base(title) {
+		initLists();
+	}
+
 	public SpoilsCard(string title, List<SpoilsTypes> types) : base(title) {
+		initLists();
 		this.types = types;
+	}
+
+	public SpoilsCard(string title, params SpoilsTypes[] types) : base(title) {
+		initLists();
+		foreach(SpoilsTypes item in types) {
+			this.types.Add(item);
+		}
 	}
 
 	public void setTypes(List<SpoilsTypes> types) {
@@ -88,5 +100,21 @@ public class SpoilsCard : PartyCard {
 
 	public List<Gains> getPassiveGains(){
 		return this.passiveGains;
+	}
+
+	public void setWhenUsable(List<List<Times>> when){
+		this.whenUsable = when;
+	}
+
+	public List<List<Times>> getWhenUsable(){
+		return this.whenUsable;
+	}
+
+	public void setActiveGains(List<List<Gains>> gains){
+		this.activeGains = gains;
+	}
+
+	public List<List<Gains>> getActiveGains(){
+		return this.activeGains;
 	}
 }
