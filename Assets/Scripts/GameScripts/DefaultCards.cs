@@ -6,6 +6,8 @@ public class DefaultCards : MonoBehaviour{
 
 	public List<SpoilsCard> spoilsCards;
 
+
+	//Called before Start()
 	void Awake(){
 		//Initialize the lists for the cards
 		spoilsCards = new List<SpoilsCard>();
