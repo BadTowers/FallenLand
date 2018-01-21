@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 public enum Gains {
 
-	//No gains
-	None,
-
 	//Skill check successes
 	Combat_Skill_Check_Successes,
 	Survival_Skill_Check_Successes,
@@ -37,7 +34,7 @@ public enum Gains {
 	Ignore_Action_Card_Movement,
 	Gain_Movement,
 	Lose_Movement,
-	All_Hexes_Cost,
+	All_Hex_Movement_Cost,
 	Mountain_Hexes_Cost,
 	Plains_Hexes_Cost,
 	CityRad_Hexes_Cost,

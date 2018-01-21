@@ -20,8 +20,13 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setTypes(SpoilsTypes.Stowable, SpoilsTypes.Alcohol, SpoilsTypes.Equipment); //Set all types the card fulfils
 		curCard.setCarryWeight(2); //Set how much the item weights
 		curCard.setSellValue(6); //Set the value of the card
-		curCard.setBaseSkills(new Dictionary<Skills, int>{{Skills.Diplomacy, 3}, {Skills.Medical, 1}}); //Set what skills the card adds to
-		curCard.setPassiveGains(Gains.None); //Set what passive gains the spoils card gives
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 3},
+			{Skills.Medical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{ //Set what passive gains the spoils card gives
+			//No passives
+		}); 
 		curCard.setActiveGains( //Set the active abilities the card can do
 			new Dictionary<Gains, int> //Set 1 of actives
 			{Gains.Gain_Spoils_Cards, 2}, //1.1
@@ -44,5 +49,33 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 
 		curCard = new SpoilsCard("6 Armored War Horses");
+		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
+		curCard.setCarryWeight(12);
+		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 4},
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 2}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 1}, //Passive 1
+			{Gains.All_Hex_Movement_Cost, 1} //Passive 2
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(new List<Times> {
+			//No actives
+		});
+		curCard.setNumberOfUses(new List<Uses> {
+			//No actives
+		});
+		curCard.setDiscard(new List<bool> {
+			//No actives
+		});
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Fernando the Chauffer");
 	}
 }

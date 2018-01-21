@@ -7,7 +7,7 @@ public class SpoilsCard : PartyCard {
 	private int sellValue; //The value of the card when sold to the bank
 	private int carryWeight; //The weight of the item
 	private List<Dictionary<Gains, int>> activeGains; //List of different active ability choices the player has
-	private List<Gains> passiveGains;
+	private Dictionary<Gains, int> passiveGains;
 	private List<Restrictions> restrictions;
 	private List<Times> whenUsable; //List of lists denoting different use times for different active choices
 	private List<Uses> uses; 
@@ -16,11 +16,14 @@ public class SpoilsCard : PartyCard {
 	private void initLists(){
 		types = new List<SpoilsTypes>();
 		activeGains = new List<Dictionary<Gains, int>>();
-		passiveGains = new List<Gains>();
+		passiveGains = new Dictionary<Gains, int>();
 		restrictions = new List<Restrictions>();
 		whenUsable = new List<Times>();
 		uses = new List<Uses>();
 		discards = new List<bool>();
+
+		sellValue = 0;
+		carryWeight = 0;
 	}
 
 	public SpoilsCard(string title) : base(title) {
@@ -91,17 +94,11 @@ public class SpoilsCard : PartyCard {
 		return this.restrictions;
 	}
 
-	public void setPassiveGains(params Gains[] gains){
-		foreach(Gains gain in gains) {
-			passiveGains.Add(gain);
-		}
-	}
-
-	public void setPassiveGains(List<Gains> gains){
+	public void setPassiveGains(Dictionary<Gains, int> gains){
 		this.passiveGains = gains;
 	}
 
-	public List<Gains> getPassiveGains(){
+	public Dictionary<Gains, int> getPassiveGains(){
 		return this.passiveGains;
 	}
 
