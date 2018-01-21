@@ -9,7 +9,9 @@ public enum SpoilsTypes { //TODO finish
 	Diplomacy,
 	Equipment, 
 	Event, 
+	Four_Wheeled,
 	Handgun,
+	Horse,
 	Heavy, 
 	Mechanical,
 	Melee_Weapon,
@@ -20,6 +22,7 @@ public enum SpoilsTypes { //TODO finish
 	Stowable,
 	Submachine_Gun,
 	Survival,
+	Two_Wheeled,
 	Vehicle, 
 	Vehicle_Equipment,
 }

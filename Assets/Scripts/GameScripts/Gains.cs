@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public enum Gains {
 
+	//No gains
+	None,
+
 	//Skill check successes
 	Combat_Skill_Check_Successes,
 	Survival_Skill_Check_Successes,
@@ -45,5 +48,13 @@ public enum Gains {
 	//Character
 	Gain_Psych_Resistence,
 	Lose_Psych_Resistence,
+
+	//Cards
+	Gain_Spoils_Cards,
+	Gain_Action_Cards,
+	Gain_Character_Cards,
+	Lose_Spoils_Cards,
+	Lose_Action_Cards,
+	Lose_Character_Cards,
 
 }

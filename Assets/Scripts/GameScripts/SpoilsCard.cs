@@ -6,18 +6,21 @@ public class SpoilsCard : PartyCard {
 	private List<SpoilsTypes> types; //The list of all spoils types the card qualifies as
 	private int sellValue; //The value of the card when sold to the bank
 	private int carryWeight; //The weight of the item
-	private List<List<Gains>> activeGains; //List of different active ability choices the player has
+	private List<Dictionary<Gains, int>> activeGains; //List of different active ability choices the player has
 	private List<Gains> passiveGains;
 	private List<Restrictions> restrictions;
-	private List<List<Times>> whenUsable; //List of lists denoting different use times for different active choices
-	private Uses uses; 
+	private List<Times> whenUsable; //List of lists denoting different use times for different active choices
+	private List<Uses> uses; 
+	private List<bool> discards; 
 
 	private void initLists(){
 		types = new List<SpoilsTypes>();
-		activeGains = new List<List<Gains>>();
+		activeGains = new List<Dictionary<Gains, int>>();
 		passiveGains = new List<Gains>();
 		restrictions = new List<Restrictions>();
-		whenUsable = new List<List<Times>>();
+		whenUsable = new List<Times>();
+		uses = new List<Uses>();
+		discards = new List<bool>();
 	}
 
 	public SpoilsCard(string title) : base(title) {
@@ -102,19 +105,59 @@ public class SpoilsCard : PartyCard {
 		return this.passiveGains;
 	}
 
-	public void setWhenUsable(List<List<Times>> when){
+	public void setWhenUsable(List<Times> when){
 		this.whenUsable = when;
+	}
+
+	public void setWhenUsable(params Times[] when){
+		foreach(Times item in when) {
+			this.whenUsable.Add(item);
+		}
 	}
 
 	public List<List<Times>> getWhenUsable(){
 		return this.whenUsable;
 	}
 
-	public void setActiveGains(List<List<Gains>> gains){
+	public void setActiveGains(List<Dictionary<Gains, int>> gains){
 		this.activeGains = gains;
 	}
 
-	public List<List<Gains>> getActiveGains(){
+	public void setActiveGames(params Dictionary<Gains,int>[] gains){
+		foreach(Dictionary<Gains,int> item in gains) {
+			this.activeGains.Add(item);
+		}
+	}
+
+	public List<Dictionary<Gains, int>> getActiveGains(){
 		return this.activeGains;
+	}
+
+	public void setNumberOfUses(List<Uses> uses){
+		this.uses = uses;
+	}
+
+	public void setNumberOfUses(params Uses[] uses){
+		foreach(Uses item in uses) {
+			this.uses.Add(item);
+		}
+	}
+
+	public List<Uses> getNumberOfUses(){
+		return this.uses;
+	}
+
+	public void setDiscard(List<bool> discards){
+		this.discards = discards;
+	}
+
+	public void setDiscard(params bool[] discards){
+		foreach(bool item in discards) {
+			this.discards.Add(item);
+		}
+	}
+
+	public List<bool> getDiscard(){
+		return this.discards;
 	}
 }
