@@ -28,10 +28,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			//No passives
 		}); 
 		curCard.setActiveGains( //Set the active abilities the card can do
-			new Dictionary<Gains, int> //Set 1 of actives
-			{Gains.Gain_Spoils_Cards, 2}, //1.1
-			new Dictionary<Gains, int> //Set 2 of actives
-			{Gains.Gain_Action_Cards, 2} //2.1
+			new Dictionary<Gains, int>{ //Set 1 of actives
+				{Gains.Gain_Spoils_Cards, 2}}, //1.1
+			new Dictionary<Gains, int>{ //Set 2 of actives
+				{Gains.Gain_Action_Cards, 2}} //2.1
 		);
 		curCard.setWhenUsable( //Set when the actives are useable
 			Times.After_Successful_Mission_Or_Encounter, //Set 1
@@ -84,8 +84,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 		curCard = new SpoilsCard("Fernando the Chauffer");
 		curCard.setTypes(SpoilsTypes.Ally);
-		curCard.setCarryWeight();
-		curCard.setSellValue();
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(0); //Can't be sold
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 2},
 			{Skills.Survival, 1},

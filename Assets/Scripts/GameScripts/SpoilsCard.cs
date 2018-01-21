@@ -72,14 +72,6 @@ public class SpoilsCard : PartyCard {
 		return this.carryWeight;
 	}
 
-	public void setUses(Uses use){
-		this.uses = use;
-	}
-
-	public Uses getUses(){
-		return this.uses;
-	}
-
 	public void setRestrictions(params Restrictions[] restrictions){
 		foreach(Restrictions curRestriction in restrictions) {
 			this.restrictions.Add(curRestriction);
@@ -112,7 +104,7 @@ public class SpoilsCard : PartyCard {
 		}
 	}
 
-	public List<List<Times>> getWhenUsable(){
+	public List<Times> getWhenUsable(){
 		return this.whenUsable;
 	}
 
@@ -120,7 +112,7 @@ public class SpoilsCard : PartyCard {
 		this.activeGains = gains;
 	}
 
-	public void setActiveGames(params Dictionary<Gains,int>[] gains){
+	public void setActiveGains(params Dictionary<Gains,int>[] gains){
 		foreach(Dictionary<Gains,int> item in gains) {
 			this.activeGains.Add(item);
 		}
