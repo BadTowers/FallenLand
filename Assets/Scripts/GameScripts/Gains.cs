@@ -1,0 +1,49 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+
+public enum Gains {
+
+	//Skill check successes
+	Combat_Skill_Check_Successes,
+	Survival_Skill_Check_Successes,
+	Diplomacy_Skill_Check_Successes,
+	Mechanical_Skill_Check_Successes,
+	Techinical_Skill_Check_Successes,
+	Medical_Skill_Check_Successes,
+
+	//Faction stuff
+	Gain_Salvage,
+	Gain_Prestige,
+	Gain_Town_Health,
+	Lost_Salvage,
+	Lose_Prestige,
+	Lose_Town_Health,
+
+	//Encounters (TODO FINISH)
+	Ignore_Ambush,
+	Ignore_Perishable,
+
+	//Opponents
+	Damage_Opponent_Party,
+	Damage_Opponent_Characters,
+	Remove_Prestige,
+	Remove_Town_Health,
+
+	//Movement
+	Ignore_Delays,
+	Ignore_Action_Card_Movement,
+	Gain_Movement,
+	Lose_Movement,
+	All_Hexes_Cost,
+	Mountain_Hexes_Cost,
+	Plains_Hexes_Cost,
+	CityRad_Hexes_Cost,
+
+	//Clothing
+	Can_Combine_With_Armor,
+
+	//Character
+	Gain_Psych_Resistence,
+	Lose_Psych_Resistence,
+
+}
