@@ -342,7 +342,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			//No passives
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Draw_Spoils_Cards, 6, Gains.Keep_Spoils_Cards, 4, Gains.Swap_New_Characters_Freely, -1}
+			{Gains.Draw_Spoils_Cards, 6}, //1.1
+			{Gains.Keep_Spoils_Cards, 4}, //1.2
+			{Gains.Swap_New_Characters_Freely, -1} //1.3
 		});
 		curCard.setWhenUsable(
 			Times.Immediately
@@ -357,5 +359,124 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			//No restrictions
 		);
 		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Survival Knife");
+		curCard.setTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Knife);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(3);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2},
+			{Skills.Survival, 2},
+			{Skills.Medical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("9mm Submachine Gun");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Computer Technical Manual");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(8);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Mechanical, 2},
+			{Skills.Techinical, 4}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Techinical_Skill_Check_Successes, 1}
+		});
+		curCard.setWhenUsable(
+			Times.After_Techinical_Skill_Check_Failure
+		);
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Cordless Power Drill");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(8);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Mechanical, 4},
+			{Skills.Techinical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		//TODO add more
 	}
 }
