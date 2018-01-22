@@ -8,7 +8,7 @@ public enum Times {
 	Immediately,
 
 	//Actions against player
-	Theft_Against_Party,
+	Party_Target_Of_Theft,
 
 	//Skill checks
 	After_Combat_Skill_Check_Failure,
