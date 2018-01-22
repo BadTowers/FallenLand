@@ -67,12 +67,12 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			//No actives
 		});
-		curCard.setWhenUsable(new List<Times> {
+		curCard.setWhenUsable(
 			//No actives
-		});
-		curCard.setNumberOfUses(new List<Uses> {
+		);
+		curCard.setNumberOfUses(
 			//No actives
-		});
+		);
 		curCard.setDiscard(
 			//No actives
 		);
@@ -102,12 +102,12 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Pay_Salvage, 5}
 		});
-		curCard.setWhenUsable(new List<Times> {
-			{Times.Immediately}
-		});
-		curCard.setNumberOfUses(new List<Uses> {
-			{Uses.Once}
-		});
+		curCard.setWhenUsable(
+			Times.Immediately
+		);
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
 		curCard.setDiscard(
 			false
 		);
@@ -115,5 +115,101 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Restrictions.Equip_To_Vehicle
 		);
 		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Portable Generator");
+		curCard.setTypes(SpoilsTypes.Vehicle_Equipment);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(16);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Survival, 2},
+			{Skills.Mechanical, 3},
+			{Skills.Techinical, 5}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Lose_Movement, 1}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			Restrictions.Equip_To_Vehicle,
+			Restrictions.Four_Wheels_Or_More
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Genuine Sock Monkey Puppet");
+		curCard.setTypes(SpoilsTypes.Equipment);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(3);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 1},
+			{Skills.Medical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Give_Opponent_This_Item, -1} //int -1 means nothing in this case
+		});
+		curCard.setWhenUsable(
+			Times.Party_Target_Of_Theft
+		);
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Matching Baja Buggies");
+		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+		curCard.setCarryWeight(8);
+		curCard.setSellValue(14);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 4},
+			{Skills.Survival, 3},
+			{Skills.Diplomacy, 1},
+			{Skills.Mechanical, 1},
+			{Skills.Medical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2},
+			{Gains.All_Hex_Movement_Cost, 1}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		//TODO add more
 	}
 }

@@ -28,6 +28,7 @@ public enum Gains {
 	Damage_Opponent_Characters,
 	Remove_Prestige,
 	Remove_Town_Health,
+	Give_Opponent_This_Item,
 
 	//Movement
 	Ignore_Delays,
