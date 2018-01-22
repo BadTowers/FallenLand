@@ -11,6 +11,9 @@ public enum Gains {
 	Techinical_Skill_Check_Successes,
 	Medical_Skill_Check_Successes,
 
+	//Combat
+	First_Strike,
+
 	//Faction stuff
 	Gain_Salvage,
 	Gain_Prestige,

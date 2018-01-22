@@ -3,6 +3,7 @@ public enum SpoilsTypes { //TODO finish
 	Alcohol,
 	Ally,
 	Armor,
+	Assault_Rifle,
 	Book,
 	Bow,
 	Clothing,

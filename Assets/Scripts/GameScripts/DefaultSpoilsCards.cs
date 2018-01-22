@@ -210,6 +210,88 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO add more
+		curCard = new SpoilsCard("5.56mm Military Rifle");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+		curCard.setCarryWeight(5);
+		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 7}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Silenced 9mm Submachine Gun");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(14);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.First_Strike, -1} //int -1 means nothing here
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No actives
+		});
+		curCard.setWhenUsable(
+			//No actives
+		);
+		curCard.setNumberOfUses(
+			//No actives
+		);
+		curCard.setDiscard(
+			//No actives
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+
+		curCard = new SpoilsCard("");
+		curCard.setTypes();
+		curCard.setCarryWeight();
+		curCard.setSellValue();
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+
+		});
+		curCard.setWhenUsable(
+
+		);
+		curCard.setNumberOfUses(
+
+		);
+		curCard.setDiscard(
+
+		);
+		curCard.setRestrictions(
+
+		);
+		spoilsCards.Add(curCard);
 	}
 }
