@@ -10,6 +10,9 @@ public enum Times {
 	//Actions against player
 	Party_Target_Of_Theft,
 
+	//Vehicle
+	Vehicle_Destroyed,
+
 	//Skill checks
 	After_Combat_Skill_Check_Failure,
 	After_Survival_Skill_Check_Failure,

@@ -13,6 +13,8 @@ public enum Gains {
 
 	//Combat
 	First_Strike,
+	Gain_Armor,
+	Lose_Armor,
 
 	//Faction stuff
 	Gain_Salvage,
@@ -49,6 +51,8 @@ public enum Gains {
 	//Vehicles
 	Prevent_Theft,
 	Prevent_Distruction,
+	Equip_Second_Vehicle_Face_Down,
+	Equip_Second_Vehicle_Face_Up,
 
 	//Character
 	Gain_Psych_Resistence,
@@ -63,6 +67,11 @@ public enum Gains {
 	Lose_Spoils_Cards,
 	Lose_Action_Cards,
 	Lose_Character_Cards,
+	Draw_Spoils_Cards,
+	Draw_Character_Cards,
+	Keep_Spoils_Cards,
+	Keep_Character_Cards,
+	Swap_New_Characters_Freely,
 
 	//Hiring
 	Pay_Salvage,

@@ -10,4 +10,8 @@ public enum Restrictions  {
 
 	//Allies
 	Equip_To_Vehicle,
+
+	//Clothing
+	Not_Used_With_Other_Clothing,
+	Not_Used_With_Other_Armor,
 }

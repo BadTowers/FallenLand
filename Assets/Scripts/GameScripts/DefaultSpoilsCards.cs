@@ -267,30 +267,94 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 
 
-		curCard = new SpoilsCard("");
-		curCard.setTypes();
-		curCard.setCarryWeight();
-		curCard.setSellValue();
+		curCard = new SpoilsCard("Mercenary Armor");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(14);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
-
+			{Skills.Combat, 1},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 1}
 		});
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
-
+			{Gains.Gain_Armor, 1}
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-
+			//No actives
 		});
 		curCard.setWhenUsable(
-
+			//No actives
 		);
 		curCard.setNumberOfUses(
-
+			//No actives
 		);
 		curCard.setDiscard(
-
+			//No actives
 		);
 		curCard.setRestrictions(
+			Restrictions.Not_Used_With_Other_Armor,
+			Restrictions.Not_Used_With_Other_Clothing
+		);
+		spoilsCards.Add(curCard);
 
+
+		curCard = new SpoilsCard("Semi Truck");
+		curCard.setTitleSubString("With Trailer");
+		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(26);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 6},
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 2},
+			{Skills.Mechanical, 1},
+			{Skills.Medical, 3}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 1}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Equip_Second_Vehicle_Face_Down, -1} //int -1 means nothing here
+		});
+		curCard.setWhenUsable(
+			Times.Vehicle_Destroyed
+		);
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Conscription");
+		curCard.setTypes(SpoilsTypes.Event);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(5);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			//No skills
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Draw_Spoils_Cards, 6, Gains.Keep_Spoils_Cards, 4, Gains.Swap_New_Characters_Freely, -1}
+		});
+		curCard.setWhenUsable(
+			Times.Immediately
+		);
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		curCard.setRestrictions(
+			//No restrictions
 		);
 		spoilsCards.Add(curCard);
 	}
