@@ -17,6 +17,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		SpoilsCard tempCard;
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("A Case of the Finest Champagne"); //Create the card and set the title
 		curCard.setTypes(SpoilsTypes.Stowable, SpoilsTypes.Alcohol, SpoilsTypes.Equipment); //Set all types the card fulfils
 		curCard.setCarryWeight(2); //Set how much the item weights
@@ -52,6 +53,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard); //Add the card to the list of all cards
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("6 Armored War Horses");
 		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
 		curCard.setCarryWeight(12);
@@ -83,6 +85,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Fernando the Chauffer");
 		curCard.setTypes(SpoilsTypes.Ally);
 		curCard.setCarryWeight(0);
@@ -118,6 +121,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Portable Generator");
 		curCard.setTypes(SpoilsTypes.Vehicle_Equipment);
 		curCard.setCarryWeight(0);
@@ -149,6 +153,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Genuine Sock Monkey Puppet");
 		curCard.setTypes(SpoilsTypes.Equipment);
 		curCard.setCarryWeight(0);
@@ -178,6 +183,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Matching Baja Buggies");
 		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 		curCard.setCarryWeight(8);
@@ -211,6 +217,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("5.56mm Military Rifle");
 		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 		curCard.setCarryWeight(5);
@@ -239,6 +246,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Silenced 9mm Submachine Gun");
 		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 		curCard.setCarryWeight(4);
@@ -268,6 +276,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Mercenary Armor");
 		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
 		curCard.setCarryWeight(3);
@@ -299,6 +308,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Semi Truck");
 		curCard.setTitleSubString("With Trailer");
 		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
@@ -332,6 +342,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Conscription");
 		curCard.setTypes(SpoilsTypes.Event);
 		curCard.setCarryWeight(0);
@@ -362,6 +373,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Survival Knife");
 		curCard.setTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Knife);
 		curCard.setCarryWeight(1);
@@ -392,6 +404,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("9mm Submachine Gun");
 		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 		curCard.setCarryWeight(4);
@@ -420,6 +433,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Computer Technical Manual");
 		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 		curCard.setCarryWeight(0);
@@ -449,6 +463,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Cordless Power Drill");
 		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
 		curCard.setCarryWeight(2);
@@ -478,6 +493,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Arnold Schwartz's");
 		curCard.setTitleSubString("Kronan the Barbarian Sword");
 		curCard.setTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword, SpoilsTypes.Relic);
@@ -509,6 +525,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
 		curCard = new SpoilsCard("Pre-War Diaster Kit");
 		curCard.setTypes(SpoilsTypes.Equipment);
 		curCard.setCarryWeight(4);
@@ -640,5 +657,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		);
 		curCard.addD6Option(tempCard);
 		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		//TODO add more cards
 	}
 }
