@@ -14,6 +14,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 		//Add the cards to the list
 		SpoilsCard curCard;
+		SpoilsCard tempCard;
 
 
 		curCard = new SpoilsCard("A Case of the Finest Champagne"); //Create the card and set the title
@@ -477,6 +478,167 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO add more
+		curCard = new SpoilsCard("Arnold Schwartz's");
+		curCard.setTitleSubString("Kronan the Barbarian Sword");
+		curCard.setTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword, SpoilsTypes.Relic);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(14);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5},
+			{Skills.Medical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Avoid_Death, -1}, //int -1 means nothing
+			{Gains.Remove_All_Damage, -1} //int -1 means nothing
+		});
+		curCard.setWhenUsable(
+			Times.After_Death
+		);
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Game
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		curCard = new SpoilsCard("Pre-War Diaster Kit");
+		curCard.setTypes(SpoilsTypes.Equipment);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(11);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 2},
+			{Skills.Mechanical, 2},
+			{Skills.Techinical, 2},
+			{Skills.Medical, 2}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Roll_D6, 1}
+		});
+		curCard.setWhenUsable(
+			Times.Before_Party_Exploits_Phase
+		);
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		tempCard = new SpoilsCard("Option 1");
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Reroll_Any_Critical_Fail, -1} //int -1 means nothing here
+		});
+		tempCard.setWhenUsable(
+			Times.After_Any_Skill_Critical_Failure
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.After_Party_Exploits_Phase
+		);
+		curCard.addD6Option(tempCard);
+		tempCard = new SpoilsCard("Option 2");
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Action_Cards, 1}
+		});
+		tempCard.setWhenUsable(
+			Times.Immediately
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Never
+		);
+		tempCard = new SpoilsCard("Option 3");
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Heal_D6_Damage, 2}
+		});
+		tempCard.setWhenUsable(
+			Times.Immediately
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Never
+		);
+		curCard.addD6Option(tempCard);
+		tempCard = new SpoilsCard("Option 4");
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2}
+		});
+		tempCard.setWhenUsable(
+			Times.Immediately
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.After_Party_Exploits_Phase
+		);
+		curCard.addD6Option(tempCard);
+		tempCard = new SpoilsCard("Option 5");
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Salvage, 3}
+		});
+		tempCard.setWhenUsable(
+			Times.Immediately
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Never
+		);
+		curCard.addD6Option(tempCard);
+		tempCard = new SpoilsCard("Option 6");
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.No_Effect, -1} //int -1 means nothing here
+		});
+		tempCard.setWhenUsable(
+			Times.Immediately
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Immediately
+		);
+		curCard.addD6Option(tempCard);
+		spoilsCards.Add(curCard);
 	}
 }

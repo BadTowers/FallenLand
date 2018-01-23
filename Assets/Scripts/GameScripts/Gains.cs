@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public enum Gains {
 
+	//General
+	No_Effect,
+
 	//Skill check successes
 	Combat_Skill_Check_Successes,
 	Survival_Skill_Check_Successes,
@@ -10,6 +13,22 @@ public enum Gains {
 	Mechanical_Skill_Check_Successes,
 	Techinical_Skill_Check_Successes,
 	Medical_Skill_Check_Successes,
+	Failed_Skill_Check_Successes,
+	Reroll_Combat_Skill_Check,
+	Reroll_Survival_Skill_Check,
+	Reroll_Diplomacy_Skill_Check,
+	Reroll_Mechanical_Skill_Check,
+	Reroll_Techinical_Skill_Check,
+	Reroll_Medical_Skill_Check,
+	Reroll_Any_Skill_Check,
+	Reroll_Failed_Skill_Check,
+	Reroll_Combat_Critical_Fail,
+	Reroll_Survival_Critical_Fail,
+	Reroll_Diplomacy_Critical_Fail,
+	Reroll_Mechanical_Critical_Fail,
+	Reroll_Techinical_Critical_Fail,
+	Reroll_Medical_Critical_Fail,
+	Reroll_Any_Critical_Fail,
 
 	//Combat
 	First_Strike,
@@ -59,6 +78,10 @@ public enum Gains {
 	Lose_Psych_Resistence,
 	Gain_Carry_Weight,
 	Lose_Carry_Weight,
+	Avoid_Death,
+	Remove_All_Damage,
+	Heal_D6_Damage,
+	Heal_D10_Damage,
 
 	//Cards
 	Gain_Spoils_Cards,
@@ -75,5 +98,11 @@ public enum Gains {
 
 	//Hiring
 	Pay_Salvage,
+
+	//D6 rewards
+	Roll_D6,
+
+	//D10 rewards
+	Roll_D10,
 
 }

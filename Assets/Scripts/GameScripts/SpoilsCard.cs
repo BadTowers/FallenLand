@@ -12,6 +12,9 @@ public class SpoilsCard : PartyCard {
 	private List<Times> whenUsable; //List of lists denoting different use times for different active choices
 	private List<Uses> uses; 
 	private List<bool> discards; 
+	private List<SpoilsCard> d6; //D6 options can be viewed as 6 individual spoils cards, each with one active ability representing the D6 option
+	private bool isTemp;
+	private Times whenTempEnd;
 
 	private void initLists(){
 		types = new List<SpoilsTypes>();
@@ -21,9 +24,12 @@ public class SpoilsCard : PartyCard {
 		whenUsable = new List<Times>();
 		uses = new List<Uses>();
 		discards = new List<bool>();
+		d6 = new List<SpoilsCard>();
 
 		sellValue = 0;
 		carryWeight = 0;
+		isTemp = false;
+		whenTempEnd = Times.Never;
 	}
 
 	public SpoilsCard(string title) : base(title) {
@@ -47,9 +53,14 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public void setTypes(params SpoilsTypes[] types){
+		this.types = new List<SpoilsTypes>();
 		foreach(SpoilsTypes item in types) {
 			this.types.Add(item);
 		}
+	}
+
+	public void addType(SpoilsTypes type){
+		this.types.Add(type);
 	}
 
 	public List<SpoilsTypes> getTypes() {
@@ -73,6 +84,7 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public void setRestrictions(params Restrictions[] restrictions){
+		this.restrictions = new List<Restrictions>();
 		foreach(Restrictions curRestriction in restrictions) {
 			this.restrictions.Add(curRestriction);
 		}
@@ -80,6 +92,10 @@ public class SpoilsCard : PartyCard {
 
 	public void setRestrictions(List<Restrictions> restrictions){
 		this.restrictions = restrictions;
+	}
+
+	public void addRestriction(Restrictions res){
+		this.restrictions.Add(res);
 	}
 
 	public List<Restrictions> getRestrictions(){
@@ -99,9 +115,14 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public void setWhenUsable(params Times[] when){
+		this.whenUsable = new List<Times>();
 		foreach(Times item in when) {
 			this.whenUsable.Add(item);
 		}
+	}
+
+	public void addWhenUsable(Times time){
+		this.whenUsable.Add(time);
 	}
 
 	public List<Times> getWhenUsable(){
@@ -113,9 +134,18 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public void setActiveGains(params Dictionary<Gains,int>[] gains){
+		this.activeGains = new List<Dictionary<Gains, int>>();
 		foreach(Dictionary<Gains,int> item in gains) {
 			this.activeGains.Add(item);
 		}
+	}
+
+	public void addActiveGain(Gains gain, int value){
+		this.activeGains.Add(new Dictionary<Gains, int>{ { gain, value } });
+	}
+
+	public void addActiveGain(Dictionary<Gains, int> gain){
+		this.activeGains.Add(gain);
 	}
 
 	public List<Dictionary<Gains, int>> getActiveGains(){
@@ -127,9 +157,14 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public void setNumberOfUses(params Uses[] uses){
+		this.uses = new List<Uses>();
 		foreach(Uses item in uses) {
 			this.uses.Add(item);
 		}
+	}
+
+	public void addNumberOfUses(Uses use){
+		this.uses.Add(use);
 	}
 
 	public List<Uses> getNumberOfUses(){
@@ -141,12 +176,52 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public void setDiscard(params bool[] discards){
+		this.discards = new List<bool>();
 		foreach(bool item in discards) {
 			this.discards.Add(item);
 		}
 	}
 
+	public void addDiscard(bool disc){
+		this.discards.Add(disc);
+	}
+
 	public List<bool> getDiscard(){
 		return this.discards;
+	}
+
+	public void setD6Options(List<SpoilsCard> d6){
+		this.d6 = d6;
+	}
+
+	public void setD6Options(params SpoilsCard[] d6){
+		this.d6 = new List<SpoilsCard>();
+		foreach(SpoilsCard item in d6) {
+			this.d6.Add(item);
+		}
+	}
+
+	public void addD6Option(SpoilsCard card){
+		this.d6.Add(card);
+	}
+
+	public List<SpoilsCard> getD6Options(){
+		return this.d6;
+	}
+
+	public void setIsTemp(bool temp){
+		this.isTemp = temp;
+	}
+
+	public bool getIsTemp(){
+		return this.isTemp;
+	}
+
+	public void setWhenTempEnd(Times time){
+		this.whenTempEnd = time;
+	}
+
+	public Times getWhenTempEnd(){
+		return this.whenTempEnd;
 	}
 }
