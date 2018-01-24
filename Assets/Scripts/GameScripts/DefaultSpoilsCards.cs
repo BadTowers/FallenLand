@@ -12,6 +12,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		//Initialize the lists for the cards
 		spoilsCards = new List<SpoilsCard>();
 
+		const int VALUE_NOT_NEEDED = -1;
+
 		//Add the cards to the list
 		SpoilsCard curCard;
 		SpoilsCard tempCard;
@@ -100,8 +102,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2},
 			{Gains.Gain_Carry_Weight, 4},
-			{Gains.Prevent_Distruction, -1}, //int value of -1 means nothing in this case
-			{Gains.Prevent_Theft, -1} //int value of -1 means nothing in this case
+			{Gains.Prevent_Distruction, VALUE_NOT_NEEDED},
+			{Gains.Prevent_Theft, VALUE_NOT_NEEDED}
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Pay_Salvage, 5}
@@ -166,7 +168,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			//No passives
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Give_Opponent_This_Item, -1} //int -1 means nothing in this case
+			{Gains.Give_Opponent_This_Item, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(
 			Times.Party_Target_Of_Theft
@@ -255,7 +257,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Combat, 5}
 		});
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			{Gains.First_Strike, -1} //int -1 means nothing here
+			{Gains.First_Strike, VALUE_NOT_NEEDED}
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			//No actives
@@ -325,7 +327,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Gain_Movement, 1}
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Equip_Second_Vehicle_Face_Down, -1} //int -1 means nothing here
+			{Gains.Equip_Second_Vehicle_Face_Down, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(
 			Times.Vehicle_Destroyed
@@ -356,7 +358,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Draw_Spoils_Cards, 6}, //1.1
 			{Gains.Keep_Spoils_Cards, 4}, //1.2
-			{Gains.Swap_New_Characters_Freely, -1} //1.3
+			{Gains.Swap_New_Characters_Freely, VALUE_NOT_NEEDED} //1.3
 		});
 		curCard.setWhenUsable(
 			Times.Immediately
@@ -446,7 +448,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			//No passives
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Techinical_Skill_Check_Successes, 1}
+			{Gains.Techinical_Skill_Check_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(
 			Times.After_Techinical_Skill_Check_Failure
@@ -507,8 +509,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			//No passives
 		});
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Avoid_Death, -1}, //int -1 means nothing
-			{Gains.Remove_All_Damage, -1} //int -1 means nothing
+			{Gains.Avoid_Death, VALUE_NOT_NEEDED},
+			{Gains.Remove_Character_All_Damage, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(
 			Times.After_Death
@@ -641,7 +643,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.addD6Option(tempCard);
 		tempCard = new SpoilsCard("Option 6");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.No_Effect, -1} //int -1 means nothing here
+			{Gains.No_Effect, VALUE_NOT_NEEDED}
 		});
 		tempCard.setWhenUsable(
 			Times.Immediately
@@ -660,6 +662,43 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 
 		/****************************************************************************************************************************************************************/
-		//TODO add more cards
+		curCard = new SpoilsCard("Biomedical Kit");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(15);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 1},
+			{Skills.Techinical, 4},
+			{Skills.Medical, 4}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			new Dictionary<Gains, int>{ //Set 1 of actives
+				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
+				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}},
+			new Dictionary<Gains, int>{ //Set 2 of actives
+				{Gains.Medical_Skill_Check_Pass, VALUE_NOT_NEEDED}} //2.1
+		});
+		curCard.setWhenUsable(
+			Times.Anytime,
+			Times.After_Medical_Skill_Check_Failure
+		);
+		curCard.setNumberOfUses(
+			Uses.Once,
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true,
+			true
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		//TODO add more
 	}
 }

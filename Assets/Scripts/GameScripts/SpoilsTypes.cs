@@ -16,6 +16,7 @@ public enum SpoilsTypes { //TODO finish
 	Heavy, 
 	Knife,
 	Mechanical,
+	Medical,
 	Melee_Weapon,
 	Party_Equipment,
 	Permenant, 
