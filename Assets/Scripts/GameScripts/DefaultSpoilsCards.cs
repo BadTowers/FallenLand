@@ -28,9 +28,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 3},
 			{Skills.Medical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{ //Set what passive gains the spoils card gives
-			//No passives
-		}); 
+		/* No passives */
 		curCard.setActiveGains( //Set the active abilities the card can do
 			new Dictionary<Gains, int>{ //Set 1 of actives
 				{Gains.Gain_Spoils_Cards, 2}}, //1.1
@@ -49,9 +47,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			true, //Set 1
 			true //Set 2
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard); //Add the card to the list of all cards
 
 
@@ -69,21 +65,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Gain_Movement, 1}, //Passive 1
 			{Gains.All_Hex_Movement_Cost, 1} //Passive 2
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -117,8 +100,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		curCard.setRestrictions(
-			Restrictions.Equip_To_Vehicle
+		curCard.setRestrictions(new List<Restrictions>(){ //Set 1 of restrictions
+				Restrictions.Equip_To_Vehicle //1.1
+			}
 		);
 		spoilsCards.Add(curCard);
 
@@ -136,21 +120,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
 			{Gains.Lose_Movement, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			Restrictions.Equip_To_Vehicle,
-			Restrictions.Four_Wheels_Or_More
+		/* No actives */
+		curCard.setRestrictions(new List<Restrictions>(){ //Set 1 of restrictions
+				Restrictions.Equip_To_Vehicle, //1.1
+				Restrictions.Four_Wheels_Or_More //1.2
+			}
 		);
 		spoilsCards.Add(curCard);
 
@@ -179,9 +153,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -201,21 +173,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Gain_Movement, 2},
 			{Gains.All_Hex_Movement_Cost, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -227,24 +186,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 7}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No passives */
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -259,21 +203,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
 			{Gains.First_Strike, VALUE_NOT_NEEDED}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -291,21 +222,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Armor, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			Restrictions.Not_Used_With_Other_Armor,
-			Restrictions.Not_Used_With_Other_Clothing
+		/* No actives */
+		curCard.setRestrictions( new List<Restrictions>(){ //Set 1
+				Restrictions.Not_Used_With_Other_Armor, //1.1
+				Restrictions.Not_Used_With_Other_Clothing //1.2
+			}
 		);
 		spoilsCards.Add(curCard);
 
@@ -338,9 +259,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -369,9 +288,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -385,24 +302,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Survival, 2},
 			{Skills.Medical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No passives */
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -414,24 +316,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 5}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No passives */
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -444,9 +331,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 2},
 			{Skills.Techinical, 4}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
+		/* No passives */
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Techinical_Skill_Check_Pass, VALUE_NOT_NEEDED}
 		});
@@ -459,9 +344,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -474,24 +357,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 4},
 			{Skills.Techinical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No actives
-		});
-		curCard.setWhenUsable(
-			//No actives
-		);
-		curCard.setNumberOfUses(
-			//No actives
-		);
-		curCard.setDiscard(
-			//No actives
-		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No passives */
+		/* No actives */
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -505,9 +373,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Combat, 5},
 			{Skills.Medical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
+		/* No passives */
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Avoid_Death, VALUE_NOT_NEEDED},
 			{Gains.Remove_Character_All_Damage, VALUE_NOT_NEEDED}
@@ -521,9 +387,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -539,9 +403,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Techinical, 2},
 			{Skills.Medical, 2}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
+		/* No passives */
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
@@ -554,12 +416,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
-		tempCard = new SpoilsCard("Option 1");
+		/* No restrictions */
+		tempCard = new SpoilsCard("Option 1"); //When a 1 is rolled
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Reroll_Any_Critical_Fail, -1} //int -1 means nothing here
+			{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
 		});
 		tempCard.setWhenUsable(
 			Times.After_Any_Skill_Critical_Failure
@@ -574,7 +434,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.After_Party_Exploits_Phase
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 2");
+		tempCard = new SpoilsCard("Option 2"); //When a 2 is rolled
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Action_Cards, 1}
 		});
@@ -590,7 +450,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setWhenTempEnd(
 			Times.Never
 		);
-		tempCard = new SpoilsCard("Option 3");
+		tempCard = new SpoilsCard("Option 3"); //When a 3 is rolled
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Heal_D6_Damage, 2}
 		});
@@ -607,7 +467,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Never
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 4");
+		tempCard = new SpoilsCard("Option 4"); //When a 4 is rolled
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
@@ -624,7 +484,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.After_Party_Exploits_Phase
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 5");
+		tempCard = new SpoilsCard("Option 5"); //When a 5 is rolled
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 3}
 		});
@@ -641,23 +501,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Never
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 6");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.No_Effect, VALUE_NOT_NEEDED}
-		});
-		tempCard.setWhenUsable(
-			Times.Immediately
-		);
-		tempCard.setNumberOfUses(
-			Uses.Once_Per_Turn
-		);
-		tempCard.setDiscard(
-			true
-		);
-		tempCard.setWhenTempEnd(
-			Times.Immediately
-		);
-		curCard.addD6Option(tempCard);
+		//Roll 6 = no effect
 		spoilsCards.Add(curCard);
 
 
@@ -671,9 +515,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Techinical, 4},
 			{Skills.Medical, 4}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
+		/* No passives */
 		curCard.setActiveGains(
 			new Dictionary<Gains, int>{ //Set 1 of actives
 				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED}, //1.1
@@ -693,9 +535,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			true,
 			true
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -708,9 +548,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 2},
 			{Skills.Medical, 5}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
-		});
+		/* No passives */
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
 			{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}
@@ -724,9 +562,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -753,9 +589,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		curCard.setRestrictions(
-			//No restrictions
-		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -767,24 +601,113 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passive
+		/* No passives */
+		/* No actives */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Top o' the Line Stun Gun");
+		curCard.setTypes(SpoilsTypes.Melee_Weapon);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Techinical, 1},
+			{Skills.Medical, 1}
 		});
+		/* No passives */
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			//No active
+			{Gains.Roll_D6, 1}
 		});
 		curCard.setWhenUsable(
-			//No active
+			Times.After_Successful_Mission_Or_Encounter
 		);
 		curCard.setNumberOfUses(
-			//No active
+			Uses.Once_Per_Successful_Encounter_Or_Mission
 		);
 		curCard.setDiscard(
-			//No active
+			false
 		);
+		/* No restrictions */
+		tempCard = new SpoilsCard("Option 1"); //When a 1 is rolled
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Spoils_Cards, 1}
+		});
+		tempCard.setWhenUsable(
+			Times.Immediately
+		);
+		tempCard.setNumberOfUses(
+			Uses.Once
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Never
+		);
+		curCard.addD6Option(tempCard);
+		//Rolling a 2-6 has no effect
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Sniper Scope Kit");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Permenant);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(10);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2},
+			{Skills.Survival, 2}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.First_Strike, VALUE_NOT_NEEDED}
+		});
+		/* No actives */
 		curCard.setRestrictions(
-			//No restrictions
+			new List<Restrictions>(){ //Set 1
+				Restrictions.Equip_To_Assault_Rifle //1.1
+			},
+			new List<Restrictions>(){ //Set 2
+				Restrictions.Equip_To_Rifle //2.1
+			}
 		);
 		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Snub Nose .357 Revolver");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(7);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3}
+		});
+		/* No passives */
+		/* No actives */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Sawed Off Double Barreled");
+		curCard.setTitleSubString("12 Gauge Breech Loading Shotgun");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Melee_Weapon, SpoilsTypes.Shotgun);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(8);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Cannot_Be_Stolen, VALUE_NOT_NEEDED},
+			{Gains.Goes_To_Auction_House_Upon_Death, VALUE_NOT_NEEDED}
+		});
+		/* No actives */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+
 	}
 }

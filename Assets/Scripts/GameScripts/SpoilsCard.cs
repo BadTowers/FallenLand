@@ -8,23 +8,25 @@ public class SpoilsCard : PartyCard {
 	private int carryWeight; //The weight of the item
 	private List<Dictionary<Gains, int>> activeGains; //List of different active ability choices the player has
 	private Dictionary<Gains, int> passiveGains;
-	private List<Restrictions> restrictions;
+	private List<List<Restrictions>> restrictions;
 	private List<Times> whenUsable; //List of lists denoting different use times for different active choices
 	private List<Uses> uses; 
 	private List<bool> discards; 
 	private List<SpoilsCard> d6; //D6 options can be viewed as 6 individual spoils cards, each with one active ability representing the D6 option
 	private bool isTemp;
 	private Times whenTempEnd;
+	private List<SpoilsCard> attachments; //Spoils cards attached to this spoils card
 
 	private void initLists(){
 		types = new List<SpoilsTypes>();
 		activeGains = new List<Dictionary<Gains, int>>();
 		passiveGains = new Dictionary<Gains, int>();
-		restrictions = new List<Restrictions>();
+		restrictions = new List<List<Restrictions>>();
 		whenUsable = new List<Times>();
 		uses = new List<Uses>();
 		discards = new List<bool>();
 		d6 = new List<SpoilsCard>();
+		attachments = new List<SpoilsCard>();
 
 		sellValue = 0;
 		carryWeight = 0;
@@ -83,22 +85,22 @@ public class SpoilsCard : PartyCard {
 		return this.carryWeight;
 	}
 
-	public void setRestrictions(params Restrictions[] restrictions){
-		this.restrictions = new List<Restrictions>();
-		foreach(Restrictions curRestriction in restrictions) {
+	public void setRestrictions(params List<Restrictions>[] restrictions){
+		this.restrictions = new List<List<Restrictions>>();
+		foreach(List<Restrictions> curRestriction in restrictions) {
 			this.restrictions.Add(curRestriction);
 		}
 	}
 
-	public void setRestrictions(List<Restrictions> restrictions){
+	public void setRestrictions(List<List<Restrictions>> restrictions){
 		this.restrictions = restrictions;
 	}
 
-	public void addRestriction(Restrictions res){
+	public void addRestriction(List<Restrictions> res){
 		this.restrictions.Add(res);
 	}
 
-	public List<Restrictions> getRestrictions(){
+	public List<List<Restrictions>> getRestrictions(){
 		return this.restrictions;
 	}
 
@@ -223,5 +225,13 @@ public class SpoilsCard : PartyCard {
 
 	public Times getWhenTempEnd(){
 		return this.whenTempEnd;
+	}
+
+	public void addAttachment(SpoilsCard att){
+		this.attachments.Add(att);
+	}
+
+	public List<SpoilsCard> getAttachments(){
+		return this.attachments;
 	}
 }

@@ -5,6 +5,8 @@ public enum Gains {
 
 	//General
 	No_Effect,
+	Cannot_Be_Stolen,
+	Goes_To_Auction_House_Upon_Death,
 
 	//Skill check successes
 	Combat_Skill_Check_Successes, //Adds successes to the total

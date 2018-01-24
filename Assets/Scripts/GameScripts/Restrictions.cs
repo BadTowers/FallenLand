@@ -14,4 +14,8 @@ public enum Restrictions  {
 	//Clothing
 	Not_Used_With_Other_Clothing,
 	Not_Used_With_Other_Armor,
+
+	//Weapon Mods
+	Equip_To_Assault_Rifle,
+	Equip_To_Rifle,
 }
