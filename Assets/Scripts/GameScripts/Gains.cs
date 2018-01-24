@@ -54,9 +54,17 @@ public enum Gains {
 	Ignore_Ambush,
 	Ignore_Perishable,
 
+	//Weapons
+	Deals_Radiation_Damage,
+	Deals_Infected_Damage,
+
 	//Opponents
-	Damage_Opponent_Party,
-	Damage_Opponent_Characters,
+	Damage_Opponent_Party_Physical,
+	Damage_Opponent_Party_Infected,
+	Damage_Opponent_Party_Radiation,
+	Damage_Opponent_Character_By_Crown_Physical,
+	Damage_Opponent_Character_By_Crown_Infected,
+	Damage_Opponent_Character_By_Crown_Radiation,
 	Remove_Prestige,
 	Remove_Town_Health,
 	Give_Opponent_This_Item,

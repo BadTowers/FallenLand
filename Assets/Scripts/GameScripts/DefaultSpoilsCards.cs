@@ -676,8 +676,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		curCard.setActiveGains(
 			new Dictionary<Gains, int>{ //Set 1 of actives
-				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
-				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}},
+				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED}, //1.1
+				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}}, //1.2
 			new Dictionary<Gains, int>{ //Set 2 of actives
 				{Gains.Medical_Skill_Check_Pass, VALUE_NOT_NEEDED}} //2.1
 		);
@@ -699,6 +699,92 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO add more
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Crate of Medical Supplies");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(7);
+		curCard.setSellValue(10);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 2},
+			{Skills.Medical, 5}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passives
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
+			{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(
+			Times.Anytime
+		);
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Extra Rusty Cleaver");
+		curCard.setTypes(SpoilsTypes.Melee_Weapon);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(3);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Deals_Infected_Damage, 1}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Damage_Opponent_Character_By_Crown_Infected, 1}
+		});
+		curCard.setWhenUsable(
+			Times.After_PvP_Round
+		);
+		curCard.setNumberOfUses(
+			Uses.Once_Per_PvP_Round
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Wrist Rocker Slingshot");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(2);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			//No passive
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			//No active
+		});
+		curCard.setWhenUsable(
+			//No active
+		);
+		curCard.setNumberOfUses(
+			//No active
+		);
+		curCard.setDiscard(
+			//No active
+		);
+		curCard.setRestrictions(
+			//No restrictions
+		);
+		spoilsCards.Add(curCard);
 	}
 }
