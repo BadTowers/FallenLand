@@ -674,13 +674,13 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setPassiveGains(new Dictionary<Gains, int>{
 			//No passives
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setActiveGains(
 			new Dictionary<Gains, int>{ //Set 1 of actives
 				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
 				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}},
 			new Dictionary<Gains, int>{ //Set 2 of actives
 				{Gains.Medical_Skill_Check_Pass, VALUE_NOT_NEEDED}} //2.1
-		});
+		);
 		curCard.setWhenUsable(
 			Times.Anytime,
 			Times.After_Medical_Skill_Check_Failure
