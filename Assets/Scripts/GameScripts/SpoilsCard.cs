@@ -9,7 +9,7 @@ public class SpoilsCard : PartyCard {
 	private List<Dictionary<Gains, int>> activeGains; //List of different active ability choices the player has
 	private Dictionary<Gains, int> passiveGains;
 	private List<List<Restrictions>> restrictions;
-	private List<Times> whenUsable; //List of lists denoting different use times for different active choices
+	private List<List<Times>> whenUsable; //List of lists denoting different use times for different active choices
 	private List<Uses> uses; 
 	private List<bool> discards; 
 	private List<SpoilsCard> d6; //D6 options can be viewed as 6 individual spoils cards, each with one active ability representing the D6 option
@@ -22,7 +22,7 @@ public class SpoilsCard : PartyCard {
 		activeGains = new List<Dictionary<Gains, int>>();
 		passiveGains = new Dictionary<Gains, int>();
 		restrictions = new List<List<Restrictions>>();
-		whenUsable = new List<Times>();
+		whenUsable = new List<List<Times>>();
 		uses = new List<Uses>();
 		discards = new List<bool>();
 		d6 = new List<SpoilsCard>();
@@ -112,22 +112,22 @@ public class SpoilsCard : PartyCard {
 		return this.passiveGains;
 	}
 
-	public void setWhenUsable(List<Times> when){
+	public void setWhenUsable(List<List<Times>> when){
 		this.whenUsable = when;
 	}
 
-	public void setWhenUsable(params Times[] when){
-		this.whenUsable = new List<Times>();
-		foreach(Times item in when) {
+	public void setWhenUsable(params List<Times>[] when){
+		this.whenUsable = new List<List<Times>>();
+		foreach(List<Times> item in when) {
 			this.whenUsable.Add(item);
 		}
 	}
 
-	public void addWhenUsable(Times time){
+	public void addWhenUsable(List<Times> time){
 		this.whenUsable.Add(time);
 	}
 
-	public List<Times> getWhenUsable(){
+	public List<List<Times>> getWhenUsable(){
 		return this.whenUsable;
 	}
 

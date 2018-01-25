@@ -43,6 +43,8 @@ public enum Gains {
 	First_Strike,
 	Gain_Armor,
 	Lose_Armor,
+	Gain_PVP_Combat_Successes,
+	Lose_PVP_Combat_Successes,
 
 	//Faction stuff
 	Gain_Salvage,

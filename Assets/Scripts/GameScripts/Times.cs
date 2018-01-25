@@ -80,6 +80,7 @@ public enum Times {
 	//PvP
 	During_PvP,
 	After_PvP_Round,
+	When_Opposing_Party_Grenades_Equipped,
 
 	//Encounters/Missions
 	After_Successful_Mission_Or_Encounter,

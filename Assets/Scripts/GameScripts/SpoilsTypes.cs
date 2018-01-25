@@ -23,6 +23,7 @@ public enum SpoilsTypes { //TODO finish
 	Ranged_Weapon, 
 	Relic,
 	Shotgun,
+	Sporting_Goods,
 	Stowable,
 	Submachine_Gun,
 	Survival,

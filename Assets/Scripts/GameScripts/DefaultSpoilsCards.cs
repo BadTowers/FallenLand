@@ -36,8 +36,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 				{Gains.Gain_Action_Cards, 2}} //2.1
 		);
 		curCard.setWhenUsable( //Set when the actives are useable
-			Times.After_Successful_Mission_Or_Encounter, //Set 1
-			Times.After_Successful_Mission_Or_Encounter //Set 2
+			new List<Times>(){ //Set 1
+				Times.After_Successful_Mission_Or_Encounter}, //1.1
+			new List<Times>(){ //Set 2
+				Times.After_Successful_Mission_Or_Encounter} //2.1
 		);
 		curCard.setNumberOfUses( //Set how many uses each active has
 			Uses.Once, //Set 1
@@ -91,9 +93,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Pay_Salvage, 5}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once
 		);
@@ -144,9 +146,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Give_Opponent_This_Item, VALUE_NOT_NEEDED}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.Party_Target_Of_Theft
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Unlimited
 		);
@@ -250,9 +252,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Equip_Second_Vehicle_Face_Down, VALUE_NOT_NEEDED}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.Vehicle_Destroyed
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once
 		);
@@ -279,9 +281,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Keep_Spoils_Cards, 4}, //1.2
 			{Gains.Swap_New_Characters_Freely, VALUE_NOT_NEEDED} //1.3
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once
 		);
@@ -335,9 +337,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Techinical_Skill_Check_Pass, VALUE_NOT_NEEDED}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.After_Techinical_Skill_Check_Failure
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once
 		);
@@ -378,9 +380,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Avoid_Death, VALUE_NOT_NEEDED},
 			{Gains.Remove_Character_All_Damage, VALUE_NOT_NEEDED}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.After_Death
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once_Per_Game
 		);
@@ -407,9 +409,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.Before_Party_Exploits_Phase
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once_Per_Turn
 		);
@@ -421,9 +423,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
 		});
-		tempCard.setWhenUsable(
+		tempCard.setWhenUsable(new List<Times>(){
 			Times.After_Any_Skill_Critical_Failure
-		);
+		});
 		tempCard.setNumberOfUses(
 			Uses.Once_Per_Turn
 		);
@@ -438,9 +440,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Action_Cards, 1}
 		});
-		tempCard.setWhenUsable(
+		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		tempCard.setNumberOfUses(
 			Uses.Once_Per_Turn
 		);
@@ -454,9 +456,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Heal_D6_Damage, 2}
 		});
-		tempCard.setWhenUsable(
+		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		tempCard.setNumberOfUses(
 			Uses.Once_Per_Turn
 		);
@@ -471,9 +473,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-		tempCard.setWhenUsable(
+		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		tempCard.setNumberOfUses(
 			Uses.Once_Per_Turn
 		);
@@ -488,9 +490,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 3}
 		});
-		tempCard.setWhenUsable(
+		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		tempCard.setNumberOfUses(
 			Uses.Once_Per_Turn
 		);
@@ -524,8 +526,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 				{Gains.Medical_Skill_Check_Pass, VALUE_NOT_NEEDED}} //2.1
 		);
 		curCard.setWhenUsable(
-			Times.Anytime,
-			Times.After_Medical_Skill_Check_Failure
+			new List<Times>(){ //Set 1
+				Times.Anytime}, //1.1
+			new List<Times>(){ //Set 2
+				Times.After_Medical_Skill_Check_Failure} //2.1
 		);
 		curCard.setNumberOfUses(
 			Uses.Once,
@@ -553,9 +557,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
 			{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.Anytime
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once
 		);
@@ -580,9 +584,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Damage_Opponent_Character_By_Crown_Infected, 1}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.After_PvP_Round
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once_Per_PvP_Round
 		);
@@ -621,9 +625,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
-		curCard.setWhenUsable(
+		curCard.setWhenUsable(new List<Times>(){
 			Times.After_Successful_Mission_Or_Encounter
-		);
+		});
 		curCard.setNumberOfUses(
 			Uses.Once_Per_Successful_Encounter_Or_Mission
 		);
@@ -635,9 +639,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 1}
 		});
-		tempCard.setWhenUsable(
+		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
-		);
+		});
 		tempCard.setNumberOfUses(
 			Uses.Once
 		);
@@ -708,6 +712,33 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Indestructible Tennis Racquet");
+		curCard.setTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sporting_Goods);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(1);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Diplomacy, 1}
+		});
+		/* No passives */
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_PVP_Combat_Successes, 2}
+		});
+		curCard.setWhenUsable(new List<Times>(){
+			Times.During_PvP, //1.1
+			Times.When_Opposing_Party_Grenades_Equipped //1.2
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_PvP_Round
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
 
+
+		//TODO add more cards
 	}
 }
