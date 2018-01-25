@@ -237,7 +237,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard = new SpoilsCard("Semi Truck");
 		curCard.setTitleSubString("With Trailer");
 		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
-		curCard.setCarryWeight(0);
+		curCard.setCarryWeight(20);
 		curCard.setSellValue(26);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 6},
@@ -739,6 +739,76 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO add more cards
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Armored Humvee");
+		curCard.setTitleSubString("With .50 Caliber MG Turret");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(12);
+		curCard.setSellValue(29);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 9},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 2},
+			{Skills.Mechanical, 1},
+			{Skills.Medical, 2}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2},
+			{Gains.All_Hex_Movement_Cost, 1}
+		});
+		/* No actives */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("The Motherload");
+		curCard.setTitleSubString("You have discovered a secret room!");
+		curCard.setTypes(SpoilsTypes.Event);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(0);
+		/* No base skills */
+		/* No passives */
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Spoils_Cards, 5}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Immediately
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Retro Mini Camper");
+		curCard.setTypes(SpoilsTypes.Vehicle_Equipment);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Survival, 3},
+			{Skills.Diplomacy, 3},
+			{Skills.Mechanical, 3},
+			{Skills.Medical, 3}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Lose_Movement, 1},
+			{Gains.Gain_Carry_Weight, 8}
+		});
+		/* No actives */
+		curCard.setRestrictions(new List<Restrictions>(){
+			{Restrictions.Equip_To_Vehicle},
+			{Restrictions.Four_Wheels_Or_More}
+		});
+		spoilsCards.Add(curCard);
+
+
+		//TODO add more
 	}
 }
