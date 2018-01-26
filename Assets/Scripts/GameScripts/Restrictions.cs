@@ -10,6 +10,7 @@ public enum Restrictions  {
 
 	//Allies
 	Equip_To_Vehicle,
+	Discard_If_Not_Purchased,
 
 	//Clothing
 	Not_Used_With_Other_Clothing,

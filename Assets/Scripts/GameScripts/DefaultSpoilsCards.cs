@@ -809,6 +809,38 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO add more
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Chris the Trophy Spouse");
+		curCard.setTypes(SpoilsTypes.Ally);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(0);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 3},
+			{Skills.Medical, 3}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Carry_Weight, 4},
+			{Gains.Gain_Prestige, 1},
+			{Gains.Gain_Psych_Resistence, 1}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Pay_Salvage, 4}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			{Times.Immediately}
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+
 	}
 }
