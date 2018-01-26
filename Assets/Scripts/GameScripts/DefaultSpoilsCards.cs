@@ -841,6 +841,62 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Alien Plasma Pistol");
+		curCard.setTypes(SpoilsTypes.Top_Secret, SpoilsTypes.Ranged_Weapon, SpoilsTypes.Relic);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(19);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5},
+			{Skills.Diplomacy, 2},
+			{Skills.Techinical, 3}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Prestige, 1},
+			{Gains.Deals_Radiation_Damage, 1}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Damage_Opponent_Character_By_Crown_Radiation, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.After_PvP_Round
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_PvP_Round
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Sledge Hammer");
+		curCard.setTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Mechanical, 2}
+		});
+		/* No passives */
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Mechanical_Skill_Check_Pass}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.During_Lock_Picking_Encounters
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
 
 	}
 }

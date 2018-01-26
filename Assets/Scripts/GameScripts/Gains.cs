@@ -54,7 +54,7 @@ public enum Gains {
 	Lose_Prestige,
 	Lose_Town_Health,
 
-	//Encounters (TODO FINISH)
+	//Encounters
 	Ignore_Ambush,
 	Ignore_Perishable,
 

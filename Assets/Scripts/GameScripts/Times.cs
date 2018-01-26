@@ -92,4 +92,9 @@ public enum Times {
 	Within_X_Hexes_Of_Enemy_Party,
 	Within_X_Hexes_Of_Enemy_Town,
 
+	//Encounters
+	During_Lock_Picking_Encounters,
+	During_Perishable_Encounters,
+	During_Ambush_Encounters
+
 }
