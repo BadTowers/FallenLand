@@ -6,6 +6,109 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 	public List<SpoilsCard> spoilsCards;
 
+	/*
+	 * NOTES:
+	 * 	The title of the card is given in the constructor.
+	 * 	The spoils types are defined on the upper right side of the card (EXCEPTION, relic is located in the passives)
+	 * 	The base skills are the 6 numbers along the bottom of the card. Blanks = 0.
+	 * 	The passives are listed to the right of the title on the card. They are things that are ALWAYS gained and DO NOT
+	 * 		rely on a particular condition, such as phase, during pvp, after skill checks, etc
+	 *	The actives are listed on the right side below the types. An active does NOT mean that it has to be activated to
+	 *		be used. In some cases, it's closer to a passive. What makes it an ACTIVE is that it has times when it can
+	 *		be used, as well has how many times it can be used. Actives can also cause the card to be discarded after using.
+	 *		EXAMPLE 1) Once every Town Business Phase, the play MAY pay 5 salvage for a salvage card.
+	 *			In this example, the user has an ACTIVE CHOICE to perform the action, as well as limits on
+	 *			WHEN it can occur (the town business phase) and HOW MANY times it can occur (once per turn).
+	 *		EXAMPLE 2) If the opponent has grenades exquipped during PvP, you gain 2 combat successes
+	 *			In this example, the user doesn't have to activate this ablility. It's passive in that as long as
+	 *			the conditions are met, it automatically happens. This still constitutes being an ACTIVE because
+	 *			there are conditions (only during PvP and only if the opponent has grenades equipped). This ability
+	 *			would be a passive if it always gave some benefit, regardless of phase, time, etc.
+	 *	The actives are described by: Active gains (what is gained with the active, such as movement, spoils cards, etc),
+	 *		when the active is useable (specific phases or conditions that must be true to use the active), how many
+	 *		the active is useable (maybe it's once and then you lose the card, maybe it's once per turn, maybe it's once
+	 *		per round of PvP, maybe it's after a passed or failed encounter or mission, etc.), and whether or not to discard
+	 *		the spoils card after the active has completed.
+	 *	Restrictions are conditions that must be upheld at all times for the spoils card to be equipped. These include
+	 *		being attached to a vehicle, not being combined with other types of clothing or armor, etc.
+	 * 
+	 * 
+	 * Below is the block of code used to define a spoils card. The ones marked as optional don't need to be included
+	 * 	if they aren't relevent to the card.
+	 * 
+	 * curCard = new SpoilsCard("");
+	 * curCard.curCard.setTitleSubString(""); //Optional
+	 * curCard.setTypes();
+	 * curCard.setCarryWeight();
+	 * curCard.setSellValue();
+	 * curCard.setBaseSkills(new Dictionary<Skills, int>{
+	 * 	
+	 * });
+	 * curCard.setPassiveGains(new Dictionary<Gains, int>{ //Optional
+	 * 	
+	 * });
+	 * curCard.setActiveGains(new Dictionary<Gains, int>{ //Optional
+	 * 		
+	 * });
+	 * curCard.setWhenUsable(new List<Times>{ //Optional (Needed if there are active gains)
+	 * 		
+	 * });
+	 * curCard.setNumberOfUses( //Optional (Needed if there are active gains)
+	 * 		
+	 * );
+	 * curCard.setDiscard( //Optional (Needed if there are active gains)
+	 * 		
+	 * );
+	 * curCard.setRestrictions(new List<Restrictions>(){ //Optional
+	 * 		
+	 * });
+	 * spoilsCards.Add(curCard);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * Sometimes, cards will say roll a d6 and then include a chart for the results of each dice outcome.
+	 * 	(Example, pre-war disaster kit)
+	 * 	(1 = re-roll 1 crit fail skill check)
+	 * 	(2 = Draw an action card)
+	 * 	(3 = Heal 2d6 damage)
+	 * 	(4 = Gain +2 movement)
+	 * 	(5 = Gain 3 Salvage coins)
+	 * 	(6 = no effect)
+	 * In order to code these effects into a single card, each spoils card has the ability to hold 6 additional teporary
+	 * 	spoils cards for these effects. We notice that rolls 1-5 are all Gains that could be assigned to an active gains
+	 * 	portion of a card. Therefore, when a card needs to have outcomes for a d6 roll, we use the following code to 
+	 * 	do that:
+	 * 
+	 * 
+	 *      tempCard = new SpoilsCard("");
+	 *	tempCard.setActiveGains(new Dictionary<Gains, int>{
+	 *		{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
+	 *	});
+	 *	tempCard.setWhenUsable(new List<Times>(){
+	 *		Times.After_Any_Skill_Critical_Failure
+	 *	});
+	 *	tempCard.setNumberOfUses(
+	 *		Uses.Once_Per_Turn
+	 *	);
+	 *	tempCard.setDiscard(
+	 *		true
+	 *	);
+	 *	tempCard.setWhenTempEnd(
+	 *		Times.After_Party_Exploits_Phase
+	 *	);
+	 *	curCard.addD6Option(tempCard);
+	 * 
+	 * 
+	 * We create a new spoils card effectively the same way we have been, but there is a new addition--setWhenTempEnd. Because some
+	 * 	cards, such as the pre-war disaster kit, give a movement bonus for that party exploits phase. This is not a bonus
+	 * 	that should carry outside of this phase, so we set its temporary end to be after the party exploits phase. This will
+	 * 	effectively allow the game manage to look through all spoils cards of a player after each phase and see if any
+	 * 	need to be removed. Other gains, such as salvage, are something that are gained but not lost, so the active
+	 * 	portion of that temp card would give 3 salvage immediately, then discard that card without considering the 
+	 * 	expiration of the effect (since there isn't an expiration to gaining 3 salvage in this case).
+	 */
+
 
 	//Called before Start()
 	void Awake(){
@@ -419,7 +522,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			false
 		);
 		/* No restrictions */
-		tempCard = new SpoilsCard("Option 1"); //When a 1 is rolled
+		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 1 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 1");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
 		});
@@ -436,7 +540,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.After_Party_Exploits_Phase
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 2"); //When a 2 is rolled
+		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 2 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 2");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Action_Cards, 1}
 		});
@@ -452,7 +557,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard.setWhenTempEnd(
 			Times.Never
 		);
-		tempCard = new SpoilsCard("Option 3"); //When a 3 is rolled
+		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 3 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 3");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Heal_D6_Damage, 2}
 		});
@@ -469,7 +575,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Never
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 4"); //When a 4 is rolled
+		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 4 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 4");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
@@ -486,7 +593,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.After_Party_Exploits_Phase
 		);
 		curCard.addD6Option(tempCard);
-		tempCard = new SpoilsCard("Option 5"); //When a 5 is rolled
+		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 5 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 5");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 3}
 		});
@@ -503,7 +611,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Never
 		);
 		curCard.addD6Option(tempCard);
-		//Roll 6 = no effect
+		curCard.addD6Option(null); //Roll 6 = no effect
 		spoilsCards.Add(curCard);
 
 
@@ -635,7 +743,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			false
 		);
 		/* No restrictions */
-		tempCard = new SpoilsCard("Option 1"); //When a 1 is rolled
+		tempCard = new SpoilsCard("Top o' the Line Stun Gun"); //When a 1 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 1");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 1}
 		});
@@ -652,7 +761,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Never
 		);
 		curCard.addD6Option(tempCard);
-		//Rolling a 2-6 has no effect
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
 		spoilsCards.Add(curCard);
 
 
@@ -882,7 +995,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No passives */
 		curCard.setActiveGains(new Dictionary<Gains, int>{
-			{Gains.Mechanical_Skill_Check_Pass}
+			{Gains.Mechanical_Skill_Check_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.During_Lock_Picking_Encounters
@@ -921,7 +1034,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			false
 		);
 		/* No restrictions */
-		tempCard = new SpoilsCard("Option 1 and 2"); //When a 1 or 2 is rolled
+		tempCard = new SpoilsCard("Compact Welding & Cutting Torch"); //When a 1 or 2 is rolled
+		tempCard.setTitleSubString("Roll Bonus - 1/2");
 		tempCard.setActiveGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 4}
 		});
@@ -939,9 +1053,63 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		);
 		curCard.addD6Option(tempCard); //1
 		curCard.addD6Option(tempCard); //2
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
 		spoilsCards.Add(curCard);
 
 
-		//TODO add more cards
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Designer Biker Leathers");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Armor, 1}
+		});
+		/* No actives */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Not_Used_With_Other_Armor
+		});
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Dork Squad");
+		curCard.setTitleSubString("Computer Repair Car");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(10);
+		curCard.setSellValue(17);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 1},
+			{Skills.Mechanical, 3},
+			{Skills.Techinical, 5},
+			{Skills.Medical, 1}
+		});
+		curCard.setPassiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2}
+		});
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+
+		});
+		curCard.setWhenUsable(new List<Times>{
+
+		});
+		curCard.setNumberOfUses(
+
+		);
+		curCard.setDiscard(
+
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+
+		});
+		spoilsCards.Add(curCard);
 	}
 }
