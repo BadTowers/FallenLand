@@ -8,7 +8,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 	/*
 	 * NOTES:
-	 * 	The title of the card is given in the constructor.
+	 * 	The title of the card is given in the constructor. This comes from the middle of the card below the image.
 	 * 	The spoils types are defined on the upper right side of the card (EXCEPTION, relic is located in the passives)
 	 * 	The base skills are the 6 numbers along the bottom of the card. Blanks = 0.
 	 * 	The passives are listed to the right of the title on the card. They are things that are ALWAYS gained and DO NOT
