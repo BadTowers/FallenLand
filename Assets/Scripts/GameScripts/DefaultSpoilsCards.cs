@@ -897,6 +897,51 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Combat Welding & Cutting Torch");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Mechanical, 2},
+			{Skills.Techinical, 1}
+		});
+		/* No passives */
+		curCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Roll_D6, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.After_Combat_Skill_Check_Success
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		tempCard = new SpoilsCard("Option 1 and 2"); //When a 1 or 2 is rolled
+		tempCard.setActiveGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Spoils_Cards, 4}
+		});
+		tempCard.setWhenUsable(new List<Times>(){
+			Times.Immediately
+		});
+		tempCard.setNumberOfUses(
+			Uses.Once
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Never
+		);
+		curCard.addD6Option(tempCard); //1
+		curCard.addD6Option(tempCard); //2
+		spoilsCards.Add(curCard);
 
+
+		//TODO add more cards
 	}
 }

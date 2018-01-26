@@ -32,6 +32,13 @@ public enum Times {
 	After_Techinical_Skill_Critical_Failure,
 	After_Medical_Skill_Critical_Failure,
 	After_Any_Skill_Critical_Failure,
+	After_Combat_Skill_Check_Success,
+	After_Survival_Skill_Check_Success,
+	After_Diplomacy_Skill_Check_Success,
+	After_Mechanical_Skill_Check_Success,
+	After_Techinical_Skill_Check_Success,
+	After_Medical_Skill_Check_Success,
+	After_Any_Skill_Check_Success,
 
 	//Phases
 	During_Effects_Phase,
@@ -79,6 +86,7 @@ public enum Times {
 
 	//PvP
 	During_PvP,
+	After_PvP,
 	After_PvP_Round,
 	When_Opposing_Party_Grenades_Equipped,
 
