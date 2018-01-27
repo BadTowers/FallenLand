@@ -1176,5 +1176,56 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Restrictions.Not_Used_With_Backback
 		});
 		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("9mm Semi Automatic Pistol");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(5);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("7.62mm Assault Rifle");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+		curCard.setCarryWeight(5);
+		curCard.setSellValue(14);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 7}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Masamune Crafted Katana");
+		curCard.setQuote("A 14th century masterpiece created by Japan's greatest sword maker.");
+		curCard.setTypes(SpoilsTypes.Relic, SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(16);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5},
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.First_Strike, VALUE_NOT_NEEDED},
+			{Gains.Gain_Psych_Resistence, 1}
+		});
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		//todo asdf
 	}
 }

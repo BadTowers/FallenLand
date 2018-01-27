@@ -6,6 +6,7 @@ public class PartyCard : NonencounterCard {
 	
 	private Dictionary<Skills, int> baseSkills; //The base numbers the party card has for each skill
 	private string titleSubString; //The string that appears below names of characters and (sometimes) items
+	private string quote; //The string that appears on character cards as a quote and, rarely, on spoils instead of a conditional active
 
 	public PartyCard(string text) : base(text) {
 		baseSkills = new Dictionary<Skills, int>();
@@ -32,5 +33,13 @@ public class PartyCard : NonencounterCard {
 
 	public string getTitleSubString() {
 		return this.titleSubString;
+	}
+
+	public void setQuote(string t){
+		this.quote = t;
+	}
+
+	public string getQuote(){
+		return this.quote;
 	}
 }
