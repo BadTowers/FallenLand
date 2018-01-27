@@ -482,7 +482,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Avoid_Death, VALUE_NOT_NEEDED},
-			{Gains.Remove_Character_All_Damage, VALUE_NOT_NEEDED}
+			{Gains.Remove_Character_Damage_All, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
 			Times.After_Death
@@ -629,8 +629,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No statics */
 		curCard.setConditionalGains(
 			new Dictionary<Gains, int>{ //Set 1 of conditionals
-				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED}, //1.1
-				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}}, //1.2
+				{Gains.Remove_Party_Physical_Damage_All, VALUE_NOT_NEEDED}, //1.1
+				{Gains.Remove_Party_Infected_Damage_All, VALUE_NOT_NEEDED}}, //1.2
 			new Dictionary<Gains, int>{ //Set 2 of conditionals
 				{Gains.Medical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}} //2.1
 		);
@@ -663,8 +663,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
-			{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}
+			{Gains.Remove_Party_Physical_Damage_All, VALUE_NOT_NEEDED},
+			{Gains.Remove_Party_Infected_Damage_All, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
 			Times.Anytime
@@ -1226,6 +1226,32 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//todo asdf
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Basic Med Kit");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Medical, 3}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Remove_Party_Physical_Damage, 3}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Anytime
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard); //Two of this card are in the deck
+		spoilsCards.Add(curCard);
+
+
+		//asdf
 	}
 }
