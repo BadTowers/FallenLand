@@ -2,5 +2,5 @@
 
 public enum Skills
 {
-	Combat, Survival, Diplomacy, Mechanical, Techinical, Medical
+	Combat, Survival, Diplomacy, Mechanical, Technical, Medical
 }

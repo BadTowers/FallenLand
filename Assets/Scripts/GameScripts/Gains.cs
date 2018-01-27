@@ -9,28 +9,35 @@ public enum Gains {
 	Goes_To_Auction_House_Upon_Death,
 
 	//Skill check successes
-	Combat_Skill_Check_Successes, //Adds successes to the total
-	Survival_Skill_Check_Successes,
-	Diplomacy_Skill_Check_Successes,
-	Mechanical_Skill_Check_Successes,
-	Techinical_Skill_Check_Successes,
-	Medical_Skill_Check_Successes,
-	Failed_Skill_Check_Successes,
-	Combat_Skill_Check_Pass, //Auto passes this particular skill check
-	Survival_Skill_Check_Pass,
-	Diplomacy_Skill_Check_Pass,
-	Mechanical_Skill_Check_Pass,
-	Techinical_Skill_Check_Pass,
-	Medical_Skill_Check_Pass,
-	Failed_Skill_Check_Pass,
-	Reroll_Combat_Skill_Check_Fails, //Reroll # of failed dice
-	Reroll_Survival_Skill_Check_Fails,
-	Reroll_Diplomacy_Skill_Check_Fails,
-	Reroll_Mechanical_Skill_Check_Fails,
-	Reroll_Techinical_Skill_Check_Fails,
-	Reroll_Medical_Skill_Check_Fails,
-	Reroll_Any_Skill_Check_Fails,
-	Reroll_Failed_Skill_Check_Fails,
+	Gain_Combat_Skill_Check_Successes, //Adds successes to the total
+	Gain_Survival_Skill_Check_Successes,
+	Gain_Diplomacy_Skill_Check_Successes,
+	Gain_Mechanical_Skill_Check_Successes,
+	Gain_Technical_Skill_Check_Successes,
+	Gain_Medical_Skill_Check_Successes,
+	Gain_Failed_Skill_Check_Successes,
+	Lose_Combat_Skill_Check_Successes, //Removes successes to the total
+	Lose_Survival_Skill_Check_Successes,
+	Lose_Diplomacy_Skill_Check_Successes,
+	Lose_Mechanical_Skill_Check_Successes,
+	Losen_Technical_Skill_Check_Successes,
+	Lose_Medical_Skill_Check_Successes,
+	Lose_Failed_Skill_Check_Successes,
+	Combat_Skill_Check_Automatic_Pass, //Auto passes this particular skill check
+	Survival_Skill_Check_Automatic_Pass,
+	Diplomacy_Skill_Check_Automatic_Pass,
+	Mechanical_Skill_Check_Automatic_Pass,
+	Technical_Skill_Check_Automatic_Pass,
+	Medical_Skill_Check_Automatic_Pass,
+	Failed_Skill_Check_Automatic_Pass,
+	Reroll_Combat_Skill_Check, //Retry the whole skill check of this type (Reroll all dice)
+	Reroll_Survival_Skill_Check,
+	Reroll_Diplomacy_Skill_Check,
+	Reroll_Mechanical_Skill_Check,
+	Reroll_Technical_Skill_Check,
+	Reroll_Medical_Skill_Check,
+	Reroll_Any_Skill_Check,
+	Reroll_Failed_Skill_Check,
 	Reroll_Combat_Critical_Fail, //Reroll a critical failure roll
 	Reroll_Survival_Critical_Fail,
 	Reroll_Diplomacy_Critical_Fail,

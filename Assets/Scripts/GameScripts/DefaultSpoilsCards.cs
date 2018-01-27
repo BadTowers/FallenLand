@@ -84,7 +84,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 	 * 
 	 *      tempCard = new SpoilsCard("");
 	 *	tempCard.setConditionalGains(new Dictionary<Gains, int>{
-	 *		{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
+	 *		{Gains.Reroll_Any_Critical_Fail, 1}
 	 *	});
 	 *	tempCard.setWhenUsable(new List<Times>(){
 	 *		Times.After_Any_Skill_Critical_Failure
@@ -221,7 +221,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Survival, 2},
 			{Skills.Mechanical, 3},
-			{Skills.Techinical, 5}
+			{Skills.Technical, 5}
 		});
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Lose_Movement, 1}
@@ -435,14 +435,14 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setSellValue(8);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Mechanical, 2},
-			{Skills.Techinical, 4}
+			{Skills.Technical, 4}
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Techinical_Skill_Check_Pass, VALUE_NOT_NEEDED}
+			{Gains.Technical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
-			Times.After_Techinical_Skill_Check_Failure
+			Times.After_Technical_Skill_Check_Failure
 		});
 		curCard.setNumberOfUses(
 			Uses.Once
@@ -461,7 +461,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setSellValue(8);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Mechanical, 4},
-			{Skills.Techinical, 1}
+			{Skills.Technical, 1}
 		});
 		/* No statics */
 		/* No conditionals */
@@ -506,7 +506,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Survival, 2},
 			{Skills.Diplomacy, 2},
 			{Skills.Mechanical, 2},
-			{Skills.Techinical, 2},
+			{Skills.Technical, 2},
 			{Skills.Medical, 2}
 		});
 		/* No statics */
@@ -526,7 +526,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 1 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 1");
 		tempCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
+			{Gains.Reroll_Any_Critical_Fail, 1}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
 			Times.After_Any_Skill_Critical_Failure
@@ -623,7 +623,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setSellValue(15);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Diplomacy, 1},
-			{Skills.Techinical, 4},
+			{Skills.Technical, 4},
 			{Skills.Medical, 4}
 		});
 		/* No statics */
@@ -632,7 +632,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED}, //1.1
 				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}}, //1.2
 			new Dictionary<Gains, int>{ //Set 2 of conditionals
-				{Gains.Medical_Skill_Check_Pass, VALUE_NOT_NEEDED}} //2.1
+				{Gains.Medical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}} //2.1
 		);
 		curCard.setWhenUsable(
 			new List<Times>(){ //Set 1
@@ -727,7 +727,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setSellValue(6);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 1},
-			{Skills.Techinical, 1},
+			{Skills.Technical, 1},
 			{Skills.Medical, 1}
 		});
 		/* No statics */
@@ -963,7 +963,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 5},
 			{Skills.Diplomacy, 2},
-			{Skills.Techinical, 3}
+			{Skills.Technical, 3}
 		});
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Prestige, 1},
@@ -996,7 +996,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Mechanical_Skill_Check_Pass, VALUE_NOT_NEEDED}
+			{Gains.Mechanical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.During_Lock_Picking_Encounters
@@ -1019,7 +1019,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 1},
 			{Skills.Mechanical, 2},
-			{Skills.Techinical, 1}
+			{Skills.Technical, 1}
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
@@ -1090,27 +1090,29 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Survival, 1},
 			{Skills.Diplomacy, 1},
 			{Skills.Mechanical, 3},
-			{Skills.Techinical, 5},
+			{Skills.Technical, 5},
 			{Skills.Medical, 1}
 		});
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-
+			{Gains.Reroll_Technical_Skill_Check, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
-
+			{Times.After_Technical_Skill_Check_Failure},
+			{Times.During_Mission_Or_Encounter}
 		});
 		curCard.setNumberOfUses(
-
+			Uses.Once_Per_Turn
 		);
 		curCard.setDiscard(
-
+			false
 		);
-		curCard.setRestrictions(new List<Restrictions>(){
-
-		});
+		/* No restrictions */
 		spoilsCards.Add(curCard);
+
+
+		//TODO more cards
 	}
 }
