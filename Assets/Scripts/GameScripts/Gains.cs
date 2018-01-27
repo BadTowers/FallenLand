@@ -52,6 +52,7 @@ public enum Gains {
 	Lose_Armor,
 	Gain_PVP_Combat_Successes,
 	Lose_PVP_Combat_Successes,
+	Destroy_Oppenent_Vehicle,
 
 	//Faction stuff
 	Gain_Salvage,

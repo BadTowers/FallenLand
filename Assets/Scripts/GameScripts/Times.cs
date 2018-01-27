@@ -85,6 +85,7 @@ public enum Times {
 	After_End_Turn_Phase,
 
 	//PvP
+	Before_PvP,
 	During_PvP,
 	After_PvP,
 	After_PvP_Round,

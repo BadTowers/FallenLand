@@ -1113,6 +1113,68 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO more cards
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Heavy Rocket Launcher");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+		curCard.setCarryWeight(8);
+		curCard.setSellValue(21);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 10}
+		});
+		/* No static gains */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Destroy_Oppenent_Vehicle, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Before_PvP
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Game
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Case of Excellent Whiskey");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Alcohol, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(8);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Diplomacy, 3},
+			{Skills.Medical, 1}
+		});
+		/* No statics */
+		/* No actives */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Experimental Laser Rifle");
+		curCard.setTitleSubString("Top Secret Weapon");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Top_Secret, SpoilsTypes.Heavy);
+		curCard.setCarryWeight(7);
+		curCard.setSellValue(24);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 8},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 2},
+			{Skills.Mechanical, 1},
+			{Skills.Technical, 2},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Prestige, 1}
+		});
+		/* No conditionals */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Not_Used_With_Backback
+		});
+		spoilsCards.Add(curCard);
 	}
 }
