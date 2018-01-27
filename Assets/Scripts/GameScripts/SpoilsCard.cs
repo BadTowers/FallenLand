@@ -6,21 +6,21 @@ public class SpoilsCard : PartyCard {
 	private List<SpoilsTypes> types; //The list of all spoils types the card qualifies as
 	private int sellValue; //The value of the card when sold to the bank
 	private int carryWeight; //The weight of the item
-	private List<Dictionary<Gains, int>> activeGains; //List of different active ability choices the player has
-	private Dictionary<Gains, int> passiveGains;
-	private List<List<Restrictions>> restrictions;
+	private List<Dictionary<Gains, int>> conditionalGains; //List of different conditional ability choices the player has
+	private Dictionary<Gains, int> staticGains; //Passive type gains that are always active
+	private List<List<Restrictions>> restrictions; //What the card has to be attached to, what it can't combine with, etc
 	private List<List<Times>> whenUsable; //List of lists denoting different use times for different active choices
 	private List<Uses> uses; 
-	private List<bool> discards; 
+	private List<bool> discards; //If you discard the card after using a conditional gain 
 	private List<SpoilsCard> d6; //D6 options can be viewed as 6 individual spoils cards, each with one active ability representing the D6 option
-	private bool isTemp;
-	private Times whenTempEnd;
+	private bool isTemp; //Denotes if it's a temporary D6 spoils or a normal spoils from the deck
+	private Times whenTempEnd; //Marks when the temp gain expires (such as after a certain phase, after a turn, etc)
 	private List<SpoilsCard> attachments; //Spoils cards attached to this spoils card
 
 	private void initLists(){
 		types = new List<SpoilsTypes>();
-		activeGains = new List<Dictionary<Gains, int>>();
-		passiveGains = new Dictionary<Gains, int>();
+		conditionalGains = new List<Dictionary<Gains, int>>();
+		staticGains = new Dictionary<Gains, int>();
 		restrictions = new List<List<Restrictions>>();
 		whenUsable = new List<List<Times>>();
 		uses = new List<Uses>();
@@ -104,12 +104,12 @@ public class SpoilsCard : PartyCard {
 		return this.restrictions;
 	}
 
-	public void setPassiveGains(Dictionary<Gains, int> gains){
-		this.passiveGains = gains;
+	public void setStaticGains(Dictionary<Gains, int> gains){
+		this.staticGains = gains;
 	}
 
-	public Dictionary<Gains, int> getPassiveGains(){
-		return this.passiveGains;
+	public Dictionary<Gains, int> getStaticGains(){
+		return this.staticGains;
 	}
 
 	public void setWhenUsable(List<List<Times>> when){
@@ -131,27 +131,27 @@ public class SpoilsCard : PartyCard {
 		return this.whenUsable;
 	}
 
-	public void setActiveGains(List<Dictionary<Gains, int>> gains){
-		this.activeGains = gains;
+	public void setConditionalGains(List<Dictionary<Gains, int>> gains){
+		this.conditionalGains = gains;
 	}
 
-	public void setActiveGains(params Dictionary<Gains,int>[] gains){
-		this.activeGains = new List<Dictionary<Gains, int>>();
+	public void setConditionalGains(params Dictionary<Gains,int>[] gains){
+		this.conditionalGains = new List<Dictionary<Gains, int>>();
 		foreach(Dictionary<Gains,int> item in gains) {
-			this.activeGains.Add(item);
+			this.conditionalGains.Add(item);
 		}
 	}
 
-	public void addActiveGain(Gains gain, int value){
-		this.activeGains.Add(new Dictionary<Gains, int>{ { gain, value } });
+	public void addConditionalGain(Gains gain, int value){
+		this.conditionalGains.Add(new Dictionary<Gains, int>{ { gain, value } });
 	}
 
-	public void addActiveGain(Dictionary<Gains, int> gain){
-		this.activeGains.Add(gain);
+	public void addConditionalGain(Dictionary<Gains, int> gain){
+		this.conditionalGains.Add(gain);
 	}
 
-	public List<Dictionary<Gains, int>> getActiveGains(){
-		return this.activeGains;
+	public List<Dictionary<Gains, int>> getConditionalGains(){
+		return this.conditionalGains;
 	}
 
 	public void setNumberOfUses(List<Uses> uses){

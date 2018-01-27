@@ -8,18 +8,15 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 	/*
 	 * 
-	 * CHANGE PASSIVE AND ACTIVES TO BE STATIC AND CONTDITIONAL GAINS
-	 * 
-	 * 
 	 * NOTES:
 	 * 	The title of the card is given in the constructor. This comes from the middle of the card below the image.
-	 * 	The spoils types are defined on the upper right side of the card (EXCEPTION, relic is located in the passives)
+	 * 	The spoils types are defined on the upper right side of the card (EXCEPTION, relic is located in the statics)
 	 * 	The base skills are the 6 numbers along the bottom of the card. Blanks = 0.
-	 * 	The passives are listed to the right of the title on the card. They are things that are ALWAYS gained and DO NOT
+	 * 	The statics are listed to the right of the title on the card. They are things that are ALWAYS gained and DO NOT
 	 * 		rely on a particular condition, such as phase, during pvp, after skill checks, etc
-	 *	The actives are listed on the right side below the types. An active does NOT mean that it has to be activated to
-	 *		be used. In some cases, it's closer to a passive. What makes it an ACTIVE is that it has times when it can
-	 *		be used, as well has how many times it can be used. Actives can also cause the card to be discarded after using.
+	 *	The conditionals are listed on the right side below the types. A conditional does NOT mean that it has to be activated to
+	 *		be used. In some cases, it acts as a passive. What makes it a conditional is that it has times when it can
+	 *		be used, as well has how many times it can be used. conditionals can also cause the card to be discarded after using.
 	 *		EXAMPLE 1) Once every Town Business Phase, the play MAY pay 5 salvage for a salvage card.
 	 *			In this example, the user has an ACTIVE CHOICE to perform the action, as well as limits on
 	 *			WHEN it can occur (the town business phase) and HOW MANY times it can occur (once per turn).
@@ -28,9 +25,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 	 *			the conditions are met, it automatically happens. This still constitutes being an ACTIVE because
 	 *			there are conditions (only during PvP and only if the opponent has grenades equipped). This ability
 	 *			would be a passive if it always gave some benefit, regardless of phase, time, etc.
-	 *	The actives are described by: Active gains (what is gained with the active, such as movement, spoils cards, etc),
-	 *		when the active is useable (specific phases or conditions that must be true to use the active), how many
-	 *		the active is useable (maybe it's once and then you lose the card, maybe it's once per turn, maybe it's once
+	 *	The conditionals are described by: Conditional gains (what is gained with the conditional, such as movement, spoils cards, etc),
+	 *		when the conditional is useable (specific phases or conditions that must be true to use the active), how many
+	 *		the conditional is useable (maybe it's once and then you lose the card, maybe it's once per turn, maybe it's once
 	 *		per round of PvP, maybe it's after a passed or failed encounter or mission, etc.), and whether or not to discard
 	 *		the spoils card after the active has completed.
 	 *	Restrictions are conditions that must be upheld at all times for the spoils card to be equipped. These include
@@ -48,10 +45,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 	 * curCard.setBaseSkills(new Dictionary<Skills, int>{
 	 * 	
 	 * });
-	 * curCard.setPassiveGains(new Dictionary<Gains, int>{ //Optional
+	 * curCard.setStaticGains(new Dictionary<Gains, int>{ //Optional
 	 * 	
 	 * });
-	 * curCard.setActiveGains(new Dictionary<Gains, int>{ //Optional
+	 * curCard.setConditionalGains(new Dictionary<Gains, int>{ //Optional
 	 * 		
 	 * });
 	 * curCard.setWhenUsable(new List<Times>{ //Optional (Needed if there are active gains)
@@ -86,7 +83,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 	 * 
 	 * 
 	 *      tempCard = new SpoilsCard("");
-	 *	tempCard.setActiveGains(new Dictionary<Gains, int>{
+	 *	tempCard.setConditionalGains(new Dictionary<Gains, int>{
 	 *		{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
 	 *	});
 	 *	tempCard.setWhenUsable(new List<Times>(){
@@ -135,14 +132,14 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 3},
 			{Skills.Medical, 1}
 		});
-		/* No passives */
-		curCard.setActiveGains( //Set the active abilities the card can do
-			new Dictionary<Gains, int>{ //Set 1 of actives
+		/* No statics */
+		curCard.setConditionalGains( //Set the active abilities the card can do
+			new Dictionary<Gains, int>{ //Set 1 of conditionals
 				{Gains.Gain_Spoils_Cards, 2}}, //1.1
-			new Dictionary<Gains, int>{ //Set 2 of actives
+			new Dictionary<Gains, int>{ //Set 2 of conditionals
 				{Gains.Gain_Action_Cards, 2}} //2.1
 		);
-		curCard.setWhenUsable( //Set when the actives are useable
+		curCard.setWhenUsable( //Set when the conditionals are useable
 			new List<Times>(){ //Set 1
 				Times.After_Successful_Mission_Or_Encounter}, //1.1
 			new List<Times>(){ //Set 2
@@ -170,11 +167,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Survival, 2},
 			{Skills.Diplomacy, 2}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 1}, //Passive 1
 			{Gains.All_Hex_Movement_Cost, 1} //Passive 2
 		});
-		/* No actives */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -191,13 +188,13 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 4},
 			{Skills.Medical, 2}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2},
 			{Gains.Gain_Carry_Weight, 4},
 			{Gains.Prevent_Distruction, VALUE_NOT_NEEDED},
 			{Gains.Prevent_Theft, VALUE_NOT_NEEDED}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Pay_Salvage, 5}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -226,10 +223,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 3},
 			{Skills.Techinical, 5}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Lose_Movement, 1}
 		});
-		/* No actives */
+		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){ //Set 1 of restrictions
 				Restrictions.Equip_To_Vehicle, //1.1
 				Restrictions.Four_Wheels_Or_More //1.2
@@ -247,10 +244,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 1},
 			{Skills.Medical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			//No statics
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Give_Opponent_This_Item, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -278,11 +275,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 1},
 			{Skills.Medical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2},
 			{Gains.All_Hex_Movement_Cost, 1}
 		});
-		/* No actives */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -295,8 +292,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 7}
 		});
-		/* No passives */
-		/* No actives */
+		/* No statics */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -309,10 +306,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 5}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.First_Strike, VALUE_NOT_NEEDED}
 		});
-		/* No actives */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -328,10 +325,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Survival, 1},
 			{Skills.Diplomacy, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Armor, 1}
 		});
-		/* No actives */
+		/* No conditionals */
 		curCard.setRestrictions( new List<Restrictions>(){ //Set 1
 				Restrictions.Not_Used_With_Other_Armor, //1.1
 				Restrictions.Not_Used_With_Other_Clothing //1.2
@@ -353,10 +350,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 1},
 			{Skills.Medical, 3}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Equip_Second_Vehicle_Face_Down, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -380,10 +377,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			//No skills
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
-			//No passives
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			//No statics
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Draw_Spoils_Cards, 6}, //1.1
 			{Gains.Keep_Spoils_Cards, 4}, //1.2
 			{Gains.Swap_New_Characters_Freely, VALUE_NOT_NEEDED} //1.3
@@ -411,8 +408,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Survival, 2},
 			{Skills.Medical, 1}
 		});
-		/* No passives */
-		/* No actives */
+		/* No statics */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -425,8 +422,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 5}
 		});
-		/* No passives */
-		/* No actives */
+		/* No statics */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -440,8 +437,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 2},
 			{Skills.Techinical, 4}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Techinical_Skill_Check_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -466,8 +463,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 4},
 			{Skills.Techinical, 1}
 		});
-		/* No passives */
-		/* No actives */
+		/* No statics */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -482,8 +479,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Combat, 5},
 			{Skills.Medical, 1}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Avoid_Death, VALUE_NOT_NEEDED},
 			{Gains.Remove_Character_All_Damage, VALUE_NOT_NEEDED}
 		});
@@ -512,8 +509,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Techinical, 2},
 			{Skills.Medical, 2}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -528,7 +525,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No restrictions */
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 1 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 1");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Reroll_Any_Critical_Fail, VALUE_NOT_NEEDED}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -546,7 +543,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.addD6Option(tempCard);
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 2 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 2");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Action_Cards, 1}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -563,7 +560,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		);
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 3 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 3");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Heal_D6_Damage, 2}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -581,7 +578,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.addD6Option(tempCard);
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 4 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 4");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -599,7 +596,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.addD6Option(tempCard);
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 5 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 5");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 3}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -629,12 +626,12 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Techinical, 4},
 			{Skills.Medical, 4}
 		});
-		/* No passives */
-		curCard.setActiveGains(
-			new Dictionary<Gains, int>{ //Set 1 of actives
+		/* No statics */
+		curCard.setConditionalGains(
+			new Dictionary<Gains, int>{ //Set 1 of conditionals
 				{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED}, //1.1
 				{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}}, //1.2
-			new Dictionary<Gains, int>{ //Set 2 of actives
+			new Dictionary<Gains, int>{ //Set 2 of conditionals
 				{Gains.Medical_Skill_Check_Pass, VALUE_NOT_NEEDED}} //2.1
 		);
 		curCard.setWhenUsable(
@@ -664,8 +661,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 2},
 			{Skills.Medical, 5}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Remove_Party_All_Physical_Damage, VALUE_NOT_NEEDED},
 			{Gains.Remove_Party_All_Infected_Damage, VALUE_NOT_NEEDED}
 		});
@@ -690,10 +687,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 2}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Deals_Infected_Damage, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Damage_Opponent_Character_By_Crown_Infected, 1}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -717,8 +714,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 1}
 		});
-		/* No passives */
-		/* No actives */
+		/* No statics */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -733,8 +730,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Techinical, 1},
 			{Skills.Medical, 1}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -749,7 +746,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No restrictions */
 		tempCard = new SpoilsCard("Top o' the Line Stun Gun"); //When a 1 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 1");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 1}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -782,10 +779,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Combat, 2},
 			{Skills.Survival, 2}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.First_Strike, VALUE_NOT_NEEDED}
 		});
-		/* No actives */
+		/* No conditionals */
 		curCard.setRestrictions(
 			new List<Restrictions>(){ //Set 1
 				Restrictions.Equip_To_Assault_Rifle //1.1
@@ -805,8 +802,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 3}
 		});
-		/* No passives */
-		/* No actives */
+		/* No statics */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -820,11 +817,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 5}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Cannot_Be_Stolen, VALUE_NOT_NEEDED},
 			{Gains.Goes_To_Auction_House_Upon_Death, VALUE_NOT_NEEDED}
 		});
-		/* No actives */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -838,8 +835,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Combat, 1},
 			{Skills.Diplomacy, 1}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_PVP_Combat_Successes, 2}
 		});
 		curCard.setWhenUsable(new List<Times>(){
@@ -869,11 +866,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 1},
 			{Skills.Medical, 2}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2},
 			{Gains.All_Hex_Movement_Cost, 1}
 		});
-		/* No actives */
+		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
 
@@ -885,8 +882,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setCarryWeight(0);
 		curCard.setSellValue(0);
 		/* No base skills */
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 5}
 		});
 		curCard.setWhenUsable(new List<Times>{
@@ -914,11 +911,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 3},
 			{Skills.Medical, 3}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Lose_Movement, 1},
 			{Gains.Gain_Carry_Weight, 8}
 		});
-		/* No actives */
+		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
 			{Restrictions.Equip_To_Vehicle},
 			{Restrictions.Four_Wheels_Or_More}
@@ -937,12 +934,12 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 3},
 			{Skills.Medical, 3}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Carry_Weight, 4},
 			{Gains.Gain_Prestige, 1},
 			{Gains.Gain_Psych_Resistence, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Pay_Salvage, 4}
 		});
 		curCard.setWhenUsable(new List<Times>{
@@ -968,11 +965,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Diplomacy, 2},
 			{Skills.Techinical, 3}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Prestige, 1},
 			{Gains.Deals_Radiation_Damage, 1}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Damage_Opponent_Character_By_Crown_Radiation, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
@@ -997,8 +994,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Combat, 3},
 			{Skills.Mechanical, 2}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Mechanical_Skill_Check_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
@@ -1024,8 +1021,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Mechanical, 2},
 			{Skills.Techinical, 1}
 		});
-		/* No passives */
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
@@ -1040,7 +1037,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No restrictions */
 		tempCard = new SpoilsCard("Compact Welding & Cutting Torch"); //When a 1 or 2 is rolled
 		tempCard.setTitleSubString("Roll Bonus - 1/2");
-		tempCard.setActiveGains(new Dictionary<Gains, int>{
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 4}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
@@ -1072,10 +1069,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Armor, 1}
 		});
-		/* No actives */
+		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Not_Used_With_Other_Armor
 		});
@@ -1096,10 +1093,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Skills.Techinical, 5},
 			{Skills.Medical, 1}
 		});
-		curCard.setPassiveGains(new Dictionary<Gains, int>{
+		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-		curCard.setActiveGains(new Dictionary<Gains, int>{
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
 
 		});
 		curCard.setWhenUsable(new List<Times>{
