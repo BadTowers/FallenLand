@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class DefaultSpoilsCards : MonoBehaviour{
 
-	public List<SpoilsCard> spoilsCards;
+	public List<SpoilsCard> spoilsCards; //The list of all default spoils cards
 
 	/*
+	 * 
+	 * CHANGE PASSIVE AND ACTIVES TO BE STATIC AND CONTDITIONAL GAINS
+	 * 
+	 * 
 	 * NOTES:
 	 * 	The title of the card is given in the constructor. This comes from the middle of the card below the image.
 	 * 	The spoils types are defined on the upper right side of the card (EXCEPTION, relic is located in the passives)
