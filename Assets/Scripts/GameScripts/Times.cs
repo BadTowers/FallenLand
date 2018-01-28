@@ -99,8 +99,8 @@ public enum Times {
 	During_Mission_Or_Encounter,
 
 	//Locations
-	Within_X_Hexes_Of_Enemy_Party,
-	Within_X_Hexes_Of_Enemy_Town,
+	Within_1_Hex_Of_Enemy_Party,
+	Within_1_Hex_Of_Enemy_Town,
 
 	//Encounters
 	During_Lock_Picking_Encounters,

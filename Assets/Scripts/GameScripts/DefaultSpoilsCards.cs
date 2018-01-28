@@ -439,7 +439,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Technical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}
+			{Gains.Technical_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>(){
 			Times.After_Technical_Skill_Check_Failure
@@ -632,7 +632,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 				{Gains.Remove_Party_Physical_Damage_All, VALUE_NOT_NEEDED}, //1.1
 				{Gains.Remove_Party_Infected_Damage_All, VALUE_NOT_NEEDED}}, //1.2
 			new Dictionary<Gains, int>{ //Set 2 of conditionals
-				{Gains.Medical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}} //2.1
+				{Gains.Medical_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}} //2.1
 		);
 		curCard.setWhenUsable(
 			new List<Times>(){ //Set 1
@@ -996,7 +996,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Mechanical_Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}
+			{Gains.Mechanical_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.During_Lock_Picking_Encounters
@@ -1416,7 +1416,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Steal_Opponent_Town_Tech, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
-			Times.Within_1_Hex_Of_Opponent_Town
+			Times.Within_1_Hex_Of_Enemy_Town
 		});
 		curCard.setNumberOfUses(
 			Uses.Once
@@ -1439,7 +1439,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}
+			{Gains.Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
 				Times.After_Drawing_Perishable_Encounter
