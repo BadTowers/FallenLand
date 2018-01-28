@@ -1454,6 +1454,31 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Grenades");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy);
+		curCard.setCarryWeight(7);
+		curCard.setSellValue(16);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 9}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Combat_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.During_Mission_Or_Encounter
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
 		//TODO asdf
 	}
 }

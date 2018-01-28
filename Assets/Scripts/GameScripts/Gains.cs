@@ -26,13 +26,14 @@ public enum Gains {
 	Losen_Technical_Skill_Check_Successes,
 	Lose_Medical_Skill_Check_Successes,
 	Lose_Failed_Skill_Check_Successes,
-	Combat_Skill_Check_Automatic_Pass, //Auto passes this particular skill check
-	Survival_Skill_Check_Automatic_Pass,
-	Diplomacy_Skill_Check_Automatic_Pass,
-	Mechanical_Skill_Check_Automatic_Pass,
-	Technical_Skill_Check_Automatic_Pass,
-	Medical_Skill_Check_Automatic_Pass,
-	Failed_Skill_Check_Automatic_Pass,
+	Combat_Skill_Checks_Automatic_Pass, //Auto passes this particular skill check
+	Survival_Skill_Checks_Automatic_Pass,
+	Diplomacy_Skill_Checks_Automatic_Pass,
+	Mechanical_Skill_Checks_Automatic_Pass,
+	Technical_Skill_Checks_Automatic_Pass,
+	Medical_Skill_Checks_Automatic_Pass,
+	Failed_Skill_Checks_Automatic_Pass,
+	Skill_Checks_Automatic_Pass,
 	Reroll_Combat_Skill_Check, //Retry the whole skill check of this type (Reroll all dice)
 	Reroll_Survival_Skill_Check,
 	Reroll_Diplomacy_Skill_Check,
