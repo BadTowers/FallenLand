@@ -8,6 +8,9 @@ public enum Gains {
 	Cannot_Be_Stolen,
 	Goes_To_Auction_House_Upon_Death,
 
+	//Location
+	Within_1_Hex_Of_Opponent_Town,
+
 	//Skill check successes
 	Gain_Combat_Skill_Check_Successes, //Adds successes to the total
 	Gain_Survival_Skill_Check_Successes,
@@ -16,7 +19,7 @@ public enum Gains {
 	Gain_Technical_Skill_Check_Successes,
 	Gain_Medical_Skill_Check_Successes,
 	Gain_Failed_Skill_Check_Successes,
-	Lose_Combat_Skill_Check_Successes, //Removes successes to the total
+	Lose_Combat_Skill_Check_Successes, //Removes successes from the total
 	Lose_Survival_Skill_Check_Successes,
 	Lose_Diplomacy_Skill_Check_Successes,
 	Lose_Mechanical_Skill_Check_Successes,
@@ -63,8 +66,12 @@ public enum Gains {
 	Lose_Town_Health,
 
 	//Encounters
-	Ignore_Ambush,
-	Ignore_Perishable,
+	Ignore_Ambush_Encounters_Missions,
+	_Encounters_Missions,
+
+	//Action cards
+	Ignore_Break_Relic_Action_Cards,
+	Ignore_Broken_Action_Cards,
 
 	//Weapons
 	Deals_Radiation_Damage,
@@ -106,8 +113,12 @@ public enum Gains {
 	Gain_Carry_Weight,
 	Lose_Carry_Weight,
 	Avoid_Death,
-	Heal_D6_Damage,
-	Heal_D10_Damage,
+	Heal_D6_Damage_Physical,
+	Heal_D6_Damage_Infected,
+	Heal_D6_Damage_Physical_Or_Infected,
+	Heal_D10_Damage_Physical,
+	Heal_D10_Damage_Infected,
+	Heal_D10_Damage_Physical_Or_Infected,
 	Remove_Party_All_Damage,
 	Remove_Party_Physical_Damage,
 	Remove_Party_Infected_Damage,
@@ -140,6 +151,7 @@ public enum Gains {
 	Keep_Spoils_Cards,
 	Keep_Character_Cards,
 	Swap_New_Characters_Freely,
+	Take_Spoils_Card_From_Top_Discard_Pile,
 
 	//Hiring
 	Pay_Salvage,
@@ -149,5 +161,16 @@ public enum Gains {
 
 	//D10 rewards
 	Roll_D10,
+
+	//Town tech
+	Upgrade_Town_Tech_T2,
+	Steal_Opponent_Town_Tech,
+
+	//NPCMs
+	Remove_NPCM_Currently_In_Play,
+
+	//Resources
+	Gain_Resource_Location,
+	Lose_Resource_Location,
 
 }

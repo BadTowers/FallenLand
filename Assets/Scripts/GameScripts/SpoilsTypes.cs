@@ -7,6 +7,7 @@ public enum SpoilsTypes { //TODO finish
 	Blunt,
 	Book,
 	Bow,
+	Camping_Gear,
 	Clothing,
 	Diplomacy,
 	Equipment, 

@@ -561,7 +561,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 3 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 3");
 		tempCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Heal_D6_Damage, 2}
+			{Gains.Heal_D6_Damage_Physical, 2}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
@@ -1252,6 +1252,208 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//asdf
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Unlimited Stash of Duct Tape");
+		curCard.setTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Mechanical);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(4);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Mechanical, 3},
+			{Skills.Technical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Ignore_Break_Relic_Action_Cards, VALUE_NOT_NEEDED},
+			{Gains.Ignore_Broken_Action_Cards, VALUE_NOT_NEEDED}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Roll_D6, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.During_End_Turn_Phase
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+
+		});
+		tempCard = new SpoilsCard("Unlimited Stash of Duct Tape");
+		tempCard.setTitleSubString("Roll 1/2");
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Take_Spoils_Card_From_Top_Discard_Pile, 1}
+		});
+		tempCard.setWhenUsable(new List<Times>(){
+			Times.Immediately
+		});
+		tempCard.setNumberOfUses(
+			Uses.Once
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.Never
+		);
+		curCard.addD6Option(tempCard); //1
+		curCard.addD6Option(tempCard); //2
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		curCard.addD6Option(null);
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Practically New Ambulance");
+		curCard.setTitleSubString("With Obnoxiously Loud Sirens");
+		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic);
+		curCard.setCarryWeight(14);
+		curCard.setSellValue(29);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 2},
+			{Skills.Technical, 2},
+			{Skills.Medical, 9}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 3}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Heal_D6_Damage_Physical_Or_Infected, 2}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.During_End_Turn_Phase
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Five Machetes");
+		curCard.setTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(14);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2},
+			{Skills.Survival, 1}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Bars of Gold");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(10);
+		curCard.setSellValue(25);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 4}
+		});
+		/* No statics */
+		curCard.setConditionalGains(
+			new Dictionary<Gains, int>{ //Set 1
+				{Gains.Upgrade_Town_Tech_T2, 1} //1.1
+			},
+			new Dictionary<Gains, int>{ //Set 2
+				{Gains.Remove_NPCM_Currently_In_Play, 1} //2.1
+			},
+			new Dictionary<Gains, int>{ //Set 3
+				{Gains.Gain_Resource_Location, 1} //3.1
+			}
+		);
+		curCard.setWhenUsable(
+			new List<Times>{ //Set 1
+				Times.Anytime //1.1
+			},
+			new List<Times>{ //Set 2
+				Times.Anytime //2.1
+			},
+			new List<Times>{ // Set 3
+				Times.Anytime //3.1
+			}
+		);
+		curCard.setNumberOfUses(
+			Uses.Once,
+			Uses.Once,
+			Uses.Once
+		);
+		curCard.setDiscard(
+			true,
+			true,
+			true
+		);
+		/* No restrictions */
+		curCard.setDiscardToTop(false); //This card gets discarded to the bottom of the pile
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Fred Rodgers' Sweater");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing, SpoilsTypes.Relic);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(16);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 2},
+			{Skills.Technical, 1},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Armor, 1}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Steal_Opponent_Town_Tech, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Within_1_Hex_Of_Opponent_Town
+		});
+		curCard.setNumberOfUses(
+			Uses.Once
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Water Purification Canteens");
+		curCard.setTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Medical, SpoilsTypes.Camping_Gear);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(5);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Survival, 1},
+			{Skills.Medical, 2}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Skill_Check_Automatic_Pass, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(new List<Times>{
+				Times.After_Drawing_Perishable_Encounter
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		//TODO asdf
 	}
 }

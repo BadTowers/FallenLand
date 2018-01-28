@@ -16,6 +16,7 @@ public class SpoilsCard : PartyCard {
 	private bool isTemp; //Denotes if it's a temporary D6 spoils or a normal spoils from the deck
 	private Times whenTempEnd; //Marks when the temp gain expires (such as after a certain phase, after a turn, etc)
 	private List<SpoilsCard> attachments; //Spoils cards attached to this spoils card
+	private bool placeOnTopOfDiscard; //Is true if it goes on top (Default), false if it goes on bottom
 
 	private void initLists(){
 		types = new List<SpoilsTypes>();
@@ -32,6 +33,7 @@ public class SpoilsCard : PartyCard {
 		carryWeight = 0;
 		isTemp = false;
 		whenTempEnd = Times.Never;
+		placeOnTopOfDiscard = true; //all cards default to going on the top of the discard pile
 	}
 
 	public SpoilsCard(string title) : base(title) {
@@ -233,5 +235,13 @@ public class SpoilsCard : PartyCard {
 
 	public List<SpoilsCard> getAttachments(){
 		return this.attachments;
+	}
+
+	public void setDiscardToTop(bool b){
+		this.placeOnTopOfDiscard = b;
+	}
+
+	public bool getDiscardToTop(){
+		return this.placeOnTopOfDiscard;
 	}
 }
