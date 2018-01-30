@@ -152,7 +152,13 @@ public enum Gains {
 	Keep_Spoils_Cards,
 	Keep_Character_Cards,
 	Swap_New_Characters_Freely,
-	Take_Spoils_Card_From_Top_Discard_Pile,
+	Take_Spoils_Cards_From_Top_Discard_Pile,
+	Any_Spoils_Cards_From_Deck,
+	Any_Spoils_Cards_From_Discard,
+	Any_Spoils_Cards_From_Deck_Or_Discard,
+	Any_Nonevent_Spoils_Cards_From_Deck,
+	Any_Nonevent_Spoils_Cards_From_Discard,
+	Any_Nonevent_Spoils_Cards_From_Deck_Or_Discard,
 
 	//Hiring
 	Pay_Salvage,
@@ -173,5 +179,8 @@ public enum Gains {
 	//Resources
 	Gain_Resource_Location,
 	Lose_Resource_Location,
+
+	//Theft
+	Take_Characters_From_Opponent_Town_Roster_Into_Players_TR,
 
 }

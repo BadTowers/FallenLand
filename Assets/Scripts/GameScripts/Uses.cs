@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public enum Uses {
 
-	Once,
 	Once_Per_Turn,
 	Unlimited,
 	None,

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class DefaultSpoilsCards : MonoBehaviour{
 
+	private Dictionary<string, int> multiples = new Dictionary<string, int>(){ //The names of the cards that, by default, are in the deck more than once
+		{"Basic Med Kit", 2},
+		{"Swat Body Armor", 2}
+	};
+
 	public List<SpoilsCard> spoilsCards; //The list of all default spoils cards
 
 	/*
@@ -146,8 +151,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 				Times.After_Successful_Mission_Or_Encounter} //2.1
 		);
 		curCard.setNumberOfUses( //Set how many uses each active has
-			Uses.Once, //Set 1
-			Uses.Once //Set 2
+			Uses.Unlimited, //Set 1
+			Uses.Unlimited //Set 2
 		);
 		curCard.setDiscard( //Set if the active use causes the card to be discarded
 			true, //Set 1
@@ -201,7 +206,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Immediately
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			false
@@ -360,7 +365,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Vehicle_Destroyed
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
@@ -389,7 +394,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Immediately
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
@@ -445,7 +450,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.After_Technical_Skill_Check_Failure
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
@@ -641,8 +646,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 				Times.After_Medical_Skill_Check_Failure} //2.1
 		);
 		curCard.setNumberOfUses(
-			Uses.Once,
-			Uses.Once
+			Uses.Unlimited,
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true,
@@ -670,7 +675,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Anytime
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
@@ -753,7 +758,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Immediately
 		});
 		tempCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		tempCard.setDiscard(
 			true
@@ -890,7 +895,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Immediately
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
@@ -946,7 +951,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Times.Immediately}
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			false
@@ -1002,7 +1007,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.During_Lock_Picking_Encounters
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			false
@@ -1029,7 +1034,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.After_Combat_Skill_Check_Success
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			false
@@ -1044,7 +1049,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Immediately
 		});
 		tempCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		tempCard.setDiscard(
 			true
@@ -1242,13 +1247,41 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Anytime
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
 		);
 		/* No restrictions */
-		spoilsCards.Add(curCard); //Two of this card are in the deck
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Special Forces Manual");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Survival, 3},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Psych_Resistence, 1}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Combat_Skill_Checks_Automatic_Pass, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.After_Combat_Skill_Check_Failure
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
 		spoilsCards.Add(curCard);
 
 
@@ -1283,13 +1316,13 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		tempCard = new SpoilsCard("Unlimited Stash of Duct Tape");
 		tempCard.setTitleSubString("Roll 1/2");
 		tempCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Take_Spoils_Card_From_Top_Discard_Pile, 1}
+			{Gains.Take_Spoils_Cards_From_Top_Discard_Pile, 1}
 		});
 		tempCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
 		});
 		tempCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		tempCard.setDiscard(
 			true
@@ -1385,9 +1418,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			}
 		);
 		curCard.setNumberOfUses(
-			Uses.Once,
-			Uses.Once,
-			Uses.Once
+			Uses.Unlimited,
+			Uses.Unlimited,
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true,
@@ -1419,7 +1452,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.Within_1_Hex_Of_Enemy_Town
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			false
@@ -1470,7 +1503,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			Times.During_Mission_Or_Encounter
 		});
 		curCard.setNumberOfUses(
-			Uses.Once
+			Uses.Unlimited
 		);
 		curCard.setDiscard(
 			true
@@ -1479,6 +1512,79 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO asdf
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Police Interceptor");
+		curCard.setTitleSubString("With Hypnotic Lights");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(10);
+		curCard.setSellValue(19);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 4},
+			{Skills.Diplomacy, 4},
+			{Skills.Medical, 3}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 3}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Take_Characters_From_Opponent_Town_Roster_Into_Players_TR, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Within_1_Hex_Of_Enemy_Town
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Finders Keepers");
+		curCard.setQuote("You have found the item of your dreams...");
+		curCard.setTypes(SpoilsTypes.Event);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(0);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Any_Nonevent_Spoils_Cards_From_Deck_Or_Discard, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Immediately
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Swat Body Armor");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(14);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Diplomacy, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Armor, 1}
+		});
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		//todo
 	}
 }
