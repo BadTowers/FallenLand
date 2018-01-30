@@ -32,6 +32,7 @@ public enum SpoilsTypes { //TODO finish
 	Submachine_Gun,
 	Survival,
 	Sword,
+	Technical,
 	Top_Secret,
 	Two_Wheeled,
 	Vehicle, 

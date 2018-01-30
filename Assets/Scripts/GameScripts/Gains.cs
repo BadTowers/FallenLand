@@ -8,9 +8,6 @@ public enum Gains {
 	Cannot_Be_Stolen,
 	Goes_To_Auction_House_Upon_Death,
 
-	//Location
-	Within_1_Hex_Of_Opponent_Town,
-
 	//Skill check successes
 	Gain_Combat_Skill_Check_Successes, //Adds successes to the total
 	Gain_Survival_Skill_Check_Successes,
@@ -69,10 +66,22 @@ public enum Gains {
 	//Ally
 	Prevent_Any_Character_Death, //In a dictionary, set the value as the HP they have after the prevention
 
-	//Encounters
-	Ignore_Ambush_Encounters_Missions,
-	Ignore_Perishable_Encounters_Missions,
+	//Encounters/MIssions
+	Ignore_Ambush_Encounters,
+	Ignore_Ambush_Missions,
+	Ignore_Ambush_Encounters_And_Missions,
+	Ignore_Perishable_Encounters,
+	Ignore_Perishable_Missions,
+	Ignore_Perishable_Encounters_And_Missions,
 	Auto_Succeed_Ambush_Encounters,
+	Auto_Succeed_Ambush_Missions,
+	Auto_Succeed_Ambush_Encounters_And_Missions,
+	Auto_Succeed_Sigma_Bunker_Encounters,
+	Auto_Succeed_Sigma_Bunker_Missions,
+	Auto_Succeed_Sigma_Bunker_Encounters_And_Missions,
+	Auto_Succeed_Lock_Picking_Encounters,
+	Auto_Succeed_Lock_Picking_Missions,
+	Auto_Succeed_Lock_Picking_Encounters_And_Missions,
 
 	//Action cards
 	Ignore_Break_Relic_Action_Cards,
@@ -92,6 +101,9 @@ public enum Gains {
 	Remove_Prestige,
 	Remove_Town_Health,
 	Give_Opponent_This_Item,
+	Select_Character_From_Opposing_Party,
+	Discard_Selected_Opposing_Character_Equipment,
+	Kill_Selected_Character_From_Opposing_Party,
 
 	//Movement
 	Ignore_Delays,
@@ -194,5 +206,9 @@ public enum Gains {
 
 	//Theft
 	Take_Characters_From_Opponent_Town_Roster_Into_Players_TR,
+
+	//Damage Types
+	Radiation_Damage_Treated_As_Physical,
+	Infected_Damage_Treated_As_Physical,
 
 }

@@ -17,6 +17,9 @@ public enum Times {
 	//Party
 	Any_Party_Member_Death,
 
+	//Opponents
+	Opponent_Discarded_Book_Spoils,
+
 	//Vehicle
 	Vehicle_Destroyed,
 
