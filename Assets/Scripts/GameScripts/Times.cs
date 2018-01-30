@@ -14,8 +14,15 @@ public enum Times {
 	//Characters
 	After_Death,
 
+	//Party
+	Any_Party_Member_Death,
+
 	//Vehicle
 	Vehicle_Destroyed,
+
+	//Cards
+	Character_Card_Received_As_Reward,
+	When_Drawn,
 
 	//Skill checks
 	After_Combat_Skill_Check_Failure,

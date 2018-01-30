@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 public enum Restrictions  {
 
+	//General
+	Equip_To_All_Party_Members_Or_None,
+	Cannot_Be_Sold,
+
+	//Cards
+	Cant_Be_Drawn_During_Setup,
+
 	//Vehicle
 	Four_Wheels_Or_More,
 	Not_Bicycles,

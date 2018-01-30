@@ -6,7 +6,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 	private Dictionary<string, int> multiples = new Dictionary<string, int>(){ //The names of the cards that, by default, are in the deck more than once
 		{"Basic Med Kit", 2},
-		{"Swat Body Armor", 2}
+		{"Swat Body Armor", 2},
+		{"First Aid Kit", 2}
 	};
 
 	public List<SpoilsCard> spoilsCards; //The list of all default spoils cards
@@ -42,33 +43,33 @@ public class DefaultSpoilsCards : MonoBehaviour{
 	 * Below is the block of code used to define a spoils card. The ones marked as optional don't need to be included
 	 * 	if they aren't relevent to the card.
 	 * 
-	 * curCard = new SpoilsCard("");
-	 * curCard.curCard.setTitleSubString(""); //Optional
-	 * curCard.setTypes();
-	 * curCard.setCarryWeight();
-	 * curCard.setSellValue();
-	 * curCard.setBaseSkills(new Dictionary<Skills, int>{
-	 * 	
-	 * });
-	 * curCard.setStaticGains(new Dictionary<Gains, int>{ //Optional
-	 * 	
-	 * });
-	 * curCard.setConditionalGains(new Dictionary<Gains, int>{ //Optional
-	 * 		
-	 * });
-	 * curCard.setWhenUsable(new List<Times>{ //Optional (Needed if there are active gains)
-	 * 		
-	 * });
-	 * curCard.setNumberOfUses( //Optional (Needed if there are active gains)
-	 * 		
-	 * );
-	 * curCard.setDiscard( //Optional (Needed if there are active gains)
-	 * 		
-	 * );
-	 * curCard.setRestrictions(new List<Restrictions>(){ //Optional
-	 * 		
-	 * });
-	 * spoilsCards.Add(curCard);
+	  curCard = new SpoilsCard("");
+	  curCard.curCard.setTitleSubString(""); //Optional
+	  curCard.setTypes();
+	  curCard.setCarryWeight();
+	  curCard.setSellValue();
+	  curCard.setBaseSkills(new Dictionary<Skills, int>{
+	  	
+	  });
+	  curCard.setStaticGains(new Dictionary<Gains, int>{ //Optional
+	  	
+	  });
+	  curCard.setConditionalGains(new Dictionary<Gains, int>{ //Optional
+	  		
+	  });
+	  curCard.setWhenUsable(new List<Times>{ //Optional (Needed if there are active gains)
+	  		
+	  });
+	  curCard.setNumberOfUses( //Optional (Needed if there are active gains)
+	  		
+	  );
+	  curCard.setDiscard( //Optional (Needed if there are active gains)
+	  		
+	  );
+	  curCard.setRestrictions(new List<Restrictions>(){ //Optional
+	  		
+	  });
+	  spoilsCards.Add(curCard);
 	 * 
 	 * 
 	 * 
@@ -87,23 +88,23 @@ public class DefaultSpoilsCards : MonoBehaviour{
 	 * 	do that:
 	 * 
 	 * 
-	 *      tempCard = new SpoilsCard("");
-	 *	tempCard.setConditionalGains(new Dictionary<Gains, int>{
-	 *		{Gains.Reroll_Any_Critical_Fail, 1}
-	 *	});
-	 *	tempCard.setWhenUsable(new List<Times>(){
-	 *		Times.After_Any_Skill_Critical_Failure
-	 *	});
-	 *	tempCard.setNumberOfUses(
-	 *		Uses.Once_Per_Turn
-	 *	);
-	 *	tempCard.setDiscard(
-	 *		true
-	 *	);
-	 *	tempCard.setWhenTempEnd(
-	 *		Times.After_Party_Exploits_Phase
-	 *	);
-	 *	curCard.addD6Option(tempCard);
+	        tempCard = new SpoilsCard("");
+	 	tempCard.setConditionalGains(new Dictionary<Gains, int>{
+	 		{Gains.Reroll_Any_Critical_Fail, 1}
+	 	});
+	 	tempCard.setWhenUsable(new List<Times>(){
+	 		Times.After_Any_Skill_Critical_Failure
+	 	});
+	 	tempCard.setNumberOfUses(
+	 		Uses.Once_Per_Turn
+	 	);
+	 	tempCard.setDiscard(
+	 		true
+	 	);
+	 	tempCard.setWhenTempEnd(
+	 		Times.After_Party_Exploits_Phase
+	 	);
+	 	curCard.addD6Option(tempCard);
 	 * 
 	 * 
 	 * We create a new spoils card effectively the same way we have been, but there is a new addition--setWhenTempEnd. Because some
@@ -196,7 +197,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2},
 			{Gains.Gain_Carry_Weight, 4},
-			{Gains.Prevent_Distruction, VALUE_NOT_NEEDED},
+			{Gains.Prevent_Destruction, VALUE_NOT_NEEDED},
 			{Gains.Prevent_Theft, VALUE_NOT_NEEDED}
 		});
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
@@ -399,7 +400,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Cant_Be_Drawn_During_Setup
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -900,7 +903,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Cant_Be_Drawn_During_Setup
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -1311,7 +1316,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			false
 		);
 		curCard.setRestrictions(new List<Restrictions>(){
-
+			Restrictions.Equip_To_All_Party_Members_Or_None
 		});
 		tempCard = new SpoilsCard("Unlimited Stash of Duct Tape");
 		tempCard.setTitleSubString("Roll 1/2");
@@ -1382,7 +1387,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No statics */
 		/* No conditionals */
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_To_All_Party_Members_Or_None
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -1475,7 +1482,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 		curCard.setWhenUsable(new List<Times>{
-				Times.After_Drawing_Perishable_Encounter
+			Times.After_Drawing_Perishable_Encounter
 		});
 		curCard.setNumberOfUses(
 			Uses.Unlimited
@@ -1483,7 +1490,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_To_All_Party_Members_Or_None
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -1564,7 +1573,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			true
 		);
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Cant_Be_Drawn_During_Setup
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -1585,6 +1596,520 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//todo
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("9mm Pistol");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Paramedic Medical Kit");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(10);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 2},
+			{Skills.Medical, 5}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Remove_Party_Physical_Damage, 5}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Anytime
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("First Aid Kit");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+		curCard.setCarryWeight(1);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Diplomacy, 1},
+			{Skills.Medical, 2}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Remove_Party_Physical_Damage, 2}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Anytime
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Classic All American");
+		curCard.setTitleSubString("Performance Muscle Car");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(10);
+		curCard.setSellValue(19);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Diplomacy, 3},
+			{Skills.Mechanical, 2},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 4}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Character_Cards, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Character_Card_Received_As_Reward
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Macho Tow Truck");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(13);
+		curCard.setSellValue(19);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 5},
+			{Skills.Diplomacy, 3},
+			{Skills.Mechanical, 5},
+			{Skills.Technical, 3}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Roll_D10, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.During_End_Turn_Phase
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+
+		});
+		tempCard = new SpoilsCard("Macho Towing Truck"); //When a 1 is rolled
+		tempCard.setTitleSubString("Bonus Roll - 1-3");
+		tempCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Any_Vehicle_Spoils_Cards_From_Discard, 1}
+		});
+		tempCard.setWhenUsable(new List<Times>(){
+			Times.Immediately
+		});
+		tempCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		tempCard.setDiscard(
+			true
+		);
+		tempCard.setWhenTempEnd(
+			Times.After_Party_Exploits_Phase
+		);
+		curCard.addD6Option(tempCard); //1
+		curCard.addD6Option(tempCard); //2
+		curCard.addD6Option(tempCard); //3
+		curCard.addD6Option(null); //4
+		curCard.addD6Option(null);
+		curCard.addD6Option(null); //6
+		curCard.addD6Option(null);
+		curCard.addD6Option(null); //8
+		curCard.addD6Option(null);
+		curCard.addD6Option(null); //10
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Five Classic .45 Pistols");
+		curCard.setTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(30);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3}
+		});
+		/* No statics */
+		/* No conditionals */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_To_All_Party_Members_Or_None
+		});
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Contact Truck");
+		curCard.setTitleSubString("With Matching Yellow Hardhats");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(12);
+		curCard.setSellValue(18);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 2},
+			{Skills.Mechanical, 4},
+			{Skills.Technical, 4},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Keep_All_Stowables, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Vehicle_Destroyed
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Jackpot");
+		curCard.setTypes(SpoilsTypes.Event);
+		curCard.setQuote("You have stumbled upon a concealed compartment!");
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(0);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Spoils_Cards, 4}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Immediately
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Cant_Be_Drawn_During_Setup
+		});
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Heavy Armor Plating");
+		curCard.setTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Lose_Movement, 1}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Prevent_Destruction, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Vehicle_Destroyed
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Game
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_To_Vehicle,
+			Restrictions.Four_Wheels_Or_More
+		});
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("5 Matching Pink Mopeds");
+		curCard.setQuote("At least the thieves had a sense of humor...");
+		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Jinxed);
+		curCard.setCarryWeight(10);
+		curCard.setSellValue(0);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 1},
+			{Skills.Mechanical, 1},
+			{Skills.Technical, 1},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 1}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Discard_Equipped_Vehicle, VALUE_NOT_NEEDED},
+			{Gains.Lose_All_Stowables, VALUE_NOT_NEEDED}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Immediately
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Game
+		);
+		curCard.setDiscard(
+			false
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Cannot_Be_Sold
+		});
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Badass Socket Set");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Mechanical, 3},
+			{Skills.Technical, 2}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Salvage, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.After_Successful_Mission_Or_Encounter
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Jugs O'Moonshine");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Alcohol, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Survival, 1},
+			{Skills.Diplomacy, 2}
+		});
+		/* No statics */
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Diplomacy_Skill_Checks_Automatic_Pass, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.After_Diplomacy_Skill_Check_Failure
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Militia Rifle");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+		curCard.setCarryWeight(5);
+		curCard.setSellValue(12);
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("High Tech Utility Belt");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Backpack);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(8);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 1},
+			{Skills.Survival, 2},
+			{Skills.Mechanical, 2},
+			{Skills.Technical, 2},
+			{Skills.Medical, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Carry_Weight, 2}
+		});
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("5.56mm Assault Rifle");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+		curCard.setCarryWeight(5);
+		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 7}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Patton");
+		curCard.setTypes(SpoilsTypes.Ally);
+		curCard.setCarryWeight(0);
+		curCard.setSellValue(0);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Survival, 1}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Prevent_Theft, VALUE_NOT_NEEDED},
+			{Gains.Gain_Carry_Weight, 2},
+			{Gains.Gain_Psych_Resistence, 1}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Prevent_Any_Character_Death, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Any_Party_Member_Death
+		});
+		curCard.setNumberOfUses(
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			true
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Cannot_Be_Sold
+		});
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Compound Hunting Bow");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Bow);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3},
+			{Skills.Survival, 2}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Classic .45 Pistol");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(6);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("William H Bonnie's");
+		curCard.setTitleSubString("Matching .45 Revolvers");
+		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun, SpoilsTypes.Relic);
+		curCard.setCarryWeight(4);
+		curCard.setSellValue(20);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 7},
+			{Skills.Survival, 3},
+			{Skills.Diplomacy, 2}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Psych_Resistence, 1}
+		});
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Cheap Mountain Bikes");
+		curCard.setTypes(SpoilsTypes.Vehicle);
+		curCard.setCarryWeight(10);
+		curCard.setSellValue(7);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 2},
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 1},
+			{Skills.Mechanical, 1},
+			{Skills.Medical, 1}
+		});
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Ram Plate");
+		curCard.setTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
+		curCard.setCarryWeight(2);
+		curCard.setSellValue(5);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 3}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Lose_Movement, 1},
+			{Gains.Auto_Succeed_Ambush_Encounters, VALUE_NOT_NEEDED}
+		});
+		/* No conditionals */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_To_Vehicle,
+			Restrictions.Four_Wheels_Or_More
+		});
+		spoilsCards.Add(curCard);
+
+
+		//TODO
 	}
 }

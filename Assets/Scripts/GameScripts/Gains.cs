@@ -66,9 +66,13 @@ public enum Gains {
 	Lose_Prestige,
 	Lose_Town_Health,
 
+	//Ally
+	Prevent_Any_Character_Death, //In a dictionary, set the value as the HP they have after the prevention
+
 	//Encounters
 	Ignore_Ambush_Encounters_Missions,
-	_Encounters_Missions,
+	Ignore_Perishable_Encounters_Missions,
+	Auto_Succeed_Ambush_Encounters,
 
 	//Action cards
 	Ignore_Break_Relic_Action_Cards,
@@ -104,9 +108,14 @@ public enum Gains {
 
 	//Vehicles
 	Prevent_Theft,
-	Prevent_Distruction,
+	Prevent_Destruction,
 	Equip_Second_Vehicle_Face_Down,
 	Equip_Second_Vehicle_Face_Up,
+	Keep_Stowables,
+	Keep_All_Stowables,
+	Discard_Equipped_Vehicle,
+	Lose_Stowables,
+	Lose_All_Stowables,
 
 	//Character
 	Gain_Psych_Resistence,
@@ -114,14 +123,14 @@ public enum Gains {
 	Gain_Carry_Weight,
 	Lose_Carry_Weight,
 	Avoid_Death,
-	Heal_D6_Damage_Physical,
+	Heal_D6_Damage_Physical, //Does not apply to all members
 	Heal_D6_Damage_Infected,
 	Heal_D6_Damage_Physical_Or_Infected,
 	Heal_D10_Damage_Physical,
 	Heal_D10_Damage_Infected,
 	Heal_D10_Damage_Physical_Or_Infected,
 	Remove_Party_All_Damage,
-	Remove_Party_Physical_Damage,
+	Remove_Party_Physical_Damage, //Remove this number from all members
 	Remove_Party_Infected_Damage,
 	Remove_Party_Radiation_Damage,
 	Remove_Party_Psych_Damage,
@@ -141,15 +150,15 @@ public enum Gains {
 	Remove_Character_Psych_Damage_All,
 
 	//Cards
-	Gain_Spoils_Cards,
+	Gain_Spoils_Cards, //Added, no catches
 	Gain_Action_Cards,
 	Gain_Character_Cards,
 	Lose_Spoils_Cards,
 	Lose_Action_Cards,
 	Lose_Character_Cards,
-	Draw_Spoils_Cards,
+	Draw_Spoils_Cards, //Combined with keep. ex draw 4, keep 2
 	Draw_Character_Cards,
-	Keep_Spoils_Cards,
+	Keep_Spoils_Cards, //Combined with draw.
 	Keep_Character_Cards,
 	Swap_New_Characters_Freely,
 	Take_Spoils_Cards_From_Top_Discard_Pile,
@@ -159,6 +168,9 @@ public enum Gains {
 	Any_Nonevent_Spoils_Cards_From_Deck,
 	Any_Nonevent_Spoils_Cards_From_Discard,
 	Any_Nonevent_Spoils_Cards_From_Deck_Or_Discard,
+	Any_Vehicle_Spoils_Cards_From_Deck,
+	Any_Vehicle_Spoils_Cards_From_Discard,
+	Any_Vehicle_Spoils_Cards_From_Deck_Or_Discard,
 
 	//Hiring
 	Pay_Salvage,
