@@ -26,6 +26,10 @@ public class PartyCard : NonencounterCard {
 			}
 		}
 	}
+		
+	public Dictionary<Skills, int> getBaseSkills(){
+		return baseSkills;
+	}
 
 	public void setTitleSubString(string t) {
 		this.titleSubString = t;

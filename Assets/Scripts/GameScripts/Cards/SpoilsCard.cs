@@ -265,4 +265,27 @@ public class SpoilsCard : PartyCard {
 	public bool getDiscardToTop(){
 		return this.placeOnTopOfDiscard;
 	}
+
+	public SpoilsCard deepCopy(){
+		SpoilsCard newCard = new SpoilsCard(this.getTitle());
+		newCard = new SpoilsCard(this.getTitle());
+		newCard.setTitleSubString(this.getTitleSubString());
+		newCard.setTypes(this.types);
+		newCard.setCarryWeight(this.carryWeight);
+		newCard.setSellValue(this.sellValue);
+		newCard.setBaseSkills(this.getBaseSkills());
+		newCard.setStaticGains(this.staticGains);
+		newCard.setConditionalGains(this.conditionalGains);
+		newCard.setWhenUsable(this.whenUsable);
+		newCard.setNumberOfUses(this.uses);
+		newCard.setDiscard(this.discards);
+		newCard.setRestrictions(this.restrictions);
+		newCard.setID(this.getID());
+		newCard.setQuote(this.getQuote());
+		newCard.setD6Options(this.d6);
+		newCard.setD10Options(this.d10);
+		newCard.setDiscardToTop(this.placeOnTopOfDiscard);
+
+		return newCard;
+	}
 }

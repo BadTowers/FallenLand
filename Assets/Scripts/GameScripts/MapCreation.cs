@@ -9,38 +9,35 @@ public class MapCreation : MonoBehaviour {
 	public const int height = 23;
 	public const int width = 34;
 	public const int scale = 3;
+	public MapLayout ml;
 	private const float LROffset = .860f * scale;
 	private const float UDOffset = .740f * scale;
 	private const int NUM_RANDOM_LOCATIONS = 100;
 	private GameObject[,] mapOfHexes;
-	private MapLayout ml;
 
-	// Use this for initialization
+	// Use this for initialization (for debugging only, creates a default map layout and creates the map)
+	/*
 	void Start () {
-		mapOfHexes = new GameObject[width, height];
-
+		
 		//Can be changed to RandomMapLayout later if desired
 		ml = new DefaultMapLayout();
-
-		//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
-		GameObject newGameState = GameObject.Find("GameCreation");
-		/* TODO actually do something with this information */
-		//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode);
-		if (newGameState != null) {
-			newGameState.GetComponent<GameCreation> ().wasRead = true; //Mark as read so the game object can be deleted
-			Debug.Log(newGameState.GetComponent<GameCreation>().faction);
-		} else {
-			Debug.Log ("Game info not received from game setup");
-		}
 
 		//Debug.Log (newGameState.GetComponent("GameCreation").gameMode);
 
 		//Assign the hexes their properties
 		createMap();
 	}
+	*/
 
-	private void createMap()
+	public void createMap()
 	{
+		mapOfHexes = new GameObject[width, height];
+
+		if(ml == null) {
+			Debug.Log("Error, map layout not set. Using default");
+			ml = new DefaultMapLayout();
+		}
+
 		for (int LR = 0; LR < width; LR++) { //Left/right
 			for (int UD = 0; UD < height; UD++) { //Up/down
 

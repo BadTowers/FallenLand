@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultSpoilsCards : MonoBehaviour{
+public class DefaultSpoilsCards{
 
 	private Dictionary<string, int> multiples = new Dictionary<string, int>(){ //The names of the cards that, by default, are in the deck more than once
 		{"Basic Med Kit", 2},
@@ -10,7 +10,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		{"First Aid Kit", 2}
 	};
 
-	public List<SpoilsCard> spoilsCards; //The list of all default spoils cards
+	private List<SpoilsCard> spoilsCards; //The list of all default spoils cards
 
 	/*
 	 * 
@@ -118,7 +118,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 
 	//Called before Start()
-	void Awake(){
+	public DefaultSpoilsCards(){
 		//Initialize the lists for the cards
 		spoilsCards = new List<SpoilsCard>();
 
@@ -127,6 +127,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		//Add the cards to the list
 		SpoilsCard curCard;
 		SpoilsCard tempCard;
+
+		Debug.Log("Instantiating spoils cards...");
 
 
 		/****************************************************************************************************************************************************************/
@@ -234,9 +236,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){ //Set 1 of restrictions
-				Restrictions.Equip_To_Vehicle, //1.1
-				Restrictions.Four_Wheels_Or_More //1.2
-			}
+			Restrictions.Equip_To_Vehicle, //1.1
+			Restrictions.Four_Wheels_Or_More //1.2
+		}
 		);
 		spoilsCards.Add(curCard);
 
@@ -1079,7 +1081,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setCarryWeight(1);
 		curCard.setSellValue(6);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
-			
+
 		});
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Armor, 1}
@@ -3694,5 +3696,26 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No conditionals */
 		/* No restrictions */
 		spoilsCards.Add(curCard);
+
+
+
+		//Now that all cards are added, let's ID them all
+		int count = spoilsCards.Count;
+		for(int i = 0; i < count; i++) {
+			spoilsCards[i].setID(i); //ID current one
+
+			//See if this card is a duplicate
+			if (multiples.ContainsKey(spoilsCards[i].getTitle())) { //If the name of this card is a name in the multiples dictionary
+				SpoilsCard newCard = spoilsCards[i].deepCopy();
+				spoilsCards.Add(newCard);
+			}
+		}
+
+
+	}
+
+
+	public List<SpoilsCard> getSpoilsCards(){
+		return this.spoilsCards;
 	}
 }
