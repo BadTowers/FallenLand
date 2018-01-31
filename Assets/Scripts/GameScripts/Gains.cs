@@ -82,7 +82,6 @@ public enum Gains {
 	Auto_Succeed_Lock_Picking_Encounters,
 	Auto_Succeed_Lock_Picking_Missions,
 	Auto_Succeed_Lock_Picking_Encounters_And_Missions,
-	Gain_Combat_Successes_On_Gladiatorial_Events,
 	Ignore_Negatives_Of_Enoucnter_Failure,
 	Ignore_Negatives_Of_Mission_Failure,
 	Ignore_Negatives_Of_Encounter_Or_Mission_Failure,
@@ -135,6 +134,8 @@ public enum Gains {
 	Lose_Stowables,
 	Lose_All_Stowables,
 	Ignore_All_Vehicle_Equipment_Movement_Penalties,
+	Choose_Which_Vehicle_To_Discard,
+	Stacks_With_Other_Vehicles,
 
 	//Character
 	Gain_Psych_Resistence,
@@ -179,6 +180,8 @@ public enum Gains {
 	Lose_Character_Cards,
 	Draw_Spoils_Cards, //Combined with keep. ex draw 4, keep 2
 	Draw_Character_Cards,
+	Draw_Encounter_Cards,
+	Keep_Encounter_Cards,
 	Keep_Spoils_Cards, //Combined with draw.
 	Keep_Character_Cards,
 	Swap_New_Characters_Freely,
@@ -192,6 +195,9 @@ public enum Gains {
 	Any_Vehicle_Spoils_Cards_From_Deck,
 	Any_Vehicle_Spoils_Cards_From_Discard,
 	Any_Vehicle_Spoils_Cards_From_Deck_Or_Discard,
+
+	//Special
+	Gain_Kurtis_Wyatt_Character_Card,
 
 	//Hiring
 	Pay_Salvage,

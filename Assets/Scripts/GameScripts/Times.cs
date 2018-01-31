@@ -21,6 +21,7 @@ public enum Times {
 
 	//Party
 	Any_Party_Member_Death,
+	After_Each_Movement,
 
 	//Opponents
 	Opponent_Discarded_Book_Spoils,
@@ -120,6 +121,8 @@ public enum Times {
 	During_Lock_Picking_Encounters,
 	During_Perishable_Encounters,
 	During_Ambush_Encounters,
+	During_Gladiatorial_Events_Encounters,
+	During_Rad_Zombie_Encounters,
 
 
 	//Locations

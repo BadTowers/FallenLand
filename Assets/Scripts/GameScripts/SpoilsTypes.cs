@@ -30,6 +30,7 @@ public enum SpoilsTypes { //TODO finish
 	Relic,
 	Rifle,
 	Shotgun,
+	Six_Wheeled,
 	Sporting_Goods,
 	Stowable,
 	Submachine_Gun,
@@ -40,4 +41,5 @@ public enum SpoilsTypes { //TODO finish
 	Two_Wheeled,
 	Vehicle, 
 	Vehicle_Equipment,
+	Zero_Wheeled,
 }
