@@ -63,6 +63,9 @@ public enum Gains {
 	Lose_Prestige,
 	Lose_Town_Health,
 
+	//Party
+	Ignore_Radiation_Damage_From_Hexes,
+
 	//Ally
 	Prevent_Any_Character_Death, //In a dictionary, set the value as the HP they have after the prevention
 
@@ -109,6 +112,8 @@ public enum Gains {
 	Kill_Selected_Character_From_Opposing_Party,
 	Steal_Spoils_From_Opposing_Party_Excluding_Vehicles,
 	Steal_Spoils_From_Opposing_Town_Auction_House,
+	Steal_D6_Salvage,
+	Steal_D10_Salvage,
 
 	//Movement
 	Ignore_Delays,

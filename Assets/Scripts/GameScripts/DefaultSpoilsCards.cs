@@ -3154,6 +3154,79 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
-		//TODO finish
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Luxury SUV");
+		curCard.setTitleSubString("With Spinner Rims and Hydraulics");
+		curCard.setTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+		curCard.setCarryWeight(12);
+		curCard.setSellValue(19);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 4},
+			{Skills.Survival, 2},
+			{Skills.Diplomacy, 1},
+			{Skills.Mechanical, 1},
+			{Skills.Medical, 3}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Gain_Movement, 2}
+		});
+		curCard.setConditionalGains(new Dictionary<Gains, int>{
+			{Gains.Steal_D10_Salvage, 1}
+		});
+		curCard.setWhenUsable(new List<Times>{
+			Times.Within_1_Hex_Of_Enemy_Town
+		});
+		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn
+		);
+		curCard.setDiscard(
+			false
+		);
+		/* No restrictions */
+		spoilsCards.Add(curCard);
+
+
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Geiger Counter");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(9);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Technical, 2}
+		});
+		curCard.setStaticGains(new Dictionary<Gains, int>{
+			{Gains.Ignore_Radiation_Damage_From_Hexes, VALUE_NOT_NEEDED}
+		});
+		curCard.setConditionalGains(
+			new Dictionary<Gains, int>{ //set 1
+				{Gains.Gain_Spoils_Cards, 1} //1.1
+			},
+			new Dictionary<Gains, int>{ //set 2
+				{Gains.Gain_Action_Cards, 1} //2.1
+			}
+		);
+		curCard.setWhenUsable(
+			new List<Times>{ //set 1
+				Times.Before_Drawing_City_Rad_Encounter_Card //1.1
+			},
+			new List<Times>{ //set 2
+				Times.Before_Drawing_City_Rad_Encounter_Card //2.1
+			}
+		);
+		curCard.setNumberOfUses(
+			Uses.Unlimited,
+			Uses.Unlimited
+		);
+		curCard.setDiscard(
+			false,
+			false
+		);
+		curCard.setRestrictions(new List<Restrictions>(){
+
+		});
+		spoilsCards.Add(curCard);
+
+
+
 	}
 }

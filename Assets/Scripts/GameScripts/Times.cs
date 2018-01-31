@@ -123,6 +123,7 @@ public enum Times {
 	During_Ambush_Encounters,
 	During_Gladiatorial_Events_Encounters,
 	During_Rad_Zombie_Encounters,
+	Before_Drawing_City_Rad_Encounter_Card,
 
 
 	//Locations

@@ -13,6 +13,7 @@ public class SpoilsCard : PartyCard {
 	private List<Uses> uses; 
 	private List<bool> discards; //If you discard the card after using a conditional gain 
 	private List<SpoilsCard> d6; //D6 options can be viewed as 6 individual spoils cards, each with one active ability representing the D6 option
+	private List<SpoilsCard> d10; //D10 options can be viewed as 10 individual spoils cards, each with one active ability.
 	private bool isTemp; //Denotes if it's a temporary D6 spoils or a normal spoils from the deck
 	private Times whenTempEnd; //Marks when the temp gain expires (such as after a certain phase, after a turn, etc)
 	private List<SpoilsCard> attachments; //Spoils cards attached to this spoils card
@@ -27,6 +28,7 @@ public class SpoilsCard : PartyCard {
 		uses = new List<Uses>();
 		discards = new List<bool>();
 		d6 = new List<SpoilsCard>();
+		d10 = new List<SpoilsCard>();
 		attachments = new List<SpoilsCard>();
 
 		sellValue = 0;
@@ -211,6 +213,25 @@ public class SpoilsCard : PartyCard {
 
 	public List<SpoilsCard> getD6Options(){
 		return this.d6;
+	}
+
+	public void setD10Options(List<SpoilsCard> d10){
+		this.d10 = d10;
+	}
+
+	public void setD10Options(params SpoilsCard[] d10){
+		this.d10 = new List<SpoilsCard>();
+		foreach(SpoilsCard item in d10) {
+			this.d10.Add(item);
+		}
+	}
+
+	public void addD10Option(SpoilsCard card){
+		this.d10.Add(card);
+	}
+
+	public List<SpoilsCard> getD10Options(){
+		return this.d10;
 	}
 
 	public void setIsTemp(bool temp){
