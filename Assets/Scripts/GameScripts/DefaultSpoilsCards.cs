@@ -213,9 +213,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			false
 		);
 		curCard.setRestrictions(new List<Restrictions>(){ //Set 1 of restrictions
-				Restrictions.Equip_To_Vehicle //1.1
-			}
-		);
+			Restrictions.Equip_To_Vehicle, //1.1
+			Restrictions.Discard_If_Not_Purchased //1.2
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -336,10 +336,10 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No conditionals */
 		curCard.setRestrictions( new List<Restrictions>(){ //Set 1
-				Restrictions.Not_Used_With_Other_Armor, //1.1
-				Restrictions.Not_Used_With_Other_Clothing //1.2
-			}
-		);
+			Restrictions.Not_Used_With_Other_Armor, //1.1
+			Restrictions.Not_Used_With_Other_Clothing, //1.2
+			Restrictions.Equip_As_First_Item //1.3
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -927,8 +927,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
-			{Restrictions.Equip_To_Vehicle},
-			{Restrictions.Four_Wheels_Or_More}
+			Restrictions.Equip_To_Vehicle,
+			Restrictions.Four_Wheels_Or_More
 		});
 		spoilsCards.Add(curCard);
 
@@ -953,7 +953,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Pay_Salvage, 4}
 		});
 		curCard.setWhenUsable(new List<Times>{
-			{Times.Immediately}
+			Times.Immediately
 		});
 		curCard.setNumberOfUses(
 			Uses.Unlimited
@@ -961,7 +961,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		curCard.setDiscard(
 			false
 		);
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Discard_If_Not_Purchased
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -1084,7 +1086,9 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		});
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
-			Restrictions.Not_Used_With_Other_Armor
+			Restrictions.Not_Used_With_Other_Armor,
+			Restrictions.Not_Used_With_Other_Clothing,
+			Restrictions.Equip_As_First_Item
 		});
 		spoilsCards.Add(curCard);
 
@@ -1593,7 +1597,11 @@ public class DefaultSpoilsCards : MonoBehaviour{
 			{Gains.Gain_Armor, 1}
 		});
 		/* No conditionals */
-		/* No restrictions */
+		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_As_First_Item, 
+			Restrictions.Not_Used_With_Other_Armor,
+			Restrictions.Not_Used_With_Other_Clothing
+		});
 		spoilsCards.Add(curCard);
 
 
@@ -2841,7 +2849,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Not_Used_With_Other_Armor,
-			Restrictions.Not_Used_With_Other_Clothing
+			Restrictions.Not_Used_With_Other_Clothing,
+			Restrictions.Equip_As_First_Item
 		});
 		spoilsCards.Add(curCard);
 
@@ -3386,7 +3395,8 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Not_Used_With_Other_Armor, 
-			Restrictions.Not_Used_With_Other_Clothing
+			Restrictions.Not_Used_With_Other_Clothing,
+			Restrictions.Equip_As_First_Item
 		});
 		spoilsCards.Add(curCard);
 
@@ -3659,6 +3669,7 @@ public class DefaultSpoilsCards : MonoBehaviour{
 
 		);
 		curCard.setRestrictions(new List<Restrictions>(){
+			Restrictions.Equip_As_First_Item,
 			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing
 		});
