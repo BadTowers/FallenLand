@@ -66,7 +66,7 @@ public enum Gains {
 	//Ally
 	Prevent_Any_Character_Death, //In a dictionary, set the value as the HP they have after the prevention
 
-	//Encounters/MIssions
+	//Encounters/Missions
 	Ignore_Ambush_Encounters,
 	Ignore_Ambush_Missions,
 	Ignore_Ambush_Encounters_And_Missions,
@@ -82,6 +82,10 @@ public enum Gains {
 	Auto_Succeed_Lock_Picking_Encounters,
 	Auto_Succeed_Lock_Picking_Missions,
 	Auto_Succeed_Lock_Picking_Encounters_And_Missions,
+	Gain_Combat_Successes_On_Gladiatorial_Events,
+	Ignore_Negatives_Of_Enoucnter_Failure,
+	Ignore_Negatives_Of_Mission_Failure,
+	Ignore_Negatives_Of_Encounter_Or_Mission_Failure,
 
 	//Action cards
 	Ignore_Break_Relic_Action_Cards,
@@ -104,6 +108,8 @@ public enum Gains {
 	Select_Character_From_Opposing_Party,
 	Discard_Selected_Opposing_Character_Equipment,
 	Kill_Selected_Character_From_Opposing_Party,
+	Steal_Spoils_From_Opposing_Party_Excluding_Vehicles,
+	Steal_Spoils_From_Opposing_Town_Auction_House,
 
 	//Movement
 	Ignore_Delays,
@@ -128,12 +134,15 @@ public enum Gains {
 	Discard_Equipped_Vehicle,
 	Lose_Stowables,
 	Lose_All_Stowables,
+	Ignore_All_Vehicle_Equipment_Movement_Penalties,
 
 	//Character
 	Gain_Psych_Resistence,
 	Lose_Psych_Resistence,
 	Gain_Carry_Weight,
 	Lose_Carry_Weight,
+	Gain_Health,
+	Lose_Health,
 	Avoid_Death,
 	Heal_D6_Damage_Physical, //Does not apply to all members
 	Heal_D6_Damage_Infected,

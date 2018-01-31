@@ -8,6 +8,11 @@ public enum Times {
 	Immediately,
 	Never,
 
+	//Clothing
+	Equipped_With_An_Axe,
+	Equipped_With_Industrial_Chainsaw,
+	Equipped_With_Rusty_Cleaver,
+
 	//Actions against player
 	Party_Target_Of_Theft,
 
@@ -102,19 +107,23 @@ public enum Times {
 	When_Opposing_Party_Grenades_Equipped,
 
 	//Encounters/Missions
+	During_Encounter_Mission_Or_PvP,
+	During_Encounter_Or_PvP,
+	During_Mission_Or_PvP,
 	After_Successful_Mission_Or_Encounter,
 	After_Failed_Mission_Or_Encounter,
 	After_Drawing_Ambush_Encounter,
 	After_Drawing_Perishable_Encounter,
-	During_Mission_Or_Encounter,
+	During_Mission,
+	During_Encounter,
+	During_Encounter_Or_Mission,
+	During_Lock_Picking_Encounters,
+	During_Perishable_Encounters,
+	During_Ambush_Encounters,
+
 
 	//Locations
 	Within_1_Hex_Of_Enemy_Party,
 	Within_1_Hex_Of_Enemy_Town,
-
-	//Encounters
-	During_Lock_Picking_Encounters,
-	During_Perishable_Encounters,
-	During_Ambush_Encounters
 
 }
