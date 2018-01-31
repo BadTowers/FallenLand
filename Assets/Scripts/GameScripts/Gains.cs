@@ -65,6 +65,7 @@ public enum Gains {
 
 	//Party
 	Ignore_Radiation_Damage_From_Hexes,
+	Ignore_Radiation_Damage,
 
 	//Ally
 	Prevent_Any_Character_Death, //In a dictionary, set the value as the HP they have after the prevention
@@ -85,6 +86,8 @@ public enum Gains {
 	Auto_Succeed_Lock_Picking_Encounters,
 	Auto_Succeed_Lock_Picking_Missions,
 	Auto_Succeed_Lock_Picking_Encounters_And_Missions,
+	Auto_Succeed_Perishable_Encounters,
+	Auto_Succeed_Combat_Encounters,
 	Ignore_Negatives_Of_Enoucnter_Failure,
 	Ignore_Negatives_Of_Mission_Failure,
 	Ignore_Negatives_Of_Encounter_Or_Mission_Failure,

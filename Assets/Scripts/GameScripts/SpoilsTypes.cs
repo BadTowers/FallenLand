@@ -19,6 +19,7 @@ public enum SpoilsTypes { //TODO finish
 	Handgun,
 	Horse,
 	Heavy,
+	Heavy_Weapon,
 	Jinxed,
 	Knife,
 	Mechanical,

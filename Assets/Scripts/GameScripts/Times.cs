@@ -55,6 +55,8 @@ public enum Times {
 	After_Technical_Skill_Check_Success,
 	After_Medical_Skill_Check_Success,
 	After_Any_Skill_Check_Success,
+	After_Any_Skill_Check_Fail_Encounter,
+	After_Any_Skill_Check_Fail_Mission,
 
 	//Phases
 	During_Effects_Phase,
@@ -124,6 +126,8 @@ public enum Times {
 	During_Gladiatorial_Events_Encounters,
 	During_Rad_Zombie_Encounters,
 	Before_Drawing_City_Rad_Encounter_Card,
+	During_Combat_Encounter_Card,
+	After_Combat_Encounter_Success,
 
 
 	//Locations

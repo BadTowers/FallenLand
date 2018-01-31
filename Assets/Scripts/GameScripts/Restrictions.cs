@@ -9,6 +9,7 @@ public enum Restrictions  {
 
 	//Cards
 	Cant_Be_Drawn_During_Setup,
+	Excludes_World_Cards,
 
 	//Vehicle
 	Four_Wheels_Or_More,
@@ -27,4 +28,7 @@ public enum Restrictions  {
 	//Weapon Mods
 	Equip_To_Assault_Rifle,
 	Equip_To_Rifle,
+
+	//Healing
+	Excludes_Healing_Deed,
 }
