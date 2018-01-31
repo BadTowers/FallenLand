@@ -3139,6 +3139,21 @@ public class DefaultSpoilsCards : MonoBehaviour{
 		spoilsCards.Add(curCard);
 
 
+		/****************************************************************************************************************************************************************/
+		curCard = new SpoilsCard("Nifty Chemistry Set");
+		curCard.setTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
+		curCard.setCarryWeight(3);
+		curCard.setSellValue(8);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Technical, 4},
+			{Skills.Medical, 3}
+		});
+		/* No statics */
+		/* No conditionals */
+		/* No restrictions */
+		spoilsCards.Add(curCard);
 
+
+		//TODO finish
 	}
 }
