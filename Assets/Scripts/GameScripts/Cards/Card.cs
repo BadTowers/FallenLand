@@ -36,4 +36,8 @@ public abstract class Card {
 		this.id = id;
 	}
 
+	public List<SpoilsCard> shuffleDeck(){
+		//TODO implement shuffle
+	}
+
 }

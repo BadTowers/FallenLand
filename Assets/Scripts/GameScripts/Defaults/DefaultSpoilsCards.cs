@@ -3699,19 +3699,23 @@ public class DefaultSpoilsCards{
 
 
 
-		//Now that all cards are added, let's ID them all
+
+
+
+		//Now that all cards are added, let's ID them all and account for duplicates that need to be added
 		int count = spoilsCards.Count;
 		for(int i = 0; i < count; i++) {
 			spoilsCards[i].setID(i); //ID current one
 
 			//See if this card is a duplicate
 			if (multiples.ContainsKey(spoilsCards[i].getTitle())) { //If the name of this card is a name in the multiples dictionary
-				SpoilsCard newCard = spoilsCards[i].deepCopy();
-				spoilsCards.Add(newCard);
+				for(int j = 1; j < multiples[spoilsCards[i].getTitle()]; j++) { //For the number of multiples to add
+					SpoilsCard newCard = spoilsCards[i].deepCopy();
+					spoilsCards.Add(newCard); //add the multiple
+					//Debug.Log("Adding multiple for " + spoilsCards[i].getTitle());
+				}
 			}
 		}
-
-
 	}
 
 
