@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour {
 		DefaultSpoilsCards temp = new DefaultSpoilsCards();
 		spoilsCards = temp.getSpoilsCards();
 		temp = null; //Clear it for garbage collection
+		spoilsCards = Card.shuffleDeck(spoilsCards);
+
+		for(int i = 0; i < spoilsCards.Count; i++) {
+			Debug.Log(spoilsCards[i].getID());
+		}
 
 	}
 
