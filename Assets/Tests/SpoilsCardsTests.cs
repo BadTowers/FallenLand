@@ -20,7 +20,22 @@ namespace Tests
 			/* Check assertions */
 			for(int i = 0; i < defaultCards.Count; i++) { //For all cards
 
-				SpoilsCard curCard = defaultCards[i];
+				SpoilsCard curCard = defaultCards[i]; //For readability
+
+
+				//Ensure all the lists in the class are not null
+				Assert.IsNotNull(curCard.getAttachments());
+				Assert.IsNotNull(curCard.getBaseSkills());
+				Assert.IsNotNull(curCard.getConditionalGains());
+				Assert.IsNotNull(curCard.getD10Options());
+				Assert.IsNotNull(curCard.getD6Options());
+				Assert.IsNotNull(curCard.getDiscard());
+				Assert.IsNotNull(curCard.getNumberOfUses());
+				Assert.IsNotNull(curCard.getRestrictions());
+				Assert.IsNotNull(curCard.getStaticGains());
+				Assert.IsNotNull(curCard.getTypes());
+				Assert.IsNotNull(curCard.getWhenUsable());
+
 
 				//There exists at least one type on the card
 				Assert.IsTrue(defaultCards[i].getTypes().Count > 0);
@@ -36,6 +51,7 @@ namespace Tests
 					Assert.IsTrue(containsNonZero);
 				}
 
+
 				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, restrictions, and discards.
 				int sizeOfConditionals = defaultCards[i].getConditionalGains().Count;
 				Assert.IsTrue(sizeOfConditionals == curCard.getNumberOfUses().Count);
@@ -43,20 +59,21 @@ namespace Tests
 				Assert.IsTrue(sizeOfConditionals == curCard.getDiscard().Count);
 				Assert.IsTrue(sizeOfConditionals == curCard.getRestrictions().Count);
 
+
 				//Ensure that the d6 cards are either 0 or 6
 				Assert.IsTrue(curCard.getD6Options().Count == 0  || curCard.getD6Options().Count == 6);
+
 
 				//Ensure the d10 cards are either 0 or 10
 				Assert.IsTrue(curCard.getD10Options().Count == 0  || curCard.getD10Options().Count == 10);
 
+
 				//Ensure it has a non-negative sell value
-				Assert.IsTrue(curCard.getSellValue() >= 0);
+				Assert.Positive(curCard.getSellValue());
+
 
 				//Ensure it has a non-negative carry weight
-				Assert.IsTrue(curCard.getCarryWeight() >= 0);
-
-
-
+				Assert.Positive(curCard.getCarryWeight());
 			}
 		}
 	}
