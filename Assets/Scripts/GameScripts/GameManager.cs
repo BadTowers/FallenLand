@@ -21,11 +21,13 @@ public class GameManager : MonoBehaviour {
 			Debug.Log ("Game info not received from game setup");
 		}
 
+
 		//Create the map layout according to the game state that was passed in
 		GameObject mapCreationGO = GameObject.Find("Map");
 		MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
 		mapCreation.ml = new DefaultMapLayout(); //For now, just do the default. Can be modified later
 		mapCreation.createMap();
+
 
 		//Create the deck of spoils cards
 		DefaultSpoilsCards temp = new DefaultSpoilsCards();
@@ -36,6 +38,27 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < spoilsCards.Count; i++) {
 			Debug.Log(spoilsCards[i].getID());
 		}
+
+
+		//TODO create the deck of character cards
+
+
+		//TODO create the deck of action cards
+
+
+		//TODO create the deck of mission cards
+
+
+		//TODO create the deck of plains cards
+
+
+		//TODO create the deck of mountain cards
+
+
+		//TODO create the deck of city/rad cards
+
+
+		//TODO deal players cards
 
 	}
 
