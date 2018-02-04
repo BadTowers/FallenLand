@@ -196,6 +196,7 @@ public class MainMenuUIManager : MonoBehaviour {
 	public void onGameModeChange(){
 		gameModeWasChanged = true;
 	}
+
 	//When randomize button is pressed (on secure random numbers https://stackify.com/csharp-random-numbers/)
 	public void onRandomize() {
 
@@ -226,15 +227,15 @@ public class MainMenuUIManager : MonoBehaviour {
 			diffToggle.isOn = false;
 		}
 		byteArray = new byte[1];
-		provider.GetBytes (byteArray);
+		provider.GetBytes(byteArray);
 		randInt = Convert.ToInt32(byteArray[0]);
 		randNum = Math.Abs((randInt) % numSoloIIDifficulties);
-		//Debug.Log ("DIFF: " + randNum.ToString ());
+		//Debug.Log("DIFF: " + randNum.ToString ());
 		soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
 		gameModeWasChanged = true;
 
 		/* Randomly pick the modifiers */
-		foreach (Toggle modifier in modifierToggles) {
+		foreach(Toggle modifier in modifierToggles) {
 			//First turn off the modifer
 			modifier.isOn = false;
 
@@ -247,23 +248,33 @@ public class MainMenuUIManager : MonoBehaviour {
 				modifier.isOn = true;
 				//If this modifier toggle is dependent on another, the checkIfParentActive method checks that the parent is on before turning the dependent child on
 				if (modifier.GetComponentInChildren<ToggleDependency>() != null) {
-					modifier.GetComponentInChildren<ToggleDependency> ().checkIfParentActive ();
+					modifier.GetComponentInChildren<ToggleDependency>().checkIfParentActive ();
 				}
 			}
 		}
 
 		//Collect all dependent modifiers
 	}
+
 	//When start button is pressed
 	public void onStartGameFromSetup() {
-		/* Pass all information from this screen into the game creation object*/
+		/****** Pass all information from this screen into the game creation object ********/
+
+
 		//Faction (Find the game creation object in the scene and then get the script from it
 		GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().faction = Factions.getFactionName(curFactionNum);
 
 		//Game mode
-		foreach (Toggle mode in gameModeToggleGroup.GetComponentsInChildren<Toggle>()) {
-			if (mode.isOn) {
-				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().mode = mode.GetComponentInChildren<ToggleInformation>().mode;
+		foreach (Toggle curModeToggle in gameModeToggleGroup.GetComponentsInChildren<Toggle>()) {
+			if (curModeToggle.isOn) {
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().mode = curModeToggle.GetComponentInChildren<ToggleInformation>().mode;
+			}
+		}
+
+		//Solo II difficulty if needed
+		foreach (Toggle curDiffToggle in soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()) {
+			if (curDiffToggle.isOn) {
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().soloIIDifficulty = curDiffToggle.GetComponentInChildren<ToggleInformation>().soloIIDifficulty;
 			}
 		}
 
@@ -396,7 +407,7 @@ public class MainMenuUIManager : MonoBehaviour {
 			soloIIDifficultyToggleGroup.SetActive (false);
 
 			//Update the text to describe the game mode
-			gameModeInfoText.text = GameCreation.getRules(GameCreation.GameType.SoloI);
+			gameModeInfoText.text = GameCreation.getRules(GameMode.SoloI);
 		}
 		//If solo II is selected
 		else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn) {
@@ -404,7 +415,7 @@ public class MainMenuUIManager : MonoBehaviour {
 			soloIIDifficultyToggleGroup.SetActive(true);
 
 			//Update the text to describe the game mode
-			gameModeInfoText.text = GameCreation.getRules(GameCreation.GameType.SoloII);
+			gameModeInfoText.text = GameCreation.getRules(GameMode.SoloII);
 		}
 
 		//No more changes to account for

@@ -5,6 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 	private List<SpoilsCard> spoilsCards;
+	public GameObject cardPrefab;
+	private int numHumanPlayers;
+	private int numComputerPlayers;
+	private GameMode gameMode;
+	private List<GameModifier> modifiers;
+	private SoloII soloIIDifficulty;
 
 
 
@@ -12,11 +18,21 @@ public class GameManager : MonoBehaviour {
 	void Start(){
 		//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 		GameObject newGameState = GameObject.Find("GameCreation");
-		/* TODO actually do something with this information */
 		//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode);
 		if (newGameState != null) {
 			newGameState.GetComponent<GameCreation> ().wasRead = true; //Mark as read so the game object can be deleted
-			Debug.Log(newGameState.GetComponent<GameCreation>().faction);
+
+			//Debug.Log(newGameState.GetComponent<GameCreation>().faction);
+
+			//Grab the game mode
+			gameMode = newGameState.GetComponent<GameCreation>().mode;
+
+			//Extract the Solo II difficulty if needed
+			if(gameMode == GameMode.SoloII) {
+				soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
+			}
+
+
 		} else {
 			Debug.Log ("Game info not received from game setup");
 		}
@@ -58,7 +74,7 @@ public class GameManager : MonoBehaviour {
 		//TODO create the deck of city/rad cards
 
 
-		//TODO deal players cards
+		//TODO deal cards to player(s)
 
 	}
 
