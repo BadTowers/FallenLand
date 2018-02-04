@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ToggleInformation : MonoBehaviour {
 
-	public GameMode mode;
-	public GameModifier modifier;
-	public SoloII soloIIDifficulty;
+	public GameInformation.GameModes mode;
+	public GameInformation.GameModifier modifier;
+	public GameInformation.SoloII soloIIDifficulty;
 
 }

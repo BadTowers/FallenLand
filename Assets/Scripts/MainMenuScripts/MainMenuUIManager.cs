@@ -407,15 +407,15 @@ public class MainMenuUIManager : MonoBehaviour {
 			soloIIDifficultyToggleGroup.SetActive (false);
 
 			//Update the text to describe the game mode
-			gameModeInfoText.text = GameCreation.getRules(GameMode.SoloI);
+			gameModeInfoText.text = GameCreation.getRules(GameInformation.GameModes.SoloI);
 		}
-		//If solo II is selected
+		//If solo II is selected 
 		else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn) {
 			//Display the solo II difficulties
 			soloIIDifficultyToggleGroup.SetActive(true);
 
 			//Update the text to describe the game mode
-			gameModeInfoText.text = GameCreation.getRules(GameMode.SoloII);
+			gameModeInfoText.text = GameCreation.getRules(GameInformation.GameModes.SoloII);
 		}
 
 		//No more changes to account for

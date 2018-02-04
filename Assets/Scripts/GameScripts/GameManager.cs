@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject cardPrefab;
 	private int numHumanPlayers;
 	private int numComputerPlayers;
-	private GameMode gameMode;
-	private List<GameModifier> modifiers;
-	private SoloII soloIIDifficulty;
+	private GameInformation.GameModes gameMode;
+	private List<GameInformation.GameModifier> modifiers;
+	private GameInformation.SoloII soloIIDifficulty;
 
 
 
@@ -18,23 +18,30 @@ public class GameManager : MonoBehaviour {
 	void Start(){
 		//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 		GameObject newGameState = GameObject.Find("GameCreation");
-		//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode);
-		if (newGameState != null) {
-			newGameState.GetComponent<GameCreation> ().wasRead = true; //Mark as read so the game object can be deleted
 
-			//Debug.Log(newGameState.GetComponent<GameCreation>().faction);
+		//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode); //Debug thingy
+
+		if (newGameState != null) {
+			//Mark as read so the game object can be deleted
+			newGameState.GetComponent<GameCreation> ().wasRead = true;
+
+			//Debug.Log(newGameState.GetComponent<GameCreation>().faction); //Debug thingy
 
 			//Grab the game mode
 			gameMode = newGameState.GetComponent<GameCreation>().mode;
 
 			//Extract the Solo II difficulty if needed
-			if(gameMode == GameMode.SoloII) {
+			if(gameMode == GameInformation.GameModes.SoloII) {
 				soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
 			}
 
+			//Set the number of human and computer players
+			numHumanPlayers = GameInformation.getHumanPlayerCount(gameMode);
+			numComputerPlayers = GameInformation.getComputerPlayerCount(gameMode);
+
 
 		} else {
-			Debug.Log ("Game info not received from game setup");
+			Debug.Log ("Game info not received from game setup.");
 		}
 
 

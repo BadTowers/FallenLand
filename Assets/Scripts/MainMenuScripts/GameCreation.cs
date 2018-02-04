@@ -5,10 +5,10 @@ using UnityEngine;
 public class GameCreation : MonoBehaviour {
 
 	public Factions.name faction;
-	public GameMode mode;
+	public GameInformation.GameModes mode;
 	public ArrayList modifiers;
 	public bool wasRead = false;
-	public SoloII soloIIDifficulty;
+	public GameInformation.SoloII soloIIDifficulty;
 
 
 
@@ -24,41 +24,41 @@ public class GameCreation : MonoBehaviour {
 		}
 	}
 
-	public static string getGameModeName(GameMode gt) {
+	public static string getGameModeName(GameInformation.GameModes gt) {
 		switch (gt) {
-		case GameMode.NormalGame:
+		case GameInformation.GameModes.NormalGame:
 			return "Normal Game\n";
-		case GameMode.SoloI:
+		case GameInformation.GameModes.SoloI:
 			return "Solo Variant I";
-		case GameMode.SoloII:
+		case GameInformation.GameModes.SoloII:
 			return "Solo Variant II";
 		default:
 			return "NULL";
 		}
 	}
 
-	public static string getSoloIITypeName(SoloII st) {
+	public static string getSoloIITypeName(GameInformation.SoloII st) {
 		switch (st) {
-		case SoloII.SoloIIStandard:
+		case GameInformation.SoloII.SoloIIStandard:
 			return "Standard--1 Enemy";
-		case SoloII.SoloIIModerate:
+		case GameInformation.SoloII.SoloIIModerate:
 			return "Moderate--2 Enemies";
-		case SoloII.SoloIIDifficult:
+		case GameInformation.SoloII.SoloIIDifficult:
 			return "Difficult--3 Enemies";
-		case SoloII.SoloIIUltimate:
+		case GameInformation.SoloII.SoloIIUltimate:
 			return "Ultimate--4 Enemies";
 		default:
 			return "NULL";
 		}
 	}
 
-	public static string getRules(GameMode gt){
+	public static string getRules(GameInformation.GameModes gt){
 		switch (gt) {
-		case GameMode.SoloI:
+		case GameInformation.GameModes.SoloI:
 			return "This solo variation of the game works essentially the same as a normal multiplayer game, but every other faction is neutral. " +
 				"The aim is to reach the victory condition in as few of turns as possible. " +
 				"How quickly can you raise your faction to the top?";
-		case GameMode.SoloII:
+		case GameInformation.GameModes.SoloII:
 			return "This solo variation of the game pits you against \"AI\" players that are dictated by a seperate town events chart." +
 			"Do you have what it takes to survive against all odds?";
 		default:
