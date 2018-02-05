@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 	private GameInformation.GameModes gameMode;
 	private List<GameInformation.GameModifier> modifiers;
 	private GameInformation.SoloII soloIIDifficulty;
-
+	private List<Player> players;
 
 
 
