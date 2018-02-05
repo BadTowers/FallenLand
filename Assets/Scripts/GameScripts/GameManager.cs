@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	private List<SpoilsCard> spoilsCards;
+	private List<SpoilsCard> spoilsCards = new List<SpoilsCard>();
 	public GameObject cardPrefab;
 	private int numHumanPlayers;
 	private int numComputerPlayers;
 	private GameInformation.GameModes gameMode;
-	private List<GameInformation.GameModifier> modifiers;
+	private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
 	private GameInformation.SoloII soloIIDifficulty;
-	private List<Player> players;
+	private List<Player> players = new List<Player>();
 
 
 
@@ -38,6 +38,14 @@ public class GameManager : MonoBehaviour {
 			//Set the number of human and computer players
 			numHumanPlayers = GameInformation.getHumanPlayerCount(gameMode);
 			numComputerPlayers = GameInformation.getComputerPlayerCount(gameMode);
+
+			//Add the players to the list (TODO: Change so later these are added in the order players will go (after dice roll or something))
+			for(int i = 0; i < numHumanPlayers; i++) {
+				players.Add(new HumanPlayer());
+			}
+			for(int i = 0; i < numComputerPlayers; i++) {
+				players.Add(new ComputerPlayer());
+			}
 
 
 		} else {
