@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	private List<SpoilsCard> spoilsCards = new List<SpoilsCard>();
+	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
+	private List<CharacterCard> characterDeck = new List<CharacterCard>();
+	private List<ActionCard> actionDeck = new List<ActionCard>();
 	public GameObject cardPrefab;
 	private int numHumanPlayers;
 	private int numComputerPlayers;
@@ -12,6 +14,9 @@ public class GameManager : MonoBehaviour {
 	private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
 	private GameInformation.SoloII soloIIDifficulty;
 	private List<Player> players = new List<Player>();
+	private int startingActionCards = 0;
+	private int startingCharacterCards = 0;
+	private int startingSpoilsCards = 0;
 
 
 
@@ -61,20 +66,31 @@ public class GameManager : MonoBehaviour {
 
 
 		//Create the deck of spoils cards
-		DefaultSpoilsCards temp = new DefaultSpoilsCards();
-		spoilsCards = temp.getSpoilsCards();
-		temp = null; //Clear it for garbage collection
-		spoilsCards = Card.shuffleDeck(spoilsCards);
+		DefaultSpoilsCards tempSpoils = new DefaultSpoilsCards();
+		spoilsDeck = tempSpoils.getSpoilsCards();
+		tempSpoils = null; //Clear it for garbage collection
+		spoilsDeck = Card.shuffleDeck(spoilsDeck);
 
+		/*
+		//Proof of shuffle
 		for(int i = 0; i < spoilsCards.Count; i++) {
 			Debug.Log(spoilsCards[i].getID());
 		}
+		*/
 
 
-		//TODO create the deck of character cards
+		//Create the deck of character cards
+		DefaultCharacterCards tempCharacters = new DefaultCharacterCards();
+		characterDeck = tempCharacters.getCharacterCards();
+		tempCharacters = null; //Clear it for garbage collection
+		characterDeck = Card.shuffleDeck(characterDeck);
 
 
 		//TODO create the deck of action cards
+		DefaultActionCards tempActions = new DefaultActionCards();
+		actionDeck = tempActions.getActionCards();
+		tempActions = null; //Clear it for garbage collection
+		actionDeck = Card.shuffleDeck(actionDeck);
 
 
 		//TODO create the deck of mission cards
@@ -90,7 +106,27 @@ public class GameManager : MonoBehaviour {
 
 
 		//TODO deal cards to player(s)
-
+		//Spoils
+		for(int i = 0; i < startingSpoilsCards; i++) {
+			for(int j = 0; j < players.Count; j++) {
+				players[i].addSpoilsCard(spoilsDeck[0]); //Add the first card to the next player's hand
+				spoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
+			}
+		}
+		//Character
+		for(int i = 0; i < startingCharacterCards; i++) {
+			for(int j = 0; j < players.Count; j++) {
+				players[i].addCharacterCard(characterDeck[0]);
+				characterDeck.RemoveAt(0);
+			}
+		}
+		//Action
+		for(int i = 0; i < startingActionCards; i++) {
+			for(int j = 0; j < players.Count; j++) {
+				players[i].addActionCard(actionDeck[0]);
+				actionDeck.RemoveAt(0);
+			}
+		}
 	}
 
 }

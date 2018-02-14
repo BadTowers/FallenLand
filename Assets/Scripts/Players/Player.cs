@@ -22,4 +22,16 @@ public abstract class Player : MonoBehaviour {
 		townRoster = new List<CharacterCard>();
 		activeCharacters = new List<CharacterCard>();
 	}
+
+	public void addSpoilsCard(SpoilsCard sc){
+		this.activeSpoils.Add(sc);
+	}
+
+	public void addCharacterCard(CharacterCard cc){
+		this.activeCharacters.Add(cc);
+	}
+
+	public void addActionCard(ActionCard ac){
+		this.actionCards.Add(ac);
+	}
 }

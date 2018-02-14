@@ -117,7 +117,6 @@ public class DefaultSpoilsCards{
 	 */
 
 
-	//Called before Start()
 	public DefaultSpoilsCards(){
 		//Initialize the lists for the cards
 		spoilsCards = new List<SpoilsCard>();
