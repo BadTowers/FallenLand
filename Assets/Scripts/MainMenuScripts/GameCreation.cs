@@ -6,14 +6,13 @@ public class GameCreation : MonoBehaviour {
 
 	public Factions.name faction;
 	public GameInformation.GameModes mode;
-	public ArrayList modifiers;
+	public List<GameInformation.GameModifier> modifiers;
 	public bool wasRead = false;
 	public GameInformation.SoloII soloIIDifficulty;
 
 
-
 	void Start() {
-		modifiers = new ArrayList();
+		modifiers = new List<GameInformation.GameModifier>();
 	}
 
 	void Update(){

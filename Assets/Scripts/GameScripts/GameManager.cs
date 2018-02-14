@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
+	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
 	private List<CharacterCard> characterDeck = new List<CharacterCard>();
+	private List<CharacterCard> discardCharacterDeck = new List<CharacterCard>();
 	private List<ActionCard> actionDeck = new List<ActionCard>();
+	private List<ActionCard> discardActionDeck = new List<ActionCard>();
 	public GameObject cardPrefab;
 	private int numHumanPlayers;
 	private int numComputerPlayers;
@@ -14,9 +17,12 @@ public class GameManager : MonoBehaviour {
 	private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
 	private GameInformation.SoloII soloIIDifficulty;
 	private List<Player> players = new List<Player>();
-	private int startingActionCards = 0;
-	private int startingCharacterCards = 0;
-	private int startingSpoilsCards = 0;
+	private int startingActionCards = 3;
+	private int startingCharacterCards = 6;
+	private int startingSpoilsCards = 10;
+	private int maxActionCards = 7;
+	private int maxCharacterCards = -1;
+	private int maxSpoilsCards = -1;
 
 
 
@@ -52,6 +58,9 @@ public class GameManager : MonoBehaviour {
 				players.Add(new ComputerPlayer());
 			}
 
+			//Interpret any modifiers
+			//TODO
+
 
 		} else {
 			Debug.Log ("Game info not received from game setup.");
@@ -86,7 +95,7 @@ public class GameManager : MonoBehaviour {
 		characterDeck = Card.shuffleDeck(characterDeck);
 
 
-		//TODO create the deck of action cards
+		//Create the deck of action cards
 		DefaultActionCards tempActions = new DefaultActionCards();
 		actionDeck = tempActions.getActionCards();
 		tempActions = null; //Clear it for garbage collection

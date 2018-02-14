@@ -14,12 +14,18 @@ public class DefaultCharacterCards {
 		//const int VALUE_NOT_NEEDED = -1;
 
 		//Add the cards to the list
-		//SpoilsCard curCard;
-		//SpoilsCard tempCard;
+		CharacterCard curCard;
+		//CharacterCard tempCard;
 
 		Debug.Log("Instantiating character cards...");
 
 		//TODO
+
+		//placeholder. inserts a bunch of blanks DEBUG THINGY
+		for(int i = 0; i < 80; i++) {
+			curCard = new CharacterCard("test " + i.ToString());
+			characterCards.Add(curCard);
+		}
 	}
 
 	public List<CharacterCard> getCharacterCards(){
