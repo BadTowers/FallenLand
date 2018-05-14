@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Player : MonoBehaviour {
+public abstract class Player {
 
 	private List<SpoilsCard> activeSpoils;
 	private List<SpoilsCard> auctionHouse;
