@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
 		//Create the map layout according to the game state that was passed in
 		GameObject mapCreationGO = GameObject.Find("Map");
 		MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
-		mapCreation.ml = new DefaultMapLayout(); //For now, just do the default. Can be modified later
+		mapCreation.ml = new DefaultMapLayout(); //For now, just do the default. Can be modified later. TODO account for modifiers
 		mapCreation.createMap();
 
 
@@ -118,21 +118,21 @@ public class GameManager : MonoBehaviour {
 		//Spoils
 		for(int i = 0; i < startingSpoilsCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
-				players[i].addSpoilsCard(spoilsDeck[0]); //Add the first card to the next player's hand
+				players[j].addSpoilsCard(spoilsDeck[0]); //Add the first card to the next player's hand
 				spoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
 			}
 		}
 		//Character
 		for(int i = 0; i < startingCharacterCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
-				players[i].addCharacterCard(characterDeck[0]);
+				players[j].addCharacterCard(characterDeck[0]);
 				characterDeck.RemoveAt(0);
 			}
 		}
 		//Action
 		for(int i = 0; i < startingActionCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
-				players[i].addActionCard(actionDeck[0]);
+				players[j].addActionCard(actionDeck[0]);
 				actionDeck.RemoveAt(0);
 			}
 		}
