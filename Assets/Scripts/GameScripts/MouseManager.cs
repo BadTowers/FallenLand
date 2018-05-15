@@ -10,6 +10,7 @@ public class MouseManager : MonoBehaviour {
 
 	public GameObject hexInformationBackground;
 	public GameObject hexInformationText;
+	public GameObject pauseMenu;
 
 	//GameObject currentlySelected TODO
 	private string toolTipText = "";
@@ -22,6 +23,12 @@ public class MouseManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
+		//Don't do any game UI if the game is paused
+		if(pauseMenu.activeSelf) {
+			disableHexInfo(); //Don't show the hex info if paused
+			return;
+		}
+
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Get a vector called a Ray from the mouse through the world
 
 		RaycastHit objectHitInfo; //Object the raycast hit, if any

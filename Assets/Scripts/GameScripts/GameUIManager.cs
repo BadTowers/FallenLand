@@ -11,8 +11,13 @@ public class GameUIManager : UIManager {
 	public GameObject saveMenu;
 	public GameObject optionsMenu;
 
+	//Game camera
+	public GameObject gameCamera;
+
 	public GameMenuStates currentState;
 	private bool escapePressed;
+	private float panSpeed;
+	private float zoomSpeed;
 
 
 	void Start(){
@@ -29,6 +34,9 @@ public class GameUIManager : UIManager {
 	//When script first starts
 	void Awake(){
 		currentState = GameMenuStates.Resume;
+		//Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
+		panSpeed = gameCamera.GetComponent<CameraManager>().panSpeed;
+		zoomSpeed = gameCamera.GetComponent<CameraManager>().zoomSpeed;
 	}
 
 
@@ -46,6 +54,10 @@ public class GameUIManager : UIManager {
 					currentState = GameMenuStates.Resume;
 				} else {
 					setActiveMenu(pauseMenu);
+					Time.timeScale = 0; //Pause any physics
+					//Freeze the game camera from moving
+					gameCamera.GetComponent<CameraManager>().panSpeed = 0;
+					gameCamera.GetComponent<CameraManager>().zoomSpeed = 0;
 				}
 				break;
 			case GameMenuStates.Resume:
@@ -55,6 +67,10 @@ public class GameUIManager : UIManager {
 					currentState = GameMenuStates.Pause;
 				} else {
 					setActiveMenu(null);
+					Time.timeScale = 1; //Resume any physics
+					//Unfreeze the game camera
+					gameCamera.GetComponent<CameraManager>().panSpeed = this.panSpeed;
+					gameCamera.GetComponent<CameraManager>().zoomSpeed = this.zoomSpeed;
 				}
 				break;
 			case GameMenuStates.Options:
