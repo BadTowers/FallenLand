@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuUIManager : MonoBehaviour {
+public class MainMenuUIManager : UIManager {
 
-	public enum MenuStates {Main, Options, SinglePlayer, SetUpNewGame, MultiplayerGame};
-	public MenuStates currentState;
+	public enum MainMenuStates {Main, Options, SinglePlayer, SetUpNewGame, MultiplayerGame};
+	public MainMenuStates currentState;
 
 	//Menu game objects
 	public GameObject mainMenu;
@@ -17,9 +17,6 @@ public class MainMenuUIManager : MonoBehaviour {
 	public GameObject singlePlayerMenu;
 	public GameObject setUpNewGameMenu;
 	public GameObject multiplayerMenu;
-
-	//List of all menu game objects
-	private List<GameObject> menus;
 
 	//List of all things to randomize
 
@@ -58,14 +55,13 @@ public class MainMenuUIManager : MonoBehaviour {
 		curFactionNum = 1;
 		factionWasChanged = true;
 		gameModeWasChanged = true;
-		menus = new List<GameObject>();
 
 		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
-		menus.Add(mainMenu);
-		menus.Add(optionsMenu);
-		menus.Add(singlePlayerMenu);
-		menus.Add(setUpNewGameMenu);
-		menus.Add(multiplayerMenu);
+		addToMenuList(mainMenu);
+		addToMenuList(optionsMenu);
+		addToMenuList(singlePlayerMenu);
+		addToMenuList(setUpNewGameMenu);
+		addToMenuList(multiplayerMenu);
 
 		//Set the display up
 		updateFactionDisplay();
@@ -73,27 +69,31 @@ public class MainMenuUIManager : MonoBehaviour {
 
 	//When script first starts
 	void Awake(){
-		currentState = MenuStates.Main;
+		currentState = MainMenuStates.Main;
 	}
 
 	void Update() {
 		//Checks current menu state
 		switch (currentState) {
-			case MenuStates.Main:
+			case MainMenuStates.Main:
 				setActiveMenu(mainMenu);
 				break;
-			case MenuStates.SinglePlayer:
+			case MainMenuStates.SinglePlayer:
 				setActiveMenu (singlePlayerMenu);
 				break;
-			case MenuStates.SetUpNewGame:
+			case MainMenuStates.SetUpNewGame:
 				setActiveMenu(setUpNewGameMenu);
-				if(factionWasChanged) updateFactionDisplay (); //Update which faction is currently displaying if a new one was selected
-				if(gameModeWasChanged) updateGameModeDisplay(); //Update the game mode information if a different one was selected
+				if(factionWasChanged){
+					updateFactionDisplay (); //Update which faction is currently displaying if a new one was selected
+				}
+				if(gameModeWasChanged){
+					updateGameModeDisplay(); //Update the game mode information if a different one was selected
+				}
 				break;
-			case MenuStates.Options:
+			case MainMenuStates.Options:
 				setActiveMenu(optionsMenu);
 				break;
-			case MenuStates.MultiplayerGame:
+			case MainMenuStates.MultiplayerGame:
 				setActiveMenu(multiplayerMenu);
 				break;
 			default:
@@ -103,14 +103,6 @@ public class MainMenuUIManager : MonoBehaviour {
 		}
 	}
 
-	private void setActiveMenu(GameObject go) {
-		go.SetActive(true);
-		foreach (GameObject other in menus) {
-			if (!other.Equals(go)) {
-				other.SetActive (false);
-			}
-		}
-	}
 
 
 	/*
@@ -119,26 +111,28 @@ public class MainMenuUIManager : MonoBehaviour {
 	// When new game button is pressed
 	public void onSinglePlayer(){
 		Debug.Log ("Single Player");
-		currentState = MenuStates.SinglePlayer;
+		currentState = MainMenuStates.SinglePlayer;
 		//asyncSceneLoad("GameScene");
 	}
 
 	// When options button is pressed
 	public void onOptions() {
-		currentState = MenuStates.Options;
+		currentState = MainMenuStates.Options;
 		Debug.Log ("Options");
 	}
 
 	// When multiplayer button is pressed
 	public void onMultiplayer() {
-		currentState = MenuStates.MultiplayerGame;
+		currentState = MainMenuStates.MultiplayerGame;
 		Debug.Log ("Multiplayer");
 	}
 
 	// When quit button is pressed
 	public void onQuit() {
+		//TODO Make this actually quit lel
 		Debug.Log ("Quit");
 	}
+
 
 	/*
 	 * NEW GAME METHODS
@@ -151,7 +145,7 @@ public class MainMenuUIManager : MonoBehaviour {
 
 	//When set up new game button is pressed
 	public void onSetUpGame() {
-		currentState = MenuStates.SetUpNewGame;
+		currentState = MainMenuStates.SetUpNewGame;
 	}
 
 	//When load game button is pressed
@@ -295,7 +289,7 @@ public class MainMenuUIManager : MonoBehaviour {
 	 */
 	//When the back button is pressed
 	public void onBack(){
-		currentState = MenuStates.Main;
+		currentState = MainMenuStates.Main;
 	}
 
 	// Used to load a scene by name TODO: Put inside helper function file?
@@ -327,18 +321,6 @@ public class MainMenuUIManager : MonoBehaviour {
 		} else {
 			Debug.Log ("Town symbol image container not set");
 		}
-
-		/*
-		//Load it
-		img = (Sprite)Resources.Load<Sprite>(FACTION_MAP_LOCATION_URI + "Map" + curFactionNum.ToString());
-
-		//Apply it
-		if (townMapImage != null) {
-			townMapImage.sprite = img;
-		} else {
-			Debug.Log ("Town map image container not set");
-		}
-		*/
 
 		//Set up town name and location
 		if (townNameAndLocation != null) {

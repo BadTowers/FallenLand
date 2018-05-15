@@ -136,6 +136,18 @@ public class GameManager : MonoBehaviour {
 				actionDeck.RemoveAt(0);
 			}
 		}
+
+
+		//DEBUG THINGY TODO
+		//Display cards
+
+
+		//TODO Decide what else to do
+	}
+
+
+	void Update(){
+
 	}
 
 }
