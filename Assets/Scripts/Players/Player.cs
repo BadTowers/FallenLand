@@ -34,4 +34,12 @@ public abstract class Player {
 	public void addActionCard(ActionCard ac){
 		this.actionCards.Add(ac);
 	}
+
+	public List<SpoilsCard> getActiveSpoilsCards(){
+		return this.activeSpoils;
+	}
+
+	public SpoilsCard getActiveSpoilsCard(int ID){
+		return this.activeSpoils[ID];
+	}
 }

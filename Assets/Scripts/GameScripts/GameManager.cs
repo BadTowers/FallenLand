@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+
+	//UI containers
+	public Image spoilsCard1; //TODO delete/rework. Just for testing
 
 	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
 	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
@@ -64,6 +68,8 @@ public class GameManager : MonoBehaviour {
 
 		} else {
 			Debug.Log ("Game info not received from game setup.");
+			//TODO remove debug thing
+			players.Add(new HumanPlayer());
 		}
 
 
@@ -138,11 +144,21 @@ public class GameManager : MonoBehaviour {
 		}
 
 
+		//TODO Decide what else to do
+
+
 		//DEBUG THINGY TODO
 		//Display cards
-
-
-		//TODO Decide what else to do
+		Debug.Log(players[0].getActiveSpoilsCards().Count);
+		//for(int i = 0; i < startingActionCards; i++) {
+			string fileName = "Cards/SpoilsCards/SpoilsCard" + players[0].getActiveSpoilsCard(0).getID().ToString(); //TODO don't hardcode to player[0]
+		Debug.Log(fileName);
+		Sprite curSprite = Resources.Load<Sprite>(fileName);
+		if(curSprite == null) {
+			Debug.Log("null");
+		}
+		spoilsCard1.sprite = curSprite;
+		//}
 	}
 
 

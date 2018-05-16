@@ -112,7 +112,7 @@ public class MapCreation : MonoBehaviour {
 
 		//Set the texture of the hex
 		string fileName = "Hexes/Hex_" + x.ToString() + "_" + y.ToString();
-		Texture2D loadTex = Resources.Load (fileName) as Texture2D;
-		go.GetComponentInChildren<Renderer> ().material.mainTexture = loadTex;
+		Texture2D loadTex = Resources.Load(fileName) as Texture2D;
+		go.GetComponentInChildren<Renderer>().material.mainTexture = loadTex;
 	}
 }
