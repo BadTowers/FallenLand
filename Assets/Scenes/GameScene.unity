@@ -808,8 +808,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spoilsCard1: {fileID: 1861055450}
-  spoilsCard2: {fileID: 0}
-  spoilsCard3: {fileID: 0}
   cardPrefab: {fileID: 1720446211486948, guid: ea205ee843c54eb4da390acb00cc5bb5, type: 2}
 --- !u!4 &636179459
 Transform:
