@@ -7,6 +7,7 @@ public enum Times {
 	Anytime,
 	Immediately,
 	Never,
+	Start_Of_Game,
 
 	//Clothing
 	Equipped_With_An_Axe,

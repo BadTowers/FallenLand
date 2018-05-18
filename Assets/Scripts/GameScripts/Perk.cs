@@ -9,7 +9,7 @@ public class Perk {
 	private List<Uses> uses;
 	//A perk has gains given as a result of using it
 	private Dictionary<Gains, int> staticGains; //Passive type gains that are always active
-	private List<Dictionary<Gains, int>> conditionalGains; //List of different conditional ability choices the player has
+	private Dictionary<Gains, int> conditionalGains; //List of different conditional ability choices the player has
 	//A perk has a title
 	private string perkTitle;
 	//A perk has a text description
@@ -18,20 +18,60 @@ public class Perk {
 
 	//Constructor
 	public Perk(string title){
+		this.whenUsable = new List<Times>();
+		this.uses = new List<Uses>();
+		this.staticGains = new Dictionary<Gains, int>();
+		this.conditionalGains = new Dictionary<Gains, int>();
 		this.perkTitle = title;
 	}
 
-	//TODO times
-	//TODO
+	public void setTimes(List<Times> t){
+		this.whenUsable = t;
+	}
 
-	//TODO uses
-	//TODO
+	public void addTime(Times t){
+		this.whenUsable.Add(t);
+	}
 
-	//TODO staticGains
-	//TODO
+	public List<Times> getTimes(){
+		return this.whenUsable;
+	}
 
-	//TODO conditionalGains
-	//TODO
+	public void setUses(List<Uses> u){
+		this.uses = u;
+	}
+
+	public void addUses(Uses u){
+		this.uses.Add(u);
+	}
+
+	public List<Uses> getUses(){
+		return this.uses;
+	}
+
+	public void setStaticGains(List<Gains> g){
+		this.staticGains = g;
+	}
+
+	public void addStaticGains(Gains g){
+		this.staticGains.Add(g);
+	}
+
+	public List<Gains> getStaticGains(){
+		return this.staticGains;
+	}
+
+	public void setConditionalGains(List<Gains> g){
+		this.conditionalGains = g;
+	}
+
+	public void addConditionalGains(Gains g){
+		this.conditionalGains.Add(g);
+	}
+
+	public List<Gains> getConditionalGains(){
+		return this.conditionalGains;
+	}
 
 	public void setPerkTitle(string title){
 		this.perkTitle = title;
