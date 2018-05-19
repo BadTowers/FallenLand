@@ -27,8 +27,8 @@ public interface HexInterface {
 	bool isResource();
 	void setIsResource(bool resource);
 
-	Factions.name getFaction();
-	void setFaction(Factions.name f);
+	Faction getFaction();
+	void setFaction(Faction f);
 
 	int getRandomLocation();
 	void setRandomLocation(int loc);
