@@ -49,27 +49,27 @@ public class Perk {
 		return this.uses;
 	}
 
-	public void setStaticGains(List<Gains> g){
+	public void setStaticGains(Dictionary<Gains, int> g){
 		this.staticGains = g;
 	}
 
-	public void addStaticGains(Gains g){
-		this.staticGains.Add(g);
+	public void addStaticGains(Gains g, int i){
+		this.staticGains.Add(g, i);
 	}
 
-	public List<Gains> getStaticGains(){
+	public Dictionary<Gains, int> getStaticGains(){
 		return this.staticGains;
 	}
 
-	public void setConditionalGains(List<Gains> g){
+	public void setConditionalGains(Dictionary<Gains, int> g){
 		this.conditionalGains = g;
 	}
 
-	public void addConditionalGains(Gains g){
-		this.conditionalGains.Add(g);
+	public void addConditionalGains(Gains g, int i){
+		this.conditionalGains.Add(g, i);
 	}
 
-	public List<Gains> getConditionalGains(){
+	public Dictionary<Gains, int> getConditionalGains(){
 		return this.conditionalGains;
 	}
 
