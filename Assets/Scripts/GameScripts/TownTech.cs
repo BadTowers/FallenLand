@@ -70,7 +70,7 @@ public class TownTech {
 		this.conditionalGains = cg;
 	}
 
-	public Dictionary<Gains, int> getConditional Gains(){
+	public Dictionary<Gains, int> getConditionalGains(){
 		return this.conditionalGains;
 	}
 
