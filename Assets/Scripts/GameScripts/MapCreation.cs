@@ -14,6 +14,7 @@ public class MapCreation : MonoBehaviour {
 	private const float UDOffset = .740f * scale;
 	private const int NUM_RANDOM_LOCATIONS = 100;
 	private GameObject[,] mapOfHexes;
+	private List<Faction> factions;
 
 	// Use this for initialization (for debugging only, creates a default map layout and creates the map)
 	/*
@@ -31,12 +32,16 @@ public class MapCreation : MonoBehaviour {
 
 	public void createMap()
 	{
+		//Set map size
 		mapOfHexes = new GameObject[width, height];
 
 		if(ml == null) {
 			Debug.Log("Error, map layout not set. Using default");
 			ml = new DefaultMapLayout();
 		}
+
+		//Load default factions
+		factions = new DefaultFactionInfo().getDefaultFactionList();
 
 		for (int LR = 0; LR < width; LR++) { //Left/right
 			for (int UD = 0; UD < height; UD++) { //Up/down
@@ -86,9 +91,9 @@ public class MapCreation : MonoBehaviour {
 
 		//Set the faction base, if needed
 		if (go.GetComponent<Hex>().isFactionBase()) {
-			foreach (Factions.name fac in Enum.GetValues((typeof(Factions.name)))) {
-				if (DefaultFactionInfo.FACTION_LOCATIONS[fac].Equals (go.GetComponent<Hex>().getCoordinates ())) { //TODO rework
-					go.GetComponent<Hex>().setFaction (fac);
+			foreach(Faction f in factions) {
+				if(f.getBaseLocation().Equals(go.GetComponent<Hex>().getCoordinates())) {
+					go.GetComponent<Hex>().setFaction(f);
 					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white; //Debug thingy
 				}
 			}
