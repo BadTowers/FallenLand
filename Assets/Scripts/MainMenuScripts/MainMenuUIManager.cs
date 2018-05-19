@@ -49,6 +49,7 @@ public class MainMenuUIManager : UIManager {
 	private int curFactionNum;
 	private bool factionWasChanged;
 	private bool gameModeWasChanged;
+	private List<Faction> factions;
 
 	void Start() {
 		//Initialize default values
@@ -256,7 +257,11 @@ public class MainMenuUIManager : UIManager {
 
 
 		//Faction (Find the game creation object in the scene and then get the script from it
-		GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().faction = Factions.getFactionName(curFactionNum);
+		foreach(Faction f in factions) {
+			if(f.getID() == curFactionNum) {
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().faction = f;
+			}
+		}
 
 		//Game mode
 		foreach (Toggle curModeToggle in gameModeToggleGroup.GetComponentsInChildren<Toggle>()) {
@@ -300,7 +305,12 @@ public class MainMenuUIManager : UIManager {
 	// Used to load in new faction and display it
 	private void updateFactionDisplay() {
 		//Set the current faction
-		Factions.name curFac = Factions.getFactionName(curFactionNum);
+		Faction curFac;
+		foreach(Faction f in factions) {
+			if(f.getID() == curFactionNum) {
+				curFac = f;
+			}
+		}
 
 		//Load it
 		Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + curFactionNum.ToString());
@@ -324,29 +334,29 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up town name and location
 		if (townNameAndLocation != null) {
-			townNameAndLocation.text = Factions.getName(curFac) + "\n" + Factions.getStartingLocation(curFac);
+			townNameAndLocation.text = curFac.getName() + "\n" + curFac.getBaseLocation().ToString(); //TODO this may be wrong
 		} else {
 			Debug.Log("Town name and location container not set");
 		}
 
-		//Set up the perk texts
+		//Set up the perk texts TODO rework this to be more dynamic (could have more or less than 4 perks)
 		if (specificPerk1Text != null) {
-			specificPerk1Text.text = Factions.getPerk1Title(curFac) + ": " + Factions.getPerk1Text(curFac);
+			specificPerk1Text.text = curFac.getPerks()[0].getPerkTitle() + ": " + curFac.getPerks()[0].getPerkDescription();
 		} else {
 			Debug.Log("Perk 1 text container not set");
 		}
 		if (specificPerk2Text != null) {
-			specificPerk2Text.text = Factions.getPerk2Title(curFac) + ": " + Factions.getPerk2Text(curFac);
+			specificPerk2Text.text = curFac.getPerks()[1].getPerkTitle() + ": " + curFac.getPerks()[1].getPerkDescription();
 		} else {
 			Debug.Log("Perk 2 text container not set");
 		}
 		if (specificPerk3Text != null) {
-			specificPerk3Text.text = Factions.getPerk3Title(curFac) + ": " + Factions.getPerk3Text(curFac);
+			specificPerk3Text.text = curFac.getPerks()[2].getPerkTitle() + ": " + curFac.getPerks()[2].getPerkDescription();
 		} else {
 			Debug.Log("Perk 3 text container not set");
 		}
 		if (specificPerk4Text != null) {
-			specificPerk4Text.text = Factions.getPerk4Title(curFac) + ": " + Factions.getPerk4Text(curFac);
+			specificPerk4Text.text = curFac.getPerks()[3].getPerkTitle() + ": " + curFac.getPerks()[3].getPerkDescription();
 		} else {
 			Debug.Log("Perk 4 text container not set");
 		}

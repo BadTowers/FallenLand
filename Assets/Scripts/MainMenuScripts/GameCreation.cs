@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameCreation : MonoBehaviour {
 
-	public Factions.name faction;
+	public Faction faction;
 	public GameInformation.GameModes mode;
 	public List<GameInformation.GameModifier> modifiers;
 	public bool wasRead = false;

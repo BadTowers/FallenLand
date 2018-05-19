@@ -12,7 +12,7 @@ public class Hex : MonoBehaviour, HexInterface{
 	private bool water;
 	private bool resource;
 	private bool factionBase;
-	private Factions.name faction = Factions.name.NULL;
+	private Faction faction;
 	private int locationNumber;
 	private bool valid;
 
@@ -125,12 +125,12 @@ public class Hex : MonoBehaviour, HexInterface{
 		this.factionBase = fb;
 	}
 
-	public Factions.name getFaction()
+	public Faction getFaction()
 	{
 		return this.faction;
 	}
 
-	public void setFaction(Factions.name f)
+	public void setFaction(Faction f)
 	{
 		this.faction = f;
 	}
