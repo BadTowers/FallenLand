@@ -50,6 +50,7 @@ public class MainMenuUIManager : UIManager {
 	private bool factionWasChanged;
 	private bool gameModeWasChanged;
 	private List<Faction> factions;
+	private Faction curFac;
 
 	void Start() {
 		//Initialize default values
@@ -305,7 +306,6 @@ public class MainMenuUIManager : UIManager {
 	// Used to load in new faction and display it
 	private void updateFactionDisplay() {
 		//Set the current faction
-		Faction curFac;
 		foreach(Faction f in factions) {
 			if(f.getID() == curFactionNum) {
 				curFac = f;
@@ -363,16 +363,16 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up town lore
 		if (loreText != null) {
-			loreText.text = Factions.getLore(curFac);
+			loreText.text = curFac.getLore();
 		} else {
 			Debug.Log("Lore text container not set");
 		}
 		//Move the lore back to the top when the faction switches
 		loreScrollBar.value = 1;
 
-		//Set up town techs
+		//Set up town techs TODO rework so this is not hardcoded to two
 		//Load tech 1
-		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + TownTechs.getTownTechNumber(Factions.getTownTech1(curFac)).ToString());
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getTownTechs()[0].getID().ToString());
 		//Apply it
 		if (townTech1Image != null) {
 			townTech1Image.sprite = img;
@@ -380,7 +380,7 @@ public class MainMenuUIManager : UIManager {
 			Debug.Log ("Town tech image 1 container not set");
 		}
 		//Load tech 2
-		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + TownTechs.getTownTechNumber(Factions.getTownTech2(curFac)).ToString());
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getTownTechs()[1].getID().ToString());
 		//Apply it
 		if (townTech2Image != null) {
 			townTech2Image.sprite = img;
