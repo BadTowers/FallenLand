@@ -179,7 +179,7 @@ public enum Gains {
 	Remove_Character_Radiation_Damage_All,
 	Remove_Character_Psych_Damage_All,
 
-	//Cards
+	//Cards general
 	Gain_Spoils_Cards, //Added, no catches
 	Gain_Action_Cards,
 	Gain_Character_Cards,
@@ -234,4 +234,6 @@ public enum Gains {
 	Radiation_Damage_Treated_As_Physical,
 	Infected_Damage_Treated_As_Physical,
 
+	//Cards specific
+	Gain_Spoils_Card_Paramedic_Med_Kit,
 }
