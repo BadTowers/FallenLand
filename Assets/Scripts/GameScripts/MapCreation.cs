@@ -103,7 +103,7 @@ public class MapCreation : MonoBehaviour {
 		if(go.GetComponent<Hex>().isRandomLocation())
 		{
 			for(int loc = 1; loc <= NUM_RANDOM_LOCATIONS; loc++){
-				if (DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[loc].Equals(go.GetComponentInChildren<Hex>().getCoordinates ())) {
+				if (DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[loc].Equals(go.GetComponentInChildren<Hex>().getCoordinates())) {
 					go.GetComponent<Hex>().setRandomLocation(loc);
 					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan; //Debug thingy
 					break;
