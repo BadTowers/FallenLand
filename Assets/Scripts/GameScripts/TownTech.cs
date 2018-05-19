@@ -19,6 +19,8 @@ public class TownTech {
 	private List<Times> whenUsable;
 	//A town tech is or is not a starting town tech
 	private bool isStartingTech;
+	//A town tech has an ID
+	private int ID;
 
 
 	//Constructor
@@ -92,5 +94,13 @@ public class TownTech {
 
 	public bool getIsStartingTech(){
 		return this.isStartingTech;
+	}
+
+	public void setID(int id){
+		this.ID = id;
+	}
+
+	public int getID(){
+		return this.ID;
 	}
 }
