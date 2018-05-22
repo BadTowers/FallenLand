@@ -57,6 +57,7 @@ public class MainMenuUIManager : UIManager {
 		curFactionNum = 1;
 		factionWasChanged = true;
 		gameModeWasChanged = true;
+		factions = (new DefaultFactionInfo()).getDefaultFactionList(); //TODO rework to handle mods later?
 
 		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 		addToMenuList(mainMenu);
@@ -64,9 +65,6 @@ public class MainMenuUIManager : UIManager {
 		addToMenuList(singlePlayerMenu);
 		addToMenuList(setUpNewGameMenu);
 		addToMenuList(multiplayerMenu);
-
-		//Set the display up
-		updateFactionDisplay();
 	}
 
 	//When script first starts
@@ -334,7 +332,7 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up town name and location
 		if (townNameAndLocation != null) {
-			townNameAndLocation.text = curFac.getName() + "\n" + curFac.getBaseLocation().ToString(); //TODO this may be wrong
+			townNameAndLocation.text = curFac.getName() + "\n" + curFac.getBaseLocationString();
 		} else {
 			Debug.Log("Town name and location container not set");
 		}
