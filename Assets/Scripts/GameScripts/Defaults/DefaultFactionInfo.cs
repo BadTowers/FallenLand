@@ -29,6 +29,7 @@ public class DefaultFactionInfo {
 
 		/***************************************************/
 		curFac = new Faction("Coalition of the Black Angels", new Coordinates(19,13));
+		curFac.setBaseLocationString("Iowa City, Iowa");
 		curPerk = new Perk("Combat Medic");
 		curPerk.setPerkDescription("Begin the game with the PARAMEDIC MED KIT spoils card");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -62,12 +63,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Enclave of Terra", new Coordinates(10,20));
+		curFac.setBaseLocationString("Great Falls, Montana");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -90,12 +95,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Syndicate", new Coordinates(4,15));
+		curFac.setBaseLocationString("Battle Mountain, Nevada");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -121,12 +130,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Swamp Runners", new Coordinates(20,4));
+		curFac.setBaseLocationString("Shreveport, Louisiana");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -148,13 +161,18 @@ public class DefaultFactionInfo {
 			"guns over a large militia, she uses them to strike at her enemies, often in unique ways. Although many regard the Swamp Runners as unmanageable rogues, their services are utilized by " +
 			"all. Their strategy is to continue to play the other Factions off of one another and establish dominance over the Ten Towns.\n";
 		curFac.setLore(lore);
-		//TODO account for town techs
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("New Federalists", new Coordinates(25,7));
+		curFac.setBaseLocationString("Albany, Georgia");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -182,12 +200,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Regulators", new Coordinates(14,8));
+		curFac.setBaseLocationString("Amarillo, Texas");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -213,12 +235,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("The Highwaymen", new Coordinates(16,16));
+		curFac.setBaseLocationString("Sturgis, South Dakota");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -244,12 +270,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("The Brotherhood", new Coordinates(7,11));
+		curFac.setBaseLocationString("Saint George, Utah");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -275,12 +305,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Sons of Neptune", new Coordinates(23,15));
+		curFac.setBaseLocationString("Grand Haven, Michigan");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -306,12 +340,16 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Sigma Corporation", new Coordinates(28,14));
+		curFac.setBaseLocationString("Emporium, Pennsylvania");
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
@@ -340,8 +378,11 @@ public class DefaultFactionInfo {
 		curFac.setLore(lore);
 		curTech = new TownTech(""); //TODO
 		curFac.addTownTech(curTech);
+		curTech = new TownTech(""); //TODO
+		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
+		facs.Add(curFac);
 	}
 
 
