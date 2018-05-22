@@ -9,6 +9,8 @@ public class Faction {
 	private List<Perk> perks;
 	//A faction has a starting base location
 	private Coordinates baseCoordinates;
+	//A faction has a starting base name (city, state)
+	private string baseLocationString;
 	//A faction has lore
 	private string facLore;
 	//A faction has town techs
@@ -53,6 +55,14 @@ public class Faction {
 
 	public Coordinates getBaseLocation(){
 		return this.baseCoordinates;
+	}
+
+	public void setBaseLocationString(string s){
+		this.baseLocationString = s;
+	}
+
+	public string getBaseLocationString(){
+		return this.baseLocationString;
 	}
 
 	public void setLore(string lore){
