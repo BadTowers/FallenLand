@@ -42,7 +42,18 @@ public class DefaultFactionInfo {
 			Uses.Once_Per_Game
 		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Information Crossroads");
+		curPerk.setPerkDescription("Once per turn, during the TOWN BUSINESS PHASE, you may pay 5 salvage coins to draw 1 action card");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
+			{Gains.Gain_Action_Cards, 1},
+			{Gains.Pay_Salvage, 5}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Town_Business_Phase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
