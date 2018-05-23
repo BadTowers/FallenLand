@@ -9,6 +9,7 @@ public abstract class Player {
 	private List<ActionCard> actionCards;
 	private List<CharacterCard> townRoster;
 	private List<CharacterCard> activeCharacters;
+	private Faction faction;
 
 
 	public Player(){
@@ -41,5 +42,13 @@ public abstract class Player {
 
 	public SpoilsCard getActiveSpoilsCard(int ID){
 		return this.activeSpoils[ID];
+	}
+
+	public void setFaction(Faction f){
+		this.faction = f;
+	}
+
+	public Faction getFaction(){
+		return this.faction;
 	}
 }
