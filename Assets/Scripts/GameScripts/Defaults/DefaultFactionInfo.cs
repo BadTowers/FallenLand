@@ -8,6 +8,7 @@ public class DefaultFactionInfo {
 
 	public DefaultFactionInfo(){
 		facs = new List<Faction>();
+		DefaultTownTechs availableTownTechs = new DefaultTownTechs();
 		Faction curFac;
 		Perk curPerk;
 		string lore;
@@ -79,9 +80,9 @@ public class DefaultFactionInfo {
 			"of the Ten Towns. Frequently playing the role of peacekeeper and brokering deals among the other Factions, they prefer to assert themselves through the use of soft power. While they " +
 			"are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Medical Center"); //TODO maybe make this be not a string
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Learning Center");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -111,9 +112,9 @@ public class DefaultFactionInfo {
 			"strong proponents of expanding the power of the Council of the Ten Towns, they hope to create equality for all factions and broaden representation to include smaller settlements. For this to " +
 			"happen, they will have to take a leadership role and share their wisdom with the other factions.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Energy Production");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -146,9 +147,9 @@ public class DefaultFactionInfo {
 			"Covertly purchasing businesses within the other nine Factions, they plot to overthrow the leadership of the other nine Factions from within and, by doing so, establish an overarching feudal " +
 			"system.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Energy Production");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Machinist Shop");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -179,9 +180,9 @@ public class DefaultFactionInfo {
 			"guns over a large militia, she uses them to strike at her enemies, often in unique ways. Although many regard the Swamp Runners as unmanageable rogues, their services are utilized by " +
 			"all. Their strategy is to continue to play the other Factions off of one another and establish dominance over the Ten Towns.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Medical Center");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Communication Center");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -216,9 +217,9 @@ public class DefaultFactionInfo {
 			"Federalists are tolerated by the other Factions because they supply them with weapons—and for the right price, muscle. Often overshadowed by the pre-war military culture, a group " +
 			"of citizens here hopes to promote change by rewriting old history books and reeducating the population of the Ten Towns with their hubris and propaganda.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Garrison");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Learning Center");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -251,9 +252,9 @@ public class DefaultFactionInfo {
 			"self-sufficiency, integrity, and fair trade. Theft is the most egregious crime in their eyes and is punishable by death. The Regulators are led by The First Marshal, a spokesman for " +
 			"the council of oligarchs—the heads of the Faction’s most prominent cattle families. Their vision of the future is to convert the other Factions to a more nomadic frontier lifestyle.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Machinist Shop");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -286,9 +287,9 @@ public class DefaultFactionInfo {
 			"and motorcycle culture. The President’s strategy when dealing with the other Factions has been to become indispensable. They are always gathering intelligence on their enemies and analyzing " +
 			"their weaknesses. Unfortunately, many members of the Highwaymen believe “might makes right” and that they should meet violence with violence, which often stands in the way of progress.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Machinist Shop");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Garrison");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -321,9 +322,9 @@ public class DefaultFactionInfo {
 			"to keep the peace, although the vote was later disputed. The Brotherhood has grand designs to establish clandestine cults within each of the factions. Eventually, they hope to bolster their " +
 			"numbers until they can overthrow each faction’s leadership and establishing an overarching theocracy.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Energy Production");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -356,9 +357,9 @@ public class DefaultFactionInfo {
 			"includes the restoration of social order by any and all means necessary. Grand Haven intends to become the premier economic power in the Fallen Lands and hopes to eventually " +
 			"reestablish overseas trade. The other factions will then have no choice but to unite under the Sons of Neptune.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Communication Center");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
@@ -394,9 +395,9 @@ public class DefaultFactionInfo {
 			"the Council of the Ten Towns, it remains useful. Their clandestine agenda is to locate the other Sigma Series Bunkers and consolidate their own power. From there, they hope " +
 			"to rebuild the military industrial complex, seek out the enemies of the former United States, and eliminate them and anyone else who stands in their way with extreme prejudice.\n";
 		curFac.setLore(lore);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Communication Center");
 		curFac.addTownTech(curTech);
-		curTech = new TownTech(""); //TODO
+		curTech = availableTownTechs.getTownTechByName("Learning Center");
 		curFac.addTownTech(curTech);
 		curFac.setID(tempID);
 		tempID++;
