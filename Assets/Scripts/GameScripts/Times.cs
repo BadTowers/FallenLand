@@ -129,10 +129,12 @@ public enum Times {
 	Before_Drawing_City_Rad_Encounter_Card,
 	During_Combat_Encounter_Card,
 	After_Combat_Encounter_Success,
+	During_Melee_Weapons_Only,
 
 
 	//Locations
 	Within_1_Hex_Of_Enemy_Party,
 	Within_1_Hex_Of_Enemy_Town,
+	In_Neutral_Starting_Town,
 
 }

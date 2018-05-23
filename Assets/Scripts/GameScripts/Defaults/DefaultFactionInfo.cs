@@ -55,9 +55,29 @@ public class DefaultFactionInfo {
 			Uses.Once_Per_Turn
 		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Fight Club");
+		curPerk.setPerkDescription("During party MELEE WEAPONS ONLY encounter cards, you receive 1 additional combat success");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
+			{Gains.Gain_Combat_Skill_Check_Successes, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Melee_Weapons_Only
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Encounter
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Midwestern Charm");
+		curPerk.setPerkDescription("Perform the HEALING DEED in any neutral starting town without having to pay the bank");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
+			{Gains.Healing_Deed_Salvage_Coin_Cost, 0}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.In_Neutral_Starting_Town
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Unlimited
+		});
 		curFac.addPerk(curPerk);
 		lore = "The residents of Iowa City panicked with the onset of the Great War, as many feared they would be targeted in the nuclear exchanged because of defense contractors, hospitals, " +
 			"and colleges. However, the anticipated hammer stroke never fell. Even when Des Moines was dusted and the ashen fallout drifted down like snow, Iowa City was again spared. " +

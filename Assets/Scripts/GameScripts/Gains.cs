@@ -92,6 +92,9 @@ public enum Gains {
 	Ignore_Negatives_Of_Mission_Failure,
 	Ignore_Negatives_Of_Encounter_Or_Mission_Failure,
 
+	//Deeds
+	Healing_Deed_Salvage_Coin_Cost,
+
 	//Action cards
 	Ignore_Break_Relic_Action_Cards,
 	Ignore_Broken_Action_Cards,
