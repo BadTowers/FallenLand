@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	//UI containers
-	public Image spoilsCard1; //TODO delete/rework. Just for testing
+	public Image spoilsCard1; //TODO delete/rework. Just for testing MOVE TO GAME UI MANAGER
 
 	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
 	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
