@@ -143,6 +143,9 @@ public class DefaultTownTechs {
 	}
 
 
+
+
+
 	public List<TownTech> getDefaultTownTechList(){
 		return this.techs;
 	}
