@@ -76,7 +76,7 @@ public class TownTech {
 		return this.conditionalGains;
 	}
 
-	private void setTimes(List<Times> t){
+	public void setTimes(List<Times> t){
 		this.whenUsable = t;
 	}
 
