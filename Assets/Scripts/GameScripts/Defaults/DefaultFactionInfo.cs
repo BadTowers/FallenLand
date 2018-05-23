@@ -3,19 +3,6 @@ using System.Collections.Generic;
 
 public class DefaultFactionInfo {
 
-	public enum name{
-		COALITION,
-		ENCLAVE,
-		SYNDICATE,
-		SWAMP_RUNNERS,
-		NEW_FEDERALISTS,
-		REGULATORS,
-		HIGHWAYMEN,
-		BROTHERHOOD,
-		SONS_OF_NEPTUNE,
-		SIGMA,
-		NULL
-	}
 
 	private List<Faction> facs;
 
@@ -58,7 +45,7 @@ public class DefaultFactionInfo {
 		curPerk = new Perk("Fight Club");
 		curPerk.setPerkDescription("During party MELEE WEAPONS ONLY encounter cards, you receive 1 additional combat success");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
-			{Gains.Gain_Combat_Skill_Check_Successes, 1}
+			{Gains.Gain_Party_Combat_Skill_Check_Successes, 1}
 		});
 		curPerk.setTimes(new List<Times>(){
 			Times.During_Melee_Weapons_Only
