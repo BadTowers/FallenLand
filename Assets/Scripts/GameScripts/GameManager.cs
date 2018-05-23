@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour {
 	private int maxActionCards = 7;
 	private int maxCharacterCards = -1;
 	private int maxSpoilsCards = -1;
+	private List<TownTech> techs;
+	private List<int> techsUsed;
+	private int maxOfEachTech = 5;
 
 
 
@@ -142,11 +145,7 @@ public class GameManager : MonoBehaviour {
 				actionDeck.RemoveAt(0);
 			}
 		}
-
-
-		//TODO Decide what else to do
-
-
+			
 		//DEBUG THINGY TODO
 		//Display cards
 		Debug.Log(players[0].getActiveSpoilsCards().Count);
@@ -159,6 +158,13 @@ public class GameManager : MonoBehaviour {
 		}
 		spoilsCard1.sprite = curSprite;
 		//}
+
+		//TODO get a list of all town techs and count how many are in play based on which ones each playing faction has
+		techs = (new DefaultTownTechs()).getDefaultTownTechList();
+		techsUsed = new List<int>();
+		for(int i = 0; i < techs.Count; i++){
+			techsUsed.Add(0);
+		}
 	}
 
 
