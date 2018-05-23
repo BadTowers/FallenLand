@@ -9,20 +9,34 @@ public enum Gains {
 	Goes_To_Auction_House_Upon_Death,
 
 	//Skill check successes
-	Gain_Combat_Skill_Check_Successes, //Adds successes to the total
-	Gain_Survival_Skill_Check_Successes,
-	Gain_Diplomacy_Skill_Check_Successes,
-	Gain_Mechanical_Skill_Check_Successes,
-	Gain_Technical_Skill_Check_Successes,
-	Gain_Medical_Skill_Check_Successes,
-	Gain_Failed_Skill_Check_Successes,
-	Lose_Combat_Skill_Check_Successes, //Removes successes from the total
-	Lose_Survival_Skill_Check_Successes,
-	Lose_Diplomacy_Skill_Check_Successes,
-	Lose_Mechanical_Skill_Check_Successes,
-	Losen_Technical_Skill_Check_Successes,
-	Lose_Medical_Skill_Check_Successes,
-	Lose_Failed_Skill_Check_Successes,
+	Gain_Party_Combat_Skill_Check_Successes, //Adds successes to the total for party checks
+	Gain_Party_Survival_Skill_Check_Successes,
+	Gain_Party_Diplomacy_Skill_Check_Successes,
+	Gain_Party_Mechanical_Skill_Check_Successes,
+	Gain_Party_Technical_Skill_Check_Successes,
+	Gain_Party_Medical_Skill_Check_Successes,
+	Gain_Party_Failed_Skill_Check_Successes,
+	Gain_Individual_Combat_Skill_Check_Successes, //Adds successes to the total for individual checks
+	Gain_Individual_Survival_Skill_Check_Successes,
+	Gain_Individual_Diplomacy_Skill_Check_Successes,
+	Gain_Individual_Mechanical_Skill_Check_Successes,
+	Gain_Individual_Technical_Skill_Check_Successes,
+	Gain_Individual_Medical_Skill_Check_Successes,
+	Gain_Individual_Failed_Skill_Check_Successes,
+	Lose_Party_Combat_Skill_Check_Successes, //Removes successes from the total for party checks
+	Lose_Party_Survival_Skill_Check_Successes,
+	Lose_Party_Diplomacy_Skill_Check_Successes,
+	Lose_Party_Mechanical_Skill_Check_Successes,
+	Lose_Party_Technical_Skill_Check_Successes,
+	Lose_Party_Medical_Skill_Check_Successes,
+	Lose_Party_Failed_Skill_Check_Successes,
+	Lose_Individual_Combat_Skill_Check_Successes, //Removes successes from the total for individual checks
+	Lose_Individual_Survival_Skill_Check_Successes,
+	Lose_Individual_Diplomacy_Skill_Check_Successes,
+	Lose_Individual_Mechanical_Skill_Check_Successes,
+	Lose_Individual_Technical_Skill_Check_Successes,
+	Lose_Individual_Medical_Skill_Check_Successes,
+	Lose_Individual_Failed_Skill_Check_Successes,
 	Combat_Skill_Checks_Automatic_Pass, //Auto passes this particular skill check
 	Survival_Skill_Checks_Automatic_Pass,
 	Diplomacy_Skill_Checks_Automatic_Pass,

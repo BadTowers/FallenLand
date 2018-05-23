@@ -2533,7 +2533,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Combat_Skill_Check_Successes, 1}
+			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.During_Gladiatorial_Events_Encounters
@@ -3030,7 +3030,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Combat_Skill_Check_Successes, 1}
+			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.During_Gladiatorial_Events_Encounters
@@ -3306,7 +3306,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No statics */
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Combat_Skill_Check_Successes, 1}
+			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.During_Rad_Zombie_Encounters
