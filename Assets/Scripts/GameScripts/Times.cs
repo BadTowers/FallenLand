@@ -58,6 +58,12 @@ public enum Times {
 	After_Any_Skill_Check_Success,
 	After_Any_Skill_Check_Fail_Encounter,
 	After_Any_Skill_Check_Fail_Mission,
+	During_Combat_Skill_Check,
+	During_Survival_Skill_Check,
+	During_Diplomacy_Skill_Check,
+	During_Mechanical_Skill_Check,
+	During_Technical_Skill_Check,
+	During_Medical_Skill_Check,
 
 	//Phases
 	During_Effects_Phase,
