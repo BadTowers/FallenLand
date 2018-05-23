@@ -20,8 +20,6 @@ public class DefaultTownTechs {
 		curTech.setUpgradeCost(30);
 		curTech.setSellCost(25);
 		curTech.setConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Prestige, 1},
-			{Gains.Gain_Town_Health, 5},
 			{Gains.Gain_Party_Technical_Skill_Check_Successes, 1}
 		});
 		curTech.setTimes(new List<Times>(){
@@ -36,8 +34,6 @@ public class DefaultTownTechs {
 		curTech.setUpgradeCost(30);
 		curTech.setSellCost(25);
 		curTech.setConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Prestige, 1},
-			{Gains.Gain_Town_Health, 5},
 			{Gains.Gain_Party_Combat_Skill_Check_Successes, 1}
 		});
 		curTech.setTimes(new List<Times>(){
@@ -52,46 +48,95 @@ public class DefaultTownTechs {
 		curTech.setUpgradeCost(30);
 		curTech.setSellCost(25);
 		curTech.setConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Prestige, 1},
-			{Gains.Gain_Town_Health, 5},
 			{Gains.Gain_Action_Cards, 1}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.During_Deal_Subphase}
 		});
 		curTech.setID(3);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Learning Center");
-		//TODO
+		curTech.setPurchaseCost(30);
+		curTech.setUpgradeCost(30);
+		curTech.setSellCost(25);
+		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Party_Diplomacy_Skill_Check_Successes, 1}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.During_Diplomacy_Skill_Check}
+		});
 		curTech.setID(4);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Machinist Shop");
-		//TODO
+		curTech.setPurchaseCost(30);
+		curTech.setUpgradeCost(30);
+		curTech.setSellCost(25);
+		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Party_Mechanical_Skill_Check_Successes, 1}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.During_Mechanical_Skill_Check}
+		});
 		curTech.setID(5);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Marketplace");
-		//TODO
+		curTech.setPurchaseCost(30);
+		curTech.setUpgradeCost(30);
+		curTech.setSellCost(25);
+		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Spoils_Cards, 1}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.During_Deal_Subphase}
+		});
 		curTech.setID(6);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Medical Center");
-		//TODO
+		curTech.setPurchaseCost(30);
+		curTech.setUpgradeCost(30);
+		curTech.setSellCost(25);
+		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Party_Medical_Skill_Check_Successes, 1}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.During_Medical_Skill_Check}
+		});
 		curTech.setID(7);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Communication Center");
-		//TODO
+		curTech.setPurchaseCost(30);
+		curTech.setUpgradeCost(30);
+		curTech.setSellCost(25);
+		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Movement, 2}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.Anytime}
+		});
 		curTech.setID(8);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Water and Supplies");
-		//TODO
+		curTech.setPurchaseCost(30);
+		curTech.setUpgradeCost(30);
+		curTech.setSellCost(25);
+		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Party_Survival_Skill_Check_Successes, 1}
+		});
+		curTech.setTimes(new List<Times>(){
+			{Times.During_Survival_Skill_Check}
+		});
 		curTech.setID(9);
 		techs.Add(curTech);
 
