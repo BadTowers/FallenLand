@@ -18,7 +18,6 @@ public class SpoilsCard : PartyCard {
 	private Times whenTempEnd; //Marks when the temp gain expires (such as after a certain phase, after a turn, etc)
 	private List<SpoilsCard> attachments; //Spoils cards attached to this spoils card
 	private bool placeOnTopOfDiscard; //Is true if it goes on top (Default), false if it goes on bottom
-	private int ID;
 
 	private void initLists(){
 		types = new List<SpoilsTypes>();
@@ -288,13 +287,5 @@ public class SpoilsCard : PartyCard {
 		newCard.setDiscardToTop(this.placeOnTopOfDiscard);
 
 		return newCard;
-	}
-
-	public void setID(int id){
-		this.ID = id;
-	}
-
-	public int getID(){
-		return this.ID;
 	}
 }
