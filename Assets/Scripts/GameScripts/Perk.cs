@@ -14,6 +14,8 @@ public class Perk {
 	private string perkTitle;
 	//A perk has a text description
 	private string perkDescription;
+	//A perk may have D6 options
+	private List<Dictionary<Gains, int>> d6;
 
 
 	//Constructor
@@ -23,6 +25,7 @@ public class Perk {
 		this.staticGains = new Dictionary<Gains, int>();
 		this.conditionalGains = new Dictionary<Gains, int>();
 		this.perkTitle = title;
+		this.d6 = new List<Dictionary<Gains, int>>();
 	}
 
 	public void setTimes(List<Times> t){
@@ -87,5 +90,13 @@ public class Perk {
 
 	public string getPerkDescription(){
 		return this.perkDescription;
+	}
+
+	public void addD6Option(Dictionary<Gains, int> d6Option){
+		this.d6.Add(d6Option);
+	}
+
+	public List<Dictionary<Gains, int>> getD6Options(){
+		return this.d6;
 	}
 }
