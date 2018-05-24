@@ -92,13 +92,53 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("Enclave of Terra", new Coordinates(10,20));
 		curFac.setBaseLocationString("Great Falls, Montana");
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Hunter's Instinct");
+		curPerk.setPerkDescription("Begin the game with the COMPOUND HUNTING BOW spoils card.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Spoils_Card_Compound_Hunting_Bow, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Start_Of_Game
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Game
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Diplomatic Connections");
+		curPerk.setPerkDescription("Each time you are the first player, SUBTRACT 2 FROM TOWN EVENTS ROLL.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Subtract_From_Roll, 2}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Town_Events_Chart_Subphase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Wiley");
+		curPerk.setPerkDescription("Your party GAINS +1 DURING FLIGHT ROLLS.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Add_To_Roll, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Encounter_Flight
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Encounter
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Kismet");
+		curPerk.setPerkDescription("Once per turn, during a solo encounter card, REROLL A FAILED SKILL CHECK.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Reroll_Failed_Skill_Check, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Solo_Encounter
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
 		lore = "The remote location of Great Falls spared it from the nuclear exchange that destroyed civilization. However, as supplies became scarce during the dark years of the Maddening, many " +
 			"militia groups in the region turned to raiding settlements. The raider’s swift attacks devastated and outgunned the small communities. To bring the fight to the raiders, the Blackfoot " +

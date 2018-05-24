@@ -233,6 +233,10 @@ public enum Gains {
 	//D10 rewards
 	Roll_D10,
 
+	//Dice modifiers
+	Subtract_From_Roll,
+	Add_To_Roll,
+
 	//Town tech
 	Upgrade_Town_Tech_T2,
 	Steal_Opponent_Town_Tech,
@@ -253,4 +257,5 @@ public enum Gains {
 
 	//Cards specific
 	Gain_Spoils_Card_Paramedic_Med_Kit,
+	Gain_Spoils_Card_Compound_Hunting_Bow,
 }

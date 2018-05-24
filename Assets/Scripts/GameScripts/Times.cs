@@ -115,6 +115,7 @@ public enum Times {
 	After_PvP,
 	After_PvP_Round,
 	When_Opposing_Party_Grenades_Equipped,
+	During_PVP_Flight,
 
 	//Encounters/Missions
 	During_Encounter_Mission_Or_PvP,
@@ -136,6 +137,8 @@ public enum Times {
 	During_Combat_Encounter_Card,
 	After_Combat_Encounter_Success,
 	During_Melee_Weapons_Only,
+	During_Encounter_Flight,
+	During_Solo_Encounter,
 
 
 	//Locations
