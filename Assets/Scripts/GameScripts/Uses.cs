@@ -12,5 +12,5 @@ public enum Uses {
 	Once_Per_Game_Per_Player,
 	Once_Per_Successful_Encounter_Or_Mission,
 	Once_Per_Encounter,
-
+	Once_Per_Movement_Deed,
 }

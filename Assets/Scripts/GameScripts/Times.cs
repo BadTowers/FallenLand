@@ -145,5 +145,11 @@ public enum Times {
 	Within_1_Hex_Of_Enemy_Party,
 	Within_1_Hex_Of_Enemy_Town,
 	In_Neutral_Starting_Town,
+	Moving_Into_Plains_Hex,
+	Moving_Into_Mountain_Hex,
+	Movint_Into_CityRad_Hex,
+	First_Move_Into_Plains_Hex,
+	First_Move_Into_Mountain_Hex,
+	First_Move_Into_CityRad_Hex,
 
 }

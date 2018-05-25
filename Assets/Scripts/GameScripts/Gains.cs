@@ -76,6 +76,8 @@ public enum Gains {
 	Lost_Salvage,
 	Lose_Prestige,
 	Lose_Town_Health,
+	Gain_Town_Defense_Chips,
+	Lose_Town_Defense_Chips,
 
 	//Party
 	Ignore_Radiation_Damage_From_Hexes,
@@ -220,6 +222,8 @@ public enum Gains {
 	Any_Vehicle_Spoils_Cards_From_Deck,
 	Any_Vehicle_Spoils_Cards_From_Discard,
 	Any_Vehicle_Spoils_Cards_From_Deck_Or_Discard,
+	Place_Into_Town_Roster, //For characters
+	Place_Into_Auction_House, //For spoils
 
 	//Special
 	Gain_Kurtis_Wyatt_Character_Card,

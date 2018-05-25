@@ -164,13 +164,68 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("Syndicate", new Coordinates(4,15));
 		curFac.setBaseLocationString("Battle Mountain, Nevada");
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Natural Defenses");
+		curPerk.setPerkDescription("Begin the game with 1 TOWN DEFENSE CHIP.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Town_Defense_Chips, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Start_Of_Game
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Game
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("High Rollers");
+		curPerk.setPerkDescription("During the TOWN EVENTS PHASE< you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Roll_D6, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Town_Events_Chart_Subphase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
+		curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+			{Gains.Gain_Salvage, 5}
+		});
+		curPerk.addD6Option(new Dictionary<Gains, int>(){ //2
+			{Gains.Gain_Salvage, 5}
+		});
+		curPerk.addD6Option(new Dictionary<Gains, int>(){ //3
+			{Gains.Gain_Salvage, 5}
+		});
+		curPerk.addD6Option(null); //4
+		curPerk.addD6Option(null); //5
+		curPerk.addD6Option(new Dictionary<Gains, int>(){ //6
+			{Gains.Lost_Salvage, 7}
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Mountaineering");
+		curPerk.setPerkDescription("Each MOVEMENT DEED, the 1st mountain hex your party passes through costs 1 movement instead of two.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Mountain_Hexes_Cost, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.First_Move_Into_Mountain_Hex
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Movement_Deed
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("The Mineshaft Gap");
+		curPerk.setPerkDescription("Once per turn, if your town roster is empty, you may draw a character card and place it there.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Draw_Character_Cards, 1},
+			{Gains.Place_Into_Town_Roster, -1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Anytime
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
 		lore = "The local warning sirens wailed across the mining community as death rained from the skies. Only the residents that fled to the mines survived. Within its depths, the survivors found " +
 			"shelter and safety from the fallout. During the long, dark years of the Maddening, as chaos reigned in the wastes, the survivors that chose to reside in the mine continued to prosper. " +
