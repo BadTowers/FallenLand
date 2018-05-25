@@ -224,6 +224,9 @@ public enum Gains {
 	Any_Vehicle_Spoils_Cards_From_Deck_Or_Discard,
 	Place_Into_Town_Roster, //For characters
 	Place_Into_Auction_House, //For spoils
+	Discard_Spoils_Cards,
+	Discard_Character_Cards,
+	Discard_Action_Cards,
 
 	//Special
 	Gain_Kurtis_Wyatt_Character_Card,

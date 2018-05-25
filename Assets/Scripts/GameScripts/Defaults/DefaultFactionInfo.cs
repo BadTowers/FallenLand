@@ -254,13 +254,55 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("Swamp Runners", new Coordinates(20,4));
 		curFac.setBaseLocationString("Shreveport, Louisiana");
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Connected");
+		curPerk.setPerkDescription("Begin the game with a resource location of your choosing.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Resource_Location, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Start_Of_Game
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Game
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Southern Ingenuity");
+		curPerk.setPerkDescription("Once per turn, during the effects phase, you may DISCARD AN ACTION CARD TO DRAW A SPOILS CARD for your auction house.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Discard_Action_Cards, 1},
+			{Gains.Draw_Spoils_Cards, 1},
+			{Gains.Place_Into_Auction_House, -1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Effects_Phase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Smugglers Network");
+		curPerk.setPerkDescription("Each time you sell a spoils card from your auction house to another player, receive 3 salvage coin from the bank.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Salvage, 3}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.After_Sell_Spoils_Card_From_Auction_House_To_Another_Player
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Unlimited
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Born on the Bayou");
+		curPerk.setPerkDescription("Your party gains +2 FLIGHT during PVP.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Add_To_Roll, 2}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_PVP_Flight
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Encounter
+		});
 		curFac.addPerk(curPerk);
 		lore = "Shreveport sustained mass casualties from the biological weapons used in the Great War. Many residents suffered horrible deaths, while others looted and pillaged the city gripped by " +
 			"madness and set it ablaze. Other horrors followed, like radiation sickness and cannibalism. When several damns upriver failed, they unleased the power of the mighty Mississippi. Mother " +

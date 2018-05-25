@@ -33,6 +33,7 @@ public enum Times {
 	//Cards
 	Character_Card_Received_As_Reward,
 	When_Drawn,
+	After_Sell_Spoils_Card_From_Auction_House_To_Another_Player,
 
 	//Skill checks
 	After_Combat_Skill_Check_Failure,
