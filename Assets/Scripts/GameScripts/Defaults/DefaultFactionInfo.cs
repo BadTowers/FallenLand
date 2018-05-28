@@ -177,7 +177,7 @@ public class DefaultFactionInfo {
 		});
 		curFac.addPerk(curPerk);
 		curPerk = new Perk("High Rollers");
-		curPerk.setPerkDescription("During the TOWN EVENTS PHASE< you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
+		curPerk.setPerkDescription("During the TOWN EVENTS PHASE, you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Roll_D6, 1}
 		});
@@ -329,13 +329,65 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("New Federalists", new Coordinates(25,7));
 		curFac.setBaseLocationString("Albany, Georgia");
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Armory Cache");
+		curPerk.setPerkDescription("Begin the game with the MILITIA RIFLE spoils card.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Spoils_Card_Militia_Rifle, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Start_Of_Game
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Game
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Weapons Bazaar");
+		curPerk.setPerkDescription("During the town business phase, roll 1d6. On 1-2, remove first weapons spoils card (top to bottom) from discard pile and place into auction house.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Roll_D6, 1},
+			{Gains.Place_Into_Auction_House, -1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Town_Business_Phase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
+		curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+			{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
+		});
+		curPerk.addD6Option(new Dictionary<Gains, int>(){ //2
+			{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
+		});
+		curPerk.addD6Option(null); //3
+		curPerk.addD6Option(null); //4
+		curPerk.addD6Option(null); //5
+		curPerk.addD6Option(null); //6
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Navigators");
+		curPerk.setPerkDescription("City and radiation hexes cost 2 movement instead of 3.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.CityRad_Hexes_Cost, 2}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Anytime
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Unlimited
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Mercenary Haven");
+		curPerk.setPerkDescription("Pay 2 salvage coins less to hire an NPCM action card or ALLY spoils card.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.NPCM_Hire_Cost_Less, 2},
+			{Gains.Ally_Hire_Cost_Less, 2}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Anytime
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Unlimited
+		});
 		curFac.addPerk(curPerk);
 		lore = "In the early hours of the Great War, Albany braced for attack. Washington D.C. was already gone, and the long list of dusted cities just kept growing. The first missiles targeting " +
 			"Albany were destroyed by THAAD missile defense batteries. The next round was detonated in the atmosphere and caused a series of electromagnetic pulses that knocked out power and " +

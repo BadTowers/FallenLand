@@ -222,6 +222,7 @@ public enum Gains {
 	Any_Vehicle_Spoils_Cards_From_Deck,
 	Any_Vehicle_Spoils_Cards_From_Discard,
 	Any_Vehicle_Spoils_Cards_From_Deck_Or_Discard,
+	Gain_First_Weapon_Spoils_From_Discard, //First meaning from top to bottom (recent to oldest, so retrieve most recent discarded weapon)
 	Place_Into_Town_Roster, //For characters
 	Place_Into_Auction_House, //For spoils
 	Discard_Spoils_Cards,
@@ -233,6 +234,10 @@ public enum Gains {
 
 	//Hiring
 	Pay_Salvage,
+	NPCM_Hire_Cost_Less,
+	NPCM_Hire_Cost_More,
+	Ally_Hire_Cost_Less,
+	Ally_Hire_Cost_More,
 
 	//D6 rewards
 	Roll_D6,
@@ -265,4 +270,5 @@ public enum Gains {
 	//Cards specific
 	Gain_Spoils_Card_Paramedic_Med_Kit,
 	Gain_Spoils_Card_Compound_Hunting_Bow,
+	Gain_Spoils_Card_Militia_Rifle,
 }
