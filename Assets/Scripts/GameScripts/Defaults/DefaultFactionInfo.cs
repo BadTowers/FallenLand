@@ -495,13 +495,57 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("The Highwaymen", new Coordinates(16,16));
 		curFac.setBaseLocationString("Sturgis, South Dakota");
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Motorcycle Culture");
+		curPerk.setPerkDescription("Begin the game with the AMERICAN IRON CUSTOM CHOPPERS spoils card. Cannot be sold or traded.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1},
+			{Gains.Reward_Cannot_Be_Traded, -1},
+			{Gains.Reward_Cannot_Be_Sold, -1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Start_Of_Game
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Game
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Caravan Escort");
+		curPerk.setPerkDescription("Each town business phase, select another faction. You each gain 2 salvage coins.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Pick_Other_Factions_Share_Gains, 1},
+			{Gains.Gain_Salvage, 2}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Town_Business_Phase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("The Riddle of Steel");
+		curPerk.setPerkDescription("If your party returns to town without a vehicle, immediately retrieve the AMERICAN IRON CUSTOM CHOPPERS spoils card.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Return_To_Town_Location,
+			Times.Has_No_Vehicle
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Unlimited
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Road Warriors");
+		curPerk.setPerkDescription("Each time a VEHICLE COMBAT or BIKER GANG ENCOUNTER CARD is drawn by any player, you GAIN 1 PRESTIGE.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Prestige, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Encounter
+		});
 		curFac.addPerk(curPerk);
 		lore = "After the bombs fells, the motorcycle clubs that survived were forced to rely on mobility and safety in numbers. Those that escaped the gridlock and chaos made the pilgrimage to " +
 			"the mecca of motorcycle culture, Sturgis, South Dakota. Many motorcycle clubs (MCs) were represented there and most put aside their long-standing rivalries. A vision emerged to unite " +

@@ -289,10 +289,15 @@ public enum Gains {
 	Gain_Spoils_Card_Compound_Hunting_Bow,
 	Gain_Spoils_Card_Militia_Rifle,
 	Gain_Spoils_Card_Six_Fast_Horses,
+	Gain_Spoils_Card_American_Iron_Custom_Choppers,
 
 	//Gain sharing
 	Pick_Other_Factions_Share_Gains,
 
 	//Town location
 	Move_Town_Location_Number_Hexes,
+
+	//Selling and trading
+	Reward_Cannot_Be_Traded,
+	Reward_Cannot_Be_Sold
 }

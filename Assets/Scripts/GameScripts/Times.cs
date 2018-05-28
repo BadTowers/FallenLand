@@ -29,6 +29,7 @@ public enum Times {
 
 	//Vehicle
 	Vehicle_Destroyed,
+	Has_No_Vehicle,
 
 	//Cards
 	Character_Card_Received_As_Reward,
@@ -140,6 +141,7 @@ public enum Times {
 	During_Melee_Weapons_Only,
 	During_Encounter_Flight,
 	During_Solo_Encounter,
+	Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
 
 
 	//Locations
@@ -152,5 +154,6 @@ public enum Times {
 	First_Move_Into_Plains_Hex,
 	First_Move_Into_Mountain_Hex,
 	First_Move_Into_CityRad_Hex,
+	Return_To_Town_Location,
 
 }
