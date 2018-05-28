@@ -84,7 +84,7 @@ public enum Gains {
 	Ignore_Radiation_Damage,
 
 	//Ally
-	Prevent_Any_Character_Death, //In a dictionary, set the value as the HP they have after the prevention
+	Prevent_Any_Character_Death_And_Set_HP_To, //In a dictionary, set the value as the HP they have after the prevention
 
 	//Encounters/Missions
 	Ignore_Ambush_Encounters,
@@ -229,11 +229,9 @@ public enum Gains {
 	Discard_Character_Cards,
 	Discard_Action_Cards,
 
-	//Special
-	Gain_Kurtis_Wyatt_Character_Card,
-
-	//Hiring
-	Pay_Salvage,
+	//Salvage and hiring
+	Optional_Pay_Salvage,
+	Mandatory_Pay_Salvage,
 	NPCM_Hire_Cost_Less,
 	NPCM_Hire_Cost_More,
 	Ally_Hire_Cost_Less,
@@ -252,6 +250,24 @@ public enum Gains {
 	//Town tech
 	Upgrade_Town_Tech_T2,
 	Steal_Opponent_Town_Tech,
+	Town_Tech_Energy_Production_Tier_One_Cost,
+	Town_Tech_Energy_Production_Tier_Two_Cost,
+	Town_Tech_Garrison_Tier_One_Cost,
+	Town_Tech_Garrison_Tier_Two_Cost,
+	Town_Tech_Law_And_Order_Tier_One_Cost,
+	Town_Tech_Law_And_Order_Tier_Two_Cost,
+	Town_Tech_Learning_Center_Tier_One_Cost,
+	Town_Tech_Learning_Center_Tier_Two_Cost,
+	Town_Tech_Machinist_Shop_Tier_One_Cost,
+	Town_Tech_Machinist_Shop_Tier_Two_Cost,
+	Town_Tech_Marketplace_Tier_One_Cost,
+	Town_Tech_Marketplace_Tier_Two_Cost,
+	Town_Tech_Medical_Center_Tier_One_Cost,
+	Town_Tech_Medical_Center_Tier_Two_Cost,
+	Town_Tech_Communication_Center_Tier_One_Cost,
+	Town_Tech_Communication_Center_Tier_Two_Cost,
+	Town_Tech_Water_And_Supplies_Tier_One_Cost,
+	Town_Tech_Water_And_Supplies_Tier_Two_Cost,
 
 	//NPCMs
 	Remove_NPCM_Currently_In_Play,
@@ -268,7 +284,15 @@ public enum Gains {
 	Infected_Damage_Treated_As_Physical,
 
 	//Cards specific
+	Gain_Kurtis_Wyatt_Character_Card,
 	Gain_Spoils_Card_Paramedic_Med_Kit,
 	Gain_Spoils_Card_Compound_Hunting_Bow,
 	Gain_Spoils_Card_Militia_Rifle,
+	Gain_Spoils_Card_Six_Fast_Horses,
+
+	//Gain sharing
+	Pick_Other_Factions_Share_Gains,
+
+	//Town location
+	Move_Town_Location_Number_Hexes,
 }

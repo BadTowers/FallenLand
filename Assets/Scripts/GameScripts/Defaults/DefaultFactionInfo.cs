@@ -34,7 +34,7 @@ public class DefaultFactionInfo {
 		curPerk.setPerkDescription("Once per turn, during the TOWN BUSINESS PHASE, you may pay 5 salvage coins to draw 1 action card");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
 			{Gains.Gain_Action_Cards, 1},
-			{Gains.Pay_Salvage, 5}
+			{Gains.Optional_Pay_Salvage, 5}
 		});
 		curPerk.setTimes(new List<Times>(){
 			Times.During_Town_Business_Phase
@@ -418,13 +418,55 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("Regulators", new Coordinates(14,8));
 		curFac.setBaseLocationString("Amarillo, Texas");
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("The Cownboy Way");
+		curPerk.setPerkDescription("Begin the game with the SIX FAST HORSES spoils card.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Gain_Spoils_Card_Six_Fast_Horses, 1}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.Start_Of_Game
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Game
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Cattle Drivers");
+		curPerk.setPerkDescription("Each town business phase, choose another faction. You each receive 3 salvage coins.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Pick_Other_Factions_Share_Gains, 1},
+			{Gains.Gain_Salvage, 3}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Town_Business_Phase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Into the Wild");
+		curPerk.setPerkDescription("During End Turn Phase, you may move your STARTING TOWN LOCATION up to 2 hexes by paying 3 salvage coins. Cannot occupy hex containing another town, resource, radiation, or water. Mission locations are rerolled.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Optional_Pay_Salvage, 3},
+			{Gains.Move_Town_Location_Number_Hexes, 2}
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_End_Turn_Phase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Once_Per_Turn
+		});
 		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
+		curPerk = new Perk("Rangers");
+		curPerk.setPerkDescription("You may purchase the tier 1 LAW AND ORDER TOWN TECHNOLOGY for 30 salvage coins.");
+		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+			{Gains.Town_Tech_Law_And_Order_Tier_One_Cost, 30},
+		});
+		curPerk.setTimes(new List<Times>(){
+			Times.During_Purchase_Subphase
+		});
+		curPerk.setUses(new List<Uses>(){
+			Uses.Unlimited
+		});
 		curFac.addPerk(curPerk);
 		lore = "By the time the radioactive fallout drifted across the plains, the US government was already gone and the country’s infrastructure had collapsed. No help was coming. The " +
 			"nuclear and biological warheads used in The Great War had darkened the skies, and this lack of sunshine combined with unprecedented chaos and violence became known as The " +
