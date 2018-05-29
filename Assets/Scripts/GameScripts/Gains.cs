@@ -299,5 +299,6 @@ public enum Gains {
 
 	//Selling and trading
 	Reward_Cannot_Be_Traded,
-	Reward_Cannot_Be_Sold
+	Reward_Cannot_Be_Sold,
+	Discard_If_Not_Purchased,
 }

@@ -206,10 +206,11 @@ public class DefaultSpoilsCards{
 			{Gains.Gain_Movement, 2},
 			{Gains.Gain_Carry_Weight, 4},
 			{Gains.Prevent_Destruction, VALUE_NOT_NEEDED},
-			{Gains.Prevent_Theft, VALUE_NOT_NEEDED}
+			{Gains.Prevent_Theft, VALUE_NOT_NEEDED},
+			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
 		});
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Pay_Salvage, 5}
+			{Gains.Optional_Pay_Salvage, 5}
 		});
 		curCard.setWhenUsable(new List<Times>(){
 			Times.Immediately
@@ -1009,10 +1010,11 @@ public class DefaultSpoilsCards{
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Carry_Weight, 4},
 			{Gains.Gain_Prestige, 1},
-			{Gains.Gain_Psych_Resistence, 1}
+			{Gains.Gain_Psych_Resistence, 1},
+			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
 		});
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Pay_Salvage, 4}
+			{Gains.Optional_Pay_Salvage, 4}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.Immediately
@@ -2157,7 +2159,7 @@ public class DefaultSpoilsCards{
 			{Gains.Gain_Psych_Resistence, 1}
 		});
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Prevent_Any_Character_Death, 1}
+			{Gains.Prevent_Any_Character_Death_And_Set_HP_To, 1}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.Any_Party_Member_Death
@@ -3101,7 +3103,7 @@ public class DefaultSpoilsCards{
 				{Gains.Remove_Party_Physical_Damage, 4} //1.1
 			},
 			new Dictionary<Gains, int>{ //Set 2
-				{Gains.Prevent_Any_Character_Death, 1} //2.1
+				{Gains.Prevent_Any_Character_Death_And_Set_HP_To, 1} //2.1
 			}
 		);
 		curCard.setWhenUsable(
@@ -3271,10 +3273,11 @@ public class DefaultSpoilsCards{
 		});
 		curCard.setStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 8},
-			{Gains.All_Hex_Movement_Cost, 1}
+			{Gains.All_Hex_Movement_Cost, 1},
+			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
 		});
 		curCard.setConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Pay_Salvage, 10}
+			{Gains.Optional_Pay_Salvage, 10}
 		});
 		curCard.setWhenUsable(new List<Times>{
 			Times.Immediately
