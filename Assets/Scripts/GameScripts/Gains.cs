@@ -79,13 +79,16 @@ public enum Gains {
 	Lose_Town_Health,
 	Gain_Town_Defense_Chips,
 	Lose_Town_Defense_Chips,
+    All_Town_Defense_Chips_Cost_More,
+    All_Town_Defense_Chips_Cost_Less,
 
-	//Party
-	Ignore_Radiation_Damage_From_Hexes,
+    //Party
+    Ignore_Radiation_Damage_From_Hexes,
 	Ignore_Radiation_Damage,
+    Move_To_Any_Mission_Chip,
 
-	//Ally
-	Prevent_Any_Character_Death_And_Set_HP_To, //In a dictionary, set the value as the HP they have after the prevention
+    //Ally
+    Prevent_Any_Character_Death_And_Set_HP_To, //In a dictionary, set the value as the HP they have after the prevention
 
 	//Encounters/Missions
 	Ignore_Ambush_Encounters,
@@ -294,9 +297,10 @@ public enum Gains {
 	Gain_Spoils_Card_Six_Fast_Horses,
 	Gain_Spoils_Card_American_Iron_Custom_Choppers,
     Gain_Spoils_Card_Vendetta_Daggers,
+    Gain_Spoils_Card_68mm_Advanced_Rifle,
 
-	//Gain sharing
-	Pick_Other_Factions_Share_Gains,
+    //Gain sharing
+    Pick_Other_Factions_Share_Gains,
 
 	//Town location
 	Move_Town_Location_Number_Hexes,

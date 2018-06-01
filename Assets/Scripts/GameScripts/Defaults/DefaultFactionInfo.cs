@@ -761,14 +761,55 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("Sigma Corporation", new Coordinates(28,14));
 		curFac.setBaseLocationString("Emporium, Pennsylvania");
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
+        curPerk = new Perk("The Long Walk");
+        curPerk.setPerkDescription("Begin the game with the 6.8mm ADVANCED RIFLE spoils card.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Gain_Spoils_Card_68mm_Advanced_Rifle, 1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.Start_Of_Game
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Game
+        });
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("Veritable Fortress");
+        curPerk.setPerkDescription("Begin the game with 2 TOWN DEFENSE CHIPS. All other town defense chips cost 4 extra salvage coins.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Gain_Town_Defense_Chips, 2},
+            {Gains.All_Town_Defense_Chips_Cost_More, 4}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.Start_Of_Game
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Game
+        });
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("Excavation");
+        curPerk.setPerkDescription("If any player draws a mission card with the word SIGMA IN THE TITLE, YOU GAIN 3 TOWN HEALTH.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Gain_Town_Health, 3}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.During_Mission_Card_Sigma_In_Title_Any_Player
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Card
+        });
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("Black Ops");
+        curPerk.setPerkDescription("Once per game, during your party exploits phase, move your party to any mission location on the map.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Move_To_Any_Mission_Chip, 1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.During_Party_Exploits_Phase
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Game
+        });
+        curFac.addPerk(curPerk);
 		lore = "After 9/11 and the ensuing \"war on terror\", Emporium, Pennsylvania found itself the thirteenth site of the U.S. government’s top-secret Sigma Series program. Fearing " +
 			"a catastrophe loomed on the horizon, these new state-of-the-art bunkers were designed to survive a nuclear war, biological catastrophe, or extinction level event. A vast " +
 			"improvement over their obsolete predecessors from the Cold War, they were created to safeguard government institutions. The Emporium Bunker’s primary mission was to harbor " +

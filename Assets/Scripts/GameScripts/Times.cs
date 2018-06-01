@@ -147,6 +147,7 @@ public enum Times {
 	During_Solo_Encounter,
 	Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
     During_Environmetal_Hazard_Encounter_Card,
+    During_Mission_Card_Sigma_In_Title_Any_Player,
 
 
     //Locations
