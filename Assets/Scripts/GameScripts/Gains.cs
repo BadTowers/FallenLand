@@ -68,9 +68,10 @@ public enum Gains {
 	Gain_PVP_Combat_Successes,
 	Lose_PVP_Combat_Successes,
 	Destroy_Oppenent_Vehicle,
+    Inflict_Rad_Damage_On_Opposing_Party,
 
-	//Faction stuff
-	Gain_Salvage,
+    //Faction stuff
+    Gain_Salvage,
 	Gain_Prestige,
 	Gain_Town_Health,
 	Lost_Salvage,

@@ -616,10 +616,38 @@ public class DefaultFactionInfo {
 			{Gains.Gain_Salvage, 6}
         });
         curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
+        curPerk = new Perk("Down With the Sickness");
+        curPerk.setPerkDescription("When an opponent plays a \"negative\" action card against one of your characters or party, roll 1d6. On a 1, each of their party members suffers 1 radiation damage.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Roll_D6, 1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.Negative_Action_Card_Against_Player
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Card
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+			{Gains.Inflict_Rad_Damage_On_Opposing_Party, 1}
+        });
+        curPerk.addD6Option(null); //2
+        curPerk.addD6Option(null); //3
+        curPerk.addD6Option(null); //4
+        curPerk.addD6Option(null); //5
+        curPerk.addD6Option(null); //6
+        curFac.addPerk(curPerk);
+		curPerk = new Perk("Survival Instincts");
+        curPerk.setPerkDescription("Your party ignores all negative effects from ENVIRONMENTAL HAZARD encounter cards.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Ignore_Negatives_Of_Enoucnter_Failure, -1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.During_Environmetal_Hazard_Encounter_Card
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Card
+        });
+        curFac.addPerk(curPerk);
 		lore = "The red sandstone bluffs surrounding Saint George provided little reprieve from the fallout of the dusted West Coast cities. Isolated and forgotten, the windswept town of Saint George " +
 			"was forced to turn inward and became more and more xenophobic of “out-dwellers”. For a while, the arid soil provided subsistence farming. When this failed, scouting parties were dispatched " +
 			"to locate what they needed to survive. The mysterious Yucca Mountain facility was discovered during one such excursion. Stockpiled with decommissioned nuclear weapons and radioactive waste, " +

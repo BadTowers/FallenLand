@@ -35,9 +35,10 @@ public enum Times {
 	Character_Card_Received_As_Reward,
 	When_Drawn,
 	After_Sell_Spoils_Card_From_Auction_House_To_Another_Player,
+    Negative_Action_Card_Against_Player,
 
-	//Skill checks
-	After_Combat_Skill_Check_Failure,
+    //Skill checks
+    After_Combat_Skill_Check_Failure,
 	After_Survival_Skill_Check_Failure,
 	After_Diplomacy_Skill_Check_Failure,
 	After_Mechanical_Skill_Check_Failure,
@@ -142,10 +143,11 @@ public enum Times {
 	During_Encounter_Flight,
 	During_Solo_Encounter,
 	Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
+    During_Environmetal_Hazard_Encounter_Card,
 
 
-	//Locations
-	Within_1_Hex_Of_Enemy_Party,
+    //Locations
+    Within_1_Hex_Of_Enemy_Party,
 	Within_1_Hex_Of_Enemy_Town,
 	In_Neutral_Starting_Town,
 	Moving_Into_Plains_Hex,
