@@ -769,7 +769,7 @@ public class DefaultFactionInfo {
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
-		lore = "After 9/11 and the ensuing “war on terror”, Emporium, Pennsylvania found itself the thirteenth site of the U.S. government’s top-secret Sigma Series program. Fearing " +
+		lore = "After 9/11 and the ensuing \"war on terror\", Emporium, Pennsylvania found itself the thirteenth site of the U.S. government’s top-secret Sigma Series program. Fearing " +
 			"a catastrophe loomed on the horizon, these new state-of-the-art bunkers were designed to survive a nuclear war, biological catastrophe, or extinction level event. A vast " +
 			"improvement over their obsolete predecessors from the Cold War, they were created to safeguard government institutions. The Emporium Bunker’s primary mission was to harbor " +
 			"members of Congress. Its secondary mission was to preserve a digital copy of the Library of Congress and the files for the mysterious project God’s Hammer. The private " +
