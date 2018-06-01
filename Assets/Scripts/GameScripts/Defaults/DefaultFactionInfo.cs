@@ -675,14 +675,65 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("Sons of Neptune", new Coordinates(23,15));
 		curFac.setBaseLocationString("Grand Haven, Michigan");
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
+        curPerk = new Perk("Hidden Agenda");
+        curPerk.setPerkDescription("Begin the game with TWO ADDITIONAL ACTION CARDS.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Gain_Action_Cards, 2}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.Start_Of_Game
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Game
+        });
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("River Traders");
+        curPerk.setPerkDescription("Each EFFECTS PHASE, you may draw a spoils card. To keep it, pay a random player 1/2 its value in salvage (rounded up).");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Draw_Spoils_Cards, 1},
+            {Gains.Pay_Random_Player_Half_Salvage_Value_To_Keep, -1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.During_Effects_Phase
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Turn
+        });
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("Anchors Aweigh");
+        curPerk.setPerkDescription("When your town is the target of an action card or world card effect, roll 1d6. On a 1, ignore the effects.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Roll_D6, 1},
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.Town_Target_Of_Action_Card_Or_World_Card
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Card
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+			{Gains.Ignore_Negative_Effects_Of_Card, 1}
+        });
+        curPerk.addD6Option(null); //2
+        curPerk.addD6Option(null); //3
+        curPerk.addD6Option(null); //4
+        curPerk.addD6Option(null); //5
+        curPerk.addD6Option(null); //6
+        curFac.addPerk(curPerk);
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("Amphibious");
+        curPerk.setPerkDescription("Your party may MOVE THROUGH THE GREAT LAKES. Each lake costs 1 salvage and 1 movement. Cannot end movement deed in water hex.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Move_Through_Great_Lakes, 1},
+            {Gains.Optional_Pay_Salvage, 1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.During_Movement_Deed
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Unlimited
+        });
+        curFac.addPerk(curPerk);
 		lore = "In the early hours of the Great War, Chicago and Detroit were hit simultaneously by multiple ICBMs. But above them on the peninsula, a last-minute shift in the winds saved Grand " +
 			"Haven, “Coast Guard City USA”. Still, many people with boards fled to the water of the Great Lakes to survive. The old adage “safety in numbers” proved true during the Maddening, " +
 			"which resulted in the survivors forming flotillas, only returning to shore to scavenge supplies. Eventually, the two largest flotillas on the lakes combined forces to form the Sons " +

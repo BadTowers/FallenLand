@@ -9,8 +9,11 @@ public enum Times {
 	Never,
 	Start_Of_Game,
 
-	//Clothing
-	Equipped_With_An_Axe,
+    //Town
+    Town_Target_Of_Action_Card_Or_World_Card,
+
+    //Clothing
+    Equipped_With_An_Axe,
 	Equipped_With_Industrial_Chainsaw,
 	Equipped_With_Rusty_Cleaver,
 
@@ -157,5 +160,11 @@ public enum Times {
 	First_Move_Into_Mountain_Hex,
 	First_Move_Into_CityRad_Hex,
 	Return_To_Town_Location,
+
+    //Deeds
+    During_Movement_Deed,
+    During_Healing_Deed,
+    During_Encounter_Deed,
+    During_Mission_Deed,
 
 }

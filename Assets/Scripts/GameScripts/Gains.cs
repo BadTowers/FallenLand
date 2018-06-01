@@ -115,9 +115,10 @@ public enum Gains {
 	//Action cards
 	Ignore_Break_Relic_Action_Cards,
 	Ignore_Broken_Action_Cards,
+    Ignore_Negative_Effects_Of_Card,
 
-	//Weapons
-	Deals_Radiation_Damage,
+    //Weapons
+    Deals_Radiation_Damage,
 	Deals_Infected_Damage,
 
 	//Opponents
@@ -237,9 +238,10 @@ public enum Gains {
 	NPCM_Hire_Cost_More,
 	Ally_Hire_Cost_Less,
 	Ally_Hire_Cost_More,
+    Pay_Random_Player_Half_Salvage_Value_To_Keep,
 
-	//D6 rewards
-	Roll_D6,
+    //D6 rewards
+    Roll_D6,
 
 	//D10 rewards
 	Roll_D10,
@@ -303,4 +305,7 @@ public enum Gains {
 	Reward_Cannot_Be_Traded,
 	Reward_Cannot_Be_Sold,
 	Discard_If_Not_Purchased,
+
+    //Movement
+    Move_Through_Great_Lakes,
 }
