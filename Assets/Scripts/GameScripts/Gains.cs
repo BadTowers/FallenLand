@@ -290,6 +290,7 @@ public enum Gains {
 	Gain_Spoils_Card_Militia_Rifle,
 	Gain_Spoils_Card_Six_Fast_Horses,
 	Gain_Spoils_Card_American_Iron_Custom_Choppers,
+    Gain_Spoils_Card_Vendetta_Daggers,
 
 	//Gain sharing
 	Pick_Other_Factions_Share_Gains,

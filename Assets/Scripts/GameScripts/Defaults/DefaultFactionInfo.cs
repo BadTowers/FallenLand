@@ -574,10 +574,48 @@ public class DefaultFactionInfo {
 		/***************************************************/
 		curFac = new Faction("The Brotherhood", new Coordinates(7,11));
 		curFac.setBaseLocationString("Saint George, Utah");
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
-		curPerk = new Perk(""); //TODO
-		curFac.addPerk(curPerk);
+        curPerk = new Perk("Blade Cult");
+        curPerk.setPerkDescription("Begin the game with the VENDETTA DAGGERS spoils card.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Gain_Spoils_Card_Vendetta_Daggers, 1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.Start_Of_Game
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Game
+        });
+        curFac.addPerk(curPerk);
+        curPerk = new Perk("Wasteland Scavengers");
+        curPerk.setPerkDescription("Each TOWN BUSINESS PHASE, roll 1d6 and gain that many salvage coins.");
+        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+            {Gains.Roll_D6, 1}
+        });
+        curPerk.setTimes(new List<Times>(){
+            Times.During_Town_Business_Phase
+        });
+        curPerk.setUses(new List<Uses>(){
+            Uses.Once_Per_Turn
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+			{Gains.Gain_Salvage, 1}
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //2
+			{Gains.Gain_Salvage, 2}
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //3
+			{Gains.Gain_Salvage, 3}
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //4
+			{Gains.Gain_Salvage, 4}
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //5
+			{Gains.Gain_Salvage, 5}
+        });
+        curPerk.addD6Option(new Dictionary<Gains, int>(){ //6
+			{Gains.Gain_Salvage, 6}
+        });
+        curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
 		curFac.addPerk(curPerk);
 		curPerk = new Perk(""); //TODO
