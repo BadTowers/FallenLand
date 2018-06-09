@@ -1,11 +1,16 @@
 fileFormatVersion: 2
 guid: 379ba58e133609640a66ffcdc4cb2f08
-timeCreated: 1526395897
+timeCreated: 1528565955
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pauseMenu: {instanceID: 0}
+  - saveMenu: {instanceID: 0}
+  - optionsMenu: {instanceID: 0}
+  - debugOverlay: {instanceID: 0}
+  - gameCamera: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

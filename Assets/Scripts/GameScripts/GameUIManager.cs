@@ -10,12 +10,14 @@ public class GameUIManager : UIManager {
 	public GameObject pauseMenu;
 	public GameObject saveMenu;
 	public GameObject optionsMenu;
+    public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
 
 	//Game camera
 	public GameObject gameCamera;
 
 	public GameMenuStates currentState;
 	private bool escapePressed;
+    private bool debugOverlayShowing;
 	private float panSpeed;
 	private float zoomSpeed;
 
@@ -23,7 +25,8 @@ public class GameUIManager : UIManager {
 	void Start(){
 		//Initialize vars
 		escapePressed = false;
-		currentState = GameMenuStates.Resume;
+        debugOverlayShowing = false;
+        currentState = GameMenuStates.Resume;
 
 		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 		addToMenuList(pauseMenu);
@@ -41,11 +44,18 @@ public class GameUIManager : UIManager {
 
 
 	void Update(){
+        //TODO refactor to a function that returns a list of buttons pressed. That list can then later be passed to an interpretter
 		//See if the escape button is being pressed
 		if(Input.GetKeyDown(KeyCode.Escape)){
 			escapePressed = true;
 			Debug.Log("Escape pressed");
 		}
+        //See if the F3 button is being pressed
+        if(Input.GetKeyDown(KeyCode.F3))
+        {
+            debugOverlayShowing = !debugOverlayShowing; //Flip if the debug screen is showing or not
+            Debug.Log("F3 pressed");
+        }
 
 		//Checks current menu state
 		switch (currentState) {
@@ -96,6 +106,10 @@ public class GameUIManager : UIManager {
 				setActiveMenu(null);
 				break;
 		}
+
+        //Toggle debug overlay
+		debugOverlay.SetActive(debugOverlayShowing);
+
 		escapePressed = false;
 	}
 
