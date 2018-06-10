@@ -185,4 +185,16 @@ public class GameManager : MonoBehaviour {
     public Player getPlayerByID(int id){ 
         return players[id];
     }
+
+    public int getNumberComputerPlayers() {
+        return this.numComputerPlayers;
+    }
+
+    public int getNumberHumanPlayers() {
+        return this.numHumanPlayers;
+    }
+
+    public int getNumberPlayers() {
+        return this.numHumanPlayers + this.numComputerPlayers;
+    }
 }
