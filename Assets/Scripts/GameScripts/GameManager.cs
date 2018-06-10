@@ -174,4 +174,15 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+
+
+    /*****Some public interface functions for the GUI to attach to*******/
+    public List<Player> getPlayers(){
+        return this.players;
+    }
+
+    //TODO change this to later so each player is assigned a random number that maps to a player in the array so a GUI cannot request an ID that it doesn't know
+    public Player getPlayerByID(int id){ 
+        return players[id];
+    }
 }
