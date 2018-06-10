@@ -47,7 +47,10 @@ public class GameManager : MonoBehaviour {
 			//Debug.Log(newGameState.GetComponent<GameCreation>().faction); //Debug thingy
 
 			//Grab the game mode
-			gameMode = newGameState.GetComponent<GameCreation>().mode;
+			gameMode = newGameState.GetComponent<GameCreation>().getMode();
+
+            //Grab the faction (TODO change this to grab a dictionary of factions and who is each faction)
+            Faction faction = newGameState.GetComponent<GameCreation>().getFaction();
 
 			//Extract the Solo II difficulty if needed
 			if(gameMode == GameInformation.GameModes.SoloII) {
@@ -56,14 +59,14 @@ public class GameManager : MonoBehaviour {
 
 			//Set the number of human and computer players
 			numHumanPlayers = GameInformation.getHumanPlayerCount(gameMode);
-			numComputerPlayers = GameInformation.getComputerPlayerCount(gameMode);
+            numComputerPlayers = GameInformation.getComputerPlayerCount(gameMode);
 
 			//Add the players to the list (TODO: Change so later these are added in the order players will go (after dice roll or something))
 			for(int i = 0; i < numHumanPlayers; i++) {
-				players.Add(new HumanPlayer(startingSalvage));
+				players.Add(new HumanPlayer(faction, startingSalvage));
 			}
 			for(int i = 0; i < numComputerPlayers; i++) {
-				players.Add(new ComputerPlayer(startingSalvage));
+				//players.Add(new ComputerPlayer(startingSalvage)); //TODO reaccount for when doing a true single player game, not a solo variant
 			}
 
 			//Interpret any modifiers
@@ -71,9 +74,9 @@ public class GameManager : MonoBehaviour {
 
 
 		} else {
+            //TODO handle this better probably
 			Debug.Log ("Game info not received from game setup.");
-			//TODO remove debug thing
-			players.Add(new HumanPlayer(startingSalvage));
+			players.Add(new HumanPlayer(new DefaultFactionInfo().getDefaultFactionList()[0], startingSalvage));
 		}
 
 
@@ -168,7 +171,7 @@ public class GameManager : MonoBehaviour {
                 techsUsed[tt]++;
             }
         }
-	}
+  	}
 
 
 	void Update(){
@@ -184,6 +187,10 @@ public class GameManager : MonoBehaviour {
 
     public int getSalvageByID(int ID) {
         return players[ID].getSalvage();
+    }
+
+    public Faction getFactionByID(int ID) {
+        return players[ID].getFaction();
     }
 
 

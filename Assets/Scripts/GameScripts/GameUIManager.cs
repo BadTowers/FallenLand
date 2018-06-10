@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUIManager : UIManager {
 
@@ -142,7 +143,36 @@ public class GameUIManager : UIManager {
     //A function to grab all the required information from the game manager to display it here
     private void updateDebugOverlay()
     {
-        int salvage = this.GetComponentInParent<GameManager>().getSalvageByID(0);
-        //TODO display this value in the debug overlay
+        //Retrieve information
+        int salvage = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().getSalvageByID(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
+        Faction faction = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().getFactionByID(0);
+
+        //Display information in the debug overlay
+        Text[] textComponenetsInDebugOverlay = debugOverlay.GetComponentsInChildren<Text>();
+        foreach (Text curText in textComponenetsInDebugOverlay) {
+            switch (curText.name) {
+                case "DebugSpoilsCardText":
+                    //TODO
+                    break;
+                case "DebugAuctionHouseText":
+                    //todo
+                    break;
+                case "DebugCharacterCardText":
+                    //todo
+                    break;
+                case "DebugTownRosterText":
+                    //todo
+                    break;
+                case "DebugActionCardText":
+                    //TODO
+                    break;
+                case "DebugTownTechText":
+                    //TODO
+                    break;
+                case "DebugSalvageText":
+                    curText.text = "Salvage: " + salvage.ToString();
+                    break;
+            }
+        }
     }
 }
