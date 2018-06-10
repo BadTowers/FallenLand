@@ -15,9 +15,11 @@ public abstract class Player {
 
 
 
-	public Player(int startingSalvage){
+	public Player(Faction faction, int startingSalvage){
         this.salvage = startingSalvage;
+        this.faction = faction;
 		initLists();
+        //TODO extract starting town techs from faction
 	}
 
 	private void initLists(){

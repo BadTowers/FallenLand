@@ -6,7 +6,7 @@ public class ComputerPlayer : Player {
 
 	//vars
 
-	public ComputerPlayer(int startingSalvage) : base(startingSalvage) {
+	public ComputerPlayer(Faction faction, int startingSalvage) : base(faction, startingSalvage) {
 
 	}
 

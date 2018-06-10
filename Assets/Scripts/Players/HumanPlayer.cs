@@ -6,7 +6,7 @@ public class HumanPlayer : Player {
 
 	//vars
 
-	public HumanPlayer(int startingSalvage) : base(startingSalvage) {
+	public HumanPlayer(Faction faction, int startingSalvage) : base(faction, startingSalvage) {
 
 	}
 
