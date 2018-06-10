@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 			
+        /*
 		//DEBUG THINGY TODO
 		//Display cards
 		Debug.Log(players[0].getActiveSpoilsCards().Count);
@@ -158,6 +159,7 @@ public class GameManager : MonoBehaviour {
 		}
 		spoilsCard1.sprite = curSprite;
 		//}
+        */
 
 		//TODO get a list of all town techs and count how many are in play based on which ones each playing faction has
 		techs = (new DefaultTownTechs()).getDefaultTownTechList();
