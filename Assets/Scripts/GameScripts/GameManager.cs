@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	//UI containers
 	public Image spoilsCard1; //TODO delete/rework. Just for testing. MOVE TO GAME UI MANAGER
 
+    private Dictionary<int, int> IDtoPlayerMapping = new Dictionary<int, int>();
 	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
 	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
 	private List<CharacterCard> characterDeck = new List<CharacterCard>();
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour {
 	private List<TownTech> techs;
 	private List<int> techsUsed;
 	private int maxOfEachTech = 5;
+    private int startingSalvage = 10;
 
 
 
@@ -59,10 +61,15 @@ public class GameManager : MonoBehaviour {
 
 			//Add the players to the list (TODO: Change so later these are added in the order players will go (after dice roll or something))
 			for(int i = 0; i < numHumanPlayers; i++) {
-				players.Add(new HumanPlayer());
+				players.Add(new HumanPlayer(startingSalvage));
+                //TODO
+                //Generate random number
+                //Map random number to i
+                //IDtoPlayerMapping[randomNumber] = i;
 			}
 			for(int i = 0; i < numComputerPlayers; i++) {
-				players.Add(new ComputerPlayer());
+				players.Add(new ComputerPlayer(startingSalvage));
+                //TODO same as for human players
 			}
 
 			//Interpret any modifiers
@@ -72,7 +79,7 @@ public class GameManager : MonoBehaviour {
 		} else {
 			Debug.Log ("Game info not received from game setup.");
 			//TODO remove debug thing
-			players.Add(new HumanPlayer());
+			players.Add(new HumanPlayer(startingSalvage));
 		}
 
 
@@ -174,15 +181,22 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+    private int getPlayerIndexFromRandomID(int randID) {
+        return IDtoPlayerMapping[randID];
+    }
+
 
 
     /*****Some public interface functions for the GUI to attach to*******/
-    public List<Player> getPlayers(){
-        return this.players;
+    public List<TownTech> getTownTechsByID(int ID) {
+        return players[ID].getTownTechs();
+        //TODO change to
+        //return players[getPlayerIndexFromRandomID(ID)].getTownTechs();
     }
 
-    //TODO change this to later so each player is assigned a random number that maps to a player in the array so a GUI cannot request an ID that it doesn't know
-    public Player getPlayerByID(int id){ 
-        return players[id];
+    public int getSalvageByID(int ID) {
+        return players[ID].getSalvage();
+        //TODO change to
+        //return players[getPlayerIndexFromRandomID(ID)].getSalvage();
     }
 }
