@@ -7,8 +7,7 @@ public class GameManager : MonoBehaviour {
 
 	//UI containers
 	public Image spoilsCard1; //TODO delete/rework. Just for testing. MOVE TO GAME UI MANAGER
-
-    private Dictionary<int, int> IDtoPlayerMapping = new Dictionary<int, int>();
+    
 	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
 	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
 	private List<CharacterCard> characterDeck = new List<CharacterCard>();
@@ -29,7 +28,7 @@ public class GameManager : MonoBehaviour {
 	private int maxCharacterCards = -1;
 	private int maxSpoilsCards = -1;
 	private List<TownTech> techs;
-	private List<int> techsUsed;
+	private Dictionary<TownTech, int> techsUsed;
 	private int maxOfEachTech = 5;
     private int startingSalvage = 10;
 
@@ -62,14 +61,9 @@ public class GameManager : MonoBehaviour {
 			//Add the players to the list (TODO: Change so later these are added in the order players will go (after dice roll or something))
 			for(int i = 0; i < numHumanPlayers; i++) {
 				players.Add(new HumanPlayer(startingSalvage));
-                //TODO
-                //Generate random number
-                //Map random number to i
-                //IDtoPlayerMapping[randomNumber] = i;
 			}
 			for(int i = 0; i < numComputerPlayers; i++) {
 				players.Add(new ComputerPlayer(startingSalvage));
-                //TODO same as for human players
 			}
 
 			//Interpret any modifiers
@@ -146,7 +140,7 @@ public class GameManager : MonoBehaviour {
 				actionDeck.RemoveAt(0);
 			}
 		}
-			
+
         /*
 		//DEBUG THINGY TODO
 		//Display cards
@@ -162,12 +156,18 @@ public class GameManager : MonoBehaviour {
 		//}
         */
 
-		//TODO get a list of all town techs and count how many are in play based on which ones each playing faction has
-		techs = (new DefaultTownTechs()).getDefaultTownTechList();
-		techsUsed = new List<int>();
-		for(int i = 0; i < techs.Count; i++){
-			techsUsed.Add(0);
-		}
+        //Count how many town techs are assigned to begin
+        techs = (new DefaultTownTechs()).getDefaultTownTechList();
+		techsUsed = new Dictionary<TownTech, int>();
+        foreach (TownTech tt in techs) {
+            techsUsed[tt] = 0; //Init all town techs to 0 currently used
+        }
+        foreach (Player p in players) {
+            foreach (TownTech tt in p.getTownTechs()) {
+                //For each town tech for each player, count it
+                techsUsed[tt]++;
+            }
+        }
 	}
 
 
@@ -175,23 +175,15 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-    private int getPlayerIndexFromRandomID(int randID) {
-        return IDtoPlayerMapping[randID];
-    }
-
 
 
     /*****Some public interface functions for the GUI to attach to*******/
     public List<TownTech> getTownTechsByID(int ID) {
         return players[ID].getTownTechs();
-        //TODO change to
-        //return players[getPlayerIndexFromRandomID(ID)].getTownTechs();
     }
 
     public int getSalvageByID(int ID) {
         return players[ID].getSalvage();
-        //TODO change to
-        //return players[getPlayerIndexFromRandomID(ID)].getSalvage();
     }
 
 
