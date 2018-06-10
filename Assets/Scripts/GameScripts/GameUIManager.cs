@@ -110,6 +110,9 @@ public class GameUIManager : UIManager {
         //Toggle debug overlay
 		debugOverlay.SetActive(debugOverlayShowing);
 
+        //Update debug overlay
+        updateDebugOverlay();
+
 		escapePressed = false;
 	}
 
@@ -133,4 +136,12 @@ public class GameUIManager : UIManager {
 		//TODO warn to save
 		Debug.Log("Quit");
 	}
+
+
+
+    //A function to grab all the required information from the game manager to display it here
+    private void updateDebugOverlay()
+    {
+        //this.GetComponentInParent<GameManager>().getPlayerByID(0);
+    }
 }
