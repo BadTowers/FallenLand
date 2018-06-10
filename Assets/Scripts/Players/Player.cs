@@ -5,11 +5,14 @@ using UnityEngine;
 public abstract class Player {
 
 	private List<SpoilsCard> activeSpoils;
-	private List<SpoilsCard> auctionHouse;
+	private List<SpoilsCard> auctionHouse; //Spoils in their town (inactive)
 	private List<ActionCard> actionCards;
-	private List<CharacterCard> townRoster;
 	private List<CharacterCard> activeCharacters;
-	private Faction faction;
+    private List<CharacterCard> townRoster; //Characters in their town (inactive)
+    private Faction faction;
+    private List<TownTech> townTechs;
+    private int salvage;
+
 
 
 	public Player(){
