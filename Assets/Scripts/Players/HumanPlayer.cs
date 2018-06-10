@@ -6,7 +6,7 @@ public class HumanPlayer : Player {
 
 	//vars
 
-	public HumanPlayer() : base(){
+	public HumanPlayer(int startingSalvage) : base(startingSalvage) {
 
 	}
 

@@ -15,7 +15,8 @@ public abstract class Player {
 
 
 
-	public Player(){
+	public Player(int startingSalvage){
+        this.salvage = startingSalvage;
 		initLists();
 	}
 
@@ -54,4 +55,29 @@ public abstract class Player {
 	public Faction getFaction(){
 		return this.faction;
 	}
+
+    public int getSalvage() {
+        return this.salvage;
+    }
+
+    public void addSalvage(int salvageToAdd) {
+        this.salvage += salvageToAdd;
+    }
+
+    public void subtractSalvage(int salvageToSubtract) {
+        this.salvage -= salvageToSubtract;
+    }
+
+    public List<TownTech> getTownTechs() {
+        return this.townTechs;
+    }
+
+    public void addTownTech(TownTech toAdd) {
+        this.townTechs.Add(toAdd);
+    }
+
+    //TODO this prolly isn't right
+    public void removeTownTech(TownTech toRemove) {
+        this.townTechs.Remove(toRemove);
+    }
 }

@@ -6,7 +6,7 @@ public class ComputerPlayer : Player {
 
 	//vars
 
-	public ComputerPlayer() : base(){
+	public ComputerPlayer(int startingSalvage) : base(startingSalvage) {
 
 	}
 
