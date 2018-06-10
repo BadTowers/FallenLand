@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameCreation : MonoBehaviour {
 
-	public Faction faction;
-	public GameInformation.GameModes mode;
+	private Faction faction; //TODO for local multiplayer, this likely needs to be a list of factions or a dictionary of factions (map IP to faction)
+	private GameInformation.GameModes mode;
 	public List<GameInformation.GameModifier> modifiers;
 	public bool wasRead = false;
 	public GameInformation.SoloII soloIIDifficulty;
@@ -23,6 +23,27 @@ public class GameCreation : MonoBehaviour {
 		}
 	}
 
+    public void setFaction(Faction f) {
+        faction = f;
+    }
+
+    public Faction getFaction() {
+        return faction;
+    }
+
+    public void setMode(GameInformation.GameModes m) {
+        mode = m;
+    }
+
+    public GameInformation.GameModes getMode() {
+        return mode;
+    }
+
+
+
+
+
+    //TODO move these to a different file. They don't belong in here
 	public static string getGameModeName(GameInformation.GameModes gt) {
 		switch (gt) {
 		case GameInformation.GameModes.NormalGame:

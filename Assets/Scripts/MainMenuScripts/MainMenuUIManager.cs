@@ -258,14 +258,14 @@ public class MainMenuUIManager : UIManager {
 		//Faction (Find the game creation object in the scene and then get the script from it
 		foreach(Faction f in factions) {
 			if(f.getID() == curFactionNum) {
-				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().faction = f;
+                GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().setFaction(f);
 			}
 		}
 
 		//Game mode
 		foreach (Toggle curModeToggle in gameModeToggleGroup.GetComponentsInChildren<Toggle>()) {
 			if (curModeToggle.isOn) {
-				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().mode = curModeToggle.GetComponentInChildren<ToggleInformation>().mode;
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().setMode(curModeToggle.GetComponentInChildren<ToggleInformation>().mode);
 			}
 		}
 
