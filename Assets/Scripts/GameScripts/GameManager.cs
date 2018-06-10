@@ -91,9 +91,7 @@ public class GameManager : MonoBehaviour {
 
 
 		//Create the deck of spoils cards
-		DefaultSpoilsCards tempSpoils = new DefaultSpoilsCards();
-		spoilsDeck = tempSpoils.getSpoilsCards();
-		tempSpoils = null; //Clear it for garbage collection
+		spoilsDeck = (new DefaultSpoilsCards()).getSpoilsCards();
 		spoilsDeck = Card.shuffleDeck(spoilsDeck);
 
 		/*
@@ -105,16 +103,12 @@ public class GameManager : MonoBehaviour {
 
 
 		//Create the deck of character cards
-		DefaultCharacterCards tempCharacters = new DefaultCharacterCards();
-		characterDeck = tempCharacters.getCharacterCards();
-		tempCharacters = null; //Clear it for garbage collection
+		characterDeck = (new DefaultCharacterCards()).getCharacterCards();
 		characterDeck = Card.shuffleDeck(characterDeck);
 
 
 		//Create the deck of action cards
-		DefaultActionCards tempActions = new DefaultActionCards();
-		actionDeck = tempActions.getActionCards();
-		tempActions = null; //Clear it for garbage collection
+		actionDeck = (new DefaultActionCards()).getActionCards();
 		actionDeck = Card.shuffleDeck(actionDeck);
 
 
