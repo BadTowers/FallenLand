@@ -13,8 +13,8 @@ public class Faction {
 	private string baseLocationString;
 	//A faction has lore
 	private string facLore;
-	//A faction has town techs
-	private List<TownTech> townTechs;
+	//A faction has starting town techs
+	private List<TownTech> startingTownTechs;
 	//A faction has an ID
 	private int ID;
 
@@ -25,7 +25,7 @@ public class Faction {
 		this.facName = name;
 		this.baseCoordinates = c;
 		perks = new List<Perk>();
-		townTechs = new List<TownTech>();
+        startingTownTechs = new List<TownTech>();
 	}
 
 
@@ -73,16 +73,16 @@ public class Faction {
 		return this.facLore;
 	}
 
-	public void setTownTechs(List<TownTech> t){
-		this.townTechs = t;
+	public void setStartingTownTechs(List<TownTech> t){
+		this.startingTownTechs = t;
 	}
 
-	public void addTownTech(TownTech t){
-		this.townTechs.Add(t);
+	public void addStartingTownTech(TownTech t){
+		this.startingTownTechs.Add(t);
 	}
 
-	public List<TownTech> getTownTechs(){
-		return this.townTechs;
+	public List<TownTech> getStartingTownTechs(){
+		return this.startingTownTechs;
 	}
 
 	public void setID(int id){
