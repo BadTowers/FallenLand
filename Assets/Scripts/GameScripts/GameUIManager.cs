@@ -142,7 +142,7 @@ public class GameUIManager : UIManager {
     //A function to grab all the required information from the game manager to display it here
     private void updateDebugOverlay()
     {
-        //TODO
-        //this.GetComponentInParent<GameManager>().getPlayerByID(0);
+        int salvage = this.GetComponentInParent<GameManager>().getSalvageByID(0);
+        //TODO display this value in the debug overlay
     }
 }
