@@ -12,9 +12,10 @@ public class GameUIManager : UIManager {
 	public GameObject saveMenu;
 	public GameObject optionsMenu;
     public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
+    public Image spoilsCard1; //TODO rework so this is maybe a container that can dynamically be populated with cards
 
-	//Game camera
-	public GameObject gameCamera;
+    //Game camera
+    public GameObject gameCamera;
 
 	public GameMenuStates currentState;
 	private bool escapePressed;
@@ -176,3 +177,20 @@ public class GameUIManager : UIManager {
         }
     }
 }
+
+
+//Code for displaying one card in one specific image GameObject
+/*
+//DEBUG THINGY TODO
+//Display cards
+Debug.Log(players[0].getActiveSpoilsCards().Count);
+//for(int i = 0; i < startingActionCards; i++) {
+	string fileName = "Cards/SpoilsCards/SpoilsCard" + players[0].getActiveSpoilsCard(0).getID().ToString(); //TODO don't hardcode to player[0]
+Debug.Log(fileName);
+Sprite curSprite = Resources.Load<Sprite>(fileName);
+if(curSprite == null) {
+	Debug.Log("null");
+}
+spoilsCard1.sprite = curSprite;
+//}
+*/

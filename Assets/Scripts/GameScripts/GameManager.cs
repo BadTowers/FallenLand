@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-
-	//UI containers
-	public Image spoilsCard1; //TODO delete/rework. Just for testing. MOVE TO GAME UI MANAGER
     
 	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
 	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
@@ -143,21 +140,6 @@ public class GameManager : MonoBehaviour {
 				actionDeck.RemoveAt(0);
 			}
 		}
-
-        /*
-		//DEBUG THINGY TODO
-		//Display cards
-		Debug.Log(players[0].getActiveSpoilsCards().Count);
-		//for(int i = 0; i < startingActionCards; i++) {
-			string fileName = "Cards/SpoilsCards/SpoilsCard" + players[0].getActiveSpoilsCard(0).getID().ToString(); //TODO don't hardcode to player[0]
-		Debug.Log(fileName);
-		Sprite curSprite = Resources.Load<Sprite>(fileName);
-		if(curSprite == null) {
-			Debug.Log("null");
-		}
-		spoilsCard1.sprite = curSprite;
-		//}
-        */
 
         //Count how many town techs are assigned to begin
         techs = (new DefaultTownTechs()).getDefaultTownTechList();
