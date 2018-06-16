@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Player {
 
-	private List<SpoilsCard> activeSpoils;
+	private List<SpoilsCard> activeSpoils; //TODO may not need this. May want to attach spoils to CharacterCard
 	private List<SpoilsCard> auctionHouse; //Spoils in their town (inactive)
 	private List<ActionCard> actionCards;
 	private List<CharacterCard> activeCharacters;
