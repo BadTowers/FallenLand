@@ -41,10 +41,10 @@ public class GameManager : MonoBehaviour {
 			//Mark as read so the game object can be deleted
 			newGameState.GetComponent<GameCreation> ().wasRead = true;
 
-			//Debug.Log(newGameState.GetComponent<GameCreation>().faction); //Debug thingy
+            //Debug.Log(newGameState.GetComponent<GameCreation>().faction); //Debug thingy
 
-			//Grab the game mode
-			gameMode = newGameState.GetComponent<GameCreation>().getMode();
+            //Grab the game mode
+            extractGameModeFromGameCreationObject(newGameState);
 
             //Grab the faction (TODO change this to grab a dictionary of factions and who is each faction)
             Faction faction = newGameState.GetComponent<GameCreation>().getFaction();
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour {
 				soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
 			}
 
-			//Set the number of human and computer players
+			//Set the number of human and computer players TODO change this to be passed in from GameCreation object
 			numHumanPlayers = GameInformation.getHumanPlayerCount(gameMode);
             numComputerPlayers = GameInformation.getComputerPlayerCount(gameMode);
 
@@ -173,6 +173,10 @@ public class GameManager : MonoBehaviour {
 
     public Faction getFactionByID(int ID) {
         return players[ID].getFaction();
+    }
+
+    private void extractGameModeFromGameCreationObject(GameObject newGameState) {
+        gameMode = newGameState.GetComponent<GameCreation>().getMode();
     }
 
 

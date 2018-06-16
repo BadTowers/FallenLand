@@ -397,7 +397,7 @@ public class MainMenuUIManager : UIManager {
 			soloIIDifficultyToggleGroup.SetActive (false);
 
 			//Update the text to describe the game mode
-			gameModeInfoText.text = GameCreation.getRules(GameInformation.GameModes.SoloI);
+			gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloI);
 		}
 		//If solo II is selected 
 		else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn) {
@@ -405,7 +405,7 @@ public class MainMenuUIManager : UIManager {
 			soloIIDifficultyToggleGroup.SetActive(true);
 
 			//Update the text to describe the game mode
-			gameModeInfoText.text = GameCreation.getRules(GameInformation.GameModes.SoloII);
+			gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloII);
 		}
 
 		//No more changes to account for
