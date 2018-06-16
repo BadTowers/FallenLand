@@ -175,9 +175,16 @@ public class GameManager : MonoBehaviour {
         return players[ID].getFaction();
     }
 
+
+
+
+    /******Some private helper functions******/
     private void extractGameModeFromGameCreationObject(GameObject newGameState) {
         gameMode = newGameState.GetComponent<GameCreation>().getMode();
     }
+
+
+
 
 
     /*
