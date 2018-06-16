@@ -50,6 +50,7 @@ public class GameInformation : MonoBehaviour {
 		SoloII
 	}
 
+    //TODO move this to the game manager
 	public static int getHumanPlayerCount(GameModes gm){
 		switch(gm) {
 		case GameModes.Null:
@@ -65,6 +66,7 @@ public class GameInformation : MonoBehaviour {
 		}
 	}
 
+    //TODO move this to the game manager
 	public static int getComputerPlayerCount(GameModes gm){
 		switch(gm) {
 		case GameModes.Null:

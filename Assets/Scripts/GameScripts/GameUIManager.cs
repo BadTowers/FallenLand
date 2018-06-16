@@ -22,6 +22,8 @@ public class GameUIManager : UIManager {
     private bool debugOverlayShowing;
 	private float panSpeed;
 	private float zoomSpeed;
+    private List<int> listOfPlayerIDs; //List of all player IDs the UI could display
+    private int currentViewedID; //Current ID of player's stuff UI is displaying
 
 
 	void Start(){
@@ -59,55 +61,8 @@ public class GameUIManager : UIManager {
             Debug.Log("F3 pressed");
         }
 
-		//Checks current menu state
-		switch (currentState) {
-			case GameMenuStates.Pause:
-				if(escapePressed) {
-					currentState = GameMenuStates.Resume;
-				} else {
-					setActiveMenu(pauseMenu);
-					Time.timeScale = 0; //Pause any physics
-					//Freeze the game camera from moving
-					gameCamera.GetComponent<CameraManager>().panSpeed = 0;
-					gameCamera.GetComponent<CameraManager>().zoomSpeed = 0;
-				}
-				break;
-			case GameMenuStates.Resume:
-				if(escapePressed) {
-					//If on options screen and escape pressed, go back to pause menu
-					setActiveMenu(pauseMenu);
-					currentState = GameMenuStates.Pause;
-				} else {
-					setActiveMenu(null);
-					Time.timeScale = 1; //Resume any physics
-					//Unfreeze the game camera
-					gameCamera.GetComponent<CameraManager>().panSpeed = this.panSpeed;
-					gameCamera.GetComponent<CameraManager>().zoomSpeed = this.zoomSpeed;
-				}
-				break;
-			case GameMenuStates.Options:
-				if(escapePressed) {
-					//If on options screen and escape pressed, go back to pause menu
-					setActiveMenu(pauseMenu);
-					currentState = GameMenuStates.Pause;
-				} else {
-					setActiveMenu(optionsMenu);
-				}
-				break;
-			case GameMenuStates.Save:
-				if(escapePressed) {
-					//If on save screen and escape pressed, go back to pause menu
-					setActiveMenu(pauseMenu);
-					currentState = GameMenuStates.Pause;
-				} else {
-					setActiveMenu(saveMenu);
-				}
-				break;
-			default:
-				//Default will be to show no menus
-				setActiveMenu(null);
-				break;
-		}
+        //Checks current menu state
+        checkCurrentMenuState();
 
         //Toggle debug overlay
 		debugOverlay.SetActive(debugOverlayShowing);
@@ -174,6 +129,58 @@ public class GameUIManager : UIManager {
                     curText.text = "Salvage: " + salvage.ToString();
                     break;
             }
+        }
+    }
+
+    //A function to display and hide menus as needed
+    private void checkCurrentMenuState() {
+        switch (currentState) {
+            case GameMenuStates.Pause:
+                if (escapePressed) {
+                    currentState = GameMenuStates.Resume;
+                } else {
+                    setActiveMenu(pauseMenu);
+                    Time.timeScale = 0; //Pause any physics
+                                        //Freeze the game camera from moving
+                    gameCamera.GetComponent<CameraManager>().panSpeed = 0;
+                    gameCamera.GetComponent<CameraManager>().zoomSpeed = 0;
+                }
+                break;
+            case GameMenuStates.Resume:
+                if (escapePressed) {
+                    //If on options screen and escape pressed, go back to pause menu
+                    setActiveMenu(pauseMenu);
+                    currentState = GameMenuStates.Pause;
+                } else {
+                    setActiveMenu(null);
+                    Time.timeScale = 1; //Resume any physics
+                                        //Unfreeze the game camera
+                    gameCamera.GetComponent<CameraManager>().panSpeed = this.panSpeed;
+                    gameCamera.GetComponent<CameraManager>().zoomSpeed = this.zoomSpeed;
+                }
+                break;
+            case GameMenuStates.Options:
+                if (escapePressed) {
+                    //If on options screen and escape pressed, go back to pause menu
+                    setActiveMenu(pauseMenu);
+                    currentState = GameMenuStates.Pause;
+                } else {
+                    setActiveMenu(optionsMenu);
+                }
+                break;
+            case GameMenuStates.Save:
+                if (escapePressed) {
+                    //If on save screen and escape pressed, go back to pause menu
+                    setActiveMenu(pauseMenu);
+                    currentState = GameMenuStates.Pause;
+                } else {
+                    setActiveMenu(saveMenu);
+                }
+                break;
+            default:
+                //Default will be to show no menus
+                setActiveMenu(null);
+                break;
         }
     }
 }
