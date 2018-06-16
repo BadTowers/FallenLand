@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour {
         return players[ID].getFaction();
     }
 
-
+    
 
 
     /******Some private helper functions******/
