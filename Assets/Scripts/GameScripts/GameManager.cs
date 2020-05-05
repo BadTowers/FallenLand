@@ -142,17 +142,17 @@ public class GameManager : MonoBehaviour {
 		}
 
         //Count how many town techs are assigned to begin
-        techs = (new DefaultTownTechs()).getDefaultTownTechList();
-		techsUsed = new Dictionary<TownTech, int>();
-        foreach (TownTech tt in techs) {
-            techsUsed[tt] = 0; //Init all town techs to 0 currently used
-        }
-        foreach (Player p in players) {
-            foreach (TownTech tt in p.getTownTechs()) {
-                //For each town tech for each player, count it
-                techsUsed[tt]++;
-            }
-        }
+        //techs = (new DefaultTownTechs()).getDefaultTownTechList();
+		//techsUsed = new Dictionary<TownTech, int>();
+        //foreach (TownTech tt in techs) {
+        //    techsUsed[tt] = 0; //Init all town techs to 0 currently used
+        //}
+        //foreach (Player p in players) {
+        //    foreach (TownTech tt in p.getTownTechs()) {
+        //        //For each town tech for each player, count it
+        //        techsUsed[tt]++;
+        //    }
+        //}
   	}
 
 

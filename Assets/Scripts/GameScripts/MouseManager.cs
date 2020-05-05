@@ -51,9 +51,11 @@ public class MouseManager : MonoBehaviour {
 	{
 		//If left clicking
 		if (Input.GetMouseButtonDown (0)) {
+			Debug.Log("Clicked a hex");
 			//If we clicked a Unity UI element
 			if (EventSystem.current.IsPointerOverGameObject()) {
 				//It is, so let's not do any game click code
+				Debug.Log("Clicked a game object");
 				return;
 			}
 
@@ -75,9 +77,14 @@ public class MouseManager : MonoBehaviour {
 	//Toggle the color of the mesh render sent in
 	void toggleColor(MeshRenderer mr)
 	{
-		if (mr.material.color == Color.white) {
+		Debug.Log("toggleColor");
+		if (mr.material.color == Color.white)
+		{
+			Debug.Log("blue");
 			mr.material.color = Color.blue;
-		} else {
+		} else
+		{
+			Debug.Log("white");
 			mr.material.color = Color.white;
 		}
 	}
