@@ -2,105 +2,124 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TownTech {
+public class TownTech
+{
 	//A town tech has a name
-	private string techName;
+	private string TechName;
 	//A town tech has a purchase cost
-	private int purchaseCost;
+	private int PurchaseCost;
 	//A town tech has an upgrade cost
-	private int upgradeCost;
+	private int UpgradeCost;
 	//A town tech has a tier (tier 1 or tier 2)
-	private int tier;
+	private int Tier;
 	//A town tech has a sell cost
-	private int sellCost;
+	private int SellCost;
 	//A town tech has gains that the player may recieve
-	private Dictionary<Gains, int> conditionalGains;
+	private Dictionary<Gains, int> ConditionalGains;
 	//A town tech has times when the gains are active
-	private List<Times> whenUsable;
+	private List<Times> WhenUsable;
 	//A town tech is or is not a starting town tech
-	private bool isStartingTech;
+	private bool IsStartingTech;
 	//A town tech has an ID
-	private int ID;
+	private int Id;
 
-
-	//Constructor
-	public TownTech(string name){
-		this.techName = name;
+	public TownTech(string name)
+	{
+		this.TechName = name;
 	}
 
-	public void setTechName(string n){
-		this.techName = n;
+	public void SetTechName(string n)
+	{
+		this.TechName = n;
 	}
 
-	public string getTechName(){
-		return this.techName;
+	public string GetTechName()
+	{
+		return this.TechName;
 	}
 
-	public void setPurchaseCost(int c){
-		this.purchaseCost = c;
+	public void SetPurchaseCost(int c)
+	{
+		this.PurchaseCost = c;
 	}
 
-	public int getPurchaseCost(){
-		return this.purchaseCost;
+	public int GetPurchaseCost()
+	{
+		return this.PurchaseCost;
 	}
 
-	public void setUpgradeCost(int c){
-		this.upgradeCost = c;
+	public void SetUpgradeCost(int c)
+	{
+		this.UpgradeCost = c;
 	}
 
-	public int getUpgradeCost(){
-		return this.upgradeCost;
+	public int GetUpgradeCost()
+	{
+		return this.UpgradeCost;
 	}
 
-	public void setTier(int t){
-		this.tier = t;
+	public void SetTier(int t)
+	{
+		this.Tier = t;
 	}
 
-	public int getTier(){
-		return this.tier;
+	public int GetTier()
+	{
+		return this.Tier;
 	}
 
-	public void setSellCost(int s){
-		this.sellCost = s;
+	public void SetSellCost(int s)
+	{
+		this.SellCost = s;
 	}
 
-	public int getSellCost(){
-		return this.sellCost;
+	public int GetSellCost()
+	{
+		return this.SellCost;
 	}
 
-	public void setConditionalGains(Dictionary<Gains, int> cg){
-		this.conditionalGains = cg;
+	public void SetConditionalGains(Dictionary<Gains, int> cg)
+	{
+		this.ConditionalGains = cg;
 	}
 
-	public Dictionary<Gains, int> getConditionalGains(){
-		return this.conditionalGains;
+	public Dictionary<Gains, int> GetConditionalGains()
+	{
+		return this.ConditionalGains;
 	}
 
-	public void setTimes(List<Times> t){
-		this.whenUsable = t;
+	public void SetTimes(List<Times> t)
+	{
+		this.WhenUsable = t;
 	}
 
-	public void addTimes(Times t){
-		this.whenUsable.Add(t);
+	public void AddTimes(Times t)
+	{
+		this.WhenUsable.Add(t);
 	}
 
-	public List<Times> getTimes(){
-		return this.whenUsable;
+	public List<Times> GetTimes()
+	{
+		return this.WhenUsable;
 	}
 
-	public void setIsStartingTech(bool b){
-		this.isStartingTech = b;
+	public void SetIsStartingTech(bool b)
+	{
+		this.IsStartingTech = b;
 	}
 
-	public bool getIsStartingTech(){
-		return this.isStartingTech;
+	public bool GetIsStartingTech()
+	{
+		return this.IsStartingTech;
 	}
 
-	public void setID(int id){
-		this.ID = id;
+	public void SetId(int id)
+	{
+		this.Id = id;
 	}
 
-	public int getID(){
-		return this.ID;
+	public int GetId()
+	{
+		return this.Id;
 	}
 }

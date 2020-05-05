@@ -370,7 +370,7 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up town techs TODO rework so this is not hardcoded to two
 		//Load tech 1
-		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getStartingTownTechs()[0].getID().ToString());
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getStartingTownTechs()[0].GetId().ToString());
 		//Apply it
 		if (townTech1Image != null) {
 			townTech1Image.sprite = img;
@@ -378,7 +378,7 @@ public class MainMenuUIManager : UIManager {
 			Debug.Log ("Town tech image 1 container not set");
 		}
 		//Load tech 2
-		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getStartingTownTechs()[1].getID().ToString());
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getStartingTownTechs()[1].GetId().ToString());
 		//Apply it
 		if (townTech2Image != null) {
 			townTech2Image.sprite = img;

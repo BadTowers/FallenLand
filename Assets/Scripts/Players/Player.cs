@@ -22,14 +22,6 @@ public abstract class Player {
         //TODO extract starting town techs from faction
 	}
 
-	private void initLists(){
-		activeSpoils = new List<SpoilsCard>();
-		auctionHouse = new List<SpoilsCard>();
-		actionCards = new List<ActionCard>();
-		townRoster = new List<CharacterCard>();
-		activeCharacters = new List<CharacterCard>();
-	}
-
 	public void addSpoilsCard(SpoilsCard sc){
 		this.activeSpoils.Add(sc);
 	}
@@ -82,4 +74,14 @@ public abstract class Player {
     public void removeTownTech(TownTech toRemove) {
         this.townTechs.Remove(toRemove);
     }
+
+	private void initLists()
+	{
+		activeSpoils = new List<SpoilsCard>();
+		auctionHouse = new List<SpoilsCard>();
+		actionCards = new List<ActionCard>();
+		townRoster = new List<CharacterCard>();
+		activeCharacters = new List<CharacterCard>();
+		townTechs = new List<TownTech>();
+	}
 }

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System;
 
-public abstract class Card{
-
-
+public abstract class Card
+{
 	/*
 							     Cards
 				   			   /       \
@@ -19,26 +18,31 @@ public abstract class Card{
 	 								Character    Spoils   	Action
 	*/
 
-	private string title;
-	private int id;
+	private string Title;
+	private int Id;
 
-	protected Card(string title){
-		this.title = title;
+	protected Card(string title)
+	{
+		this.Title = title;
 	}
 
-	public string getTitle(){
-		return title;
+	public string GetTitle()
+	{
+		return Title;
 	}
 
-	public int getID(){
-		return this.id;
+	public int GetId()
+	{
+		return this.Id;
 	}
 
-	public void setID(int id){
-		this.id = id;
+	public void SetId(int id)
+	{
+		this.Id = id;
 	}
 
-	public static List<T> shuffleDeck<T>(List<T> cards){
+	public static List<T> ShuffleDeck<T>(List<T> cards)
+	{
 		RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
 		byte[] byteArray1 = new byte[1];
 		byte[] byteArray2 = new byte[1];

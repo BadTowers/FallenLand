@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class DefaultSpoilsCards{
 
@@ -164,7 +165,7 @@ public class DefaultSpoilsCards{
 			true //Set 2
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard); //Add the card to the list of all cards
 
@@ -185,7 +186,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -225,7 +226,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Equip_To_Vehicle, //1.1
 			Restrictions.Discard_If_Not_Purchased //1.2
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -249,7 +250,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Four_Wheels_Or_More //1.2
 		}
 		);
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -279,7 +280,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -302,7 +303,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -318,7 +319,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -336,7 +337,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -361,7 +362,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Clothing, //1.2
 			Restrictions.Equip_As_First_Item //1.3
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -395,7 +396,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -428,7 +429,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Cant_Be_Drawn_During_Setup
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -446,7 +447,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -462,7 +463,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -490,7 +491,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -507,7 +508,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -537,7 +538,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -603,6 +604,7 @@ public class DefaultSpoilsCards{
 		tempCard.setWhenTempEnd(
 			Times.Never
 		);
+		curCard.addD6Option(tempCard);
 		tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 3 is rolled
 		tempCard.setTitleSubString("Bonus Roll - 3");
 		tempCard.setConditionalGains(new Dictionary<Gains, int>{
@@ -658,7 +660,7 @@ public class DefaultSpoilsCards{
 		);
 		curCard.addD6Option(tempCard);
 		curCard.addD6Option(null); //Roll 6 = no effect
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -696,7 +698,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -725,7 +727,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -754,7 +756,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -770,7 +772,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -822,7 +824,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -848,7 +850,7 @@ public class DefaultSpoilsCards{
 				Restrictions.Equip_To_Rifle //2.1
 			}
 		);
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -864,7 +866,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -884,7 +886,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -913,7 +915,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -937,7 +939,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -965,7 +967,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Cant_Be_Drawn_During_Setup
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -991,7 +993,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Equip_To_Vehicle,
 			Restrictions.Four_Wheels_Or_More
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1028,7 +1030,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Discard_If_Not_Purchased
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1060,7 +1062,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1088,7 +1090,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1140,7 +1142,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1162,7 +1164,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Clothing,
 			Restrictions.Equip_As_First_Item
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1198,7 +1200,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1225,7 +1227,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1243,7 +1245,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No actives */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1269,7 +1271,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Not_Used_With_Backback
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1285,7 +1287,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1301,7 +1303,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1323,7 +1325,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1350,7 +1352,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1382,7 +1384,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1438,7 +1440,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1472,7 +1474,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1491,7 +1493,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Equip_To_All_Party_Members_Or_None
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1539,7 +1541,7 @@ public class DefaultSpoilsCards{
 		);
 		/* No restrictions */
 		curCard.setDiscardToTop(false); //This card gets discarded to the bottom of the pile
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1570,7 +1572,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1600,7 +1602,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Equip_To_All_Party_Members_Or_None
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1627,7 +1629,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1659,7 +1661,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1689,7 +1691,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Cant_Be_Drawn_During_Setup
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1712,7 +1714,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1728,7 +1730,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1756,7 +1758,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1784,7 +1786,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1817,7 +1819,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1868,17 +1870,17 @@ public class DefaultSpoilsCards{
 		tempCard.setWhenTempEnd(
 			Times.After_Party_Exploits_Phase
 		);
-		curCard.addD6Option(tempCard); //1
-		curCard.addD6Option(tempCard); //2
-		curCard.addD6Option(tempCard); //3
-		curCard.addD6Option(null); //4
-		curCard.addD6Option(null);
-		curCard.addD6Option(null); //6
-		curCard.addD6Option(null);
-		curCard.addD6Option(null); //8
-		curCard.addD6Option(null);
-		curCard.addD6Option(null); //10
-		curCard.setID(curID);
+		curCard.addD10Option(tempCard); //1
+		curCard.addD10Option(tempCard); //2
+		curCard.addD10Option(tempCard); //3
+		curCard.addD10Option(null); //4
+		curCard.addD10Option(null);
+		curCard.addD10Option(null); //6
+		curCard.addD10Option(null);
+		curCard.addD10Option(null); //8
+		curCard.addD10Option(null);
+		curCard.addD10Option(null); //10
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1896,7 +1898,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Equip_To_All_Party_Members_Or_None
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1931,7 +1933,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1961,7 +1963,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Cant_Be_Drawn_During_Setup
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -1993,7 +1995,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Equip_To_Vehicle,
 			Restrictions.Four_Wheels_Or_More
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2031,7 +2033,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Cannot_Be_Sold
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2059,7 +2061,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2088,7 +2090,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2098,10 +2100,13 @@ public class DefaultSpoilsCards{
 		curCard.setTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 		curCard.setCarryWeight(5);
 		curCard.setSellValue(12);
+		curCard.setBaseSkills(new Dictionary<Skills, int>{
+			{Skills.Combat, 7}
+		});
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2123,7 +2128,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2139,7 +2144,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2173,7 +2178,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Cannot_Be_Sold
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2190,7 +2195,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2206,7 +2211,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2227,7 +2232,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2246,7 +2251,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2268,7 +2273,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Equip_To_Vehicle,
 			Restrictions.Four_Wheels_Or_More
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2302,7 +2307,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2332,7 +2337,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2348,7 +2353,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2380,7 +2385,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2403,7 +2408,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrctions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2419,7 +2424,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrctions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2473,7 +2478,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(tempCard); //4
 		curCard.addD6Option(null); //5
 		curCard.addD6Option(null); //6
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2490,7 +2495,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2520,7 +2525,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2547,7 +2552,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2599,7 +2604,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2627,7 +2632,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2644,7 +2649,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2663,7 +2668,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2691,7 +2696,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2708,7 +2713,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2727,7 +2732,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2755,7 +2760,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2782,7 +2787,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2801,7 +2806,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2832,13 +2837,15 @@ public class DefaultSpoilsCards{
 			}
 		);
 		curCard.setNumberOfUses(
+			Uses.Once_Per_Turn,
 			Uses.Once_Per_Turn
 		);
 		curCard.setDiscard(
+			false,
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2857,7 +2864,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2879,7 +2886,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Equip_To_Vehicle, 
 			Restrictions.Four_Wheels_Or_More
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2948,7 +2955,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(null); //4
 		curCard.addD6Option(null);
 		curCard.addD6Option(null); //6
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2965,7 +2972,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -2982,7 +2989,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3001,7 +3008,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3017,7 +3024,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3044,7 +3051,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3064,7 +3071,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Clothing,
 			Restrictions.Equip_As_First_Item
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3083,7 +3090,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3123,7 +3130,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3146,7 +3153,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3162,7 +3169,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3189,7 +3196,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3206,7 +3213,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3253,7 +3260,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3292,7 +3299,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Cannot_Be_Sold,
 			Restrictions.Discard_If_Not_Purchased
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3321,7 +3328,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3379,7 +3386,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(null);
 		curCard.addD6Option(null);
 		curCard.addD6Option(null); //6
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3396,7 +3403,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3430,7 +3437,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3473,7 +3480,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3496,7 +3503,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3531,7 +3538,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3550,7 +3557,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3572,7 +3579,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3600,7 +3607,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3628,7 +3635,7 @@ public class DefaultSpoilsCards{
 			true
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3651,7 +3658,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Other_Clothing,
 			Restrictions.Equip_As_First_Item
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3680,7 +3687,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Excludes_Healing_Deed
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3710,7 +3717,7 @@ public class DefaultSpoilsCards{
 			Restrictions.Not_Used_With_Backback,
 			Restrictions.Excludes_World_Cards
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3726,7 +3733,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3749,7 +3756,7 @@ public class DefaultSpoilsCards{
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Equip_To_All_Party_Members_Or_None
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3765,7 +3772,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3782,7 +3789,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3812,7 +3819,7 @@ public class DefaultSpoilsCards{
 			false
 		);
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3829,7 +3836,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3879,7 +3886,7 @@ public class DefaultSpoilsCards{
 		curCard.addD6Option(null); //4
 		curCard.addD6Option(null);
 		curCard.addD6Option(null); //6
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3898,7 +3905,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditional */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3914,7 +3921,7 @@ public class DefaultSpoilsCards{
 		/* No statics */
 		/* No conditional */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3933,24 +3940,13 @@ public class DefaultSpoilsCards{
 			{Gains.Gain_Movement, 1},
 			{Gains.Gain_Psych_Resistence, 1}
 		});
-		curCard.setConditionalGains(new Dictionary<Gains, int>{
-
-		});
-		curCard.setWhenUsable(new List<Times>{
-
-		});
-		curCard.setNumberOfUses(
-
-		);
-		curCard.setDiscard(
-
-		);
+		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
 			Restrictions.Equip_As_First_Item,
 			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing
 		});
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3972,7 +3968,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		/* No restrictions */
-		curCard.setID(curID);
+		curCard.SetId(curID);
 		curID++;
 		spoilsCards.Add(curCard);
 
@@ -3984,11 +3980,11 @@ public class DefaultSpoilsCards{
 		//Now that all cards are added, let's ID them all and account for duplicates that need to be added
 		int count = spoilsCards.Count;
 		for(int i = 0; i < count; i++) {
-			spoilsCards[i].setID(i); //ID current one
+			spoilsCards[i].SetId(i); //ID current one
 
 			//See if this card is a duplicate
-			if (multiples.ContainsKey(spoilsCards[i].getTitle())) { //If the name of this card is a name in the multiples dictionary
-				for(int j = 1; j < multiples[spoilsCards[i].getTitle()]; j++) { //For the number of multiples to add
+			if (multiples.ContainsKey(spoilsCards[i].GetTitle())) { //If the name of this card is a name in the multiples dictionary
+				for(int j = 1; j < multiples[spoilsCards[i].GetTitle()]; j++) { //For the number of multiples to add
 					SpoilsCard newCard = spoilsCards[i].deepCopy();
 					spoilsCards.Add(newCard); //add the multiple
 					//Debug.Log("Adding multiple for " + spoilsCards[i].getTitle());

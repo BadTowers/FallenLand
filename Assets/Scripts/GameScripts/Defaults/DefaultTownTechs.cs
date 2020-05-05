@@ -16,128 +16,128 @@ public class DefaultTownTechs {
 
 		/***************************************************/
 		curTech = new TownTech("Energy Production");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Party_Technical_Skill_Check_Successes, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Technical_Skill_Check}
 		});
-		curTech.setID(1);
+		curTech.SetId(1);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Garrison");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Party_Combat_Skill_Check_Successes, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Combat_Skill_Check}
 		});
-		curTech.setID(2);
+		curTech.SetId(2);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Law and Order");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Action_Cards, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Deal_Subphase}
 		});
-		curTech.setID(3);
+		curTech.SetId(3);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Learning Center");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Party_Diplomacy_Skill_Check_Successes, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Diplomacy_Skill_Check}
 		});
-		curTech.setID(4);
+		curTech.SetId(4);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Machinist Shop");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Party_Mechanical_Skill_Check_Successes, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Mechanical_Skill_Check}
 		});
-		curTech.setID(5);
+		curTech.SetId(5);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Marketplace");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Cards, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Deal_Subphase}
 		});
-		curTech.setID(6);
+		curTech.SetId(6);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Medical Center");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Party_Medical_Skill_Check_Successes, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Medical_Skill_Check}
 		});
-		curTech.setID(7);
+		curTech.SetId(7);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Communication Center");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Movement, 2}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.Anytime}
 		});
-		curTech.setID(8);
+		curTech.SetId(8);
 		techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Water and Supplies");
-		curTech.setPurchaseCost(30);
-		curTech.setUpgradeCost(30);
-		curTech.setSellCost(25);
-		curTech.setConditionalGains(new Dictionary<Gains, int>(){
+		curTech.SetPurchaseCost(30);
+		curTech.SetUpgradeCost(30);
+		curTech.SetSellCost(25);
+		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Party_Survival_Skill_Check_Successes, 1}
 		});
-		curTech.setTimes(new List<Times>(){
+		curTech.SetTimes(new List<Times>(){
 			{Times.During_Survival_Skill_Check}
 		});
-		curTech.setID(9);
+		curTech.SetId(9);
 		techs.Add(curTech);
 
 	}
@@ -152,7 +152,7 @@ public class DefaultTownTechs {
 		
 	public TownTech getTownTechByName(string name){
 		foreach(TownTech tt in techs) {
-			if(tt.getTechName() == name) {
+			if(tt.GetTechName() == name) {
 				return tt;
 			}
 		}

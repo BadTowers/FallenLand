@@ -267,8 +267,8 @@ public class SpoilsCard : PartyCard {
 	}
 
 	public SpoilsCard deepCopy(){
-		SpoilsCard newCard = new SpoilsCard(this.getTitle());
-		newCard = new SpoilsCard(this.getTitle());
+		SpoilsCard newCard = new SpoilsCard(this.GetTitle());
+		newCard = new SpoilsCard(this.GetTitle());
 		newCard.setTitleSubString(this.getTitleSubString());
 		newCard.setTypes(this.types);
 		newCard.setCarryWeight(this.carryWeight);
@@ -280,7 +280,7 @@ public class SpoilsCard : PartyCard {
 		newCard.setNumberOfUses(this.uses);
 		newCard.setDiscard(this.discards);
 		newCard.setRestrictions(this.restrictions);
-		newCard.setID(this.getID());
+		newCard.SetId(this.GetId());
 		newCard.setQuote(this.getQuote());
 		newCard.setD6Options(this.d6);
 		newCard.setD10Options(this.d10);

@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour {
 	private int maxOfEachTech = 5;
     private int startingSalvage = 10;
 
-
-
 	void Start(){
 		//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 		GameObject newGameState = GameObject.Find("GameCreation");
@@ -86,7 +84,7 @@ public class GameManager : MonoBehaviour {
 
 		//Create the deck of spoils cards
 		spoilsDeck = (new DefaultSpoilsCards()).getSpoilsCards();
-		spoilsDeck = Card.shuffleDeck(spoilsDeck);
+		spoilsDeck = Card.ShuffleDeck(spoilsDeck);
 
 		/*
 		//Proof of shuffle
@@ -98,12 +96,12 @@ public class GameManager : MonoBehaviour {
 
 		//Create the deck of character cards
 		characterDeck = (new DefaultCharacterCards()).getCharacterCards();
-		characterDeck = Card.shuffleDeck(characterDeck);
+		characterDeck = Card.ShuffleDeck(characterDeck);
 
 
 		//Create the deck of action cards
 		actionDeck = (new DefaultActionCards()).getActionCards();
-		actionDeck = Card.shuffleDeck(actionDeck);
+		actionDeck = Card.ShuffleDeck(actionDeck);
 
 
 		//TODO create the deck of mission cards
@@ -142,17 +140,20 @@ public class GameManager : MonoBehaviour {
 		}
 
         //Count how many town techs are assigned to begin
-        //techs = (new DefaultTownTechs()).getDefaultTownTechList();
-		//techsUsed = new Dictionary<TownTech, int>();
-        //foreach (TownTech tt in techs) {
-        //    techsUsed[tt] = 0; //Init all town techs to 0 currently used
-        //}
-        //foreach (Player p in players) {
-        //    foreach (TownTech tt in p.getTownTechs()) {
-        //        //For each town tech for each player, count it
-        //        techsUsed[tt]++;
-        //    }
-        //}
+        techs = (new DefaultTownTechs()).getDefaultTownTechList();
+		techsUsed = new Dictionary<TownTech, int>();
+        foreach (TownTech tt in techs)
+		{
+			techsUsed[tt] = 0; //Init all town techs to 0 currently used
+        }
+        foreach (Player p in players)
+		{
+            foreach (TownTech tt in p.getTownTechs())
+			{
+                //For each town tech for each player, count it
+                techsUsed[tt]++;
+            }
+        }
   	}
 
 
