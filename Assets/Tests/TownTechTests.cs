@@ -20,6 +20,7 @@ namespace Tests
 		[TearDown]
 		public void Teardown()
 		{
+			TownTech = null;
 		}
 
 		[UnityTest]
