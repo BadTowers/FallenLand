@@ -93,11 +93,6 @@ public class TownTech
 		this.WhenUsable = t;
 	}
 
-	public void AddTimes(Times t)
-	{
-		this.WhenUsable.Add(t);
-	}
-
 	public List<Times> GetTimes()
 	{
 		return this.WhenUsable;

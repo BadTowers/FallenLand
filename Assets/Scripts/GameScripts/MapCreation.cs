@@ -17,9 +17,9 @@ public class MapCreation : MonoBehaviour {
 	private List<Faction> factions;
 
 	// Use this for initialization (for debugging only, creates a default map layout and creates the map)
-	
+
 	void Start () {
-		
+
 		//Can be changed to RandomMapLayout later if desired
 		ml = new DefaultMapLayout();
 
@@ -28,7 +28,7 @@ public class MapCreation : MonoBehaviour {
 		//Assign the hexes their properties
 		createMap();
 	}
-	
+
 
 	public void createMap()
 	{

@@ -14,7 +14,7 @@ public abstract class MapLayout {
 
 	public bool isHexInGame(Coordinates coords)
 	{
-		return arrayOfHexes [coords.getX(), coords.getY()] [hexType.VALID];
+		return arrayOfHexes [coords.GetX(), coords.GetY()] [hexType.VALID];
 	}
 
 	public bool isCity(int x, int y)
@@ -24,7 +24,7 @@ public abstract class MapLayout {
 
 	public bool isCity(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.CITY];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.CITY];
 	}
 
 	public bool isRad(int x, int y)
@@ -34,7 +34,7 @@ public abstract class MapLayout {
 
 	public bool isRad(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.RAD];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.RAD];
 	}
 
 	public bool isMountain(int x, int y)
@@ -44,7 +44,7 @@ public abstract class MapLayout {
 
 	public bool isMountain(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.MOUNTAIN];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.MOUNTAIN];
 	}
 
 	public bool isPlains(int x, int y)
@@ -54,7 +54,7 @@ public abstract class MapLayout {
 
 	public bool isPlains(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.PLAINS];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.PLAINS];
 	}
 
 	public bool isWater(int x, int y)
@@ -64,7 +64,7 @@ public abstract class MapLayout {
 
 	public bool isWater(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.WATER];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.WATER];
 	}
 
 	public bool isFactionBase(int x, int y)
@@ -74,7 +74,7 @@ public abstract class MapLayout {
 
 	public bool isFactionBase(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.BASE];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.BASE];
 	}
 
 	public bool isRandomNumber(int x, int y)
@@ -84,7 +84,7 @@ public abstract class MapLayout {
 
 	public bool isRandomLocation(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.RAND_LOC];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.RAND_LOC];
 	}
 
 	public bool isResource(int x, int y)
@@ -94,7 +94,7 @@ public abstract class MapLayout {
 
 	public bool isResource(Coordinates coords)
 	{
-		return arrayOfHexes[coords.getX(), coords.getY()][hexType.RESOURCE];
+		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.RESOURCE];
 	}
 
 	public abstract void InitializeMapOfHexes();

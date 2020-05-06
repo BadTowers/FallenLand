@@ -10,8 +10,8 @@ public class SpoilsCard : PartyCard {
 	private Dictionary<Gains, int> staticGains; //Passive type gains that are always active
 	private List<List<Restrictions>> restrictions; //What the card has to be attached to, what it can't combine with, etc
 	private List<List<Times>> whenUsable; //List of lists denoting different use times for different active choices
-	private List<Uses> uses; 
-	private List<bool> discards; //If you discard the card after using a conditional gain 
+	private List<Uses> uses;
+	private List<bool> discards; //If you discard the card after using a conditional gain
 	private List<SpoilsCard> d6; //D6 options can be viewed as 6 individual spoils cards, each with one active ability representing the D6 option
 	private List<SpoilsCard> d10; //D10 options can be viewed as 10 individual spoils cards, each with one active ability.
 	private bool isTemp; //Denotes if it's a temporary D6 spoils or a normal spoils from the deck

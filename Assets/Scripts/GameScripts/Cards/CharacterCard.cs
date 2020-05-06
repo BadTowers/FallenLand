@@ -39,7 +39,7 @@ public class CharacterCard : PartyCard {
 	public int getCarryCapacity() {
 		return this.carryCapacity;
 	}
-    
+
     //Returns true if it can attach a card (no restrictions stopped it)
     //Returns false if the card cannot be attached (some restriction stopped it)
     //TODO maybe at some point, give access to an object that gives the reasons why a card wasn't attached

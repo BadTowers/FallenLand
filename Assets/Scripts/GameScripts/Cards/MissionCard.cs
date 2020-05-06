@@ -25,7 +25,7 @@ public class MissionCard : EncounterCard {
 	public Dictionary<Skills, int> getOptionalSkillChecks(){
 		return this.optionalSkillChecks;
 	}
-		
+
 	public void setOptionalSuccessText(string text){
 		this.optionalSuccessText = text;
 	}

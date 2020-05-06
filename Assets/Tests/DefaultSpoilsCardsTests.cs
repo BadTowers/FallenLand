@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Tests
 {
-	public class SpoilsCardsTests
+	public class DefaultSpoilsCardsTests
 	{
 		[UnityTest]
 		public IEnumerator TestDefaultSpoilsCards()
@@ -15,13 +15,13 @@ namespace Tests
 			DefaultSpoilsCards dsc = new DefaultSpoilsCards();
 			List<SpoilsCard> defaultCards = dsc.getSpoilsCards();
 
-			yield return null; //Wait for one frame
+			yield return null;
 
 			/* Check assertions */
 			for(int i = 0; i < defaultCards.Count; i++) { //For all cards
 
 				SpoilsCard curCard = defaultCards[i];
-				Debug.Log("Card " + i + " title " + curCard.GetTitle());
+				Debug.Log("Testing card " + i + ": title " + curCard.GetTitle());
 
 
 				//Ensure all the lists in the class are not null
@@ -57,7 +57,7 @@ namespace Tests
 						Assert.IsTrue(containsNonZero);
 					}
 				}
-				
+
 
 				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, restrictions, and discards.
 				int sizeOfConditionals = defaultCards[i].getConditionalGains().Count;

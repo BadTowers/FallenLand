@@ -1,35 +1,43 @@
-﻿public class Coordinates {
+﻿public class Coordinates
+{
+    private int X;
+    private int Y;
 
-	private int x;
-	private int y;
+    public Coordinates(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
 
-	public Coordinates(int x, int y)
-	{
-		this.x = x;
-		this.y = y;
-	}
+    public int GetX()
+    {
+        return X;
+    }
 
-	public int getX()
-	{
-		return x;
-	}
+    public int GetY()
+    {
+        return Y;
+    }
 
-	public int getY()
-	{
-		return y;
-	}
+    public override bool Equals(object Obj)
+    {
+        if (X == ((Coordinates)Obj).X && Y == ((Coordinates)Obj).Y)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public override bool Equals(object Obj)
-	{
-		if (this.x == ((Coordinates)Obj).x && this.y == ((Coordinates)Obj).y) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public override int GetHashCode()
+    {
+        return System.Tuple.Create(X, Y).GetHashCode();
+    }
 
-	public override string ToString ()
-	{
-		return "(x, y) = (" + x + ", " + y + ")"; 
-	}
+    public override string ToString()
+    {
+        return "(x, y) = (" + X + ", " + Y + ")";
+    }
 }

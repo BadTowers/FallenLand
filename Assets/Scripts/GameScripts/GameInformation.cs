@@ -25,32 +25,32 @@ public class GameInformation : MonoBehaviour {
 	}
 
 	public enum SoloII {
-		Null, 
-		SoloIIStandard, 
-		SoloIIModerate, 
-		SoloIIDifficult, 
+		Null,
+		SoloIIStandard,
+		SoloIIModerate,
+		SoloIIDifficult,
 		SoloIIUltimate,
 	}
 
 	public enum GameModifier {
-		Null, 
-		ProjectGodsHammer, 
-		Ronin, 
-		HarshReality, 
-		HarshRealityMod1, 
-		HarshRealityMod2, 
-		Demo, 
-		DemoMod1, 
-		Timed, 
-		Expert, 
-		Short, 
+		Null,
+		ProjectGodsHammer,
+		Ronin,
+		HarshReality,
+		HarshRealityMod1,
+		HarshRealityMod2,
+		Demo,
+		DemoMod1,
+		Timed,
+		Expert,
+		Short,
 		Veteran,
 	}
 
 	public enum GameModes{
-		Null, 
-		NormalGame, 
-		SoloI, 
+		Null,
+		NormalGame,
+		SoloI,
 		SoloII
 	}
 

@@ -149,7 +149,7 @@ public class DefaultTownTechs {
 	public List<TownTech> getDefaultTownTechList(){
 		return this.techs;
 	}
-		
+
 	public TownTech getTownTechByName(string name){
 		foreach(TownTech tt in techs) {
 			if(tt.GetTechName() == name) {

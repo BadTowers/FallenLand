@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 public class PartyCard : NonencounterCard {
-	
+
 	private Dictionary<Skills, int> baseSkills; //The base numbers the party card has for each skill
 	private string titleSubString; //The string that appears below names of characters and (sometimes) items
 	private string quote; //The string that appears on character cards as a quote and, rarely, on spoils instead of a conditional active
@@ -26,7 +26,7 @@ public class PartyCard : NonencounterCard {
 			}
 		}
 	}
-		
+
 	public Dictionary<Skills, int> getBaseSkills(){
 		return baseSkills;
 	}

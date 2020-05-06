@@ -14,7 +14,7 @@ public class DefaultSpoilsCards{
 	private List<SpoilsCard> spoilsCards; //The list of all default spoils cards
 
 	/*
-	 * 
+	 *
 	 * NOTES:
 	 * 	The title of the card is given in the constructor. This comes from the middle of the card below the image.
 	 * 	The spoils types are defined on the upper right side of the card (EXCEPTION, relic is located in the statics)
@@ -39,44 +39,44 @@ public class DefaultSpoilsCards{
 	 *		the spoils card after the active has completed.
 	 *	Restrictions are conditions that must be upheld at all times for the spoils card to be equipped. These include
 	 *		being attached to a vehicle, not being combined with other types of clothing or armor, etc.
-	 * 
-	 * 
+	 *
+	 *
 	 * Below is the block of code used to define a spoils card. The ones marked as optional don't need to be included
 	 * 	if they aren't relevent to the card.
-	 * 
+	 *
 	  curCard = new SpoilsCard("");
 	  curCard.curCard.setTitleSubString(""); //Optional
 	  curCard.setTypes();
 	  curCard.setCarryWeight();
 	  curCard.setSellValue();
 	  curCard.setBaseSkills(new Dictionary<Skills, int>{
-	  	
+
 	  });
 	  curCard.setStaticGains(new Dictionary<Gains, int>{ //Optional
-	  	
+
 	  });
 	  curCard.setConditionalGains(new Dictionary<Gains, int>{ //Optional
-	  		
+
 	  });
 	  curCard.setWhenUsable(new List<Times>{ //Optional (Needed if there are active gains)
-	  		
+
 	  });
 	  curCard.setNumberOfUses( //Optional (Needed if there are active gains)
-	  		
+
 	  );
 	  curCard.setDiscard( //Optional (Needed if there are active gains)
-	  		
+
 	  );
 	  curCard.setRestrictions(new List<Restrictions>(){ //Optional
-	  		
+
 	  });
 	  curCard.setID(curID);
 		curID++;
 		spoilsCards.Add(curCard);
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 * Sometimes, cards will say roll a d6 and then include a chart for the results of each dice outcome.
 	 * 	(Example, pre-war disaster kit)
 	 * 	(1 = re-roll 1 crit fail skill check)
@@ -87,10 +87,10 @@ public class DefaultSpoilsCards{
 	 * 	(6 = no effect)
 	 * In order to code these effects into a single card, each spoils card has the ability to hold 6 additional teporary
 	 * 	spoils cards for these effects. We notice that rolls 1-5 are all Gains that could be assigned to an active gains
-	 * 	portion of a card. Therefore, when a card needs to have outcomes for a d6 roll, we use the following code to 
+	 * 	portion of a card. Therefore, when a card needs to have outcomes for a d6 roll, we use the following code to
 	 * 	do that:
-	 * 
-	 * 
+	 *
+	 *
 	        tempCard = new SpoilsCard("");
 	 	tempCard.setConditionalGains(new Dictionary<Gains, int>{
 	 		{Gains.Reroll_Any_Critical_Fail, 1}
@@ -108,14 +108,14 @@ public class DefaultSpoilsCards{
 	 		Times.After_Party_Exploits_Phase
 	 	);
 	 	curCard.addD6Option(tempCard);
-	 * 
-	 * 
+	 *
+	 *
 	 * We create a new spoils card effectively the same way we have been, but there is a new addition--setWhenTempEnd. Because some
 	 * 	cards, such as the pre-war disaster kit, give a movement bonus for that party exploits phase. This is not a bonus
 	 * 	that should carry outside of this phase, so we set its temporary end to be after the party exploits phase. This will
 	 * 	effectively allow the game manage to look through all spoils cards of a player after each phase and see if any
 	 * 	need to be removed. Other gains, such as salvage, are something that are gained but not lost, so the active
-	 * 	portion of that temp card would give 3 salvage immediately, then discard that card without considering the 
+	 * 	portion of that temp card would give 3 salvage immediately, then discard that card without considering the
 	 * 	expiration of the effect (since there isn't an expiration to gaining 3 salvage in this case).
 	 */
 
@@ -1710,7 +1710,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
-			Restrictions.Equip_As_First_Item, 
+			Restrictions.Equip_As_First_Item,
 			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing
 		});
@@ -2883,7 +2883,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
-			Restrictions.Equip_To_Vehicle, 
+			Restrictions.Equip_To_Vehicle,
 			Restrictions.Four_Wheels_Or_More
 		});
 		curCard.SetId(curID);
@@ -2898,7 +2898,7 @@ public class DefaultSpoilsCards{
 		curCard.setSellValue(40);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
 			{Skills.Combat, 10},
-			{Skills.Survival, 3}, 
+			{Skills.Survival, 3},
 			{Skills.Diplomacy, 4},
 			{Skills.Mechanical, 3},
 			{Skills.Technical, 2},
@@ -3654,7 +3654,7 @@ public class DefaultSpoilsCards{
 		});
 		/* No conditionals */
 		curCard.setRestrictions(new List<Restrictions>(){
-			Restrictions.Not_Used_With_Other_Armor, 
+			Restrictions.Not_Used_With_Other_Armor,
 			Restrictions.Not_Used_With_Other_Clothing,
 			Restrictions.Equip_As_First_Item
 		});
@@ -3800,7 +3800,7 @@ public class DefaultSpoilsCards{
 		curCard.setCarryWeight(1);
 		curCard.setSellValue(15);
 		curCard.setBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5}, 
+			{Skills.Combat, 5},
 			{Skills.Diplomacy, 1}
 		});
 		curCard.setStaticGains(new Dictionary<Gains, int>{

@@ -64,7 +64,7 @@ public class Hex : MonoBehaviour, HexInterface{
 	{
 		this.rad = rad;
 	}
-		
+
 	public bool isMountain()
 	{
 		return mountain;

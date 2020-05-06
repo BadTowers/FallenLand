@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CameraManager : MonoBehaviour 
+public class CameraManager : MonoBehaviour
 {
 	public float panSpeed;		// Speed of the camera when being panned
 	public float zoomSpeed;		// Speed of the camera going back and forth

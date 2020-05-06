@@ -399,7 +399,7 @@ public class MainMenuUIManager : UIManager {
 			//Update the text to describe the game mode
 			gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloI);
 		}
-		//If solo II is selected 
+		//If solo II is selected
 		else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn) {
 			//Display the solo II difficulties
 			soloIIDifficultyToggleGroup.SetActive(true);

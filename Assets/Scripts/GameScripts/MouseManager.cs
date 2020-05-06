@@ -20,7 +20,7 @@ public class MouseManager : MonoBehaviour {
 		hexInformationText.SetActive (false);
 		hexInformationBackground.SetActive (false);
 	}
-	
+
 	// Update is called once per frame
 	void Update() {
 		//Don't do any game UI if the game is paused
