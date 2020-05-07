@@ -7,6 +7,10 @@ unit-test:
   stage: test
   tags:
     - unity
+  artifacts:
+    paths:
+    - ./unit-tests.xml
+    expire_in: 1 week
 unity-build:
   script: "echo 'Building...'"
   stage: build
