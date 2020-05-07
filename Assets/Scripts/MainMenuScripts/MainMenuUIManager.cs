@@ -257,7 +257,7 @@ public class MainMenuUIManager : UIManager {
 
 		//Faction (Find the game creation object in the scene and then get the script from it
 		foreach(Faction f in factions) {
-			if(f.getID() == curFactionNum) {
+			if(f.GetId() == curFactionNum) {
                 GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().setFaction(f);
 			}
 		}
@@ -305,7 +305,7 @@ public class MainMenuUIManager : UIManager {
 	private void updateFactionDisplay() {
 		//Set the current faction
 		foreach(Faction f in factions) {
-			if(f.getID() == curFactionNum) {
+			if(f.GetId() == curFactionNum) {
 				curFac = f;
 			}
 		}
@@ -332,36 +332,36 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up town name and location
 		if (townNameAndLocation != null) {
-			townNameAndLocation.text = curFac.getName() + "\n" + curFac.getBaseLocationString();
+			townNameAndLocation.text = curFac.GetName() + "\n" + curFac.GetBaseLocationString();
 		} else {
 			Debug.Log("Town name and location container not set");
 		}
 
 		//Set up the perk texts TODO rework this to be more dynamic (could have more or less than 4 perks)
 		if (specificPerk1Text != null) {
-			specificPerk1Text.text = curFac.getPerks()[0].getPerkTitle() + ": " + curFac.getPerks()[0].getPerkDescription();
+			specificPerk1Text.text = curFac.GetPerks()[0].getPerkTitle() + ": " + curFac.GetPerks()[0].getPerkDescription();
 		} else {
 			Debug.Log("Perk 1 text container not set");
 		}
 		if (specificPerk2Text != null) {
-			specificPerk2Text.text = curFac.getPerks()[1].getPerkTitle() + ": " + curFac.getPerks()[1].getPerkDescription();
+			specificPerk2Text.text = curFac.GetPerks()[1].getPerkTitle() + ": " + curFac.GetPerks()[1].getPerkDescription();
 		} else {
 			Debug.Log("Perk 2 text container not set");
 		}
 		if (specificPerk3Text != null) {
-			specificPerk3Text.text = curFac.getPerks()[2].getPerkTitle() + ": " + curFac.getPerks()[2].getPerkDescription();
+			specificPerk3Text.text = curFac.GetPerks()[2].getPerkTitle() + ": " + curFac.GetPerks()[2].getPerkDescription();
 		} else {
 			Debug.Log("Perk 3 text container not set");
 		}
 		if (specificPerk4Text != null) {
-			specificPerk4Text.text = curFac.getPerks()[3].getPerkTitle() + ": " + curFac.getPerks()[3].getPerkDescription();
+			specificPerk4Text.text = curFac.GetPerks()[3].getPerkTitle() + ": " + curFac.GetPerks()[3].getPerkDescription();
 		} else {
 			Debug.Log("Perk 4 text container not set");
 		}
 
 		//Set up town lore
 		if (loreText != null) {
-			loreText.text = curFac.getLore();
+			loreText.text = curFac.GetLore();
 		} else {
 			Debug.Log("Lore text container not set");
 		}
@@ -370,7 +370,7 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up town techs TODO rework so this is not hardcoded to two
 		//Load tech 1
-		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getStartingTownTechs()[0].GetId().ToString());
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.GetStartingTownTechs()[0].GetId().ToString());
 		//Apply it
 		if (townTech1Image != null) {
 			townTech1Image.sprite = img;
@@ -378,7 +378,7 @@ public class MainMenuUIManager : UIManager {
 			Debug.Log ("Town tech image 1 container not set");
 		}
 		//Load tech 2
-		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.getStartingTownTechs()[1].GetId().ToString());
+		img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.GetStartingTownTechs()[1].GetId().ToString());
 		//Apply it
 		if (townTech2Image != null) {
 			townTech2Image.sprite = img;

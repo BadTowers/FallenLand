@@ -1,96 +1,113 @@
 ﻿using System.Collections.Generic;
 
+public class Faction
+{
+	private string FactionName;
+	private List<Perk> Perks;
+	private Coordinates StartingBaseLocation;
+	private string StartingBaseName;
+	private string FactionLore;
+	private List<TownTech> StartingTownTechs;
+	private int Id;
 
-public class Faction {
-
-	//A faction has a name
-	private string facName;
-	//A faction has perks
-	private List<Perk> perks;
-	//A faction has a starting base location
-	private Coordinates baseCoordinates;
-	//A faction has a starting base name (city, state)
-	private string baseLocationString;
-	//A faction has lore
-	private string facLore;
-	//A faction has starting town techs
-	private List<TownTech> startingTownTechs;
-	//A faction has an ID
-	private int ID;
-
-
-
-	//Constructor
-	public Faction(string name, Coordinates c){
-		this.facName = name;
-		this.baseCoordinates = c;
-		perks = new List<Perk>();
-        startingTownTechs = new List<TownTech>();
+	public Faction(string name, Coordinates location)
+	{
+		FactionName = name;
+		StartingBaseLocation = location;
+		Perks = new List<Perk>();
+        StartingTownTechs = new List<TownTech>();
 	}
 
-
-	public void setName(string n){
-		this.facName = n;
+	public void SetName(string name)
+	{
+		FactionName = name;
 	}
 
-	public string getName(){
-		return this.facName;
+	public string GetName()
+	{
+		return FactionName;
 	}
 
-	public void setPerks(List<Perk> p){
-		this.perks = p;
+	public void SetPerks(List<Perk> perks)
+	{
+		if (perks != null)
+		{
+			Perks = perks;
+		}
 	}
 
-	public void addPerk(Perk p){
-		this.perks.Add(p);
+	public void AddPerk(Perk perk)
+	{
+		if (perk != null)
+		{
+			Perks.Add(perk);
+		}
 	}
 
-	public List<Perk> getPerks(){
-		return this.perks;
+	public List<Perk> GetPerks()
+	{
+		return Perks;
 	}
 
-	public void setBaseLocation(Coordinates c){
-		this.baseCoordinates = c;
+	public void SetBaseLocation(Coordinates location)
+	{
+		if (location != null)
+		{
+			StartingBaseLocation = location;
+		}
 	}
 
-	public Coordinates getBaseLocation(){
-		return this.baseCoordinates;
+	public Coordinates GetBaseLocation()
+	{
+		return StartingBaseLocation;
 	}
 
-	public void setBaseLocationString(string s){
-		this.baseLocationString = s;
+	public void SetBaseLocationString(string locationString)
+	{
+		StartingBaseName = locationString;
 	}
 
-	public string getBaseLocationString(){
-		return this.baseLocationString;
+	public string GetBaseLocationString()
+	{
+		return StartingBaseName;
 	}
 
-	public void setLore(string lore){
-		this.facLore = lore;
+	public void SetLore(string lore)
+	{
+		FactionLore = lore;
 	}
 
-	public string getLore(){
-		return this.facLore;
+	public string GetLore()
+	{
+		return FactionLore;
 	}
 
-	public void setStartingTownTechs(List<TownTech> t){
-		this.startingTownTechs = t;
+	public void SetStartingTownTechs(List<TownTech> townTechs)
+	{
+		if (townTechs != null)
+		{
+			StartingTownTechs = townTechs;
+		}
 	}
 
-	public void addStartingTownTech(TownTech t){
-		this.startingTownTechs.Add(t);
+	public void AddStartingTownTech(TownTech townTech)
+	{
+		StartingTownTechs.Add(townTech);
 	}
 
-	public List<TownTech> getStartingTownTechs(){
-		return this.startingTownTechs;
+	public List<TownTech> GetStartingTownTechs()
+	{
+		return StartingTownTechs;
 	}
 
-	public void setID(int id){
-		this.ID = id;
+	public void SetId(int id)
+	{
+		Id = id;
 	}
 
-	public int getID(){
-		return this.ID;
+	public int GetId()
+	{
+		return Id;
 	}
 
 }

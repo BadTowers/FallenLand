@@ -17,7 +17,7 @@ public class DefaultFactionInfo {
 
 		/***************************************************/
 		curFac = new Faction("Coalition of the Black Angels", new Coordinates(19,13));
-		curFac.setBaseLocationString("Iowa City, Iowa");
+		curFac.SetBaseLocationString("Iowa City, Iowa");
 		curPerk = new Perk("Combat Medic");
 		curPerk.setPerkDescription("Begin the game with the PARAMEDIC MED KIT spoils card");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -29,7 +29,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Information Crossroads");
 		curPerk.setPerkDescription("Once per turn, during the TOWN BUSINESS PHASE, you may pay 5 salvage coins to draw 1 action card");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
@@ -42,7 +42,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Fight Club");
 		curPerk.setPerkDescription("During party MELEE WEAPONS ONLY encounter cards, you receive 1 additional combat success");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
@@ -54,7 +54,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Midwestern Charm");
 		curPerk.setPerkDescription("Perform the HEALING DEED in any neutral starting town without having to pay the bank");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
@@ -66,7 +66,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Unlimited
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "The residents of Iowa City panicked with the onset of the Great War, as many feared they would be targeted in the nuclear exchanged because of defense contractors, hospitals, " +
 			"and colleges. However, the anticipated hammer stroke never fell. Even when Des Moines was dusted and the ashen fallout drifted down like snow, Iowa City was again spared. " +
 			"But their luck eventually ran out.\n\nAs a crossroads in the Midwest, the city was quickly inundated with fleeing refugees during the Maddening. Iowa City residents were thoroughly " +
@@ -79,19 +79,19 @@ public class DefaultFactionInfo {
 			"buildings. Priding themselves in maintaining strong diplomatic ties with the other factions, the Coalition of the Black Angel is often at the forefront of the decision making within the Council " +
 			"of the Ten Towns. Frequently playing the role of peacekeeper and brokering deals among the other Factions, they prefer to assert themselves through the use of soft power. While they " +
 			"are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Medical Center"); //TODO maybe make this be not a string
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Learning Center");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Enclave of Terra", new Coordinates(10,20));
-		curFac.setBaseLocationString("Great Falls, Montana");
+		curFac.SetBaseLocationString("Great Falls, Montana");
 		curPerk = new Perk("Hunter's Instinct");
 		curPerk.setPerkDescription("Begin the game with the COMPOUND HUNTING BOW spoils card.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -103,7 +103,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Diplomatic Connections");
 		curPerk.setPerkDescription("Each time you are the first player, SUBTRACT 2 FROM TOWN EVENTS ROLL.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -115,7 +115,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Wiley");
 		curPerk.setPerkDescription("Your party GAINS +1 DURING FLIGHT ROLLS.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -127,7 +127,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Kismet");
 		curPerk.setPerkDescription("Once per turn, during a solo encounter card, REROLL A FAILED SKILL CHECK.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -139,7 +139,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "The remote location of Great Falls spared it from the nuclear exchange that destroyed civilization. However, as supplies became scarce during the dark years of the Maddening, many " +
 			"militia groups in the region turned to raiding settlements. The raider’s swift attacks devastated and outgunned the small communities. To bring the fight to the raiders, the Blackfoot " +
 			"and Sioux Nations rallied the small settlements to them. Utilizing guerrilla tactics to harass and punish the raiders for years, their decisive victory was finally achieved at Battle " +
@@ -151,19 +151,19 @@ public class DefaultFactionInfo {
 			"High Elder, who is supported by a small council. With the best energy and water purification capabilities within the Ten Towns, their alliances and trade partners have continued to grow. As " +
 			"strong proponents of expanding the power of the Council of the Ten Towns, they hope to create equality for all factions and broaden representation to include smaller settlements. For this to " +
 			"happen, they will have to take a leadership role and share their wisdom with the other factions.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Energy Production");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Syndicate", new Coordinates(4,15));
-		curFac.setBaseLocationString("Battle Mountain, Nevada");
+		curFac.SetBaseLocationString("Battle Mountain, Nevada");
 		curPerk = new Perk("Natural Defenses");
 		curPerk.setPerkDescription("Begin the game with 1 TOWN DEFENSE CHIP.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -175,7 +175,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("High Rollers");
 		curPerk.setPerkDescription("During the TOWN EVENTS PHASE, you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -201,7 +201,7 @@ public class DefaultFactionInfo {
 		curPerk.addD6Option(new Dictionary<Gains, int>(){ //6
 			{Gains.Lost_Salvage, 7}
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Mountaineering");
 		curPerk.setPerkDescription("Each MOVEMENT DEED, the 1st mountain hex your party passes through costs 1 movement instead of two.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -213,7 +213,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Movement_Deed
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("The Mineshaft Gap");
 		curPerk.setPerkDescription("Once per turn, if your town roster is empty, you may draw a character card and place it there.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -226,7 +226,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "The local warning sirens wailed across the mining community as death rained from the skies. Only the residents that fled to the mines survived. Within its depths, the survivors found " +
 			"shelter and safety from the fallout. During the long, dark years of the Maddening, as chaos reigned in the wastes, the survivors that chose to reside in the mine continued to prosper. " +
 			"However, the situation took a turn for the worse when a well-armed group calling themselves Syndicate arrived and demanded entry.\n\nA long and bloody battle for the mine ensued. When " +
@@ -241,19 +241,19 @@ public class DefaultFactionInfo {
 			"say in all matters, the families often jockey to consolidate their own power and influence. However, since the Emergence, Syndicate has been more united than ever and focused on the future. " +
 			"Covertly purchasing businesses within the other nine Factions, they plot to overthrow the leadership of the other nine Factions from within and, by doing so, establish an overarching feudal " +
 			"system.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Energy Production");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Machinist Shop");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Swamp Runners", new Coordinates(20,4));
-		curFac.setBaseLocationString("Shreveport, Louisiana");
+		curFac.SetBaseLocationString("Shreveport, Louisiana");
 		curPerk = new Perk("Connected");
 		curPerk.setPerkDescription("Begin the game with a resource location of your choosing.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -265,7 +265,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Southern Ingenuity");
 		curPerk.setPerkDescription("Once per turn, during the effects phase, you may DISCARD AN ACTION CARD TO DRAW A SPOILS CARD for your auction house.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -279,7 +279,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Smugglers Network");
 		curPerk.setPerkDescription("Each time you sell a spoils card from your auction house to another player, receive 3 salvage coin from the bank.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -291,7 +291,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Unlimited
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Born on the Bayou");
 		curPerk.setPerkDescription("Your party gains +2 FLIGHT during PVP.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -303,7 +303,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "Shreveport sustained mass casualties from the biological weapons used in the Great War. Many residents suffered horrible deaths, while others looted and pillaged the city gripped by " +
 			"madness and set it ablaze. Other horrors followed, like radiation sickness and cannibalism. When several damns upriver failed, they unleased the power of the mighty Mississippi. Mother " +
 			"Nature almost seemed to rejoice at the prospect of washing away the blight and pestilence, as countless river towns were smashed and washed downstream. When the unstoppable river torrent " +
@@ -316,19 +316,19 @@ public class DefaultFactionInfo {
 			"and drugs often top their list and it is whispered they even delve in human trafficking. The leader of the Swamp Runners has traditionally ben the Baroness. Favoring thugs and hired " +
 			"guns over a large militia, she uses them to strike at her enemies, often in unique ways. Although many regard the Swamp Runners as unmanageable rogues, their services are utilized by " +
 			"all. Their strategy is to continue to play the other Factions off of one another and establish dominance over the Ten Towns.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Medical Center");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Communication Center");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("New Federalists", new Coordinates(25,7));
-		curFac.setBaseLocationString("Albany, Georgia");
+		curFac.SetBaseLocationString("Albany, Georgia");
 		curPerk = new Perk("Armory Cache");
 		curPerk.setPerkDescription("Begin the game with the MILITIA RIFLE spoils card.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -340,7 +340,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Weapons Bazaar");
 		curPerk.setPerkDescription("During the town business phase, roll 1d6. On 1-2, remove first weapons spoils card (top to bottom) from discard pile and place into auction house.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -363,7 +363,7 @@ public class DefaultFactionInfo {
 		curPerk.addD6Option(null); //4
 		curPerk.addD6Option(null); //5
 		curPerk.addD6Option(null); //6
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Navigators");
 		curPerk.setPerkDescription("City and radiation hexes cost 2 movement instead of 3.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -375,7 +375,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Unlimited
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Mercenary Haven");
 		curPerk.setPerkDescription("Pay 2 salvage coins less to hire an NPCM action card or ALLY spoils card.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -388,7 +388,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Unlimited
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "In the early hours of the Great War, Albany braced for attack. Washington D.C. was already gone, and the long list of dusted cities just kept growing. The first missiles targeting " +
 			"Albany were destroyed by THAAD missile defense batteries. The next round was detonated in the atmosphere and caused a series of electromagnetic pulses that knocked out power and " +
 			"electronics all across the Eastern seaboard. With the chain of command broken, the base commander panicked. Recalling troops and their families, the base was ordered on lockdown " +
@@ -405,19 +405,19 @@ public class DefaultFactionInfo {
 			"unite the Ten Towns under an iron dictatorship, the New Federalists forces are always bolstering their militia through forced conscription from the outlying farmsteads. The New " +
 			"Federalists are tolerated by the other Factions because they supply them with weapons—and for the right price, muscle. Often overshadowed by the pre-war military culture, a group " +
 			"of citizens here hopes to promote change by rewriting old history books and reeducating the population of the Ten Towns with their hubris and propaganda.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Garrison");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Learning Center");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Regulators", new Coordinates(14,8));
-		curFac.setBaseLocationString("Amarillo, Texas");
+		curFac.SetBaseLocationString("Amarillo, Texas");
 		curPerk = new Perk("The Cownboy Way");
 		curPerk.setPerkDescription("Begin the game with the SIX FAST HORSES spoils card.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -429,7 +429,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Cattle Drivers");
 		curPerk.setPerkDescription("Each town business phase, choose another faction. You each receive 3 salvage coins.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -442,7 +442,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Into the Wild");
 		curPerk.setPerkDescription("During End Turn Phase, you may move your STARTING TOWN LOCATION up to 2 hexes by paying 3 salvage coins. Cannot occupy hex containing another town, resource, radiation, or water. Mission locations are rerolled.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -455,7 +455,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Rangers");
 		curPerk.setPerkDescription("You may purchase the tier 1 LAW AND ORDER TOWN TECHNOLOGY for 30 salvage coins.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -467,7 +467,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Unlimited
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "By the time the radioactive fallout drifted across the plains, the US government was already gone and the country’s infrastructure had collapsed. No help was coming. The " +
 			"nuclear and biological warheads used in The Great War had darkened the skies, and this lack of sunshine combined with unprecedented chaos and violence became known as The " +
 			"Maddening. Most of the ranchers in the Texas Panhandle attempted to find safety by moving their cattle operations closer to Amarillo. The arduous journey claimed many lives, " +
@@ -482,19 +482,19 @@ public class DefaultFactionInfo {
 			"culture of nomads, they have perfected the art of maintaining their herd of cattle on the go, which many Factions have come to rely on.\n\nThe Regulators’ core values are freedom, " +
 			"self-sufficiency, integrity, and fair trade. Theft is the most egregious crime in their eyes and is punishable by death. The Regulators are led by The First Marshal, a spokesman for " +
 			"the council of oligarchs—the heads of the Faction’s most prominent cattle families. Their vision of the future is to convert the other Factions to a more nomadic frontier lifestyle.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Machinist Shop");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("The Highwaymen", new Coordinates(16,16));
-		curFac.setBaseLocationString("Sturgis, South Dakota");
+		curFac.SetBaseLocationString("Sturgis, South Dakota");
 		curPerk = new Perk("Motorcycle Culture");
 		curPerk.setPerkDescription("Begin the game with the AMERICAN IRON CUSTOM CHOPPERS spoils card. Cannot be sold or traded.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -508,7 +508,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Caravan Escort");
 		curPerk.setPerkDescription("Each town business phase, select another faction. You each gain 2 salvage coins.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -521,7 +521,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("The Riddle of Steel");
 		curPerk.setPerkDescription("If your party returns to town without a vehicle, immediately retrieve the AMERICAN IRON CUSTOM CHOPPERS spoils card.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -534,7 +534,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Unlimited
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Road Warriors");
 		curPerk.setPerkDescription("Each time a VEHICLE COMBAT or BIKER GANG ENCOUNTER CARD is drawn by any player, you GAIN 1 PRESTIGE.");
 		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -546,7 +546,7 @@ public class DefaultFactionInfo {
 		curPerk.setUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
-		curFac.addPerk(curPerk);
+		curFac.AddPerk(curPerk);
 		lore = "After the bombs fells, the motorcycle clubs that survived were forced to rely on mobility and safety in numbers. Those that escaped the gridlock and chaos made the pilgrimage to " +
 			"the mecca of motorcycle culture, Sturgis, South Dakota. Many motorcycle clubs (MCs) were represented there and most put aside their long-standing rivalries. A vision emerged to unite " +
 			"themselves into a single MC, the Highwaymen. Those that refused to join were cast out and formed the Outlaws. Comprised mostly of the criminal element, bounties were placed on their " +
@@ -561,19 +561,19 @@ public class DefaultFactionInfo {
 			"surpasses their ingenuity, but cannot match their production capabilities.\n\nThe Highwaymen are led by their President, a charismatic demagogue whose priorities are loyalty, profits, " +
 			"and motorcycle culture. The President’s strategy when dealing with the other Factions has been to become indispensable. They are always gathering intelligence on their enemies and analyzing " +
 			"their weaknesses. Unfortunately, many members of the Highwaymen believe “might makes right” and that they should meet violence with violence, which often stands in the way of progress.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Machinist Shop");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Garrison");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("The Brotherhood", new Coordinates(7,11));
-		curFac.setBaseLocationString("Saint George, Utah");
+		curFac.SetBaseLocationString("Saint George, Utah");
         curPerk = new Perk("Blade Cult");
         curPerk.setPerkDescription("Begin the game with the VENDETTA DAGGERS spoils card.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -585,7 +585,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Wasteland Scavengers");
         curPerk.setPerkDescription("Each TOWN BUSINESS PHASE, roll 1d6 and gain that many salvage coins.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -615,7 +615,7 @@ public class DefaultFactionInfo {
         curPerk.addD6Option(new Dictionary<Gains, int>(){ //6
 			{Gains.Gain_Salvage, 6}
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Down With the Sickness");
         curPerk.setPerkDescription("When an opponent plays a \"negative\" action card against one of your characters or party, roll 1d6. On a 1, each of their party members suffers 1 radiation damage.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -635,7 +635,7 @@ public class DefaultFactionInfo {
         curPerk.addD6Option(null); //4
         curPerk.addD6Option(null); //5
         curPerk.addD6Option(null); //6
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
 		curPerk = new Perk("Survival Instincts");
         curPerk.setPerkDescription("Your party ignores all negative effects from ENVIRONMENTAL HAZARD encounter cards.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -647,7 +647,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Card
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
 		lore = "The red sandstone bluffs surrounding Saint George provided little reprieve from the fallout of the dusted West Coast cities. Isolated and forgotten, the windswept town of Saint George " +
 			"was forced to turn inward and became more and more xenophobic of “out-dwellers”. For a while, the arid soil provided subsistence farming. When this failed, scouting parties were dispatched " +
 			"to locate what they needed to survive. The mysterious Yucca Mountain facility was discovered during one such excursion. Stockpiled with decommissioned nuclear weapons and radioactive waste, " +
@@ -662,19 +662,19 @@ public class DefaultFactionInfo {
 			"the accepting natures of the Coalition of the Black Angel and Enclave of Terra. When this again failed, they threatened war. After much deliberation, the Council of the Ten Towns admitted them " +
 			"to keep the peace, although the vote was later disputed. The Brotherhood has grand designs to establish clandestine cults within each of the factions. Eventually, they hope to bolster their " +
 			"numbers until they can overthrow each faction’s leadership and establishing an overarching theocracy.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Energy Production");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Sons of Neptune", new Coordinates(23,15));
-		curFac.setBaseLocationString("Grand Haven, Michigan");
+		curFac.SetBaseLocationString("Grand Haven, Michigan");
         curPerk = new Perk("Hidden Agenda");
         curPerk.setPerkDescription("Begin the game with TWO ADDITIONAL ACTION CARDS.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -686,7 +686,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("River Traders");
         curPerk.setPerkDescription("Each EFFECTS PHASE, you may draw a spoils card. To keep it, pay a random player 1/2 its value in salvage (rounded up).");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -699,7 +699,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Turn
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Anchors Aweigh");
         curPerk.setPerkDescription("When your town is the target of an action card or world card effect, roll 1d6. On a 1, ignore the effects.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -719,8 +719,8 @@ public class DefaultFactionInfo {
         curPerk.addD6Option(null); //4
         curPerk.addD6Option(null); //5
         curPerk.addD6Option(null); //6
-        curFac.addPerk(curPerk);
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Amphibious");
         curPerk.setPerkDescription("Your party may MOVE THROUGH THE GREAT LAKES. Each lake costs 1 salvage and 1 movement. Cannot end movement deed in water hex.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -733,7 +733,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Unlimited
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
 		lore = "In the early hours of the Great War, Chicago and Detroit were hit simultaneously by multiple ICBMs. But above them on the peninsula, a last-minute shift in the winds saved Grand " +
 			"Haven, “Coast Guard City USA”. Still, many people with boards fled to the water of the Great Lakes to survive. The old adage “safety in numbers” proved true during the Maddening, " +
 			"which resulted in the survivors forming flotillas, only returning to shore to scavenge supplies. Eventually, the two largest flotillas on the lakes combined forces to form the Sons " +
@@ -748,19 +748,19 @@ public class DefaultFactionInfo {
 			"democracy, guided by the Council of Captains, but steered by the Admiral. Preferring logical policies achieved by subtlety and discipline, the Admiral’s map for the future " +
 			"includes the restoration of social order by any and all means necessary. Grand Haven intends to become the premier economic power in the Fallen Lands and hopes to eventually " +
 			"reestablish overseas trade. The other factions will then have no choice but to unite under the Sons of Neptune.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Communication Center");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Water and Supplies");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 
 
 		/***************************************************/
 		curFac = new Faction("Sigma Corporation", new Coordinates(28,14));
-		curFac.setBaseLocationString("Emporium, Pennsylvania");
+		curFac.SetBaseLocationString("Emporium, Pennsylvania");
         curPerk = new Perk("The Long Walk");
         curPerk.setPerkDescription("Begin the game with the 6.8mm ADVANCED RIFLE spoils card.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -772,7 +772,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Veritable Fortress");
         curPerk.setPerkDescription("Begin the game with 2 TOWN DEFENSE CHIPS. All other town defense chips cost 4 extra salvage coins.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -785,7 +785,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Excavation");
         curPerk.setPerkDescription("If any player draws a mission card with the word SIGMA IN THE TITLE, YOU GAIN 3 TOWN HEALTH.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -797,7 +797,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Card
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
         curPerk = new Perk("Black Ops");
         curPerk.setPerkDescription("Once per game, during your party exploits phase, move your party to any mission location on the map.");
         curPerk.setConditionalGains(new Dictionary<Gains, int>(){
@@ -809,7 +809,7 @@ public class DefaultFactionInfo {
         curPerk.setUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
-        curFac.addPerk(curPerk);
+        curFac.AddPerk(curPerk);
 		lore = "After 9/11 and the ensuing \"war on terror\", Emporium, Pennsylvania found itself the thirteenth site of the U.S. government’s top-secret Sigma Series program. Fearing " +
 			"a catastrophe loomed on the horizon, these new state-of-the-art bunkers were designed to survive a nuclear war, biological catastrophe, or extinction level event. A vast " +
 			"improvement over their obsolete predecessors from the Cold War, they were created to safeguard government institutions. The Emporium Bunker’s primary mission was to harbor " +
@@ -827,12 +827,12 @@ public class DefaultFactionInfo {
 			"of influence through a series of backroom dealings, which only perpetuates the general distrust of Sigma Corporation. As long as the Illuminarious can continue to influence " +
 			"the Council of the Ten Towns, it remains useful. Their clandestine agenda is to locate the other Sigma Series Bunkers and consolidate their own power. From there, they hope " +
 			"to rebuild the military industrial complex, seek out the enemies of the former United States, and eliminate them and anyone else who stands in their way with extreme prejudice.\n";
-		curFac.setLore(lore);
+		curFac.SetLore(lore);
 		curTech = availableTownTechs.getTownTechByName("Communication Center");
-		curFac.addStartingTownTech(curTech);
+		curFac.AddStartingTownTech(curTech);
 		curTech = availableTownTechs.getTownTechByName("Learning Center");
-		curFac.addStartingTownTech(curTech);
-		curFac.setID(tempID);
+		curFac.AddStartingTownTech(curTech);
+		curFac.SetId(tempID);
 		tempID++;
 		facs.Add(curFac);
 	}

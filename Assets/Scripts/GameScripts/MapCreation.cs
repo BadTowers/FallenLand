@@ -92,7 +92,7 @@ public class MapCreation : MonoBehaviour {
 		//Set the faction base, if needed
 		if (go.GetComponent<Hex>().isFactionBase()) {
 			foreach(Faction f in factions) {
-				if(f.getBaseLocation().Equals(go.GetComponent<Hex>().getCoordinates())) {
+				if(f.GetBaseLocation().Equals(go.GetComponent<Hex>().getCoordinates())) {
 					go.GetComponent<Hex>().setFaction(f);
 					//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white; //Debug thingy
 				}
