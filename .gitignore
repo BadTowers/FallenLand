@@ -40,3 +40,6 @@ sysinfo.txt
 *.blend[1-9]
 __pycache__
 /dist/
+
+#Coverage Files
+CodeCoverage/Report
