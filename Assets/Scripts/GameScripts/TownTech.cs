@@ -4,117 +4,116 @@ using UnityEngine;
 
 public class TownTech
 {
-	//A town tech has a name
 	private string TechName;
-	//A town tech has a purchase cost
 	private int PurchaseCost;
-	//A town tech has an upgrade cost
 	private int UpgradeCost;
-	//A town tech has a tier (tier 1 or tier 2)
-	private int Tier;
-	//A town tech has a sell cost
+	private int Tier; //tier 1 or 2
 	private int SellCost;
-	//A town tech has gains that the player may recieve
 	private Dictionary<Gains, int> ConditionalGains;
-	//A town tech has times when the gains are active
 	private List<Times> WhenUsable;
-	//A town tech is or is not a starting town tech
 	private bool IsStartingTech;
-	//A town tech has an ID
 	private int Id;
 
 	public TownTech(string name)
 	{
-		this.TechName = name;
+		TechName = name;
+		ConditionalGains = new Dictionary<Gains, int>();
+		WhenUsable = new List<Times>();
 	}
 
 	public void SetTechName(string n)
 	{
-		this.TechName = n;
+		TechName = n;
 	}
 
 	public string GetTechName()
 	{
-		return this.TechName;
+		return TechName;
 	}
 
 	public void SetPurchaseCost(int c)
 	{
-		this.PurchaseCost = c;
+		PurchaseCost = c;
 	}
 
 	public int GetPurchaseCost()
 	{
-		return this.PurchaseCost;
+		return PurchaseCost;
 	}
 
 	public void SetUpgradeCost(int c)
 	{
-		this.UpgradeCost = c;
+		UpgradeCost = c;
 	}
 
 	public int GetUpgradeCost()
 	{
-		return this.UpgradeCost;
+		return UpgradeCost;
 	}
 
 	public void SetTier(int t)
 	{
-		this.Tier = t;
+		Tier = t;
 	}
 
 	public int GetTier()
 	{
-		return this.Tier;
+		return Tier;
 	}
 
 	public void SetSellCost(int s)
 	{
-		this.SellCost = s;
+		SellCost = s;
 	}
 
 	public int GetSellCost()
 	{
-		return this.SellCost;
+		return SellCost;
 	}
 
-	public void SetConditionalGains(Dictionary<Gains, int> cg)
+	public void SetConditionalGains(Dictionary<Gains, int> condGains)
 	{
-		this.ConditionalGains = cg;
+		if (condGains != null)
+		{
+			ConditionalGains = condGains;
+		}
 	}
 
 	public Dictionary<Gains, int> GetConditionalGains()
 	{
-		return this.ConditionalGains;
+		return ConditionalGains;
 	}
 
-	public void SetTimes(List<Times> t)
+	public void SetTimes(List<Times> times)
 	{
-		this.WhenUsable = t;
+		if (times != null)
+		{
+			WhenUsable = times;
+		}
 	}
 
 	public List<Times> GetTimes()
 	{
-		return this.WhenUsable;
+		return WhenUsable;
 	}
 
 	public void SetIsStartingTech(bool b)
 	{
-		this.IsStartingTech = b;
+		IsStartingTech = b;
 	}
 
 	public bool GetIsStartingTech()
 	{
-		return this.IsStartingTech;
+		return IsStartingTech;
 	}
 
 	public void SetId(int id)
 	{
-		this.Id = id;
+		Id = id;
 	}
 
 	public int GetId()
 	{
-		return this.Id;
+		return Id;
 	}
 }
