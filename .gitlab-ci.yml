@@ -3,7 +3,7 @@ stages:
   - build
   - deploy
 unit-test:
-  script: "C:\Program Files"\Unity\Hub\Editor\2019.3.13f1\Editor\Unity.exe -batchmode -projectPath . -runTests -testPlatform editmode  -logFile -testResults ./unit-tests.xml
+  script: C:\Users\JSB\Desktop\Unity2019.3.13f1.lnk -batchmode -projectPath . -runTests -testPlatform editmode  -logFile -testResults ./unit-tests.xml
   stage: test
   tags:
     - unity
