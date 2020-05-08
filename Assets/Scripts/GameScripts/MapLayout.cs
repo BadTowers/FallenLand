@@ -7,92 +7,92 @@ public abstract class MapLayout {
 	protected Dictionary<hexType, bool>[,] arrayOfHexes = new Dictionary<hexType, bool>[MapCreation.width, MapCreation.height]; //2D array of dictionaries that map an int from the enum above -> boolean
 
 
-	public bool isHexInGame(int x, int y)
+	public bool IsHexInGame(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.VALID];
 	}
 
-	public bool isHexInGame(Coordinates coords)
+	public bool IsHexInGame(Coordinates coords)
 	{
 		return arrayOfHexes [coords.GetX(), coords.GetY()] [hexType.VALID];
 	}
 
-	public bool isCity(int x, int y)
+	public bool IsCity(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.CITY];
 	}
 
-	public bool isCity(Coordinates coords)
+	public bool IsCity(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.CITY];
 	}
 
-	public bool isRad(int x, int y)
+	public bool IsRad(int x, int y)
 	{
 		return arrayOfHexes [x, y][hexType.RAD];
 	}
 
-	public bool isRad(Coordinates coords)
+	public bool IsRad(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.RAD];
 	}
 
-	public bool isMountain(int x, int y)
+	public bool IsMountain(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.MOUNTAIN];
 	}
 
-	public bool isMountain(Coordinates coords)
+	public bool IsMountain(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.MOUNTAIN];
 	}
 
-	public bool isPlains(int x, int y)
+	public bool IsPlains(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.PLAINS];
 	}
 
-	public bool isPlains(Coordinates coords)
+	public bool IsPlains(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.PLAINS];
 	}
 
-	public bool isWater(int x, int y)
+	public bool IsWater(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.WATER];
 	}
 
-	public bool isWater(Coordinates coords)
+	public bool IsWater(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.WATER];
 	}
 
-	public bool isFactionBase(int x, int y)
+	public bool IsFactionBase(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.BASE];
 	}
 
-	public bool isFactionBase(Coordinates coords)
+	public bool IsFactionBase(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.BASE];
 	}
 
-	public bool isRandomNumber(int x, int y)
+	public bool IsRandomLocation(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.RAND_LOC];
 	}
 
-	public bool isRandomLocation(Coordinates coords)
+	public bool IsRandomLocation(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.RAND_LOC];
 	}
 
-	public bool isResource(int x, int y)
+	public bool IsResource(int x, int y)
 	{
 		return arrayOfHexes[x, y][hexType.RESOURCE];
 	}
 
-	public bool isResource(Coordinates coords)
+	public bool IsResource(Coordinates coords)
 	{
 		return arrayOfHexes[coords.GetX(), coords.GetY()][hexType.RESOURCE];
 	}

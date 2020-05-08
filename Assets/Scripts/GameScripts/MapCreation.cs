@@ -58,7 +58,7 @@ public class MapCreation : MonoBehaviour {
 
 				//Create a hex and change its starting information
 				//Debug.Log("x: " + LR + "   y: " + UD);
-				if (ml.isHexInGame (LR, UD)) {
+				if (ml.IsHexInGame (LR, UD)) {
 					curHex = (GameObject)Instantiate (hexTilePrefab, new Vector3 (lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
 					configureHex (curHex, LR, UD);
 				}
@@ -79,15 +79,15 @@ public class MapCreation : MonoBehaviour {
 		Coordinates coords = new Coordinates(x, y);
 		go.AddComponent<Hex>();
 		go.GetComponent<Hex>().setCoordinates(coords);
-		go.GetComponent<Hex>().setIsCity(ml.isCity(coords));
-		go.GetComponent<Hex>().setIsMountain(ml.isMountain(coords));
-		go.GetComponent<Hex>().setIsRad(ml.isRad(coords));
-		go.GetComponent<Hex>().setIsFactionBase(ml.isFactionBase(coords));
-		go.GetComponent<Hex>().setIsPlains(ml.isPlains(coords));
-		go.GetComponent<Hex>().setIsRandomLocation(ml.isRandomLocation(coords));
-		go.GetComponent<Hex>().setIsWater(ml.isWater(coords));
-		go.GetComponent<Hex>().setIsResource(ml.isResource(coords));
-		go.GetComponent<Hex>().setIsHexInGame(ml.isHexInGame(coords));
+		go.GetComponent<Hex>().setIsCity(ml.IsCity(coords));
+		go.GetComponent<Hex>().setIsMountain(ml.IsMountain(coords));
+		go.GetComponent<Hex>().setIsRad(ml.IsRad(coords));
+		go.GetComponent<Hex>().setIsFactionBase(ml.IsFactionBase(coords));
+		go.GetComponent<Hex>().setIsPlains(ml.IsPlains(coords));
+		go.GetComponent<Hex>().setIsRandomLocation(ml.IsRandomLocation(coords));
+		go.GetComponent<Hex>().setIsWater(ml.IsWater(coords));
+		go.GetComponent<Hex>().setIsResource(ml.IsResource(coords));
+		go.GetComponent<Hex>().setIsHexInGame(ml.IsHexInGame(coords));
 
 		//Set the faction base, if needed
 		if (go.GetComponent<Hex>().isFactionBase()) {
