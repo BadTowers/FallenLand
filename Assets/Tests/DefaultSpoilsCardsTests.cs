@@ -8,23 +8,29 @@ namespace Tests
 {
 	public class DefaultSpoilsCardsTests
 	{
+		private List<SpoilsCard> DefaultSpoilsDeck;
+
+		[SetUp]
+		public void Setup()
+		{
+			DefaultSpoilsCards dsc = new DefaultSpoilsCards();
+			DefaultSpoilsDeck = dsc.getSpoilsCards();
+		}
+
+		[TearDown]
+		public void Teardown()
+		{
+			DefaultSpoilsDeck = null;
+		}
+
 		[UnityTest]
 		public IEnumerator TestDefaultSpoilsCards()
 		{
-			/* Create an instance of the default cards deck */
-			DefaultSpoilsCards dsc = new DefaultSpoilsCards();
-			List<SpoilsCard> defaultCards = dsc.getSpoilsCards();
-
-			yield return null;
-
-			/* Check assertions */
-			for(int i = 0; i < defaultCards.Count; i++) { //For all cards
-
-				SpoilsCard curCard = defaultCards[i];
+			for (int i = 0; i < DefaultSpoilsDeck.Count; i++)
+			{
+				SpoilsCard curCard = DefaultSpoilsDeck[i];
 				Debug.Log("Testing card " + i + ": title " + curCard.GetTitle());
 
-
-				//Ensure all the lists in the class are not null
 				Assert.IsNotNull(curCard.GetAttachments());
 				Assert.IsNotNull(curCard.GetBaseSkills());
 				Assert.IsNotNull(curCard.GetConditionalGains());
@@ -37,9 +43,7 @@ namespace Tests
 				Assert.IsNotNull(curCard.GetTypes());
 				Assert.IsNotNull(curCard.GetWhenUsable());
 
-
-				//There exists at least one type on the card
-				Assert.IsTrue(defaultCards[i].GetTypes().Count > 0);
+				Assert.IsTrue(DefaultSpoilsDeck[i].GetTypes().Count > 0);
 
 				//If it isn't an event card, ensure all cards have at least one non-zero base skill
 				if (curCard.GetTitle() != "Designer Biker Leathers" && curCard.GetTitle() != "Fallen Land Board Game") //These cards have no stats
@@ -58,30 +62,55 @@ namespace Tests
 					}
 				}
 
-
-				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, restrictions, and discards.
-				int sizeOfConditionals = defaultCards[i].GetConditionalGains().Count;
+				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, and discards.
+				int sizeOfConditionals = DefaultSpoilsDeck[i].GetConditionalGains().Count;
 				Assert.AreEqual(sizeOfConditionals, curCard.GetNumberOfUses().Count);
 				Assert.AreEqual(sizeOfConditionals, curCard.GetWhenUsable().Count);
 				Assert.AreEqual(sizeOfConditionals, curCard.GetDiscard().Count);
-				//Assert.AreEqual(sizeOfConditionals, curCard.getRestrictions().Count);
 
+				Assert.IsTrue(curCard.GetD6Options().Count == 0 || curCard.GetD6Options().Count == 6);
 
-				//Ensure that the d6 cards are either 0 or 6
-				Assert.IsTrue(curCard.GetD6Options().Count == 0  || curCard.GetD6Options().Count == 6);
+				Assert.IsTrue(curCard.GetD10Options().Count == 0 || curCard.GetD10Options().Count == 10);
 
-
-				//Ensure the d10 cards are either 0 or 10
-				Assert.IsTrue(curCard.GetD10Options().Count == 0  || curCard.GetD10Options().Count == 10);
-
-
-				//Ensure it has a non-negative sell value
 				Assert.IsTrue(curCard.GetSellValue() >= 0);
 
-
-				//Ensure it has a non-negative carry weight
 				Assert.IsTrue(curCard.GetCarryWeight() >= 0);
 			}
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestShuffleOnDefaultSpoilsDeck()
+		{
+			bool areShuffled = false;
+			List<SpoilsCard> deckBeforeShuffle = deepCopy(DefaultSpoilsDeck);
+			Card.ShuffleDeck(DefaultSpoilsDeck);
+
+			for (int i = 0; i < deckBeforeShuffle.Count; i++)
+			{
+				if (deckBeforeShuffle[i].GetTitle() != DefaultSpoilsDeck[i].GetTitle())
+				{
+					areShuffled = true;
+					break;
+				}
+			}
+			Assert.IsTrue(areShuffled);
+
+			yield return null;
+		}
+
+
+
+		private static List<T> deepCopy<T>(List<T> cards)
+		{
+			List<T> cardsCopy = new List<T>();
+			for (int i = 0; i < cards.Count; i++)
+			{
+				cardsCopy.Add(cards[i]);
+			}
+
+			return cardsCopy;
 		}
 	}
 }
