@@ -1,4 +1,4 @@
 ﻿static class Constants
 {
-	public const int INVALID_LOCATION = 1;
+	public const int INVALID_LOCATION = -1;
 }
