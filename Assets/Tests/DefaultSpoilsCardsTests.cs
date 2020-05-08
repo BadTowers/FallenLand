@@ -25,29 +25,29 @@ namespace Tests
 
 
 				//Ensure all the lists in the class are not null
-				Assert.IsNotNull(curCard.getAttachments());
-				Assert.IsNotNull(curCard.getBaseSkills());
-				Assert.IsNotNull(curCard.getConditionalGains());
-				Assert.IsNotNull(curCard.getD10Options());
-				Assert.IsNotNull(curCard.getD6Options());
-				Assert.IsNotNull(curCard.getDiscard());
-				Assert.IsNotNull(curCard.getNumberOfUses());
-				Assert.IsNotNull(curCard.getRestrictions());
-				Assert.IsNotNull(curCard.getStaticGains());
-				Assert.IsNotNull(curCard.getTypes());
-				Assert.IsNotNull(curCard.getWhenUsable());
+				Assert.IsNotNull(curCard.GetAttachments());
+				Assert.IsNotNull(curCard.GetBaseSkills());
+				Assert.IsNotNull(curCard.GetConditionalGains());
+				Assert.IsNotNull(curCard.GetD10Options());
+				Assert.IsNotNull(curCard.GetD6Options());
+				Assert.IsNotNull(curCard.GetDiscard());
+				Assert.IsNotNull(curCard.GetNumberOfUses());
+				Assert.IsNotNull(curCard.GetRestrictions());
+				Assert.IsNotNull(curCard.GetStaticGains());
+				Assert.IsNotNull(curCard.GetTypes());
+				Assert.IsNotNull(curCard.GetWhenUsable());
 
 
 				//There exists at least one type on the card
-				Assert.IsTrue(defaultCards[i].getTypes().Count > 0);
+				Assert.IsTrue(defaultCards[i].GetTypes().Count > 0);
 
 				//If it isn't an event card, ensure all cards have at least one non-zero base skill
 				if (curCard.GetTitle() != "Designer Biker Leathers" && curCard.GetTitle() != "Fallen Land Board Game") //These cards have no stats
 				{
-					if (!curCard.getTypes().Contains(SpoilsTypes.Event))
+					if (!curCard.GetTypes().Contains(SpoilsTypes.Event))
 					{
 						bool containsNonZero = false;
-						foreach (int curValue in curCard.getBaseSkills().Values)
+						foreach (int curValue in curCard.GetBaseSkills().Values)
 						{
 							if (curValue != 0)
 							{
@@ -60,27 +60,27 @@ namespace Tests
 
 
 				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, restrictions, and discards.
-				int sizeOfConditionals = defaultCards[i].getConditionalGains().Count;
-				Assert.AreEqual(sizeOfConditionals, curCard.getNumberOfUses().Count);
-				Assert.AreEqual(sizeOfConditionals, curCard.getWhenUsable().Count);
-				Assert.AreEqual(sizeOfConditionals, curCard.getDiscard().Count);
+				int sizeOfConditionals = defaultCards[i].GetConditionalGains().Count;
+				Assert.AreEqual(sizeOfConditionals, curCard.GetNumberOfUses().Count);
+				Assert.AreEqual(sizeOfConditionals, curCard.GetWhenUsable().Count);
+				Assert.AreEqual(sizeOfConditionals, curCard.GetDiscard().Count);
 				//Assert.AreEqual(sizeOfConditionals, curCard.getRestrictions().Count);
 
 
 				//Ensure that the d6 cards are either 0 or 6
-				Assert.IsTrue(curCard.getD6Options().Count == 0  || curCard.getD6Options().Count == 6);
+				Assert.IsTrue(curCard.GetD6Options().Count == 0  || curCard.GetD6Options().Count == 6);
 
 
 				//Ensure the d10 cards are either 0 or 10
-				Assert.IsTrue(curCard.getD10Options().Count == 0  || curCard.getD10Options().Count == 10);
+				Assert.IsTrue(curCard.GetD10Options().Count == 0  || curCard.GetD10Options().Count == 10);
 
 
 				//Ensure it has a non-negative sell value
-				Assert.IsTrue(curCard.getSellValue() >= 0);
+				Assert.IsTrue(curCard.GetSellValue() >= 0);
 
 
 				//Ensure it has a non-negative carry weight
-				Assert.IsTrue(curCard.getCarryWeight() >= 0);
+				Assert.IsTrue(curCard.GetCarryWeight() >= 0);
 			}
 		}
 	}

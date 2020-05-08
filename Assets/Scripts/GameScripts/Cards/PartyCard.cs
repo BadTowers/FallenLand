@@ -2,48 +2,60 @@
 using System.Collections.Generic;
 using System;
 
-public class PartyCard : NonencounterCard {
+public class PartyCard : NonencounterCard
+{
 
-	private Dictionary<Skills, int> baseSkills; //The base numbers the party card has for each skill
-	private string titleSubString; //The string that appears below names of characters and (sometimes) items
-	private string quote; //The string that appears on character cards as a quote and, rarely, on spoils instead of a conditional active
+	private Dictionary<Skills, int> BaseSkills;
+	private string TitleSubString;
+	private string Quote;
 
-	public PartyCard(string text) : base(text) {
-		baseSkills = new Dictionary<Skills, int>();
-		titleSubString = "";
+	public PartyCard(string text) : base(text)
+	{
+		BaseSkills = new Dictionary<Skills, int>();
 	}
 
-	public void setBaseSkills(Dictionary<Skills, int> skills){
-		//For each skill passed in, add it and its value to the dictionary
-		foreach(Skills curSkill in skills.Keys) {
-			baseSkills.Add(curSkill, skills[curSkill]);
-		}
+	public void SetBaseSkills(Dictionary<Skills, int> skills)
+	{
+		if (skills != null)
+		{
+			foreach (Skills curSkill in skills.Keys)
+			{
+				BaseSkills.Add(curSkill, skills[curSkill]);
+			}
 
-		//For each remaining skill that wasn't passed in, set it to 0
-		foreach(Skills skill in Enum.GetValues(typeof(Skills))) {
-			if(!baseSkills.ContainsKey(skill)) {
-				baseSkills.Add(skill, 0);
+			//For each remaining skill that wasn't passed in, set it to 0
+			foreach (Skills skill in Enum.GetValues(typeof(Skills)))
+			{
+				if (!BaseSkills.ContainsKey(skill))
+				{
+					BaseSkills.Add(skill, 0);
+				}
 			}
 		}
 	}
 
-	public Dictionary<Skills, int> getBaseSkills(){
-		return baseSkills;
+	public Dictionary<Skills, int> GetBaseSkills()
+	{
+		return BaseSkills;
 	}
 
-	public void setTitleSubString(string t) {
-		this.titleSubString = t;
+	public void SetTitleSubString(string titleSubString)
+	{
+		TitleSubString = titleSubString;
 	}
 
-	public string getTitleSubString() {
-		return this.titleSubString;
+	public string GetTitleSubString()
+	{
+		return TitleSubString;
 	}
 
-	public void setQuote(string t){
-		this.quote = t;
+	public void SetQuote(string quote)
+	{
+		Quote = quote;
 	}
 
-	public string getQuote(){
-		return this.quote;
+	public string GetQuote()
+	{
+		return Quote;
 	}
 }
