@@ -46,6 +46,6 @@
 
     public override string ToString()
     {
-        return "(x, y) = (" + X + ", " + Y + ")";
+        return "(x, y) = (" + X.ToString() + ", " + Y.ToString() + ")";
     }
 }
