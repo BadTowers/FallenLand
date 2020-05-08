@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultTownTechs {
+public class DefaultTownTechs
+{
+	private List<TownTech> Techs;
 
-
-	private List<TownTech> techs;
-
-	//Constructor
-	public DefaultTownTechs(){
-		techs = new List<TownTech>();
+	public DefaultTownTechs()
+	{
+		Techs = new List<TownTech>();
 
 		//Vars
 		TownTech curTech;
@@ -26,7 +25,7 @@ public class DefaultTownTechs {
 			{Times.During_Technical_Skill_Check}
 		});
 		curTech.SetId(1);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Garrison");
@@ -40,12 +39,12 @@ public class DefaultTownTechs {
 			{Times.During_Combat_Skill_Check}
 		});
 		curTech.SetId(2);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Law and Order");
-		curTech.SetPurchaseCost(30);
-		curTech.SetUpgradeCost(30);
+		curTech.SetPurchaseCost(40);
+		curTech.SetUpgradeCost(40);
 		curTech.SetSellCost(25);
 		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Action_Cards, 1}
@@ -54,7 +53,7 @@ public class DefaultTownTechs {
 			{Times.During_Deal_Subphase}
 		});
 		curTech.SetId(3);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Learning Center");
@@ -68,7 +67,7 @@ public class DefaultTownTechs {
 			{Times.During_Diplomacy_Skill_Check}
 		});
 		curTech.SetId(4);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Machinist Shop");
@@ -82,12 +81,12 @@ public class DefaultTownTechs {
 			{Times.During_Mechanical_Skill_Check}
 		});
 		curTech.SetId(5);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Marketplace");
-		curTech.SetPurchaseCost(30);
-		curTech.SetUpgradeCost(30);
+		curTech.SetPurchaseCost(40);
+		curTech.SetUpgradeCost(40);
 		curTech.SetSellCost(25);
 		curTech.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Cards, 1}
@@ -96,7 +95,7 @@ public class DefaultTownTechs {
 			{Times.During_Deal_Subphase}
 		});
 		curTech.SetId(6);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Medical Center");
@@ -110,7 +109,7 @@ public class DefaultTownTechs {
 			{Times.During_Medical_Skill_Check}
 		});
 		curTech.SetId(7);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Communication Center");
@@ -124,7 +123,7 @@ public class DefaultTownTechs {
 			{Times.Anytime}
 		});
 		curTech.SetId(8);
-		techs.Add(curTech);
+		Techs.Add(curTech);
 
 		/***************************************************/
 		curTech = new TownTech("Water and Supplies");
@@ -138,26 +137,26 @@ public class DefaultTownTechs {
 			{Times.During_Survival_Skill_Check}
 		});
 		curTech.SetId(9);
-		techs.Add(curTech);
-
+		Techs.Add(curTech);
 	}
 
-
-
-
-
-	public List<TownTech> getDefaultTownTechList(){
-		return this.techs;
+	public List<TownTech> GetDefaultTownTechList()
+	{
+		return Techs;
 	}
 
-	public TownTech getTownTechByName(string name){
-		foreach(TownTech tt in techs) {
-			if(tt.GetTechName() == name) {
-				return tt;
+	public TownTech GetTownTechByName(string name)
+	{
+		TownTech toReturn = null;
+		foreach(TownTech tt in Techs)
+		{
+			if(tt.GetTechName() == name)
+			{
+				toReturn = tt;
+				break;
 			}
 		}
 
-		//Error condition
-		return null;
+		return toReturn;
 	}
 }

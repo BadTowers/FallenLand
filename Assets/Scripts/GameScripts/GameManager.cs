@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour {
 		}
 
         //Count how many town techs are assigned to begin
-        techs = (new DefaultTownTechs()).getDefaultTownTechList();
+        techs = (new DefaultTownTechs()).GetDefaultTownTechList();
 		techsUsed = new Dictionary<TownTech, int>();
         foreach (TownTech tt in techs)
 		{
