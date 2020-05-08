@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour {
 		} else {
             //TODO handle this better probably
 			Debug.Log ("Game info not received from game setup.");
-			players.Add(new HumanPlayer(new DefaultFactionInfo().getDefaultFactionList()[0], startingSalvage));
+			players.Add(new HumanPlayer(new DefaultFactionInfo().GetDefaultFactionList()[0], startingSalvage));
 		}
 
 

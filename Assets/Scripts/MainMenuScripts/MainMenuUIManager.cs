@@ -57,7 +57,7 @@ public class MainMenuUIManager : UIManager {
 		curFactionNum = 1;
 		factionWasChanged = true;
 		gameModeWasChanged = true;
-		factions = (new DefaultFactionInfo()).getDefaultFactionList(); //TODO rework to handle mods later?
+		factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
 
 		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 		addToMenuList(mainMenu);

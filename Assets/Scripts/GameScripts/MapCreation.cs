@@ -41,7 +41,7 @@ public class MapCreation : MonoBehaviour {
 		}
 
 		//Load default factions
-		factions = new DefaultFactionInfo().getDefaultFactionList();
+		factions = new DefaultFactionInfo().GetDefaultFactionList();
 
 		for (int LR = 0; LR < width; LR++) { //Left/right
 			for (int UD = 0; UD < height; UD++) { //Up/down

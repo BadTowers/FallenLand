@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class DefaultFactionInfo {
+public class DefaultFactionInfo
+{
+	private List<Faction> Factions;
 
-
-	private List<Faction> facs;
-
-	public DefaultFactionInfo(){
-		facs = new List<Faction>();
+	public DefaultFactionInfo()
+	{
+		Factions = new List<Faction>();
 		DefaultTownTechs availableTownTechs = new DefaultTownTechs();
 		Faction curFac;
 		Perk curPerk;
@@ -86,7 +86,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -158,7 +158,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -248,7 +248,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -323,7 +323,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -412,7 +412,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -489,7 +489,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -568,7 +568,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -669,7 +669,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -755,7 +755,7 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 
 
 		/***************************************************/
@@ -834,11 +834,11 @@ public class DefaultFactionInfo {
 		curFac.AddStartingTownTech(curTech);
 		curFac.SetId(tempID);
 		tempID++;
-		facs.Add(curFac);
+		Factions.Add(curFac);
 	}
 
-
-	public List<Faction> getDefaultFactionList(){
-		return this.facs;
+	public List<Faction> GetDefaultFactionList()
+	{
+		return Factions;
 	}
 }
