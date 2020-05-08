@@ -1,157 +1,191 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public class Hex : MonoBehaviour, HexInterface
+{
+	private Coordinates CoordinatesInstance;
+	private bool IsCityHex;
+	private bool IsRadHex;
+	private bool IsMountainHex;
+	private bool IsPlainsHex;
+	private bool IsRandomLocationHex;
+	private bool IsWaterHex;
+	private bool IsResourceHex;
+	private bool IsFactionBaseHex;
+	private Faction FactionInstance;
+	private int LocationNumber;
+	private bool IsValidHex;
 
-public class Hex : MonoBehaviour, HexInterface{
-	private Coordinates coords;
-	private bool city;
-	private bool rad;
-	private bool mountain;
-	private bool plains;
-	private bool randomLocation;
-	private bool water;
-	private bool resource;
-	private bool factionBase;
-	private Faction faction;
-	private int locationNumber;
-	private bool valid;
-
-	//CONSTRUCTORS
 	public Hex()
 	{
-
+		CoordinatesInstance = new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION);
+		FactionInstance = new Faction("invalid faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
 	}
+
 	public Hex(Coordinates coords)
 	{
-		this.coords = coords;
+		if (coords != null)
+		{
+			CoordinatesInstance = coords;
+		}
+		else
+		{
+			CoordinatesInstance = new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION);
+		}
+
+		FactionInstance = new Faction("invalid faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
 	}
+
 	public Hex(int x, int y)
 	{
-		this.coords = new Coordinates (x, y);
+		setXAndYCoordinates(x, y);
+		FactionInstance = new Faction("invalid faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
 	}
 
-	public void setCoordinates(Coordinates coords)
+	public void SetCoordinates(Coordinates coords)
 	{
-		this.coords = coords;
+		if (coords != null)
+		{
+			CoordinatesInstance = coords;
+		}
 	}
 
-	public void setCoordinates(int x, int y)
+	public void SetCoordinates(int x, int y)
 	{
-		this.coords = new Coordinates (x, y);
+		setXAndYCoordinates(x, y);
 	}
 
-	public Coordinates getCoordinates()
+	public Coordinates GetCoordinates()
 	{
-		return this.coords;
+		return CoordinatesInstance;
 	}
 
-	public bool isCity()
+	public bool IsCity()
 	{
-		return city;
+		return IsCityHex;
 	}
 
-	public void setIsCity(bool city)
+	public void SetIsCity(bool city)
 	{
-		this.city = city;
+		IsCityHex = city;
 	}
 
-	public bool isRad()
+	public bool IsRad()
 	{
-		return rad;
+		return IsRadHex;
 	}
 
-	public void setIsRad(bool rad)
+	public void SetIsRad(bool rad)
 	{
-		this.rad = rad;
+		IsRadHex = rad;
 	}
 
-	public bool isMountain()
+	public bool IsMountain()
 	{
-		return mountain;
+		return IsMountainHex;
 	}
 
-	public void setIsMountain(bool mountain)
+	public void SetIsMountain(bool mountain)
 	{
-		this.mountain = mountain;
+		IsMountainHex = mountain;
 	}
 
-	public bool isPlains()
+	public bool IsPlains()
 	{
-		return plains;
+		return IsPlainsHex;
 	}
 
-	public void setIsPlains(bool plains)
+	public void SetIsPlains(bool plains)
 	{
-		this.plains = plains;
+		IsPlainsHex = plains;
 	}
 
-	public bool isRandomLocation()
+	public bool IsRandomLocation()
 	{
-		return randomLocation;
+		return IsRandomLocationHex;
 	}
 
-	public void setIsRandomLocation(bool rl)
+	public void SetIsRandomLocation(bool isRandomLocation)
 	{
-		this.randomLocation = rl;
+		IsRandomLocationHex = isRandomLocation;
 	}
 
-	public bool isWater()
+	public bool IsWater()
 	{
-		return water;
+		return IsWaterHex;
 	}
 
-	public void setIsWater(bool water)
+	public void SetIsWater(bool isWater)
 	{
-		this.water = water;
+		IsWaterHex = isWater;
 	}
 
-	public bool isResource()
+	public bool IsResource()
 	{
-		return this.resource;
+		return IsResourceHex;
 	}
 
-	public void setIsResource(bool resource)
+	public void SetIsResource(bool isResource)
 	{
-		this.resource = resource;
+		IsResourceHex = isResource;
 	}
 
-	public bool isFactionBase()
+	public bool IsFactionBase()
 	{
-		return factionBase;
+		return IsFactionBaseHex;
 	}
 
-	public void setIsFactionBase(bool fb)
+	public void SetIsFactionBase(bool isFactionBase)
 	{
-		this.factionBase = fb;
+		IsFactionBaseHex = isFactionBase;
 	}
 
-	public Faction getFaction()
+	public Faction GetFaction()
 	{
-		return this.faction;
+		return FactionInstance;
 	}
 
-	public void setFaction(Faction f)
+	public void SetFaction(Faction faction)
 	{
-		this.faction = f;
+		if (faction != null)
+		{
+			FactionInstance = faction;
+		}
 	}
 
-	public int getRandomLocation()
+	public int GetRandomLocationNumber()
 	{
-		return this.locationNumber;
+		return LocationNumber;
 	}
 
-	public void setRandomLocation(int loc)
+	public void SetRandomLocationNumber(int locationNum)
 	{
-		this.locationNumber = loc;
+		if (locationNum > 0)
+		{
+			LocationNumber = locationNum;
+		}
 	}
 
-	public bool isHexInGame()
+	public bool IsHexInGame()
 	{
-		return this.valid;
+		return IsValidHex;
 	}
 
-	public void setIsHexInGame(bool valid)
+	public void SetIsHexInGame(bool isValid)
 	{
-		this.valid = valid;
+		IsValidHex = isValid;
+	}
+
+	private void setXAndYCoordinates(int x, int y)
+	{
+		if (x < Constants.INVALID_LOCATION)
+		{
+			x = Constants.INVALID_LOCATION;
+		}
+		if (y < Constants.INVALID_LOCATION)
+		{
+			y = Constants.INVALID_LOCATION;
+		}
+		CoordinatesInstance = new Coordinates(x, y);
 	}
 }

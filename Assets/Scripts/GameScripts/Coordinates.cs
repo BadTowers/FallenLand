@@ -5,6 +5,14 @@
 
     public Coordinates(int x, int y)
     {
+        if (x < Constants.INVALID_LOCATION)
+        {
+            x = Constants.INVALID_LOCATION;
+        }
+        if (y < Constants.INVALID_LOCATION)
+        {
+            y = Constants.INVALID_LOCATION;
+        }
         X = x;
         Y = y;
     }

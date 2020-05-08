@@ -1,38 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface HexInterface {
+public interface HexInterface
+{
+	bool IsCity();
+	void SetIsCity(bool isCity);
 
-	bool isCity();
-	void setIsCity(bool city);
+	bool IsRad();
+	void SetIsRad(bool isRad);
 
-	bool isRad();
-	void setIsRad(bool rad);
+	bool IsMountain();
+	void SetIsMountain(bool isMountain);
 
-	bool isMountain();
-	void setIsMountain(bool mountain);
+	bool IsPlains();
+	void SetIsPlains(bool isPlains);
 
-	bool isPlains();
-	void setIsPlains(bool plains);
+	bool IsRandomLocation();
+	void SetIsRandomLocation(bool isRandomLocation);
 
-	bool isRandomLocation();
-	void setIsRandomLocation(bool rand);
+	bool IsWater();
+	void SetIsWater(bool isWater);
 
-	bool isWater();
-	void setIsWater(bool water);
+	bool IsFactionBase();
+	void SetIsFactionBase(bool isFactionBase);
 
-	bool isFactionBase();
-	void setIsFactionBase(bool b);
+	bool IsResource();
+	void SetIsResource(bool isResource);
 
-	bool isResource();
-	void setIsResource(bool resource);
+	Faction GetFaction();
+	void SetFaction(Faction faction);
 
-	Faction getFaction();
-	void setFaction(Faction f);
+	int GetRandomLocationNumber();
+	void SetRandomLocationNumber(int randomLocationNumber);
 
-	int getRandomLocation();
-	void setRandomLocation(int loc);
-
-	bool isHexInGame();
-	void setIsHexInGame( bool valid);
+	bool IsHexInGame();
+	void SetIsHexInGame(bool isValid);
 }

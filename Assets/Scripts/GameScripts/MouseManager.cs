@@ -108,32 +108,32 @@ public class MouseManager : MonoBehaviour {
 		StringBuilder toReturn = new StringBuilder();
 		toReturn.Append(hex.name);
 		toReturn.Append(Environment.NewLine);
-		if (hex.isRad ()) {
+		if (hex.IsRad ()) {
 			toReturn.Append("Rad" + Environment.NewLine);
 		}
-		if (hex.isCity ()) {
+		if (hex.IsCity ()) {
 			toReturn.Append("City" + Environment.NewLine);
 		}
-		if (hex.isMountain ()) {
+		if (hex.IsMountain ()) {
 			toReturn.Append ("Mountain" + Environment.NewLine);
 		}
-		if (hex.isPlains ()) {
+		if (hex.IsPlains ()) {
 			toReturn.Append ("Plains" + Environment.NewLine);
 		}
-		if (hex.isRandomLocation ()) {
+		if (hex.IsRandomLocation ()) {
 			toReturn.Append("R: ");
-			toReturn.Append(hex.getRandomLocation());
+			toReturn.Append(hex.GetRandomLocationNumber());
 			toReturn.Append (Environment.NewLine);
 		}
-		if (hex.isResource ()) {
+		if (hex.IsResource ()) {
 			toReturn.Append ("Resource" + Environment.NewLine);
 		}
-		if(hex.isFactionBase()){
+		if(hex.IsFactionBase()){
 			toReturn.Append("F: ");
-			toReturn.Append(hex.getFaction());
+			toReturn.Append(hex.GetFaction());
 			toReturn.Append(Environment.NewLine);
 		}
-		if (hex.isWater ()) {
+		if (hex.IsWater ()) {
 			toReturn.Append ("Water" + Environment.NewLine);
 		}
 
