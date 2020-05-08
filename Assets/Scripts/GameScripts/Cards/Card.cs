@@ -6,16 +6,16 @@ using System;
 public abstract class Card
 {
 	/*
-							     Cards
-				   			   /       \
-					Encounters  		 Nonencounters
-				  /	|	 \     \			  |		\
-				 /	|	  \	    \			  |	 	 \
-				/	|	   \	 \			  |		  \
-			   /    |      	\ 	  \ 		  |		   \
-	 	Mission	  	Plains	Rad	  Mountain 	 Party		Nonparty
-	 										 |   |		    |
-	 								Character    Spoils   	Action
+                                 Cards
+                               /       \
+                    Encounters          Nonencounters
+                  / |    \     \              |     \
+                 /  |     \     \             |      \
+                /   |      \     \            |       \
+               /    |       \     \           |        \
+         Mission   Plains   Rad   Mountain   Party      Nonparty
+                                             |   |          |
+                                     Character    Spoils    Action
 	*/
 
 	private string Title;
