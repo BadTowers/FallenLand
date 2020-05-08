@@ -339,22 +339,22 @@ public class MainMenuUIManager : UIManager {
 
 		//Set up the perk texts TODO rework this to be more dynamic (could have more or less than 4 perks)
 		if (specificPerk1Text != null) {
-			specificPerk1Text.text = curFac.GetPerks()[0].getPerkTitle() + ": " + curFac.GetPerks()[0].getPerkDescription();
+			specificPerk1Text.text = curFac.GetPerks()[0].GetPerkTitle() + ": " + curFac.GetPerks()[0].GetPerkDescription();
 		} else {
 			Debug.Log("Perk 1 text container not set");
 		}
 		if (specificPerk2Text != null) {
-			specificPerk2Text.text = curFac.GetPerks()[1].getPerkTitle() + ": " + curFac.GetPerks()[1].getPerkDescription();
+			specificPerk2Text.text = curFac.GetPerks()[1].GetPerkTitle() + ": " + curFac.GetPerks()[1].GetPerkDescription();
 		} else {
 			Debug.Log("Perk 2 text container not set");
 		}
 		if (specificPerk3Text != null) {
-			specificPerk3Text.text = curFac.GetPerks()[2].getPerkTitle() + ": " + curFac.GetPerks()[2].getPerkDescription();
+			specificPerk3Text.text = curFac.GetPerks()[2].GetPerkTitle() + ": " + curFac.GetPerks()[2].GetPerkDescription();
 		} else {
 			Debug.Log("Perk 3 text container not set");
 		}
 		if (specificPerk4Text != null) {
-			specificPerk4Text.text = curFac.GetPerks()[3].getPerkTitle() + ": " + curFac.GetPerks()[3].getPerkDescription();
+			specificPerk4Text.text = curFac.GetPerks()[3].GetPerkTitle() + ": " + curFac.GetPerks()[3].GetPerkDescription();
 		} else {
 			Debug.Log("Perk 4 text container not set");
 		}

@@ -2,101 +2,109 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Perk {
-	//A perk has times it can be used
-	private List<Times> whenUsable;
-	//A perk has a certain number of uses
-	private List<Uses> uses;
-	//A perk has gains given as a result of using it
-	private Dictionary<Gains, int> staticGains; //Passive type gains that are always active
-	private Dictionary<Gains, int> conditionalGains; //List of different conditional ability choices the player has
-	//A perk has a title
-	private string perkTitle;
-	//A perk has a text description
-	private string perkDescription;
-	//A perk may have D6 options
-	private List<Dictionary<Gains, int>> d6;
+public class Perk
+{
+	private List<Times> WhenUsable;
+	private List<Uses> NumberOfUses;
+	private Dictionary<Gains, int> StaticGains;
+	private Dictionary<Gains, int> ConditionalGains;
+	private string PerkTitle;
+	private string PerkDescription;
+	private List<Dictionary<Gains, int>> D6Options;
 
 
-	//Constructor
-	public Perk(string title){
-		this.whenUsable = new List<Times>();
-		this.uses = new List<Uses>();
-		this.staticGains = new Dictionary<Gains, int>();
-		this.conditionalGains = new Dictionary<Gains, int>();
-		this.perkTitle = title;
-		this.d6 = new List<Dictionary<Gains, int>>();
+	public Perk(string title)
+	{
+		WhenUsable = new List<Times>();
+		NumberOfUses = new List<Uses>();
+		StaticGains = new Dictionary<Gains, int>();
+		ConditionalGains = new Dictionary<Gains, int>();
+		PerkTitle = title;
+		D6Options = new List<Dictionary<Gains, int>>();
 	}
 
-	public void setTimes(List<Times> t){
-		this.whenUsable = t;
+	public void SetTimes(List<Times> whenUsable)
+	{
+		if (whenUsable != null)
+		{
+			WhenUsable = whenUsable;
+		}
 	}
 
-	public void addTime(Times t){
-		this.whenUsable.Add(t);
+	public List<Times> GetTimes()
+	{
+		return WhenUsable;
 	}
 
-	public List<Times> getTimes(){
-		return this.whenUsable;
+	public void SetUses(List<Uses> numUses)
+	{
+		if (numUses != null)
+		{
+			NumberOfUses = numUses;
+		}
 	}
 
-	public void setUses(List<Uses> u){
-		this.uses = u;
+	public List<Uses> GetUses()
+	{
+		return NumberOfUses;
 	}
 
-	public void addUses(Uses u){
-		this.uses.Add(u);
+	public void SetStaticGains(Dictionary<Gains, int> staticGains)
+	{
+		if (staticGains != null)
+		{
+			StaticGains = staticGains;
+		}
 	}
 
-	public List<Uses> getUses(){
-		return this.uses;
+	public Dictionary<Gains, int> GetStaticGains()
+	{
+		return StaticGains;
 	}
 
-	public void setStaticGains(Dictionary<Gains, int> g){
-		this.staticGains = g;
+	public void SetConditionalGains(Dictionary<Gains, int> conditionalGains)
+	{
+		if (conditionalGains != null)
+		{
+			ConditionalGains = conditionalGains;
+		}
 	}
 
-	public void addStaticGains(Gains g, int i){
-		this.staticGains.Add(g, i);
+	public Dictionary<Gains, int> GetConditionalGains()
+	{
+		return ConditionalGains;
 	}
 
-	public Dictionary<Gains, int> getStaticGains(){
-		return this.staticGains;
+	public void SetPerkTitle(string title)
+	{
+		PerkTitle = title;
 	}
 
-	public void setConditionalGains(Dictionary<Gains, int> g){
-		this.conditionalGains = g;
+	public string GetPerkTitle()
+	{
+		return PerkTitle;
 	}
 
-	public void addConditionalGains(Gains g, int i){
-		this.conditionalGains.Add(g, i);
+	public void SetPerkDescription(string description)
+	{
+		PerkDescription = description;
 	}
 
-	public Dictionary<Gains, int> getConditionalGains(){
-		return this.conditionalGains;
+	public string GetPerkDescription()
+	{
+		return PerkDescription;
 	}
 
-	public void setPerkTitle(string title){
-		this.perkTitle = title;
+	public void AddD6Option(Dictionary<Gains, int> d6Option)
+	{
+		if (d6Option != null)
+		{
+			D6Options.Add(d6Option);
+		}
 	}
 
-	public string getPerkTitle(){
-		return this.perkTitle;
-	}
-
-	public void setPerkDescription(string desc){
-		this.perkDescription = desc;
-	}
-
-	public string getPerkDescription(){
-		return this.perkDescription;
-	}
-
-	public void addD6Option(Dictionary<Gains, int> d6Option){
-		this.d6.Add(d6Option);
-	}
-
-	public List<Dictionary<Gains, int>> getD6Options(){
-		return this.d6;
+	public List<Dictionary<Gains, int>> GetD6Options()
+	{
+		return D6Options;
 	}
 }

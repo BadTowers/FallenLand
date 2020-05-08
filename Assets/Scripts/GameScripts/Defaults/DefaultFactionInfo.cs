@@ -19,51 +19,51 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Coalition of the Black Angels", new Coordinates(19,13));
 		curFac.SetBaseLocationString("Iowa City, Iowa");
 		curPerk = new Perk("Combat Medic");
-		curPerk.setPerkDescription("Begin the game with the PARAMEDIC MED KIT spoils card");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with the PARAMEDIC MED KIT spoils card");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Card_Paramedic_Med_Kit, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Information Crossroads");
-		curPerk.setPerkDescription("Once per turn, during the TOWN BUSINESS PHASE, you may pay 5 salvage coins to draw 1 action card");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
+		curPerk.SetPerkDescription("Once per turn, during the TOWN BUSINESS PHASE, you may pay 5 salvage coins to draw 1 action card");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
 			{Gains.Gain_Action_Cards, 1},
 			{Gains.Optional_Pay_Salvage, 5}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Town_Business_Phase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Fight Club");
-		curPerk.setPerkDescription("During party MELEE WEAPONS ONLY encounter cards, you receive 1 additional combat success");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
+		curPerk.SetPerkDescription("During party MELEE WEAPONS ONLY encounter cards, you receive 1 additional combat success");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
 			{Gains.Gain_Party_Combat_Skill_Check_Successes, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Melee_Weapons_Only
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Midwestern Charm");
-		curPerk.setPerkDescription("Perform the HEALING DEED in any neutral starting town without having to pay the bank");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>() {
+		curPerk.SetPerkDescription("Perform the HEALING DEED in any neutral starting town without having to pay the bank");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
 			{Gains.Healing_Deed_Salvage_Coin_Cost, 0}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.In_Neutral_Starting_Town
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Unlimited
 		});
 		curFac.AddPerk(curPerk);
@@ -93,50 +93,50 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Enclave of Terra", new Coordinates(10,20));
 		curFac.SetBaseLocationString("Great Falls, Montana");
 		curPerk = new Perk("Hunter's Instinct");
-		curPerk.setPerkDescription("Begin the game with the COMPOUND HUNTING BOW spoils card.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with the COMPOUND HUNTING BOW spoils card.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Card_Compound_Hunting_Bow, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Diplomatic Connections");
-		curPerk.setPerkDescription("Each time you are the first player, SUBTRACT 2 FROM TOWN EVENTS ROLL.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Each time you are the first player, SUBTRACT 2 FROM TOWN EVENTS ROLL.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Subtract_From_Roll, 2}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Town_Events_Chart_Subphase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Wiley");
-		curPerk.setPerkDescription("Your party GAINS +1 DURING FLIGHT ROLLS.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Your party GAINS +1 DURING FLIGHT ROLLS.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Add_To_Roll, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Encounter_Flight
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Kismet");
-		curPerk.setPerkDescription("Once per turn, during a solo encounter card, REROLL A FAILED SKILL CHECK.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Once per turn, during a solo encounter card, REROLL A FAILED SKILL CHECK.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Reroll_Failed_Skill_Check, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Solo_Encounter
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
@@ -165,65 +165,65 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Syndicate", new Coordinates(4,15));
 		curFac.SetBaseLocationString("Battle Mountain, Nevada");
 		curPerk = new Perk("Natural Defenses");
-		curPerk.setPerkDescription("Begin the game with 1 TOWN DEFENSE CHIP.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with 1 TOWN DEFENSE CHIP.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Town_Defense_Chips, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("High Rollers");
-		curPerk.setPerkDescription("During the TOWN EVENTS PHASE, you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("During the TOWN EVENTS PHASE, you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Roll_D6, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Town_Events_Chart_Subphase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+		curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
 			{Gains.Gain_Salvage, 5}
 		});
-		curPerk.addD6Option(new Dictionary<Gains, int>(){ //2
+		curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
 			{Gains.Gain_Salvage, 5}
 		});
-		curPerk.addD6Option(new Dictionary<Gains, int>(){ //3
+		curPerk.AddD6Option(new Dictionary<Gains, int>(){ //3
 			{Gains.Gain_Salvage, 5}
 		});
-		curPerk.addD6Option(null); //4
-		curPerk.addD6Option(null); //5
-		curPerk.addD6Option(new Dictionary<Gains, int>(){ //6
+		curPerk.AddD6Option(null); //4
+		curPerk.AddD6Option(null); //5
+		curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
 			{Gains.Lost_Salvage, 7}
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Mountaineering");
-		curPerk.setPerkDescription("Each MOVEMENT DEED, the 1st mountain hex your party passes through costs 1 movement instead of two.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Each MOVEMENT DEED, the 1st mountain hex your party passes through costs 1 movement instead of two.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Mountain_Hexes_Cost, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.First_Move_Into_Mountain_Hex
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Movement_Deed
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("The Mineshaft Gap");
-		curPerk.setPerkDescription("Once per turn, if your town roster is empty, you may draw a character card and place it there.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Once per turn, if your town roster is empty, you may draw a character card and place it there.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Draw_Character_Cards, 1},
 			{Gains.Place_Into_Town_Roster, -1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Anytime
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
@@ -255,52 +255,52 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Swamp Runners", new Coordinates(20,4));
 		curFac.SetBaseLocationString("Shreveport, Louisiana");
 		curPerk = new Perk("Connected");
-		curPerk.setPerkDescription("Begin the game with a resource location of your choosing.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with a resource location of your choosing.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Resource_Location, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Southern Ingenuity");
-		curPerk.setPerkDescription("Once per turn, during the effects phase, you may DISCARD AN ACTION CARD TO DRAW A SPOILS CARD for your auction house.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Once per turn, during the effects phase, you may DISCARD AN ACTION CARD TO DRAW A SPOILS CARD for your auction house.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Discard_Action_Cards, 1},
 			{Gains.Draw_Spoils_Cards, 1},
 			{Gains.Place_Into_Auction_House, -1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Effects_Phase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Smugglers Network");
-		curPerk.setPerkDescription("Each time you sell a spoils card from your auction house to another player, receive 3 salvage coin from the bank.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Each time you sell a spoils card from your auction house to another player, receive 3 salvage coin from the bank.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Salvage, 3}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.After_Sell_Spoils_Card_From_Auction_House_To_Another_Player
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Unlimited
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Born on the Bayou");
-		curPerk.setPerkDescription("Your party gains +2 FLIGHT during PVP.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Your party gains +2 FLIGHT during PVP.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Add_To_Roll, 2}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_PVP_Flight
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
 		curFac.AddPerk(curPerk);
@@ -330,62 +330,62 @@ public class DefaultFactionInfo {
 		curFac = new Faction("New Federalists", new Coordinates(25,7));
 		curFac.SetBaseLocationString("Albany, Georgia");
 		curPerk = new Perk("Armory Cache");
-		curPerk.setPerkDescription("Begin the game with the MILITIA RIFLE spoils card.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with the MILITIA RIFLE spoils card.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Card_Militia_Rifle, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Weapons Bazaar");
-		curPerk.setPerkDescription("During the town business phase, roll 1d6. On 1-2, remove first weapons spoils card (top to bottom) from discard pile and place into auction house.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("During the town business phase, roll 1d6. On 1-2, remove first weapons spoils card (top to bottom) from discard pile and place into auction house.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Roll_D6, 1},
 			{Gains.Place_Into_Auction_House, -1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Town_Business_Phase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
-		curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+		curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
 			{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
 		});
-		curPerk.addD6Option(new Dictionary<Gains, int>(){ //2
+		curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
 			{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
 		});
-		curPerk.addD6Option(null); //3
-		curPerk.addD6Option(null); //4
-		curPerk.addD6Option(null); //5
-		curPerk.addD6Option(null); //6
+		curPerk.AddD6Option(null); //3
+		curPerk.AddD6Option(null); //4
+		curPerk.AddD6Option(null); //5
+		curPerk.AddD6Option(null); //6
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Navigators");
-		curPerk.setPerkDescription("City and radiation hexes cost 2 movement instead of 3.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("City and radiation hexes cost 2 movement instead of 3.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.CityRad_Hexes_Cost, 2}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Anytime
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Unlimited
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Mercenary Haven");
-		curPerk.setPerkDescription("Pay 2 salvage coins less to hire an NPCM action card or ALLY spoils card.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Pay 2 salvage coins less to hire an NPCM action card or ALLY spoils card.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.NPCM_Hire_Cost_Less, 2},
 			{Gains.Ally_Hire_Cost_Less, 2}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Anytime
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Unlimited
 		});
 		curFac.AddPerk(curPerk);
@@ -419,52 +419,52 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Regulators", new Coordinates(14,8));
 		curFac.SetBaseLocationString("Amarillo, Texas");
 		curPerk = new Perk("The Cownboy Way");
-		curPerk.setPerkDescription("Begin the game with the SIX FAST HORSES spoils card.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with the SIX FAST HORSES spoils card.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Card_Six_Fast_Horses, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Cattle Drivers");
-		curPerk.setPerkDescription("Each town business phase, choose another faction. You each receive 3 salvage coins.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Each town business phase, choose another faction. You each receive 3 salvage coins.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Pick_Other_Factions_Share_Gains, 1},
 			{Gains.Gain_Salvage, 3}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Town_Business_Phase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Into the Wild");
-		curPerk.setPerkDescription("During End Turn Phase, you may move your STARTING TOWN LOCATION up to 2 hexes by paying 3 salvage coins. Cannot occupy hex containing another town, resource, radiation, or water. Mission locations are rerolled.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("During End Turn Phase, you may move your STARTING TOWN LOCATION up to 2 hexes by paying 3 salvage coins. Cannot occupy hex containing another town, resource, radiation, or water. Mission locations are rerolled.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Optional_Pay_Salvage, 3},
 			{Gains.Move_Town_Location_Number_Hexes, 2}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_End_Turn_Phase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Rangers");
-		curPerk.setPerkDescription("You may purchase the tier 1 LAW AND ORDER TOWN TECHNOLOGY for 30 salvage coins.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("You may purchase the tier 1 LAW AND ORDER TOWN TECHNOLOGY for 30 salvage coins.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Town_Tech_Law_And_Order_Tier_One_Cost, 30},
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Purchase_Subphase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Unlimited
 		});
 		curFac.AddPerk(curPerk);
@@ -496,54 +496,54 @@ public class DefaultFactionInfo {
 		curFac = new Faction("The Highwaymen", new Coordinates(16,16));
 		curFac.SetBaseLocationString("Sturgis, South Dakota");
 		curPerk = new Perk("Motorcycle Culture");
-		curPerk.setPerkDescription("Begin the game with the AMERICAN IRON CUSTOM CHOPPERS spoils card. Cannot be sold or traded.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Begin the game with the AMERICAN IRON CUSTOM CHOPPERS spoils card. Cannot be sold or traded.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1},
 			{Gains.Reward_Cannot_Be_Traded, -1},
 			{Gains.Reward_Cannot_Be_Sold, -1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Start_Of_Game
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Game
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Caravan Escort");
-		curPerk.setPerkDescription("Each town business phase, select another faction. You each gain 2 salvage coins.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Each town business phase, select another faction. You each gain 2 salvage coins.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Pick_Other_Factions_Share_Gains, 1},
 			{Gains.Gain_Salvage, 2}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.During_Town_Business_Phase
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Turn
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("The Riddle of Steel");
-		curPerk.setPerkDescription("If your party returns to town without a vehicle, immediately retrieve the AMERICAN IRON CUSTOM CHOPPERS spoils card.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("If your party returns to town without a vehicle, immediately retrieve the AMERICAN IRON CUSTOM CHOPPERS spoils card.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Return_To_Town_Location,
 			Times.Has_No_Vehicle
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Unlimited
 		});
 		curFac.AddPerk(curPerk);
 		curPerk = new Perk("Road Warriors");
-		curPerk.setPerkDescription("Each time a VEHICLE COMBAT or BIKER GANG ENCOUNTER CARD is drawn by any player, you GAIN 1 PRESTIGE.");
-		curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+		curPerk.SetPerkDescription("Each time a VEHICLE COMBAT or BIKER GANG ENCOUNTER CARD is drawn by any player, you GAIN 1 PRESTIGE.");
+		curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
 			{Gains.Gain_Prestige, 1}
 		});
-		curPerk.setTimes(new List<Times>(){
+		curPerk.SetTimes(new List<Times>(){
 			Times.Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
 		});
-		curPerk.setUses(new List<Uses>(){
+		curPerk.SetUses(new List<Uses>(){
 			Uses.Once_Per_Encounter
 		});
 		curFac.AddPerk(curPerk);
@@ -575,76 +575,76 @@ public class DefaultFactionInfo {
 		curFac = new Faction("The Brotherhood", new Coordinates(7,11));
 		curFac.SetBaseLocationString("Saint George, Utah");
         curPerk = new Perk("Blade Cult");
-        curPerk.setPerkDescription("Begin the game with the VENDETTA DAGGERS spoils card.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Begin the game with the VENDETTA DAGGERS spoils card.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Gain_Spoils_Card_Vendetta_Daggers, 1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.Start_Of_Game
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Wasteland Scavengers");
-        curPerk.setPerkDescription("Each TOWN BUSINESS PHASE, roll 1d6 and gain that many salvage coins.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Each TOWN BUSINESS PHASE, roll 1d6 and gain that many salvage coins.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Roll_D6, 1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.During_Town_Business_Phase
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Turn
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
 			{Gains.Gain_Salvage, 1}
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //2
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
 			{Gains.Gain_Salvage, 2}
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //3
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //3
 			{Gains.Gain_Salvage, 3}
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //4
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //4
 			{Gains.Gain_Salvage, 4}
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //5
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //5
 			{Gains.Gain_Salvage, 5}
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //6
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
 			{Gains.Gain_Salvage, 6}
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Down With the Sickness");
-        curPerk.setPerkDescription("When an opponent plays a \"negative\" action card against one of your characters or party, roll 1d6. On a 1, each of their party members suffers 1 radiation damage.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("When an opponent plays a \"negative\" action card against one of your characters or party, roll 1d6. On a 1, each of their party members suffers 1 radiation damage.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Roll_D6, 1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.Negative_Action_Card_Against_Player
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Card
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
 			{Gains.Inflict_Rad_Damage_On_Opposing_Party, 1}
         });
-        curPerk.addD6Option(null); //2
-        curPerk.addD6Option(null); //3
-        curPerk.addD6Option(null); //4
-        curPerk.addD6Option(null); //5
-        curPerk.addD6Option(null); //6
+        curPerk.AddD6Option(null); //2
+        curPerk.AddD6Option(null); //3
+        curPerk.AddD6Option(null); //4
+        curPerk.AddD6Option(null); //5
+        curPerk.AddD6Option(null); //6
         curFac.AddPerk(curPerk);
 		curPerk = new Perk("Survival Instincts");
-        curPerk.setPerkDescription("Your party ignores all negative effects from ENVIRONMENTAL HAZARD encounter cards.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Your party ignores all negative effects from ENVIRONMENTAL HAZARD encounter cards.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Ignore_Negatives_Of_Enoucnter_Failure, -1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.During_Environmetal_Hazard_Encounter_Card
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Card
         });
         curFac.AddPerk(curPerk);
@@ -676,61 +676,61 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Sons of Neptune", new Coordinates(23,15));
 		curFac.SetBaseLocationString("Grand Haven, Michigan");
         curPerk = new Perk("Hidden Agenda");
-        curPerk.setPerkDescription("Begin the game with TWO ADDITIONAL ACTION CARDS.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Begin the game with TWO ADDITIONAL ACTION CARDS.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Gain_Action_Cards, 2}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.Start_Of_Game
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("River Traders");
-        curPerk.setPerkDescription("Each EFFECTS PHASE, you may draw a spoils card. To keep it, pay a random player 1/2 its value in salvage (rounded up).");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Each EFFECTS PHASE, you may draw a spoils card. To keep it, pay a random player 1/2 its value in salvage (rounded up).");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Draw_Spoils_Cards, 1},
             {Gains.Pay_Random_Player_Half_Salvage_Value_To_Keep, -1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.During_Effects_Phase
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Turn
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Anchors Aweigh");
-        curPerk.setPerkDescription("When your town is the target of an action card or world card effect, roll 1d6. On a 1, ignore the effects.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("When your town is the target of an action card or world card effect, roll 1d6. On a 1, ignore the effects.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Roll_D6, 1},
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.Town_Target_Of_Action_Card_Or_World_Card
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Card
         });
-        curPerk.addD6Option(new Dictionary<Gains, int>(){ //1
+        curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
 			{Gains.Ignore_Negative_Effects_Of_Card, 1}
         });
-        curPerk.addD6Option(null); //2
-        curPerk.addD6Option(null); //3
-        curPerk.addD6Option(null); //4
-        curPerk.addD6Option(null); //5
-        curPerk.addD6Option(null); //6
+        curPerk.AddD6Option(null); //2
+        curPerk.AddD6Option(null); //3
+        curPerk.AddD6Option(null); //4
+        curPerk.AddD6Option(null); //5
+        curPerk.AddD6Option(null); //6
         curFac.AddPerk(curPerk);
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Amphibious");
-        curPerk.setPerkDescription("Your party may MOVE THROUGH THE GREAT LAKES. Each lake costs 1 salvage and 1 movement. Cannot end movement deed in water hex.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Your party may MOVE THROUGH THE GREAT LAKES. Each lake costs 1 salvage and 1 movement. Cannot end movement deed in water hex.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Move_Through_Great_Lakes, 1},
             {Gains.Optional_Pay_Salvage, 1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.During_Movement_Deed
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Unlimited
         });
         curFac.AddPerk(curPerk);
@@ -762,51 +762,51 @@ public class DefaultFactionInfo {
 		curFac = new Faction("Sigma Corporation", new Coordinates(28,14));
 		curFac.SetBaseLocationString("Emporium, Pennsylvania");
         curPerk = new Perk("The Long Walk");
-        curPerk.setPerkDescription("Begin the game with the 6.8mm ADVANCED RIFLE spoils card.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Begin the game with the 6.8mm ADVANCED RIFLE spoils card.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Gain_Spoils_Card_68mm_Advanced_Rifle, 1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.Start_Of_Game
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Veritable Fortress");
-        curPerk.setPerkDescription("Begin the game with 2 TOWN DEFENSE CHIPS. All other town defense chips cost 4 extra salvage coins.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Begin the game with 2 TOWN DEFENSE CHIPS. All other town defense chips cost 4 extra salvage coins.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Gain_Town_Defense_Chips, 2},
             {Gains.All_Town_Defense_Chips_Cost_More, 4}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.Start_Of_Game
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Excavation");
-        curPerk.setPerkDescription("If any player draws a mission card with the word SIGMA IN THE TITLE, YOU GAIN 3 TOWN HEALTH.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("If any player draws a mission card with the word SIGMA IN THE TITLE, YOU GAIN 3 TOWN HEALTH.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Gain_Town_Health, 3}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.During_Mission_Card_Sigma_In_Title_Any_Player
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Card
         });
         curFac.AddPerk(curPerk);
         curPerk = new Perk("Black Ops");
-        curPerk.setPerkDescription("Once per game, during your party exploits phase, move your party to any mission location on the map.");
-        curPerk.setConditionalGains(new Dictionary<Gains, int>(){
+        curPerk.SetPerkDescription("Once per game, during your party exploits phase, move your party to any mission location on the map.");
+        curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
             {Gains.Move_To_Any_Mission_Chip, 1}
         });
-        curPerk.setTimes(new List<Times>(){
+        curPerk.SetTimes(new List<Times>(){
             Times.During_Party_Exploits_Phase
         });
-        curPerk.setUses(new List<Uses>(){
+        curPerk.SetUses(new List<Uses>(){
             Uses.Once_Per_Game
         });
         curFac.AddPerk(curPerk);
