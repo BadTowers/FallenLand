@@ -92,7 +92,6 @@ namespace Tests
 				if (deckBeforeShuffle[i].GetTitle() != DefaultSpoilsDeck[i].GetTitle())
 				{
 					areShuffled = true;
-					break;
 				}
 			}
 			Assert.IsTrue(areShuffled);
