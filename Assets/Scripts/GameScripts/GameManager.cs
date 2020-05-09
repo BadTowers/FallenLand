@@ -95,12 +95,12 @@ public class GameManager : MonoBehaviour {
 
 
 		//Create the deck of character cards
-		characterDeck = (new DefaultCharacterCards()).getCharacterCards();
+		characterDeck = (new DefaultCharacterCards()).GetCharacterCards();
 		characterDeck = Card.ShuffleDeck(characterDeck);
 
 
 		//Create the deck of action cards
-		actionDeck = (new DefaultActionCards()).getActionCards();
+		actionDeck = (new DefaultActionCards()).GetActionCards();
 		actionDeck = Card.ShuffleDeck(actionDeck);
 
 
