@@ -5,29 +5,26 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	private List<SpoilsCard> spoilsDeck = new List<SpoilsCard>();
-	private List<SpoilsCard> discardSpoilsDeck = new List<SpoilsCard>();
-	private List<CharacterCard> characterDeck = new List<CharacterCard>();
-	private List<CharacterCard> discardCharacterDeck = new List<CharacterCard>();
-	private List<ActionCard> actionDeck = new List<ActionCard>();
-	private List<ActionCard> discardActionDeck = new List<ActionCard>();
-	public GameObject cardPrefab;
-	private int numHumanPlayers;
-	private int numComputerPlayers;
-	private GameInformation.GameModes gameMode;
-	private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
-	private GameInformation.SoloII soloIIDifficulty;
-	private List<Player> players = new List<Player>();
-	private int startingActionCards = 3;
-	private int startingCharacterCards = 6;
-	private int startingSpoilsCards = 10;
-	private int maxActionCards = 7;
-	private int maxCharacterCards = -1;
-	private int maxSpoilsCards = -1;
-	private List<TownTech> techs;
-	private Dictionary<TownTech, int> techsUsed;
-	private int maxOfEachTech = 5;
-    private int startingSalvage = 10;
+	private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
+	private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
+	private List<ActionCard> ActionDeck = new List<ActionCard>();
+	public GameObject CardPrefab;
+	private int NumHumanPlayers;
+	private int NumComputerPlayers;
+	private GameInformation.GameModes GameMode;
+	//private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
+	//private GameInformation.SoloII soloIIDifficulty;
+	private List<Player> Players = new List<Player>();
+	private const int StartingActionCards = 3;
+	private const int StartingCharacterCards = 6;
+	private const int StartingSpoilsCards = 10;
+	private const int MaxActionCards = 7;
+	private const int MaxCharacterCards = -1;
+	private const int MaxSpoilsCards = -1;
+	private List<TownTech> TownTechs;
+	private Dictionary<TownTech, int> TechsUsed;
+	private const int MaxOfEachTech = 5;
+    private const int StartingSalvage = 10;
 
 	void Start(){
 		//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
@@ -48,19 +45,19 @@ public class GameManager : MonoBehaviour {
             Faction faction = newGameState.GetComponent<GameCreation>().getFaction();
 
 			//Extract the Solo II difficulty if needed
-			if(gameMode == GameInformation.GameModes.SoloII) {
-				soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
-			}
+			//if(gameMode == GameInformation.GameModes.SoloII) {
+			//	soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
+			//}
 
 			//Set the number of human and computer players TODO change this to be passed in from GameCreation object
-			numHumanPlayers = GameInformation.getHumanPlayerCount(gameMode);
-            numComputerPlayers = GameInformation.getComputerPlayerCount(gameMode);
+			NumHumanPlayers = GameInformation.getHumanPlayerCount(GameMode);
+            NumComputerPlayers = GameInformation.getComputerPlayerCount(GameMode);
 
 			//Add the players to the list (TODO: Change so later these are added in the order players will go (after dice roll or something))
-			for(int i = 0; i < numHumanPlayers; i++) {
-				players.Add(new HumanPlayer(faction, startingSalvage));
+			for(int i = 0; i < NumHumanPlayers; i++) {
+				Players.Add(new HumanPlayer(faction, StartingSalvage));
 			}
-			for(int i = 0; i < numComputerPlayers; i++) {
+			for(int i = 0; i < NumComputerPlayers; i++) {
 				//players.Add(new ComputerPlayer(startingSalvage)); //TODO reaccount for when doing a true single player game, not a solo variant
 			}
 
@@ -71,7 +68,7 @@ public class GameManager : MonoBehaviour {
 		} else {
             //TODO handle this better probably
 			Debug.Log ("Game info not received from game setup.");
-			players.Add(new HumanPlayer(new DefaultFactionInfo().GetDefaultFactionList()[0], startingSalvage));
+			Players.Add(new HumanPlayer(new DefaultFactionInfo().GetDefaultFactionList()[0], StartingSalvage));
 		}
 
 
@@ -82,14 +79,14 @@ public class GameManager : MonoBehaviour {
 		mapCreation.createMap();
 
 
-		spoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
-		spoilsDeck = Card.ShuffleDeck(spoilsDeck);
+		SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
+		SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
 
-		characterDeck = (new DefaultCharacterCards()).GetCharacterCards();
-		characterDeck = Card.ShuffleDeck(characterDeck);
+		CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
+		CharacterDeck = Card.ShuffleDeck(CharacterDeck);
 
-		actionDeck = (new DefaultActionCards()).GetActionCards();
-		actionDeck = Card.ShuffleDeck(actionDeck);
+		ActionDeck = (new DefaultActionCards()).GetActionCards();
+		ActionDeck = Card.ShuffleDeck(ActionDeck);
 
 
 		//TODO create the deck of mission cards
@@ -104,47 +101,9 @@ public class GameManager : MonoBehaviour {
 		//TODO create the deck of city/rad cards
 
 
-		//TODO deal cards to player(s)
-		//Spoils
-		for(int i = 0; i < startingSpoilsCards; i++) {
-			for(int j = 0; j < players.Count; j++) {
-				players[j].AddSpoilsCardToAuctionHouse(spoilsDeck[0]); //Add the first card to the next player's hand
-				Debug.Log("Dealt card " + spoilsDeck[0].GetTitle());
-				spoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
-			}
-		}
-		//Character
-		for(int i = 0; i < startingCharacterCards; i++) {
-			for(int j = 0; j < players.Count; j++) {
-				players[j].AddCharacterCardToTownRoster(characterDeck[0]);
-				Debug.Log("Dealt card " + characterDeck[0].GetTitle());
-				characterDeck.RemoveAt(0);
-			}
-		}
-		//Action
-		for(int i = 0; i < startingActionCards; i++) {
-			for(int j = 0; j < players.Count; j++) {
-				players[j].AddActionCardToHand(actionDeck[0]);
-				Debug.Log("Dealt card " + actionDeck[0].GetTitle());
-				actionDeck.RemoveAt(0);
-			}
-		}
+		dealCardsToPlayers();
 
-        //Count how many town techs are assigned to begin
-        techs = (new DefaultTownTechs()).GetDefaultTownTechList();
-		techsUsed = new Dictionary<TownTech, int>();
-        foreach (TownTech tt in techs)
-		{
-			techsUsed[tt] = 0; //Init all town techs to 0 currently used
-        }
-        foreach (Player p in players)
-		{
-            foreach (TownTech tt in p.GetTownTechs())
-			{
-                //For each town tech for each player, count it
-                techsUsed[tt]++;
-            }
-        }
+		countTownTechsThatAreInUse();
   	}
 
 
@@ -158,37 +117,37 @@ public class GameManager : MonoBehaviour {
     /*****Some public interface functions for the GUI to attach to*******/
     public List<TownTech> GetTownTechs(int playerId)
 	{
-        return players[playerId].GetTownTechs();
+        return Players[playerId].GetTownTechs();
     }
 
     public int GetSalvage(int playerId)
 	{
-        return players[playerId].GetSalvageAmount();
+        return Players[playerId].GetSalvageAmount();
     }
 
     public Faction GetFaction(int playerId)
 	{
-        return players[playerId].GetPlayerFaction();
+        return Players[playerId].GetPlayerFaction();
     }
 
 	public List<SpoilsCard> GetAuctionHouse(int playerId)
 	{
-		return players[playerId].GetAuctionHouseCards();
+		return Players[playerId].GetAuctionHouseCards();
 	}
 
 	public List<ActionCard> GetActionCards(int playerId)
 	{
-		return players[playerId].GetActionCards();
+		return Players[playerId].GetActionCards();
 	}
 
 	public List<CharacterCard> GetActiveCharacterCards(int playerId)
 	{
-		return players[playerId].GetActiveCharacters();
+		return Players[playerId].GetActiveCharacters();
 	}
 
 	public List<CharacterCard> GetTownRoster(int playerId)
 	{
-		return players[playerId].GetTownRoster();
+		return Players[playerId].GetTownRoster();
 	}
 
 
@@ -197,10 +156,57 @@ public class GameManager : MonoBehaviour {
 	/******Some private helper functions******/
 	private void extractGameModeFromGameCreationObject(GameObject newGameState)
 	{
-        gameMode = newGameState.GetComponent<GameCreation>().getMode();
+        GameMode = newGameState.GetComponent<GameCreation>().getMode();
     }
 
+	private void dealCardsToPlayers()
+	{
+		for (int i = 0; i < StartingSpoilsCards; i++)
+		{
+			for (int j = 0; j < Players.Count; j++)
+			{
+				Players[j].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]); //Add the first card to the next player's hand
+				Debug.Log("Dealt card " + SpoilsDeck[0].GetTitle());
+				SpoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
+			}
+		}
+		for (int i = 0; i < StartingCharacterCards; i++)
+		{
+			for (int j = 0; j < Players.Count; j++)
+			{
+				Players[j].AddCharacterCardToTownRoster(CharacterDeck[0]);
+				Debug.Log("Dealt card " + CharacterDeck[0].GetTitle());
+				CharacterDeck.RemoveAt(0);
+			}
+		}
+		for (int i = 0; i < StartingActionCards; i++)
+		{
+			for (int j = 0; j < Players.Count; j++)
+			{
+				Players[j].AddActionCardToHand(ActionDeck[0]);
+				Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
+				ActionDeck.RemoveAt(0);
+			}
+		}
+	}
 
+	private void countTownTechsThatAreInUse()
+	{
+		TownTechs = (new DefaultTownTechs()).GetDefaultTownTechList();
+		TechsUsed = new Dictionary<TownTech, int>();
+		foreach (TownTech tt in TownTechs)
+		{
+			TechsUsed[tt] = 0; //Init all town techs to 0 currently used
+		}
+		foreach (Player p in Players)
+		{
+			foreach (TownTech tt in p.GetTownTechs())
+			{
+				//For each town tech for each player, count it
+				TechsUsed[tt]++;
+			}
+		}
+	}
 
 
 
