@@ -42,4 +42,5 @@ __pycache__
 /dist/
 
 #Coverage Files
-CodeCoverage/Report
+CodeCoverage/Report/*
+!CodeCoverage/Report/badge_linecoverage.svg
