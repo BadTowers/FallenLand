@@ -117,18 +117,11 @@ public class GameUIManager : UIManager {
         //List<CharacterCard> townRoster = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetTownRoster(0);
         int salvage = GameMangerInstance.GetSalvage(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
         Faction faction = GameMangerInstance.GetFaction(0);
-        List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(0);
         //List<ActionCard> actionCards = GameMangerInstance.GetActionCards(0);
         //List <CharacterCard> townRoster = GameMangerInstance.GetTownRoster(0);
         //List<TownTech> townTechs = GameMangerInstance.GetTownTechs(0);
-        string spoilsCardString = "";
-        Debug.Log("Number of spoils cards: " + auctionHouse.Count);
-        for (int i = 0; i < auctionHouse.Count; i++)
-        {
-            spoilsCardString += auctionHouse[i].GetTitle();
-            spoilsCardString += ", ";
-        }
-        Debug.Log(spoilsCardString);
+        string spoilsCardString = getSpoilsCardString();
+        string townTechString = getTownTechString();
 
         //Display information in the debug overlay
         Text[] textComponenetsInDebugOverlay = debugOverlay.GetComponentsInChildren<Text>();
@@ -150,7 +143,7 @@ public class GameUIManager : UIManager {
                     //TODO
                     break;
                 case "DebugTownTechText":
-                    //TODO
+                    curText.text = "TTs: " + townTechString;
                     break;
                 case "DebugSalvageText":
                     curText.text = "Salvage: " + salvage.ToString();
@@ -212,6 +205,34 @@ public class GameUIManager : UIManager {
                 setActiveMenu(null);
                 break;
         }
+    }
+
+    private string getSpoilsCardString()
+    {
+        List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(0);
+        string spoilsCardString = "";
+        Debug.Log("Number of spoils cards: " + auctionHouse.Count);
+        for (int i = 0; i < auctionHouse.Count; i++)
+        {
+            spoilsCardString += auctionHouse[i].GetTitle();
+            spoilsCardString += ", ";
+        }
+        Debug.Log(spoilsCardString);
+        return spoilsCardString;
+    }
+
+    private string getTownTechString()
+    {
+        List<TownTech> townTechs = GameMangerInstance.GetTownTechs(0);
+        string townTechString = "";
+        Debug.Log("Number of town techs: " + townTechs.Count);
+        for (int i = 0; i < townTechs.Count; i++)
+        {
+            townTechString += townTechs[i].GetTechName();
+            townTechString += ", ";
+        }
+        Debug.Log(townTechString);
+        return townTechString;
     }
 }
 
