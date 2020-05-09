@@ -63,7 +63,7 @@ public abstract class Player
 		return ActionCardsInHand;
 	}
 
-	public List<CharacterCard> GetTownRosterCards()
+	public List<CharacterCard> GetTownRoster()
 	{
 		return TownRoster;
 	}

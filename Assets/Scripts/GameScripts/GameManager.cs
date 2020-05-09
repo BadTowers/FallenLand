@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < startingSpoilsCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
 				players[j].AddSpoilsCardToAuctionHouse(spoilsDeck[0]); //Add the first card to the next player's hand
+				Debug.Log("Dealt card " + spoilsDeck[0].GetTitle());
 				spoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
 			}
 		}
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < startingCharacterCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
 				players[j].AddCharacterCardToTownRoster(characterDeck[0]);
+				Debug.Log("Dealt card " + characterDeck[0].GetTitle());
 				characterDeck.RemoveAt(0);
 			}
 		}
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < startingActionCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
 				players[j].AddActionCardToHand(actionDeck[0]);
+				Debug.Log("Dealt card " + actionDeck[0].GetTitle());
 				actionDeck.RemoveAt(0);
 			}
 		}
@@ -145,33 +148,55 @@ public class GameManager : MonoBehaviour {
   	}
 
 
-	void Update(){
+	void Update()
+	{
 
 	}
 
 
 
     /*****Some public interface functions for the GUI to attach to*******/
-    public List<TownTech> GetTownTechsByID(int ID)
+    public List<TownTech> GetTownTechs(int playerId)
 	{
-        return players[ID].GetTownTechs();
+        return players[playerId].GetTownTechs();
     }
 
-    public int GetSalvageByID(int ID)
+    public int GetSalvage(int playerId)
 	{
-        return players[ID].GetSalvageAmount();
+        return players[playerId].GetSalvageAmount();
     }
 
-    public Faction GetFactionByID(int ID)
+    public Faction GetFaction(int playerId)
 	{
-        return players[ID].GetPlayerFaction();
+        return players[playerId].GetPlayerFaction();
     }
+
+	public List<SpoilsCard> GetAuctionHouse(int playerId)
+	{
+		return players[playerId].GetAuctionHouseCards();
+	}
+
+	public List<ActionCard> GetActionCards(int playerId)
+	{
+		return players[playerId].GetActionCards();
+	}
+
+	public List<CharacterCard> GetActiveCharacterCards(int playerId)
+	{
+		return players[playerId].GetActiveCharacters();
+	}
+
+	public List<CharacterCard> GetTownRoster(int playerId)
+	{
+		return players[playerId].GetTownRoster();
+	}
 
 
 
 
 	/******Some private helper functions******/
-	private void extractGameModeFromGameCreationObject(GameObject newGameState) {
+	private void extractGameModeFromGameCreationObject(GameObject newGameState)
+	{
         gameMode = newGameState.GetComponent<GameCreation>().getMode();
     }
 

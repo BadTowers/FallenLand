@@ -30,7 +30,7 @@ namespace Tests
 			Assert.AreEqual(10, HumanPlayerInstance.GetSalvageAmount());
 			Assert.IsNotNull(HumanPlayerInstance.GetAuctionHouseCards());
 			Assert.IsNotNull(HumanPlayerInstance.GetActionCards());
-			Assert.IsNotNull(HumanPlayerInstance.GetTownRosterCards());
+			Assert.IsNotNull(HumanPlayerInstance.GetTownRoster());
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters());
 			Assert.IsNotNull(HumanPlayerInstance.GetTownTechs());
 
@@ -58,11 +58,11 @@ namespace Tests
 		public IEnumerator TestCharactersInTownRoster()
 		{
 			HumanPlayerInstance.AddCharacterCardToTownRoster(new CharacterCard("test card"));
-			Assert.AreEqual(1, HumanPlayerInstance.GetTownRosterCards().Count);
+			Assert.AreEqual(1, HumanPlayerInstance.GetTownRoster().Count);
 			HumanPlayerInstance.AddCharacterCardToTownRoster(new CharacterCard("test card 1"));
-			Assert.AreEqual(2, HumanPlayerInstance.GetTownRosterCards().Count);
+			Assert.AreEqual(2, HumanPlayerInstance.GetTownRoster().Count);
 			HumanPlayerInstance.AddCharacterCardToTownRoster(null);
-			Assert.AreEqual(2, HumanPlayerInstance.GetTownRosterCards().Count);
+			Assert.AreEqual(2, HumanPlayerInstance.GetTownRoster().Count);
 
 			yield return null;
 		}

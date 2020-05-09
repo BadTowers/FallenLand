@@ -13,7 +13,8 @@ public class GameUIManager : UIManager {
 	public GameObject OptionsMenu;
     public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
     public Image spoilsCard1; //TODO rework so this is maybe a container that can dynamically be populated with cards
-    public GameObject GameManager;
+    public GameObject GameManagerGameObject;
+    private GameManager GameMangerInstance;
 
     //Game camera
     public GameObject gameCamera;
@@ -38,7 +39,10 @@ public class GameUIManager : UIManager {
 		addToMenuList(PauseMenu);
 		addToMenuList(OptionsMenu);
 		addToMenuList(SaveMenu);
-	}
+
+        GameMangerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
+
+    }
 
 	//When script first starts
 	void Awake()
@@ -108,15 +112,30 @@ public class GameUIManager : UIManager {
     private void updateDebugOverlay()
     {
         //Retrieve information
-        int salvage = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetSalvageByID(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
-        Faction faction = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetFactionByID(0);
+        //int salvage = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetSalvage(0);
+        //Faction faction = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetFaction(0);
+        //List<CharacterCard> townRoster = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetTownRoster(0);
+        int salvage = GameMangerInstance.GetSalvage(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
+        Faction faction = GameMangerInstance.GetFaction(0);
+        List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(0);
+        //List<ActionCard> actionCards = GameMangerInstance.GetActionCards(0);
+        //List <CharacterCard> townRoster = GameMangerInstance.GetTownRoster(0);
+        //List<TownTech> townTechs = GameMangerInstance.GetTownTechs(0);
+        string spoilsCardString = "";
+        Debug.Log("Number of spoils cards: " + auctionHouse.Count);
+        for (int i = 0; i < auctionHouse.Count; i++)
+        {
+            spoilsCardString += auctionHouse[i].GetTitle();
+            spoilsCardString += ", ";
+        }
+        Debug.Log(spoilsCardString);
 
         //Display information in the debug overlay
         Text[] textComponenetsInDebugOverlay = debugOverlay.GetComponentsInChildren<Text>();
         foreach (Text curText in textComponenetsInDebugOverlay) {
             switch (curText.name) {
                 case "DebugSpoilsCardText":
-                    //TODO
+                    curText.text = "Spoils: " + spoilsCardString;
                     break;
                 case "DebugAuctionHouseText":
                     //todo
@@ -125,7 +144,7 @@ public class GameUIManager : UIManager {
                     //todo
                     break;
                 case "DebugTownRosterText":
-                    //todo
+                    //curText.text = "Characters: " + characterCardsString;
                     break;
                 case "DebugActionCardText":
                     //TODO
@@ -135,6 +154,9 @@ public class GameUIManager : UIManager {
                     break;
                 case "DebugSalvageText":
                     curText.text = "Salvage: " + salvage.ToString();
+                    break;
+                case "DebugFactionText":
+                    curText.text = "Faction name: " + faction.GetName();
                     break;
             }
         }
