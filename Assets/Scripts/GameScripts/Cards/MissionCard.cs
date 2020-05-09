@@ -4,41 +4,71 @@ using UnityEngine;
 
 public class MissionCard : EncounterCard {
 
-	private Dictionary<Skills, int> optionalSkillChecks; //Dictionary mapping optional skill checks to how many successes are needed
-	private string optionalSuccessText; //The success text for the optional portion of the mission
+	private Dictionary<Skills, int> OptionalSkillChecks;
+	private string OptionalSuccessText;
 	//optionalSuccessRewards. The reward received for succeeding at the optional skill check
-	private string optionalFailureText; //The failure text for teh optional portion of the mission
+	private string OptionalFailureText;
 	//optionalFailurePunishments. The punishment for failing at the optional skill check
 
-	public MissionCard(string title) : base(title){
-
+	public MissionCard(string title) : base(title)
+	{
+		initOptionalSkillChecks(null);
+		initText();
 	}
 
-	public MissionCard(string title, Dictionary<Skills, int> optionalSkillChecks) : base(title) {
-		this.optionalSkillChecks = optionalSkillChecks;
+	public MissionCard(string title, Dictionary<Skills, int> optionalSkillChecks) : base(title)
+	{
+		initOptionalSkillChecks(optionalSkillChecks);
+		initText();
 	}
 
-	public void setOptionalSkillChecks(Dictionary<Skills, int> osc){
-		this.optionalSkillChecks = osc;
+	public void SetOptionalSkillChecks(Dictionary<Skills, int> optionalSkillChecks)
+	{
+		if (optionalSkillChecks != null)
+		{
+			OptionalSkillChecks = optionalSkillChecks;
+		}
+		initText();
 	}
 
-	public Dictionary<Skills, int> getOptionalSkillChecks(){
-		return this.optionalSkillChecks;
+	public Dictionary<Skills, int> GetOptionalSkillChecks()
+	{
+		return OptionalSkillChecks;
 	}
 
-	public void setOptionalSuccessText(string text){
-		this.optionalSuccessText = text;
+	public void SetOptionalSuccessText(string text)
+	{
+		OptionalSuccessText = text;
 	}
 
-	public string getOptionalSuccessText() {
-		return this.optionalSuccessText;
+	public string GetOptionalSuccessText()
+	{
+		return OptionalSuccessText;
 	}
 
-	public void setOptionalFailureText(string text){
-		this.optionalFailureText = text;
+	public void SetOptionalFailureText(string text)
+	{
+		OptionalFailureText = text;
 	}
 
-	public string getOptionalFailureText(){
-		return this.optionalFailureText;
+	public string GetOptionalFailureText()
+	{
+		return OptionalFailureText;
+	}
+
+
+	private void initText()
+	{
+		OptionalSuccessText = "";
+		OptionalFailureText = "";
+	}
+
+	private void initOptionalSkillChecks(Dictionary<Skills, int> optionalSkillChecks)
+	{
+		if (optionalSkillChecks == null)
+		{
+			optionalSkillChecks = new Dictionary<Skills, int>();
+		}
+		OptionalSkillChecks = optionalSkillChecks;
 	}
 }
