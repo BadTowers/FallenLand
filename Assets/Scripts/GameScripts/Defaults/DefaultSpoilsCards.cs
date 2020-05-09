@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
-public class DefaultSpoilsCards{
-
-	private Dictionary<string, int> multiples = new Dictionary<string, int>(){ //The names of the cards that, by default, are in the deck more than once
+public class DefaultSpoilsCards
+{
+	private Dictionary<string, int> multiples = new Dictionary<string, int>()
+	{
 		{"Basic Med Kit", 2},
 		{"Swat Body Armor", 2},
 		{"First Aid Kit", 2}
 	};
 
-	private List<SpoilsCard> spoilsCards; //The list of all default spoils cards
+	private List<SpoilsCard> SpoilsCardsDeck;
 
 	/*
 	 *
@@ -120,9 +121,10 @@ public class DefaultSpoilsCards{
 	 */
 
 
-	public DefaultSpoilsCards(){
+	public DefaultSpoilsCards()
+	{
 		//Initialize the lists for the cards
-		spoilsCards = new List<SpoilsCard>();
+		SpoilsCardsDeck = new List<SpoilsCard>();
 
 		const int VALUE_NOT_NEEDED = -1;
 
@@ -167,7 +169,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard); //Add the card to the list of all cards
+		SpoilsCardsDeck.Add(curCard); //Add the card to the list of all cards
 
 
 		/****************************************************************************************************************************************************************/
@@ -188,7 +190,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -228,7 +230,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -252,7 +254,7 @@ public class DefaultSpoilsCards{
 		);
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -282,7 +284,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -305,7 +307,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -321,7 +323,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -339,7 +341,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 
@@ -364,7 +366,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -398,7 +400,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -431,7 +433,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -449,7 +451,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -465,7 +467,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -493,7 +495,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -510,7 +512,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -540,7 +542,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -662,7 +664,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null); //Roll 6 = no effect
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -700,7 +702,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -729,7 +731,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -758,7 +760,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -774,7 +776,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -826,7 +828,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null);
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -852,7 +854,7 @@ public class DefaultSpoilsCards{
 		);
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -868,7 +870,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -888,7 +890,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -917,7 +919,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -941,7 +943,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -969,7 +971,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -995,7 +997,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1032,7 +1034,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1064,7 +1066,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1092,7 +1094,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1144,7 +1146,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null);
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1166,7 +1168,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1202,7 +1204,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1229,7 +1231,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1247,7 +1249,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1273,7 +1275,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1289,7 +1291,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1305,7 +1307,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1327,7 +1329,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1354,7 +1356,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1386,7 +1388,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1442,7 +1444,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null);
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1476,7 +1478,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1495,7 +1497,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1543,7 +1545,7 @@ public class DefaultSpoilsCards{
 		curCard.SetDiscardToTop(false); //This card gets discarded to the bottom of the pile
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1574,7 +1576,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1604,7 +1606,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1631,7 +1633,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1663,7 +1665,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1693,7 +1695,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1716,7 +1718,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1732,7 +1734,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1760,7 +1762,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1788,7 +1790,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1821,7 +1823,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1882,7 +1884,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD10Option(null); //10
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1900,7 +1902,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1935,7 +1937,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1965,7 +1967,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -1997,7 +1999,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2035,7 +2037,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2063,7 +2065,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2092,7 +2094,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2108,7 +2110,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2130,7 +2132,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2146,7 +2148,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2180,7 +2182,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2197,7 +2199,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2213,7 +2215,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2234,7 +2236,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2253,7 +2255,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2275,7 +2277,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2309,7 +2311,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2339,7 +2341,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2355,7 +2357,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2387,7 +2389,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2410,7 +2412,7 @@ public class DefaultSpoilsCards{
 		/* No restrctions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2426,7 +2428,7 @@ public class DefaultSpoilsCards{
 		/* No restrctions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2480,7 +2482,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null); //6
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2497,7 +2499,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2527,7 +2529,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2554,7 +2556,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2606,7 +2608,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2634,7 +2636,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2651,7 +2653,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2670,7 +2672,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2698,7 +2700,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2715,7 +2717,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2734,7 +2736,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2762,7 +2764,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2789,7 +2791,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2808,7 +2810,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2847,7 +2849,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2866,7 +2868,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2888,7 +2890,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2957,7 +2959,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null); //6
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2974,7 +2976,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -2991,7 +2993,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3010,7 +3012,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3026,7 +3028,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3053,7 +3055,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3073,7 +3075,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3092,7 +3094,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3132,7 +3134,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3155,7 +3157,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3171,7 +3173,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3198,7 +3200,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3215,7 +3217,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3262,7 +3264,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3301,7 +3303,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3330,7 +3332,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3388,7 +3390,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null); //6
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3405,7 +3407,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3439,7 +3441,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3482,7 +3484,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3505,7 +3507,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3540,7 +3542,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3559,7 +3561,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3581,7 +3583,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3609,7 +3611,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3637,7 +3639,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3660,7 +3662,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3689,7 +3691,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3719,7 +3721,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3735,7 +3737,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3758,7 +3760,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3774,7 +3776,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3791,7 +3793,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3821,7 +3823,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3838,7 +3840,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3888,7 +3890,7 @@ public class DefaultSpoilsCards{
 		curCard.AddD6Option(null); //6
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3907,7 +3909,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3923,7 +3925,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3948,7 +3950,7 @@ public class DefaultSpoilsCards{
 		});
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 		/****************************************************************************************************************************************************************/
@@ -3970,7 +3972,7 @@ public class DefaultSpoilsCards{
 		/* No restrictions */
 		curCard.SetId(curID);
 		curID++;
-		spoilsCards.Add(curCard);
+		SpoilsCardsDeck.Add(curCard);
 
 
 
@@ -3978,15 +3980,15 @@ public class DefaultSpoilsCards{
 
 
 		//Now that all cards are added, let's ID them all and account for duplicates that need to be added
-		int count = spoilsCards.Count;
+		int count = SpoilsCardsDeck.Count;
 		for(int i = 0; i < count; i++) {
-			spoilsCards[i].SetId(i); //ID current one
+			SpoilsCardsDeck[i].SetId(i); //ID current one
 
 			//See if this card is a duplicate
-			if (multiples.ContainsKey(spoilsCards[i].GetTitle())) { //If the name of this card is a name in the multiples dictionary
-				for(int j = 1; j < multiples[spoilsCards[i].GetTitle()]; j++) { //For the number of multiples to add
-					SpoilsCard newCard = spoilsCards[i].DeepCopy();
-					spoilsCards.Add(newCard); //add the multiple
+			if (multiples.ContainsKey(SpoilsCardsDeck[i].GetTitle())) { //If the name of this card is a name in the multiples dictionary
+				for(int j = 1; j < multiples[SpoilsCardsDeck[i].GetTitle()]; j++) { //For the number of multiples to add
+					SpoilsCard newCard = SpoilsCardsDeck[i].DeepCopy();
+					SpoilsCardsDeck.Add(newCard); //add the multiple
 					//Debug.Log("Adding multiple for " + spoilsCards[i].getTitle());
 				}
 			}
@@ -3994,7 +3996,8 @@ public class DefaultSpoilsCards{
 	}
 
 
-	public List<SpoilsCard> getSpoilsCards(){
-		return this.spoilsCards;
+	public List<SpoilsCard> GetSpoilsCards()
+	{
+		return SpoilsCardsDeck;
 	}
 }

@@ -1,87 +1,136 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public abstract class Player {
-
-	private List<SpoilsCard> activeSpoils; //TODO may not need this. May want to attach spoils to CharacterCard
-	private List<SpoilsCard> auctionHouse; //Spoils in their town (inactive)
-	private List<ActionCard> actionCards;
-	private List<CharacterCard> activeCharacters;
-    private List<CharacterCard> townRoster; //Characters in their town (inactive)
-    private Faction faction;
-    private List<TownTech> townTechs;
-    private int salvage;
+public abstract class Player 
+{
+	private List<SpoilsCard> AuctionHouse;
+	private List<ActionCard> ActionCardsInHand;
+	private List<CharacterCard> ActiveCharacters;
+    private List<CharacterCard> TownRoster;
+    private Faction FactionOfPlayer;
+    private List<TownTech> TownTechs;
+    private int AmountOfSalvage;
+	private int Id;
 
 
+	public Player(Faction faction, int startingSalvage)
+	{
+		if (startingSalvage < 0)
+		{
+			startingSalvage = 0;
+		}
+		if (faction == null)
+		{
+			faction = new Faction("dummy faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
+		}
 
-	public Player(Faction faction, int startingSalvage){
-        this.salvage = startingSalvage;
-        this.faction = faction;
+		AmountOfSalvage = startingSalvage;
+		FactionOfPlayer = faction;
 		initLists();
         //TODO extract starting town techs from faction
 	}
 
-	public void addSpoilsCard(SpoilsCard sc){
-		this.activeSpoils.Add(sc);
+	public void AddSpoilsCardToAuctionHouse(SpoilsCard spoilsCard)
+	{
+		if (spoilsCard != null)
+		{
+			AuctionHouse.Add(spoilsCard);
+		}
 	}
 
-	public void addCharacterCard(CharacterCard cc){
-		this.activeCharacters.Add(cc);
+	public void AddCharacterCardToTownRoster(CharacterCard characterCard)
+	{
+		if (characterCard != null)
+		{
+			TownRoster.Add(characterCard);
+		}
 	}
 
-	public void addActionCard(ActionCard ac){
-		this.actionCards.Add(ac);
+	public void AddActionCardToHand(ActionCard actionCard)
+	{
+		if (actionCard != null)
+		{
+			ActionCardsInHand.Add(actionCard);
+		}
 	}
 
-	public List<SpoilsCard> getActiveSpoilsCards(){
-		return this.activeSpoils;
+	public List<SpoilsCard> GetAuctionHouseCards()
+	{
+		return AuctionHouse;
 	}
 
-	public SpoilsCard getActiveSpoilsCard(int ID){
-		return this.activeSpoils[ID];
+	public List<ActionCard> GetActionCards()
+	{
+		return ActionCardsInHand;
 	}
 
-	public void setFaction(Faction f){
-		this.faction = f;
+	public List<CharacterCard> GetTownRosterCards()
+	{
+		return TownRoster;
 	}
 
-	public Faction getFaction(){
-		return this.faction;
+	public void SetPlayerFaction(Faction faction)
+	{
+		if (faction != null)
+		{
+			FactionOfPlayer = faction;
+		}
 	}
 
-    public int getSalvage() {
-        return this.salvage;
+	public Faction GetPlayerFaction()
+	{
+		return FactionOfPlayer;
+	}
+
+    public int GetSalvageAmount()
+	{
+        return AmountOfSalvage;
     }
 
-    public void addSalvage(int salvageToAdd) {
-        this.salvage += salvageToAdd;
+    public void AddSalvageToPlayer(int salvageToAdd)
+	{
+		if (salvageToAdd > 0)
+		{
+			AmountOfSalvage += salvageToAdd;
+		}
     }
 
-    public void subtractSalvage(int salvageToSubtract) {
-        this.salvage -= salvageToSubtract;
+    public void RemoveSalvageFromPlayer(int salvageToRemove)
+	{
+		if (salvageToRemove > 0)
+		{
+			AmountOfSalvage -= salvageToRemove;
+		}
+		if (AmountOfSalvage < 0)
+		{
+			AmountOfSalvage = 0;
+		}
     }
 
-    public List<TownTech> getTownTechs() {
-        return this.townTechs;
+    public List<TownTech> GetTownTechs()
+	{
+        return TownTechs;
     }
 
-    public void addTownTech(TownTech toAdd) {
-        this.townTechs.Add(toAdd);
+	public List<CharacterCard> GetActiveCharacters()
+	{
+		return ActiveCharacters;
+	}
+
+    public void AddTownTech(TownTech techToAdd)
+	{
+		if (techToAdd != null)
+		{
+			TownTechs.Add(techToAdd);
+		}
     }
 
-    //TODO this prolly isn't right
-    public void removeTownTech(TownTech toRemove) {
-        this.townTechs.Remove(toRemove);
-    }
 
 	private void initLists()
 	{
-		activeSpoils = new List<SpoilsCard>();
-		auctionHouse = new List<SpoilsCard>();
-		actionCards = new List<ActionCard>();
-		townRoster = new List<CharacterCard>();
-		activeCharacters = new List<CharacterCard>();
-		townTechs = new List<TownTech>();
+		AuctionHouse = new List<SpoilsCard>();
+		ActionCardsInHand = new List<ActionCard>();
+		TownRoster = new List<CharacterCard>();
+		ActiveCharacters = new List<CharacterCard>();
+		TownTechs = new List<TownTech>();
 	}
 }

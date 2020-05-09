@@ -82,24 +82,12 @@ public class GameManager : MonoBehaviour {
 		mapCreation.createMap();
 
 
-		//Create the deck of spoils cards
-		spoilsDeck = (new DefaultSpoilsCards()).getSpoilsCards();
+		spoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
 		spoilsDeck = Card.ShuffleDeck(spoilsDeck);
 
-		/*
-		//Proof of shuffle
-		for(int i = 0; i < spoilsCards.Count; i++) {
-			Debug.Log(spoilsCards[i].getID());
-		}
-		*/
-
-
-		//Create the deck of character cards
 		characterDeck = (new DefaultCharacterCards()).GetCharacterCards();
 		characterDeck = Card.ShuffleDeck(characterDeck);
 
-
-		//Create the deck of action cards
 		actionDeck = (new DefaultActionCards()).GetActionCards();
 		actionDeck = Card.ShuffleDeck(actionDeck);
 
@@ -120,21 +108,21 @@ public class GameManager : MonoBehaviour {
 		//Spoils
 		for(int i = 0; i < startingSpoilsCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
-				players[j].addSpoilsCard(spoilsDeck[0]); //Add the first card to the next player's hand
+				players[j].AddSpoilsCardToAuctionHouse(spoilsDeck[0]); //Add the first card to the next player's hand
 				spoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
 			}
 		}
 		//Character
 		for(int i = 0; i < startingCharacterCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
-				players[j].addCharacterCard(characterDeck[0]);
+				players[j].AddCharacterCardToTownRoster(characterDeck[0]);
 				characterDeck.RemoveAt(0);
 			}
 		}
 		//Action
 		for(int i = 0; i < startingActionCards; i++) {
 			for(int j = 0; j < players.Count; j++) {
-				players[j].addActionCard(actionDeck[0]);
+				players[j].AddActionCardToHand(actionDeck[0]);
 				actionDeck.RemoveAt(0);
 			}
 		}
@@ -148,7 +136,7 @@ public class GameManager : MonoBehaviour {
         }
         foreach (Player p in players)
 		{
-            foreach (TownTech tt in p.getTownTechs())
+            foreach (TownTech tt in p.GetTownTechs())
 			{
                 //For each town tech for each player, count it
                 techsUsed[tt]++;
@@ -164,23 +152,26 @@ public class GameManager : MonoBehaviour {
 
 
     /*****Some public interface functions for the GUI to attach to*******/
-    public List<TownTech> getTownTechsByID(int ID) {
-        return players[ID].getTownTechs();
+    public List<TownTech> GetTownTechsByID(int ID)
+	{
+        return players[ID].GetTownTechs();
     }
 
-    public int getSalvageByID(int ID) {
-        return players[ID].getSalvage();
+    public int GetSalvageByID(int ID)
+	{
+        return players[ID].GetSalvageAmount();
     }
 
-    public Faction getFactionByID(int ID) {
-        return players[ID].getFaction();
+    public Faction GetFactionByID(int ID)
+	{
+        return players[ID].GetPlayerFaction();
     }
 
 
 
 
-    /******Some private helper functions******/
-    private void extractGameModeFromGameCreationObject(GameObject newGameState) {
+	/******Some private helper functions******/
+	private void extractGameModeFromGameCreationObject(GameObject newGameState) {
         gameMode = newGameState.GetComponent<GameCreation>().getMode();
     }
 

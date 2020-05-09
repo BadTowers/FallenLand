@@ -325,10 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f232e7d1c8367f41aa7a5e889b0f3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 0.6
-  zoomSpeed: 4
-  minZoom: 10
-  maxZoom: 50
+  PanSpeed: 0.6
+  ZoomSpeed: 4
+  MinZoom: 10
+  MaxZoom: 50
 --- !u!1 &88554219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,11 +1121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 379ba58e133609640a66ffcdc4cb2f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 1036348489}
-  saveMenu: {fileID: 1641222278}
-  optionsMenu: {fileID: 855131738}
+  PauseMenu: {fileID: 1036348489}
+  SaveMenu: {fileID: 1641222278}
+  OptionsMenu: {fileID: 855131738}
   debugOverlay: {fileID: 1731381539}
   spoilsCard1: {fileID: 0}
+  GameManager: {fileID: 636179457}
   gameCamera: {fileID: 64563040}
   currentState: 0
 --- !u!4 &470854617
@@ -2233,6 +2234,26 @@ PrefabInstance:
     - target: {fileID: 4980143703327220, guid: c3184ea247ef3c9409151832820ae820, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114827072838384046, guid: c3184ea247ef3c9409151832820ae820,
+        type: 2}
+      propertyPath: PanSpeed
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114827072838384046, guid: c3184ea247ef3c9409151832820ae820,
+        type: 2}
+      propertyPath: ZoomSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114827072838384046, guid: c3184ea247ef3c9409151832820ae820,
+        type: 2}
+      propertyPath: MinZoom
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114827072838384046, guid: c3184ea247ef3c9409151832820ae820,
+        type: 2}
+      propertyPath: MaxZoom
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3184ea247ef3c9409151832820ae820, type: 2}

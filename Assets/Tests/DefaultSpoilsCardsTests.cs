@@ -14,7 +14,7 @@ namespace Tests
 		public void Setup()
 		{
 			DefaultSpoilsCards dsc = new DefaultSpoilsCards();
-			DefaultSpoilsDeck = dsc.getSpoilsCards();
+			DefaultSpoilsDeck = dsc.GetSpoilsCards();
 		}
 
 		[TearDown]

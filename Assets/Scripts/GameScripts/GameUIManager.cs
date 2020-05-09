@@ -8,11 +8,12 @@ public class GameUIManager : UIManager {
 	public enum GameMenuStates {Pause, Options, Resume, Save};
 
 	//UI Objects
-	public GameObject pauseMenu;
-	public GameObject saveMenu;
-	public GameObject optionsMenu;
+	public GameObject PauseMenu;
+	public GameObject SaveMenu;
+	public GameObject OptionsMenu;
     public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
     public Image spoilsCard1; //TODO rework so this is maybe a container that can dynamically be populated with cards
+    public GameObject GameManager;
 
     //Game camera
     public GameObject gameCamera;
@@ -26,20 +27,22 @@ public class GameUIManager : UIManager {
     private int currentViewedID; //Current ID of player's stuff UI is displaying
 
 
-	void Start(){
+	void Start()
+    {
 		//Initialize vars
 		escapePressed = false;
         debugOverlayShowing = false;
         currentState = GameMenuStates.Resume;
 
 		//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
-		addToMenuList(pauseMenu);
-		addToMenuList(optionsMenu);
-		addToMenuList(saveMenu);
+		addToMenuList(PauseMenu);
+		addToMenuList(OptionsMenu);
+		addToMenuList(SaveMenu);
 	}
 
 	//When script first starts
-	void Awake(){
+	void Awake()
+    {
 		currentState = GameMenuStates.Resume;
 		//Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
 		panSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
@@ -47,7 +50,8 @@ public class GameUIManager : UIManager {
 	}
 
 
-	void Update(){
+	void Update()
+    {
         //TODO refactor to a function that returns a list of buttons pressed. That list can then later be passed to an interpretter
 		//See if the escape button is being pressed
 		if(Input.GetKeyDown(KeyCode.Escape)){
@@ -73,22 +77,26 @@ public class GameUIManager : UIManager {
 		escapePressed = false;
 	}
 
-	public void onResume(){
+	public void OnResume()
+    {
 		currentState = GameMenuStates.Resume;
 		Debug.Log("Resume");
 	}
 
-	public void onOptions(){
+	public void OnOptions()
+    {
 		currentState = GameMenuStates.Options;
 		Debug.Log("Options");
 	}
 
-	public void onSave(){
+	public void OnSave()
+    {
 		currentState = GameMenuStates.Save;
 		Debug.Log("Save");
 	}
 
-	public void onQuit(){
+	public void OnQuit()
+    {
 		//TODO make quit
 		//TODO warn to save
 		Debug.Log("Quit");
@@ -100,8 +108,8 @@ public class GameUIManager : UIManager {
     private void updateDebugOverlay()
     {
         //Retrieve information
-        int salvage = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().getSalvageByID(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
-        Faction faction = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().getFactionByID(0);
+        int salvage = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetSalvageByID(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
+        Faction faction = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetFactionByID(0);
 
         //Display information in the debug overlay
         Text[] textComponenetsInDebugOverlay = debugOverlay.GetComponentsInChildren<Text>();
@@ -139,7 +147,7 @@ public class GameUIManager : UIManager {
                 if (escapePressed) {
                     currentState = GameMenuStates.Resume;
                 } else {
-                    setActiveMenu(pauseMenu);
+                    setActiveMenu(PauseMenu);
                     Time.timeScale = 0; //Pause any physics
                                         //Freeze the game camera from moving
                     gameCamera.GetComponent<CameraManager>().PanSpeed = 0;
@@ -149,7 +157,7 @@ public class GameUIManager : UIManager {
             case GameMenuStates.Resume:
                 if (escapePressed) {
                     //If on options screen and escape pressed, go back to pause menu
-                    setActiveMenu(pauseMenu);
+                    setActiveMenu(PauseMenu);
                     currentState = GameMenuStates.Pause;
                 } else {
                     setActiveMenu(null);
@@ -162,19 +170,19 @@ public class GameUIManager : UIManager {
             case GameMenuStates.Options:
                 if (escapePressed) {
                     //If on options screen and escape pressed, go back to pause menu
-                    setActiveMenu(pauseMenu);
+                    setActiveMenu(PauseMenu);
                     currentState = GameMenuStates.Pause;
                 } else {
-                    setActiveMenu(optionsMenu);
+                    setActiveMenu(OptionsMenu);
                 }
                 break;
             case GameMenuStates.Save:
                 if (escapePressed) {
                     //If on save screen and escape pressed, go back to pause menu
-                    setActiveMenu(pauseMenu);
+                    setActiveMenu(PauseMenu);
                     currentState = GameMenuStates.Pause;
                 } else {
-                    setActiveMenu(saveMenu);
+                    setActiveMenu(SaveMenu);
                 }
                 break;
             default:
