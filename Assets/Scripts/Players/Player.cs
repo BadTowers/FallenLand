@@ -26,7 +26,7 @@ public abstract class Player
 		AmountOfSalvage = startingSalvage;
 		FactionOfPlayer = faction;
 		initLists();
-        //TODO extract starting town techs from faction
+		extractTownTechsFromFaction();
 	}
 
 	public void AddSpoilsCardToAuctionHouse(SpoilsCard spoilsCard)
@@ -74,6 +74,7 @@ public abstract class Player
 		{
 			FactionOfPlayer = faction;
 		}
+		extractTownTechsFromFaction();
 	}
 
 	public Faction GetPlayerFaction()
@@ -132,5 +133,14 @@ public abstract class Player
 		TownRoster = new List<CharacterCard>();
 		ActiveCharacters = new List<CharacterCard>();
 		TownTechs = new List<TownTech>();
+	}
+
+	private void extractTownTechsFromFaction()
+	{
+		List<TownTech> techs = FactionOfPlayer.GetStartingTownTechs();
+		if (techs != null)
+		{
+			TownTechs = techs;
+		}
 	}
 }

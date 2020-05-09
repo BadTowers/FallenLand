@@ -139,5 +139,27 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestStartingTownTechs()
+		{
+			TownTech tech1 = new TownTech("Tech1");
+			TownTech tech2 = new TownTech("Tech2");
+			Faction faction = new Faction("Faction", new Coordinates(1, 2));
+			faction.AddStartingTownTech(tech1);
+			faction.AddStartingTownTech(tech2);
+
+			HumanPlayerInstance.SetPlayerFaction(faction);
+			Assert.IsNotNull(HumanPlayerInstance.GetTownTechs());
+			Assert.AreEqual(2, HumanPlayerInstance.GetTownTechs().Count);
+
+			Faction faction1 = new Faction("Faction1", new Coordinates(1, 2));
+			faction.AddStartingTownTech(null);
+			HumanPlayerInstance.SetPlayerFaction(faction1);
+			Assert.IsNotNull(HumanPlayerInstance.GetTownTechs());
+			Assert.AreEqual(0, HumanPlayerInstance.GetTownTechs().Count);
+
+			yield return null;
+		}
 	}
 }
