@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ActionCard : NonpartyCard
 {
-	private int SellValue; //The value the card can be sold to the bank for
-	//phase. This is the phase the card can be played in
+	private int SellValue;
+	//phase. This is the phase the card can be played in TODO
 	//Actions. The list of actions the card can do. Sometimes this is one thing. Sometimes this is a list of things and can pick one. TODO
 
 	public ActionCard(string title) : base(title)
@@ -13,13 +13,16 @@ public class ActionCard : NonpartyCard
 
 	}
 
-	public void SetSellValue(int sv)
+	public void SetSellValue(int sellValue)
 	{
-		this.SellValue = sv;
+		if (sellValue >= 0)
+		{
+			SellValue = sellValue;
+		}
 	}
 
 	public int GetSellValue()
 	{
-		return this.SellValue;
+		return SellValue;
 	}
 }
