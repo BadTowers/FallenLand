@@ -6,22 +6,24 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour
 {
-	public float panSpeed;		// Speed of the camera when being panned
-	public float zoomSpeed;		// Speed of the camera going back and forth
-	public float minZoom;
-	public float maxZoom;
-	private bool isPanning = false;		// Is the camera being panned?
+	public float PanSpeed;
+	public float ZoomSpeed;
+	public float MinZoom;
+	public float MaxZoom;
+	private bool isPanning = false;
 
 	//For panning
 	private Vector3 oldLocation = new Vector3(-1, -1, -1);
 	private Vector3 newLocation = new Vector3 (-1, -1, -1);
 
-	void Start(){
+	void Start()
+	{
 		//Center the camera
-		Camera.main.transform.position = new Vector3(12 * MapCreation.scale, minZoom, 5 * MapCreation.scale);
+		Camera.main.transform.position = new Vector3(12 * MapCreation.scale, MinZoom, 5 * MapCreation.scale);
 	}
 
-	void Update() {
+	void Update()
+	{
 		// Get the right mouse button
 		if(Input.GetMouseButtonDown(1))
 		{
@@ -29,7 +31,8 @@ public class CameraManager : MonoBehaviour
 		}
 
 		// Disable movements on button release
-		if (!Input.GetMouseButton(1)) {
+		if (!Input.GetMouseButton(1))
+		{
 			isPanning = false;
 			oldLocation = new Vector3(-1, -1, -1);
 			newLocation = new Vector3(-1, -1, -1);
@@ -45,14 +48,15 @@ public class CameraManager : MonoBehaviour
 			newLocation = Input.mousePosition;
 
 			//If old location is -1, then this is the first pan frame, so return.
-			if (oldLocation.x == -1) {
+			if (oldLocation.x == -1)
+			{
 				return;
 			}
 
 			Vector3 movement = Vector3.zero;
 			movement.x = oldLocation.x - newLocation.x; //Set side to side move equal to the left/right move of mouse
 			movement.z = oldLocation.y - newLocation.y; //Set front to back move (z plane) equal to the up/down move of the mouse
-			movement *= panSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
+			movement *= PanSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 			//movement = Camera.main.transform.TransformDirection(movement); //Account for camera facing different direction than default
 			movement.y = 0; //Don't change in the y direction
 			transform.Translate(movement * Time.deltaTime * MapCreation.scale, Space.World); //Update the camera
@@ -66,32 +70,34 @@ public class CameraManager : MonoBehaviour
 		}
 
 		// Zoom via scrollwheel
-		if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+		if (Input.GetAxis("Mouse ScrollWheel") > 0)
+		{
 			//GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y - .3f, transform.position.z + .2f);
-			ZoomIn();
+			zoomIn();
 		}
-		else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+		else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+		{
 			//GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y + .3f, transform.position.z - .2f);
-			ZoomOut();
+			zoomOut();
 		}
 	}
 
-	private void ZoomIn()
+	private void zoomIn()
 	{
-		float newY = Camera.main.transform.position.y - zoomSpeed;
-		if (newY < minZoom)
+		float newY = Camera.main.transform.position.y - ZoomSpeed;
+		if (newY < MinZoom)
 		{
-			newY = minZoom;
+			newY = MinZoom;
 		}
 		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
 	}
 
-	private void ZoomOut()
+	private void zoomOut()
 	{
-		float newY = zoomSpeed + Camera.main.transform.position.y;
-		if (newY > maxZoom)
+		float newY = ZoomSpeed + Camera.main.transform.position.y;
+		if (newY > MaxZoom)
 		{
-			newY = maxZoom;
+			newY = MaxZoom;
 		}
 		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
 	}
