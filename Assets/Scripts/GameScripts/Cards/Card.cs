@@ -3,105 +3,109 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System;
 
-public abstract class Card
+namespace FallenLand
 {
-	/*
-                                 Cards
-                               /       \
-                    Encounters          Nonencounters
-                  / |    \     \              |     \
-                 /  |     \     \             |      \
-                /   |      \     \            |       \
-               /    |       \     \           |        \
-         Mission   Plains   Rad   Mountain   Party      Nonparty
-                                             |   |          |
-                                     Character    Spoils    Action
-	*/
-
-	private string Title;
-	private int Id;
-
-	protected Card(string title)
+	public abstract class Card
 	{
-		this.Title = title;
-	}
+		/*
+									 Cards
+								   /       \
+						Encounters          Nonencounters
+					  / |    \     \              |     \
+					 /  |     \     \             |      \
+					/   |      \     \            |       \
+				   /    |       \     \           |        \
+			 Mission   Plains   Rad   Mountain   Party      Nonparty
+												 |   |          |
+										 Character    Spoils    Action
+		*/
 
-	public string GetTitle()
-	{
-		return Title;
-	}
+		private string Title;
+		private int Id;
 
-	public int GetId()
-	{
-		return this.Id;
-	}
-
-	public void SetId(int id)
-	{
-		this.Id = id;
-	}
-
-	public static List<T> ShuffleDeck<T>(List<T> cards)
-	{
-		List<T> cardsBefore = deepCopy(cards);
-		RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-		byte[] byteArray1 = new byte[1];
-		byte[] byteArray2 = new byte[1];
-		bool isShuffled = false;
-
-		while (!isShuffled)
+		protected Card(string title)
 		{
-			for (int i = 0; i < 10; i++)
-			{
-				for (int j = 0; j < cards.Count; j++)
-				{
-					provider.GetBytes(byteArray1); //Get a byte from the RNG service
-					provider.GetBytes(byteArray2);
-					int randInt1 = Convert.ToInt32(byteArray1[0]); //Convert the byte to an integer
-					int randInt2 = Convert.ToInt32(byteArray2[0]);
-					randInt1 = Math.Abs(randInt1 % cards.Count); //Put it within the bounds of the deck
-					randInt2 = Math.Abs(randInt2 % cards.Count);
+			this.Title = title;
+		}
 
-					//Swap the two cards
-					T temp = cards[randInt1];
-					cards[randInt1] = cards[randInt2];
-					cards[randInt2] = temp;
+		public string GetTitle()
+		{
+			return Title;
+		}
+
+		public int GetId()
+		{
+			return this.Id;
+		}
+
+		public void SetId(int id)
+		{
+			this.Id = id;
+		}
+
+		public static List<T> ShuffleDeck<T>(List<T> cards)
+		{
+			List<T> cardsBefore = deepCopy(cards);
+			RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+			byte[] byteArray1 = new byte[1];
+			byte[] byteArray2 = new byte[1];
+			bool isShuffled = false;
+
+			while (!isShuffled)
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					for (int j = 0; j < cards.Count; j++)
+					{
+						provider.GetBytes(byteArray1); //Get a byte from the RNG service
+						provider.GetBytes(byteArray2);
+						int randInt1 = Convert.ToInt32(byteArray1[0]); //Convert the byte to an integer
+						int randInt2 = Convert.ToInt32(byteArray2[0]);
+						randInt1 = Math.Abs(randInt1 % cards.Count); //Put it within the bounds of the deck
+						randInt2 = Math.Abs(randInt2 % cards.Count);
+
+						//Swap the two cards
+						T temp = cards[randInt1];
+						cards[randInt1] = cards[randInt2];
+						cards[randInt2] = temp;
+					}
+				}
+				if (cardsAreReordered(cardsBefore, cards))
+				{
+					isShuffled = true;
 				}
 			}
-			if (cardsAreReordered(cardsBefore, cards))
-			{
-				isShuffled = true;
-			}
+
+			return cards;
 		}
 
-		return cards;
-	}
-
-	private static bool cardsAreReordered<T>(List<T> deck1, List<T> deck2)
-	{
-		bool areReordered = false;
-		if (deck1.Count == deck2.Count)
+		private static bool cardsAreReordered<T>(List<T> deck1, List<T> deck2)
 		{
-			for (int i = 0; i < deck1.Count; i++)
+			bool areReordered = false;
+			if (deck1.Count == deck2.Count)
 			{
-				if (deck1[i].GetHashCode() != deck2[i].GetHashCode())
+				for (int i = 0; i < deck1.Count; i++)
 				{
-					areReordered = true;
+					if (deck1[i].GetHashCode() != deck2[i].GetHashCode())
+					{
+						areReordered = true;
+					}
 				}
 			}
+
+			return areReordered;
 		}
 
-		return areReordered;
-	}
-
-	private static List<T> deepCopy<T>(List<T> cards)
-	{
-		List<T> cardsCopy = new List<T>();
-		for (int i = 0; i < cards.Count; i++)
+		private static List<T> deepCopy<T>(List<T> cards)
 		{
-			cardsCopy.Add(cards[i]);
-		}
+			List<T> cardsCopy = new List<T>();
+			for (int i = 0; i < cards.Count; i++)
+			{
+				cardsCopy.Add(cards[i]);
+			}
 
-		return cardsCopy;
+			return cardsCopy;
+		}
 	}
+
 }

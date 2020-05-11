@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlainsCard : EncounterCard
+namespace FallenLand
 {
-	public PlainsCard(string title) : base(title)
+	public class PlainsCard : EncounterCard
 	{
+		public PlainsCard(string title) : base(title)
+		{
 
+		}
 	}
 }

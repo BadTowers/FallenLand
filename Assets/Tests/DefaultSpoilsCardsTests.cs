@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using System.Collections.Generic;
 using UnityEngine;
+using FallenLand;
 
 namespace Tests
 {

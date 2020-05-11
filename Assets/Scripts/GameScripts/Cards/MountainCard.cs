@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MountainCard : EncounterCard
+namespace FallenLand
 {
-	public MountainCard(string title) : base(title)
+	public class MountainCard : EncounterCard
 	{
+		public MountainCard(string title) : base(title)
+		{
 
+		}
 	}
 }

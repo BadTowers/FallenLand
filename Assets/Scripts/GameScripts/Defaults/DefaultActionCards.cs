@@ -2,30 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultActionCards
+namespace FallenLand
 {
-	private List<ActionCard> ActionCards;
-
-	public DefaultActionCards()
+	public class DefaultActionCards
 	{
-		ActionCards = new List<ActionCard>();
+		private List<ActionCard> ActionCards;
 
-		//Add the cards to the list
-		ActionCard curCard;
+		public DefaultActionCards()
+		{
+			ActionCards = new List<ActionCard>();
 
-		Debug.Log("Instantiating action cards...");
+			//Add the cards to the list
+			ActionCard curCard;
 
-		//TODO
+			Debug.Log("Instantiating action cards...");
 
-		//placeholder. inserts a bunch of blanks DEBUG THINGY
-		for(int i = 0; i < 80; i++) {
-			curCard = new ActionCard("test " + i.ToString());
-			ActionCards.Add(curCard);
+			//TODO
+
+			//placeholder. inserts a bunch of blanks DEBUG THINGY
+			for (int i = 0; i < 80; i++)
+			{
+				curCard = new ActionCard("test " + i.ToString());
+				ActionCards.Add(curCard);
+			}
 		}
-	}
 
-	public List<ActionCard> GetActionCards()
-	{
-		return ActionCards;
+		public List<ActionCard> GetActionCards()
+		{
+			return ActionCards;
+		}
 	}
 }

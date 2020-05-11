@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NonpartyCard : NonencounterCard
+namespace FallenLand
 {
-	public NonpartyCard(string title) : base(title)
+	public class NonpartyCard : NonencounterCard
 	{
+		public NonpartyCard(string title) : base(title)
+		{
 
+		}
 	}
 }

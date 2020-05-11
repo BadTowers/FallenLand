@@ -2,60 +2,64 @@
 using System.Collections.Generic;
 using System;
 
-public class PartyCard : NonencounterCard
+namespace FallenLand
 {
-
-	private Dictionary<Skills, int> BaseSkills;
-	private string TitleSubString;
-	private string Quote;
-
-	public PartyCard(string text) : base(text)
+	public class PartyCard : NonencounterCard
 	{
-		BaseSkills = new Dictionary<Skills, int>();
-	}
 
-	public void SetBaseSkills(Dictionary<Skills, int> skills)
-	{
-		if (skills != null)
+		private Dictionary<Skills, int> BaseSkills;
+		private string TitleSubString;
+		private string Quote;
+
+		public PartyCard(string text) : base(text)
 		{
-			foreach (Skills curSkill in skills.Keys)
-			{
-				BaseSkills.Add(curSkill, skills[curSkill]);
-			}
+			BaseSkills = new Dictionary<Skills, int>();
+		}
 
-			//For each remaining skill that wasn't passed in, set it to 0
-			foreach (Skills skill in Enum.GetValues(typeof(Skills)))
+		public void SetBaseSkills(Dictionary<Skills, int> skills)
+		{
+			if (skills != null)
 			{
-				if (!BaseSkills.ContainsKey(skill))
+				foreach (Skills curSkill in skills.Keys)
 				{
-					BaseSkills.Add(skill, 0);
+					BaseSkills.Add(curSkill, skills[curSkill]);
+				}
+
+				//For each remaining skill that wasn't passed in, set it to 0
+				foreach (Skills skill in Enum.GetValues(typeof(Skills)))
+				{
+					if (!BaseSkills.ContainsKey(skill))
+					{
+						BaseSkills.Add(skill, 0);
+					}
 				}
 			}
 		}
+
+		public Dictionary<Skills, int> GetBaseSkills()
+		{
+			return BaseSkills;
+		}
+
+		public void SetTitleSubString(string titleSubString)
+		{
+			TitleSubString = titleSubString;
+		}
+
+		public string GetTitleSubString()
+		{
+			return TitleSubString;
+		}
+
+		public void SetQuote(string quote)
+		{
+			Quote = quote;
+		}
+
+		public string GetQuote()
+		{
+			return Quote;
+		}
 	}
 
-	public Dictionary<Skills, int> GetBaseSkills()
-	{
-		return BaseSkills;
-	}
-
-	public void SetTitleSubString(string titleSubString)
-	{
-		TitleSubString = titleSubString;
-	}
-
-	public string GetTitleSubString()
-	{
-		return TitleSubString;
-	}
-
-	public void SetQuote(string quote)
-	{
-		Quote = quote;
-	}
-
-	public string GetQuote()
-	{
-		return Quote;
-	}
 }

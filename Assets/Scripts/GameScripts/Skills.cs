@@ -1,6 +1,7 @@
-﻿
-
-public enum Skills
+﻿namespace FallenLand
 {
-	Combat, Survival, Diplomacy, Mechanical, Technical, Medical
+	public enum Skills
+	{
+		Combat, Survival, Diplomacy, Mechanical, Technical, Medical
+	}
 }

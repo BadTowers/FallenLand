@@ -1,402 +1,406 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class SpoilsCard : PartyCard {
-
-	private List<SpoilsTypes> Types;
-	private int SellValue;
-	private int CarryWeight;
-	private List<Dictionary<Gains, int>> ConditionalGains;
-	private Dictionary<Gains, int> StaticGains;
-	private List<List<Restrictions>> Restrictions;
-	private List<List<Times>> TimesWhenUsable;
-	private List<Uses> NumberOfUses;
-	private List<bool> DiscardsAfterConditionalGains;
-	private List<SpoilsCard> D6Options;
-	private List<SpoilsCard> D10Options;
-	private bool IsTemporary;
-	private Times WhenTempGainsExpire;
-	private List<SpoilsCard> Attachments;
-	private bool PlaceOnTopOfDiscard;
-
-	public SpoilsCard(string title) : base(title)
+namespace FallenLand
+{
+	public class SpoilsCard : PartyCard
 	{
-		initVariables();
-	}
 
-	public SpoilsCard(string title, List<SpoilsTypes> types) : base(title)
-	{
-		initVariables();
-		Types = types;
-	}
+		private List<SpoilsTypes> Types;
+		private int SellValue;
+		private int CarryWeight;
+		private List<Dictionary<Gains, int>> ConditionalGains;
+		private Dictionary<Gains, int> StaticGains;
+		private List<List<Restrictions>> Restrictions;
+		private List<List<Times>> TimesWhenUsable;
+		private List<Uses> NumberOfUses;
+		private List<bool> DiscardsAfterConditionalGains;
+		private List<SpoilsCard> D6Options;
+		private List<SpoilsCard> D10Options;
+		private bool IsTemporary;
+		private Times WhenTempGainsExpire;
+		private List<SpoilsCard> Attachments;
+		private bool PlaceOnTopOfDiscard;
 
-	public SpoilsCard(string title, params SpoilsTypes[] types) : base(title)
-	{
-		initVariables();
-		foreach(SpoilsTypes item in types)
+		public SpoilsCard(string title) : base(title)
 		{
-			Types.Add(item);
+			initVariables();
 		}
-	}
 
-	public void SetTypes(List<SpoilsTypes> types)
-	{
-		Types = types;
-	}
-
-	public void SetTypes(params SpoilsTypes[] types)
-	{
-		Types = new List<SpoilsTypes>();
-		foreach(SpoilsTypes item in types)
+		public SpoilsCard(string title, List<SpoilsTypes> types) : base(title)
 		{
-			Types.Add(item);
+			initVariables();
+			Types = types;
 		}
-	}
 
-	public void AddType(SpoilsTypes type)
-	{
-		Types.Add(type);
-	}
-
-	public List<SpoilsTypes> GetTypes()
-	{
-		return Types;
-	}
-
-	public void SetSellValue(int sellValue)
-	{
-		if(sellValue >= 0)
+		public SpoilsCard(string title, params SpoilsTypes[] types) : base(title)
 		{
-			SellValue = sellValue;
-		}
-	}
-
-	public int GetSellValue()
-	{
-		return SellValue;
-	}
-
-	public void SetCarryWeight(int carryWeight)
-	{
-		if (carryWeight >= 0)
-		{
-			CarryWeight = carryWeight;
-		}
-	}
-
-	public int GetCarryWeight()
-	{
-		return CarryWeight;
-	}
-
-	public void SetRestrictions(params List<Restrictions>[] restrictions)
-	{
-		Restrictions = new List<List<Restrictions>>();
-		foreach(List<Restrictions> curRestriction in restrictions)
-		{
-			if (curRestriction != null)
+			initVariables();
+			foreach (SpoilsTypes item in types)
 			{
-				Restrictions.Add(curRestriction);
+				Types.Add(item);
 			}
 		}
-	}
 
-	public void SetRestrictions(List<List<Restrictions>> restrictions)
-	{
-		if (restrictions != null)
+		public void SetTypes(List<SpoilsTypes> types)
 		{
-			Restrictions = restrictions;
+			Types = types;
 		}
-	}
 
-	public void AddRestriction(List<Restrictions> newRestriction)
-	{
-		if (newRestriction != null)
+		public void SetTypes(params SpoilsTypes[] types)
 		{
-			Restrictions.Add(newRestriction);
-		}
-	}
-
-	public List<List<Restrictions>> GetRestrictions()
-	{
-		return Restrictions;
-	}
-
-	public void SetStaticGains(Dictionary<Gains, int> gains)
-	{
-		if (gains != null)
-		{
-			StaticGains = gains;
-		}
-	}
-
-	public Dictionary<Gains, int> GetStaticGains()
-	{
-		return StaticGains;
-	}
-
-	public void SetWhenUsable(List<List<Times>> whenUsable)
-	{
-		if (whenUsable != null)
-		{
-			TimesWhenUsable = whenUsable;
-		}
-	}
-
-	public void SetWhenUsable(params List<Times>[] whenUsable)
-	{
-		TimesWhenUsable = new List<List<Times>>();
-		foreach(List<Times> curWhenUsable in whenUsable)
-		{
-			if (curWhenUsable != null)
+			Types = new List<SpoilsTypes>();
+			foreach (SpoilsTypes item in types)
 			{
-				TimesWhenUsable.Add(curWhenUsable);
+				Types.Add(item);
 			}
 		}
-	}
 
-	public void AddWhenUsable(List<Times> time)
-	{
-		if (time != null)
+		public void AddType(SpoilsTypes type)
 		{
-			TimesWhenUsable.Add(time);
+			Types.Add(type);
 		}
-	}
 
-	public List<List<Times>> GetWhenUsable()
-	{
-		return TimesWhenUsable;
-	}
-
-	public void SetConditionalGains(List<Dictionary<Gains, int>> gains)
-	{
-		if (gains != null)
+		public List<SpoilsTypes> GetTypes()
 		{
-			ConditionalGains = gains;
+			return Types;
 		}
-	}
 
-	public void SetConditionalGains(params Dictionary<Gains,int>[] conditionalGains)
-	{
-		ConditionalGains = new List<Dictionary<Gains, int>>();
-		foreach(Dictionary<Gains,int> curConditionalGain in conditionalGains)
+		public void SetSellValue(int sellValue)
 		{
-			if (curConditionalGain != null)
+			if (sellValue >= 0)
 			{
-				ConditionalGains.Add(curConditionalGain);
+				SellValue = sellValue;
 			}
 		}
-	}
 
-	public void AddConditionalGain(Gains gain, int value)
-	{
-		ConditionalGains.Add(new Dictionary<Gains, int>{ { gain, value } });
-	}
-
-	public void AddConditionalGain(Dictionary<Gains, int> gain)
-	{
-		if (gain != null)
+		public int GetSellValue()
 		{
-			ConditionalGains.Add(gain);
+			return SellValue;
 		}
-	}
 
-	public List<Dictionary<Gains, int>> GetConditionalGains()
-	{
-		return ConditionalGains;
-	}
-
-	public void SetNumberOfUses(List<Uses> numUses)
-	{
-		if (numUses != null)
+		public void SetCarryWeight(int carryWeight)
 		{
-			NumberOfUses = numUses;
+			if (carryWeight >= 0)
+			{
+				CarryWeight = carryWeight;
+			}
 		}
-	}
 
-	public void SetNumberOfUses(params Uses[] uses)
-	{
-		NumberOfUses = new List<Uses>();
-		foreach(Uses curNumUses in uses)
+		public int GetCarryWeight()
 		{
-			NumberOfUses.Add(curNumUses);
+			return CarryWeight;
 		}
-	}
 
-	public void AddNumberOfUses(Uses use)
-	{
-		NumberOfUses.Add(use);
-	}
-
-	public List<Uses> GetNumberOfUses()
-	{
-		return NumberOfUses;
-	}
-
-	public void SetDiscard(List<bool> discards)
-	{
-		if (discards != null)
+		public void SetRestrictions(params List<Restrictions>[] restrictions)
 		{
-			DiscardsAfterConditionalGains = discards;
+			Restrictions = new List<List<Restrictions>>();
+			foreach (List<Restrictions> curRestriction in restrictions)
+			{
+				if (curRestriction != null)
+				{
+					Restrictions.Add(curRestriction);
+				}
+			}
 		}
-	}
 
-	public void SetDiscard(params bool[] discards)
-	{
-		DiscardsAfterConditionalGains = new List<bool>();
-		foreach(bool item in discards)
+		public void SetRestrictions(List<List<Restrictions>> restrictions)
 		{
-			DiscardsAfterConditionalGains.Add(item);
+			if (restrictions != null)
+			{
+				Restrictions = restrictions;
+			}
 		}
-	}
 
-	public void AddDiscard(bool disc)
-	{
-		DiscardsAfterConditionalGains.Add(disc);
-	}
-
-	public List<bool> GetDiscard()
-	{
-		return DiscardsAfterConditionalGains;
-	}
-
-	public void SetD6Options(List<SpoilsCard> d6)
-	{
-		if (d6 != null)
+		public void AddRestriction(List<Restrictions> newRestriction)
 		{
-			D6Options = d6;
+			if (newRestriction != null)
+			{
+				Restrictions.Add(newRestriction);
+			}
 		}
-	}
 
-	public void SetD6Options(params SpoilsCard[] d6)
-	{
-		D6Options = new List<SpoilsCard>();
-		foreach(SpoilsCard item in d6)
+		public List<List<Restrictions>> GetRestrictions()
 		{
-			D6Options.Add(item);
+			return Restrictions;
 		}
-	}
 
-	public void AddD6Option(SpoilsCard card)
-	{
-		D6Options.Add(card);
-	}
-
-	public List<SpoilsCard> GetD6Options()
-	{
-		return D6Options;
-	}
-
-	public void SetD10Options(List<SpoilsCard> d10)
-	{
-		if (d10 != null)
+		public void SetStaticGains(Dictionary<Gains, int> gains)
 		{
-			D10Options = d10;
+			if (gains != null)
+			{
+				StaticGains = gains;
+			}
 		}
-	}
 
-	public void SetD10Options(params SpoilsCard[] d10Options)
-	{
-		D10Options = new List<SpoilsCard>();
-		foreach(SpoilsCard curD10Option in d10Options)
+		public Dictionary<Gains, int> GetStaticGains()
 		{
-			D10Options.Add(curD10Option);
+			return StaticGains;
 		}
-	}
 
-	public void AddD10Option(SpoilsCard card)
-	{
-		D10Options.Add(card);
-	}
-
-	public List<SpoilsCard> GetD10Options()
-	{
-		return D10Options;
-	}
-
-	public void SetIsTemp(bool temp)
-	{
-		IsTemporary = temp;
-	}
-
-	public bool GetIsTemp()
-	{
-		return IsTemporary;
-	}
-
-	public void SetWhenTempEnd(Times time)
-	{
-		WhenTempGainsExpire = time;
-	}
-
-	public Times GetWhenTempEnd()
-	{
-		return WhenTempGainsExpire;
-	}
-
-	public void AddAttachment(SpoilsCard attachment)
-	{
-		if (attachment != null)
+		public void SetWhenUsable(List<List<Times>> whenUsable)
 		{
-			Attachments.Add(attachment);
+			if (whenUsable != null)
+			{
+				TimesWhenUsable = whenUsable;
+			}
 		}
-	}
 
-	public List<SpoilsCard> GetAttachments()
-	{
-		return Attachments;
-	}
+		public void SetWhenUsable(params List<Times>[] whenUsable)
+		{
+			TimesWhenUsable = new List<List<Times>>();
+			foreach (List<Times> curWhenUsable in whenUsable)
+			{
+				if (curWhenUsable != null)
+				{
+					TimesWhenUsable.Add(curWhenUsable);
+				}
+			}
+		}
 
-	public void SetDiscardToTop(bool isDiscardToTop)
-	{
-		PlaceOnTopOfDiscard = isDiscardToTop;
-	}
+		public void AddWhenUsable(List<Times> time)
+		{
+			if (time != null)
+			{
+				TimesWhenUsable.Add(time);
+			}
+		}
 
-	public bool GetDiscardToTop()
-	{
-		return PlaceOnTopOfDiscard;
-	}
+		public List<List<Times>> GetWhenUsable()
+		{
+			return TimesWhenUsable;
+		}
 
-	public SpoilsCard DeepCopy()
-	{
-		SpoilsCard newCard = new SpoilsCard(this.GetTitle());
-		newCard.SetTitleSubString(this.GetTitleSubString());
-		newCard.SetTypes(this.Types);
-		newCard.SetCarryWeight(this.CarryWeight);
-		newCard.SetSellValue(this.SellValue);
-		newCard.SetBaseSkills(this.GetBaseSkills());
-		newCard.SetStaticGains(this.StaticGains);
-		newCard.SetConditionalGains(this.ConditionalGains);
-		newCard.SetWhenUsable(this.TimesWhenUsable);
-		newCard.SetNumberOfUses(this.NumberOfUses);
-		newCard.SetDiscard(this.DiscardsAfterConditionalGains);
-		newCard.SetRestrictions(this.Restrictions);
-		newCard.SetId(this.GetId());
-		newCard.SetQuote(this.GetQuote());
-		newCard.SetD6Options(this.D6Options);
-		newCard.SetD10Options(this.D10Options);
-		newCard.SetDiscardToTop(this.PlaceOnTopOfDiscard);
+		public void SetConditionalGains(List<Dictionary<Gains, int>> gains)
+		{
+			if (gains != null)
+			{
+				ConditionalGains = gains;
+			}
+		}
 
-		return newCard;
-	}
+		public void SetConditionalGains(params Dictionary<Gains, int>[] conditionalGains)
+		{
+			ConditionalGains = new List<Dictionary<Gains, int>>();
+			foreach (Dictionary<Gains, int> curConditionalGain in conditionalGains)
+			{
+				if (curConditionalGain != null)
+				{
+					ConditionalGains.Add(curConditionalGain);
+				}
+			}
+		}
 
-	private void initVariables()
-	{
-		Types = new List<SpoilsTypes>();
-		ConditionalGains = new List<Dictionary<Gains, int>>();
-		StaticGains = new Dictionary<Gains, int>();
-		Restrictions = new List<List<Restrictions>>();
-		TimesWhenUsable = new List<List<Times>>();
-		NumberOfUses = new List<Uses>();
-		DiscardsAfterConditionalGains = new List<bool>();
-		D6Options = new List<SpoilsCard>();
-		D10Options = new List<SpoilsCard>();
-		Attachments = new List<SpoilsCard>();
+		public void AddConditionalGain(Gains gain, int value)
+		{
+			ConditionalGains.Add(new Dictionary<Gains, int> { { gain, value } });
+		}
 
-		SellValue = 0;
-		CarryWeight = 0;
-		IsTemporary = false;
-		WhenTempGainsExpire = Times.Never;
-		PlaceOnTopOfDiscard = true; //all cards default to going on the top of the discard pile
+		public void AddConditionalGain(Dictionary<Gains, int> gain)
+		{
+			if (gain != null)
+			{
+				ConditionalGains.Add(gain);
+			}
+		}
+
+		public List<Dictionary<Gains, int>> GetConditionalGains()
+		{
+			return ConditionalGains;
+		}
+
+		public void SetNumberOfUses(List<Uses> numUses)
+		{
+			if (numUses != null)
+			{
+				NumberOfUses = numUses;
+			}
+		}
+
+		public void SetNumberOfUses(params Uses[] uses)
+		{
+			NumberOfUses = new List<Uses>();
+			foreach (Uses curNumUses in uses)
+			{
+				NumberOfUses.Add(curNumUses);
+			}
+		}
+
+		public void AddNumberOfUses(Uses use)
+		{
+			NumberOfUses.Add(use);
+		}
+
+		public List<Uses> GetNumberOfUses()
+		{
+			return NumberOfUses;
+		}
+
+		public void SetDiscard(List<bool> discards)
+		{
+			if (discards != null)
+			{
+				DiscardsAfterConditionalGains = discards;
+			}
+		}
+
+		public void SetDiscard(params bool[] discards)
+		{
+			DiscardsAfterConditionalGains = new List<bool>();
+			foreach (bool item in discards)
+			{
+				DiscardsAfterConditionalGains.Add(item);
+			}
+		}
+
+		public void AddDiscard(bool disc)
+		{
+			DiscardsAfterConditionalGains.Add(disc);
+		}
+
+		public List<bool> GetDiscard()
+		{
+			return DiscardsAfterConditionalGains;
+		}
+
+		public void SetD6Options(List<SpoilsCard> d6)
+		{
+			if (d6 != null)
+			{
+				D6Options = d6;
+			}
+		}
+
+		public void SetD6Options(params SpoilsCard[] d6)
+		{
+			D6Options = new List<SpoilsCard>();
+			foreach (SpoilsCard item in d6)
+			{
+				D6Options.Add(item);
+			}
+		}
+
+		public void AddD6Option(SpoilsCard card)
+		{
+			D6Options.Add(card);
+		}
+
+		public List<SpoilsCard> GetD6Options()
+		{
+			return D6Options;
+		}
+
+		public void SetD10Options(List<SpoilsCard> d10)
+		{
+			if (d10 != null)
+			{
+				D10Options = d10;
+			}
+		}
+
+		public void SetD10Options(params SpoilsCard[] d10Options)
+		{
+			D10Options = new List<SpoilsCard>();
+			foreach (SpoilsCard curD10Option in d10Options)
+			{
+				D10Options.Add(curD10Option);
+			}
+		}
+
+		public void AddD10Option(SpoilsCard card)
+		{
+			D10Options.Add(card);
+		}
+
+		public List<SpoilsCard> GetD10Options()
+		{
+			return D10Options;
+		}
+
+		public void SetIsTemp(bool temp)
+		{
+			IsTemporary = temp;
+		}
+
+		public bool GetIsTemp()
+		{
+			return IsTemporary;
+		}
+
+		public void SetWhenTempEnd(Times time)
+		{
+			WhenTempGainsExpire = time;
+		}
+
+		public Times GetWhenTempEnd()
+		{
+			return WhenTempGainsExpire;
+		}
+
+		public void AddAttachment(SpoilsCard attachment)
+		{
+			if (attachment != null)
+			{
+				Attachments.Add(attachment);
+			}
+		}
+
+		public List<SpoilsCard> GetAttachments()
+		{
+			return Attachments;
+		}
+
+		public void SetDiscardToTop(bool isDiscardToTop)
+		{
+			PlaceOnTopOfDiscard = isDiscardToTop;
+		}
+
+		public bool GetDiscardToTop()
+		{
+			return PlaceOnTopOfDiscard;
+		}
+
+		public SpoilsCard DeepCopy()
+		{
+			SpoilsCard newCard = new SpoilsCard(this.GetTitle());
+			newCard.SetTitleSubString(this.GetTitleSubString());
+			newCard.SetTypes(this.Types);
+			newCard.SetCarryWeight(this.CarryWeight);
+			newCard.SetSellValue(this.SellValue);
+			newCard.SetBaseSkills(this.GetBaseSkills());
+			newCard.SetStaticGains(this.StaticGains);
+			newCard.SetConditionalGains(this.ConditionalGains);
+			newCard.SetWhenUsable(this.TimesWhenUsable);
+			newCard.SetNumberOfUses(this.NumberOfUses);
+			newCard.SetDiscard(this.DiscardsAfterConditionalGains);
+			newCard.SetRestrictions(this.Restrictions);
+			newCard.SetId(this.GetId());
+			newCard.SetQuote(this.GetQuote());
+			newCard.SetD6Options(this.D6Options);
+			newCard.SetD10Options(this.D10Options);
+			newCard.SetDiscardToTop(this.PlaceOnTopOfDiscard);
+
+			return newCard;
+		}
+
+		private void initVariables()
+		{
+			Types = new List<SpoilsTypes>();
+			ConditionalGains = new List<Dictionary<Gains, int>>();
+			StaticGains = new Dictionary<Gains, int>();
+			Restrictions = new List<List<Restrictions>>();
+			TimesWhenUsable = new List<List<Times>>();
+			NumberOfUses = new List<Uses>();
+			DiscardsAfterConditionalGains = new List<bool>();
+			D6Options = new List<SpoilsCard>();
+			D10Options = new List<SpoilsCard>();
+			Attachments = new List<SpoilsCard>();
+
+			SellValue = 0;
+			CarryWeight = 0;
+			IsTemporary = false;
+			WhenTempGainsExpire = Times.Never;
+			PlaceOnTopOfDiscard = true; //all cards default to going on the top of the discard pile
+		}
 	}
 }

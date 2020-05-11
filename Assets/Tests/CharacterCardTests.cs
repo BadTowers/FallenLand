@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
+using FallenLand;
 
 namespace Tests
 {

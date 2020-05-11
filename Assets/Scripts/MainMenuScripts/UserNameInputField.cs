@@ -2,39 +2,42 @@
 using UnityEngine.UI;
 using Photon.Pun;
 
-[RequireComponent(typeof(InputField))]
-public class UserNameInputField : MonoBehaviour
+namespace FallenLand
 {
-    const string playerNamePrefKey = "PlayerName";
-
-    #region MonoBehaviour CallBacks
-    void Start()
+    [RequireComponent(typeof(InputField))]
+    public class UserNameInputField : MonoBehaviour
     {
-        string defaultName = string.Empty;
-        InputField inputField = this.GetComponent<InputField>();
-        if (inputField != null)
+        const string playerNamePrefKey = "PlayerName";
+
+        #region MonoBehaviour CallBacks
+        void Start()
         {
-            if (PlayerPrefs.HasKey(playerNamePrefKey))
+            string defaultName = string.Empty;
+            InputField inputField = this.GetComponent<InputField>();
+            if (inputField != null)
             {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                inputField.text = defaultName;
+                if (PlayerPrefs.HasKey(playerNamePrefKey))
+                {
+                    defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+                    inputField.text = defaultName;
+                }
             }
+            PhotonNetwork.NickName = defaultName;
         }
-        PhotonNetwork.NickName = defaultName;
-    }
-    #endregion
+        #endregion
 
-    #region Public Methods
-    public void SetPlayerName(string value)
-    {
-        if (string.IsNullOrEmpty(value))
+        #region Public Methods
+        public void SetPlayerName(string value)
         {
-            Debug.LogError("Player Name is null or empty");
-            return;
-        }
-        PhotonNetwork.NickName = value;
+            if (string.IsNullOrEmpty(value))
+            {
+                Debug.LogError("Player Name is null or empty");
+                return;
+            }
+            PhotonNetwork.NickName = value;
 
-        PlayerPrefs.SetString(playerNamePrefKey, value);
+            PlayerPrefs.SetString(playerNamePrefKey, value);
+        }
+        #endregion
     }
-    #endregion
 }

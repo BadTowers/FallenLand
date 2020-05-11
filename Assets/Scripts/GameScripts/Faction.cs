@@ -1,113 +1,116 @@
 ﻿using System.Collections.Generic;
 
-public class Faction
+namespace FallenLand
 {
-	private string FactionName;
-	private List<Perk> Perks;
-	private Coordinates StartingBaseLocation;
-	private string StartingBaseName;
-	private string FactionLore;
-	private List<TownTech> StartingTownTechs;
-	private int Id;
-
-	public Faction(string name, Coordinates location)
+	public class Faction
 	{
-		FactionName = name;
-		StartingBaseLocation = location;
-		Perks = new List<Perk>();
-        StartingTownTechs = new List<TownTech>();
-	}
+		private string FactionName;
+		private List<Perk> Perks;
+		private Coordinates StartingBaseLocation;
+		private string StartingBaseName;
+		private string FactionLore;
+		private List<TownTech> StartingTownTechs;
+		private int Id;
 
-	public void SetName(string name)
-	{
-		FactionName = name;
-	}
-
-	public string GetName()
-	{
-		return FactionName;
-	}
-
-	public void SetPerks(List<Perk> perks)
-	{
-		if (perks != null)
+		public Faction(string name, Coordinates location)
 		{
-			Perks = perks;
-		}
-	}
-
-	public void AddPerk(Perk perk)
-	{
-		if (perk != null)
-		{
-			Perks.Add(perk);
-		}
-	}
-
-	public List<Perk> GetPerks()
-	{
-		return Perks;
-	}
-
-	public void SetBaseLocation(Coordinates location)
-	{
-		if (location != null)
-		{
+			FactionName = name;
 			StartingBaseLocation = location;
+			Perks = new List<Perk>();
+			StartingTownTechs = new List<TownTech>();
 		}
-	}
 
-	public Coordinates GetBaseLocation()
-	{
-		return StartingBaseLocation;
-	}
-
-	public void SetBaseLocationString(string locationString)
-	{
-		StartingBaseName = locationString;
-	}
-
-	public string GetBaseLocationString()
-	{
-		return StartingBaseName;
-	}
-
-	public void SetLore(string lore)
-	{
-		FactionLore = lore;
-	}
-
-	public string GetLore()
-	{
-		return FactionLore;
-	}
-
-	public void SetStartingTownTechs(List<TownTech> townTechs)
-	{
-		if (townTechs != null)
+		public void SetName(string name)
 		{
-			StartingTownTechs = townTechs;
+			FactionName = name;
 		}
-	}
 
-	public void AddStartingTownTech(TownTech townTech)
-	{
-		StartingTownTechs.Add(townTech);
-	}
+		public string GetName()
+		{
+			return FactionName;
+		}
 
-	public List<TownTech> GetStartingTownTechs()
-	{
-		return StartingTownTechs;
-	}
+		public void SetPerks(List<Perk> perks)
+		{
+			if (perks != null)
+			{
+				Perks = perks;
+			}
+		}
 
-	public void SetId(int id)
-	{
-		Id = id;
-	}
+		public void AddPerk(Perk perk)
+		{
+			if (perk != null)
+			{
+				Perks.Add(perk);
+			}
+		}
 
-	public int GetId()
-	{
-		return Id;
-	}
+		public List<Perk> GetPerks()
+		{
+			return Perks;
+		}
 
+		public void SetBaseLocation(Coordinates location)
+		{
+			if (location != null)
+			{
+				StartingBaseLocation = location;
+			}
+		}
+
+		public Coordinates GetBaseLocation()
+		{
+			return StartingBaseLocation;
+		}
+
+		public void SetBaseLocationString(string locationString)
+		{
+			StartingBaseName = locationString;
+		}
+
+		public string GetBaseLocationString()
+		{
+			return StartingBaseName;
+		}
+
+		public void SetLore(string lore)
+		{
+			FactionLore = lore;
+		}
+
+		public string GetLore()
+		{
+			return FactionLore;
+		}
+
+		public void SetStartingTownTechs(List<TownTech> townTechs)
+		{
+			if (townTechs != null)
+			{
+				StartingTownTechs = townTechs;
+			}
+		}
+
+		public void AddStartingTownTech(TownTech townTech)
+		{
+			StartingTownTechs.Add(townTech);
+		}
+
+		public List<TownTech> GetStartingTownTechs()
+		{
+			return StartingTownTechs;
+		}
+
+		public void SetId(int id)
+		{
+			Id = id;
+		}
+
+		public int GetId()
+		{
+			return Id;
+		}
+
+	}
 }

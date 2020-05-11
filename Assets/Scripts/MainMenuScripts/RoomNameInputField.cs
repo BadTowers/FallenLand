@@ -1,27 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(InputField))]
-public class RoomNameInputField : MonoBehaviour
+namespace FallenLand
 {
-    private string RoomName = "JeksPeen";
-
-    void Start()
+    [RequireComponent(typeof(InputField))]
+    public class RoomNameInputField : MonoBehaviour
     {
-        InputField inputField = this.GetComponent<InputField>();
-        if (inputField != null)
+        private string RoomName = "JeksPeen";
+
+        void Start()
         {
-            inputField.text = RoomName;
+            InputField inputField = this.GetComponent<InputField>();
+            if (inputField != null)
+            {
+                inputField.text = RoomName;
+            }
         }
-    }
 
-    public void SetRoomName(string value)
-    {
-        RoomName = value;
-    }
+        public void SetRoomName(string value)
+        {
+            RoomName = value;
+        }
 
-    public string GetRoomName()
-    {
-        return RoomName;
+        public string GetRoomName()
+        {
+            return RoomName;
+        }
     }
 }
