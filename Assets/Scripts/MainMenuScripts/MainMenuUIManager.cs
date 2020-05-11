@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using NUnit.Framework;
 
 public class MainMenuUIManager : UIManager {
 
@@ -55,6 +56,7 @@ public class MainMenuUIManager : UIManager {
 	private Faction curFac;
 	string gameVersion = "1";
 	private Text FeedbackText;
+	private bool IsCreatingRoom;
 
 	[SerializeField]
 	private byte maxPlayersPerRoom = 5;
@@ -76,6 +78,7 @@ public class MainMenuUIManager : UIManager {
 		FeedbackText = GameObject.Find("FeedbackText").GetComponent<Text>();
 
 		currentState = MainMenuStates.Main;
+		IsCreatingRoom = false;
 	}
 
 	//When script first starts
@@ -140,10 +143,46 @@ public class MainMenuUIManager : UIManager {
 		}
 	}
 
+	public void CreateRoom()
+	{
+		IsCreatingRoom = true;
+		RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
+		if (string.IsNullOrEmpty(roomNameInputField.GetRoomName()))
+		{
+			FeedbackText.text = "Room name cannot be empty";
+		}
+		else
+		{
+			if (PhotonNetwork.IsConnected)
+			{
+				Debug.Log("Connected to the photon network");
+			}
+			else
+			{
+				Debug.Log("Not connected to photon network... need to do that");
+				PhotonNetwork.ConnectUsingSettings();
+				PhotonNetwork.GameVersion = gameVersion;
+			}
+		}
+	}
+
 	public override void OnConnectedToMaster()
 	{
 		RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
-		PhotonNetwork.JoinRoom(roomNameInputField.GetRoomName());
+
+		if (IsCreatingRoom)
+		{
+			Debug.Log("Is creating OnConnectedToMaster");
+			RoomOptions roomOptions = new RoomOptions();
+			roomOptions.MaxPlayers = maxPlayersPerRoom;
+			PhotonNetwork.CreateRoom(roomNameInputField.GetRoomName(), roomOptions);
+			IsCreatingRoom = false;
+		}
+		else
+		{
+			Debug.Log("Is joining OnConnectedToMaster");
+			PhotonNetwork.JoinRoom(roomNameInputField.GetRoomName());
+		}
 	}
 
 	public override void OnJoinRoomFailed(short returnCode, string message)
@@ -353,6 +392,7 @@ public class MainMenuUIManager : UIManager {
 	public void onCreateMultiplayerGame()
 	{
 		Debug.Log("Create multiplayer game button pressed");
+		CreateRoom();
 	}
 
 	/*
