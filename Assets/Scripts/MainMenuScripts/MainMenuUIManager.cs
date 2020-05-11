@@ -60,7 +60,13 @@ public class MainMenuUIManager : UIManager {
 	[SerializeField]
 	private byte maxPlayersPerRoom = 5;
 
-	void Start() {
+	//When script first starts
+	void Awake()
+	{
+		// #Critical
+		// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+		PhotonNetwork.AutomaticallySyncScene = true;
+
 		//Initialize default values
 		curFactionNum = 1;
 		factionWasChanged = true;
@@ -79,15 +85,8 @@ public class MainMenuUIManager : UIManager {
 		IsCreatingRoom = false;
 	}
 
-	//When script first starts
-	void Awake()
+	void Update()
 	{
-		// #Critical
-		// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-		PhotonNetwork.AutomaticallySyncScene = true;		
-	}
-
-	void Update() {
 		//Checks current menu state
 		switch (currentState) {
 			case MainMenuStates.Main:
@@ -530,6 +529,16 @@ public class MainMenuUIManager : UIManager {
 		{
 			GameObject.Find("PlayerText_" + i).GetComponent<Text>().text = PhotonNetwork.PlayerList[i].NickName;
 		}
+	}
+
+	public void CallAwake()
+	{
+		Awake();
+	}
+
+	public void CallUpdate()
+	{
+		Update();
 	}
 }
 
