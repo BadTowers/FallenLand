@@ -5,6 +5,8 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class MainMenuUIManager : UIManager {
 
@@ -51,6 +53,11 @@ public class MainMenuUIManager : UIManager {
 	private bool gameModeWasChanged;
 	private List<Faction> factions;
 	private Faction curFac;
+	string gameVersion = "1";
+	private Text FeedbackText;
+
+	[SerializeField]
+	private byte maxPlayersPerRoom = 5;
 
 	void Start() {
 		//Initialize default values
@@ -65,11 +72,18 @@ public class MainMenuUIManager : UIManager {
 		addToMenuList(singlePlayerMenu);
 		addToMenuList(setUpNewGameMenu);
 		addToMenuList(multiplayerMenu);
+
+		FeedbackText = GameObject.Find("FeedbackText").GetComponent<Text>();
+
+		currentState = MainMenuStates.Main;
 	}
 
 	//When script first starts
-	void Awake(){
-		currentState = MainMenuStates.Main;
+	void Awake()
+	{
+		// #Critical
+		// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+		PhotonNetwork.AutomaticallySyncScene = true;
 	}
 
 	void Update() {
@@ -103,6 +117,46 @@ public class MainMenuUIManager : UIManager {
 		}
 	}
 
+	public void JoinRoom()
+	{
+		RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
+		if (string.IsNullOrEmpty(roomNameInputField.GetRoomName()))
+		{
+			FeedbackText.text = "Room name cannot be empty";
+		}
+		else
+		{
+			if (PhotonNetwork.IsConnected)
+			{
+				Debug.Log("Connected to the photon network");
+				PhotonNetwork.JoinRoom(roomNameInputField.GetRoomName());
+			}
+			else
+			{
+				Debug.Log("Not connected to photon network... need to do that");
+				PhotonNetwork.ConnectUsingSettings();
+				PhotonNetwork.GameVersion = gameVersion;
+			}
+		}
+	}
+
+	public override void OnConnectedToMaster()
+	{
+		RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
+		PhotonNetwork.JoinRoom(roomNameInputField.GetRoomName());
+	}
+
+	public override void OnJoinRoomFailed(short returnCode, string message)
+	{
+		Debug.LogWarningFormat("OnJoinRoomFailed() was called by PUN with reason {0}", message);
+		FeedbackText.text = "Failed to join lobby";
+	}
+
+	public override void OnJoinedRoom()
+	{
+		Debug.Log("OnJoinedRoom()");
+		FeedbackText.text = "Successfully joined";
+	}
 
 
 	/*
@@ -287,6 +341,19 @@ public class MainMenuUIManager : UIManager {
 		asyncSceneLoad("GameScene");
 	}
 
+	/*
+	 * MULTIPLAYER PAGE
+	 */
+	public void onJoinMultiplayerGame()
+	{
+		Debug.Log("Join multiplayer game button pressed");
+		JoinRoom();
+	}
+
+	public void onCreateMultiplayerGame()
+	{
+		Debug.Log("Create multiplayer game button pressed");
+	}
 
 	/*
 	 * UNIVERSAL METHODS

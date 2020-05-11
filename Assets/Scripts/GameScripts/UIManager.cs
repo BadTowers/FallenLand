@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : MonoBehaviourPunCallbacks
+{
 
 	private List<GameObject> menus;
 
