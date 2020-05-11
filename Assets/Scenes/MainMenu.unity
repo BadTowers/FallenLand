@@ -7276,7 +7276,7 @@ GameObject:
   - component: {fileID: 1021465803}
   - component: {fileID: 1021465802}
   m_Layer: 5
-  m_Name: PlayerText_1
+  m_Name: PlayerText_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12718,7 +12718,7 @@ MonoBehaviour:
     never fell. Even when Des Moines was dusted and the ashen fallout drift down
     like snow, Iowa City was again spared. But their luck eventually ran out.
 
-    
+
 
     As
     a crossroads in the Midwest, the city was quickly inundated with fleeing refugees
@@ -12735,7 +12735,7 @@ MonoBehaviour:
     centers and an intricate array of rooftop conservatories. It is also considered
     one of the last remaining intellectual bastions in the Fallen Lands.
 
-    
+
 
     Led
     by the Grand Mayor, who is elected from a council of elites, Coalition of the
@@ -13242,7 +13242,7 @@ GameObject:
   - component: {fileID: 1732892863}
   - component: {fileID: 1732892862}
   m_Layer: 5
-  m_Name: PlayerText_2
+  m_Name: PlayerText_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14436,7 +14436,7 @@ GameObject:
   - component: {fileID: 1836519732}
   - component: {fileID: 1836519731}
   m_Layer: 5
-  m_Name: PlayerText_3
+  m_Name: PlayerText_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16039,7 +16039,7 @@ GameObject:
   - component: {fileID: 1979441640}
   - component: {fileID: 1979441639}
   m_Layer: 5
-  m_Name: PlayerText_5
+  m_Name: PlayerText_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16270,7 +16270,7 @@ GameObject:
   - component: {fileID: 2038306743}
   - component: {fileID: 2038306742}
   m_Layer: 5
-  m_Name: PlayerText_4
+  m_Name: PlayerText_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

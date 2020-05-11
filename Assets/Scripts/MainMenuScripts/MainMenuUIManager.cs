@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System;
 using UnityEngine;
@@ -114,6 +113,7 @@ public class MainMenuUIManager : UIManager {
 				break;
 			case MainMenuStates.MultiplayerLobby:
 				setActiveMenu(MultiplayerLobby);
+				updatePlayerList();
 				break;
 			default:
 				//Default will be to show the main menu in case of error
@@ -522,6 +522,14 @@ public class MainMenuUIManager : UIManager {
 
 		//No more changes to account for
 		gameModeWasChanged = false;
+	}
+
+	private void updatePlayerList()
+	{
+		for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+		{
+			GameObject.Find("PlayerText_" + i).GetComponent<Text>().text = PhotonNetwork.PlayerList[i].NickName;
+		}
 	}
 }
 
