@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-using NUnit.Framework;
 
 public class MainMenuUIManager : UIManager {
 
-	public enum MainMenuStates {Main, Options, SinglePlayer, SetUpNewGame, MultiplayerGame};
+	public enum MainMenuStates {Main, Options, SinglePlayer, SetUpNewGame, MultiplayerCreation, MultiplayerLobby};
 	public MainMenuStates currentState;
 
 	//Menu game objects
@@ -19,7 +18,8 @@ public class MainMenuUIManager : UIManager {
 	public GameObject optionsMenu;
 	public GameObject singlePlayerMenu;
 	public GameObject setUpNewGameMenu;
-	public GameObject multiplayerMenu;
+	public GameObject MultiplayerCreation;
+	public GameObject MultiplayerLobby;
 
 	//List of all things to randomize
 
@@ -73,9 +73,8 @@ public class MainMenuUIManager : UIManager {
 		addToMenuList(optionsMenu);
 		addToMenuList(singlePlayerMenu);
 		addToMenuList(setUpNewGameMenu);
-		addToMenuList(multiplayerMenu);
-
-		FeedbackText = GameObject.Find("FeedbackText").GetComponent<Text>();
+		addToMenuList(MultiplayerCreation);
+		addToMenuList(MultiplayerLobby);
 
 		currentState = MainMenuStates.Main;
 		IsCreatingRoom = false;
@@ -86,7 +85,7 @@ public class MainMenuUIManager : UIManager {
 	{
 		// #Critical
 		// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-		PhotonNetwork.AutomaticallySyncScene = true;
+		PhotonNetwork.AutomaticallySyncScene = true;		
 	}
 
 	void Update() {
@@ -110,8 +109,11 @@ public class MainMenuUIManager : UIManager {
 			case MainMenuStates.Options:
 				setActiveMenu(optionsMenu);
 				break;
-			case MainMenuStates.MultiplayerGame:
-				setActiveMenu(multiplayerMenu);
+			case MainMenuStates.MultiplayerCreation:
+				setActiveMenu(MultiplayerCreation);
+				break;
+			case MainMenuStates.MultiplayerLobby:
+				setActiveMenu(MultiplayerLobby);
 				break;
 			default:
 				//Default will be to show the main menu in case of error
@@ -194,7 +196,7 @@ public class MainMenuUIManager : UIManager {
 	public override void OnJoinedRoom()
 	{
 		Debug.Log("OnJoinedRoom()");
-		FeedbackText.text = "Successfully joined";
+		currentState = MainMenuStates.MultiplayerLobby;
 	}
 
 
@@ -209,19 +211,22 @@ public class MainMenuUIManager : UIManager {
 	}
 
 	// When options button is pressed
-	public void onOptions() {
+	public void onOptions()
+	{
 		currentState = MainMenuStates.Options;
 		Debug.Log ("Options");
 	}
 
 	// When multiplayer button is pressed
-	public void onMultiplayer() {
-		currentState = MainMenuStates.MultiplayerGame;
-		Debug.Log ("Multiplayer");
+	public void onMultiplayer()
+	{
+		currentState = MainMenuStates.MultiplayerCreation;
+		Debug.Log ("Multiplayer creation");
 	}
 
 	// When quit button is pressed
-	public void onQuit() {
+	public void onQuit()
+	{
 		//TODO Make this actually quit lel
 		Debug.Log ("Quit");
 	}
