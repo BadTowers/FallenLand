@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using NUnit.Framework.Constraints;
 
 namespace FallenLand
 {
@@ -19,8 +20,8 @@ namespace FallenLand
                 if (PlayerPrefs.HasKey(playerNamePrefKey))
                 {
                     defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                    inputField.text = defaultName;
                 }
+                inputField.text = defaultName;
             }
             PhotonNetwork.NickName = defaultName;
         }
@@ -29,14 +30,14 @@ namespace FallenLand
         #region Public Methods
         public void SetPlayerName(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            InputField inputField = this.GetComponent<InputField>();
+            if (!string.IsNullOrEmpty(value))
             {
-                Debug.LogError("Player Name is null or empty");
-                return;
-            }
-            PhotonNetwork.NickName = value;
+                PhotonNetwork.NickName = value;
 
-            PlayerPrefs.SetString(playerNamePrefKey, value);
+                PlayerPrefs.SetString(playerNamePrefKey, value);
+                inputField.text = value;
+            }
         }
         #endregion
     }
