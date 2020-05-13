@@ -20,6 +20,12 @@ namespace FallenLand
         public void SetRoomName(string value)
         {
             RoomName = value;
+
+            InputField inputField = this.GetComponent<InputField>();
+            if (inputField != null)
+            {
+                inputField.text = RoomName;
+            }
         }
 
         public string GetRoomName()
