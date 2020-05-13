@@ -8267,10 +8267,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  mainMenu: {fileID: 881144196}
-  optionsMenu: {fileID: 50133645}
-  singlePlayerMenu: {fileID: 525795405}
-  setUpNewGameMenu: {fileID: 7243433}
+  MainMenu: {fileID: 881144196}
+  OptionsMenu: {fileID: 50133645}
+  SinglePlayerMenu: {fileID: 525795405}
+  SetUpNewGameMenu: {fileID: 7243433}
   MultiplayerCreation: {fileID: 1677034915}
   MultiplayerLobby: {fileID: 1754439754}
   townLogoImage: {fileID: 656381214}

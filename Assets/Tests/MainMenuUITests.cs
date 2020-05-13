@@ -21,10 +21,10 @@ namespace Tests
 			MainMenuUIManagerInstance = GameObj.GetComponent<MainMenuUIManager>();
 			MenuList = new List<GameObject>
 			{
-				MainMenuUIManagerInstance.mainMenu,
-				MainMenuUIManagerInstance.optionsMenu,
-				MainMenuUIManagerInstance.singlePlayerMenu,
-				MainMenuUIManagerInstance.setUpNewGameMenu,
+				MainMenuUIManagerInstance.MainMenu,
+				MainMenuUIManagerInstance.OptionsMenu,
+				MainMenuUIManagerInstance.SinglePlayerMenu,
+				MainMenuUIManagerInstance.SetUpNewGameMenu,
 				MainMenuUIManagerInstance.MultiplayerCreation,
 				MainMenuUIManagerInstance.MultiplayerLobby
 			};
@@ -51,7 +51,7 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestUponStartupWeSeeTheMainMenuScreen()
 		{
-			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.mainMenu);
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MainMenu);
 
 			yield return null;
 		}
@@ -73,7 +73,7 @@ namespace Tests
 
 			yield return null;
 
-			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.optionsMenu);
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.OptionsMenu);
 		}
 
 		[UnityTest]
@@ -83,7 +83,7 @@ namespace Tests
 
 			yield return null;
 
-			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.singlePlayerMenu);
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.SinglePlayerMenu);
 		}
 
 		[UnityTest]
@@ -93,7 +93,7 @@ namespace Tests
 
 			yield return null;
 
-			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.setUpNewGameMenu);
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.SetUpNewGameMenu);
 		}
 
 

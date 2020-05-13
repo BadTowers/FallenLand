@@ -16,16 +16,13 @@ namespace FallenLand
 		public MainMenuStates currentState;
 
 		//Menu game objects
-		public GameObject mainMenu;
-		public GameObject optionsMenu;
-		public GameObject singlePlayerMenu;
-		public GameObject setUpNewGameMenu;
+		public GameObject MainMenu;
+		public GameObject OptionsMenu;
+		public GameObject SinglePlayerMenu;
+		public GameObject SetUpNewGameMenu;
 		public GameObject MultiplayerCreation;
 		public GameObject MultiplayerLobby;
 
-		//List of all things to randomize
-
-		//For set up new game
 		public Image townLogoImage;
 		public Image townSymbolImage;
 		//public Image townMapImage; //Currently unused
@@ -80,10 +77,10 @@ namespace FallenLand
 			instantiateGameObjects();
 
 			//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
-			addToMenuList(mainMenu);
-			addToMenuList(optionsMenu);
-			addToMenuList(singlePlayerMenu);
-			addToMenuList(setUpNewGameMenu);
+			addToMenuList(MainMenu);
+			addToMenuList(OptionsMenu);
+			addToMenuList(SinglePlayerMenu);
+			addToMenuList(SetUpNewGameMenu);
 			addToMenuList(MultiplayerCreation);
 			addToMenuList(MultiplayerLobby);
 
@@ -97,13 +94,13 @@ namespace FallenLand
 			switch (currentState)
 			{
 				case MainMenuStates.Main:
-					setActiveMenu(mainMenu);
+					setActiveMenu(MainMenu);
 					break;
 				case MainMenuStates.SinglePlayer:
-					setActiveMenu(singlePlayerMenu);
+					setActiveMenu(SinglePlayerMenu);
 					break;
 				case MainMenuStates.SetUpNewGame:
-					setActiveMenu(setUpNewGameMenu);
+					setActiveMenu(SetUpNewGameMenu);
 					if (FactionWasChanged)
 					{
 						updateFactionDisplay(); //Update which faction is currently displaying if a new one was selected
@@ -114,7 +111,7 @@ namespace FallenLand
 					}
 					break;
 				case MainMenuStates.Options:
-					setActiveMenu(optionsMenu);
+					setActiveMenu(OptionsMenu);
 					break;
 				case MainMenuStates.MultiplayerCreation:
 					setActiveMenu(MultiplayerCreation);
@@ -125,7 +122,7 @@ namespace FallenLand
 					break;
 				default:
 					//Default will be to show the main menu in case of error
-					setActiveMenu(mainMenu);
+					setActiveMenu(MainMenu);
 					break;
 			}
 		}
@@ -654,29 +651,35 @@ namespace FallenLand
 
 		private void instantiateGameObjects()
 		{
-			if (mainMenu == null)
+			if (MainMenu == null)
 			{
-				mainMenu = new GameObject();
+				MainMenu = new GameObject();
+				Debug.Log("mainMenu was not set");
 			}
-			if (optionsMenu == null)
+			if (OptionsMenu == null)
 			{
-				optionsMenu = new GameObject();
+				OptionsMenu = new GameObject();
+				Debug.Log("optionsMenu was not set");
 			}
-			if (singlePlayerMenu == null)
+			if (SinglePlayerMenu == null)
 			{
-				singlePlayerMenu = new GameObject();
+				SinglePlayerMenu = new GameObject();
+				Debug.Log("singlePlayerMenu was not set");
 			}
-			if (setUpNewGameMenu == null)
+			if (SetUpNewGameMenu == null)
 			{
-				setUpNewGameMenu = new GameObject();
+				SetUpNewGameMenu = new GameObject();
+				Debug.Log("setUpNewGameMenu was not set");
 			}
 			if (MultiplayerCreation == null)
 			{
 				MultiplayerCreation = new GameObject();
+				Debug.Log("MultiplayerCreation was not set");
 			}
 			if (MultiplayerLobby == null)
 			{
 				MultiplayerLobby = new GameObject();
+				Debug.Log("MultiplayerLobby was not set");
 			}
 		}
 	}
