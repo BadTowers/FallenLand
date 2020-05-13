@@ -28,9 +28,6 @@ namespace FallenLand
 		//public Image townMapImage; //Currently unused
 		public Image townTech1Image;
 		public Image townTech2Image;
-		public int numFactions;
-		public int numSinglePlayerGameModes;
-		public int numSoloIIDifficulties;
 		public Text townNameAndLocation;
 		public Text specificPerk1Text;
 		public Text specificPerk2Text;
@@ -57,6 +54,9 @@ namespace FallenLand
 		private Faction CurrentFaction;
 		private Text FeedbackText;
 		private bool IsCreatingRoom;
+		private int NumFactions;
+		private int NumSinglePlayerGameModes;
+		private int NumSoloIIDifficulties;
 
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
@@ -86,6 +86,10 @@ namespace FallenLand
 
 			currentState = MainMenuStates.Main;
 			IsCreatingRoom = false;
+
+			NumFactions = 10;
+			NumSinglePlayerGameModes = 2;
+			NumSoloIIDifficulties = 4;
 		}
 
 		void Update()
@@ -283,7 +287,7 @@ namespace FallenLand
 		{
 			if (CurrentFactionNumber == 1)
 			{
-				CurrentFactionNumber = numFactions;
+				CurrentFactionNumber = NumFactions;
 			}
 			else
 			{
@@ -295,7 +299,7 @@ namespace FallenLand
 		//When the next town play mat arrow is pressed
 		public void onNext()
 		{
-			if (CurrentFactionNumber == numFactions)
+			if (CurrentFactionNumber == NumFactions)
 			{
 				CurrentFactionNumber = 1;
 			}
@@ -324,7 +328,7 @@ namespace FallenLand
 			byte[] byteArray = new byte[1];
 			provider.GetBytes(byteArray);
 			int randInt = Convert.ToInt32(byteArray[0]);
-			CurrentFactionNumber = Math.Abs(((randInt) % (numFactions)) + 1);
+			CurrentFactionNumber = Math.Abs(((randInt) % (NumFactions)) + 1);
 			//Debug.Log ("FAC: " + curFactionNum.ToString ());
 			FactionWasChanged = true;
 
@@ -334,7 +338,7 @@ namespace FallenLand
 			byteArray = new byte[1];
 			provider.GetBytes(byteArray);
 			randInt = Convert.ToInt32(byteArray[0]);
-			int randNum = Math.Abs((randInt) % numSinglePlayerGameModes);
+			int randNum = Math.Abs((randInt) % NumSinglePlayerGameModes);
 			//Debug.Log ("MODE: " + randNum.ToString ());
 			gameModeToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
 			//Difficulty too (if not needed, it won't show up in the UI)
@@ -346,7 +350,7 @@ namespace FallenLand
 			byteArray = new byte[1];
 			provider.GetBytes(byteArray);
 			randInt = Convert.ToInt32(byteArray[0]);
-			randNum = Math.Abs((randInt) % numSoloIIDifficulties);
+			randNum = Math.Abs((randInt) % NumSoloIIDifficulties);
 			//Debug.Log("DIFF: " + randNum.ToString ());
 			soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
 			GameModeWasChanged = true;
