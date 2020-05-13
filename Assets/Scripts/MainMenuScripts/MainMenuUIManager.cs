@@ -51,12 +51,13 @@ namespace FallenLand
 		public const int SOLO_I_BUTTON_NUM = 0;
 		public const int SOLO_II_BUTTON_NUM = 1;
 		public GameObject modifiersContainer;
-		private int curFactionNum;
-		private bool factionWasChanged;
-		private bool gameModeWasChanged;
-		private List<Faction> factions;
-		private Faction curFac;
-		string gameVersion = "1";
+		public string gameVersion = "1";
+
+		private int CurrentFactionNumber;
+		private bool FactionWasChanged;
+		private bool GameModeWasChanged;
+		private List<Faction> Factions;
+		private Faction CurrentFaction;
 		private Text FeedbackText;
 		private bool IsCreatingRoom;
 
@@ -71,10 +72,10 @@ namespace FallenLand
 			PhotonNetwork.AutomaticallySyncScene = true;
 
 			//Initialize default values
-			curFactionNum = 1;
-			factionWasChanged = true;
-			gameModeWasChanged = true;
-			factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
+			CurrentFactionNumber = 1;
+			FactionWasChanged = true;
+			GameModeWasChanged = true;
+			Factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
 
 			instantiateGameObjects();
 
@@ -103,11 +104,11 @@ namespace FallenLand
 					break;
 				case MainMenuStates.SetUpNewGame:
 					setActiveMenu(setUpNewGameMenu);
-					if (factionWasChanged)
+					if (FactionWasChanged)
 					{
 						updateFactionDisplay(); //Update which faction is currently displaying if a new one was selected
 					}
-					if (gameModeWasChanged)
+					if (GameModeWasChanged)
 					{
 						updateGameModeDisplay(); //Update the game mode information if a different one was selected
 					}
@@ -211,7 +212,7 @@ namespace FallenLand
 		 * MAIN MENU METHODS
 		 */
 		// When new game button is pressed
-		public void onSinglePlayer()
+		public void OnSinglePlayerButtonPressed()
 		{
 			Debug.Log("Single Player");
 			currentState = MainMenuStates.SinglePlayer;
@@ -219,24 +220,30 @@ namespace FallenLand
 		}
 
 		// When options button is pressed
-		public void onOptions()
+		public void OnOptionsButtonPressed()
 		{
-			currentState = MainMenuStates.Options;
 			Debug.Log("Options");
+			currentState = MainMenuStates.Options;
 		}
 
 		// When multiplayer button is pressed
-		public void onMultiplayer()
+		public void OnMultiplayerButtonPressed()
 		{
-			currentState = MainMenuStates.MultiplayerCreation;
 			Debug.Log("Multiplayer creation");
+			currentState = MainMenuStates.MultiplayerCreation;
 		}
 
 		// When quit button is pressed
-		public void onQuit()
+		public void OnQuitButtonPressed()
 		{
-			//TODO Make this actually quit lel
 			Debug.Log("Quit");
+			#if UNITY_STANDALONE
+			Application.Quit();
+			#endif
+
+			#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+			#endif
 		}
 
 
@@ -244,27 +251,27 @@ namespace FallenLand
 		 * NEW GAME METHODS
 		 */
 		//When start default game button is pressed
-		public void onStartDefault()
+		public void OnStartDefault()
 		{
 			//TODO
 			Debug.Log("Start default");
 		}
 
 		//When set up new game button is pressed
-		public void onSetUpGame()
+		public void OnSetUpGame()
 		{
 			currentState = MainMenuStates.SetUpNewGame;
 		}
 
 		//When load game button is pressed
-		public void onLoadGame()
+		public void OnLoadGame()
 		{
 			//TODO
 			Debug.Log("Load game");
 		}
 
 		//When tutorial button is pressed
-		public void onTutorial()
+		public void OnTutorial()
 		{
 			//TODO
 			Debug.Log("Tutorial");
@@ -277,37 +284,35 @@ namespace FallenLand
 		//When the previous town play mat arrow is pressed
 		public void onPrevious()
 		{
-			//Decrement the current mat number
-			if (curFactionNum == 1)
+			if (CurrentFactionNumber == 1)
 			{
-				curFactionNum = numFactions;
+				CurrentFactionNumber = numFactions;
 			}
 			else
 			{
-				curFactionNum--;
+				CurrentFactionNumber--;
 			}
-			factionWasChanged = true; //Mark that changes were made
+			FactionWasChanged = true;
 		}
 
 		//When the next town play mat arrow is pressed
 		public void onNext()
 		{
-			//Increment the current mat number
-			if (curFactionNum == numFactions)
+			if (CurrentFactionNumber == numFactions)
 			{
-				curFactionNum = 1;
+				CurrentFactionNumber = 1;
 			}
 			else
 			{
-				curFactionNum++;
+				CurrentFactionNumber++;
 			}
-			factionWasChanged = true; //NMark that changes were made
+			FactionWasChanged = true;
 		}
 
 		//When game mode toggle changes
 		public void onGameModeChange()
 		{
-			gameModeWasChanged = true;
+			GameModeWasChanged = true;
 		}
 
 		//When randomize button is pressed (on secure random numbers https://stackify.com/csharp-random-numbers/)
@@ -322,9 +327,9 @@ namespace FallenLand
 			byte[] byteArray = new byte[1];
 			provider.GetBytes(byteArray);
 			int randInt = Convert.ToInt32(byteArray[0]);
-			curFactionNum = Math.Abs(((randInt) % (numFactions)) + 1);
+			CurrentFactionNumber = Math.Abs(((randInt) % (numFactions)) + 1);
 			//Debug.Log ("FAC: " + curFactionNum.ToString ());
-			factionWasChanged = true;
+			FactionWasChanged = true;
 
 			/* Randomly pick game mode */
 			//Game mode first
@@ -347,7 +352,7 @@ namespace FallenLand
 			randNum = Math.Abs((randInt) % numSoloIIDifficulties);
 			//Debug.Log("DIFF: " + randNum.ToString ());
 			soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>()[randNum].isOn = true;
-			gameModeWasChanged = true;
+			GameModeWasChanged = true;
 
 			/* Randomly pick the modifiers */
 			foreach (Toggle modifier in modifierToggles)
@@ -381,9 +386,9 @@ namespace FallenLand
 
 
 			//Faction (Find the game creation object in the scene and then get the script from it
-			foreach (Faction f in factions)
+			foreach (Faction f in Factions)
 			{
-				if (f.GetId() == curFactionNum)
+				if (f.GetId() == CurrentFactionNumber)
 				{
 					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().setFaction(f);
 				}
@@ -454,16 +459,16 @@ namespace FallenLand
 		private void updateFactionDisplay()
 		{
 			//Set the current faction
-			foreach (Faction f in factions)
+			foreach (Faction f in Factions)
 			{
-				if (f.GetId() == curFactionNum)
+				if (f.GetId() == CurrentFactionNumber)
 				{
-					curFac = f;
+					CurrentFaction = f;
 				}
 			}
 
 			//Load it
-			Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + curFactionNum.ToString());
+			Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + CurrentFactionNumber.ToString());
 
 			//Apply it
 			if (townLogoImage != null)
@@ -476,7 +481,7 @@ namespace FallenLand
 			}
 
 			//Load it
-			img = (Sprite)Resources.Load<Sprite>(FACTION_SYMBOL_URI + "FactionSymbol" + curFactionNum.ToString());
+			img = (Sprite)Resources.Load<Sprite>(FACTION_SYMBOL_URI + "FactionSymbol" + CurrentFactionNumber.ToString());
 
 			//Apply it
 			if (townSymbolImage != null)
@@ -491,7 +496,7 @@ namespace FallenLand
 			//Set up town name and location
 			if (townNameAndLocation != null)
 			{
-				townNameAndLocation.text = curFac.GetName() + "\n" + curFac.GetBaseLocationString();
+				townNameAndLocation.text = CurrentFaction.GetName() + "\n" + CurrentFaction.GetBaseLocationString();
 			}
 			else
 			{
@@ -501,7 +506,7 @@ namespace FallenLand
 			//Set up the perk texts TODO rework this to be more dynamic (could have more or less than 4 perks)
 			if (specificPerk1Text != null)
 			{
-				specificPerk1Text.text = curFac.GetPerks()[0].GetPerkTitle() + ": " + curFac.GetPerks()[0].GetPerkDescription();
+				specificPerk1Text.text = CurrentFaction.GetPerks()[0].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[0].GetPerkDescription();
 			}
 			else
 			{
@@ -509,7 +514,7 @@ namespace FallenLand
 			}
 			if (specificPerk2Text != null)
 			{
-				specificPerk2Text.text = curFac.GetPerks()[1].GetPerkTitle() + ": " + curFac.GetPerks()[1].GetPerkDescription();
+				specificPerk2Text.text = CurrentFaction.GetPerks()[1].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[1].GetPerkDescription();
 			}
 			else
 			{
@@ -517,7 +522,7 @@ namespace FallenLand
 			}
 			if (specificPerk3Text != null)
 			{
-				specificPerk3Text.text = curFac.GetPerks()[2].GetPerkTitle() + ": " + curFac.GetPerks()[2].GetPerkDescription();
+				specificPerk3Text.text = CurrentFaction.GetPerks()[2].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[2].GetPerkDescription();
 			}
 			else
 			{
@@ -525,7 +530,7 @@ namespace FallenLand
 			}
 			if (specificPerk4Text != null)
 			{
-				specificPerk4Text.text = curFac.GetPerks()[3].GetPerkTitle() + ": " + curFac.GetPerks()[3].GetPerkDescription();
+				specificPerk4Text.text = CurrentFaction.GetPerks()[3].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[3].GetPerkDescription();
 			}
 			else
 			{
@@ -535,18 +540,25 @@ namespace FallenLand
 			//Set up town lore
 			if (loreText != null)
 			{
-				loreText.text = curFac.GetLore();
+				loreText.text = CurrentFaction.GetLore();
 			}
 			else
 			{
 				Debug.Log("Lore text container not set");
 			}
 			//Move the lore back to the top when the faction switches
-			loreScrollBar.value = 1;
+			if (loreScrollBar != null)
+			{
+				loreScrollBar.value = 1;
+			}
+			else
+			{
+				Debug.Log("Lore scroll bar not set");
+			}
 
 			//Set up town techs TODO rework so this is not hardcoded to two
 			//Load tech 1
-			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.GetStartingTownTechs()[0].GetId().ToString());
+			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[0].GetId().ToString());
 			//Apply it
 			if (townTech1Image != null)
 			{
@@ -557,7 +569,7 @@ namespace FallenLand
 				Debug.Log("Town tech image 1 container not set");
 			}
 			//Load tech 2
-			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + curFac.GetStartingTownTechs()[1].GetId().ToString());
+			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[1].GetId().ToString());
 			//Apply it
 			if (townTech2Image != null)
 			{
@@ -569,32 +581,67 @@ namespace FallenLand
 			}
 
 			//No more changes to account for
-			factionWasChanged = false;
+			FactionWasChanged = false;
 		}
 
 		private void updateGameModeDisplay()
 		{
 			//If solo I is selected
-			if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_I_BUTTON_NUM].isOn)
+			if (gameModeToggleGroup != null)
 			{
-				//Don't display the solo II difficulties
-				soloIIDifficultyToggleGroup.SetActive(false);
+				if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_I_BUTTON_NUM].isOn)
+				{
+					//Don't display the solo II difficulties
+					if (soloIIDifficultyToggleGroup != null)
+					{
+						soloIIDifficultyToggleGroup.SetActive(false);
+					}
+					else
+					{
+						Debug.Log("soloIIDifficultyToggleGroup is null");
+					}
 
-				//Update the text to describe the game mode
-				gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloI);
+					//Update the text to describe the game mode
+					if (gameModeInfoText != null)
+					{
+						gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloI);
+					}
+					else
+					{
+						Debug.Log("gameModeInfoText is null");
+					}
+				}
+				//If solo II is selected
+				else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn)
+				{
+					//Display the solo II difficulties
+					if (soloIIDifficultyToggleGroup != null)
+					{
+						soloIIDifficultyToggleGroup.SetActive(true);
+					}
+					else
+					{
+						Debug.Log("soloIIDifficultyToggleGroup is null");
+					}
+
+					//Update the text to describe the game mode
+					if (gameModeInfoText != null)
+					{
+						gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloII);
+					}
+					else
+					{
+						Debug.Log("gameModeInfoText is null");
+					}
+				}
 			}
-			//If solo II is selected
-			else if (gameModeToggleGroup.GetComponentsInChildren<Toggle>()[SOLO_II_BUTTON_NUM].isOn)
+			else
 			{
-				//Display the solo II difficulties
-				soloIIDifficultyToggleGroup.SetActive(true);
-
-				//Update the text to describe the game mode
-				gameModeInfoText.text = GameInformation.getRules(GameInformation.GameModes.SoloII);
+				Debug.Log("gameModeToggleGroup is null");
 			}
 
 			//No more changes to account for
-			gameModeWasChanged = false;
+			GameModeWasChanged = false;
 		}
 
 		private void updatePlayerList()

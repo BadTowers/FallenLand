@@ -2946,7 +2946,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onLoadGame
+        m_MethodName: OnLoadGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3462,7 +3462,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onTutorial
+        m_MethodName: OnTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4593,7 +4593,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onSetUpGame
+        m_MethodName: OnSetUpGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5376,7 +5376,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onSinglePlayer
+        m_MethodName: OnSinglePlayerButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8291,6 +8291,7 @@ MonoBehaviour:
   gameModeInfoText: {fileID: 510924471}
   soloIIDifficultyToggleGroup: {fileID: 189771656}
   modifiersContainer: {fileID: 1208335137}
+  gameVersion: 1
   maxPlayersPerRoom: 5
 --- !u!4 &1125402274
 Transform:
@@ -11189,7 +11190,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onStartDefault
+        m_MethodName: OnStartDefault
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15603,13 +15604,13 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1948022688}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: OnQuit
+        m_MethodName: OnQuitButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15739,7 +15740,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onOptions
+        m_MethodName: OnOptionsButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16755,7 +16756,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1125402273}
-        m_MethodName: onMultiplayer
+        m_MethodName: OnMultiplayerButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
