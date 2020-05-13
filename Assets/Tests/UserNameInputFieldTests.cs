@@ -21,7 +21,7 @@ namespace Tests
 		[TearDown]
 		public void Teardown()	
 		{
-			GameObj = null;
+			Object.Destroy(GameObj);
 		}
 
 		[UnityTest]
