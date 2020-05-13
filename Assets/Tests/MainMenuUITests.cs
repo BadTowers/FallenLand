@@ -8,46 +8,40 @@ namespace Tests
 {
 	public class MainMenuUITests
 	{
+		private GameObject GameObj;
 		private MainMenuUIManager MainMenuUIManagerInstance;
 
 		[SetUp]
 		public void Setup()
 		{
-			MainMenuUIManagerInstance = new MainMenuUIManager
-			{
-				mainMenu = new GameObject(),
-				optionsMenu = new GameObject(),
-				singlePlayerMenu = new GameObject(),
-				setUpNewGameMenu = new GameObject(),
-				MultiplayerCreation = new GameObject(),
-				MultiplayerLobby = new GameObject()
-			};
+			GameObj = new GameObject();
+			GameObj.AddComponent<MainMenuUIManager>();
+			MainMenuUIManagerInstance = GameObj.GetComponent<MainMenuUIManager>();
 		}
 
 		[TearDown]
 		public void Teardown()
 		{
-			MainMenuUIManagerInstance = null;
+			GameObj = null;
 		}
 
 		[UnityTest]
 		public IEnumerator TestPublicGameObjects()
 		{
+			yield return null;
+
 			Assert.IsNotNull(MainMenuUIManagerInstance.mainMenu);
 			Assert.IsNotNull(MainMenuUIManagerInstance.optionsMenu);
 			Assert.IsNotNull(MainMenuUIManagerInstance.singlePlayerMenu);
 			Assert.IsNotNull(MainMenuUIManagerInstance.setUpNewGameMenu);
 			Assert.IsNotNull(MainMenuUIManagerInstance.MultiplayerCreation);
-			Assert.IsNotNull(MainMenuUIManagerInstance.MultiplayerLobby);
-
-			yield return null;
+			Assert.IsNotNull(MainMenuUIManagerInstance.MultiplayerLobby);			
 		}
 
 		[UnityTest]
 		public IEnumerator TestUponStartupWeSeeTheMainMenuScreen()
 		{
-			MainMenuUIManagerInstance.CallAwake();
-			MainMenuUIManagerInstance.CallUpdate();
+			yield return null;
 
 			Assert.IsTrue(MainMenuUIManagerInstance.mainMenu.activeSelf);
 			Assert.IsFalse(MainMenuUIManagerInstance.optionsMenu.activeSelf);
@@ -55,8 +49,6 @@ namespace Tests
 			Assert.IsFalse(MainMenuUIManagerInstance.setUpNewGameMenu.activeSelf);
 			Assert.IsFalse(MainMenuUIManagerInstance.MultiplayerCreation.activeSelf);
 			Assert.IsFalse(MainMenuUIManagerInstance.MultiplayerLobby.activeSelf);
-
-			yield return null;
 		}
 	}
 }

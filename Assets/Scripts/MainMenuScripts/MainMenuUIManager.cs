@@ -76,6 +76,8 @@ namespace FallenLand
 			gameModeWasChanged = true;
 			factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
 
+			instantiateGameObjects();
+
 			//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 			addToMenuList(mainMenu);
 			addToMenuList(optionsMenu);
@@ -603,15 +605,32 @@ namespace FallenLand
 			}
 		}
 
-		public void CallAwake()
+		private void instantiateGameObjects()
 		{
-			Awake();
-		}
-
-		public void CallUpdate()
-		{
-			Update();
+			if (mainMenu == null)
+			{
+				mainMenu = new GameObject();
+			}
+			if (optionsMenu == null)
+			{
+				optionsMenu = new GameObject();
+			}
+			if (singlePlayerMenu == null)
+			{
+				singlePlayerMenu = new GameObject();
+			}
+			if (setUpNewGameMenu == null)
+			{
+				setUpNewGameMenu = new GameObject();
+			}
+			if (MultiplayerCreation == null)
+			{
+				MultiplayerCreation = new GameObject();
+			}
+			if (MultiplayerLobby == null)
+			{
+				MultiplayerLobby = new GameObject();
+			}
 		}
 	}
 }
-
