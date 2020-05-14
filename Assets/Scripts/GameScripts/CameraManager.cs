@@ -2,16 +2,16 @@
 // for using the mouse displacement for calculating the amount of camera movement and panning code.
 
 using UnityEngine;
-using System.Collections;
 
 namespace FallenLand
 {
 	public class CameraManager : MonoBehaviour
 	{
-		public float PanSpeed;
-		public float ZoomSpeed;
-		public float MinZoom;
-		public float MaxZoom;
+		public float PanSpeed = 0.6f;
+		public float ZoomSpeed = 4;
+		public float MinZoom = 10;
+		public float MaxZoom = 50;
+
 		private bool isPanning = false;
 
 		//For panning
@@ -29,6 +29,7 @@ namespace FallenLand
 			// Get the right mouse button
 			if (Input.GetMouseButtonDown(1))
 			{
+				Debug.Log("IsPanning");
 				isPanning = true;
 			}
 
