@@ -19,10 +19,10 @@ namespace FallenLand
 
 		void Update()
 		{
-			checkIfParentActive();
+			CheckIfParentActive();
 		}
 
-		public void checkIfParentActive()
+		public void CheckIfParentActive()
 		{
 			//A dependent modifier can't be on if the parent isn't on
 			if (!parentModifier.isOn)

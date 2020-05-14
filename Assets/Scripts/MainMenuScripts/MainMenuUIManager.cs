@@ -372,7 +372,7 @@ namespace FallenLand
 					//If this modifier toggle is dependent on another, the checkIfParentActive method checks that the parent is on before turning the dependent child on
 					if (modifier.GetComponentInChildren<ToggleDependency>() != null)
 					{
-						modifier.GetComponentInChildren<ToggleDependency>().checkIfParentActive();
+						modifier.GetComponentInChildren<ToggleDependency>().CheckIfParentActive();
 					}
 				}
 			}
