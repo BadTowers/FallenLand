@@ -391,7 +391,7 @@ namespace FallenLand
 			{
 				if (f.GetId() == CurrentFactionNumber)
 				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().setFaction(f);
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetFaction(f);
 				}
 			}
 
@@ -400,7 +400,7 @@ namespace FallenLand
 			{
 				if (curModeToggle.isOn)
 				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().setMode(curModeToggle.GetComponentInChildren<ToggleInformation>().mode);
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetMode(curModeToggle.GetComponentInChildren<ToggleInformation>().mode);
 				}
 			}
 
@@ -409,7 +409,7 @@ namespace FallenLand
 			{
 				if (curDiffToggle.isOn)
 				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().soloIIDifficulty = curDiffToggle.GetComponentInChildren<ToggleInformation>().soloIIDifficulty;
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetSoloIIDifficulty(curDiffToggle.GetComponentInChildren<ToggleInformation>().soloIIDifficulty);
 				}
 			}
 
@@ -418,7 +418,7 @@ namespace FallenLand
 			{
 				if (modifier.isOn)
 				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().modifiers.Add(modifier.GetComponentInChildren<ToggleInformation>().modifier);
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().AddModifier(modifier.GetComponentInChildren<ToggleInformation>().modifier);
 				}
 			}
 

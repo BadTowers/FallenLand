@@ -6,49 +6,71 @@ namespace FallenLand
 {
 	public class GameCreation : MonoBehaviour
 	{
+		public bool WasRead = false;
 
-		private Faction faction; //TODO for multiplayer, this likely needs to be a list of factions or a dictionary of factions (map IP to faction)
-		private GameInformation.GameModes mode;
-		public List<GameInformation.GameModifier> modifiers;
-		public bool wasRead = false;
-		public GameInformation.SoloII soloIIDifficulty;
+		private Faction FactionInstance; //TODO for multiplayer, this likely needs to be a list of factions or a dictionary of factions (map IP to faction)
+		private GameInformation.GameModes GameMode;
+		private GameInformation.SoloII SoloIIDifficulty;
+		private List<GameInformation.GameModifier> ListOfModifiers;
 
 
 		void Start()
 		{
-			modifiers = new List<GameInformation.GameModifier>();
+			ListOfModifiers = new List<GameInformation.GameModifier>();
+			GameMode = GameInformation.GameModes.Null;
+			SoloIIDifficulty = GameInformation.SoloII.Null;
 		}
 
 		void Update()
 		{
-			if (!wasRead)
+			if (!WasRead)
 			{
 				DontDestroyOnLoad(this.gameObject);
 			}
 			else
 			{
-				Destroy(this.gameObject);
+				DestroyImmediate(this.gameObject);
 			}
 		}
 
-		public void setFaction(Faction f)
+		public void SetFaction(Faction faction)
 		{
-			faction = f;
+			FactionInstance = faction;
 		}
 
-		public Faction getFaction()
+		public Faction GetFaction()
 		{
-			return faction;
+			return FactionInstance;
 		}
 
-		public void setMode(GameInformation.GameModes m)
+		public void SetMode(GameInformation.GameModes mode)
 		{
-			mode = m;
+			GameMode = mode;
 		}
 
-		public GameInformation.GameModes getMode()
+		public GameInformation.GameModes GetMode()
 		{
-			return mode;
+			return GameMode;
+		}
+
+		public void SetSoloIIDifficulty(GameInformation.SoloII difficulty)
+		{
+			SoloIIDifficulty = difficulty;
+		}
+
+		public GameInformation.SoloII GetSoloIIDifficulty()
+		{
+			return SoloIIDifficulty;
+		}
+
+		public void AddModifier(GameInformation.GameModifier modifier)
+		{
+			ListOfModifiers.Add(modifier);
+		}
+
+		public List<GameInformation.GameModifier> GetListOfModifiers()
+		{
+			return ListOfModifiers;
 		}
 	}
 }

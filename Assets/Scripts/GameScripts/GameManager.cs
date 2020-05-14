@@ -39,7 +39,7 @@ namespace FallenLand
 			if (newGameState != null)
 			{
 				//Mark as read so the game object can be deleted
-				newGameState.GetComponent<GameCreation>().wasRead = true;
+				newGameState.GetComponent<GameCreation>().WasRead = true;
 
 				//Debug.Log(newGameState.GetComponent<GameCreation>().faction); //Debug thingy
 
@@ -47,7 +47,7 @@ namespace FallenLand
 				extractGameModeFromGameCreationObject(newGameState);
 
 				//Grab the faction (TODO change this to grab a dictionary of factions and who is each faction)
-				Faction faction = newGameState.GetComponent<GameCreation>().getFaction();
+				Faction faction = newGameState.GetComponent<GameCreation>().GetFaction();
 
 				//Extract the Solo II difficulty if needed
 				//if(gameMode == GameInformation.GameModes.SoloII) {
@@ -165,7 +165,7 @@ namespace FallenLand
 		/******Some private helper functions******/
 		private void extractGameModeFromGameCreationObject(GameObject newGameState)
 		{
-			GameMode = newGameState.GetComponent<GameCreation>().getMode();
+			GameMode = newGameState.GetComponent<GameCreation>().GetMode();
 		}
 
 		private void dealCardsToPlayers()

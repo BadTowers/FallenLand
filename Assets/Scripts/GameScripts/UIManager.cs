@@ -22,13 +22,6 @@ namespace FallenLand
 					}
 				}
 			}
-			else
-			{
-				foreach (GameObject other in menus)
-				{
-					other.SetActive(false);
-				}
-			}
 		}
 
 		protected void addToMenuList(GameObject go)

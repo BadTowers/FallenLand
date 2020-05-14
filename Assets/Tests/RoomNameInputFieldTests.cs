@@ -48,11 +48,14 @@ namespace Tests
 			InputField nameInputField = RoomNameInputFieldObj.GetComponent<InputField>();
 			Assert.IsNotNull(nameInputField);
 			Assert.AreEqual("Test name", nameInputField.text);
+			Assert.AreEqual("Test name", RoomNameInputFieldObj.GetRoomName());
 
 			RoomNameInputFieldObj.SetRoomName("");
 			Assert.AreEqual(string.Empty, nameInputField.text);
+			Assert.AreEqual(string.Empty, RoomNameInputFieldObj.GetRoomName());
 			RoomNameInputFieldObj.SetRoomName(null);
 			Assert.AreEqual(string.Empty, nameInputField.text);
+			Assert.AreEqual(null, RoomNameInputFieldObj.GetRoomName());
 		}
 	}
 }
