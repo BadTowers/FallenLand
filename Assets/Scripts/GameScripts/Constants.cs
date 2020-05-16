@@ -1,6 +1,6 @@
 ﻿namespace FallenLand
 {
-	static class Constants
+	public static class Constants
 	{
 		public const int INVALID_LOCATION = -1;
 	}
