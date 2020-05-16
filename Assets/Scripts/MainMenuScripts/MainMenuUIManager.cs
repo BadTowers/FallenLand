@@ -57,12 +57,14 @@ namespace FallenLand
 		private int NumFactions;
 		private int NumSinglePlayerGameModes;
 		private int NumSoloIIDifficulties;
+		private List<GameObject> PickFactionButtons;
+		private List<GameObject> PlayerTexts;
+		private int CurrentPlayerIndex;
 
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
-		//When script first starts
-		void Awake()
+		void Start()
 		{
 			// #Critical
 			// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
@@ -73,6 +75,14 @@ namespace FallenLand
 			FactionWasChanged = true;
 			GameModeWasChanged = true;
 			Factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
+
+			PickFactionButtons = new List<GameObject>();
+			PlayerTexts = new List<GameObject>();
+			for (int i = 0; i < maxPlayersPerRoom; i++)
+			{
+				PlayerTexts.Add(GameObject.Find("PlayerText_" + i));
+				PickFactionButtons.Add(GameObject.Find("PickFactionButton_" + i));
+			}
 
 			instantiateGameObjects();
 
@@ -205,6 +215,15 @@ namespace FallenLand
 		public override void OnJoinedRoom()
 		{
 			Debug.Log("OnJoinedRoom()");
+
+			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			{
+				if (PhotonNetwork.PlayerList[i].NickName == PlayerPrefs.GetString("PlayerName"))
+				{
+					CurrentPlayerIndex = i;
+				}
+			}
+
 			currentState = MainMenuStates.MultiplayerLobby;
 		}
 
@@ -283,7 +302,7 @@ namespace FallenLand
 		 * SET UP NEW GAME METHODS
 		 */
 		//When the previous town play mat arrow is pressed
-		public void onPrevious()
+		public void OnPreviousFactionButtonPressed()
 		{
 			if (CurrentFactionNumber == 1)
 			{
@@ -297,7 +316,7 @@ namespace FallenLand
 		}
 
 		//When the next town play mat arrow is pressed
-		public void onNext()
+		public void OnNextFactionButtonPressed()
 		{
 			if (CurrentFactionNumber == NumFactions)
 			{
@@ -448,6 +467,11 @@ namespace FallenLand
 		public void onBack()
 		{
 			currentState = MainMenuStates.Main;
+		}
+
+		public void OnPickFactionButtonPressedMultiplayer()
+		{
+			Debug.Log("Pick faction button pressed");
 		}
 
 		// Used to load a scene by name TODO: Put inside helper function file?
@@ -649,7 +673,22 @@ namespace FallenLand
 		{
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
-				GameObject.Find("PlayerText_" + i).GetComponent<Text>().text = PhotonNetwork.PlayerList[i].NickName;
+				PlayerTexts[i].GetComponent<Text>().text = PhotonNetwork.PlayerList[i].NickName;
+				PlayerTexts[i].SetActive(true);
+				if (i == CurrentPlayerIndex)
+				{
+					PickFactionButtons[i].SetActive(true);
+				}
+				else
+				{
+					PickFactionButtons[i].SetActive(false);
+				}
+			}
+
+			for (int i = PhotonNetwork.PlayerList.Length; i < maxPlayersPerRoom; i++)
+			{
+				PlayerTexts[i].SetActive(false);
+				PickFactionButtons[i].SetActive(false);
 			}
 		}
 
