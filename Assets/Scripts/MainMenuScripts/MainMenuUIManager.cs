@@ -64,7 +64,7 @@ namespace FallenLand
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
-		void Start()
+		void Awake()
 		{
 			// #Critical
 			// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
