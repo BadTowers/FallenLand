@@ -4,21 +4,45 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using FallenLand;
+using Photon.Pun;
+using UnityEngine.UI;
 
 namespace Tests
 {
 	public class MainMenuUITests
 	{
-		private GameObject GameObj;
+		private GameObject MainGameObj;
+		private List<GameObject> TextGameObjs;
+		private List<GameObject> ButtonGameObjs;
+		private GameObject FeedbackTextObj;
 		private MainMenuUIManager MainMenuUIManagerInstance;
 		private List<GameObject> MenuList;
 
 		[SetUp]
 		public void Setup()
 		{
-			GameObj = new GameObject();
-			GameObj.AddComponent<MainMenuUIManager>();
-			MainMenuUIManagerInstance = GameObj.GetComponent<MainMenuUIManager>();
+			const int MAX_NUM_PLAYERS = 5;
+
+			MainGameObj = new GameObject();
+			TextGameObjs = new List<GameObject>();
+			ButtonGameObjs = new List<GameObject>();
+			FeedbackTextObj = new GameObject();
+
+			for (int i = 0; i < MAX_NUM_PLAYERS; i++)
+			{
+				TextGameObjs.Add(new GameObject());
+				ButtonGameObjs.Add(new GameObject());
+				TextGameObjs[i].AddComponent<Text>();
+				TextGameObjs[i].name = "PlayerText_" + i;
+				ButtonGameObjs[i].AddComponent<Button>();
+				ButtonGameObjs[i].name = "PickFactionButton_" + i;
+			}
+
+			FeedbackTextObj.AddComponent<Text>();
+			FeedbackTextObj.name = "FeedbackText";
+
+			MainGameObj.AddComponent<MainMenuUIManager>();
+			MainMenuUIManagerInstance = MainGameObj.GetComponent<MainMenuUIManager>();
 			MenuList = new List<GameObject>
 			{
 				MainMenuUIManagerInstance.MainMenu,
@@ -33,7 +57,11 @@ namespace Tests
 		[TearDown]
 		public void Teardown()
 		{
-			GameObj = null;
+			PhotonNetwork.Disconnect();
+			TextGameObjs = null;
+			ButtonGameObjs = null;
+			MainGameObj = null;
+			FeedbackTextObj = null;
 			MenuList = null;
 		}
 
@@ -95,6 +123,112 @@ namespace Tests
 
 			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.SetUpNewGameMenu);
 		}
+
+		[UnityTest]
+		public IEnumerator TestMultiplayerLobbyWithOnePlayer()
+		{
+			const string EXPECTED_USERNAME = "JSB";
+
+			MainGameObj.AddComponent<RoomNameInputField>();
+			RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
+			Assert.IsNotNull(roomNameInputField);
+			roomNameInputField.name = "RoomNameInputField";
+			roomNameInputField.SetRoomName("TestRoom");
+
+			GameObject anotherGameObject = new GameObject();
+			anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
+			UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
+			Assert.IsNotNull(userNameInputField);
+			userNameInputField.name = "UsernameInputField";
+			userNameInputField.SetPlayerName(EXPECTED_USERNAME);
+
+			PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
+
+			MainMenuUIManagerInstance.CreateRoom();
+
+			yield return null;
+
+			Assert.AreEqual(1, PhotonNetwork.PlayerList.Length);
+
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerLobby);
+
+			Text playerOneText = TextGameObjs[0].GetComponent<Text>();
+			Assert.IsNotNull(playerOneText);
+			Assert.AreEqual(EXPECTED_USERNAME, playerOneText.text);
+		}
+
+		//Valid tests, but can't get them to run all at once. Requires more investigation
+
+		//[UnityTest]
+		//public IEnumerator TestTryingToJoinWithoutARoomExisting()
+		//{
+		//	const string EXPECTED_USERNAME_1 = "JSB";
+		//	MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
+
+		//	MainGameObj.AddComponent<RoomNameInputField>();
+		//	RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
+		//	Assert.IsNotNull(roomNameInputField);
+		//	roomNameInputField.name = "RoomNameInputField";
+		//	roomNameInputField.SetRoomName("TestRoom");
+
+		//	GameObject anotherGameObject = new GameObject();
+		//	anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
+		//	UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
+		//	Assert.IsNotNull(userNameInputField);
+		//	userNameInputField.name = "UsernameInputField";
+		//	userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
+		//	PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
+
+		//	MainMenuUIManagerInstance.JoinRoom();
+
+		//	while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
+		//	{
+		//		yield return null;
+		//	}
+
+		//	Assert.AreEqual(0, PhotonNetwork.PlayerList.Length);
+
+		//	assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
+
+		//	Text failText = FeedbackTextObj.GetComponent<Text>();
+		//	Assert.AreEqual("Failed to join lobby", failText.text);
+		//}
+
+		//[UnityTest]
+		//public IEnumerator TestTryingToJoinWithoutWithABlankRoom()
+		//{
+		//	const string EXPECTED_USERNAME_1 = "JSB";
+		//	MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
+
+		//	MainGameObj.AddComponent<RoomNameInputField>();
+		//	RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
+		//	Assert.IsNotNull(roomNameInputField);
+		//	roomNameInputField.name = "RoomNameInputField";
+		//	roomNameInputField.SetRoomName("");
+
+		//	GameObject anotherGameObject = new GameObject();
+		//	anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
+		//	UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
+		//	Assert.IsNotNull(userNameInputField);
+		//	userNameInputField.name = "UsernameInputField";
+		//	userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
+		//	PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
+
+		//	MainMenuUIManagerInstance.JoinRoom();
+
+		//	while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
+		//	{
+		//		yield return null;
+		//	}
+		//	yield return null; //yield an extra frame for the text to render
+
+		//	Assert.AreEqual(0, PhotonNetwork.PlayerList.Length);
+
+		//	assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
+
+		//	Text failText = FeedbackTextObj.GetComponent<Text>();
+		//	Assert.AreEqual("Room name cannot be empty", failText.text);
+		//}
 
 
 

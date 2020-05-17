@@ -11,7 +11,6 @@ namespace FallenLand
 {
 	public class MainMenuUIManager : UIManager
 	{
-
 		public enum MainMenuStates { Main, Options, SinglePlayer, SetUpNewGame, MultiplayerCreation, MultiplayerLobby };
 		public MainMenuStates currentState;
 
@@ -60,6 +59,8 @@ namespace FallenLand
 		private List<GameObject> PickFactionButtons;
 		private List<GameObject> PlayerTexts;
 		private int CurrentPlayerIndex;
+		private bool ConnectedToRoom;
+		private bool FailedToConnectToRoom;
 
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
@@ -84,6 +85,8 @@ namespace FallenLand
 				PickFactionButtons.Add(GameObject.Find("PickFactionButton_" + i));
 			}
 
+			FeedbackText = GameObject.Find("FeedbackText").GetComponent<Text>();
+
 			instantiateGameObjects();
 
 			//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
@@ -100,6 +103,8 @@ namespace FallenLand
 			NumFactions = 10;
 			NumSinglePlayerGameModes = 2;
 			NumSoloIIDifficulties = 4;
+			ConnectedToRoom = false;
+			FailedToConnectToRoom = false;
 		}
 
 		void Update()
@@ -170,6 +175,7 @@ namespace FallenLand
 			RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
 			if (string.IsNullOrEmpty(roomNameInputField.GetRoomName()))
 			{
+				Debug.Log("Room name is null or empty");
 				FeedbackText.text = "Room name cannot be empty";
 			}
 			else
@@ -187,8 +193,21 @@ namespace FallenLand
 			}
 		}
 
+		public bool GetConnectedToRoom()
+		{
+			Debug.Log("GetConnectedToRoom " + ConnectedToRoom);
+			return ConnectedToRoom;
+		}
+
+		public bool GetFailedToConnectToRoom()
+		{
+			Debug.Log("GetFailedToConnectToRoom " + FailedToConnectToRoom);
+			return FailedToConnectToRoom;
+		}
+
 		public override void OnConnectedToMaster()
 		{
+			Debug.Log("OnConnectedToMaster");
 			RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
 
 			if (IsCreatingRoom)
@@ -209,12 +228,17 @@ namespace FallenLand
 		public override void OnJoinRoomFailed(short returnCode, string message)
 		{
 			Debug.LogWarningFormat("OnJoinRoomFailed() was called by PUN with reason {0}", message);
+			Debug.Log("OnJoinRoomFailed() was called by PUN with reason " + message);
+			FailedToConnectToRoom = true;
+			ConnectedToRoom = false;
 			FeedbackText.text = "Failed to join lobby";
 		}
 
 		public override void OnJoinedRoom()
 		{
-			Debug.Log("OnJoinedRoom()");
+			ConnectedToRoom = true;
+			FailedToConnectToRoom = false;
+			Debug.Log("MainMenuUIManager.OnJoinedRoom()");
 
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
@@ -227,6 +251,11 @@ namespace FallenLand
 			currentState = MainMenuStates.MultiplayerLobby;
 		}
 
+		public override void OnDisconnected(DisconnectCause cause)
+		{
+			Debug.Log("OnDisconnected: " + cause.ToString());
+			ConnectedToRoom = false;
+		}
 
 		/*
 		 * MAIN MENU METHODS
