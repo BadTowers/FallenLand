@@ -21,19 +21,7 @@ namespace FallenLand
 		public GameObject SetUpNewGameMenu;
 		public GameObject MultiplayerCreation;
 		public GameObject MultiplayerLobby;
-
-		public Image townLogoImage;
-		public Image townSymbolImage;
 		//public Image townMapImage; //Currently unused
-		public Image townTech1Image;
-		public Image townTech2Image;
-		public Text townNameAndLocation;
-		public Text specificPerk1Text;
-		public Text specificPerk2Text;
-		public Text specificPerk3Text;
-		public Text specificPerk4Text;
-		public Text loreText;
-		public Scrollbar loreScrollBar;
 		public const string FACTION_MAP_LOCATION_URI = "Factions/FactionMapLocations/";
 		public const string FACTION_IMAGE_URI = "Factions/FactionImage/";
 		public const string FACTION_SYMBOL_URI = "Factions/FactionSymbols/";
@@ -43,9 +31,20 @@ namespace FallenLand
 		public GameObject soloIIDifficultyToggleGroup;
 		public const int SOLO_I_BUTTON_NUM = 0;
 		public const int SOLO_II_BUTTON_NUM = 1;
-		public GameObject modifiersContainer;
+		public GameObject ModifiersContainer;
 		public string gameVersion = "1";
 
+		private Image TownLogoImage;
+		private Image TownSymbolImage;
+		private Image TownTech1Image;
+		private Image TownTech2Image;
+		private Text TownNameAndLocation;
+		private Text SpecificPerk1Text;
+		private Text SpecificPerk2Text;
+		private Text SpecificPerk3Text;
+		private Text SpecificPerk4Text;
+		private Text LoreText;
+		private Scrollbar LoreScrollBar;
 		private int CurrentFactionNumber;
 		private bool FactionWasChanged;
 		private bool GameModeWasChanged;
@@ -105,6 +104,18 @@ namespace FallenLand
 			NumSoloIIDifficulties = 4;
 			ConnectedToRoom = false;
 			FailedToConnectToRoom = false;
+
+			TownLogoImage = GameObject.Find("FactionLogoImage").GetComponent<Image>();
+			TownSymbolImage = GameObject.Find("FactionSymbolImage").GetComponent<Image>();
+			TownTech1Image = GameObject.Find("Tech1Image").GetComponent<Image>();
+			TownTech2Image = GameObject.Find("Tech2Image").GetComponent<Image>();
+			TownNameAndLocation = GameObject.Find("TownInfoText").GetComponent<Text>();
+			SpecificPerk1Text = GameObject.Find("SpecificPerk1Text").GetComponent<Text>();
+			SpecificPerk2Text = GameObject.Find("SpecificPerk2Text").GetComponent<Text>();
+			SpecificPerk3Text = GameObject.Find("SpecificPerk3Text").GetComponent<Text>();
+			SpecificPerk4Text = GameObject.Find("SpecificPerk4Text").GetComponent<Text>();
+			LoreText = GameObject.Find("LoreText").GetComponent<Text>();
+			LoreScrollBar = GameObject.Find("LoreScrollbar").GetComponent<Scrollbar>();
 		}
 
 		void Update()
@@ -369,7 +380,7 @@ namespace FallenLand
 		{
 
 			//Collect all the modifier toggles from the container
-			Toggle[] modifierToggles = modifiersContainer.GetComponentsInChildren<Toggle>();
+			Toggle[] modifierToggles = ModifiersContainer.GetComponentsInChildren<Toggle>();
 
 			/* Randomly pick a faction */
 			RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
@@ -462,7 +473,7 @@ namespace FallenLand
 			}
 
 			//Game modifiers
-			foreach (Toggle modifier in modifiersContainer.GetComponentsInChildren<Toggle>())
+			foreach (Toggle modifier in ModifiersContainer.GetComponentsInChildren<Toggle>())
 			{
 				if (modifier.isOn)
 				{
@@ -525,9 +536,9 @@ namespace FallenLand
 			Sprite img = (Sprite)Resources.Load<Sprite>(FACTION_IMAGE_URI + "FactionImage" + CurrentFactionNumber.ToString());
 
 			//Apply it
-			if (townLogoImage != null)
+			if (TownLogoImage != null)
 			{
-				townLogoImage.sprite = img;
+				TownLogoImage.sprite = img;
 			}
 			else
 			{
@@ -538,9 +549,9 @@ namespace FallenLand
 			img = (Sprite)Resources.Load<Sprite>(FACTION_SYMBOL_URI + "FactionSymbol" + CurrentFactionNumber.ToString());
 
 			//Apply it
-			if (townSymbolImage != null)
+			if (TownSymbolImage != null)
 			{
-				townSymbolImage.sprite = img;
+				TownSymbolImage.sprite = img;
 			}
 			else
 			{
@@ -548,9 +559,9 @@ namespace FallenLand
 			}
 
 			//Set up town name and location
-			if (townNameAndLocation != null)
+			if (TownNameAndLocation != null)
 			{
-				townNameAndLocation.text = CurrentFaction.GetName() + "\n" + CurrentFaction.GetBaseLocationString();
+				TownNameAndLocation.text = CurrentFaction.GetName() + "\n" + CurrentFaction.GetBaseLocationString();
 			}
 			else
 			{
@@ -558,33 +569,33 @@ namespace FallenLand
 			}
 
 			//Set up the perk texts TODO rework this to be more dynamic (could have more or less than 4 perks)
-			if (specificPerk1Text != null)
+			if (SpecificPerk1Text != null)
 			{
-				specificPerk1Text.text = CurrentFaction.GetPerks()[0].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[0].GetPerkDescription();
+				SpecificPerk1Text.text = CurrentFaction.GetPerks()[0].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[0].GetPerkDescription();
 			}
 			else
 			{
 				Debug.Log("Perk 1 text container not set");
 			}
-			if (specificPerk2Text != null)
+			if (SpecificPerk2Text != null)
 			{
-				specificPerk2Text.text = CurrentFaction.GetPerks()[1].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[1].GetPerkDescription();
+				SpecificPerk2Text.text = CurrentFaction.GetPerks()[1].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[1].GetPerkDescription();
 			}
 			else
 			{
 				Debug.Log("Perk 2 text container not set");
 			}
-			if (specificPerk3Text != null)
+			if (SpecificPerk3Text != null)
 			{
-				specificPerk3Text.text = CurrentFaction.GetPerks()[2].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[2].GetPerkDescription();
+				SpecificPerk3Text.text = CurrentFaction.GetPerks()[2].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[2].GetPerkDescription();
 			}
 			else
 			{
 				Debug.Log("Perk 3 text container not set");
 			}
-			if (specificPerk4Text != null)
+			if (SpecificPerk4Text != null)
 			{
-				specificPerk4Text.text = CurrentFaction.GetPerks()[3].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[3].GetPerkDescription();
+				SpecificPerk4Text.text = CurrentFaction.GetPerks()[3].GetPerkTitle() + ": " + CurrentFaction.GetPerks()[3].GetPerkDescription();
 			}
 			else
 			{
@@ -592,18 +603,18 @@ namespace FallenLand
 			}
 
 			//Set up town lore
-			if (loreText != null)
+			if (LoreText != null)
 			{
-				loreText.text = CurrentFaction.GetLore();
+				LoreText.text = CurrentFaction.GetLore();
 			}
 			else
 			{
 				Debug.Log("Lore text container not set");
 			}
 			//Move the lore back to the top when the faction switches
-			if (loreScrollBar != null)
+			if (LoreScrollBar != null)
 			{
-				loreScrollBar.value = 1;
+				LoreScrollBar.value = 1;
 			}
 			else
 			{
@@ -614,9 +625,9 @@ namespace FallenLand
 			//Load tech 1
 			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[0].GetId().ToString());
 			//Apply it
-			if (townTech1Image != null)
+			if (TownTech1Image != null)
 			{
-				townTech1Image.sprite = img;
+				TownTech1Image.sprite = img;
 			}
 			else
 			{
@@ -625,9 +636,9 @@ namespace FallenLand
 			//Load tech 2
 			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[1].GetId().ToString());
 			//Apply it
-			if (townTech2Image != null)
+			if (TownTech2Image != null)
 			{
-				townTech2Image.sprite = img;
+				TownTech2Image.sprite = img;
 			}
 			else
 			{

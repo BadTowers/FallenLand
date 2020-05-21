@@ -17,6 +17,7 @@ namespace Tests
 		private GameObject FeedbackTextObj;
 		private MainMenuUIManager MainMenuUIManagerInstance;
 		private List<GameObject> MenuList;
+		private List<GameObject> FactionSelectionObjectList;
 
 		[SetUp]
 		public void Setup()
@@ -27,6 +28,7 @@ namespace Tests
 			TextGameObjs = new List<GameObject>();
 			ButtonGameObjs = new List<GameObject>();
 			FeedbackTextObj = new GameObject();
+			FactionSelectionObjectList = new List<GameObject>();
 
 			for (int i = 0; i < MAX_NUM_PLAYERS; i++)
 			{
@@ -40,6 +42,8 @@ namespace Tests
 
 			FeedbackTextObj.AddComponent<Text>();
 			FeedbackTextObj.name = "FeedbackText";
+
+			addFactionSelectionElements();
 
 			MainGameObj.AddComponent<MainMenuUIManager>();
 			MainMenuUIManagerInstance = MainGameObj.GetComponent<MainMenuUIManager>();
@@ -63,6 +67,7 @@ namespace Tests
 			MainGameObj = null;
 			FeedbackTextObj = null;
 			MenuList = null;
+			FactionSelectionObjectList = null;
 		}
 
 		[UnityTest]
@@ -246,6 +251,43 @@ namespace Tests
 					Assert.IsFalse(MenuList[i].activeSelf);
 				}
 			}
+		}
+
+		private void addFactionSelectionElements()
+		{
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[0].AddComponent<Image>();
+			FactionSelectionObjectList[0].GetComponent<Image>().name = "FactionLogoImage";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[1].AddComponent<Image>();
+			FactionSelectionObjectList[1].GetComponent<Image>().name = "FactionSymbolImage";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[2].AddComponent<Image>();
+			FactionSelectionObjectList[2].GetComponent<Image>().name = "Tech1Image";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[3].AddComponent<Image>();
+			FactionSelectionObjectList[3].GetComponent<Image>().name = "Tech2Image";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[4].AddComponent<Text>();
+			FactionSelectionObjectList[4].GetComponent<Text>().name = "TownInfoText";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[5].AddComponent<Text>();
+			FactionSelectionObjectList[5].GetComponent<Text>().name = "SpecificPerk1Text";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[6].AddComponent<Text>();
+			FactionSelectionObjectList[6].GetComponent<Text>().name = "SpecificPerk2Text";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[7].AddComponent<Text>();
+			FactionSelectionObjectList[7].GetComponent<Text>().name = "SpecificPerk3Text";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[8].AddComponent<Text>();
+			FactionSelectionObjectList[8].GetComponent<Text>().name = "SpecificPerk4Text";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[9].AddComponent<Text>();
+			FactionSelectionObjectList[9].GetComponent<Text>().name = "LoreText";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[10].AddComponent<Scrollbar>();
+			FactionSelectionObjectList[10].GetComponent<Scrollbar>().name = "LoreScrollbar";
 		}
 	}
 }
