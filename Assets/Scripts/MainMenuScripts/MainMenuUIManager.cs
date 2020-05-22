@@ -524,6 +524,7 @@ namespace FallenLand
 		public void onBack()
 		{
 			currentState = MainMenuStates.Main;
+			PhotonNetwork.LeaveRoom();
 			PhotonNetwork.Disconnect();
 		}
 
