@@ -259,7 +259,7 @@ namespace FallenLand
 			Debug.Log("OnJoinRoomFailed() was called by PUN with reason " + message);
 			FailedToConnectToRoom = true;
 			ConnectedToRoom = false;
-			FeedbackText.text = "Failed to join lobby";
+			FeedbackText.text = "Failed to join lobby: " + message;
 		}
 
 		public override void OnJoinedRoom()
@@ -524,8 +524,16 @@ namespace FallenLand
 		public void onBack()
 		{
 			currentState = MainMenuStates.Main;
-			PhotonNetwork.LeaveRoom();
-			PhotonNetwork.Disconnect();
+			if (PhotonNetwork.InLobby)
+			{
+				PhotonNetwork.LeaveRoom();
+			}
+			if (PhotonNetwork.IsConnected)
+			{
+				PhotonNetwork.Disconnect();
+			}
+
+			FeedbackText.text = "";
 		}
 
 		public void OnPickFactionButtonPressedMultiplayer()
