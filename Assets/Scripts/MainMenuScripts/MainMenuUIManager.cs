@@ -75,6 +75,8 @@ namespace FallenLand
 			PhotonNetwork.AutomaticallySyncScene = true;
 
 			PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
+			PhotonNetwork.QuickResends = 3;
+			PhotonNetwork.MaxResendsBeforeDisconnect = 7;
 
 			//Initialize default values
 			CurrentFactionNumber = 1;
@@ -163,6 +165,7 @@ namespace FallenLand
 					updatePlayerList();
 					updatePing();
 					updateStartButton();
+					Debug.Log("Message resends: " + PhotonNetwork.ResentReliableCommands);
 					break;
 				default:
 					//Default will be to show the main menu in case of error
@@ -732,24 +735,24 @@ namespace FallenLand
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
 				Photon.Realtime.Player player = PhotonNetwork.PlayerList[i];
+				Hashtable playerHashTable = player.CustomProperties;
 
 				PlayerTexts[i].GetComponent<Text>().text = player.NickName;
 				PlayerTexts[i].SetActive(true);
 				FactionLabels[i].SetActive(true);
 
-				if (i == CurrentPlayerIndex)
+				if (i == CurrentPlayerIndex && (string)playerHashTable["FactionName"] != CurrentFaction.GetName())
 				{
 					Hashtable properties = new Hashtable
 					{
-						["FactionNumber"] = CurrentFaction.GetName()
+						["FactionName"] = CurrentFaction.GetName()
 					};
 					player.SetCustomProperties(properties);
 				}
 
-				Hashtable playerHashTable = player.CustomProperties;
 				if (!playerHashTable.IsNullOrEmpty())
 				{
-					string currentPlayerFaction = (string)playerHashTable["FactionNumber"];
+					string currentPlayerFaction = (string)playerHashTable["FactionName"];
 					Debug.Log("Current player faction " + currentPlayerFaction);
 					FactionLabels[i].GetComponent<Text>().text = currentPlayerFaction;
 				}
