@@ -211,6 +211,7 @@ namespace FallenLand
 				if (PhotonNetwork.IsConnected)
 				{
 					Debug.Log("Connected to the photon network");
+					OnConnectedToMaster();
 				}
 				else
 				{
