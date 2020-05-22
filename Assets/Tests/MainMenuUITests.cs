@@ -18,6 +18,7 @@ namespace Tests
 		private MainMenuUIManager MainMenuUIManagerInstance;
 		private List<GameObject> MenuList;
 		private List<GameObject> FactionSelectionObjectList;
+		private GameObject StartMultiplayerButtonObject;
 
 		[SetUp]
 		public void Setup()
@@ -29,6 +30,7 @@ namespace Tests
 			FactionGameObjs = new List<GameObject>();
 			FeedbackTextObj = new GameObject();
 			FactionSelectionObjectList = new List<GameObject>();
+			StartMultiplayerButtonObject = new GameObject();
 
 			for (int i = 0; i < MAX_NUM_PLAYERS; i++)
 			{
@@ -42,6 +44,9 @@ namespace Tests
 
 			FeedbackTextObj.AddComponent<Text>();
 			FeedbackTextObj.name = "FeedbackText";
+
+			StartMultiplayerButtonObject.AddComponent<Button>();
+			StartMultiplayerButtonObject.name = "StartGameButton";
 
 			addFactionSelectionElements();
 
@@ -160,6 +165,9 @@ namespace Tests
 			Text playerOneText = TextGameObjs[0].GetComponent<Text>();
 			Assert.IsNotNull(playerOneText);
 			Assert.AreEqual(EXPECTED_USERNAME, playerOneText.text);
+
+			Button startMultiplayerGameButton = StartMultiplayerButtonObject.GetComponent<Button>();
+			Assert.IsFalse(startMultiplayerGameButton.interactable);
 		}
 
 		//Valid tests, but can't get them to run all at once. Requires more investigation

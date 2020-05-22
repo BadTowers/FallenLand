@@ -48,6 +48,7 @@ namespace FallenLand
 		private Text LoreText;
 		private Scrollbar LoreScrollBar;
 		private Text PingText;
+		private Button MultiplayerStartButton;
 		private int CurrentFactionNumber;
 		private bool FactionWasChanged;
 		private bool GameModeWasChanged;
@@ -122,6 +123,7 @@ namespace FallenLand
 			LoreText = GameObject.Find("LoreText").GetComponent<Text>();
 			LoreScrollBar = GameObject.Find("LoreScrollbar").GetComponent<Scrollbar>();
 			PingText = GameObject.Find("ActualPingText").GetComponent<Text>();
+			MultiplayerStartButton = GameObject.Find("StartGameButton").GetComponent<Button>();
 		}
 
 		void Update()
@@ -160,6 +162,7 @@ namespace FallenLand
 					}
 					updatePlayerList();
 					updatePing();
+					updateStartButton();
 					break;
 				default:
 					//Default will be to show the main menu in case of error
@@ -762,6 +765,18 @@ namespace FallenLand
 		private void updatePing()
 		{
 			PingText.text = PhotonNetwork.GetPing() + "ms";
+		}
+
+		private void updateStartButton()
+		{
+			if (PhotonNetwork.PlayerList.Length > 1)
+			{
+				MultiplayerStartButton.interactable = true;
+			}
+			else
+			{
+				MultiplayerStartButton.interactable = false;
+			}
 		}
 
 		private void instantiateGameObjects()
