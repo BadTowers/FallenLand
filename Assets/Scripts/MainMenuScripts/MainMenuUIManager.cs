@@ -658,7 +658,7 @@ namespace FallenLand
 			}
 
 			//Set faction label
-			//FactionLabels[CurrentPlayerIndex].GetComponent<Text>().text = CurrentFaction.GetName();
+			FactionLabels[CurrentPlayerIndex].GetComponent<Text>().text = CurrentFaction.GetName();
 
 			//No more changes to account for
 			FactionWasChanged = false;
