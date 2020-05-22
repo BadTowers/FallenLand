@@ -66,13 +66,13 @@ namespace Tests
 		[TearDown]
 		public void Teardown()
 		{
-			PhotonNetwork.Disconnect();
 			TextGameObjs = null;
 			FactionGameObjs = null;
-			MainGameObj = null;
-			FeedbackTextObj = null;
+			GameObject.DestroyImmediate(MainGameObj);
+			GameObject.DestroyImmediate(FeedbackTextObj);
 			MenuList = null;
 			FactionSelectionObjectList = null;
+			System.GC.Collect();
 		}
 
 		[UnityTest]
@@ -135,6 +135,7 @@ namespace Tests
 		}
 
 		[UnityTest]
+		[Parallelizable(ParallelScope.None)]
 		public IEnumerator TestMultiplayerLobbyWithOnePlayer()
 		{
 			const string EXPECTED_USERNAME = "JSB";
@@ -152,11 +153,12 @@ namespace Tests
 			userNameInputField.name = "UsernameInputField";
 			userNameInputField.SetPlayerName(EXPECTED_USERNAME);
 
-			PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
-
 			MainMenuUIManagerInstance.CreateRoom();
 
-			yield return null;
+			while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
+			{
+				yield return null;
+			}
 
 			Assert.AreEqual(1, PhotonNetwork.PlayerList.Length);
 
@@ -168,47 +170,139 @@ namespace Tests
 
 			Button startMultiplayerGameButton = StartMultiplayerButtonObject.GetComponent<Button>();
 			Assert.IsFalse(startMultiplayerGameButton.interactable);
+
+			MainMenuUIManagerInstance.onBack();
+
+			//Wait for us to leave the room
+			while (MainMenuUIManagerInstance.GetConnectedToRoom())
+			{
+				yield return null;
+			}
+
+			PhotonNetwork.Disconnect();
+
+			//Wait for us to leave the server
+			while (MainMenuUIManagerInstance.GetConnectedToMaster())
+			{
+				yield return null;
+			}
 		}
 
 		//Valid tests, but can't get them to run all at once. Requires more investigation
 
+		[UnityTest]
+		[Parallelizable(ParallelScope.None)]
+		public IEnumerator TestTryingToJoinWithoutARoomExisting()
+		{
+			const string EXPECTED_USERNAME_1 = "JSB";
+			MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
+
+			MainGameObj.AddComponent<RoomNameInputField>();
+			RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
+			Assert.IsNotNull(roomNameInputField);
+			roomNameInputField.name = "RoomNameInputField";
+			roomNameInputField.SetRoomName("TestTryingToJoinWithoutARoomExistingRoom");
+
+			GameObject anotherGameObject = new GameObject();
+			anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
+			UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
+			Assert.IsNotNull(userNameInputField);
+			userNameInputField.name = "UsernameInputField";
+			userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
+
+			MainMenuUIManagerInstance.JoinRoom();
+
+			while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
+			{
+				yield return null;
+			}
+
+			Assert.AreEqual(0, PhotonNetwork.PlayerList.Length);
+
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
+
+			Text failText = FeedbackTextObj.GetComponent<Text>();
+			StringAssert.Contains("Failed to join lobby", failText.text);
+
+			MainMenuUIManagerInstance.onBack();
+
+			//Wait for us to leave the room
+			while (MainMenuUIManagerInstance.GetConnectedToRoom())
+			{
+				yield return null;
+			}
+
+			PhotonNetwork.Disconnect();
+
+			//Wait for us to leave the server
+			while (MainMenuUIManagerInstance.GetConnectedToMaster())
+			{
+				yield return null;
+			}
+		}
+
+		[UnityTest]
+		[Parallelizable(ParallelScope.None)]
+		public IEnumerator TestUponFailingToJoinMultiplayerGame_WhenBackIsPressedAndWeReenterThisPage_ThenTheFeedbackTextIsBlank()
+		{
+			MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
+
+			yield return null;
+
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
+
+			MainGameObj.AddComponent<RoomNameInputField>();
+			RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
+			Assert.IsNotNull(roomNameInputField);
+			roomNameInputField.name = "RoomNameInputField";
+			roomNameInputField.SetRoomName("PotatoRoomThatShouldNotExist");
+
+			GameObject anotherGameObject = new GameObject();
+			anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
+			UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
+			Assert.IsNotNull(userNameInputField);
+			userNameInputField.name = "UsernameInputField";
+			userNameInputField.SetPlayerName("PeanutBrain");
+
+			MainMenuUIManagerInstance.onJoinMultiplayerGame();
+
+			while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
+			{
+				yield return null;
+			}
+
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
+
+			Text failText = FeedbackTextObj.GetComponent<Text>();
+			StringAssert.Contains("Failed to join lobby", failText.text);
+
+			MainMenuUIManagerInstance.onBack();
+			yield return null;
+			MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
+			yield return null;
+
+			Assert.AreEqual(string.Empty, failText.text);
+
+			MainMenuUIManagerInstance.onBack();
+
+			//Wait for us to leave the room
+			while (MainMenuUIManagerInstance.GetConnectedToRoom())
+			{
+				yield return null;
+			}
+
+			PhotonNetwork.Disconnect();
+
+			//Wait for us to leave the server
+			while (MainMenuUIManagerInstance.GetConnectedToMaster())
+			{
+				yield return null;
+			}
+		}
+
 		//[UnityTest]
-		//public IEnumerator TestTryingToJoinWithoutARoomExisting()
-		//{
-		//	const string EXPECTED_USERNAME_1 = "JSB";
-		//	MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
-
-		//	MainGameObj.AddComponent<RoomNameInputField>();
-		//	RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
-		//	Assert.IsNotNull(roomNameInputField);
-		//	roomNameInputField.name = "RoomNameInputField";
-		//	roomNameInputField.SetRoomName("TestRoom");
-
-		//	GameObject anotherGameObject = new GameObject();
-		//	anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
-		//	UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
-		//	Assert.IsNotNull(userNameInputField);
-		//	userNameInputField.name = "UsernameInputField";
-		//	userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
-		//	PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
-
-		//	MainMenuUIManagerInstance.JoinRoom();
-
-		//	while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
-		//	{
-		//		yield return null;
-		//	}
-
-		//	Assert.AreEqual(0, PhotonNetwork.PlayerList.Length);
-
-		//	assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
-
-		//	Text failText = FeedbackTextObj.GetComponent<Text>();
-		//	Assert.AreEqual("Failed to join lobby", failText.text);
-		//}
-
-		//[UnityTest]
-		//public IEnumerator TestTryingToJoinWithoutWithABlankRoom()
+		//[Parallelizable(ParallelScope.None)]
+		//public IEnumerator TestTryingToJoinWithABlankRoom()
 		//{
 		//	const string EXPECTED_USERNAME_1 = "JSB";
 		//	MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
@@ -225,7 +319,6 @@ namespace Tests
 		//	Assert.IsNotNull(userNameInputField);
 		//	userNameInputField.name = "UsernameInputField";
 		//	userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
-		//	PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
 
 		//	MainMenuUIManagerInstance.JoinRoom();
 
@@ -241,6 +334,22 @@ namespace Tests
 
 		//	Text failText = FeedbackTextObj.GetComponent<Text>();
 		//	Assert.AreEqual("Room name cannot be empty", failText.text);
+
+		//	MainMenuUIManagerInstance.onBack();
+
+		//	//Wait for us to leave the room
+		//	while (MainMenuUIManagerInstance.GetConnectedToRoom())
+		//	{
+		//		yield return null;
+		//	}
+
+		//	PhotonNetwork.Disconnect();
+
+		//	//Wait for us to leave the server
+		//	while (MainMenuUIManagerInstance.GetConnectedToMaster())
+		//	{
+		//		yield return null;
+		//	}
 		//}
 
 

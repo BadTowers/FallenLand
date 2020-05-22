@@ -64,6 +64,8 @@ namespace FallenLand
 		private List<GameObject> PlayerTexts;
 		private int CurrentPlayerIndex;
 		private bool ConnectedToRoom;
+		private bool ConnectedToLobby;
+		private bool ConnectedToMaster;
 		private bool FailedToConnectToRoom;
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
@@ -174,6 +176,27 @@ namespace FallenLand
 			}
 		}
 
+		private void OnDestroy()
+		{
+			if (PhotonNetwork.InRoom)
+			{
+				Debug.Log("Disconnecting from room in the desctructor");
+				PhotonNetwork.LeaveRoom();
+			}
+			if (PhotonNetwork.InLobby)
+			{
+				Debug.Log("Disconnecting from lobby in the desctructor");
+				PhotonNetwork.LeaveLobby();
+			}
+			if (PhotonNetwork.IsConnected)
+			{
+				Debug.Log("Disconnecting from server in the desctructor");
+				PhotonNetwork.Disconnect();
+			}
+
+			Debug.Log("Done destructing main menu ui manager");
+		}
+
 		public void JoinRoom()
 		{
 			RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
@@ -185,7 +208,7 @@ namespace FallenLand
 			{
 				if (PhotonNetwork.IsConnected)
 				{
-					Debug.Log("Connected to the photon network");
+					Debug.Log("Already connected to the photon network");
 					PhotonNetwork.JoinRoom(roomNameInputField.GetRoomName());
 				}
 				else
@@ -224,26 +247,32 @@ namespace FallenLand
 
 		public bool GetConnectedToRoom()
 		{
-			Debug.Log("GetConnectedToRoom " + ConnectedToRoom);
 			return ConnectedToRoom;
 		}
 
 		public bool GetFailedToConnectToRoom()
 		{
-			Debug.Log("GetFailedToConnectToRoom " + FailedToConnectToRoom);
 			return FailedToConnectToRoom;
+		}
+		
+		public bool GetConnectedToMaster()
+		{
+			return ConnectedToMaster;
 		}
 
 		public override void OnConnectedToMaster()
 		{
-			Debug.Log("OnConnectedToMaster");
+			Debug.Log("OnConnectedToMaster callback");
+			ConnectedToMaster = true;
 			RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
 
 			if (IsCreatingRoom)
 			{
 				Debug.Log("Is creating OnConnectedToMaster");
-				RoomOptions roomOptions = new RoomOptions();
-				roomOptions.MaxPlayers = maxPlayersPerRoom;
+				RoomOptions roomOptions = new RoomOptions
+				{
+					MaxPlayers = maxPlayersPerRoom
+				};
 				PhotonNetwork.CreateRoom(roomNameInputField.GetRoomName(), roomOptions);
 				IsCreatingRoom = false;
 			}
@@ -283,6 +312,19 @@ namespace FallenLand
 		public override void OnDisconnected(DisconnectCause cause)
 		{
 			Debug.Log("OnDisconnected: " + cause.ToString());
+			ConnectedToRoom = false;
+			ConnectedToMaster = false;
+		}
+
+		public override void OnLeftLobby()
+		{
+			Debug.Log("Left lobby");
+			ConnectedToLobby = false;
+		}
+		
+		public override void OnLeftRoom()
+		{
+			Debug.Log("Left room");
 			ConnectedToRoom = false;
 		}
 
@@ -525,21 +567,18 @@ namespace FallenLand
 		public void onBack()
 		{
 			currentState = MainMenuStates.Main;
-			if (PhotonNetwork.InLobby)
+			if (PhotonNetwork.InRoom)
 			{
+				Debug.Log("leaving room from back");
 				PhotonNetwork.LeaveRoom();
 			}
-			if (PhotonNetwork.IsConnected)
+			if (PhotonNetwork.InLobby)
 			{
-				PhotonNetwork.Disconnect();
+				Debug.Log("leaving lobby from back");
+				PhotonNetwork.LeaveLobby();
 			}
 
 			FeedbackText.text = "";
-		}
-
-		public void OnPickFactionButtonPressedMultiplayer()
-		{
-			Debug.Log("Pick faction button pressed");
 		}
 
 		// Used to load a scene by name TODO: Put inside helper function file?
