@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System;
 using UnityEngine;
@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
+using Castle.Core.Internal;
 
 namespace FallenLand
 {
@@ -45,22 +47,23 @@ namespace FallenLand
 		private Text SpecificPerk4Text;
 		private Text LoreText;
 		private Scrollbar LoreScrollBar;
+		private Text PingText;
 		private int CurrentFactionNumber;
 		private bool FactionWasChanged;
 		private bool GameModeWasChanged;
 		private List<Faction> Factions;
+		[SerializeField]
 		private Faction CurrentFaction;
 		private Text FeedbackText;
 		private bool IsCreatingRoom;
 		private int NumFactions;
 		private int NumSinglePlayerGameModes;
 		private int NumSoloIIDifficulties;
-		private List<GameObject> PickFactionButtons;
+		private List<GameObject> FactionLabels;
 		private List<GameObject> PlayerTexts;
 		private int CurrentPlayerIndex;
 		private bool ConnectedToRoom;
 		private bool FailedToConnectToRoom;
-
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
@@ -70,18 +73,20 @@ namespace FallenLand
 			// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
 			PhotonNetwork.AutomaticallySyncScene = true;
 
+			PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
+
 			//Initialize default values
 			CurrentFactionNumber = 1;
 			FactionWasChanged = true;
 			GameModeWasChanged = true;
 			Factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
 
-			PickFactionButtons = new List<GameObject>();
+			FactionLabels = new List<GameObject>();
 			PlayerTexts = new List<GameObject>();
 			for (int i = 0; i < maxPlayersPerRoom; i++)
 			{
 				PlayerTexts.Add(GameObject.Find("PlayerText_" + i));
-				PickFactionButtons.Add(GameObject.Find("PickFactionButton_" + i));
+				FactionLabels.Add(GameObject.Find("FactionText_" + i));
 			}
 
 			FeedbackText = GameObject.Find("FeedbackText").GetComponent<Text>();
@@ -116,6 +121,7 @@ namespace FallenLand
 			SpecificPerk4Text = GameObject.Find("SpecificPerk4Text").GetComponent<Text>();
 			LoreText = GameObject.Find("LoreText").GetComponent<Text>();
 			LoreScrollBar = GameObject.Find("LoreScrollbar").GetComponent<Scrollbar>();
+			PingText = GameObject.Find("ActualPingText").GetComponent<Text>();
 		}
 
 		void Update()
@@ -148,7 +154,12 @@ namespace FallenLand
 					break;
 				case MainMenuStates.MultiplayerLobby:
 					setActiveMenu(MultiplayerLobby);
+					if (FactionWasChanged)
+					{
+						updateFactionDisplay(); //Update which faction is currently displaying if a new one was selected
+					}
 					updatePlayerList();
+					updatePing();
 					break;
 				default:
 					//Default will be to show the main menu in case of error
@@ -507,6 +518,7 @@ namespace FallenLand
 		public void onBack()
 		{
 			currentState = MainMenuStates.Main;
+			PhotonNetwork.Disconnect();
 		}
 
 		public void OnPickFactionButtonPressedMultiplayer()
@@ -524,11 +536,11 @@ namespace FallenLand
 		private void updateFactionDisplay()
 		{
 			//Set the current faction
-			foreach (Faction f in Factions)
+			foreach (Faction faction in Factions)
 			{
-				if (f.GetId() == CurrentFactionNumber)
+				if (faction.GetId() == CurrentFactionNumber)
 				{
-					CurrentFaction = f;
+					CurrentFaction = faction;
 				}
 			}
 
@@ -645,6 +657,9 @@ namespace FallenLand
 				Debug.Log("Town tech image 2 container not set");
 			}
 
+			//Set faction label
+			//FactionLabels[CurrentPlayerIndex].GetComponent<Text>().text = CurrentFaction.GetName();
+
 			//No more changes to account for
 			FactionWasChanged = false;
 		}
@@ -713,23 +728,40 @@ namespace FallenLand
 		{
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
-				PlayerTexts[i].GetComponent<Text>().text = PhotonNetwork.PlayerList[i].NickName;
+				Photon.Realtime.Player player = PhotonNetwork.PlayerList[i];
+
+				PlayerTexts[i].GetComponent<Text>().text = player.NickName;
 				PlayerTexts[i].SetActive(true);
+				FactionLabels[i].SetActive(true);
+
 				if (i == CurrentPlayerIndex)
 				{
-					PickFactionButtons[i].SetActive(true);
+					Hashtable properties = new Hashtable
+					{
+						["FactionNumber"] = CurrentFaction.GetName()
+					};
+					player.SetCustomProperties(properties);
 				}
-				else
+
+				Hashtable playerHashTable = player.CustomProperties;
+				if (!playerHashTable.IsNullOrEmpty())
 				{
-					PickFactionButtons[i].SetActive(false);
+					string currentPlayerFaction = (string)playerHashTable["FactionNumber"];
+					Debug.Log("Current player faction " + currentPlayerFaction);
+					FactionLabels[i].GetComponent<Text>().text = currentPlayerFaction;
 				}
 			}
 
 			for (int i = PhotonNetwork.PlayerList.Length; i < maxPlayersPerRoom; i++)
 			{
 				PlayerTexts[i].SetActive(false);
-				PickFactionButtons[i].SetActive(false);
+				FactionLabels[i].SetActive(false);
 			}
+		}
+
+		private void updatePing()
+		{
+			PingText.text = PhotonNetwork.GetPing() + "ms";
 		}
 
 		private void instantiateGameObjects()

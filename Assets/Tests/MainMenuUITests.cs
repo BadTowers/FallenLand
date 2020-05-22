@@ -13,7 +13,7 @@ namespace Tests
 	{
 		private GameObject MainGameObj;
 		private List<GameObject> TextGameObjs;
-		private List<GameObject> ButtonGameObjs;
+		private List<GameObject> FactionGameObjs;
 		private GameObject FeedbackTextObj;
 		private MainMenuUIManager MainMenuUIManagerInstance;
 		private List<GameObject> MenuList;
@@ -26,18 +26,18 @@ namespace Tests
 
 			MainGameObj = new GameObject();
 			TextGameObjs = new List<GameObject>();
-			ButtonGameObjs = new List<GameObject>();
+			FactionGameObjs = new List<GameObject>();
 			FeedbackTextObj = new GameObject();
 			FactionSelectionObjectList = new List<GameObject>();
 
 			for (int i = 0; i < MAX_NUM_PLAYERS; i++)
 			{
 				TextGameObjs.Add(new GameObject());
-				ButtonGameObjs.Add(new GameObject());
+				FactionGameObjs.Add(new GameObject());
 				TextGameObjs[i].AddComponent<Text>();
 				TextGameObjs[i].name = "PlayerText_" + i;
-				ButtonGameObjs[i].AddComponent<Button>();
-				ButtonGameObjs[i].name = "PickFactionButton_" + i;
+				FactionGameObjs[i].AddComponent<Text>();
+				FactionGameObjs[i].name = "FactionText_" + i;
 			}
 
 			FeedbackTextObj.AddComponent<Text>();
@@ -63,7 +63,7 @@ namespace Tests
 		{
 			PhotonNetwork.Disconnect();
 			TextGameObjs = null;
-			ButtonGameObjs = null;
+			FactionGameObjs = null;
 			MainGameObj = null;
 			FeedbackTextObj = null;
 			MenuList = null;
@@ -288,6 +288,9 @@ namespace Tests
 			FactionSelectionObjectList.Add(new GameObject());
 			FactionSelectionObjectList[10].AddComponent<Scrollbar>();
 			FactionSelectionObjectList[10].GetComponent<Scrollbar>().name = "LoreScrollbar";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[11].AddComponent<Text>();
+			FactionSelectionObjectList[11].GetComponent<Text>().name = "ActualPingText";
 		}
 	}
 }
