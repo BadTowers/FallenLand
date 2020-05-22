@@ -44,3 +44,7 @@ __pycache__
 #Coverage Files
 CodeCoverage/Report/*
 !CodeCoverage/Report/badge_linecoverage.svg
+
+#Build zip
+*.zip
+*.7z
