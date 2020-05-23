@@ -804,7 +804,7 @@ namespace FallenLand
 
 				if (i == CurrentPlayerIndex)
 				{
-					updateMultiplayerNameColor(i);
+					updateMultiplayerNameColor(i, 37f / 255f, 135f / 255f, 6f / 255f);
 					if ((string)playerHashTable["FactionName"] != CurrentFaction.GetName())
 					{
 						Hashtable properties = new Hashtable
@@ -813,6 +813,10 @@ namespace FallenLand
 						};
 						player.SetCustomProperties(properties);
 					}
+				}
+				else
+				{
+					updateMultiplayerNameColor(i, 0f, 0f, 0f);
 				}
 
 				if (!playerHashTable.IsNullOrEmpty())
@@ -933,17 +937,17 @@ namespace FallenLand
 			}
 		}
 
-		private void updateMultiplayerNameColor(int playerIndex)
+		private void updateMultiplayerNameColor(int playerIndex, float r, float g, float b)
 		{
 			//Color requires a number between 0-1
-			if (PlayerTexts[playerIndex].GetComponent<Text>().color.r != 37f/255f ||
-			    PlayerTexts[playerIndex].GetComponent<Text>().color.g != 135f/255f ||
-			    PlayerTexts[playerIndex].GetComponent<Text>().color.b != 6f/255f)
+			if (PlayerTexts[playerIndex].GetComponent<Text>().color.r != r ||
+			    PlayerTexts[playerIndex].GetComponent<Text>().color.g != g ||
+			    PlayerTexts[playerIndex].GetComponent<Text>().color.b != b)
 			{
 				Debug.Log("Changing color");
-				PlayerTexts[playerIndex].GetComponent<Text>().color = new Color(37f/255f, 135f/255f, 6f/255f);
+				PlayerTexts[playerIndex].GetComponent<Text>().color = new Color(r, g, b);
 			}
 		}
-        #endregion
-    }
+		#endregion
+	}
 }
