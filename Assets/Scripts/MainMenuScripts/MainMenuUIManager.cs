@@ -53,7 +53,6 @@ namespace FallenLand
 		private bool FactionWasChanged;
 		private bool GameModeWasChanged;
 		private List<Faction> Factions;
-		[SerializeField]
 		private Faction CurrentFaction;
 		private Text FeedbackText;
 		private bool IsCreatingRoom;
@@ -67,10 +66,35 @@ namespace FallenLand
 		private bool ConnectedToLobby;
 		private bool ConnectedToMaster;
 		private bool FailedToConnectToRoom;
+		private string MyOnlineUserId;
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
-		void Awake()
+        #region Destructor
+        private void OnDestroy()
+		{
+			if (PhotonNetwork.InRoom)
+			{
+				Debug.Log("Disconnecting from room in the desctructor");
+				PhotonNetwork.LeaveRoom();
+			}
+			if (PhotonNetwork.InLobby)
+			{
+				Debug.Log("Disconnecting from lobby in the desctructor");
+				PhotonNetwork.LeaveLobby();
+			}
+			if (PhotonNetwork.IsConnected)
+			{
+				Debug.Log("Disconnecting from server in the desctructor");
+				PhotonNetwork.Disconnect();
+			}
+
+			Debug.Log("Done destructing main menu ui manager");
+		}
+        #endregion
+
+        #region UnityFunctions
+        void Awake()
 		{
 			// #Critical
 			// this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
@@ -175,28 +199,9 @@ namespace FallenLand
 					break;
 			}
 		}
+		#endregion
 
-		private void OnDestroy()
-		{
-			if (PhotonNetwork.InRoom)
-			{
-				Debug.Log("Disconnecting from room in the desctructor");
-				PhotonNetwork.LeaveRoom();
-			}
-			if (PhotonNetwork.InLobby)
-			{
-				Debug.Log("Disconnecting from lobby in the desctructor");
-				PhotonNetwork.LeaveLobby();
-			}
-			if (PhotonNetwork.IsConnected)
-			{
-				Debug.Log("Disconnecting from server in the desctructor");
-				PhotonNetwork.Disconnect();
-			}
-
-			Debug.Log("Done destructing main menu ui manager");
-		}
-
+		#region PublicAPI
 		public void JoinRoom()
 		{
 			RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
@@ -259,8 +264,10 @@ namespace FallenLand
 		{
 			return ConnectedToMaster;
 		}
+        #endregion
 
-		public override void OnConnectedToMaster()
+        #region PunCallbacks
+        public override void OnConnectedToMaster()
 		{
 			Debug.Log("OnConnectedToMaster callback");
 			ConnectedToMaster = true;
@@ -327,6 +334,7 @@ namespace FallenLand
 		public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)
 		{
 			Debug.Log("OnPlayerEnteredRoom callback. Name: " + player.NickName + " ID: " + player.UserId);
+			updateUserOnlineInformation();
 		}
 
 		public override void OnPlayerLeftRoom(Photon.Realtime.Player player)
@@ -334,6 +342,9 @@ namespace FallenLand
 			Debug.Log("OnPlayerLeftRoom callback. Name: " + player.NickName + " ID: " + player.UserId);
 			updateUserOnlineInformation();
 		}
+		#endregion
+
+		#region UICallbacks
 		public void OnSinglePlayerButtonPressed()
 		{
 			Debug.Log("Single Player");
@@ -549,6 +560,9 @@ namespace FallenLand
 			else
 			{
 				Debug.Log("PhotonNetwork : Loading game");
+
+				gatherDataForNextScene();
+
 				PhotonNetwork.LoadLevel("GameScene");
 			}
 		}
@@ -569,9 +583,11 @@ namespace FallenLand
 
 			FeedbackText.text = "";
 		}
+        #endregion
 
-		// Used to load a scene by name TODO: Put inside helper function file?
-		private void asyncSceneLoad(string name)
+        #region HelperFunctions
+        // Used to load a scene by name TODO: Put inside helper function file?
+        private void asyncSceneLoad(string name)
 		{
 			SceneManager.LoadSceneAsync(name);
 		}
@@ -814,13 +830,13 @@ namespace FallenLand
 
 		private void updateStartButton()
 		{
-			if (PhotonNetwork.PlayerList.Length > 1)
+			//if (PhotonNetwork.PlayerList.Length > 1)
 			{
 				MultiplayerStartButton.interactable = true;
 			}
-			else
+			//else
 			{
-				MultiplayerStartButton.interactable = false;
+				//MultiplayerStartButton.interactable = false;
 			}
 		}
 
@@ -858,6 +874,47 @@ namespace FallenLand
 			}
 		}
 
+		private void gatherDataForNextScene()
+		{
+			//TODO
+
+			//Faction (Find the game creation object in the scene and then get the script from it
+			foreach (Faction f in Factions)
+			{
+				if (f.GetId() == CurrentFactionNumber)
+				{
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetFaction(f);
+				}
+			}
+
+			//Game mode
+			foreach (Toggle curModeToggle in gameModeToggleGroup.GetComponentsInChildren<Toggle>())
+			{
+				if (curModeToggle.isOn)
+				{
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetMode(curModeToggle.GetComponentInChildren<ToggleInformation>().mode);
+				}
+			}
+
+			//Solo II difficulty if needed
+			foreach (Toggle curDiffToggle in soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>())
+			{
+				if (curDiffToggle.isOn)
+				{
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetSoloIIDifficulty(curDiffToggle.GetComponentInChildren<ToggleInformation>().soloIIDifficulty);
+				}
+			}
+
+			//Game modifiers
+			foreach (Toggle modifier in ModifiersContainer.GetComponentsInChildren<Toggle>())
+			{
+				if (modifier.isOn)
+				{
+					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().AddModifier(modifier.GetComponentInChildren<ToggleInformation>().modifier);
+				}
+			}
+		}
+
 		private void updateUserOnlineInformation()
 		{
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
@@ -881,5 +938,6 @@ namespace FallenLand
 				PlayerTexts[playerIndex].GetComponent<Text>().color = new Color(37f/255f, 135f/255f, 6f/255f);
 			}
 		}
-	}
+        #endregion
+    }
 }
