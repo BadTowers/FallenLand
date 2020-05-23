@@ -8,6 +8,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Castle.Core.Internal;
+using System.Linq;
 
 namespace FallenLand
 {
@@ -138,6 +139,8 @@ namespace FallenLand
 			NumSoloIIDifficulties = 4;
 			ConnectedToRoom = false;
 			FailedToConnectToRoom = false;
+
+			CurrentPlayerIndex = -1;
 
 			TownLogoImage = GameObject.Find("FactionLogoImage").GetComponent<Image>();
 			TownSymbolImage = GameObject.Find("FactionSymbolImage").GetComponent<Image>();
@@ -306,7 +309,11 @@ namespace FallenLand
 			FailedToConnectToRoom = false;
 			Debug.Log("MainMenuUIManager.OnJoinedRoom()");
 
-			updateUserOnlineInformation();
+			if (CurrentPlayerIndex == -1)
+			{
+				CurrentPlayerIndex = PhotonNetwork.PlayerList.Length - 1;
+			}
+			MyOnlineUserId = PhotonNetwork.PlayerList[CurrentPlayerIndex].UserId;
 
 			currentState = MainMenuStates.MultiplayerLobby;
 		}
@@ -316,6 +323,7 @@ namespace FallenLand
 			Debug.Log("OnDisconnected: " + cause.ToString());
 			ConnectedToRoom = false;
 			ConnectedToMaster = false;
+			MyOnlineUserId = "";
 		}
 
 		public override void OnLeftLobby()
@@ -328,13 +336,12 @@ namespace FallenLand
 		{
 			Debug.Log("Left room callback");
 			ConnectedToRoom = false;
-			MyOnlineUserId = "";
+			CurrentPlayerIndex = -1;
 		}
 
 		public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)
 		{
 			Debug.Log("OnPlayerEnteredRoom callback. Name: " + player.NickName + " ID: " + player.UserId);
-			updateUserOnlineInformation();
 		}
 
 		public override void OnPlayerLeftRoom(Photon.Realtime.Player player)
@@ -919,10 +926,9 @@ namespace FallenLand
 		{
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
-				if (PhotonNetwork.PlayerList[i].NickName == PlayerPrefs.GetString("PlayerName"))
+				if (PhotonNetwork.PlayerList[i].UserId == MyOnlineUserId)
 				{
 					CurrentPlayerIndex = i;
-					MyOnlineUserId = PhotonNetwork.PlayerList[i].UserId;
 				}
 			}
 		}
