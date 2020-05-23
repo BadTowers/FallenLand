@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -331,21 +331,7 @@ namespace Tests
 			Text failText = FeedbackTextObj.GetComponent<Text>();
 			Assert.AreEqual("Room name cannot be empty", failText.text);
 
-			MainMenuUIManagerInstance.onBack();
-
-			//Wait for us to leave the room
-			while (MainMenuUIManagerInstance.GetConnectedToRoom())
-			{
-				yield return null;
-			}
-
-			PhotonNetwork.Disconnect();
-
-			//Wait for us to leave the server
-			while (MainMenuUIManagerInstance.GetConnectedToMaster())
-			{
-				yield return null;
-			}
+			//Don't have to do exit lobby stuff because we never connected
 		}
 
 
