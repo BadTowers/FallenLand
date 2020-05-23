@@ -49,6 +49,7 @@ namespace FallenLand
 		private Text LoreText;
 		private Scrollbar LoreScrollBar;
 		private Text PingText;
+		private Text UserIdText;
 		private Button MultiplayerStartButton;
 		private int CurrentFactionNumber;
 		private bool FactionWasChanged;
@@ -154,6 +155,7 @@ namespace FallenLand
 			LoreText = GameObject.Find("LoreText").GetComponent<Text>();
 			LoreScrollBar = GameObject.Find("LoreScrollbar").GetComponent<Scrollbar>();
 			PingText = GameObject.Find("ActualPingText").GetComponent<Text>();
+			UserIdText = GameObject.Find("UserIdText").GetComponent<Text>();
 			MultiplayerStartButton = GameObject.Find("StartGameButton").GetComponent<Button>();
 		}
 
@@ -314,6 +316,7 @@ namespace FallenLand
 				CurrentPlayerIndex = PhotonNetwork.PlayerList.Length - 1;
 			}
 			MyOnlineUserId = PhotonNetwork.PlayerList[CurrentPlayerIndex].UserId;
+			UserIdText.text = MyOnlineUserId;
 
 			currentState = MainMenuStates.MultiplayerLobby;
 		}
