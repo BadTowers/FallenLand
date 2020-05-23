@@ -560,6 +560,19 @@ namespace FallenLand
 			CreateRoom();
 		}
 
+		public void OnMultiplayerStartButtonPressed()
+		{
+			if (!PhotonNetwork.IsMasterClient)
+			{
+				Debug.Log("PhotonNetwork : Trying to Load a level but we are not the master Client");
+			}
+			else
+			{
+				Debug.Log("PhotonNetwork : Loading game");
+				PhotonNetwork.LoadLevel("GameScene");
+			}
+		}
+
 		/*
 		 * UNIVERSAL METHODS
 		 */

@@ -126,37 +126,72 @@ namespace FallenLand
 		/*****Some public interface functions for the GUI to attach to*******/
 		public List<TownTech> GetTownTechs(int playerId)
 		{
-			return Players[playerId].GetTownTechs();
+			List<TownTech> techs = new List<TownTech>();
+			if (playerId < Players.Count)
+			{
+				techs = Players[playerId].GetTownTechs();
+			}
+			return techs;
 		}
 
 		public int GetSalvage(int playerId)
 		{
-			return Players[playerId].GetSalvageAmount();
+			int salvage = 0;
+			if (playerId < Players.Count)
+			{
+				salvage = Players[playerId].GetSalvageAmount();
+			}
+			return salvage;
 		}
 
 		public Faction GetFaction(int playerId)
 		{
-			return Players[playerId].GetPlayerFaction();
+			Faction faction = new Faction("dummy faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
+			if (playerId < Players.Count)
+			{
+				faction = Players[playerId].GetPlayerFaction();
+			}
+			return faction;
 		}
 
 		public List<SpoilsCard> GetAuctionHouse(int playerId)
 		{
-			return Players[playerId].GetAuctionHouseCards();
+			List<SpoilsCard> spoils = new List<SpoilsCard>();
+			if (playerId < Players.Count)
+			{
+				spoils = Players[playerId].GetAuctionHouseCards();
+			}
+			return spoils;
 		}
 
 		public List<ActionCard> GetActionCards(int playerId)
 		{
-			return Players[playerId].GetActionCards();
+			List<ActionCard> actionCards = new List<ActionCard>();
+			if (playerId < Players.Count)
+			{
+				actionCards = Players[playerId].GetActionCards();
+			}
+			return actionCards;
 		}
 
 		public List<CharacterCard> GetActiveCharacterCards(int playerId)
 		{
-			return Players[playerId].GetActiveCharacters();
+			List<CharacterCard> characterCards = new List<CharacterCard>();
+			if (playerId < Players.Count)
+			{
+				characterCards = Players[playerId].GetActiveCharacters();
+			}
+			return characterCards;
 		}
 
 		public List<CharacterCard> GetTownRoster(int playerId)
 		{
-			return Players[playerId].GetTownRoster();
+			List<CharacterCard> townRoster = new List<CharacterCard>();
+			if (playerId < Players.Count)
+			{
+				townRoster = Players[playerId].GetTownRoster();
+			}
+			return townRoster;
 		}
 
 
