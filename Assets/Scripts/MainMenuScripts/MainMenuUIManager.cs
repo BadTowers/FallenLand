@@ -841,14 +841,7 @@ namespace FallenLand
 
 		private void updateStartButton()
 		{
-			//if (PhotonNetwork.PlayerList.Length > 1)
-			{
-				MultiplayerStartButton.interactable = true;
-			}
-			//else
-			{
-				//MultiplayerStartButton.interactable = false;
-			}
+			MultiplayerStartButton.interactable = (PhotonNetwork.IsMasterClient) && (PhotonNetwork.PlayerList.Length > 1);
 		}
 
 		private void instantiateGameObjects()
