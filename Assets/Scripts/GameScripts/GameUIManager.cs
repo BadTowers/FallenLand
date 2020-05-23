@@ -22,10 +22,10 @@ namespace FallenLand
         public GameObject gameCamera;
 
         public GameMenuStates currentState;
-        private bool escapePressed;
-        private bool debugOverlayShowing;
-        private float panSpeed;
-        private float zoomSpeed;
+        private bool EscapePressed;
+        private bool DebugOverlayShowing;
+        private float PanSpeed;
+        private float ZoomSpeed;
         private List<int> listOfPlayerIDs; //List of all player IDs the UI could display
         private int currentViewedID; //Current ID of player's stuff UI is displaying
 
@@ -33,8 +33,8 @@ namespace FallenLand
         void Start()
         {
             //Initialize vars
-            escapePressed = false;
-            debugOverlayShowing = false;
+            EscapePressed = false;
+            DebugOverlayShowing = false;
             currentState = GameMenuStates.Resume;
 
             //Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
@@ -51,8 +51,8 @@ namespace FallenLand
         {
             currentState = GameMenuStates.Resume;
             //Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
-            panSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
-            zoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
+            PanSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
+            ZoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
         }
 
 
@@ -62,13 +62,13 @@ namespace FallenLand
             //See if the escape button is being pressed
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                escapePressed = true;
+                EscapePressed = true;
                 Debug.Log("Escape pressed");
             }
             //See if the F3 button is being pressed
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                debugOverlayShowing = !debugOverlayShowing; //Flip if the debug screen is showing or not
+                DebugOverlayShowing = !DebugOverlayShowing; //Flip if the debug screen is showing or not
                 Debug.Log("F3 pressed");
             }
 
@@ -76,12 +76,12 @@ namespace FallenLand
             checkCurrentMenuState();
 
             //Toggle debug overlay
-            debugOverlay.SetActive(debugOverlayShowing);
+            debugOverlay.SetActive(DebugOverlayShowing);
 
             //Update debug overlay
             updateDebugOverlay();
 
-            escapePressed = false;
+            EscapePressed = false;
         }
 
         public void OnResume()
@@ -166,7 +166,7 @@ namespace FallenLand
             switch (currentState)
             {
                 case GameMenuStates.Pause:
-                    if (escapePressed)
+                    if (EscapePressed)
                     {
                         currentState = GameMenuStates.Resume;
                     }
@@ -180,7 +180,7 @@ namespace FallenLand
                     }
                     break;
                 case GameMenuStates.Resume:
-                    if (escapePressed)
+                    if (EscapePressed)
                     {
                         //If on options screen and escape pressed, go back to pause menu
                         setActiveMenu(PauseMenu);
@@ -191,12 +191,12 @@ namespace FallenLand
                         setActiveMenu(null);
                         Time.timeScale = 1; //Resume any physics
                                             //Unfreeze the game camera
-                        gameCamera.GetComponent<CameraManager>().PanSpeed = this.panSpeed;
-                        gameCamera.GetComponent<CameraManager>().ZoomSpeed = this.zoomSpeed;
+                        gameCamera.GetComponent<CameraManager>().PanSpeed = this.PanSpeed;
+                        gameCamera.GetComponent<CameraManager>().ZoomSpeed = this.ZoomSpeed;
                     }
                     break;
                 case GameMenuStates.Options:
-                    if (escapePressed)
+                    if (EscapePressed)
                     {
                         //If on options screen and escape pressed, go back to pause menu
                         setActiveMenu(PauseMenu);
@@ -208,7 +208,7 @@ namespace FallenLand
                     }
                     break;
                 case GameMenuStates.Save:
-                    if (escapePressed)
+                    if (EscapePressed)
                     {
                         //If on save screen and escape pressed, go back to pause menu
                         setActiveMenu(PauseMenu);
