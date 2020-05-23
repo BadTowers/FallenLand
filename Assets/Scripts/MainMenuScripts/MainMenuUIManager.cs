@@ -271,7 +271,8 @@ namespace FallenLand
 				Debug.Log("Is creating OnConnectedToMaster");
 				RoomOptions roomOptions = new RoomOptions
 				{
-					MaxPlayers = maxPlayersPerRoom
+					MaxPlayers = maxPlayersPerRoom,
+					PublishUserId = true
 				};
 				PhotonNetwork.CreateRoom(roomNameInputField.GetRoomName(), roomOptions);
 				IsCreatingRoom = false;
@@ -298,13 +299,7 @@ namespace FallenLand
 			FailedToConnectToRoom = false;
 			Debug.Log("MainMenuUIManager.OnJoinedRoom()");
 
-			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-			{
-				if (PhotonNetwork.PlayerList[i].NickName == PlayerPrefs.GetString("PlayerName"))
-				{
-					CurrentPlayerIndex = i;
-				}
-			}
+			updateUserOnlineInformation();
 
 			currentState = MainMenuStates.MultiplayerLobby;
 		}
@@ -318,20 +313,27 @@ namespace FallenLand
 
 		public override void OnLeftLobby()
 		{
-			Debug.Log("Left lobby");
+			Debug.Log("Left lobby callback");
 			ConnectedToLobby = false;
 		}
 		
 		public override void OnLeftRoom()
 		{
-			Debug.Log("Left room");
+			Debug.Log("Left room callback");
 			ConnectedToRoom = false;
+			MyOnlineUserId = "";
 		}
 
-		/*
-		 * MAIN MENU METHODS
-		 */
-		// When new game button is pressed
+		public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)
+		{
+			Debug.Log("OnPlayerEnteredRoom callback. Name: " + player.NickName + " ID: " + player.UserId);
+		}
+
+		public override void OnPlayerLeftRoom(Photon.Realtime.Player player)
+		{
+			Debug.Log("OnPlayerLeftRoom callback. Name: " + player.NickName + " ID: " + player.UserId);
+			updateUserOnlineInformation();
+		}
 		public void OnSinglePlayerButtonPressed()
 		{
 			Debug.Log("Single Player");
@@ -339,21 +341,18 @@ namespace FallenLand
 			//asyncSceneLoad("GameScene");
 		}
 
-		// When options button is pressed
 		public void OnOptionsButtonPressed()
 		{
 			Debug.Log("Options");
 			currentState = MainMenuStates.Options;
 		}
 
-		// When multiplayer button is pressed
 		public void OnMultiplayerButtonPressed()
 		{
 			Debug.Log("Multiplayer creation");
 			currentState = MainMenuStates.MultiplayerCreation;
 		}
 
-		// When quit button is pressed
 		public void OnQuitButtonPressed()
 		{
 			Debug.Log("Quit");
@@ -366,42 +365,29 @@ namespace FallenLand
 			#endif
 		}
 
-
-		/*
-		 * NEW GAME METHODS
-		 */
-		//When start default game button is pressed
 		public void OnStartDefault()
 		{
 			//TODO
 			Debug.Log("Start default");
 		}
 
-		//When set up new game button is pressed
 		public void OnSetUpGame()
 		{
 			currentState = MainMenuStates.SetUpNewGame;
 		}
 
-		//When load game button is pressed
 		public void OnLoadGame()
 		{
 			//TODO
 			Debug.Log("Load game");
 		}
 
-		//When tutorial button is pressed
 		public void OnTutorial()
 		{
 			//TODO
 			Debug.Log("Tutorial");
 		}
 
-
-		/*
-		 * SET UP NEW GAME METHODS
-		 */
-		//When the previous town play mat arrow is pressed
 		public void OnPreviousFactionButtonPressed()
 		{
 			if (CurrentFactionNumber == 1)
@@ -415,7 +401,6 @@ namespace FallenLand
 			FactionWasChanged = true;
 		}
 
-		//When the next town play mat arrow is pressed
 		public void OnNextFactionButtonPressed()
 		{
 			if (CurrentFactionNumber == NumFactions)
@@ -429,7 +414,6 @@ namespace FallenLand
 			FactionWasChanged = true;
 		}
 
-		//When game mode toggle changes
 		public void onGameModeChange()
 		{
 			GameModeWasChanged = true;
@@ -499,7 +483,6 @@ namespace FallenLand
 			//Collect all dependent modifiers
 		}
 
-		//When start button is pressed
 		public void onStartGameFromSetup()
 		{
 			/****** Pass all information from this screen into the game creation object ********/
@@ -545,9 +528,6 @@ namespace FallenLand
 			asyncSceneLoad("GameScene");
 		}
 
-		/*
-		 * MULTIPLAYER PAGE
-		 */
 		public void onJoinMultiplayerGame()
 		{
 			Debug.Log("Join multiplayer game button pressed");
@@ -573,10 +553,6 @@ namespace FallenLand
 			}
 		}
 
-		/*
-		 * UNIVERSAL METHODS
-		 */
-		//When the back button is pressed
 		public void onBack()
 		{
 			currentState = MainMenuStates.Main;
@@ -803,13 +779,17 @@ namespace FallenLand
 				PlayerTexts[i].SetActive(true);
 				FactionLabels[i].SetActive(true);
 
-				if (i == CurrentPlayerIndex && (string)playerHashTable["FactionName"] != CurrentFaction.GetName())
+				if (i == CurrentPlayerIndex)
 				{
-					Hashtable properties = new Hashtable
+					updateMultiplayerNameColor(i);
+					if ((string)playerHashTable["FactionName"] != CurrentFaction.GetName())
 					{
-						["FactionName"] = CurrentFaction.GetName()
-					};
-					player.SetCustomProperties(properties);
+						Hashtable properties = new Hashtable
+						{
+							["FactionName"] = CurrentFaction.GetName()
+						};
+						player.SetCustomProperties(properties);
+					}
 				}
 
 				if (!playerHashTable.IsNullOrEmpty())
@@ -875,6 +855,30 @@ namespace FallenLand
 			{
 				MultiplayerLobby = new GameObject();
 				Debug.Log("MultiplayerLobby was not set");
+			}
+		}
+
+		private void updateUserOnlineInformation()
+		{
+			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			{
+				if (PhotonNetwork.PlayerList[i].NickName == PlayerPrefs.GetString("PlayerName"))
+				{
+					CurrentPlayerIndex = i;
+					MyOnlineUserId = PhotonNetwork.PlayerList[i].UserId;
+				}
+			}
+		}
+
+		private void updateMultiplayerNameColor(int playerIndex)
+		{
+			//Color requires a number between 0-1
+			if (PlayerTexts[playerIndex].GetComponent<Text>().color.r != 37f/255f ||
+			    PlayerTexts[playerIndex].GetComponent<Text>().color.g != 135f/255f ||
+			    PlayerTexts[playerIndex].GetComponent<Text>().color.b != 6f/255f)
+			{
+				Debug.Log("Changing color");
+				PlayerTexts[playerIndex].GetComponent<Text>().color = new Color(37f/255f, 135f/255f, 6f/255f);
 			}
 		}
 	}
