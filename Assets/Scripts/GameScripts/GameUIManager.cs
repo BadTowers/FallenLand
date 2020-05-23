@@ -15,7 +15,6 @@ namespace FallenLand
         public GameObject SaveMenu;
         public GameObject OptionsMenu;
         public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
-        public Image spoilsCard1; //TODO rework so this is maybe a container that can dynamically be populated with cards
         public GameObject GameManagerGameObject;
         private GameManager GameMangerInstance;
 
