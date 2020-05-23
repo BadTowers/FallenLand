@@ -300,57 +300,53 @@ namespace Tests
 			}
 		}
 
-		//[UnityTest]
-		//[Parallelizable(ParallelScope.None)]
-		//public IEnumerator TestTryingToJoinWithABlankRoom()
-		//{
-		//	const string EXPECTED_USERNAME_1 = "JSB";
-		//	MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
+		[UnityTest]
+		[Parallelizable(ParallelScope.None)]
+		public IEnumerator TestTryingToJoinWithABlankRoom()
+		{
+			const string EXPECTED_USERNAME_1 = "JSB";
+			MainMenuUIManagerInstance.OnMultiplayerButtonPressed();
 
-		//	MainGameObj.AddComponent<RoomNameInputField>();
-		//	RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
-		//	Assert.IsNotNull(roomNameInputField);
-		//	roomNameInputField.name = "RoomNameInputField";
-		//	roomNameInputField.SetRoomName("");
+			MainGameObj.AddComponent<RoomNameInputField>();
+			RoomNameInputField roomNameInputField = MainGameObj.GetComponent<RoomNameInputField>();
+			Assert.IsNotNull(roomNameInputField);
+			roomNameInputField.name = "RoomNameInputField";
+			roomNameInputField.SetRoomName("");
 
-		//	GameObject anotherGameObject = new GameObject();
-		//	anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
-		//	UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
-		//	Assert.IsNotNull(userNameInputField);
-		//	userNameInputField.name = "UsernameInputField";
-		//	userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
+			GameObject anotherGameObject = new GameObject();
+			anotherGameObject.AddComponent<UserNameInputField>(); //Can't add to MainGameObj for some reason
+			UserNameInputField userNameInputField = anotherGameObject.GetComponent<UserNameInputField>();
+			Assert.IsNotNull(userNameInputField);
+			userNameInputField.name = "UsernameInputField";
+			userNameInputField.SetPlayerName(EXPECTED_USERNAME_1);
 
-		//	MainMenuUIManagerInstance.JoinRoom();
+			MainMenuUIManagerInstance.JoinRoom();
 
-		//	while (!MainMenuUIManagerInstance.GetConnectedToRoom() && !MainMenuUIManagerInstance.GetFailedToConnectToRoom())
-		//	{
-		//		yield return null;
-		//	}
-		//	yield return null; //yield an extra frame for the text to render
+			yield return null;
 
-		//	Assert.AreEqual(0, PhotonNetwork.PlayerList.Length);
+			Assert.AreEqual(0, PhotonNetwork.PlayerList.Length);
 
-		//	assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
+			assertMenuIsActiveOthersAreNot(MainMenuUIManagerInstance.MultiplayerCreation);
 
-		//	Text failText = FeedbackTextObj.GetComponent<Text>();
-		//	Assert.AreEqual("Room name cannot be empty", failText.text);
+			Text failText = FeedbackTextObj.GetComponent<Text>();
+			Assert.AreEqual("Room name cannot be empty", failText.text);
 
-		//	MainMenuUIManagerInstance.onBack();
+			MainMenuUIManagerInstance.onBack();
 
-		//	//Wait for us to leave the room
-		//	while (MainMenuUIManagerInstance.GetConnectedToRoom())
-		//	{
-		//		yield return null;
-		//	}
+			//Wait for us to leave the room
+			while (MainMenuUIManagerInstance.GetConnectedToRoom())
+			{
+				yield return null;
+			}
 
-		//	PhotonNetwork.Disconnect();
+			PhotonNetwork.Disconnect();
 
-		//	//Wait for us to leave the server
-		//	while (MainMenuUIManagerInstance.GetConnectedToMaster())
-		//	{
-		//		yield return null;
-		//	}
-		//}
+			//Wait for us to leave the server
+			while (MainMenuUIManagerInstance.GetConnectedToMaster())
+			{
+				yield return null;
+			}
+		}
 
 
 
