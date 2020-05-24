@@ -62,7 +62,6 @@ namespace FallenLand
 			//If left clicking
 			if (Input.GetMouseButtonDown(0))
 			{
-				Debug.Log("Clicked a hex");
 				//If we clicked a Unity UI element
 				if (EventSystem.current.IsPointerOverGameObject())
 				{
@@ -70,6 +69,7 @@ namespace FallenLand
 					Debug.Log("Clicked a game object");
 					return;
 				}
+				Debug.Log("Clicked a hex");
 
 				MeshRenderer mr;
 				//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
