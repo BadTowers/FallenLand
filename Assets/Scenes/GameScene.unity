@@ -327,7 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PanSpeed: 0.6
   ZoomSpeed: 4
-  MinZoom: 10
+  MinZoom: 20
   MaxZoom: 50
 --- !u!1 &88554219
 GameObject:
@@ -2248,7 +2248,7 @@ PrefabInstance:
     - target: {fileID: 114827072838384046, guid: c3184ea247ef3c9409151832820ae820,
         type: 2}
       propertyPath: MinZoom
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114827072838384046, guid: c3184ea247ef3c9409151832820ae820,
         type: 2}
