@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,58 +26,64 @@ namespace FallenLand
 		private const int MaxCharacterCards = -1;
 		private const int MaxSpoilsCards = -1;
 		private List<TownTech> TownTechs;
-		private Dictionary<TownTech, int> TechsUsed;
+		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
 		private const int StartingSalvage = 10;
+		private string MyUserId;
+		private GameObject NewGameState;
+		private bool GameIsSetUpAtStart;
 
 		void Start()
 		{
+			MyUserId = "";
+
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
-			GameObject newGameState = GameObject.Find("GameCreation");
+			NewGameState = GameObject.Find("GameCreation");
 
-			//Debug.Log(newGameState.GetComponent<GameCreation>().gameMode); //Debug thingy
-
-			if (newGameState != null)
+			if (NewGameState != null)
 			{
-				//Mark as read so the game object can be deleted
-				newGameState.GetComponent<GameCreation>().WasRead = true;
-
-				//Debug.Log(newGameState.GetComponent<GameCreation>().faction); //Debug thingy
-
 				//Grab the game mode
-				extractGameModeFromGameCreationObject(newGameState);
-
-				//Grab the faction (TODO change this to grab a dictionary of factions and who is each faction)
-				Faction faction = newGameState.GetComponent<GameCreation>().GetFaction();
+				extractGameModeFromGameCreationObject(NewGameState);
 
 				//Extract the Solo II difficulty if needed
 				//if(gameMode == GameInformation.GameModes.SoloII) {
 				//	soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
 				//}
 
-				//Set the number of human and computer players TODO change this to be passed in from GameCreation object
-				NumHumanPlayers = GameInformation.getHumanPlayerCount(GameMode);
-				NumComputerPlayers = GameInformation.getComputerPlayerCount(GameMode);
+				//Set the number of human and computer players
+				NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
+				NumComputerPlayers = 0; //No computer players implemented for now. Will change when AI is added
 
-				//Add the players to the list (TODO: Change so later these are added in the order players will go (after dice roll or something))
-				for (int i = 0; i < NumHumanPlayers; i++)
+				//Figure out our user ID
+				Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
+				Photon.Realtime.Player[] allPlayersButMe = PhotonNetwork.PlayerListOthers;
+				for (int i = 0; i < allPlayers.Length; i++)
 				{
-					Players.Add(new HumanPlayer(faction, StartingSalvage));
+					bool found = false;
+					for (int j = 0; j < allPlayersButMe.Length; j++)
+					{
+						if (allPlayers[i].UserId == allPlayersButMe[j].UserId)
+						{
+							found = true;
+						}
+					}
+					if (!found)
+					{
+						MyUserId = allPlayers[i].UserId;
+					}
 				}
-				for (int i = 0; i < NumComputerPlayers; i++)
+				if (MyUserId == "")
 				{
-					//players.Add(new ComputerPlayer(startingSalvage)); //TODO reaccount for when doing a true single player game, not a solo variant
+					Debug.LogError("Didn't find user's id...");
 				}
 
 				//Interpret any modifiers
-				//TODO
-
-
+				//TODO when these are implemented
 			}
 			else
 			{
-				//TODO handle this better probably
-				Debug.Log("Game info not received from game setup.");
+				//TODO handle this better probably. This is the case where I start debugging from the game scene rather than the main menu
+				Debug.LogError("Game info not received from game setup.");
 				Players.Add(new HumanPlayer(new DefaultFactionInfo().GetDefaultFactionList()[0], StartingSalvage));
 			}
 
@@ -108,17 +115,27 @@ namespace FallenLand
 
 
 			//TODO create the deck of city/rad cards
-
-
-			dealCardsToPlayers();
-
-			countTownTechsThatAreInUse();
 		}
 
 
 		void Update()
 		{
+			if (NewGameState.GetComponent<GameCreation>().GetFactions().Count > 0 && !GameIsSetUpAtStart)
+			{
+				Debug.Log("Factions have come through!");
+				for (int i = 0; i < NumHumanPlayers; i++)
+				{
+					string currentUserId = PhotonNetwork.PlayerList[i].UserId;
+					Faction faction = NewGameState.GetComponent<GameCreation>().GetFaction(currentUserId);
+					Players.Add(new HumanPlayer(faction, StartingSalvage));
+				}
 
+				dealCardsToPlayers();
+
+				countTownTechsThatAreInUse();
+
+				GameIsSetUpAtStart = true;
+			}
 		}
 
 
@@ -194,6 +211,21 @@ namespace FallenLand
 			return townRoster;
 		}
 
+		public int GetIndexForMyPlayer()
+		{
+			int returnIndex = 0;
+
+			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			{
+				if (PhotonNetwork.PlayerList[i].UserId == MyUserId)
+				{
+					returnIndex = i;
+				}
+			}
+
+			return returnIndex;
+		}
+
 
 
 
@@ -205,6 +237,7 @@ namespace FallenLand
 
 		private void dealCardsToPlayers()
 		{
+			Debug.Log("dealCardsToPlayers");
 			for (int i = 0; i < StartingSpoilsCards; i++)
 			{
 				for (int j = 0; j < Players.Count; j++)
@@ -237,17 +270,17 @@ namespace FallenLand
 		private void countTownTechsThatAreInUse()
 		{
 			TownTechs = (new DefaultTownTechs()).GetDefaultTownTechList();
-			TechsUsed = new Dictionary<TownTech, int>();
+			TechsUsed = new Dictionary<string, int>();
 			foreach (TownTech tt in TownTechs)
 			{
-				TechsUsed[tt] = 0; //Init all town techs to 0 currently used
+				TechsUsed[tt.GetTechName()] = 0; //Init all town techs to 0 currently used
 			}
 			foreach (Player p in Players)
 			{
 				foreach (TownTech tt in p.GetTownTechs())
 				{
 					//For each town tech for each player, count it
-					TechsUsed[tt]++;
+					TechsUsed[tt.GetTechName()]++;
 				}
 			}
 		}

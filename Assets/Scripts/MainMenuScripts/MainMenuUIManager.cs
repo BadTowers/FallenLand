@@ -72,28 +72,6 @@ namespace FallenLand
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
-        #region Destructor
-        private void OnDestroy()
-		{
-			if (PhotonNetwork.InRoom)
-			{
-				Debug.Log("Disconnecting from room in the desctructor");
-				PhotonNetwork.LeaveRoom();
-			}
-			if (PhotonNetwork.InLobby)
-			{
-				Debug.Log("Disconnecting from lobby in the desctructor");
-				PhotonNetwork.LeaveLobby();
-			}
-			if (PhotonNetwork.IsConnected)
-			{
-				Debug.Log("Disconnecting from server in the desctructor");
-				PhotonNetwork.Disconnect();
-			}
-
-			Debug.Log("Done destructing main menu ui manager");
-		}
-        #endregion
 
         #region UnityFunctions
         void Awake()
@@ -110,7 +88,7 @@ namespace FallenLand
 			CurrentFactionNumber = 1;
 			FactionWasChanged = true;
 			GameModeWasChanged = true;
-			Factions = (new DefaultFactionInfo()).GetDefaultFactionList(); //TODO rework to handle mods later?
+			Factions = (new DefaultFactionInfo()).GetDefaultFactionList();
 
 			FactionLabels = new List<GameObject>();
 			PlayerTexts = new List<GameObject>();
@@ -573,6 +551,7 @@ namespace FallenLand
 
 				gatherDataForNextScene();
 
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SendData(true);
 				PhotonNetwork.LoadLevel("GameScene");
 			}
 		}
@@ -728,7 +707,10 @@ namespace FallenLand
 			}
 
 			//Set faction label
-			FactionLabels[CurrentPlayerIndex].GetComponent<Text>().text = CurrentFaction.GetName();
+			if (CurrentPlayerIndex > -1)
+			{
+				FactionLabels[CurrentPlayerIndex].GetComponent<Text>().text = CurrentFaction.GetName();
+			}
 
 			//No more changes to account for
 			FactionWasChanged = false;
@@ -825,7 +807,6 @@ namespace FallenLand
 				if (!playerHashTable.IsNullOrEmpty())
 				{
 					string currentPlayerFaction = (string)playerHashTable["FactionName"];
-					Debug.Log("Current player faction " + currentPlayerFaction);
 					FactionLabels[i].GetComponent<Text>().text = currentPlayerFaction;
 				}
 			}
@@ -883,43 +864,12 @@ namespace FallenLand
 
 		private void gatherDataForNextScene()
 		{
-			//TODO
-
-			//Faction (Find the game creation object in the scene and then get the script from it
-			foreach (Faction f in Factions)
+			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
-				if (f.GetId() == CurrentFactionNumber)
-				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetFaction(f);
-				}
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().AddFaction(PhotonNetwork.PlayerList[i].UserId, (string)PhotonNetwork.PlayerList[i].CustomProperties["FactionName"]);
 			}
 
-			//Game mode
-			foreach (Toggle curModeToggle in gameModeToggleGroup.GetComponentsInChildren<Toggle>())
-			{
-				if (curModeToggle.isOn)
-				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetMode(curModeToggle.GetComponentInChildren<ToggleInformation>().mode);
-				}
-			}
-
-			//Solo II difficulty if needed
-			foreach (Toggle curDiffToggle in soloIIDifficultyToggleGroup.GetComponentsInChildren<Toggle>())
-			{
-				if (curDiffToggle.isOn)
-				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetSoloIIDifficulty(curDiffToggle.GetComponentInChildren<ToggleInformation>().soloIIDifficulty);
-				}
-			}
-
-			//Game modifiers
-			foreach (Toggle modifier in ModifiersContainer.GetComponentsInChildren<Toggle>())
-			{
-				if (modifier.isOn)
-				{
-					GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().AddModifier(modifier.GetComponentInChildren<ToggleInformation>().modifier);
-				}
-			}
+			GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetMode(GameInformation.GameModes.NormalGame);
 		}
 
 		private void updateUserOnlineInformation()

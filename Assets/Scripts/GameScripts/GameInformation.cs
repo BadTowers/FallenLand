@@ -62,42 +62,6 @@ namespace FallenLand
 			SoloII
 		}
 
-		//TODO this shouldn't be a static function. This should be tied to something in the game manager itself
-		public static int getHumanPlayerCount(GameModes gm)
-		{
-			switch (gm)
-			{
-				case GameModes.Null:
-					return -1;
-				case GameModes.NormalGame:
-					return -1; //TODO fix this once it's actually implemented
-				case GameModes.SoloI:
-					return 1;
-				case GameModes.SoloII:
-					return 1;
-				default:
-					return -1;
-			}
-		}
-
-		//TODO move this to the game manager
-		public static int getComputerPlayerCount(GameModes gm)
-		{
-			switch (gm)
-			{
-				case GameModes.Null:
-					return -1;
-				case GameModes.NormalGame:
-					return -1; //TODO fix this once it's actually implemented
-				case GameModes.SoloI:
-					return 0;
-				case GameModes.SoloII:
-					return 0;
-				default:
-					return -1;
-			}
-		}
-
 		public static string getGameModeName(GameInformation.GameModes gt)
 		{
 			switch (gt)

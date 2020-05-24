@@ -26,7 +26,6 @@ namespace FallenLand
         private bool DebugOverlayShowing;
         private float PanSpeed;
         private float ZoomSpeed;
-        private List<int> listOfPlayerIDs; //List of all player IDs the UI could display
         private int currentViewedID; //Current ID of player's stuff UI is displaying
 
 
@@ -114,17 +113,16 @@ namespace FallenLand
         //A function to grab all the required information from the game manager to display it here
         private void updateDebugOverlay()
         {
+            int myIndex = GameMangerInstance.GetIndexForMyPlayer();
+
             //Retrieve information
-            //int salvage = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetSalvage(0);
-            //Faction faction = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetFaction(0);
-            //List<CharacterCard> townRoster = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetTownRoster(0);
-            int salvage = GameMangerInstance.GetSalvage(0); //TODO this shouldnt be a hardcoded 0. Needs to be retrieved from game manager
-            Faction faction = GameMangerInstance.GetFaction(0);
+            int salvage = GameMangerInstance.GetSalvage(myIndex);
+            Faction faction = GameMangerInstance.GetFaction(myIndex);
+            string spoilsCardString = getSpoilsCardString(myIndex);
+            string townTechString = getTownTechString(myIndex);
             //List<ActionCard> actionCards = GameMangerInstance.GetActionCards(0);
             //List <CharacterCard> townRoster = GameMangerInstance.GetTownRoster(0);
-            //List<TownTech> townTechs = GameMangerInstance.GetTownTechs(0);
-            string spoilsCardString = getSpoilsCardString();
-            string townTechString = getTownTechString();
+            //List<CharacterCard> townRoster = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetTownRoster(0);
 
             //Display information in the debug overlay
             Text[] textComponenetsInDebugOverlay = debugOverlay.GetComponentsInChildren<Text>();
@@ -226,31 +224,27 @@ namespace FallenLand
             }
         }
 
-        private string getSpoilsCardString()
+        private string getSpoilsCardString(int playerIndex)
         {
-            List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(0);
+            List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(playerIndex);
             string spoilsCardString = "";
-            Debug.Log("Number of spoils cards: " + auctionHouse.Count);
             for (int i = 0; i < auctionHouse.Count; i++)
             {
                 spoilsCardString += auctionHouse[i].GetTitle();
                 spoilsCardString += ", ";
             }
-            Debug.Log(spoilsCardString);
             return spoilsCardString;
         }
 
-        private string getTownTechString()
+        private string getTownTechString(int playerIndex)
         {
-            List<TownTech> townTechs = GameMangerInstance.GetTownTechs(0);
+            List<TownTech> townTechs = GameMangerInstance.GetTownTechs(playerIndex);
             string townTechString = "";
-            Debug.Log("Number of town techs: " + townTechs.Count);
             for (int i = 0; i < townTechs.Count; i++)
             {
                 townTechString += townTechs[i].GetTechName();
                 townTechString += ", ";
             }
-            Debug.Log(townTechString);
             return townTechString;
         }
     }

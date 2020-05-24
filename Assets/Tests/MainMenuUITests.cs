@@ -226,11 +226,7 @@ namespace Tests
 
 			MainMenuUIManagerInstance.onBack();
 
-			//Wait for us to leave the room
-			while (MainMenuUIManagerInstance.GetConnectedToRoom())
-			{
-				yield return null;
-			}
+			//don't have to leave the room because we never joined one
 
 			PhotonNetwork.Disconnect();
 
@@ -285,11 +281,7 @@ namespace Tests
 
 			MainMenuUIManagerInstance.onBack();
 
-			//Wait for us to leave the room
-			while (MainMenuUIManagerInstance.GetConnectedToRoom())
-			{
-				yield return null;
-			}
+			//don't have to leave the room because we aren't in one
 
 			PhotonNetwork.Disconnect();
 
@@ -390,6 +382,9 @@ namespace Tests
 			FactionSelectionObjectList.Add(new GameObject());
 			FactionSelectionObjectList[11].AddComponent<Text>();
 			FactionSelectionObjectList[11].GetComponent<Text>().name = "ActualPingText";
+			FactionSelectionObjectList.Add(new GameObject());
+			FactionSelectionObjectList[12].AddComponent<Text>();
+			FactionSelectionObjectList[12].GetComponent<Text>().name = "UserIdText";
 		}
 	}
 }
