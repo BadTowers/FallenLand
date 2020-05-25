@@ -98,35 +98,35 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x * ZoomedScale, ImageSize.y * ZoomedScale);
         float newX = getNewX();
         float newY = getNewY();
-        transform.position = new Vector3(newX, newY, transform.position.z);
+        transform.localPosition = new Vector3(newX, newY, transform.localPosition.z);
         disableScroll();
         transform.SetAsLastSibling(); //move to the front (on parent)
     }
 
     private float getNewX()
     {
-        float newX = transform.position.x;
-        if (transform.position.x < 268)
+        float newX = transform.localPosition.x;
+        if (transform.localPosition.x < 140)
         {
-            newX = 268;
+            newX = 140;
         }
-        else if (transform.position.x > 729)
+        else if (transform.localPosition.x > 385)
         {
-            newX = 729;
+            newX = 385;
         }
         return newX;
     }
 
     private float getNewY()
     {
-        float newY = transform.position.y;
-        if (transform.position.y > 360)
+        float newY = transform.localPosition.y;
+        if (transform.localPosition.y > -90)
         {
-            newY = 360;
+            newY = -90;
         }
-        else if (transform.position.y < 205)
+        else if (transform.localPosition.y < -170)
         {
-            newY = 205;
+            newY = -170;
         }
         return newY;
     }
