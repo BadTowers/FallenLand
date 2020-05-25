@@ -79,6 +79,7 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         }
     }
 
+    #region HelperFunctions
     private void makeSmall()
     {
         this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
@@ -136,4 +137,5 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         Debug.Log("enabled scrolling");
         GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
     }
+    #endregion
 }
