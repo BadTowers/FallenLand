@@ -14,12 +14,12 @@ namespace FallenLand
 			if (go != null)
 			{
 				go.SetActive(true);
-				foreach (GameObject other in menus)
+			}
+			foreach (GameObject other in menus)
+			{
+				if (!other.Equals(go))
 				{
-					if (!other.Equals(go))
-					{
-						other.SetActive(false);
-					}
+					other.SetActive(false);
 				}
 			}
 		}
