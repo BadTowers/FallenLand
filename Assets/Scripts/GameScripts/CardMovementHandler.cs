@@ -6,10 +6,12 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
 {
     private bool IsDragging;
     private bool IsClicked;
+    private bool IsOldParentSet;
     private const float ZoomedScale = 2.5f;
     private Vector2 ImageSize = new Vector2(75, 100);
     private Vector3 PreHoverLocation = new Vector3(-1, -1, -1);
     private float PreHoverScrollSensitivity;
+    private GameObject OldParent;
 
     void Start()
     {
@@ -26,6 +28,8 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
                 PreHoverLocation = transform.position;
             }
             IsDragging = true;
+            figureOutCurrentParent();
+            setNewTemporaryParent();
             Canvas myCanvas = this.GetComponentInParent<Canvas>();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(myCanvas.transform as RectTransform, Input.mousePosition, myCanvas.worldCamera, out Vector2 pos);
             transform.position = myCanvas.transform.TransformPoint(pos);
@@ -40,6 +44,7 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Dropped");
+            resetParent();
             transform.position = PreHoverLocation;
             enableScroll();
             transform.SetAsFirstSibling(); //move to the back (on parent)
@@ -136,6 +141,28 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     {
         Debug.Log("enabled scrolling");
         GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
+    }
+
+    private void figureOutCurrentParent()
+    {
+        if (this.GetComponentInParent<Image>().rectTransform.parent != null && !IsOldParentSet)
+        {
+            Debug.Log("Figured out old parent for " + this.GetComponentInParent<Image>().name);
+            OldParent = this.GetComponentInParent<Image>().rectTransform.parent.gameObject;
+            IsOldParentSet = true;
+        }
+    }
+    
+    private void setNewTemporaryParent()
+    {
+        Debug.Log("Set new temporary parent for " + this.GetComponentInParent<Image>().name);
+        this.GetComponentInParent<Image>().rectTransform.SetParent(GameObject.Find("CharacterAndSpoilsAssigningPanel").transform);
+    }
+
+    private void resetParent()
+    {
+        Debug.Log("Reset parent for " + this.GetComponentInParent<Image>().name);
+        this.GetComponentInParent<Image>().rectTransform.SetParent(OldParent.transform);
     }
     #endregion
 }
