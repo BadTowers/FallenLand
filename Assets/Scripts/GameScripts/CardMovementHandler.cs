@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -7,15 +9,22 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     private bool IsDragging;
     private bool IsClicked;
     private bool IsOldParentSet;
+    private bool IsHoveringOverPanel;
     private const float ZoomedScale = 2.5f;
     private Vector2 ImageSize = new Vector2(75, 100);
     private Vector3 PreHoverLocation = new Vector3(-1, -1, -1);
     private float PreHoverScrollSensitivity;
     private GameObject OldParent;
+    private GameObject HoveredOverPanel;
 
     void Start()
     {
         PreHoverScrollSensitivity = GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity;
+    }
+
+    void Update()
+    {
+        checkIfWeAreHoveredOverPanel();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -44,8 +53,23 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Dropped");
-            resetParent();
-            transform.position = PreHoverLocation;
+            if (HoveredOverPanel != null)
+            {
+                Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
+                if (viewportTransform != null)
+                {
+                    this.GetComponentInParent<Image>().rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
+                }
+                else
+                {
+                    this.GetComponentInParent<Image>().rectTransform.SetParent(HoveredOverPanel.transform);
+                }
+            }
+            else
+            {
+                resetParent();
+                transform.position = PreHoverLocation;
+            }
             enableScroll();
             transform.SetAsFirstSibling(); //move to the back (on parent)
             IsDragging = false;
@@ -163,6 +187,72 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     {
         Debug.Log("Reset parent for " + this.GetComponentInParent<Image>().name);
         this.GetComponentInParent<Image>().rectTransform.SetParent(OldParent.transform);
+    }
+
+    private void checkIfWeAreHoveredOverPanel()
+    {
+        findPanelOfInterest();
+
+        if (HoveredOverPanel != null)
+        {
+            changeHoveredPanelColor(HoveredOverPanel.name);
+            if (!IsHoveringOverPanel)
+            {
+                HoveredOverPanel = null;
+            }
+        }
+    }
+
+    private void findPanelOfInterest()
+    {
+        IsHoveringOverPanel = false;
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        foreach (RaycastResult result in raycastResults)
+        {
+            if (result.gameObject.name.Contains("CharacterPanel") || result.gameObject.name.Contains("AuctionHouseScrollView") || result.gameObject.name.Contains("TownRosterScrollView"))
+            {
+                if (HoveredOverPanel != null)
+                {
+                    changeHoveredPanelColor(HoveredOverPanel.name);
+                }
+                if (IsDragging)
+                {
+                    HoveredOverPanel = result.gameObject;
+                    IsHoveringOverPanel = true;
+                }
+                break;
+            }
+        }
+    }
+
+    private void changeHoveredPanelColor(string name)
+    {
+        Color color;
+
+        if (IsHoveringOverPanel)
+        {
+            Debug.Log("Hovering on while dragging " + name);
+            color = new Color(88f/255f, 121f/255f, 214f/255f, 1f);
+        }
+        else
+        {
+            Debug.Log("Not hovering or dragging " + name);
+            if (name.Contains("CharacterPanel"))
+            {
+                color = new Color(1f, 1f, 1f, .5f);
+            }
+            else
+            {
+                color = new Color(0f, 0f, 0f, 0f);
+            }
+        }
+
+        HoveredOverPanel.gameObject.GetComponent<Image>().color = color;
     }
     #endregion
 }
