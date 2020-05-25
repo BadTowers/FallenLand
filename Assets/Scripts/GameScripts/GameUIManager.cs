@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -171,7 +171,7 @@ namespace FallenLand
                     else
                     {
                         setActiveMenu(PauseMenu);
-                        Time.timeScale = 0; //Pause any physics
+                        //Time.timeScale = 0; //Pause any physics
                                             //Freeze the game camera from moving
                         gameCamera.GetComponent<CameraManager>().PanSpeed = 0;
                         gameCamera.GetComponent<CameraManager>().ZoomSpeed = 0;
@@ -187,7 +187,7 @@ namespace FallenLand
                     else
                     {
                         setActiveMenu(null);
-                        Time.timeScale = 1; //Resume any physics
+                        //Time.timeScale = 1; //Resume any physics
                                             //Unfreeze the game camera
                         gameCamera.GetComponent<CameraManager>().PanSpeed = this.PanSpeed;
                         gameCamera.GetComponent<CameraManager>().ZoomSpeed = this.ZoomSpeed;
