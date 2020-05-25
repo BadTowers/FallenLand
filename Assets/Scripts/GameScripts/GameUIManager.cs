@@ -9,24 +9,25 @@ namespace FallenLand
     {
 
         public enum GameMenuStates { Pause, Options, Resume, Save };
-
         //UI Objects
         public GameObject PauseMenu;
         public GameObject SaveMenu;
         public GameObject OptionsMenu;
         public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
         public GameObject GameManagerGameObject;
-        private GameManager GameMangerInstance;
-
+        public GameObject ImageGameObject;
         //Game camera
         public GameObject gameCamera;
-
         public GameMenuStates currentState;
+
         private bool EscapePressed;
         private bool DebugOverlayShowing;
         private float PanSpeed;
         private float ZoomSpeed;
         private int currentViewedID; //Current ID of player's stuff UI is displaying
+        private GameManager GameMangerInstance;
+        private GameObject CharacterAndSpoilsScreen;
+        private GameObject AuctionHouseScrollContent;
 
 
         void Start()
@@ -42,7 +43,10 @@ namespace FallenLand
             addToMenuList(SaveMenu);
 
             GameMangerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
+            CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
+            CharacterAndSpoilsScreen.SetActive(true); //temporary for debugging
 
+            AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
         }
 
         //When script first starts
@@ -80,6 +84,9 @@ namespace FallenLand
             //Update debug overlay
             updateDebugOverlay();
 
+            int myIndex = GameMangerInstance.GetIndexForMyPlayer();
+            updateCharacterSpoilsScreen(myIndex);
+
             EscapePressed = false;
         }
 
@@ -109,7 +116,7 @@ namespace FallenLand
         }
 
 
-
+        #region HelperFunctions
         //A function to grab all the required information from the game manager to display it here
         private void updateDebugOverlay()
         {
@@ -247,6 +254,41 @@ namespace FallenLand
             }
             return townTechString;
         }
+
+        private void updateCharacterSpoilsScreen(int playerIndex)
+        {
+            const float OFFSET_X = 125;
+            const float OFFSET_Y = 85;
+
+            List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(playerIndex);
+            if (AuctionHouseScrollContent.transform.childCount < auctionHouse.Count) //when you drag a card, this count will not match and it'll delete and readd all the cards. need to find a way to disable this when dragging a card
+            {
+                Debug.Log("Count not the same");
+                //Clear old
+                foreach (Transform child in AuctionHouseScrollContent.transform)
+                {
+                    Debug.Log("Deleting old");
+                    GameObject.Destroy(child.gameObject);
+                }
+
+                //Add new
+                for (int i = 0; i < auctionHouse.Count; i++)
+                {
+                    Debug.Log("Adding card");
+                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    Image image = imageObj.GetComponent<Image>();
+                    string fileName = "Cards/SpoilsCards/SpoilsCard" + auctionHouse[i].GetId().ToString();
+                    Sprite curSprite = Resources.Load<Sprite>(fileName);
+                    image.sprite = curSprite;
+                    imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
+                    image.transform.SetParent(AuctionHouseScrollContent.transform);
+                    image.transform.localPosition = new Vector3(82f + (i%4 * OFFSET_X), -42f - (i/4 * OFFSET_Y), 0f);
+                    image.transform.localScale = new Vector3(1f, -1f, 1f);
+                    image.rectTransform.sizeDelta = new Vector2(75, 100);
+                }
+            }
+        }
+        #endregion
     }
 }
 
