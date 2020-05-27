@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace FallenLand
 {
-	public abstract class Card : MonoBehaviour
+	public abstract class Card
 	{
 		/*
 									 Cards
