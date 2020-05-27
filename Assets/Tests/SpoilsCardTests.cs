@@ -409,5 +409,21 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestDeepSet()
+		{
+			SpoilsCard cardToCopyFrom = new SpoilsCard("To copy");
+			cardToCopyFrom.SetId(10);
+			cardToCopyFrom.SetQuote("copy quote");
+
+			SpoilsCardInstance.DeepSet(cardToCopyFrom);
+
+			Assert.AreEqual(SpoilsCardInstance.GetId(), cardToCopyFrom.GetId());
+			Assert.AreEqual(SpoilsCardInstance.GetTitle(), cardToCopyFrom.GetTitle());
+			Assert.AreEqual(SpoilsCardInstance.GetQuote(), cardToCopyFrom.GetQuote());
+
+			yield return null;
+		}
 	}
 }

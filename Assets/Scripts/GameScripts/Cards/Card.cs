@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System;
+using UnityEngine;
 
 namespace FallenLand
 {
-	public abstract class Card
+	public abstract class Card : MonoBehaviour
 	{
 		/*
 									 Cards
@@ -31,6 +32,11 @@ namespace FallenLand
 		public string GetTitle()
 		{
 			return Title;
+		}
+
+		public void SetTitle(string title)
+		{
+			Title = title;
 		}
 
 		public int GetId()

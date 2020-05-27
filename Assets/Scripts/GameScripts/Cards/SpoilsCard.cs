@@ -383,6 +383,27 @@ namespace FallenLand
 			return newCard;
 		}
 
+		public void DeepSet(SpoilsCard cardToCopyFrom)
+		{
+			this.SetTitle(cardToCopyFrom.GetTitle());
+			this.SetTitleSubString(cardToCopyFrom.GetTitleSubString());
+			this.SetTypes(cardToCopyFrom.Types);
+			this.SetCarryWeight(cardToCopyFrom.CarryWeight);
+			this.SetSellValue(cardToCopyFrom.SellValue);
+			this.SetBaseSkills(cardToCopyFrom.GetBaseSkills());
+			this.SetStaticGains(cardToCopyFrom.StaticGains);
+			this.SetConditionalGains(cardToCopyFrom.ConditionalGains);
+			this.SetWhenUsable(cardToCopyFrom.TimesWhenUsable);
+			this.SetNumberOfUses(cardToCopyFrom.NumberOfUses);
+			this.SetDiscard(cardToCopyFrom.DiscardsAfterConditionalGains);
+			this.SetRestrictions(cardToCopyFrom.Restrictions);
+			this.SetId(cardToCopyFrom.GetId());
+			this.SetQuote(cardToCopyFrom.GetQuote());
+			this.SetD6Options(cardToCopyFrom.D6Options);
+			this.SetD10Options(cardToCopyFrom.D10Options);
+			this.SetDiscardToTop(cardToCopyFrom.PlaceOnTopOfDiscard);
+		}
+
 		private void initVariables()
 		{
 			Types = new List<SpoilsTypes>();
