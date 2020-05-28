@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using FallenLand;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,10 +16,13 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     private float PreHoverScrollSensitivity;
     private GameObject OldParent;
     private GameObject HoveredOverPanel;
+    private GameUIManager UiManager;
 
     void Start()
     {
         PreHoverScrollSensitivity = GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity;
+
+        UiManager = GameObject.Find("UIManager").GetComponentInChildren<GameUIManager>();
     }
 
     void Update()
@@ -35,6 +38,7 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
             if (!IsDragging && !IsClicked)
             {
                 PreHoverLocation = transform.position;
+                UiManager.SetCardIsDragging(true);
             }
             IsDragging = true;
             figureOutCurrentParent();
@@ -53,15 +57,17 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Dropped");
-            if (HoveredOverPanel != null)
+            if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(this.GetComponentInParent<Image>(), HoveredOverPanel))
             {
                 Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
                 if (viewportTransform != null)
                 {
+                    UiManager.UpdateAfterCardWasMoved(this.GetComponentInParent<Image>(), HoveredOverPanel);
                     this.GetComponentInParent<Image>().rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
                 }
                 else
                 {
+                    UiManager.UpdateAfterCardWasMoved(this.GetComponentInParent<Image>(), HoveredOverPanel);
                     this.GetComponentInParent<Image>().rectTransform.SetParent(HoveredOverPanel.transform);
                 }
             }
@@ -72,6 +78,9 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
             }
             enableScroll();
             transform.SetAsFirstSibling(); //move to the back (on parent)
+            OldParent = null;
+            IsOldParentSet = false;
+            UiManager.SetCardIsDragging(false);
             IsDragging = false;
         }
     }
@@ -91,6 +100,7 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Mouse click");
+            Debug.Log(transform.localPosition);
             if (!IsDragging)
             {
                 if (!IsClicked)
@@ -234,14 +244,12 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
     {
         Color color;
 
-        if (IsHoveringOverPanel)
+        if (IsHoveringOverPanel && UiManager.CardIsAllowedToMoveHere(this.GetComponentInChildren<Image>(), HoveredOverPanel))
         {
-            Debug.Log("Hovering on while dragging " + name);
             color = new Color(88f/255f, 121f/255f, 214f/255f, 1f);
         }
         else
         {
-            Debug.Log("Not hovering or dragging " + name);
             if (name.Contains("CharacterPanel"))
             {
                 color = new Color(1f, 1f, 1f, .5f);

@@ -1,8 +1,6 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace FallenLand
 {
@@ -224,6 +222,32 @@ namespace FallenLand
 			}
 
 			return returnIndex;
+		}
+
+		public void RemoveCardFromPlayerAuctionHouse(int playerIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
+			}
+		}
+
+		public void AssignSpoilsCardToCharacter(int playerIndex, int characterIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
+			}
+		}
+
+		public bool IsAllowedToApplySpoilsToCharacterSlot(int playerIndex, SpoilsCard card, int characterIndex)
+		{
+			bool isAllowed = false;
+			if (playerIndex < Players.Count)
+			{
+				isAllowed = Players[playerIndex].IsAllowedToAddSpoilsCardToCharacter(characterIndex, card);
+			}
+			return isAllowed;
 		}
 
 

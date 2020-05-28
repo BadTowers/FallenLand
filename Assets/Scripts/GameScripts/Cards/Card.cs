@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System;
-using UnityEngine;
+using Mono.Reflection;
 
 namespace FallenLand
 {
@@ -23,6 +22,7 @@ namespace FallenLand
 
 		private string Title;
 		private int Id;
+		private Image UiCard;
 
 		protected Card(string title)
 		{
@@ -37,6 +37,16 @@ namespace FallenLand
 		public void SetTitle(string title)
 		{
 			Title = title;
+		}
+
+		public void SetImage(Image card)
+		{
+			UiCard = card;
+		}
+
+		public Image GetImage()
+		{
+			return UiCard;
 		}
 
 		public int GetId()

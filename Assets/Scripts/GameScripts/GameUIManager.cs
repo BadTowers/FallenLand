@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,11 +24,12 @@ namespace FallenLand
         private float PanSpeed;
         private float ZoomSpeed;
         private int currentViewedID; //Current ID of player's stuff UI is displaying
-        private GameManager GameMangerInstance;
+        private GameManager GameManagerInstance;
         private GameObject CharacterAndSpoilsScreen;
         private GameObject AuctionHouseScrollContent;
+        private bool CardIsDragging;
 
-
+        #region UnityFunctions
         void Start()
         {
             //Initialize vars
@@ -42,14 +42,13 @@ namespace FallenLand
             addToMenuList(OptionsMenu);
             addToMenuList(SaveMenu);
 
-            GameMangerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
+            GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
             CharacterAndSpoilsScreen.SetActive(true); //temporary for debugging
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
         }
 
-        //When script first starts
         void Awake()
         {
             currentState = GameMenuStates.Resume;
@@ -57,7 +56,6 @@ namespace FallenLand
             PanSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
             ZoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
         }
-
 
         void Update()
         {
@@ -84,12 +82,62 @@ namespace FallenLand
             //Update debug overlay
             updateDebugOverlay();
 
-            int myIndex = GameMangerInstance.GetIndexForMyPlayer();
-            updateCharacterSpoilsScreen(myIndex);
+            updateCharacterSpoilsScreen();
 
             EscapePressed = false;
         }
+        #endregion
 
+        #region PublicFunctions
+        public void SetCardIsDragging(bool isDragging)
+        {
+            CardIsDragging = isDragging;
+        }
+
+        public bool GetCardIsDragging()
+        {
+            return CardIsDragging;
+        }
+
+        public void UpdateAfterCardWasMoved(Image cardImage, GameObject panelMovingInto)
+        {
+            //Update the data we have stored in the game manager
+            updateStoredData(cardImage, panelMovingInto);
+            //Organize the panels again
+        }
+
+        //if (panelMovingInto.name.Contains("CharacterPanel") || panelMovingInto.name.Contains("AuctionHouseScrollView") || panelMovingInto.name.Contains("TownRosterScrollView"))
+        public bool CardIsAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
+        {
+            bool isAllowed = true;
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is SpoilsCard)
+            {
+                SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
+                if (panelMovingInto.name.Contains("TownRosterScrollView"))
+                {
+                    isAllowed = false;
+                }
+                try
+                {
+                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                    if (!GameManagerInstance.IsAllowedToApplySpoilsToCharacterSlot(myIndex, card, characterIndex))
+                    {
+                        isAllowed = false;
+                        Debug.Log("Can't put a spoils card on an empty character slot");
+                    }
+                }
+                catch
+                {
+                    Debug.Log("Wasn't over a character card. No need to check that part");
+                }
+            }
+
+            return isAllowed;
+        }
+        #endregion
+
+        #region UICallbacks
         public void OnResume()
         {
             currentState = GameMenuStates.Resume;
@@ -114,17 +162,17 @@ namespace FallenLand
             //TODO warn to save
             Debug.Log("Quit");
         }
-
+        #endregion
 
         #region HelperFunctions
         //A function to grab all the required information from the game manager to display it here
         private void updateDebugOverlay()
         {
-            int myIndex = GameMangerInstance.GetIndexForMyPlayer();
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
 
             //Retrieve information
-            int salvage = GameMangerInstance.GetSalvage(myIndex);
-            Faction faction = GameMangerInstance.GetFaction(myIndex);
+            int salvage = GameManagerInstance.GetSalvage(myIndex);
+            Faction faction = GameManagerInstance.GetFaction(myIndex);
             string spoilsCardString = getSpoilsCardString(myIndex);
             string townTechString = getTownTechString(myIndex);
             //List<ActionCard> actionCards = GameMangerInstance.GetActionCards(0);
@@ -233,7 +281,7 @@ namespace FallenLand
 
         private string getSpoilsCardString(int playerIndex)
         {
-            List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(playerIndex);
+            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
             string spoilsCardString = "";
             for (int i = 0; i < auctionHouse.Count; i++)
             {
@@ -245,7 +293,7 @@ namespace FallenLand
 
         private string getTownTechString(int playerIndex)
         {
-            List<TownTech> townTechs = GameMangerInstance.GetTownTechs(playerIndex);
+            List<TownTech> townTechs = GameManagerInstance.GetTownTechs(playerIndex);
             string townTechString = "";
             for (int i = 0; i < townTechs.Count; i++)
             {
@@ -255,13 +303,14 @@ namespace FallenLand
             return townTechString;
         }
 
-        private void updateCharacterSpoilsScreen(int playerIndex)
+        private void updateCharacterSpoilsScreen()
         {
             const float OFFSET_X = 125;
             const float OFFSET_Y = 85;
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
-            List<SpoilsCard> auctionHouse = GameMangerInstance.GetAuctionHouse(playerIndex);
-            if (AuctionHouseScrollContent.transform.childCount < auctionHouse.Count) //when you drag a card, this count will not match and it'll delete and readd all the cards. need to find a way to disable this when dragging a card
+            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
+            if (AuctionHouseScrollContent.transform.childCount < auctionHouse.Count && !CardIsDragging)
             {
                 Debug.Log("Count not the same");
                 //Clear old
@@ -285,8 +334,42 @@ namespace FallenLand
                     image.transform.localPosition = new Vector3(82f + (i%4 * OFFSET_X), -42f - (i/4 * OFFSET_Y), 0f);
                     image.transform.localScale = new Vector3(1f, -1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
+                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+
+                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = auctionHouse[i];
                 }
             }
+        }
+
+        private bool updateStoredData(Image cardImage, GameObject panelMovingInto)
+        {
+            bool wasUpdated = true;
+
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
+            List<CharacterCard> townRoster = GameManagerInstance.GetTownRoster(playerIndex);
+            SpoilsCard foundInAuctionHouse = auctionHouse.Find(x => x == cardImage.GetComponentInChildren<MonoCard>().CardPtr);
+            CharacterCard foundInTownRoster = townRoster.Find(x => x == cardImage.GetComponentInChildren<MonoCard>().CardPtr);
+
+            if (foundInAuctionHouse != null)
+            {
+                Debug.Log("Was in auction house");
+                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                Debug.Log("Applying to character " + characterIndex);
+                GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
+                GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, foundInAuctionHouse);
+            }
+            else if (foundInTownRoster != null)
+            {
+                Debug.Log("Was in town roster");
+            }
+            else
+            {
+                Debug.LogError("Failed to find the card... " + cardImage.GetComponentInChildren<MonoCard>().CardPtr.GetTitle());
+                wasUpdated = false;
+            }
+
+            return wasUpdated;
         }
         #endregion
     }

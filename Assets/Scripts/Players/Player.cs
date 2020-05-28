@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace FallenLand
 {
@@ -125,6 +126,29 @@ namespace FallenLand
 			{
 				TownTechs.Add(techToAdd);
 			}
+		}
+
+		public void RemoveSpoilsCardFromAuctionHouse(SpoilsCard card)
+		{
+			AuctionHouse.Remove(card);
+		}
+
+		public void AddSpoilsToCharacter(int characterIndex, SpoilsCard card)
+		{
+			if (characterIndex < ActiveCharacters.Count)
+			{
+				ActiveCharacters[characterIndex].AttachSpoilsCard(card);
+			}
+		}
+
+		public bool IsAllowedToAddSpoilsCardToCharacter(int characterIndex, SpoilsCard card)
+		{
+			bool isAllowed = false;
+			if (characterIndex < ActiveCharacters.Count)
+			{
+				isAllowed = true;
+			}
+			return isAllowed;
 		}
 
 
