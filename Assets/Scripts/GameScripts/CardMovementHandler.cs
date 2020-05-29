@@ -57,18 +57,20 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log("Dropped");
-            if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(this.GetComponentInParent<Image>(), HoveredOverPanel))
+            Image cardImage = this.GetComponentInParent<Image>();
+            if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(cardImage, HoveredOverPanel) && parentChanged())
             {
                 Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
                 if (viewportTransform != null)
                 {
-                    UiManager.UpdateAfterCardWasMoved(this.GetComponentInParent<Image>(), HoveredOverPanel);
-                    this.GetComponentInParent<Image>().rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
+                    Debug.Log("Dropped on scroll");
+                    UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
+                    cardImage.rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
                 }
                 else
                 {
-                    UiManager.UpdateAfterCardWasMoved(this.GetComponentInParent<Image>(), HoveredOverPanel);
-                    this.GetComponentInParent<Image>().rectTransform.SetParent(HoveredOverPanel.transform);
+                    UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
+                    cardImage.rectTransform.SetParent(HoveredOverPanel.transform);
                 }
             }
             else
@@ -261,6 +263,23 @@ public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler,
         }
 
         HoveredOverPanel.gameObject.GetComponent<Image>().color = color;
+    }
+
+    private bool parentChanged()
+    {
+        bool changed = true;
+
+        Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
+        if (viewportTransform != null && viewportTransform.transform.Find("Content").gameObject.transform == OldParent.gameObject.transform)
+        {
+            changed = false;
+        }
+        else if(HoveredOverPanel.transform == OldParent.transform)
+        {
+            changed = false;
+        }
+
+        return changed;
     }
     #endregion
 }

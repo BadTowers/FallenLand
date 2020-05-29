@@ -101,9 +101,8 @@ namespace FallenLand
 
         public void UpdateAfterCardWasMoved(Image cardImage, GameObject panelMovingInto)
         {
-            //Update the data we have stored in the game manager
             updateStoredData(cardImage, panelMovingInto);
-            //Organize the panels again
+            updateCharacterSpoilsScreen();
         }
 
         //if (panelMovingInto.name.Contains("CharacterPanel") || panelMovingInto.name.Contains("AuctionHouseScrollView") || panelMovingInto.name.Contains("TownRosterScrollView"))
@@ -354,10 +353,13 @@ namespace FallenLand
             if (foundInAuctionHouse != null)
             {
                 Debug.Log("Was in auction house");
-                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                Debug.Log("Applying to character " + characterIndex);
-                GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
-                GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, foundInAuctionHouse);
+                if (panelMovingInto.name.Contains("CharacterPanel"))
+                {
+                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                    Debug.Log("Applying to character " + characterIndex);
+                    GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
+                    GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, foundInAuctionHouse);
+                }
             }
             else if (foundInTownRoster != null)
             {
