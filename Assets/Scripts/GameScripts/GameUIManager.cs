@@ -109,7 +109,7 @@ namespace FallenLand
         public bool CardIsAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
         {
             bool isAllowed = true;
-            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            int myIndex = (GameManagerInstance != null) ? GameManagerInstance.GetIndexForMyPlayer() : 0;
             if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is SpoilsCard)
             {
                 SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
