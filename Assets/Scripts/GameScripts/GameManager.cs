@@ -232,11 +232,27 @@ namespace FallenLand
 			}
 		}
 
+		public void RemoveCardFromPlayerTownRoster(int playerIndex, CharacterCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].RemoveCharacterFromTownRoster(card);
+			}
+		}
+
 		public void AssignSpoilsCardToCharacter(int playerIndex, int characterIndex, SpoilsCard card)
 		{
 			if (playerIndex < Players.Count)
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
+			}
+		}
+
+		public void AssignCharacterToParty(int playerIndex, int characterIndex, CharacterCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].AddCharacterToParty(characterIndex, card);
 			}
 		}
 
@@ -246,6 +262,16 @@ namespace FallenLand
 			if (playerIndex < Players.Count)
 			{
 				isAllowed = Players[playerIndex].IsAllowedToAddSpoilsCardToCharacter(characterIndex, card);
+			}
+			return isAllowed;
+		}
+
+		public bool IsAllowedToApplyCharacterToCharacterSlot(int playerIndex, int characterIndex)
+		{
+			bool isAllowed = false;
+			if (playerIndex < Players.Count)
+			{
+				isAllowed = Players[playerIndex].IsAllowedToAddCharacterToParty(characterIndex);
 			}
 			return isAllowed;
 		}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace FallenLand
 {
@@ -120,6 +121,19 @@ namespace FallenLand
 			return ActiveCharacters;
 		}
 
+		public int GetNumberOfCharactersActive()
+		{
+			int count = 0;
+			for (int i = 0; i < ActiveCharacters.Count; i++)
+			{
+				if (ActiveCharacters[i] != null)
+				{
+					count++;
+				}
+			}
+			return count;
+		}
+
 		public void AddTownTech(TownTech techToAdd)
 		{
 			if (techToAdd != null)
@@ -136,17 +150,25 @@ namespace FallenLand
 			}
 		}
 
-		public void AddActiveCharacter(CharacterCard character)
+		public void RemoveCharacterFromTownRoster(CharacterCard card)
 		{
-			if (character != null)
+			if (TownRoster.Contains(card))
 			{
-				ActiveCharacters.Add(character);
+				TownRoster.Remove(card);
+			}
+		}
+
+		public void AddCharacterToParty(int characterIndex, CharacterCard character)
+		{
+			if (character != null && ActiveCharacters[characterIndex] == null)
+			{
+				ActiveCharacters[characterIndex] = character;
 			}
 		}
 
 		public void AddSpoilsToCharacter(int characterIndex, SpoilsCard card)
 		{
-			if (characterIndex < ActiveCharacters.Count)
+			if (ActiveCharacters[characterIndex] != null)
 			{
 				ActiveCharacters[characterIndex].AttachSpoilsCard(card);
 			}
@@ -155,7 +177,17 @@ namespace FallenLand
 		public bool IsAllowedToAddSpoilsCardToCharacter(int characterIndex, SpoilsCard card)
 		{
 			bool isAllowed = false;
-			if (characterIndex < ActiveCharacters.Count)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			{
+				isAllowed = true;
+			}
+			return isAllowed;
+		}
+
+		public bool IsAllowedToAddCharacterToParty(int characterIndex)
+		{
+			bool isAllowed = false;
+			if (ActiveCharacters[characterIndex] == null)
 			{
 				isAllowed = true;
 			}
@@ -170,6 +202,11 @@ namespace FallenLand
 			TownRoster = new List<CharacterCard>();
 			ActiveCharacters = new List<CharacterCard>();
 			TownTechs = new List<TownTech>();
+
+			for (int i = 0; i < 5; i++) //TODO don't hardcode to 5
+			{
+				ActiveCharacters.Add(null);
+			}
 		}
 
 		private void extractTownTechsFromFaction()

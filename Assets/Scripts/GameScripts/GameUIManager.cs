@@ -24,6 +24,7 @@ namespace FallenLand
         private GameManager GameManagerInstance;
         private GameObject CharacterAndSpoilsScreen;
         private GameObject AuctionHouseScrollContent;
+        private GameObject TownRosterScrollContent;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
 
@@ -45,6 +46,7 @@ namespace FallenLand
             CharacterAndSpoilsScreen.SetActive(true); //temporary for debugging
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
+            TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
         }
 
         void Awake()
@@ -107,27 +109,13 @@ namespace FallenLand
         public bool CardIsAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
         {
             bool isAllowed = true;
-            int myIndex = (GameManagerInstance != null) ? GameManagerInstance.GetIndexForMyPlayer() : 0;
             if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is SpoilsCard)
             {
-                SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
-                if (panelMovingInto.name.Contains("TownRosterScrollView"))
-                {
-                    isAllowed = false;
-                }
-                try
-                {
-                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                    if (!GameManagerInstance.IsAllowedToApplySpoilsToCharacterSlot(myIndex, card, characterIndex))
-                    {
-                        isAllowed = false;
-                        Debug.Log("Can't put a spoils card on an empty character slot");
-                    }
-                }
-                catch
-                {
-                    Debug.Log("Wasn't over a character card. No need to check that part");
-                }
+                isAllowed = isSpoilsCardAllowedToMoveHere(cardImage, panelMovingInto);
+            }
+            else if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is CharacterCard)
+            {
+                isAllowed = isCharacterCardAllowedToMoveHere(cardImage, panelMovingInto);
             }
 
             return isAllowed;
@@ -302,40 +290,8 @@ namespace FallenLand
 
         private void updateCharacterSpoilsScreen()
         {
-            const float OFFSET_X = 125;
-            const float OFFSET_Y = 85;
-            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
-
-            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
-            if (AuctionHouseScrollContent.transform.childCount < auctionHouse.Count && !CardIsDragging)
-            {
-                Debug.Log("Count not the same");
-                //Clear old
-                foreach (Transform child in AuctionHouseScrollContent.transform)
-                {
-                    Debug.Log("Deleting old");
-                    GameObject.Destroy(child.gameObject);
-                }
-
-                //Add new
-                for (int i = 0; i < auctionHouse.Count; i++)
-                {
-                    Debug.Log("Adding card");
-                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
-                    Image image = imageObj.GetComponent<Image>();
-                    string fileName = "Cards/SpoilsCards/SpoilsCard" + auctionHouse[i].GetId().ToString();
-                    Sprite curSprite = Resources.Load<Sprite>(fileName);
-                    image.sprite = curSprite;
-                    imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
-                    image.transform.SetParent(AuctionHouseScrollContent.transform);
-                    image.transform.localPosition = new Vector3(82f + (i%4 * OFFSET_X), -42f - (i/4 * OFFSET_Y), 0f);
-                    image.transform.localScale = new Vector3(1f, 1f, 1f);
-                    image.rectTransform.sizeDelta = new Vector2(75, 100);
-                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
-
-                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = auctionHouse[i];
-                }
-            }
+            updateAuctionHouseUi();
+            updateTownRosterUi();
         }
 
         private bool updateStoredData(Image cardImage, GameObject panelMovingInto)
@@ -362,6 +318,13 @@ namespace FallenLand
             else if (foundInTownRoster != null)
             {
                 Debug.Log("Was in town roster");
+                if (panelMovingInto.name.Contains("CharacterPanel"))
+                {
+                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                    Debug.Log("Applying to character " + characterIndex);
+                    GameManagerInstance.RemoveCardFromPlayerTownRoster(playerIndex, foundInTownRoster);
+                    GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, foundInTownRoster);
+                }
             }
             else
             {
@@ -370,6 +333,130 @@ namespace FallenLand
             }
 
             return wasUpdated;
+        }
+
+        private void updateAuctionHouseUi()
+        {
+            const float OFFSET_X = 125;
+            const float OFFSET_Y = 85;
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
+            if (AuctionHouseScrollContent.transform.childCount < auctionHouse.Count && !CardIsDragging)
+            {
+                //Clear old
+                foreach (Transform child in AuctionHouseScrollContent.transform)
+                {
+                    Debug.Log("Deleting old auction house cards");
+                    GameObject.Destroy(child.gameObject);
+                }
+
+                //Add new
+                for (int i = 0; i < auctionHouse.Count; i++)
+                {
+                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    Image image = imageObj.GetComponent<Image>();
+                    string fileName = "Cards/SpoilsCards/SpoilsCard" + auctionHouse[i].GetId().ToString();
+                    Sprite curSprite = Resources.Load<Sprite>(fileName);
+                    image.sprite = curSprite;
+                    imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
+                    image.transform.SetParent(AuctionHouseScrollContent.transform);
+                    image.transform.localPosition = new Vector3(82f + (i % 4 * OFFSET_X), -42f - (i / 4 * OFFSET_Y), 0f);
+                    image.transform.localScale = new Vector3(1f, 1f, 1f);
+                    image.rectTransform.sizeDelta = new Vector2(75, 100);
+                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+
+                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = auctionHouse[i];
+                }
+            }
+        }
+
+        private void updateTownRosterUi()
+        {
+            const float OFFSET_X = 125;
+            const float OFFSET_Y = 85;
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            List<CharacterCard> townRoster = GameManagerInstance.GetTownRoster(playerIndex);
+            if (TownRosterScrollContent.transform.childCount < townRoster.Count && !CardIsDragging)
+            {
+                //Clear old
+                foreach (Transform child in TownRosterScrollContent.transform)
+                {
+                    Debug.Log("Deleting old town roster cards");
+                    GameObject.Destroy(child.gameObject);
+                }
+
+                //Add new
+                for (int i = 0; i < townRoster.Count; i++)
+                {
+                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    Image image = imageObj.GetComponent<Image>();
+                    string fileName = "Cards/CharacterCards/CharacterCard" + townRoster[i].GetId().ToString();
+                    Sprite curSprite = Resources.Load<Sprite>(fileName);
+                    image.sprite = curSprite;
+                    imageObj.name = "CharacterCard" + townRoster[i].GetId().ToString();
+                    image.transform.SetParent(TownRosterScrollContent.transform);
+                    image.transform.localPosition = new Vector3(82f + (i % 4 * OFFSET_X), -42f - (i / 4 * OFFSET_Y), 0f);
+                    image.transform.localScale = new Vector3(1f, 1f, 1f);
+                    image.rectTransform.sizeDelta = new Vector2(75, 100);
+                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+
+                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = townRoster[i];
+                }
+            }
+        }
+
+        private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
+        {
+            bool isAllowed = true;
+
+            int myIndex = (GameManagerInstance != null) ? GameManagerInstance.GetIndexForMyPlayer() : 0;
+            SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
+            if (panelMovingInto.name.Contains("TownRosterScrollView"))
+            {
+                isAllowed = false;
+            }
+            try
+            {
+                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                if (!GameManagerInstance.IsAllowedToApplySpoilsToCharacterSlot(myIndex, card, characterIndex))
+                {
+                    isAllowed = false;
+                    Debug.Log("Can't put a spoils card on an empty character slot");
+                }
+            }
+            catch
+            {
+                Debug.Log("Wasn't over a character card. No need to check that part");
+            }
+            return isAllowed;
+        }
+
+        private bool isCharacterCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
+        {
+            bool isAllowed = true;
+
+            int myIndex = (GameManagerInstance != null) ? GameManagerInstance.GetIndexForMyPlayer() : 0;
+            CharacterCard card = (CharacterCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
+            if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
+            {
+                isAllowed = false;
+            }
+            try
+            {
+                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                if (!GameManagerInstance.IsAllowedToApplyCharacterToCharacterSlot(myIndex, characterIndex))
+                {
+                    isAllowed = false;
+                    Debug.Log("Can't put a character card on a non-empty character slot");
+                }
+            }
+            catch
+            {
+                Debug.Log("Wasn't over a character card. No need to check that part");
+            }
+            return isAllowed;
         }
         #endregion
     }

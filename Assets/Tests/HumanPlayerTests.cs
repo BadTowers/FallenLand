@@ -8,6 +8,11 @@ namespace Tests
 	public class HumanPlayerTests
 	{
 		private HumanPlayer HumanPlayerInstance;
+		private const int CHARACTER_1_INDEX = 0;
+		private const int CHARACTER_2_INDEX = 1;
+		private const int CHARACTER_3_INDEX = 2;
+		private const int CHARACTER_4_INDEX = 3;
+		private const int CHARACTER_5_INDEX = 4;
 
 		[SetUp]
 		public void Setup()
@@ -182,13 +187,31 @@ namespace Tests
 			CharacterCard character1 = new CharacterCard("char 1");
 			CharacterCard character2 = new CharacterCard("char 2");
 
-			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacters().Count);
-			HumanPlayerInstance.AddActiveCharacter(character1);
-			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters().Count);
-			HumanPlayerInstance.AddActiveCharacter(null);
-			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters().Count);
-			HumanPlayerInstance.AddActiveCharacter(character2);
-			Assert.AreEqual(2, HumanPlayerInstance.GetActiveCharacters().Count);
+			Assert.AreEqual(5, HumanPlayerInstance.GetActiveCharacters().Count);
+			for (int characterIndex = 0; characterIndex < HumanPlayerInstance.GetActiveCharacters().Count; characterIndex++)
+			{
+				Assert.IsNull(HumanPlayerInstance.GetActiveCharacters()[characterIndex]);
+			}
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character1);
+			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, null);
+			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, null);
+			Assert.IsNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_2_INDEX]);
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, character2);
+			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_2_INDEX]);
+			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character2);
+			Assert.AreEqual(character1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
+			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
 
 			yield return null;
 		}
@@ -197,26 +220,23 @@ namespace Tests
 		public IEnumerator TestAddingSpoilsToActiveCharacters()
 		{
 			CharacterCard character1 = new CharacterCard("char 1");
-			const int CHARACTER_1_INDEX = 0;
 			CharacterCard character2 = new CharacterCard("char 2");
-			const int CHARACTER_2_INDEX = 1;
-			const int CHARACTER_3_INDEX = 2;
-			const int CHARACTER_4_INDEX = 3;
-			const int CHARACTER_5_INDEX = 4;
 			SpoilsCard spoils1 = new SpoilsCard("spoils 1");
 			SpoilsCard spoils2 = new SpoilsCard("spoils 2");
 
-			HumanPlayerInstance.AddActiveCharacter(character1);
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character1);
 			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_1_INDEX, spoils1));
 			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_1_INDEX, spoils2));
+
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_1_INDEX, spoils1);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX].GetEquippedSpoils().Count);
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils1));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils2));
+			
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_2_INDEX, spoils1);
-			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters().Count);
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
-			HumanPlayerInstance.AddActiveCharacter(character2);
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, character2);
 			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils1));
 			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils2));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_3_INDEX, spoils1));
