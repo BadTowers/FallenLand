@@ -254,14 +254,7 @@ namespace FallenLand
             }
             else
             {
-                if (name.Contains("CharacterPanel"))
-                {
-                    color = new Color(1f, 1f, 1f, .5f);
-                }
-                else
-                {
-                    color = new Color(0f, 0f, 0f, 0f);
-                }
+                color = new Color(0f, 0f, 0f, 0f);
             }
 
             HoveredOverPanel.gameObject.GetComponent<Image>().color = color;
