@@ -329,7 +329,7 @@ namespace FallenLand
                     imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
                     image.transform.SetParent(AuctionHouseScrollContent.transform);
                     image.transform.localPosition = new Vector3(82f + (i%4 * OFFSET_X), -42f - (i/4 * OFFSET_Y), 0f);
-                    image.transform.localScale = new Vector3(1f, -1f, 1f);
+                    image.transform.localScale = new Vector3(1f, 1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
 
