@@ -23,6 +23,7 @@ namespace FallenLand
 			for (int i = 0; i < 80; i++)
 			{
 				curCard = new CharacterCard("test " + i.ToString());
+				curCard.SetId(0);
 				CharacterCards.Add(curCard);
 			}
 		}
