@@ -25,6 +25,7 @@ namespace FallenLand
         private GameObject CharacterAndSpoilsScreen;
         private GameObject AuctionHouseScrollContent;
         private GameObject TownRosterScrollContent;
+        private List<GameObject> ActiveCharactersScrollContent;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
 
@@ -45,8 +46,14 @@ namespace FallenLand
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
             CharacterAndSpoilsScreen.SetActive(true); //temporary for debugging
 
+            ActiveCharactersScrollContent = new List<GameObject>();
+
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
+            for (int i = 0; i < 5; i++) //TODO don't hardcode to give in the party
+            {
+                ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i+1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
+            }    
         }
 
         void Awake()
@@ -298,6 +305,7 @@ namespace FallenLand
         {
             updateAuctionHouseUi(true);
             updateTownRosterUi(true);
+            updateCharacterPanels(true);
         }
 
         private bool updateStoredData(Image cardImage, GameObject panelMovingInto)
@@ -435,6 +443,61 @@ namespace FallenLand
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
 
                     imageObj.GetComponentInChildren<MonoCard>().CardPtr = townRoster[i];
+                }
+            }
+        }
+
+        private void updateCharacterPanels(bool forceRedraw)
+        {
+            const float OFFSET_Y = 24.5f;
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(playerIndex);
+            for (int activeIndex = 0; activeIndex < activeCharacters.Count; activeIndex++)
+            {
+                if ((ActiveCharactersScrollContent[activeIndex].transform.childCount < activeCharacters.Count || forceRedraw) && !CardIsDragging)
+                {
+                    //Clear old
+                    foreach (Transform child in ActiveCharactersScrollContent[activeIndex].transform)
+                    {
+                        Debug.Log("Deleting cards for character slot " + (activeIndex + 1));
+                        GameObject.Destroy(child.gameObject);
+                    }
+
+                    //Add character back to slot
+                    Debug.Log("Adding Character to slot " + (activeIndex + 1));
+                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    Image image = imageObj.GetComponent<Image>();
+                    string fileName = "Cards/CharacterCards/CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
+                    Sprite curSprite = Resources.Load<Sprite>(fileName);
+                    image.sprite = curSprite;
+                    imageObj.name = "CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
+                    image.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
+                    image.transform.localPosition = new Vector3(90f, -40f, 0f);
+                    image.transform.localScale = new Vector3(1f, 1f, 1f);
+                    image.rectTransform.sizeDelta = new Vector2(75, 100);
+                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = activeCharacters[activeIndex];
+
+                    //Add spoils back to slot
+                    List<SpoilsCard> curSlotSpoils = activeCharacters[activeIndex].GetEquippedSpoils();
+                    for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
+                    {
+                        Debug.Log("Adding spoils to slot " + (activeIndex + 1));
+                        GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                        Image image2 = imageObj2.GetComponent<Image>();
+                        string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
+                        Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
+                        image2.sprite = curSprite2;
+                        imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
+                        image2.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
+                        image2.transform.localPosition = new Vector3(90f, -40f - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
+                        image2.transform.localScale = new Vector3(1f, 1f, 1f);
+                        image2.rectTransform.sizeDelta = new Vector2(75, 100);
+                        image2.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                        imageObj2.GetComponentInChildren<MonoCard>().CardPtr = curSlotSpoils[curSpoilIndex];
+                        image2.transform.SetAsFirstSibling(); //move to the back (on parent)
+                    }
                 }
             }
         }
