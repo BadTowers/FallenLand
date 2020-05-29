@@ -8,26 +8,24 @@ namespace FallenLand
     {
 
         public enum GameMenuStates { Pause, Options, Resume, Save };
-        //UI Objects
         public GameObject PauseMenu;
         public GameObject SaveMenu;
         public GameObject OptionsMenu;
         public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
         public GameObject GameManagerGameObject;
         public GameObject ImageGameObject;
-        //Game camera
         public GameObject gameCamera;
-        public GameMenuStates currentState;
 
         private bool EscapePressed;
         private bool DebugOverlayShowing;
         private float PanSpeed;
         private float ZoomSpeed;
-        private int currentViewedID; //Current ID of player's stuff UI is displaying
+        private int CurrentViewedID; //Current ID of player's stuff UI is displaying
         private GameManager GameManagerInstance;
         private GameObject CharacterAndSpoilsScreen;
         private GameObject AuctionHouseScrollContent;
         private bool CardIsDragging;
+        private GameMenuStates CurrentState;
 
         #region UnityFunctions
         void Start()
@@ -35,7 +33,7 @@ namespace FallenLand
             //Initialize vars
             EscapePressed = false;
             DebugOverlayShowing = false;
-            currentState = GameMenuStates.Resume;
+            CurrentState = GameMenuStates.Resume;
 
             //Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
             addToMenuList(PauseMenu);
@@ -51,7 +49,7 @@ namespace FallenLand
 
         void Awake()
         {
-            currentState = GameMenuStates.Resume;
+            CurrentState = GameMenuStates.Resume;
             //Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
             PanSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
             ZoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
@@ -139,19 +137,19 @@ namespace FallenLand
         #region UICallbacks
         public void OnResume()
         {
-            currentState = GameMenuStates.Resume;
+            CurrentState = GameMenuStates.Resume;
             Debug.Log("Resume");
         }
 
         public void OnOptions()
         {
-            currentState = GameMenuStates.Options;
+            CurrentState = GameMenuStates.Options;
             Debug.Log("Options");
         }
 
         public void OnSave()
         {
-            currentState = GameMenuStates.Save;
+            CurrentState = GameMenuStates.Save;
             Debug.Log("Save");
         }
 
@@ -215,12 +213,12 @@ namespace FallenLand
         //A function to display and hide menus as needed
         private void checkCurrentMenuState()
         {
-            switch (currentState)
+            switch (CurrentState)
             {
                 case GameMenuStates.Pause:
                     if (EscapePressed)
                     {
-                        currentState = GameMenuStates.Resume;
+                        CurrentState = GameMenuStates.Resume;
                     }
                     else
                     {
@@ -236,7 +234,7 @@ namespace FallenLand
                     {
                         //If on options screen and escape pressed, go back to pause menu
                         setActiveMenu(PauseMenu);
-                        currentState = GameMenuStates.Pause;
+                        CurrentState = GameMenuStates.Pause;
                     }
                     else
                     {
@@ -252,7 +250,7 @@ namespace FallenLand
                     {
                         //If on options screen and escape pressed, go back to pause menu
                         setActiveMenu(PauseMenu);
-                        currentState = GameMenuStates.Pause;
+                        CurrentState = GameMenuStates.Pause;
                     }
                     else
                     {
@@ -264,7 +262,7 @@ namespace FallenLand
                     {
                         //If on save screen and escape pressed, go back to pause menu
                         setActiveMenu(PauseMenu);
-                        currentState = GameMenuStates.Pause;
+                        CurrentState = GameMenuStates.Pause;
                     }
                     else
                     {
