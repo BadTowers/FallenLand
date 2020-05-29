@@ -76,12 +76,24 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestCharactersInTownRoster()
 		{
-			HumanPlayerInstance.AddCharacterCardToTownRoster(new CharacterCard("test card"));
+			CharacterCard card1 = new CharacterCard("char 1");
+			CharacterCard card2 = new CharacterCard("char 2");
+
+			HumanPlayerInstance.AddCharacterCardToTownRoster(card1);
 			Assert.AreEqual(1, HumanPlayerInstance.GetTownRoster().Count);
-			HumanPlayerInstance.AddCharacterCardToTownRoster(new CharacterCard("test card 1"));
+			HumanPlayerInstance.AddCharacterCardToTownRoster(card2);
 			Assert.AreEqual(2, HumanPlayerInstance.GetTownRoster().Count);
 			HumanPlayerInstance.AddCharacterCardToTownRoster(null);
 			Assert.AreEqual(2, HumanPlayerInstance.GetTownRoster().Count);
+
+			HumanPlayerInstance.RemoveCharacterFromTownRoster(null);
+			Assert.AreEqual(2, HumanPlayerInstance.GetTownRoster().Count);
+			HumanPlayerInstance.RemoveCharacterFromTownRoster(card1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetTownRoster().Count);
+			HumanPlayerInstance.RemoveCharacterFromTownRoster(card2);
+			Assert.AreEqual(0, HumanPlayerInstance.GetTownRoster().Count);
+			HumanPlayerInstance.RemoveCharacterFromTownRoster(card1);
+			Assert.AreEqual(0, HumanPlayerInstance.GetTownRoster().Count);
 
 			yield return null;
 		}
@@ -193,22 +205,27 @@ namespace Tests
 				Assert.IsNull(HumanPlayerInstance.GetActiveCharacters()[characterIndex]);
 			}
 
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character1);
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, null);
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_2_INDEX));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, null);
 			Assert.IsNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_2_INDEX]);
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_2_INDEX));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, character2);
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_2_INDEX]);
 			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
 
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character2);
 			Assert.AreEqual(character1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
