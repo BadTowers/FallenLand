@@ -86,6 +86,8 @@ namespace FallenLand
                 transform.SetAsFirstSibling(); //move to the back (on parent)
                 OldParent = null;
                 IsOldParentSet = false;
+                changeHoveredPanelColor(HoveredOverPanel.name);
+                HoveredOverPanel = null;
             }
         }
 
@@ -250,7 +252,7 @@ namespace FallenLand
         {
             Color color;
 
-            if (IsHoveringOverPanel && UiManager.CardIsAllowedToMoveHere(this.GetComponentInChildren<Image>(), HoveredOverPanel))
+            if (IsHoveringOverPanel && UiManager.CardIsAllowedToMoveHere(this.GetComponentInChildren<Image>(), HoveredOverPanel) && IsDragging)
             {
                 color = new Color(88f / 255f, 121f / 255f, 214f / 255f, 1f);
             }
