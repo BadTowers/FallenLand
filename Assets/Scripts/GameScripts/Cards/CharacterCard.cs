@@ -58,41 +58,25 @@ namespace FallenLand
             return CarryCapacity;
         }
 
-        //Returns true if it can attach a card (no restrictions stopped it)
-        //Returns false if the card cannot be attached (some restriction stopped it)
-        //TODO maybe at some point, give access to an object that gives the reasons why a card wasn't attached
-        public bool AttachSpoilsCard(SpoilsCard toAttach)
+        public List<SpoilsCard> GetEquippedSpoils()
         {
-            bool canBeAttached = true;
-
-            //TODO Check restrictions here
-
-            if (canBeAttached)
-            {
-                EquippedSpoils.Add(toAttach); //Equip the spoils
-                                              //TODO: Remove the card from the player's hand
-            }
-
-            return canBeAttached;
+            return EquippedSpoils;
         }
 
-        public bool RemoveSpoilsCard(SpoilsCard toRemove)
+        public void AttachSpoilsCard(SpoilsCard toAttach)
         {
-            bool canBeRemoved = true;
-
-            //TODO check restrictions here //This may not be necessary for removal, have to check this
-
-            if (!EquippedSpoils.Contains(toRemove))
+            if (toAttach != null)
             {
-                canBeRemoved = false;
+                EquippedSpoils.Add(toAttach);
             }
-            if (canBeRemoved)
+        }
+
+        public void RemoveSpoilsCard(SpoilsCard toRemove)
+        {
+            if (EquippedSpoils.Contains(toRemove))
             {
                 EquippedSpoils.Remove(toRemove);
-                //TODO: Add the card back to the player
             }
-
-            return canBeRemoved;
         }
     }
 }

@@ -84,12 +84,18 @@ namespace Tests
 		public IEnumerator TestAttachAndRemoveSpoilsCards()
 		{
 			SpoilsCard card1 = new SpoilsCard("Card1");
-			Assert.IsTrue(CharacterCardInstance.AttachSpoilsCard(card1));
+
+			Assert.AreEqual(0, CharacterCardInstance.GetEquippedSpoils().Count);
+			CharacterCardInstance.AttachSpoilsCard(card1);
+			Assert.AreEqual(1, CharacterCardInstance.GetEquippedSpoils().Count);
+			CharacterCardInstance.AttachSpoilsCard(null);
+			Assert.AreEqual(1, CharacterCardInstance.GetEquippedSpoils().Count);
 
 			SpoilsCard card2 = new SpoilsCard("Card2");
-			Assert.IsFalse(CharacterCardInstance.RemoveSpoilsCard(card2));
-
-			Assert.IsTrue(CharacterCardInstance.RemoveSpoilsCard(card1));
+			CharacterCardInstance.RemoveSpoilsCard(card2);
+			Assert.AreEqual(1, CharacterCardInstance.GetEquippedSpoils().Count);
+			CharacterCardInstance.RemoveSpoilsCard(card1);
+			Assert.AreEqual(0, CharacterCardInstance.GetEquippedSpoils().Count);
 
 			yield return null;
 		}
