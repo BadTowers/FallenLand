@@ -130,7 +130,18 @@ namespace FallenLand
 
 		public void RemoveSpoilsCardFromAuctionHouse(SpoilsCard card)
 		{
-			AuctionHouse.Remove(card);
+			if (AuctionHouse.Contains(card))
+			{
+				AuctionHouse.Remove(card);
+			}
+		}
+
+		public void AddActiveCharacter(CharacterCard character)
+		{
+			if (character != null)
+			{
+				ActiveCharacters.Add(character);
+			}
 		}
 
 		public void AddSpoilsToCharacter(int characterIndex, SpoilsCard card)

@@ -43,12 +43,28 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestSpoilsCardsInAuctionHouse()
 		{
-			HumanPlayerInstance.AddSpoilsCardToAuctionHouse(new SpoilsCard("test card"));
+			SpoilsCard testCard1 = new SpoilsCard("test card");
+			SpoilsCard testCard2 = new SpoilsCard("test card 2");
+			SpoilsCard testCard3 = new SpoilsCard("3est card 3");
+
+			//Adding
+			HumanPlayerInstance.AddSpoilsCardToAuctionHouse(testCard1);
 			Assert.AreEqual(1, HumanPlayerInstance.GetAuctionHouseCards().Count);
-			HumanPlayerInstance.AddSpoilsCardToAuctionHouse(new SpoilsCard("test card 2"));
+			HumanPlayerInstance.AddSpoilsCardToAuctionHouse(testCard2);
 			Assert.AreEqual(2, HumanPlayerInstance.GetAuctionHouseCards().Count);
 			HumanPlayerInstance.AddSpoilsCardToAuctionHouse(null);
 			Assert.AreEqual(2, HumanPlayerInstance.GetAuctionHouseCards().Count);
+
+			//Removing
+			HumanPlayerInstance.RemoveSpoilsCardFromAuctionHouse(testCard1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetAuctionHouseCards().Count);
+			HumanPlayerInstance.RemoveSpoilsCardFromAuctionHouse(null);
+			Assert.AreEqual(1, HumanPlayerInstance.GetAuctionHouseCards().Count);
+			HumanPlayerInstance.RemoveSpoilsCardFromAuctionHouse(testCard3);
+			Assert.AreEqual(1, HumanPlayerInstance.GetAuctionHouseCards().Count);
+			HumanPlayerInstance.RemoveSpoilsCardFromAuctionHouse(testCard2);
+			Assert.AreEqual(0, HumanPlayerInstance.GetAuctionHouseCards().Count);
+
 
 			yield return null;
 		}
@@ -157,6 +173,56 @@ namespace Tests
 			HumanPlayerInstance.SetPlayerFaction(faction1);
 			Assert.IsNotNull(HumanPlayerInstance.GetTownTechs());
 			Assert.AreEqual(0, HumanPlayerInstance.GetTownTechs().Count);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestActiveCharacters()
+		{
+			CharacterCard character1 = new CharacterCard("char 1");
+			CharacterCard character2 = new CharacterCard("char 2");
+
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacters().Count);
+			HumanPlayerInstance.AddActiveCharacter(character1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters().Count);
+			HumanPlayerInstance.AddActiveCharacter(null);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters().Count);
+			HumanPlayerInstance.AddActiveCharacter(character2);
+			Assert.AreEqual(2, HumanPlayerInstance.GetActiveCharacters().Count);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestAddingSpoilsToActiveCharacters()
+		{
+			CharacterCard character1 = new CharacterCard("char 1");
+			const int CHARACTER_1_INDEX = 0;
+			CharacterCard character2 = new CharacterCard("char 2");
+			const int CHARACTER_2_INDEX = 1;
+			const int CHARACTER_3_INDEX = 2;
+			const int CHARACTER_4_INDEX = 3;
+			const int CHARACTER_5_INDEX = 4;
+			SpoilsCard spoils1 = new SpoilsCard("spoils 1");
+			SpoilsCard spoils2 = new SpoilsCard("spoils 2");
+
+			HumanPlayerInstance.AddActiveCharacter(character1);
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_1_INDEX, spoils1));
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_1_INDEX, spoils2));
+			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_1_INDEX, spoils1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX].GetEquippedSpoils().Count);
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils1));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils2));
+			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_2_INDEX, spoils1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters().Count);
+
+			HumanPlayerInstance.AddActiveCharacter(character2);
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils1));
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_2_INDEX, spoils2));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_3_INDEX, spoils1));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_4_INDEX, spoils1));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_5_INDEX, spoils1));
 
 			yield return null;
 		}
