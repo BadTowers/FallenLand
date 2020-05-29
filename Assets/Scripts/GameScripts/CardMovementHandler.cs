@@ -19,6 +19,7 @@ namespace FallenLand
         private GameObject OldParent;
         private GameObject HoveredOverPanel;
         private GameUIManager UiManager;
+        private int SiblingOrder;
 
         void Start()
         {
@@ -130,7 +131,7 @@ namespace FallenLand
             this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
             transform.position = PreHoverLocation;
             enableScroll();
-            transform.SetAsFirstSibling(); //move to the back (on parent)
+            transform.SetSiblingIndex(SiblingOrder);
         }
 
         private void makeLarge()
@@ -140,6 +141,7 @@ namespace FallenLand
             float newY = getNewY();
             transform.localPosition = new Vector3(newX, newY, transform.localPosition.z);
             disableScroll();
+            SiblingOrder = transform.GetSiblingIndex();
             transform.SetAsLastSibling(); //move to the front (on parent)
         }
 
