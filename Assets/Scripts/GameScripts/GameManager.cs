@@ -240,6 +240,22 @@ namespace FallenLand
 			}
 		}
 
+		public void RemoveSpoilsCardFromPlayerActiveParty(int playerIndex, int characterSlotIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
+			}
+		}
+
+		public void RemoveCharacterFromActiveParty(int playerIndex, int characterSlotFoundIn, CharacterCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].RemoveCharacterFromParty(characterSlotFoundIn);
+			}
+		}
+
 		public void AssignSpoilsCardToCharacter(int playerIndex, int characterIndex, SpoilsCard card)
 		{
 			if (playerIndex < Players.Count)
@@ -253,6 +269,22 @@ namespace FallenLand
 			if (playerIndex < Players.Count)
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
+			}
+		}
+
+		public void AddSpoilsToAuctionHouse(int playerIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
+			}
+		}
+
+		public void AddCharacterToTownRoster(int playerIndex, CharacterCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].AddCharacterCardToTownRoster(card);
 			}
 		}
 

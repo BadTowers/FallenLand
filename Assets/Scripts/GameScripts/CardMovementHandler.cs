@@ -59,20 +59,22 @@ namespace FallenLand
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 Debug.Log("Dropped");
+                UiManager.SetCardIsDragging(false);
+                IsDragging = false;
                 Image cardImage = this.GetComponentInParent<Image>();
-                if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(cardImage, HoveredOverPanel) && parentChanged())
+                if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(cardImage, HoveredOverPanel))
                 {
                     Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
                     if (viewportTransform != null)
                     {
                         Debug.Log("Dropped on scroll");
-                        UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
                         cardImage.rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
+                        UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
                     }
                     else
                     {
-                        UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
                         cardImage.rectTransform.SetParent(HoveredOverPanel.transform);
+                        UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
                     }
                 }
                 else
@@ -84,8 +86,6 @@ namespace FallenLand
                 transform.SetAsFirstSibling(); //move to the back (on parent)
                 OldParent = null;
                 IsOldParentSet = false;
-                UiManager.SetCardIsDragging(false);
-                IsDragging = false;
             }
         }
 
@@ -265,23 +265,6 @@ namespace FallenLand
             }
 
             HoveredOverPanel.gameObject.GetComponent<Image>().color = color;
-        }
-
-        private bool parentChanged()
-        {
-            bool changed = true;
-
-            Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
-            if (viewportTransform != null && viewportTransform.transform.Find("Content").gameObject.transform == OldParent.gameObject.transform)
-            {
-                changed = false;
-            }
-            else if (HoveredOverPanel.transform == OldParent.transform)
-            {
-                changed = false;
-            }
-
-            return changed;
         }
         #endregion
     }

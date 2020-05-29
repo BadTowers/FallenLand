@@ -158,6 +158,19 @@ namespace FallenLand
 			}
 		}
 
+		public void RemoveSpoilsCardFromActiveCharacter(int characterIndex, SpoilsCard card)
+		{
+			if (ActiveCharacters[characterIndex].GetEquippedSpoils().Contains(card))
+			{
+				ActiveCharacters[characterIndex].RemoveSpoilsCard(card);
+			}
+		}
+
+		public void RemoveCharacterFromParty(int characterIndex)
+		{
+			ActiveCharacters[characterIndex] = null;
+		}
+
 		public void AddCharacterToParty(int characterIndex, CharacterCard character)
 		{
 			if (character != null && ActiveCharacters[characterIndex] == null)
