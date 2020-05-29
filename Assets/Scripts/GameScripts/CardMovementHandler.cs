@@ -173,12 +173,14 @@ namespace FallenLand
         {
             Debug.Log("disabled scrolling");
             GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = 0;
+            GameObject.Find("TownRosterScrollView").GetComponent<ScrollRect>().scrollSensitivity = 0;
         }
 
         private void enableScroll()
         {
             Debug.Log("enabled scrolling");
             GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
+            GameObject.Find("TownRosterScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
         }
 
         private void figureOutCurrentParent()
@@ -228,7 +230,7 @@ namespace FallenLand
 
             foreach (RaycastResult result in raycastResults)
             {
-                if (result.gameObject.name.Contains("CharacterPanel") || result.gameObject.name.Contains("AuctionHouseScrollView") || result.gameObject.name.Contains("TownRosterScrollView"))
+                if (result.gameObject.name.Contains("CharacterSlotScrollView") || result.gameObject.name.Contains("AuctionHouseScrollView") || result.gameObject.name.Contains("TownRosterScrollView"))
                 {
                     if (HoveredOverPanel != null)
                     {

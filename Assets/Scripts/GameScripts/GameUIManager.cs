@@ -105,7 +105,7 @@ namespace FallenLand
             redrawCharacterSpoilsScreen();
         }
 
-        //if (panelMovingInto.name.Contains("CharacterPanel") || panelMovingInto.name.Contains("AuctionHouseScrollView") || panelMovingInto.name.Contains("TownRosterScrollView"))
+        //if (panelMovingInto.name.Contains("CharacterSlotScrollView") || panelMovingInto.name.Contains("AuctionHouseScrollView") || panelMovingInto.name.Contains("TownRosterScrollView"))
         public bool CardIsAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
         {
             bool isAllowed = true;
@@ -312,7 +312,7 @@ namespace FallenLand
 
             if (foundInAuctionHouse != null)
             {
-                if (panelMovingInto.name.Contains("CharacterPanel"))
+                if (panelMovingInto.name.Contains("CharacterSlotScrollView"))
                 {
                     int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
                     GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
@@ -321,7 +321,7 @@ namespace FallenLand
             }
             else if (foundInTownRoster != null)
             {
-                if (panelMovingInto.name.Contains("CharacterPanel"))
+                if (panelMovingInto.name.Contains("CharacterSlotScrollView"))
                 {
                     int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
                     GameManagerInstance.RemoveCardFromPlayerTownRoster(playerIndex, foundInTownRoster);
