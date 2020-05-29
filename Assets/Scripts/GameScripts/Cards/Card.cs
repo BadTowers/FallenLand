@@ -39,16 +39,6 @@ namespace FallenLand
 			Title = title;
 		}
 
-		public void SetImage(Image card)
-		{
-			UiCard = card;
-		}
-
-		public Image GetImage()
-		{
-			return UiCard;
-		}
-
 		public int GetId()
 		{
 			return this.Id;
