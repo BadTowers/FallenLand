@@ -348,7 +348,15 @@ namespace FallenLand
                         SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
                         GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, card);
                         //TODO handle the case where we drag from one character panel to another
-                        GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, card);
+                        if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
+                        {
+                            GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, card);
+                        }
+                        else
+                        {
+                            int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                            GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, card);
+                        }
                     }
                     else if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is CharacterCard)
                     {
@@ -455,8 +463,10 @@ namespace FallenLand
             List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(playerIndex);
             for (int activeIndex = 0; activeIndex < activeCharacters.Count; activeIndex++)
             {
+                Debug.Log("updateCharacterPanels: activeIndex: " + activeIndex);
                 if ((ActiveCharactersScrollContent[activeIndex].transform.childCount < activeCharacters.Count || forceRedraw) && !CardIsDragging)
                 {
+                    Debug.Log("activeIndex was not null: " + activeIndex);
                     //Clear old
                     foreach (Transform child in ActiveCharactersScrollContent[activeIndex].transform)
                     {
@@ -464,39 +474,42 @@ namespace FallenLand
                         GameObject.Destroy(child.gameObject);
                     }
 
-                    //Add character back to slot
-                    Debug.Log("Adding Character to slot " + (activeIndex + 1));
-                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
-                    Image image = imageObj.GetComponent<Image>();
-                    string fileName = "Cards/CharacterCards/CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
-                    Sprite curSprite = Resources.Load<Sprite>(fileName);
-                    image.sprite = curSprite;
-                    imageObj.name = "CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
-                    image.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
-                    image.transform.localPosition = new Vector3(90f, -40f, 0f);
-                    image.transform.localScale = new Vector3(1f, 1f, 1f);
-                    image.rectTransform.sizeDelta = new Vector2(75, 100);
-                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
-                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = activeCharacters[activeIndex];
-
-                    //Add spoils back to slot
-                    List<SpoilsCard> curSlotSpoils = activeCharacters[activeIndex].GetEquippedSpoils();
-                    for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
+                    if (activeCharacters[activeIndex] != null)
                     {
-                        Debug.Log("Adding spoils to slot " + (activeIndex + 1));
-                        GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
-                        Image image2 = imageObj2.GetComponent<Image>();
-                        string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
-                        Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
-                        image2.sprite = curSprite2;
-                        imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
-                        image2.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
-                        image2.transform.localPosition = new Vector3(90f, -40f - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
-                        image2.transform.localScale = new Vector3(1f, 1f, 1f);
-                        image2.rectTransform.sizeDelta = new Vector2(75, 100);
-                        image2.transform.eulerAngles = new Vector3(0f, 0f, 90f);
-                        imageObj2.GetComponentInChildren<MonoCard>().CardPtr = curSlotSpoils[curSpoilIndex];
-                        image2.transform.SetAsFirstSibling(); //move to the back (on parent)
+                        //Add character back to slot
+                        Debug.Log("Adding Character to slot " + (activeIndex + 1));
+                        GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                        Image image = imageObj.GetComponent<Image>();
+                        string fileName = "Cards/CharacterCards/CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
+                        Sprite curSprite = Resources.Load<Sprite>(fileName);
+                        image.sprite = curSprite;
+                        imageObj.name = "CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
+                        image.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
+                        image.transform.localPosition = new Vector3(90f, -40f, 0f);
+                        image.transform.localScale = new Vector3(1f, 1f, 1f);
+                        image.rectTransform.sizeDelta = new Vector2(75, 100);
+                        image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                        imageObj.GetComponentInChildren<MonoCard>().CardPtr = activeCharacters[activeIndex];
+
+                        //Add spoils back to slot
+                        List<SpoilsCard> curSlotSpoils = activeCharacters[activeIndex].GetEquippedSpoils();
+                        for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
+                        {
+                            Debug.Log("Adding spoils to slot " + (activeIndex + 1));
+                            GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                            Image image2 = imageObj2.GetComponent<Image>();
+                            string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
+                            Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
+                            image2.sprite = curSprite2;
+                            imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
+                            image2.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
+                            image2.transform.localPosition = new Vector3(90f, -40f - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
+                            image2.transform.localScale = new Vector3(1f, 1f, 1f);
+                            image2.rectTransform.sizeDelta = new Vector2(75, 100);
+                            image2.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                            imageObj2.GetComponentInChildren<MonoCard>().CardPtr = curSlotSpoils[curSpoilIndex];
+                            image2.transform.SetAsFirstSibling(); //move to the back (on parent)
+                        }
                     }
                 }
             }
