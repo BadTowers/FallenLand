@@ -152,9 +152,9 @@ namespace FallenLand
             {
                 newX = 140;
             }
-            else if (transform.localPosition.x > 385)
+            else if (transform.localPosition.x > 405)
             {
-                newX = 385;
+                newX = 405;
             }
             return newX;
         }
