@@ -11,7 +11,6 @@ namespace FallenLand
         public GameObject PauseMenu;
         public GameObject SaveMenu;
         public GameObject OptionsMenu;
-        public GameObject debugOverlay; //Not a menu, it's an overlay, so it doesn't have to be added to the menu panels list
         public GameObject GameManagerGameObject;
         public GameObject ImageGameObject;
         public GameObject gameCamera;
@@ -25,13 +24,20 @@ namespace FallenLand
         private GameObject CharacterAndSpoilsScreen;
         private GameObject AuctionHouseScrollContent;
         private GameObject TownRosterScrollContent;
+        private GameObject DebugOverlay;
+        private GameObject MainOverlay;
         private List<GameObject> ActiveCharactersScrollContent;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
 
         #region UnityFunctions
-        void Start()
+        void Awake()
         {
+            CurrentState = GameMenuStates.Resume;
+            //Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
+            PanSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
+            ZoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
+
             //Initialize vars
             EscapePressed = false;
             DebugOverlayShowing = false;
@@ -44,7 +50,8 @@ namespace FallenLand
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
-            CharacterAndSpoilsScreen.SetActive(true); //temporary for debugging
+            DebugOverlay = GameObject.Find("DebugOverlay");
+            MainOverlay = GameObject.Find("MainOverlay");
 
             ActiveCharactersScrollContent = new List<GameObject>();
 
@@ -52,41 +59,30 @@ namespace FallenLand
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             for (int i = 0; i < 5; i++) //TODO don't hardcode to give in the party
             {
-                ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i+1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
-            }    
-        }
+                ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
+            }
 
-        void Awake()
-        {
-            CurrentState = GameMenuStates.Resume;
-            //Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
-            PanSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
-            ZoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
+            DebugOverlay.SetActive(false);
+            MainOverlay.SetActive(false);
+            CharacterAndSpoilsScreen.SetActive(true);
         }
 
         void Update()
         {
             //TODO refactor to a function that returns a list of buttons pressed. That list can then later be passed to an interpretter
-            //See if the escape button is being pressed
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 EscapePressed = true;
-                Debug.Log("Escape pressed");
             }
-            //See if the F3 button is being pressed
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                DebugOverlayShowing = !DebugOverlayShowing; //Flip if the debug screen is showing or not
-                Debug.Log("F3 pressed");
+                DebugOverlayShowing = !DebugOverlayShowing;
             }
 
-            //Checks current menu state
             checkCurrentMenuState();
 
-            //Toggle debug overlay
-            debugOverlay.SetActive(DebugOverlayShowing);
+            DebugOverlay.SetActive(DebugOverlayShowing);
 
-            //Update debug overlay
             updateDebugOverlay();
 
             updateCharacterSpoilsScreen();
@@ -112,7 +108,6 @@ namespace FallenLand
             redrawCharacterSpoilsScreen();
         }
 
-        //if (panelMovingInto.name.Contains("CharacterSlotScrollView") || panelMovingInto.name.Contains("AuctionHouseScrollView") || panelMovingInto.name.Contains("TownRosterScrollView"))
         public bool CardIsAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
         {
             bool isAllowed = true;
@@ -154,6 +149,19 @@ namespace FallenLand
             //TODO warn to save
             Debug.Log("Quit");
         }
+
+        public void OnOpenCharacterAndSpoilsScreenPress()
+        {
+            CharacterAndSpoilsScreen.SetActive(true);
+            MainOverlay.SetActive(false);
+            redrawCharacterSpoilsScreen();
+        }
+
+        public void OnDoneInCharacterAndSpoilsScreenPress()
+        {
+            CharacterAndSpoilsScreen.SetActive(false);
+            MainOverlay.SetActive(true);
+        }
         #endregion
 
         #region HelperFunctions
@@ -172,7 +180,7 @@ namespace FallenLand
             //List<CharacterCard> townRoster = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetTownRoster(0);
 
             //Display information in the debug overlay
-            Text[] textComponenetsInDebugOverlay = debugOverlay.GetComponentsInChildren<Text>();
+            Text[] textComponenetsInDebugOverlay = DebugOverlay.GetComponentsInChildren<Text>();
             foreach (Text curText in textComponenetsInDebugOverlay)
             {
                 switch (curText.name)
@@ -303,8 +311,8 @@ namespace FallenLand
 
         private void redrawCharacterSpoilsScreen()
         {
-            updateAuctionHouseUi(true);
             updateTownRosterUi(true);
+            updateAuctionHouseUi(true);
             updateCharacterPanels(true);
         }
 
@@ -402,7 +410,6 @@ namespace FallenLand
                 //Clear old
                 foreach (Transform child in AuctionHouseScrollContent.transform)
                 {
-                    Debug.Log("Deleting old auction house cards");
                     GameObject.Destroy(child.gameObject);
                 }
 
@@ -470,21 +477,17 @@ namespace FallenLand
             List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(playerIndex);
             for (int activeIndex = 0; activeIndex < activeCharacters.Count; activeIndex++)
             {
-                Debug.Log("updateCharacterPanels: activeIndex: " + activeIndex);
                 if ((ActiveCharactersScrollContent[activeIndex].transform.childCount < activeCharacters.Count || forceRedraw) && !CardIsDragging)
                 {
-                    Debug.Log("activeIndex was not null: " + activeIndex);
                     //Clear old
                     foreach (Transform child in ActiveCharactersScrollContent[activeIndex].transform)
                     {
-                        Debug.Log("Deleting cards for character slot " + (activeIndex + 1));
                         GameObject.Destroy(child.gameObject);
                     }
 
                     if (activeCharacters[activeIndex] != null)
                     {
                         //Add character back to slot
-                        Debug.Log("Adding Character to slot " + (activeIndex + 1));
                         GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
                         Image image = imageObj.GetComponent<Image>();
                         string fileName = "Cards/CharacterCards/CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
@@ -502,7 +505,6 @@ namespace FallenLand
                         List<SpoilsCard> curSlotSpoils = activeCharacters[activeIndex].GetEquippedSpoils();
                         for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                         {
-                            Debug.Log("Adding spoils to slot " + (activeIndex + 1));
                             GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
                             Image image2 = imageObj2.GetComponent<Image>();
                             string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
