@@ -347,7 +347,6 @@ namespace FallenLand
                     {
                         SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
                         GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, card);
-                        //TODO handle the case where we drag from one character panel to another
                         if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
                         {
                             GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, card);
@@ -368,9 +367,17 @@ namespace FallenLand
                             GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, spoilsCardToMove);
                             GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, spoilsCardToMove);
                         }
-                        //Move character back to town roster (todo, also handle if they are dragging it to another slot)
+
                         GameManagerInstance.RemoveCharacterFromActiveParty(playerIndex, characterSlotFoundIn, card);
-                        GameManagerInstance.AddCharacterToTownRoster(playerIndex, card);
+                        if (panelMovingInto.name.Contains("TownRosterScrollView"))
+                        {
+                            GameManagerInstance.AddCharacterToTownRoster(playerIndex, card);
+                        }
+                        else
+                        {
+                            int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                            GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, card);
+                        }
                     }
                 }
                 else
