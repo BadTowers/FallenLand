@@ -42,6 +42,7 @@ namespace FallenLand
                 {
                     PreHoverLocation = transform.position;
                     UiManager.SetCardIsDragging(true);
+                    SiblingOrder = transform.GetSiblingIndex();
                 }
                 IsDragging = true;
                 figureOutCurrentParent();
@@ -59,24 +60,14 @@ namespace FallenLand
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                Debug.Log("Dropped");
                 UiManager.SetCardIsDragging(false);
                 IsDragging = false;
                 Image cardImage = this.GetComponentInParent<Image>();
                 if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(cardImage, HoveredOverPanel))
                 {
                     Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
-                    if (viewportTransform != null)
-                    {
-                        Debug.Log("Dropped on scroll");
-                        cardImage.rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
-                        UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
-                    }
-                    else
-                    {
-                        cardImage.rectTransform.SetParent(HoveredOverPanel.transform);
-                        UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
-                    }
+                    cardImage.rectTransform.SetParent(viewportTransform.transform.Find("Content").gameObject.transform);
+                    UiManager.UpdateAfterCardWasMoved(cardImage, HoveredOverPanel);
                 }
                 else
                 {
@@ -84,11 +75,13 @@ namespace FallenLand
                     transform.position = PreHoverLocation;
                 }
                 enableScroll();
-                transform.SetAsFirstSibling(); //move to the back (on parent)
                 OldParent = null;
                 IsOldParentSet = false;
-                changeHoveredPanelColor(HoveredOverPanel.name);
-                HoveredOverPanel = null;
+                if (HoveredOverPanel != null)
+                {
+                    changeHoveredPanelColor(HoveredOverPanel.name);
+                    HoveredOverPanel = null;
+                }
             }
         }
 
@@ -207,6 +200,7 @@ namespace FallenLand
         {
             Debug.Log("Reset parent for " + this.GetComponentInParent<Image>().name);
             this.GetComponentInParent<Image>().rectTransform.SetParent(OldParent.transform);
+            transform.SetSiblingIndex(SiblingOrder);
         }
 
         private void checkIfWeAreHoveredOverPanel()
