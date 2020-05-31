@@ -150,7 +150,7 @@ namespace FallenLand
 			if (hex.IsFactionBase())
 			{
 				toReturn.Append("F: ");
-				toReturn.Append(hex.GetFaction());
+				toReturn.Append(hex.GetFaction().GetName());
 				toReturn.Append(Environment.NewLine);
 			}
 			if (hex.IsWater())
