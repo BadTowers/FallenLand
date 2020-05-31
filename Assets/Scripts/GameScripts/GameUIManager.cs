@@ -46,7 +46,7 @@ namespace FallenLand
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
-            for (int i = 0; i < 5; i++) //TODO don't hardcode to give in the party
+            for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
             }

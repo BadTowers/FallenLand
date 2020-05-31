@@ -213,7 +213,7 @@ namespace FallenLand
 			ActiveCharacters = new List<CharacterCard>();
 			TownTechs = new List<TownTech>();
 
-			for (int i = 0; i < 5; i++) //TODO don't hardcode to 5
+			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
 				ActiveCharacters.Add(null);
 			}
