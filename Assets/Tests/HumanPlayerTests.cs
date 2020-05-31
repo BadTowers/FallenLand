@@ -230,11 +230,18 @@ namespace Tests
 			Assert.AreEqual(character1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
 
+			HumanPlayerInstance.RemoveCharacterFromParty(CHARACTER_3_INDEX);
+			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
+			HumanPlayerInstance.RemoveCharacterFromParty(CHARACTER_1_INDEX);
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
+			HumanPlayerInstance.RemoveCharacterFromParty(CHARACTER_2_INDEX);
+			Assert.AreEqual(0, HumanPlayerInstance.GetNumberOfCharactersActive());
+
 			yield return null;
 		}
 
 		[UnityTest]
-		public IEnumerator TestAddingSpoilsToActiveCharacters()
+		public IEnumerator TestAddingAndRemovingSpoilsFromActiveCharacters()
 		{
 			CharacterCard character1 = new CharacterCard("char 1");
 			CharacterCard character2 = new CharacterCard("char 2");
@@ -259,6 +266,11 @@ namespace Tests
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_3_INDEX, spoils1));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_4_INDEX, spoils1));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddSpoilsCardToCharacter(CHARACTER_5_INDEX, spoils1));
+
+			HumanPlayerInstance.RemoveSpoilsCardFromActiveCharacter(CHARACTER_1_INDEX, spoils2);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX].GetEquippedSpoils().Count);
+			HumanPlayerInstance.RemoveSpoilsCardFromActiveCharacter(CHARACTER_1_INDEX, spoils1);
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX].GetEquippedSpoils().Count);
 
 			yield return null;
 		}

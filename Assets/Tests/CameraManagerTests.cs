@@ -3,19 +3,24 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using UnityEngine;
 using FallenLand;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace Tests
 {
 	public class CameraManagerTests
 	{
 		private GameObject GameObj;
+		private GameObject PauseMenuObj;
+		private GameObject CharacterScreenObj;
         private Camera Cam;
 
 		[SetUp]
 		public void Setup()
 		{
+			PauseMenuObj = new GameObject();
+			PauseMenuObj.name = "PauseMenu";
+			CharacterScreenObj = new GameObject();
+			CharacterScreenObj.name = "CharacterAndSpoilsAssigningPanel";
+
 			GameObj = new GameObject();
 			GameObj.AddComponent<GameCreation>();
             Cam = GameObj.AddComponent<Camera>();
