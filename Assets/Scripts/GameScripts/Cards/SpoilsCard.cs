@@ -4,7 +4,6 @@ namespace FallenLand
 {
 	public class SpoilsCard : PartyCard
 	{
-
 		private List<SpoilsTypes> Types;
 		private int SellValue;
 		private int CarryWeight;

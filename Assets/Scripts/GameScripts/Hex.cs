@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FallenLand
 {
-	public class Hex : MonoBehaviour, HexInterface
+	public class Hex : MonoBehaviour, IHexInterface
 	{
 		private Coordinates CoordinatesInstance;
 		private bool IsCityHex;

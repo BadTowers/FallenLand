@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
 
 namespace FallenLand
 {
@@ -14,7 +12,6 @@ namespace FallenLand
 		private List<TownTech> TownTechs;
 		private int AmountOfSalvage;
 		private int Id;
-
 
 		public Player(Faction faction, int startingSalvage)
 		{

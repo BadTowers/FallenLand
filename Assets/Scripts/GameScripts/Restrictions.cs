@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿
 namespace FallenLand
 {
 	public enum Restrictions
 	{
-
 		//General
 		Equip_To_All_Party_Members_Or_None,
 		Cannot_Be_Sold,

@@ -1,4 +1,5 @@
-﻿namespace FallenLand
+﻿
+namespace FallenLand
 {
 	public enum Skills
 	{

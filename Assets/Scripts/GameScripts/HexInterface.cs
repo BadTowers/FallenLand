@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿
 namespace FallenLand
 {
-	public interface HexInterface
+	public interface IHexInterface
 	{
 		bool IsCity();
 		void SetIsCity(bool isCity);

@@ -1,8 +1,8 @@
-﻿namespace FallenLand
+﻿
+namespace FallenLand
 {
-
 	public enum SpoilsTypes
-	{ //TODO finish
+	{
 		Alcohol,
 		Ally,
 		Armor,
@@ -47,5 +47,4 @@
 		Vehicle_Equipment,
 		Zero_Wheeled,
 	}
-
 }

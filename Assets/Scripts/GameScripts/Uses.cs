@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿
 namespace FallenLand
 {
 	public enum Uses
 	{
-
 		Once_Per_Turn,
 		Unlimited,
 		None,

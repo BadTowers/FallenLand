@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 namespace FallenLand
 {
 	public class DefaultSpoilsCards
 	{
 		private Dictionary<string, int> multiples = new Dictionary<string, int>()
-	{
+		{
 		{"Basic Med Kit", 2},
 		{"Swat Body Armor", 2},
 		{"First Aid Kit", 2}
-	};
-
+		};
 		private List<SpoilsCard> SpoilsCardsDeck;
 
 		/*

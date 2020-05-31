@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿
 namespace FallenLand
 {
 	public enum Times
 	{
-
 		//General
 		Anytime,
 		Immediately,

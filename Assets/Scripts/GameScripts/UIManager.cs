@@ -6,16 +6,15 @@ namespace FallenLand
 {
 	public class UIManager : MonoBehaviourPunCallbacks
 	{
+		private List<GameObject> Menus;
 
-		private List<GameObject> menus;
-
-		protected void setActiveMenu(GameObject go)
+		protected void SetActiveMenu(GameObject go)
 		{
 			if (go != null)
 			{
 				go.SetActive(true);
 			}
-			foreach (GameObject other in menus)
+			foreach (GameObject other in Menus)
 			{
 				if (!other.Equals(go))
 				{
@@ -24,17 +23,17 @@ namespace FallenLand
 			}
 		}
 
-		protected void addToMenuList(GameObject go)
+		protected void AddToMenuList(GameObject go)
 		{
-			check();
-			menus.Add(go);
+			Check();
+			Menus.Add(go);
 		}
 
-		private void check()
+		private void Check()
 		{
-			if (menus == null)
+			if (Menus == null)
 			{
-				menus = new List<GameObject>();
+				Menus = new List<GameObject>();
 			}
 		}
 	}

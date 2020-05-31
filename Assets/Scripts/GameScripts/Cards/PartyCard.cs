@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 
 namespace FallenLand
 {
 	public class PartyCard : NonencounterCard
 	{
-
 		private Dictionary<Skills, int> BaseSkills;
 		private string TitleSubString;
 		private string Quote;

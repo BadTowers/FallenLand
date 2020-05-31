@@ -14,8 +14,6 @@ namespace FallenLand
 
         private bool EscapePressed;
         private bool DebugOverlayShowing;
-        private float PanSpeed;
-        private float ZoomSpeed;
         private int CurrentViewedID; //Current ID of player's stuff UI is displaying
         private GameManager GameManagerInstance;
         private GameObject CharacterAndSpoilsScreen;
@@ -32,9 +30,6 @@ namespace FallenLand
         void Awake()
         {
             CurrentState = GameMenuStates.Resume;
-            //Get the move speeds from the camera so we can freeze and unfreeze for pauses and resumes
-            PanSpeed = gameCamera.GetComponent<CameraManager>().PanSpeed;
-            ZoomSpeed = gameCamera.GetComponent<CameraManager>().ZoomSpeed;
 
             //Initialize vars
             EscapePressed = false;

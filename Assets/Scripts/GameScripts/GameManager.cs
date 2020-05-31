@@ -6,7 +6,6 @@ namespace FallenLand
 {
 	public class GameManager : MonoBehaviour
 	{
-
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();

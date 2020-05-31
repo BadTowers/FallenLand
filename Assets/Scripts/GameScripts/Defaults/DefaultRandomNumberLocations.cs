@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FallenLand
 {
 	public static class DefaultRandomNumberLocations
 	{
-
 		public static Dictionary<int, Coordinates> RAND_NUM_LOCATIONS = new Dictionary<int, Coordinates>()
-	{
+		{
 		{1, new Coordinates(3,20)},
 		{2, new Coordinates(4,21)},
 		{3, new Coordinates(6,20)},
@@ -108,8 +106,7 @@ namespace FallenLand
 		{98, new Coordinates(26,1)},
 		{99, new Coordinates(27,3)},
 		{100, new Coordinates(29,2)},
-		{-1, new Coordinates(-1,-1)} //An invalid location
-	};
-
+		{-1, new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION)}
+		};
 	}
 }

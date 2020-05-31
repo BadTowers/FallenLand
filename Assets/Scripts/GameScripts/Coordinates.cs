@@ -1,9 +1,10 @@
-﻿namespace FallenLand
+﻿
+namespace FallenLand
 {
     public class Coordinates
     {
-        private int X;
-        private int Y;
+        private readonly int X;
+        private readonly int Y;
 
         public Coordinates(int x, int y)
         {

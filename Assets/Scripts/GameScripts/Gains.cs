@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿
 namespace FallenLand
 {
 	public enum Gains
 	{
-
 		//General
 		No_Effect,
 		Cannot_Be_Stolen,

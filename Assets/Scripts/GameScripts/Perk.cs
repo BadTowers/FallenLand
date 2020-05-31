@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace FallenLand
 {
@@ -13,7 +11,6 @@ namespace FallenLand
 		private string PerkTitle;
 		private string PerkDescription;
 		private List<Dictionary<Gains, int>> D6Options;
-
 
 		public Perk(string title)
 		{

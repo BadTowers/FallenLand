@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FallenLand
 {
 	public class GameInformation : MonoBehaviour
 	{
-
 		//TODO rework this
 		//Similar to Factions, create a GameMode class.
 		//Add the attributes to it as needed

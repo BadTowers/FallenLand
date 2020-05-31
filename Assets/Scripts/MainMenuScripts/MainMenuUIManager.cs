@@ -8,7 +8,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Castle.Core.Internal;
-using System.Linq;
 
 namespace FallenLand
 {
@@ -103,12 +102,12 @@ namespace FallenLand
 			instantiateGameObjects();
 
 			//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
-			addToMenuList(MainMenu);
-			addToMenuList(OptionsMenu);
-			addToMenuList(SinglePlayerMenu);
-			addToMenuList(SetUpNewGameMenu);
-			addToMenuList(MultiplayerCreation);
-			addToMenuList(MultiplayerLobby);
+			AddToMenuList(MainMenu);
+			AddToMenuList(OptionsMenu);
+			AddToMenuList(SinglePlayerMenu);
+			AddToMenuList(SetUpNewGameMenu);
+			AddToMenuList(MultiplayerCreation);
+			AddToMenuList(MultiplayerLobby);
 
 			currentState = MainMenuStates.Main;
 			IsCreatingRoom = false;
@@ -143,13 +142,13 @@ namespace FallenLand
 			switch (currentState)
 			{
 				case MainMenuStates.Main:
-					setActiveMenu(MainMenu);
+					SetActiveMenu(MainMenu);
 					break;
 				case MainMenuStates.SinglePlayer:
-					setActiveMenu(SinglePlayerMenu);
+					SetActiveMenu(SinglePlayerMenu);
 					break;
 				case MainMenuStates.SetUpNewGame:
-					setActiveMenu(SetUpNewGameMenu);
+					SetActiveMenu(SetUpNewGameMenu);
 					if (FactionWasChanged)
 					{
 						updateFactionDisplay(); //Update which faction is currently displaying if a new one was selected
@@ -160,13 +159,13 @@ namespace FallenLand
 					}
 					break;
 				case MainMenuStates.Options:
-					setActiveMenu(OptionsMenu);
+					SetActiveMenu(OptionsMenu);
 					break;
 				case MainMenuStates.MultiplayerCreation:
-					setActiveMenu(MultiplayerCreation);
+					SetActiveMenu(MultiplayerCreation);
 					break;
 				case MainMenuStates.MultiplayerLobby:
-					setActiveMenu(MultiplayerLobby);
+					SetActiveMenu(MultiplayerLobby);
 					if (FactionWasChanged)
 					{
 						updateFactionDisplay(); //Update which faction is currently displaying if a new one was selected
@@ -178,7 +177,7 @@ namespace FallenLand
 					break;
 				default:
 					//Default will be to show the main menu in case of error
-					setActiveMenu(MainMenu);
+					SetActiveMenu(MainMenu);
 					break;
 			}
 		}

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,12 +8,12 @@ namespace FallenLand
 {
 	public class MouseManager : MonoBehaviour
 	{
-
 		private GameObject HexInformationBackground;
 		private GameObject HexInformationText;
-		private string toolTipText = "";
+		private string ToolTipText = "";
 
-		void Awake()
+        #region UnityFunctions
+        void Awake()
 		{
 			HexInformationBackground = GameObject.Find("HexInformationBackground");
 			HexInformationText = GameObject.Find("HexInformationText");
@@ -42,7 +40,7 @@ namespace FallenLand
 				//We know here what we are mousing over
 				if (ourHitObject.name != null)
 				{
-					MouseOverHex(ourHitObject);
+					mouseOverHex(ourHitObject);
 				}
 			}
 			else
@@ -50,9 +48,9 @@ namespace FallenLand
 				disableHexInfo();
 			}
 		}
+        #endregion
 
-		//Moused over a hex
-		void MouseOverHex(GameObject go)
+        private void mouseOverHex(GameObject go)
 		{
 			//If left clicking
 			if (Input.GetMouseButtonDown(0))
@@ -86,8 +84,7 @@ namespace FallenLand
 			}
 		}
 
-		//Toggle the color of the mesh render sent in
-		void toggleColor(MeshRenderer mr)
+		private void toggleColor(MeshRenderer mr)
 		{
 			Debug.Log("toggleColor");
 			if (mr.material.color == Color.white)
@@ -102,21 +99,21 @@ namespace FallenLand
 			}
 		}
 
-		void enableHexInfo(string text)
+		private void enableHexInfo(string text)
 		{
-			toolTipText = text;
+			ToolTipText = text;
 			HexInformationText.SetActive(true);
 			HexInformationBackground.SetActive(true);
 		}
 
-		void disableHexInfo()
+		private void disableHexInfo()
 		{
-			toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
+			ToolTipText = ""; //Reset the tooltip text when you aren't mousing over something
 			HexInformationText.SetActive(false);
 			HexInformationBackground.SetActive(false);
 		}
 
-		string getHexInfoString(Hex hex)
+		private string getHexInfoString(Hex hex)
 		{
 			StringBuilder toReturn = new StringBuilder();
 			toReturn.Append(hex.name);
@@ -159,14 +156,6 @@ namespace FallenLand
 			}
 
 			return toReturn.ToString();
-		}
-
-		void OnGUI()
-		{
-			if (toolTipText != "")
-			{
-				HexInformationText.GetComponent<Text>().text = toolTipText;
-			}
 		}
 	}
 }
