@@ -50,6 +50,17 @@ namespace FallenLand
 		}
         #endregion
 
+        #region PublicFunctions
+        public void OnGUI()
+		{
+			if (ToolTipText != "")
+			{
+				HexInformationText.GetComponent<Text>().text = ToolTipText;
+			}
+		}
+        #endregion
+
+        #region HelperFunctions
         private void mouseOverHex(GameObject go)
 		{
 			//If left clicking
@@ -157,5 +168,6 @@ namespace FallenLand
 
 			return toReturn.ToString();
 		}
+		#endregion
 	}
 }
