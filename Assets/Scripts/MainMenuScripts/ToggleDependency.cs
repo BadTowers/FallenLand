@@ -12,7 +12,6 @@ namespace FallenLand
 		 *
 		 */
 
-
 		public Toggle parentModifier;
 
 		void Update()
