@@ -11,30 +11,25 @@ namespace FallenLand
 	public class MouseManager : MonoBehaviour
 	{
 
-		public GameObject hexInformationBackground;
-		public GameObject hexInformationText;
-		public GameObject pauseMenu;
-
-		//GameObject currentlySelected TODO
+		private GameObject HexInformationBackground;
+		private GameObject HexInformationText;
 		private string toolTipText = "";
+
+		void Awake()
+		{
+			HexInformationBackground = GameObject.Find("HexInformationBackground");
+			HexInformationText = GameObject.Find("HexInformationText");
+		}
 
 		void Start()
 		{
-			// Start the tooltips for hex information as hidden
-			hexInformationText.SetActive(false);
-			hexInformationBackground.SetActive(false);
+			HexInformationText.SetActive(false);
+			HexInformationBackground.SetActive(false);
 		}
 
 		// Update is called once per frame
 		void Update()
 		{
-			//Don't do any game UI if the game is paused
-			if (pauseMenu.activeSelf)
-			{
-				disableHexInfo(); //Don't show the hex info if paused
-				return;
-			}
-
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //Get a vector called a Ray from the mouse through the world
 
 			RaycastHit objectHitInfo; //Object the raycast hit, if any
@@ -110,15 +105,15 @@ namespace FallenLand
 		void enableHexInfo(string text)
 		{
 			toolTipText = text;
-			hexInformationText.SetActive(true);
-			hexInformationBackground.SetActive(true);
+			HexInformationText.SetActive(true);
+			HexInformationBackground.SetActive(true);
 		}
 
 		void disableHexInfo()
 		{
 			toolTipText = ""; //Reset the tooltip text when you aren't mousing over something
-			hexInformationText.SetActive(false);
-			hexInformationBackground.SetActive(false);
+			HexInformationText.SetActive(false);
+			HexInformationBackground.SetActive(false);
 		}
 
 		string getHexInfoString(Hex hex)
@@ -170,7 +165,7 @@ namespace FallenLand
 		{
 			if (toolTipText != "")
 			{
-				hexInformationText.GetComponent<Text>().text = toolTipText;
+				HexInformationText.GetComponent<Text>().text = toolTipText;
 			}
 		}
 	}

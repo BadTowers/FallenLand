@@ -12,11 +12,19 @@ namespace FallenLand
 		public float MinZoom = 10;
 		public float MaxZoom = 50;
 
-		private bool isPanning = false;
-
-		//For panning
+		private GameObject PauseMenu;
+		private GameObject CharacterSpoilsOverlay;
+		private bool IsPanning = false;
+		private bool CameraMovementIsAllowed = false;
 		private Vector3 oldLocation = new Vector3(-1, -1, -1);
 		private Vector3 newLocation = new Vector3(-1, -1, -1);
+
+        #region UnityFunctions
+        void Awake()
+		{
+			PauseMenu = GameObject.Find("PauseMenu");
+			CharacterSpoilsOverlay = GameObject.Find("CharacterAndSpoilsAssigningPanel");
+		}
 
 		void Start()
 		{
@@ -26,23 +34,24 @@ namespace FallenLand
 
 		void Update()
 		{
+			updateIsAllowedToPan();
+
 			// Get the right mouse button
-			if (Input.GetMouseButtonDown(1))
+			if (Input.GetMouseButtonDown(1) && CameraMovementIsAllowed)
 			{
-				Debug.Log("IsPanning");
-				isPanning = true;
+				IsPanning = true;
 			}
 
 			// Disable movements on button release
 			if (!Input.GetMouseButton(1))
 			{
-				isPanning = false;
+				IsPanning = false;
 				oldLocation = new Vector3(-1, -1, -1);
 				newLocation = new Vector3(-1, -1, -1);
 			}
 
 			// Pan the camera on its XZ plane
-			if (isPanning)
+			if (IsPanning)
 			{
 				//Update the mouse location from one frame ago.
 				oldLocation = newLocation;
@@ -73,19 +82,19 @@ namespace FallenLand
 			}
 
 			// Zoom via scrollwheel
-			if (Input.GetAxis("Mouse ScrollWheel") > 0)
+			if (Input.GetAxis("Mouse ScrollWheel") > 0 && CameraMovementIsAllowed)
 			{
-				//GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y - .3f, transform.position.z + .2f);
 				zoomIn();
 			}
-			else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+			else if (Input.GetAxis("Mouse ScrollWheel") < 0 && CameraMovementIsAllowed)
 			{
-				//GetComponent<Transform>().position = new Vector3 (transform.position.x, transform.position.y + .3f, transform.position.z - .2f);
 				zoomOut();
 			}
 		}
+        #endregion
 
-		private void zoomIn()
+        #region HelperFunctions
+        private void zoomIn()
 		{
 			float newY = Camera.main.transform.position.y - ZoomSpeed;
 			if (newY < MinZoom)
@@ -104,5 +113,18 @@ namespace FallenLand
 			}
 			Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
 		}
+
+		private void updateIsAllowedToPan()
+		{
+			if (!PauseMenu.activeSelf && !CharacterSpoilsOverlay.activeSelf)
+			{
+				CameraMovementIsAllowed = true;
+			}
+			else
+			{
+				CameraMovementIsAllowed = false;
+			}
+		}
+		#endregion
 	}
 }

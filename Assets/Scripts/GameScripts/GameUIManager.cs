@@ -8,9 +8,6 @@ namespace FallenLand
     {
 
         public enum GameMenuStates { Pause, Options, Resume, Save };
-        public GameObject PauseMenu;
-        public GameObject SaveMenu;
-        public GameObject OptionsMenu;
         public GameObject GameManagerGameObject;
         public GameObject ImageGameObject;
         public GameObject gameCamera;
@@ -26,6 +23,7 @@ namespace FallenLand
         private GameObject TownRosterScrollContent;
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
+        private GameObject PauseMenu;
         private List<GameObject> ActiveCharactersScrollContent;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
@@ -43,12 +41,8 @@ namespace FallenLand
             DebugOverlayShowing = false;
             CurrentState = GameMenuStates.Resume;
 
-            //Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
-            addToMenuList(PauseMenu);
-            addToMenuList(OptionsMenu);
-            addToMenuList(SaveMenu);
-
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
+            PauseMenu = GameObject.Find("PauseMenu");
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
             DebugOverlay = GameObject.Find("DebugOverlay");
             MainOverlay = GameObject.Find("MainOverlay");
@@ -61,7 +55,11 @@ namespace FallenLand
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
             }
+        }
 
+        void Start()
+        {
+            PauseMenu.SetActive(false);
             DebugOverlay.SetActive(false);
             MainOverlay.SetActive(false);
             CharacterAndSpoilsScreen.SetActive(true);
@@ -219,62 +217,20 @@ namespace FallenLand
             switch (CurrentState)
             {
                 case GameMenuStates.Pause:
+                    updateUiOnPause();
                     if (EscapePressed)
                     {
                         CurrentState = GameMenuStates.Resume;
                     }
-                    else
-                    {
-                        setActiveMenu(PauseMenu);
-                        //Time.timeScale = 0; //Pause any physics
-                                            //Freeze the game camera from moving
-                        gameCamera.GetComponent<CameraManager>().PanSpeed = 0;
-                        gameCamera.GetComponent<CameraManager>().ZoomSpeed = 0;
-                    }
                     break;
                 case GameMenuStates.Resume:
+                    updateUiOnUnpuase();
                     if (EscapePressed)
                     {
-                        //If on options screen and escape pressed, go back to pause menu
-                        setActiveMenu(PauseMenu);
                         CurrentState = GameMenuStates.Pause;
-                    }
-                    else
-                    {
-                        setActiveMenu(null);
-                        //Time.timeScale = 1; //Resume any physics
-                                            //Unfreeze the game camera
-                        gameCamera.GetComponent<CameraManager>().PanSpeed = this.PanSpeed;
-                        gameCamera.GetComponent<CameraManager>().ZoomSpeed = this.ZoomSpeed;
-                    }
-                    break;
-                case GameMenuStates.Options:
-                    if (EscapePressed)
-                    {
-                        //If on options screen and escape pressed, go back to pause menu
-                        setActiveMenu(PauseMenu);
-                        CurrentState = GameMenuStates.Pause;
-                    }
-                    else
-                    {
-                        setActiveMenu(OptionsMenu);
-                    }
-                    break;
-                case GameMenuStates.Save:
-                    if (EscapePressed)
-                    {
-                        //If on save screen and escape pressed, go back to pause menu
-                        setActiveMenu(PauseMenu);
-                        CurrentState = GameMenuStates.Pause;
-                    }
-                    else
-                    {
-                        setActiveMenu(SaveMenu);
                     }
                     break;
                 default:
-                    //Default will be to show no menus
-                    setActiveMenu(null);
                     break;
             }
         }
@@ -606,6 +562,18 @@ namespace FallenLand
             }
 
             return characterIndexFoundOn;
+        }
+
+        private void updateUiOnPause()
+        {
+            MainOverlay.SetActive(false);
+            PauseMenu.SetActive(true);
+        }
+
+        private void updateUiOnUnpuase()
+        {
+            MainOverlay.SetActive(true);
+            PauseMenu.SetActive(false);
         }
         #endregion
     }
