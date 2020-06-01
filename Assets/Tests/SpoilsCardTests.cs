@@ -26,7 +26,7 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestSpoilsCardConstructors()
 		{
-			Assert.IsNotNull(SpoilsCardInstance.GetTypes());
+			Assert.IsNotNull(SpoilsCardInstance.GetSpoilsTypes());
 			Assert.IsNotNull(SpoilsCardInstance.GetConditionalGains());
 			Assert.IsNotNull(SpoilsCardInstance.GetStaticGains());
 			Assert.IsNotNull(SpoilsCardInstance.GetRestrictions());
@@ -38,9 +38,9 @@ namespace Tests
 			Assert.IsNotNull(SpoilsCardInstance.GetAttachments());
 
 			SpoilsCard spoilsCardListConstructor = new SpoilsCard("list constructor", new List<SpoilsTypes>() { SpoilsTypes.Alcohol });
-			Assert.IsNotNull(spoilsCardListConstructor.GetTypes());
-			Assert.AreEqual(1, spoilsCardListConstructor.GetTypes().Count);
-			Assert.AreEqual(SpoilsTypes.Alcohol, spoilsCardListConstructor.GetTypes()[0]);
+			Assert.IsNotNull(spoilsCardListConstructor.GetSpoilsTypes());
+			Assert.AreEqual(1, spoilsCardListConstructor.GetSpoilsTypes().Count);
+			Assert.AreEqual(SpoilsTypes.Alcohol, spoilsCardListConstructor.GetSpoilsTypes()[0]);
 			Assert.IsNotNull(spoilsCardListConstructor.GetConditionalGains());
 			Assert.IsNotNull(spoilsCardListConstructor.GetStaticGains());
 			Assert.IsNotNull(spoilsCardListConstructor.GetRestrictions());
@@ -52,10 +52,10 @@ namespace Tests
 			Assert.IsNotNull(spoilsCardListConstructor.GetAttachments());
 
 			SpoilsCard spoilsCardParamConstructor = new SpoilsCard("param constructor", SpoilsTypes.Assault_Rifle, SpoilsTypes.Heavy_Weapon);
-			Assert.IsNotNull(spoilsCardParamConstructor.GetTypes());
-			Assert.AreEqual(2, spoilsCardParamConstructor.GetTypes().Count);
-			Assert.AreEqual(SpoilsTypes.Assault_Rifle, spoilsCardParamConstructor.GetTypes()[0]);
-			Assert.AreEqual(SpoilsTypes.Heavy_Weapon, spoilsCardParamConstructor.GetTypes()[1]);
+			Assert.IsNotNull(spoilsCardParamConstructor.GetSpoilsTypes());
+			Assert.AreEqual(2, spoilsCardParamConstructor.GetSpoilsTypes().Count);
+			Assert.AreEqual(SpoilsTypes.Assault_Rifle, spoilsCardParamConstructor.GetSpoilsTypes()[0]);
+			Assert.AreEqual(SpoilsTypes.Heavy_Weapon, spoilsCardParamConstructor.GetSpoilsTypes()[1]);
 			Assert.IsNotNull(spoilsCardParamConstructor.GetConditionalGains());
 			Assert.IsNotNull(spoilsCardParamConstructor.GetStaticGains());
 			Assert.IsNotNull(spoilsCardParamConstructor.GetRestrictions());
@@ -86,14 +86,14 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestTypes()
 		{
-			Assert.IsNotNull(SpoilsCardInstance.GetTypes());
-			Assert.AreEqual(0, SpoilsCardInstance.GetTypes().Count);
+			Assert.IsNotNull(SpoilsCardInstance.GetSpoilsTypes());
+			Assert.AreEqual(0, SpoilsCardInstance.GetSpoilsTypes().Count);
 			SpoilsCardInstance.SetTypes(new List<SpoilsTypes>() { SpoilsTypes.Ranged_Weapon });
-			Assert.AreEqual(1, SpoilsCardInstance.GetTypes().Count);
-			Assert.AreEqual(SpoilsTypes.Ranged_Weapon, SpoilsCardInstance.GetTypes()[0]);
+			Assert.AreEqual(1, SpoilsCardInstance.GetSpoilsTypes().Count);
+			Assert.AreEqual(SpoilsTypes.Ranged_Weapon, SpoilsCardInstance.GetSpoilsTypes()[0]);
 			SpoilsCardInstance.AddType(SpoilsTypes.Relic);
-			Assert.AreEqual(2, SpoilsCardInstance.GetTypes().Count);
-			Assert.AreEqual(SpoilsTypes.Relic, SpoilsCardInstance.GetTypes()[1]);
+			Assert.AreEqual(2, SpoilsCardInstance.GetSpoilsTypes().Count);
+			Assert.AreEqual(SpoilsTypes.Relic, SpoilsCardInstance.GetSpoilsTypes()[1]);
 
 			yield return null;
 		}
@@ -422,6 +422,35 @@ namespace Tests
 			Assert.AreEqual(SpoilsCardInstance.GetId(), cardToCopyFrom.GetId());
 			Assert.AreEqual(SpoilsCardInstance.GetTitle(), cardToCopyFrom.GetTitle());
 			Assert.AreEqual(SpoilsCardInstance.GetQuote(), cardToCopyFrom.GetQuote());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestEqippedSpoils()
+		{
+			Assert.IsNotNull(SpoilsCardInstance.GetEquippedSpoils());
+			Assert.AreEqual(0, SpoilsCardInstance.GetEquippedSpoils().Count);
+
+			SpoilsCard spoils1 = new SpoilsCard("Spoils1");
+			SpoilsCard spoils2 = new SpoilsCard("Spoils2");
+			SpoilsCard spoils3 = new SpoilsCard("Spoils3");
+
+			SpoilsCardInstance.AttachSpoilsCard(null);
+			Assert.AreEqual(0, SpoilsCardInstance.GetEquippedSpoils().Count);
+			SpoilsCardInstance.AttachSpoilsCard(spoils1);
+			Assert.AreEqual(1, SpoilsCardInstance.GetEquippedSpoils().Count);
+			SpoilsCardInstance.AttachSpoilsCard(spoils2);
+			Assert.AreEqual(2, SpoilsCardInstance.GetEquippedSpoils().Count);
+
+			SpoilsCardInstance.RemoveSpoilsCard(null);
+			Assert.AreEqual(2, SpoilsCardInstance.GetEquippedSpoils().Count);
+			SpoilsCardInstance.RemoveSpoilsCard(spoils2);
+			Assert.AreEqual(1, SpoilsCardInstance.GetEquippedSpoils().Count);
+			SpoilsCardInstance.RemoveSpoilsCard(spoils3);
+			Assert.AreEqual(1, SpoilsCardInstance.GetEquippedSpoils().Count);
+			SpoilsCardInstance.RemoveSpoilsCard(spoils1);
+			Assert.AreEqual(0, SpoilsCardInstance.GetEquippedSpoils().Count);
 
 			yield return null;
 		}

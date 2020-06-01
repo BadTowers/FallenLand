@@ -274,5 +274,70 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestAddAndRemoveVehicleFromParty()
+		{
+			SpoilsCard vehicleSpoils = new SpoilsCard("Vehicle Spoils");
+			vehicleSpoils.AddType(SpoilsTypes.Vehicle);
+			SpoilsCard notAVehicleSpoils = new SpoilsCard("Non-vehicle spoils");
+			notAVehicleSpoils.AddType(SpoilsTypes.Armor);
+
+			Assert.True(HumanPlayerInstance.IsAllowedToEquipVehicleToSlot());
+			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
+			Assert.False(HumanPlayerInstance.IsAllowedToEquipVehicleToSlot());
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfActiveVehicles());
+			Assert.AreEqual(vehicleSpoils, HumanPlayerInstance.GetActiveVehicle());
+
+			HumanPlayerInstance.AddVehicleToParty(notAVehicleSpoils);
+			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfActiveVehicles());
+			Assert.AreEqual(vehicleSpoils, HumanPlayerInstance.GetActiveVehicle());
+
+			HumanPlayerInstance.RemoveActiveVehicle();
+			Assert.AreEqual(0, HumanPlayerInstance.GetNumberOfActiveVehicles());
+			Assert.AreEqual(null, HumanPlayerInstance.GetActiveVehicle());
+
+			HumanPlayerInstance.AddVehicleToParty(notAVehicleSpoils);
+			Assert.AreEqual(0, HumanPlayerInstance.GetNumberOfActiveVehicles());
+			Assert.AreEqual(null, HumanPlayerInstance.GetActiveVehicle());
+
+			HumanPlayerInstance.AddVehicleToParty(null);
+			Assert.AreEqual(0, HumanPlayerInstance.GetNumberOfActiveVehicles());
+			Assert.AreEqual(null, HumanPlayerInstance.GetActiveVehicle());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestAddRemoveStowablesToVehicle()
+		{
+			SpoilsCard vehicleSpoils = new SpoilsCard("Vehicle Spoils");
+			vehicleSpoils.AddType(SpoilsTypes.Vehicle);
+			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
+
+			SpoilsCard stowableCard = new SpoilsCard("Stowable");
+			stowableCard.AddType(SpoilsTypes.Stowable);
+			SpoilsCard nonstowableCard = new SpoilsCard("Not stowable");
+			nonstowableCard.AddType(SpoilsTypes.Rifle);
+
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(stowableCard));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(nonstowableCard));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(null));
+
+			HumanPlayerInstance.AddStowableToVehicle(stowableCard);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
+			Assert.AreEqual(stowableCard, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils()[0]);
+			HumanPlayerInstance.AddStowableToVehicle(nonstowableCard);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
+			HumanPlayerInstance.AddStowableToVehicle(null);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
+
+			HumanPlayerInstance.RemoveSpoilsCardFromActiveVehicle(nonstowableCard);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
+			HumanPlayerInstance.RemoveSpoilsCardFromActiveVehicle(stowableCard);
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
+
+			yield return null;
+		}
 	}
 }

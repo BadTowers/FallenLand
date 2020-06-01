@@ -6,10 +6,11 @@ namespace FallenLand
 {
 	public class GameManager : MonoBehaviour
 	{
+		public GameObject CardPrefab;
+
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();
-		public GameObject CardPrefab;
 		private int NumHumanPlayers;
 		private int NumComputerPlayers;
 		private GameInformation.GameModes GameMode;
@@ -93,7 +94,7 @@ namespace FallenLand
 
 
 			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
-			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
+			//SpoilsDeck = Card.ShuffleDeck(SpoilsDeck); //DON'T SHUFFLE FOR NOW FOR TESTING
 
 			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
 			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
@@ -208,6 +209,16 @@ namespace FallenLand
 			return townRoster;
 		}
 
+		public SpoilsCard GetActiveVehicle(int playerId)
+		{
+			SpoilsCard vehicle = null;
+			if (playerId < Players.Count)
+			{
+				vehicle = Players[playerId].GetActiveVehicle();
+			}
+			return vehicle;
+		}
+
 		public int GetIndexForMyPlayer()
 		{
 			int returnIndex = 0;
@@ -255,6 +266,22 @@ namespace FallenLand
 			}
 		}
 
+		public void RemoveSpoilsCardFromActiveVehicle(int playerIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].RemoveSpoilsCardFromActiveVehicle(card);
+			}
+		}
+
+		public void RemoveActiveVehicle(int playerIndex)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].RemoveActiveVehicle();
+			}
+		}
+
 		public void AssignSpoilsCardToCharacter(int playerIndex, int characterIndex, SpoilsCard card)
 		{
 			if (playerIndex < Players.Count)
@@ -287,6 +314,22 @@ namespace FallenLand
 			}
 		}
 
+		public void AddVehicleToActiveParty(int playerIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].AddVehicleToParty(card);
+			}
+		}
+
+		public void AddSpoilsToActiveVehicle(int playerIndex, SpoilsCard card)
+		{
+			if (playerIndex < Players.Count)
+			{
+				Players[playerIndex].AddStowableToVehicle(card);
+			}
+		}
+
 		public bool IsAllowedToApplySpoilsToCharacterSlot(int playerIndex, SpoilsCard card, int characterIndex)
 		{
 			bool isAllowed = false;
@@ -297,14 +340,39 @@ namespace FallenLand
 			return isAllowed;
 		}
 
+		public bool IsAllowedToApplySpoilsToVehicleSlot(int playerIndex, SpoilsCard card)
+		{
+			bool isAllowed = false;
+			List<SpoilsTypes> types = card.GetSpoilsTypes();
+			if (playerIndex < Players.Count && types.Contains(SpoilsTypes.Vehicle))
+			{
+				isAllowed = Players[playerIndex].IsAllowedToEquipVehicleToSlot();
+			}
+			else
+			{
+				isAllowed = Players[playerIndex].IsAllowedToEquipSpoilsToVehicle(card);
+			}
+			return isAllowed;
+		}
+
 		public bool IsAllowedToApplyCharacterToCharacterSlot(int playerIndex, int characterIndex)
 		{
 			bool isAllowed = false;
-			if (playerIndex < Players.Count)
+			if (playerIndex < Players.Count && characterIndex != Constants.VEHICLE_INDEX)
 			{
 				isAllowed = Players[playerIndex].IsAllowedToAddCharacterToParty(characterIndex);
 			}
 			return isAllowed;
+		}
+
+		public int GetNumberOfActiveVehicles(int playerIndex)
+		{
+			int count = 0;
+			if (playerIndex < Players.Count)
+			{
+				count = Players[playerIndex].GetNumberOfActiveVehicles();
+			}
+			return count;
 		}
 
 

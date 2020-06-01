@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,19 +20,17 @@ namespace FallenLand
         private GameObject CharacterAndSpoilsScreen;
         private GameObject AuctionHouseScrollContent;
         private GameObject TownRosterScrollContent;
+        private GameObject VehicleSlotScrollContent;
+        private List<GameObject> ActiveCharactersScrollContent;
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
-        private List<GameObject> ActiveCharactersScrollContent;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
 
         #region UnityFunctions
         void Awake()
         {
-            CurrentState = GameMenuStates.Resume;
-
-            //Initialize vars
             EscapePressed = false;
             DebugOverlayShowing = false;
             CurrentState = GameMenuStates.Resume;
@@ -50,6 +49,7 @@ namespace FallenLand
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
             }
+            VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
         }
 
         void Start()
@@ -97,7 +97,7 @@ namespace FallenLand
 
         public void UpdateAfterCardWasMoved(Image cardImage, GameObject panelMovingInto)
         {
-            updateStoredData(cardImage, panelMovingInto);
+            updateStoredCharacterAndSpoilsData(cardImage, panelMovingInto);
             redrawCharacterSpoilsScreen();
         }
 
@@ -265,18 +265,37 @@ namespace FallenLand
             updateTownRosterUi(true);
             updateAuctionHouseUi(true);
             updateCharacterPanels(true);
+            updateVehiclePanel(true);
         }
 
-        private bool updateStoredData(Image cardImage, GameObject panelMovingInto)
+        private bool updateStoredCharacterAndSpoilsData(Image cardImage, GameObject panelMovingInto)
         {
             bool wasUpdated = true;
 
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
             List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
             List<CharacterCard> townRoster = GameManagerInstance.GetTownRoster(playerIndex);
+            SpoilsCard activeVehicle = GameManagerInstance.GetActiveVehicle(playerIndex);
+            List<SpoilsCard> attachedToVehicle = null;
+
             SpoilsCard foundInAuctionHouse = auctionHouse.Find(x => x == cardImage.GetComponentInChildren<MonoCard>().CardPtr);
             CharacterCard foundInTownRoster = townRoster.Find(x => x == cardImage.GetComponentInChildren<MonoCard>().CardPtr);
+            SpoilsCard foundAsVehicle = null;
+            SpoilsCard foundOnVehicle = null;
+            if (activeVehicle != null)
+            {
+                attachedToVehicle = activeVehicle.GetEquippedSpoils();
+                if (activeVehicle == cardImage.GetComponentInChildren<MonoCard>().CardPtr)
+                {
+                    foundAsVehicle = activeVehicle;
+                }
+            }
+            if (attachedToVehicle != null)
+            {
+                foundOnVehicle = attachedToVehicle.Find(x => x == cardImage.GetComponentInChildren<MonoCard>().CardPtr);
+            }
 
+            //See where the card is coming from
             if (foundInAuctionHouse != null)
             {
                 if (panelMovingInto.name.Contains("CharacterSlotScrollView"))
@@ -284,6 +303,18 @@ namespace FallenLand
                     int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
                     GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
                     GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, foundInAuctionHouse);
+                }
+                else if (panelMovingInto.name.Contains("VehicleSlotScrollView"))
+                {
+                    GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
+                    if (foundInAuctionHouse.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
+                    {
+                        GameManagerInstance.AddVehicleToActiveParty(playerIndex, foundInAuctionHouse);
+                    }
+                    else
+                    {
+                        GameManagerInstance.AddSpoilsToActiveVehicle(playerIndex, foundInAuctionHouse);
+                    }
                 }
             }
             else if (foundInTownRoster != null)
@@ -295,11 +326,39 @@ namespace FallenLand
                     GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, foundInTownRoster);
                 }
             }
+            else if (foundAsVehicle != null)
+            {
+                if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
+                {
+                    //Move all spoils back to the auction house
+                    for (int i = foundAsVehicle.GetEquippedSpoils().Count - 1; i >= 0; i--)
+                    {
+                        SpoilsCard spoilsCardToMove = foundAsVehicle.GetEquippedSpoils()[i];
+                        GameManagerInstance.RemoveSpoilsCardFromActiveVehicle(playerIndex, spoilsCardToMove);
+                        GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, spoilsCardToMove);
+                    }
+                    GameManagerInstance.RemoveActiveVehicle(playerIndex);
+                    GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, foundAsVehicle);
+                }
+            }
+            else if (foundOnVehicle != null)
+            {
+                if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
+                {
+                    GameManagerInstance.RemoveSpoilsCardFromActiveVehicle(playerIndex, foundOnVehicle);
+                    GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, foundOnVehicle);
+                }
+                else if (panelMovingInto.name.Contains("CharacterSlotScrollView"))
+                {
+                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                    GameManagerInstance.RemoveSpoilsCardFromActiveVehicle(playerIndex, foundOnVehicle);
+                    GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, foundOnVehicle);
+                }
+            }
             else
             {
-                
                 int characterSlotFoundIn = findCardInActiveCharacters(cardImage);
-                
+
                 if (characterSlotFoundIn != -1)
                 {
                     if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is SpoilsCard)
@@ -313,14 +372,21 @@ namespace FallenLand
                         else
                         {
                             int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                            GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, card);
+                            if (characterIndex == Constants.VEHICLE_INDEX)
+                            {
+                                GameManagerInstance.AddVehicleToActiveParty(playerIndex, card);
+                            }
+                            else
+                            {
+                                GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, card);
+                            }
                         }
                     }
                     else if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is CharacterCard)
                     {
                         CharacterCard card = (CharacterCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
                         //Move all spoils back to the auction house
-                        for (int i = card.GetEquippedSpoils().Count - 1; i >= 0 ; i--)
+                        for (int i = card.GetEquippedSpoils().Count - 1; i >= 0; i--)
                         {
                             SpoilsCard spoilsCardToMove = card.GetEquippedSpoils()[i];
                             GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, spoilsCardToMove);
@@ -475,6 +541,59 @@ namespace FallenLand
             }
         }
 
+        private void updateVehiclePanel(bool forceRedraw)
+        {
+            const float OFFSET_Y = 24.5f;
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            SpoilsCard activeVehicle = GameManagerInstance.GetActiveVehicle(playerIndex);
+            if (((activeVehicle != null && VehicleSlotScrollContent.transform.childCount < activeVehicle.GetEquippedSpoils().Count + 1) || forceRedraw) && !CardIsDragging)
+            {
+                //Clear old
+                foreach (Transform child in VehicleSlotScrollContent.transform)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+
+                if (activeVehicle != null)
+                {
+                    //Add vehicle back to slot
+                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    Image image = imageObj.GetComponent<Image>();
+                    string fileName = "Cards/SpoilsCards/SpoilsCard" + activeVehicle.GetId().ToString();
+                    Sprite curSprite = Resources.Load<Sprite>(fileName);
+                    image.sprite = curSprite;
+                    imageObj.name = "SpoilsCard" + activeVehicle.GetId().ToString();
+                    image.transform.SetParent(VehicleSlotScrollContent.transform);
+                    image.transform.localPosition = new Vector3(90f, -40f, 0f);
+                    image.transform.localScale = new Vector3(1f, 1f, 1f);
+                    image.rectTransform.sizeDelta = new Vector2(75, 100);
+                    image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = activeVehicle;
+
+                    //Add spoils back to slot
+                    List<SpoilsCard> curSlotSpoils = activeVehicle.GetEquippedSpoils();
+                    Debug.Log("There are currently " + curSlotSpoils.Count + " spoils attached to the vehicle");
+                    for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
+                    {
+                        GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                        Image image2 = imageObj2.GetComponent<Image>();
+                        string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
+                        Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
+                        image2.sprite = curSprite2;
+                        imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
+                        image2.transform.SetParent(VehicleSlotScrollContent.transform);
+                        image2.transform.localPosition = new Vector3(90f, -40f - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
+                        image2.transform.localScale = new Vector3(1f, 1f, 1f);
+                        image2.rectTransform.sizeDelta = new Vector2(75, 100);
+                        image2.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                        imageObj2.GetComponentInChildren<MonoCard>().CardPtr = curSlotSpoils[curSpoilIndex];
+                        image2.transform.SetAsFirstSibling(); //move to the back (on parent)
+                    }
+                }
+            }
+        }
+
         private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
         {
             bool isAllowed = true;
@@ -485,18 +604,26 @@ namespace FallenLand
             {
                 isAllowed = false;
             }
-            try
+            else if (panelMovingInto.name.Contains("VehicleSlotScrollView"))
             {
-                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                if (!GameManagerInstance.IsAllowedToApplySpoilsToCharacterSlot(myIndex, card, characterIndex))
-                {
-                    isAllowed = false;
-                    Debug.Log("Can't put a spoils card on an empty character slot");
-                }
+                Debug.Log("Is a spoils trying to move into a vehicle slot");
+                isAllowed = GameManagerInstance.IsAllowedToApplySpoilsToVehicleSlot(myIndex, card);
             }
-            catch
+            else
             {
-                Debug.Log("Wasn't over a character card. No need to check that part");
+                try
+                {
+                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                    if (!GameManagerInstance.IsAllowedToApplySpoilsToCharacterSlot(myIndex, card, characterIndex))
+                    {
+                        isAllowed = false;
+                        Debug.Log("Can't put a spoils card on an empty character slot");
+                    }
+                }
+                catch
+                {
+                    Debug.Log("Wasn't over a character card. No need to check that part");
+                }
             }
             return isAllowed;
         }
@@ -511,18 +638,21 @@ namespace FallenLand
             {
                 isAllowed = false;
             }
-            try
+            else
             {
-                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                if (!GameManagerInstance.IsAllowedToApplyCharacterToCharacterSlot(myIndex, characterIndex))
+                try
                 {
-                    isAllowed = false;
-                    Debug.Log("Can't put a character card on a non-empty character slot");
+                    int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                    if (!GameManagerInstance.IsAllowedToApplyCharacterToCharacterSlot(myIndex, characterIndex))
+                    {
+                        isAllowed = false;
+                        Debug.Log("Can't put a character card on a non-empty character slot");
+                    }
                 }
-            }
-            catch
-            {
-                Debug.Log("Wasn't over a character card. No need to check that part");
+                catch
+                {
+                    Debug.Log("Wasn't over a character card. No need to check that part");
+                }
             }
             return isAllowed;
         }

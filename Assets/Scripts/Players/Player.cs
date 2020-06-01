@@ -7,6 +7,7 @@ namespace FallenLand
 		private List<SpoilsCard> AuctionHouse;
 		private List<ActionCard> ActionCardsInHand;
 		private List<CharacterCard> ActiveCharacters;
+		private SpoilsCard Vehicle;
 		private List<CharacterCard> TownRoster;
 		private Faction FactionOfPlayer;
 		private List<TownTech> TownTechs;
@@ -26,6 +27,7 @@ namespace FallenLand
 
 			AmountOfSalvage = startingSalvage;
 			FactionOfPlayer = faction;
+			Vehicle = null;
 			initLists();
 			extractTownTechsFromFaction();
 		}
@@ -51,6 +53,22 @@ namespace FallenLand
 			if (actionCard != null)
 			{
 				ActionCardsInHand.Add(actionCard);
+			}
+		}
+
+		public void AddVehicleToParty(SpoilsCard vehicleCard)
+		{
+			if (vehicleCard != null && Vehicle == null && vehicleCard.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
+			{
+				Vehicle = vehicleCard;
+			}
+		}
+
+		public void AddStowableToVehicle(SpoilsCard stowableCard)
+		{
+			if (stowableCard != null && Vehicle != null && stowableCard.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
+			{
+				Vehicle.AttachSpoilsCard(stowableCard);
 			}
 		}
 
@@ -118,6 +136,11 @@ namespace FallenLand
 			return ActiveCharacters;
 		}
 
+		public SpoilsCard GetActiveVehicle()
+		{
+			return Vehicle;
+		}
+
 		public int GetNumberOfCharactersActive()
 		{
 			int count = 0;
@@ -127,6 +150,16 @@ namespace FallenLand
 				{
 					count++;
 				}
+			}
+			return count;
+		}
+
+		public int GetNumberOfActiveVehicles()
+		{
+			int count = 0;
+			if (Vehicle != null)
+			{
+				count++;
 			}
 			return count;
 		}
@@ -168,6 +201,19 @@ namespace FallenLand
 			ActiveCharacters[characterIndex] = null;
 		}
 
+		public void RemoveSpoilsCardFromActiveVehicle(SpoilsCard card)
+		{
+			if (Vehicle != null && Vehicle.GetEquippedSpoils().Contains(card))
+			{
+				Vehicle.RemoveSpoilsCard(card);
+			}
+		}
+
+		public void RemoveActiveVehicle()
+		{
+			Vehicle = null;
+		}
+
 		public void AddCharacterToParty(int characterIndex, CharacterCard character)
 		{
 			if (character != null && ActiveCharacters[characterIndex] == null)
@@ -187,7 +233,27 @@ namespace FallenLand
 		public bool IsAllowedToAddSpoilsCardToCharacter(int characterIndex, SpoilsCard card)
 		{
 			bool isAllowed = false;
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null && !card.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
+			{
+				isAllowed = true;
+			}
+			return isAllowed;
+		}
+
+		public bool IsAllowedToEquipVehicleToSlot()
+		{
+			bool isAllowed = false;
+			if (Vehicle == null)
+			{
+				isAllowed = true;
+			}
+			return isAllowed;
+		}
+
+		public bool IsAllowedToEquipSpoilsToVehicle(SpoilsCard card)
+		{
+			bool isAllowed = false;
+			if (Vehicle != null && card != null && card.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
 			{
 				isAllowed = true;
 			}

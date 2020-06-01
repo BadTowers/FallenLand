@@ -78,7 +78,7 @@ namespace FallenLand
                 IsOldParentSet = false;
                 if (HoveredOverPanel != null)
                 {
-                    changeHoveredPanelColor(HoveredOverPanel.name);
+                    changeHoveredPanelColor();
                     HoveredOverPanel = null;
                 }
             }
@@ -208,7 +208,7 @@ namespace FallenLand
 
             if (HoveredOverPanel != null)
             {
-                changeHoveredPanelColor(HoveredOverPanel.name);
+                changeHoveredPanelColor();
                 if (!IsHoveringOverPanel)
                 {
                     HoveredOverPanel = null;
@@ -227,11 +227,14 @@ namespace FallenLand
 
             foreach (RaycastResult result in raycastResults)
             {
-                if (result.gameObject.name.Contains("CharacterSlotScrollView") || result.gameObject.name.Contains("AuctionHouseScrollView") || result.gameObject.name.Contains("TownRosterScrollView"))
+                if (result.gameObject.name.Contains("CharacterSlotScrollView") || 
+                    result.gameObject.name.Contains("AuctionHouseScrollView") || 
+                    result.gameObject.name.Contains("TownRosterScrollView") ||
+                    result.gameObject.name.Contains("VehicleSlotScrollView"))
                 {
                     if (HoveredOverPanel != null)
                     {
-                        changeHoveredPanelColor(HoveredOverPanel.name);
+                        changeHoveredPanelColor();
                     }
                     if (IsDragging)
                     {
@@ -243,7 +246,7 @@ namespace FallenLand
             }
         }
 
-        private void changeHoveredPanelColor(string name)
+        private void changeHoveredPanelColor()
         {
             Color color;
 

@@ -19,6 +19,7 @@ namespace FallenLand
 		private Times WhenTempGainsExpire;
 		private List<SpoilsCard> Attachments;
 		private bool PlaceOnTopOfDiscard;
+		private List<SpoilsCard> EquippedSpoils;
 
 		public SpoilsCard(string title) : base(title)
 		{
@@ -59,7 +60,7 @@ namespace FallenLand
 			Types.Add(type);
 		}
 
-		public List<SpoilsTypes> GetTypes()
+		public List<SpoilsTypes> GetSpoilsTypes()
 		{
 			return Types;
 		}
@@ -358,6 +359,27 @@ namespace FallenLand
 			return PlaceOnTopOfDiscard;
 		}
 
+		public List<SpoilsCard> GetEquippedSpoils()
+		{
+			return EquippedSpoils;
+		}
+
+		public void AttachSpoilsCard(SpoilsCard toAttach)
+		{
+			if (toAttach != null)
+			{
+				EquippedSpoils.Add(toAttach);
+			}
+		}
+
+		public void RemoveSpoilsCard(SpoilsCard toRemove)
+		{
+			if (EquippedSpoils.Contains(toRemove))
+			{
+				EquippedSpoils.Remove(toRemove);
+			}
+		}
+
 		public SpoilsCard DeepCopy()
 		{
 			SpoilsCard newCard = new SpoilsCard(this.GetTitle());
@@ -414,6 +436,7 @@ namespace FallenLand
 			D6Options = new List<SpoilsCard>();
 			D10Options = new List<SpoilsCard>();
 			Attachments = new List<SpoilsCard>();
+			EquippedSpoils = new List<SpoilsCard>();
 
 			SellValue = 0;
 			CarryWeight = 0;

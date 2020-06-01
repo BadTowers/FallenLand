@@ -41,15 +41,15 @@ namespace Tests
 				Assert.IsNotNull(curCard.GetNumberOfUses());
 				Assert.IsNotNull(curCard.GetRestrictions());
 				Assert.IsNotNull(curCard.GetStaticGains());
-				Assert.IsNotNull(curCard.GetTypes());
+				Assert.IsNotNull(curCard.GetSpoilsTypes());
 				Assert.IsNotNull(curCard.GetWhenUsable());
 
-				Assert.IsTrue(DefaultSpoilsDeck[i].GetTypes().Count > 0);
+				Assert.IsTrue(DefaultSpoilsDeck[i].GetSpoilsTypes().Count > 0);
 
 				//If it isn't an event card, ensure all cards have at least one non-zero base skill
 				if (curCard.GetTitle() != "Designer Biker Leathers" && curCard.GetTitle() != "Fallen Land Board Game") //These cards have no stats
 				{
-					if (!curCard.GetTypes().Contains(SpoilsTypes.Event))
+					if (!curCard.GetSpoilsTypes().Contains(SpoilsTypes.Event))
 					{
 						bool containsNonZero = false;
 						foreach (int curValue in curCard.GetBaseSkills().Values)
