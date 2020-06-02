@@ -231,7 +231,7 @@ namespace FallenLand
 			return returnIndex;
 		}
 
-		public void RemoveCardFromPlayerAuctionHouse(int playerIndex, SpoilsCard card)
+		public void RemoveSpoilFromAuctionHouse(int playerIndex, SpoilsCard card)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
@@ -239,7 +239,7 @@ namespace FallenLand
 			}
 		}
 
-		public void RemoveCardFromPlayerTownRoster(int playerIndex, CharacterCard card)
+		public void RemoveCharacterFromTownRoster(int playerIndex, CharacterCard card)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
@@ -255,7 +255,7 @@ namespace FallenLand
 			}
 		}
 
-		public void RemoveCharacterFromActiveParty(int playerIndex, int characterSlotFoundIn, CharacterCard card)
+		public void RemoveCharacterFromActiveParty(int playerIndex, int characterSlotFoundIn)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{

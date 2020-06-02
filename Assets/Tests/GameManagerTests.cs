@@ -6,6 +6,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -16,6 +17,7 @@ namespace Tests
 		private GameObject PhotonNetworkHelperObject;
 		private GameObject MapCreationObject;
 		private PhotonNetworkHelper NetworkHelper;
+		private const int MY_PLAYER_INDEX = 0;
 
 		[SetUp]
 		public void Setup()
@@ -44,6 +46,7 @@ namespace Tests
 			Object.Destroy(GameManagerObject);
 		}
 
+		//All of these are in one test because the setup and teardown to the photon network is expensive
 		[UnityTest]
 		[Parallelizable(ParallelScope.None)]
 		public IEnumerator TestPublicInterfaceInVarietyOfWays()
@@ -69,21 +72,20 @@ namespace Tests
 			int numPlayers = PhotonNetwork.PlayerList.Length;
 
 			//player index too high will tell us we aren't allowed to attach anything
-			SpoilsCard spoil = new SpoilsCard("spoils");
-			spoil.AddSpoilsType(SpoilsTypes.Stowable);
-			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(numPlayers+1, spoil, 0));
-			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(numPlayers+1, spoil));
+			SpoilsCard stowableSpoil = new SpoilsCard("spoils");
+			stowableSpoil.AddSpoilsType(SpoilsTypes.Stowable);
+			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(numPlayers+1, stowableSpoil, 0));
+			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(numPlayers+1, stowableSpoil));
 			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(numPlayers+1, 0));
 			Assert.AreEqual(0, gameManager.GetNumberOfActiveVehicles(numPlayers+1));
 
 			//player index too low will tell us we aren't allowed to attach anything
-			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(-1, spoil, 0));
-			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(-1, spoil));
+			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(-1, stowableSpoil, 0));
+			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(-1, stowableSpoil));
 			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(-1, 0));
 			Assert.AreEqual(0, gameManager.GetNumberOfActiveVehicles(-1));
 
-			//Since we are the only player connected, our index should be 0
-			Assert.AreEqual(0, gameManager.GetIndexForMyPlayer());
+			Assert.AreEqual(MY_PLAYER_INDEX, gameManager.GetIndexForMyPlayer());
 
 			//Can't add vehicle if player index is invalid
 			SpoilsCard vehicle = new SpoilsCard("vehicle");
@@ -122,6 +124,105 @@ namespace Tests
 			//Get back an empty town roster for an invalid player index
 			Assert.IsNotNull(gameManager.GetTownRoster(-1));
 			Assert.AreEqual(0, gameManager.GetTownRoster(-1).Count);
+
+			//Make sure we can extract out our faction
+			Dictionary<string, string> myFaction = new Dictionary<string, string>
+			{
+				{ PhotonNetwork.PlayerList[0].UserId, new DefaultFactionInfo().GetDefaultFactionList()[1].GetName()}
+			};
+			GameCreationObject.GetComponent<GameCreation>().SetFactions(myFaction);
+			yield return null; //progress a frame so the update function runs
+			Assert.AreEqual(new DefaultFactionInfo().GetDefaultFactionList()[1].GetName(), gameManager.GetFaction(MY_PLAYER_INDEX).GetName());
+
+			//A valid ID should have some action cards in their hand
+			Assert.IsTrue(gameManager.GetActionCards(MY_PLAYER_INDEX).Count > 0);
+
+			//A valid ID should have some characters and spoils in their town roster and auction house
+			Assert.IsTrue(gameManager.GetAuctionHouse(MY_PLAYER_INDEX).Count > 0);
+			Assert.IsTrue(gameManager.GetTownRoster(MY_PLAYER_INDEX).Count > 0);
+
+			//A valid ID should be able to equip a vehicle
+			Assert.IsTrue(gameManager.IsAllowedToApplySpoilsToVehicleSlot(MY_PLAYER_INDEX, vehicle));
+			gameManager.AddVehicleToActiveParty(MY_PLAYER_INDEX, vehicle);
+			Assert.IsNotNull(gameManager.GetActiveVehicle(MY_PLAYER_INDEX));
+			Assert.AreEqual(vehicle, gameManager.GetActiveVehicle(MY_PLAYER_INDEX));
+			Assert.AreEqual(1, gameManager.GetNumberOfActiveVehicles(MY_PLAYER_INDEX));
+
+			//A valid ID should be able to equip stowables to their vehicle
+			Assert.IsTrue(gameManager.IsAllowedToApplySpoilsToVehicleSlot(MY_PLAYER_INDEX, stowableSpoil));
+			gameManager.AddSpoilsToActiveVehicle(MY_PLAYER_INDEX, stowableSpoil);
+			Assert.IsNotNull(gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils());
+			Assert.AreEqual(1, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils().Count);
+			Assert.AreEqual(stowableSpoil, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils()[0]);
+
+			//A valid ID can remove stowables from their active vehicle
+			gameManager.RemoveSpoilsCardFromActiveVehicle(MY_PLAYER_INDEX, null);
+			Assert.AreEqual(1, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils().Count);
+			gameManager.RemoveSpoilsCardFromActiveVehicle(MY_PLAYER_INDEX, stowableSpoil);
+			Assert.AreEqual(0, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils().Count);
+
+			//A valid ID can remove their active vehicle
+			gameManager.RemoveActiveVehicle(MY_PLAYER_INDEX);
+			Assert.AreEqual(0, gameManager.GetNumberOfActiveVehicles(MY_PLAYER_INDEX));
+			Assert.IsNull(gameManager.GetActiveVehicle(MY_PLAYER_INDEX));
+
+			//A valid ID should be able to equip characters to their party and add spoils to that member
+			CharacterCard character = new CharacterCard("character");
+			const int SLOT_0 = 0;
+			const int SLOT_1 = 1;
+			Assert.IsNotNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX));
+			Assert.AreEqual(5, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX).Count);
+			Assert.IsTrue(gameManager.IsAllowedToApplyCharacterToCharacterSlot(MY_PLAYER_INDEX, SLOT_0));
+			Assert.IsNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0]);
+			gameManager.AssignCharacterToParty(MY_PLAYER_INDEX, SLOT_0, character);
+			Assert.IsNotNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0]);
+			Assert.AreEqual(character, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0]);
+			Assert.IsTrue(gameManager.IsAllowedToApplySpoilsToCharacterSlot(MY_PLAYER_INDEX, stowableSpoil, SLOT_0));
+			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(MY_PLAYER_INDEX, stowableSpoil, SLOT_1));
+			gameManager.AssignSpoilsCardToCharacter(MY_PLAYER_INDEX, SLOT_0, stowableSpoil);
+			Assert.AreEqual(1, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0].GetEquippedSpoils().Count);
+			Assert.AreEqual(stowableSpoil, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0].GetEquippedSpoils()[0]);
+
+			//A valid ID should be able to remove characters from their part and spoils from that member
+			gameManager.RemoveSpoilsCardFromPlayerActiveParty(MY_PLAYER_INDEX, SLOT_0, null);
+			Assert.AreEqual(1, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0].GetEquippedSpoils().Count);
+			gameManager.RemoveSpoilsCardFromPlayerActiveParty(MY_PLAYER_INDEX, SLOT_0, stowableSpoil);
+			Assert.AreEqual(0, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0].GetEquippedSpoils().Count);
+			gameManager.RemoveCharacterFromActiveParty(MY_PLAYER_INDEX, SLOT_0);
+			Assert.IsNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0]);
+
+			//A valid ID can add spoils to their auction house
+			int auctionHouseSizeBefore = gameManager.GetAuctionHouse(MY_PLAYER_INDEX).Count;
+			gameManager.AddSpoilsToAuctionHouse(MY_PLAYER_INDEX, stowableSpoil);
+			Assert.AreEqual(auctionHouseSizeBefore + 1, gameManager.GetAuctionHouse(MY_PLAYER_INDEX).Count);
+
+			//A valid ID can remove spoils from their auction house
+			gameManager.RemoveSpoilFromAuctionHouse(MY_PLAYER_INDEX, stowableSpoil);
+			Assert.AreEqual(auctionHouseSizeBefore, gameManager.GetAuctionHouse(MY_PLAYER_INDEX).Count);
+
+			//Null spoils aren't added to auction house
+			gameManager.AddSpoilsToAuctionHouse(MY_PLAYER_INDEX, null);
+			Assert.AreEqual(auctionHouseSizeBefore, gameManager.GetAuctionHouse(MY_PLAYER_INDEX).Count);
+
+			//A valid ID can add characters to their town roster
+			int townRosterSizeBefore = gameManager.GetTownRoster(MY_PLAYER_INDEX).Count;
+			gameManager.AddCharacterToTownRoster(MY_PLAYER_INDEX, character);
+			Assert.AreEqual(townRosterSizeBefore + 1, gameManager.GetTownRoster(MY_PLAYER_INDEX).Count);
+
+			//A valid ID can remove characters from their town roster
+			gameManager.RemoveCharacterFromTownRoster(MY_PLAYER_INDEX, character);
+			Assert.AreEqual(townRosterSizeBefore, gameManager.GetTownRoster(MY_PLAYER_INDEX).Count);
+
+			//Null characters aren't added to town roster
+			gameManager.AddCharacterToTownRoster(MY_PLAYER_INDEX, null);
+			Assert.AreEqual(townRosterSizeBefore, gameManager.GetTownRoster(MY_PLAYER_INDEX).Count);
+
+			//A valid ID should have a non-zero amount of starting salvage
+			Assert.IsTrue(gameManager.GetSalvage(MY_PLAYER_INDEX) > 0);
+
+			//A valid ID should have a non-zero amount of starting town techs
+			Assert.IsTrue(gameManager.GetTownTechs(MY_PLAYER_INDEX).Count > 0);
+			
 
 
 			//////Teardown requires us to leave the room and disconnect from master

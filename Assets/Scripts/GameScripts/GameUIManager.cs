@@ -301,12 +301,12 @@ namespace FallenLand
                 if (panelMovingInto.name.Contains("CharacterSlotScrollView"))
                 {
                     int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                    GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
+                    GameManagerInstance.RemoveSpoilFromAuctionHouse(playerIndex, foundInAuctionHouse);
                     GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, foundInAuctionHouse);
                 }
                 else if (panelMovingInto.name.Contains("VehicleSlotScrollView"))
                 {
-                    GameManagerInstance.RemoveCardFromPlayerAuctionHouse(playerIndex, foundInAuctionHouse);
+                    GameManagerInstance.RemoveSpoilFromAuctionHouse(playerIndex, foundInAuctionHouse);
                     if (foundInAuctionHouse.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
                     {
                         GameManagerInstance.AddVehicleToActiveParty(playerIndex, foundInAuctionHouse);
@@ -322,7 +322,7 @@ namespace FallenLand
                 if (panelMovingInto.name.Contains("CharacterSlotScrollView"))
                 {
                     int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                    GameManagerInstance.RemoveCardFromPlayerTownRoster(playerIndex, foundInTownRoster);
+                    GameManagerInstance.RemoveCharacterFromTownRoster(playerIndex, foundInTownRoster);
                     GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, foundInTownRoster);
                 }
             }
@@ -393,7 +393,7 @@ namespace FallenLand
                             GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, spoilsCardToMove);
                         }
 
-                        GameManagerInstance.RemoveCharacterFromActiveParty(playerIndex, characterSlotFoundIn, card);
+                        GameManagerInstance.RemoveCharacterFromActiveParty(playerIndex, characterSlotFoundIn);
                         if (panelMovingInto.name.Contains("TownRosterScrollView"))
                         {
                             GameManagerInstance.AddCharacterToTownRoster(playerIndex, card);
