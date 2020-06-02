@@ -5,73 +5,62 @@ namespace FallenLand
 {
 	public class MapCreation : MonoBehaviour
 	{
+		public const int MAP_HEIGHT = 23;
+		public const int MAP_WIDTH = 34;
+		public const int MAP_SCALE = 3;
 
-		public GameObject hexTilePrefab;
-		public const int height = 23;
-		public const int width = 34;
-		public const int scale = 3;
-		public MapLayout ml;
-		private const float LROffset = .860f * scale;
-		private const float UDOffset = .740f * scale;
+		private const float LeftRightOffset = .860f * MAP_SCALE;
+		private const float UpDownOffset = .740f * MAP_SCALE;
 		private const int NUM_RANDOM_LOCATIONS = 100;
-		private GameObject[,] mapOfHexes;
-		private List<Faction> factions;
+		private GameObject[,] MapOfHexes;
+		private List<Faction> Factions;
+		private GameObject HexTilePrefab;
+		private MapLayout MapLayout;
 
-		// Use this for initialization (for debugging only, creates a default map layout and creates the map)
-
-		void Start()
+		public void CreateMap()
 		{
+			HexTilePrefab = (GameObject)Resources.Load("Prefabs/HexNoSlantsPrefab", typeof(GameObject));
+			if (HexTilePrefab == null)
+			{
+				Debug.LogError("HexTilePrefab null");
+			}
 
-			//Can be changed to RandomMapLayout later if desired
-			ml = new DefaultMapLayout();
-
-			//Debug.Log (newGameState.GetComponent("GameCreation").gameMode);
-
-			//Assign the hexes their properties
-			createMap();
-		}
-
-
-		public void createMap()
-		{
 			//Set map size
-			mapOfHexes = new GameObject[width, height];
+			MapOfHexes = new GameObject[MAP_WIDTH, MAP_HEIGHT];
 
-			if (ml == null)
+			if (MapLayout == null)
 			{
 				Debug.Log("Error, map layout not set. Using default");
-				ml = new DefaultMapLayout();
+				MapLayout = new DefaultMapLayout();
 			}
 
 			//Load default factions
-			factions = new DefaultFactionInfo().GetDefaultFactionList();
+			Factions = new DefaultFactionInfo().GetDefaultFactionList();
 
-			for (int LR = 0; LR < width; LR++)
-			{ //Left/right
-				for (int UD = 0; UD < height; UD++)
-				{ //Up/down
-
-					float lrPos = LR * LROffset;
-					float udPos = UD * UDOffset;
+			for (int LR = 0; LR < MAP_WIDTH; LR++)
+			{
+				for (int UD = 0; UD < MAP_HEIGHT; UD++)
+				{
+					float lrPos = LR * LeftRightOffset;
+					float udPos = UD * UpDownOffset;
 
 					//Odd row needs half an offset added on
 					if (UD % 2 == 1)
 					{
-						lrPos += LROffset / 2f;
+						lrPos += LeftRightOffset / 2f;
 					}
 
 					GameObject curHex = null;
 
 					//Create a hex and change its starting information
-					//Debug.Log("x: " + LR + "   y: " + UD);
-					if (ml.IsHexInGame(LR, UD))
+					if (MapLayout.IsHexInGame(LR, UD))
 					{
-						curHex = (GameObject)Instantiate(hexTilePrefab, new Vector3(lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
+						curHex = (GameObject)Instantiate(HexTilePrefab, new Vector3(lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
 						configureHex(curHex, LR, UD);
 					}
 
 					//Store the hex
-					mapOfHexes[LR, UD] = curHex;
+					MapOfHexes[LR, UD] = curHex;
 				}
 			}
 		}
@@ -86,20 +75,20 @@ namespace FallenLand
 			Coordinates coords = new Coordinates(x, y);
 			go.AddComponent<Hex>();
 			go.GetComponent<Hex>().SetCoordinates(coords);
-			go.GetComponent<Hex>().SetIsCity(ml.IsCity(coords));
-			go.GetComponent<Hex>().SetIsMountain(ml.IsMountain(coords));
-			go.GetComponent<Hex>().SetIsRad(ml.IsRad(coords));
-			go.GetComponent<Hex>().SetIsFactionBase(ml.IsFactionBase(coords));
-			go.GetComponent<Hex>().SetIsPlains(ml.IsPlains(coords));
-			go.GetComponent<Hex>().SetIsRandomLocation(ml.IsRandomLocation(coords));
-			go.GetComponent<Hex>().SetIsWater(ml.IsWater(coords));
-			go.GetComponent<Hex>().SetIsResource(ml.IsResource(coords));
-			go.GetComponent<Hex>().SetIsHexInGame(ml.IsHexInGame(coords));
+			go.GetComponent<Hex>().SetIsCity(MapLayout.IsCity(coords));
+			go.GetComponent<Hex>().SetIsMountain(MapLayout.IsMountain(coords));
+			go.GetComponent<Hex>().SetIsRad(MapLayout.IsRad(coords));
+			go.GetComponent<Hex>().SetIsFactionBase(MapLayout.IsFactionBase(coords));
+			go.GetComponent<Hex>().SetIsPlains(MapLayout.IsPlains(coords));
+			go.GetComponent<Hex>().SetIsRandomLocation(MapLayout.IsRandomLocation(coords));
+			go.GetComponent<Hex>().SetIsWater(MapLayout.IsWater(coords));
+			go.GetComponent<Hex>().SetIsResource(MapLayout.IsResource(coords));
+			go.GetComponent<Hex>().SetIsHexInGame(MapLayout.IsHexInGame(coords));
 
 			//Set the faction base, if needed
 			if (go.GetComponent<Hex>().IsFactionBase())
 			{
-				foreach (Faction f in factions)
+				foreach (Faction f in Factions)
 				{
 					if (f.GetBaseLocation().Equals(go.GetComponent<Hex>().GetCoordinates()))
 					{

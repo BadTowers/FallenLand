@@ -137,7 +137,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("A Case of the Finest Champagne"); //Create the card and set the title
-			curCard.SetTypes(SpoilsTypes.Stowable, SpoilsTypes.Alcohol, SpoilsTypes.Equipment); //Set all types the card fulfils
+			curCard.SetSpoilsTypes(SpoilsTypes.Stowable, SpoilsTypes.Alcohol, SpoilsTypes.Equipment); //Set all types the card fulfils
 			curCard.SetCarryWeight(2); //Set how much the item weights
 			curCard.SetSellValue(6); //Set the value of the card
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -173,7 +173,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("6 Armored War Horses");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -194,7 +194,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Fernando the Chauffer");
-			curCard.SetTypes(SpoilsTypes.Ally);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ally);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0); //Can't be sold
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -234,7 +234,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Portable Generator");
-			curCard.SetTypes(SpoilsTypes.Vehicle_Equipment);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle_Equipment);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(16);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -258,7 +258,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Genuine Sock Monkey Puppet");
-			curCard.SetTypes(SpoilsTypes.Equipment);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(3);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -289,7 +289,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Matching Baja Buggies");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(8);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -312,7 +312,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("5.56mm Military Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -328,7 +328,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Silenced 9mm Submachine Gun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -347,7 +347,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Mercenary Armor");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -372,7 +372,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Semi Truck");
 			curCard.SetTitleSubString("With Trailer");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(20);
 			curCard.SetSellValue(26);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -405,7 +405,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Conscription");
-			curCard.SetTypes(SpoilsTypes.Event);
+			curCard.SetSpoilsTypes(SpoilsTypes.Event);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(5);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -440,7 +440,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Survival Knife");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Knife);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Knife);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(3);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -458,7 +458,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("9mm Submachine Gun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -474,7 +474,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Computer Technical Manual");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -502,7 +502,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Cordless Power Drill");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -520,7 +520,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Arnold Schwartz's");
 			curCard.SetTitleSubString("Kronan the Barbarian Sword");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -549,7 +549,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Pre-War Diaster Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(11);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -671,7 +671,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Biomedical Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(15);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -709,7 +709,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Crate of Medical Supplies");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -738,7 +738,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Extra Rusty Cleaver");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(3);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -767,7 +767,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Wrist Rocker Slingshot");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(2);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -783,7 +783,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Top o' the Line Stun Gun");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -835,7 +835,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Sniper Scope Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Permenant);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Permenant);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -861,7 +861,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Snub Nose .357 Revolver");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -878,7 +878,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Sawed Off Double Barreled");
 			curCard.SetTitleSubString("12 Gauge Breech Loading Shotgun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Melee_Weapon, SpoilsTypes.Shotgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Melee_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -897,7 +897,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Indestructible Tennis Racquet");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sporting_Goods);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Sporting_Goods);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(1);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -927,7 +927,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Armored Humvee");
 			curCard.SetTitleSubString("With .50 Caliber MG Turret");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(29);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -951,7 +951,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("The Motherload");
 			curCard.SetTitleSubString("You have discovered a secret room!");
-			curCard.SetTypes(SpoilsTypes.Event);
+			curCard.SetSpoilsTypes(SpoilsTypes.Event);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0);
 			/* No base skills */
@@ -978,7 +978,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Retro Mini Camper");
-			curCard.SetTypes(SpoilsTypes.Vehicle_Equipment);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle_Equipment);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1004,7 +1004,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Chris the Trophy Spouse");
-			curCard.SetTypes(SpoilsTypes.Ally);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ally);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1041,7 +1041,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Alien Plasma Pistol");
-			curCard.SetTypes(SpoilsTypes.Top_Secret, SpoilsTypes.Ranged_Weapon, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Top_Secret, SpoilsTypes.Ranged_Weapon, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1073,7 +1073,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Sledge Hammer");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1101,7 +1101,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Combat Welding & Cutting Torch");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1153,7 +1153,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Designer Biker Leathers");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -1177,7 +1177,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Dork Squad");
 			curCard.SetTitleSubString("Computer Repair Car");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(17);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1212,7 +1212,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Heavy Rocket Launcher");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(8);
 			curCard.SetSellValue(21);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1239,7 +1239,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Case of Excellent Whiskey");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Alcohol, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Alcohol, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1258,7 +1258,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Experimental Laser Rifle");
 			curCard.SetTitleSubString("Top Secret Weapon");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Top_Secret, SpoilsTypes.Heavy);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Top_Secret, SpoilsTypes.Heavy);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(24);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1283,7 +1283,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("9mm Semi Automatic Pistol");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(5);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1299,7 +1299,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("7.62mm Assault Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1316,7 +1316,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Masamune Crafted Katana");
 			curCard.SetQuote("A 14th century masterpiece created by Japan's greatest sword maker.");
-			curCard.SetTypes(SpoilsTypes.Relic, SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword);
+			curCard.SetSpoilsTypes(SpoilsTypes.Relic, SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(16);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1337,7 +1337,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Basic Med Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1364,7 +1364,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Special Forces Manual");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1396,7 +1396,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Unlimited Stash of Duct Tape");
-			curCard.SetTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Mechanical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Mechanical);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(4);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1453,7 +1453,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Practically New Ambulance");
 			curCard.SetTitleSubString("With Obnoxiously Loud Sirens");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(14);
 			curCard.SetSellValue(29);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1486,7 +1486,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Five Machetes");
-			curCard.SetTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword);
+			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Melee_Weapon, SpoilsTypes.Sword);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1505,7 +1505,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Bars of Gold");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(25);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1553,7 +1553,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Fred Rodgers' Sweater");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(16);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1584,7 +1584,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Water Purification Canteens");
-			curCard.SetTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Medical, SpoilsTypes.Camping_Gear);
+			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Medical, SpoilsTypes.Camping_Gear);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(5);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1614,7 +1614,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Grenades");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(16);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1642,7 +1642,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Police Interceptor");
 			curCard.SetTitleSubString("With Hypnotic Lights");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1674,7 +1674,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Finders Keepers");
 			curCard.SetQuote("You have found the item of your dreams...");
-			curCard.SetTypes(SpoilsTypes.Event);
+			curCard.SetSpoilsTypes(SpoilsTypes.Event);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -1704,7 +1704,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Swat Body Armor");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Clothing);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1727,7 +1727,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("9mm Pistol");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1743,7 +1743,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Paramedic Medical Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1771,7 +1771,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("First Aid Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1800,7 +1800,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Classic All American");
 			curCard.SetTitleSubString("Performance Muscle Car");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1832,7 +1832,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Macho Tow Truck");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Six_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Six_Wheeled);
 			curCard.SetCarryWeight(13);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1894,7 +1894,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Five Classic .45 Pistols");
-			curCard.SetTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(30);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1913,7 +1913,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Contact Truck");
 			curCard.SetTitleSubString("With Matching Yellow Hardhats");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(18);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1947,7 +1947,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Jackpot");
-			curCard.SetTypes(SpoilsTypes.Event);
+			curCard.SetSpoilsTypes(SpoilsTypes.Event);
 			curCard.SetQuote("You have stumbled upon a concealed compartment!");
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0);
@@ -1978,7 +1978,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Heavy Armor Plating");
-			curCard.SetTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2011,7 +2011,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("5 Matching Pink Mopeds");
 			curCard.SetQuote("At least the thieves had a sense of humor...");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Jinxed, SpoilsTypes.Two_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Jinxed, SpoilsTypes.Two_Wheeled);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2048,7 +2048,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Badass Socket Set");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2076,7 +2076,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Jugs O'Moonshine");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Alcohol, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Alcohol, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2105,7 +2105,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Militia Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2121,7 +2121,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("High Tech Utility Belt");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Backpack);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Backpack);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2143,7 +2143,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("5.56mm Assault Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2159,7 +2159,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Patton");
-			curCard.SetTypes(SpoilsTypes.Ally);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ally);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2193,7 +2193,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Compound Hunting Bow");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Bow);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Bow);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2210,7 +2210,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Classic .45 Pistol");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2227,7 +2227,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("William H Bonnie's");
 			curCard.SetTitleSubString("Matching .45 Revolvers");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(20);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2247,7 +2247,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Cheap Mountain Bikes");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Two_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Two_Wheeled);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2266,7 +2266,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Ram Plate");
-			curCard.SetTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(5);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2288,7 +2288,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Espresso Van");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(23);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2323,7 +2323,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Experimental Battle Suit");
 			curCard.SetTitleSubString("Top Secret Weapon");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(23);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2352,7 +2352,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard(".45 Semi Automatic Pistol");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2368,7 +2368,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Expired Pre-War Library Card");
-			curCard.SetTypes(SpoilsTypes.Equipment);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2400,7 +2400,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("The President's Football");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(20);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2423,7 +2423,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Titanium Softball Bat");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt, SpoilsTypes.Sporting_Goods);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt, SpoilsTypes.Sporting_Goods);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(3);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2439,7 +2439,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard(".50 Caliber Sniper Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(6);
 			curCard.SetSellValue(22);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2493,7 +2493,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Soldering Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(5);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2510,7 +2510,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Lock Pick Guide and Tools");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2540,7 +2540,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Lead Filled Kempo Gloves");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Fist);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Fist);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2567,7 +2567,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Scary Hockey Mask");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2619,7 +2619,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Firefighter's Axe");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Axe);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Axe);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2647,7 +2647,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("6.8mm Advanced Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(15);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2664,7 +2664,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Elite Camping Backpack");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Backpack, SpoilsTypes.Camping_Gear);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Backpack, SpoilsTypes.Camping_Gear);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2683,7 +2683,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Flare Gun Pistol");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(4);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2711,7 +2711,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Vendetta Daggers");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Knife, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Knife, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(13);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2728,7 +2728,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Dear Old Ma's Repair Kit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2747,7 +2747,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Ultimate Set of Tools");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(8);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2775,7 +2775,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("A History of World Diplomacy");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2802,7 +2802,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard(".223 Sniper Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2821,7 +2821,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Trunk of Unlimited Disguises");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2861,7 +2861,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Fallen Land Board Game");
 			curCard.SetQuote("A strange pre-war board game about the apocalypse...");
-			curCard.SetTypes(SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(13);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -2880,7 +2880,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Blower or Supercharger");
-			curCard.SetTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2902,7 +2902,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("The War Wagon");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Six_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Six_Wheeled);
 			curCard.SetCarryWeight(16);
 			curCard.SetSellValue(40);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2971,7 +2971,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard(".22 Small Bore Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2988,7 +2988,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Lumberjack Axe");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Axe);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Axe);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3005,7 +3005,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Nifty Multi-Tool");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Melee_Weapon);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3024,7 +3024,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Vintage .45 Submachine Gun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(13);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3040,7 +3040,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Brass Knuckles");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Fist);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Fist);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(3);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3067,7 +3067,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Luxurious Designer Suit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Clothing);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Clothing);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3087,7 +3087,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Heavy Duty Flashlight");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Blunt, SpoilsTypes.Melee_Weapon);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Blunt, SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3106,7 +3106,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Combat Medic Satchel");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(12);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3146,7 +3146,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Ultimate Laptop");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(18);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3169,7 +3169,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("12 Guage Pump Shotgun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3185,7 +3185,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Rocket Launcher");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(18);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3212,7 +3212,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Camping Gear");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Camping_Gear, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Camping_Gear, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3229,7 +3229,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Ol' Rusty");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3276,7 +3276,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Chopper and Pilot");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Zero_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Zero_Wheeled);
 			curCard.SetCarryWeight(16);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3315,7 +3315,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Industrial Chainsaw");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(11);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3344,7 +3344,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Gyrocopter");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Zero_Wheeled); //May not be a zero wheel vehicle?
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Zero_Wheeled); //May not be a zero wheel vehicle?
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(25);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3403,7 +3403,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Nifty Chemistry Set");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3421,7 +3421,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Luxury SUV");
 			curCard.SetTitleSubString("With Spinner Rims and Hydraulics");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3454,7 +3454,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Geiger Counter");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(9);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3498,7 +3498,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Cache of Military Body Armor");
-			curCard.SetTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Armor);
+			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Armor);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(25);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3522,7 +3522,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Enigma Van");
 			curCard.SetTitleSubString("With Custom 60's Paint Job");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled);
 			curCard.SetCarryWeight(20);
 			curCard.SetSellValue(24);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3556,7 +3556,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Pro Fishing Gear & Tackle");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Camping_Gear, SpoilsTypes.Stowable);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Camping_Gear, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3575,7 +3575,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("6 Fast Horses");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
 			curCard.SetCarryWeight(14);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3597,7 +3597,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Henry's Guide to Repairs");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3625,7 +3625,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Roadkill Cookbook");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3654,7 +3654,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("High Tech Body Armor");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(15);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3677,7 +3677,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Larry's Guide to Civil War Surgery");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3706,7 +3706,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Flame Thrower");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Melee_Weapon, SpoilsTypes.Heavy_Weapon, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Melee_Weapon, SpoilsTypes.Heavy_Weapon, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(24);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3736,7 +3736,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("4.6mm Submachine Gun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(17);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3752,7 +3752,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Radiation and Biohazard Suits");
-			curCard.SetTypes(SpoilsTypes.Party_Equipment);
+			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3775,7 +3775,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard(".44 Semi Automatic Pistol");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3791,7 +3791,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("High Tech Crossbow");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Bow);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Bow);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(7);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3808,7 +3808,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Autographed Bat");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt, SpoilsTypes.Sporting_Goods, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt, SpoilsTypes.Sporting_Goods, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(15);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3838,7 +3838,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("10 Gauge Pump Shotgun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(8);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3855,7 +3855,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Leather Bull Whip");
-			curCard.SetTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt);
+			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(5);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3905,7 +3905,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("5.56mm Bolt Action Rifle");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(15);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3924,7 +3924,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("12 Gauge Bullpup Shotgun");
-			curCard.SetTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(10);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3940,7 +3940,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("The Duke's Cowboy Outfit");
-			curCard.SetTypes(SpoilsTypes.Equipment, SpoilsTypes.Clothing, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Clothing, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3965,7 +3965,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("American Iron Custom Choppers");
-			curCard.SetTypes(SpoilsTypes.Vehicle, SpoilsTypes.Two_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Two_Wheeled);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(13);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{

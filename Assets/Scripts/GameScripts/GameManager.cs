@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,6 @@ namespace FallenLand
 {
 	public class GameManager : MonoBehaviour
 	{
-		public GameObject CardPrefab;
-
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();
@@ -31,7 +30,8 @@ namespace FallenLand
 		private GameObject NewGameState;
 		private bool GameIsSetUpAtStart;
 
-		void Start()
+        #region UnityFunctions
+        void Start()
 		{
 			MyUserId = "";
 
@@ -89,8 +89,7 @@ namespace FallenLand
 			//Create the map layout according to the game state that was passed in
 			GameObject mapCreationGO = GameObject.Find("Map");
 			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
-			mapCreation.ml = new DefaultMapLayout(); //For now, just do the default. Can be modified later. TODO account for modifiers
-			mapCreation.createMap();
+			mapCreation.CreateMap();
 
 
 			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
@@ -115,7 +114,6 @@ namespace FallenLand
 			//TODO create the deck of city/rad cards
 		}
 
-
 		void Update()
 		{
 			if (NewGameState.GetComponent<GameCreation>().GetFactions().Count > 0 && !GameIsSetUpAtStart)
@@ -135,11 +133,10 @@ namespace FallenLand
 				GameIsSetUpAtStart = true;
 			}
 		}
+        #endregion
 
-
-
-		/*****Some public interface functions for the GUI to attach to*******/
-		public List<TownTech> GetTownTechs(int playerId)
+        #region PublicAPI
+        public List<TownTech> GetTownTechs(int playerId)
 		{
 			List<TownTech> techs = new List<TownTech>();
 			if (playerId < Players.Count)
@@ -149,72 +146,72 @@ namespace FallenLand
 			return techs;
 		}
 
-		public int GetSalvage(int playerId)
+		public int GetSalvage(int playerIndex)
 		{
 			int salvage = 0;
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				salvage = Players[playerId].GetSalvageAmount();
+				salvage = Players[playerIndex].GetSalvageAmount();
 			}
 			return salvage;
 		}
 
-		public Faction GetFaction(int playerId)
+		public Faction GetFaction(int playerIndex)
 		{
 			Faction faction = new Faction("dummy faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				faction = Players[playerId].GetPlayerFaction();
+				faction = Players[playerIndex].GetPlayerFaction();
 			}
 			return faction;
 		}
 
-		public List<SpoilsCard> GetAuctionHouse(int playerId)
+		public List<SpoilsCard> GetAuctionHouse(int playerIndex)
 		{
 			List<SpoilsCard> spoils = new List<SpoilsCard>();
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				spoils = Players[playerId].GetAuctionHouseCards();
+				spoils = Players[playerIndex].GetAuctionHouseCards();
 			}
 			return spoils;
 		}
 
-		public List<ActionCard> GetActionCards(int playerId)
+		public List<ActionCard> GetActionCards(int playerIndex)
 		{
 			List<ActionCard> actionCards = new List<ActionCard>();
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				actionCards = Players[playerId].GetActionCards();
+				actionCards = Players[playerIndex].GetActionCards();
 			}
 			return actionCards;
 		}
 
-		public List<CharacterCard> GetActiveCharacterCards(int playerId)
+		public List<CharacterCard> GetActiveCharacterCards(int playerIndex)
 		{
 			List<CharacterCard> characterCards = new List<CharacterCard>();
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				characterCards = Players[playerId].GetActiveCharacters();
+				characterCards = Players[playerIndex].GetActiveCharacters();
 			}
 			return characterCards;
 		}
 
-		public List<CharacterCard> GetTownRoster(int playerId)
+		public List<CharacterCard> GetTownRoster(int playerIndex)
 		{
 			List<CharacterCard> townRoster = new List<CharacterCard>();
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				townRoster = Players[playerId].GetTownRoster();
+				townRoster = Players[playerIndex].GetTownRoster();
 			}
 			return townRoster;
 		}
 
-		public SpoilsCard GetActiveVehicle(int playerId)
+		public SpoilsCard GetActiveVehicle(int playerIndex)
 		{
 			SpoilsCard vehicle = null;
-			if (playerId < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
-				vehicle = Players[playerId].GetActiveVehicle();
+				vehicle = Players[playerIndex].GetActiveVehicle();
 			}
 			return vehicle;
 		}
@@ -236,7 +233,7 @@ namespace FallenLand
 
 		public void RemoveCardFromPlayerAuctionHouse(int playerIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
 			}
@@ -244,7 +241,7 @@ namespace FallenLand
 
 		public void RemoveCardFromPlayerTownRoster(int playerIndex, CharacterCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
 			}
@@ -252,7 +249,7 @@ namespace FallenLand
 
 		public void RemoveSpoilsCardFromPlayerActiveParty(int playerIndex, int characterSlotIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
 			}
@@ -260,7 +257,7 @@ namespace FallenLand
 
 		public void RemoveCharacterFromActiveParty(int playerIndex, int characterSlotFoundIn, CharacterCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveCharacterFromParty(characterSlotFoundIn);
 			}
@@ -268,7 +265,7 @@ namespace FallenLand
 
 		public void RemoveSpoilsCardFromActiveVehicle(int playerIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveSpoilsCardFromActiveVehicle(card);
 			}
@@ -276,7 +273,7 @@ namespace FallenLand
 
 		public void RemoveActiveVehicle(int playerIndex)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveActiveVehicle();
 			}
@@ -284,7 +281,7 @@ namespace FallenLand
 
 		public void AssignSpoilsCardToCharacter(int playerIndex, int characterIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
 			}
@@ -292,7 +289,7 @@ namespace FallenLand
 
 		public void AssignCharacterToParty(int playerIndex, int characterIndex, CharacterCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
 			}
@@ -300,7 +297,7 @@ namespace FallenLand
 
 		public void AddSpoilsToAuctionHouse(int playerIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
 			}
@@ -308,7 +305,7 @@ namespace FallenLand
 
 		public void AddCharacterToTownRoster(int playerIndex, CharacterCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddCharacterCardToTownRoster(card);
 			}
@@ -316,7 +313,7 @@ namespace FallenLand
 
 		public void AddVehicleToActiveParty(int playerIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddVehicleToParty(card);
 			}
@@ -324,7 +321,7 @@ namespace FallenLand
 
 		public void AddSpoilsToActiveVehicle(int playerIndex, SpoilsCard card)
 		{
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddStowableToVehicle(card);
 			}
@@ -333,7 +330,7 @@ namespace FallenLand
 		public bool IsAllowedToApplySpoilsToCharacterSlot(int playerIndex, SpoilsCard card, int characterIndex)
 		{
 			bool isAllowed = false;
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				isAllowed = Players[playerIndex].IsAllowedToAddSpoilsCardToCharacter(characterIndex, card);
 			}
@@ -343,14 +340,17 @@ namespace FallenLand
 		public bool IsAllowedToApplySpoilsToVehicleSlot(int playerIndex, SpoilsCard card)
 		{
 			bool isAllowed = false;
-			List<SpoilsTypes> types = card.GetSpoilsTypes();
-			if (playerIndex < Players.Count && types.Contains(SpoilsTypes.Vehicle))
+			if (card != null && isPlayerIndexInRange(playerIndex))
 			{
-				isAllowed = Players[playerIndex].IsAllowedToEquipVehicleToSlot();
-			}
-			else
-			{
-				isAllowed = Players[playerIndex].IsAllowedToEquipSpoilsToVehicle(card);
+				List<SpoilsTypes> types = card.GetSpoilsTypes();
+				if (types.Contains(SpoilsTypes.Vehicle))
+				{
+					isAllowed = Players[playerIndex].IsAllowedToEquipVehicleToSlot();
+				}
+				else
+				{
+					isAllowed = Players[playerIndex].IsAllowedToEquipSpoilsToVehicle(card);
+				}
 			}
 			return isAllowed;
 		}
@@ -358,7 +358,7 @@ namespace FallenLand
 		public bool IsAllowedToApplyCharacterToCharacterSlot(int playerIndex, int characterIndex)
 		{
 			bool isAllowed = false;
-			if (playerIndex < Players.Count && characterIndex != Constants.VEHICLE_INDEX)
+			if (isPlayerIndexInRange(playerIndex) && characterIndex != Constants.VEHICLE_INDEX)
 			{
 				isAllowed = Players[playerIndex].IsAllowedToAddCharacterToParty(characterIndex);
 			}
@@ -368,18 +368,16 @@ namespace FallenLand
 		public int GetNumberOfActiveVehicles(int playerIndex)
 		{
 			int count = 0;
-			if (playerIndex < Players.Count)
+			if (isPlayerIndexInRange(playerIndex))
 			{
 				count = Players[playerIndex].GetNumberOfActiveVehicles();
 			}
 			return count;
 		}
+        #endregion
 
-
-
-
-		/******Some private helper functions******/
-		private void extractGameModeFromGameCreationObject(GameObject newGameState)
+        #region HelperFunctions
+        private void extractGameModeFromGameCreationObject(GameObject newGameState)
 		{
 			GameMode = newGameState.GetComponent<GameCreation>().GetMode();
 		}
@@ -433,6 +431,12 @@ namespace FallenLand
 				}
 			}
 		}
+
+		private bool isPlayerIndexInRange(int playerIndex)
+		{
+			return playerIndex >= 0 && playerIndex < Players.Count;
+		}
+		#endregion
 
 
 

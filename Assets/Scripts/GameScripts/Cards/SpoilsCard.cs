@@ -41,12 +41,12 @@ namespace FallenLand
 			}
 		}
 
-		public void SetTypes(List<SpoilsTypes> types)
+		public void SetSpoilsTypes(List<SpoilsTypes> types)
 		{
 			Types = types;
 		}
 
-		public void SetTypes(params SpoilsTypes[] types)
+		public void SetSpoilsTypes(params SpoilsTypes[] types)
 		{
 			Types = new List<SpoilsTypes>();
 			foreach (SpoilsTypes item in types)
@@ -55,7 +55,7 @@ namespace FallenLand
 			}
 		}
 
-		public void AddType(SpoilsTypes type)
+		public void AddSpoilsType(SpoilsTypes type)
 		{
 			Types.Add(type);
 		}
@@ -384,7 +384,7 @@ namespace FallenLand
 		{
 			SpoilsCard newCard = new SpoilsCard(this.GetTitle());
 			newCard.SetTitleSubString(this.GetTitleSubString());
-			newCard.SetTypes(this.Types);
+			newCard.SetSpoilsTypes(this.Types);
 			newCard.SetCarryWeight(this.CarryWeight);
 			newCard.SetSellValue(this.SellValue);
 			newCard.SetBaseSkills(this.GetBaseSkills());
@@ -407,7 +407,7 @@ namespace FallenLand
 		{
 			this.SetTitle(cardToCopyFrom.GetTitle());
 			this.SetTitleSubString(cardToCopyFrom.GetTitleSubString());
-			this.SetTypes(cardToCopyFrom.Types);
+			this.SetSpoilsTypes(cardToCopyFrom.Types);
 			this.SetCarryWeight(cardToCopyFrom.CarryWeight);
 			this.SetSellValue(cardToCopyFrom.SellValue);
 			this.SetBaseSkills(cardToCopyFrom.GetBaseSkills());

@@ -6,7 +6,7 @@ namespace FallenLand
 	{
 		protected enum HexType { CITY, RAD, MOUNTAIN, PLAINS, WATER, BASE, RAND_LOC, RESOURCE, VALID };
 
-		protected Dictionary<HexType, bool>[,] arrayOfHexes = new Dictionary<HexType, bool>[MapCreation.width, MapCreation.height]; //2D array of dictionaries that map an int from the enum above -> boolean
+		protected Dictionary<HexType, bool>[,] arrayOfHexes = new Dictionary<HexType, bool>[MapCreation.MAP_WIDTH, MapCreation.MAP_HEIGHT]; //2D array of dictionaries that map an int from the enum above -> boolean
 
 
 		public bool IsHexInGame(int x, int y)

@@ -88,10 +88,10 @@ namespace Tests
 		{
 			Assert.IsNotNull(SpoilsCardInstance.GetSpoilsTypes());
 			Assert.AreEqual(0, SpoilsCardInstance.GetSpoilsTypes().Count);
-			SpoilsCardInstance.SetTypes(new List<SpoilsTypes>() { SpoilsTypes.Ranged_Weapon });
+			SpoilsCardInstance.SetSpoilsTypes(new List<SpoilsTypes>() { SpoilsTypes.Ranged_Weapon });
 			Assert.AreEqual(1, SpoilsCardInstance.GetSpoilsTypes().Count);
 			Assert.AreEqual(SpoilsTypes.Ranged_Weapon, SpoilsCardInstance.GetSpoilsTypes()[0]);
-			SpoilsCardInstance.AddType(SpoilsTypes.Relic);
+			SpoilsCardInstance.AddSpoilsType(SpoilsTypes.Relic);
 			Assert.AreEqual(2, SpoilsCardInstance.GetSpoilsTypes().Count);
 			Assert.AreEqual(SpoilsTypes.Relic, SpoilsCardInstance.GetSpoilsTypes()[1]);
 

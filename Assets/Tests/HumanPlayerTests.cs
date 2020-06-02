@@ -279,9 +279,9 @@ namespace Tests
 		public IEnumerator TestAddAndRemoveVehicleFromParty()
 		{
 			SpoilsCard vehicleSpoils = new SpoilsCard("Vehicle Spoils");
-			vehicleSpoils.AddType(SpoilsTypes.Vehicle);
+			vehicleSpoils.AddSpoilsType(SpoilsTypes.Vehicle);
 			SpoilsCard notAVehicleSpoils = new SpoilsCard("Non-vehicle spoils");
-			notAVehicleSpoils.AddType(SpoilsTypes.Armor);
+			notAVehicleSpoils.AddSpoilsType(SpoilsTypes.Armor);
 
 			Assert.True(HumanPlayerInstance.IsAllowedToEquipVehicleToSlot());
 			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
@@ -312,13 +312,13 @@ namespace Tests
 		public IEnumerator TestAddRemoveStowablesToVehicle()
 		{
 			SpoilsCard vehicleSpoils = new SpoilsCard("Vehicle Spoils");
-			vehicleSpoils.AddType(SpoilsTypes.Vehicle);
+			vehicleSpoils.AddSpoilsType(SpoilsTypes.Vehicle);
 			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
 
 			SpoilsCard stowableCard = new SpoilsCard("Stowable");
-			stowableCard.AddType(SpoilsTypes.Stowable);
+			stowableCard.AddSpoilsType(SpoilsTypes.Stowable);
 			SpoilsCard nonstowableCard = new SpoilsCard("Not stowable");
-			nonstowableCard.AddType(SpoilsTypes.Rifle);
+			nonstowableCard.AddSpoilsType(SpoilsTypes.Rifle);
 
 			Assert.IsTrue(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(stowableCard));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(nonstowableCard));

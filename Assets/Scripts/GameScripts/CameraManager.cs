@@ -29,7 +29,7 @@ namespace FallenLand
 		void Start()
 		{
 			//Center the camera
-			Camera.main.transform.position = new Vector3(12 * MapCreation.scale, MinZoom, 5 * MapCreation.scale);
+			Camera.main.transform.position = new Vector3(12 * MapCreation.MAP_SCALE, MinZoom, 5 * MapCreation.MAP_SCALE);
 		}
 
 		void Update()
@@ -71,12 +71,12 @@ namespace FallenLand
 				movement *= PanSpeed; // Pan speed only has to be reduced in the Left/Right direction, not the Up/Down
 									  //movement = Camera.main.transform.TransformDirection(movement); //Account for camera facing different direction than default
 				movement.y = 0; //Don't change in the y direction
-				transform.Translate(movement * Time.deltaTime * MapCreation.scale, Space.World); //Update the camera
+				transform.Translate(movement * Time.deltaTime * MapCreation.MAP_SCALE, Space.World); //Update the camera
 																								 //Ensure we are still in the the map bounds
 				float newPanX = transform.position.x;
 				float newPanZ = transform.position.z;
-				newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.scale, 27 * MapCreation.scale);
-				newPanZ = Mathf.Clamp(newPanZ, -1 * MapCreation.scale, 16 * MapCreation.scale);
+				newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.MAP_SCALE, 27 * MapCreation.MAP_SCALE);
+				newPanZ = Mathf.Clamp(newPanZ, -1 * MapCreation.MAP_SCALE, 16 * MapCreation.MAP_SCALE);
 				//Update the camera if we went over the bounds
 				transform.position = new Vector3(newPanX, transform.position.y, newPanZ);
 			}
