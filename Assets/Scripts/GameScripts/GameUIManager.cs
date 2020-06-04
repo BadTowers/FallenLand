@@ -21,6 +21,8 @@ namespace FallenLand
         private GameObject TownRosterScrollContent;
         private GameObject VehicleSlotScrollContent;
         private List<GameObject> ActiveCharactersScrollContent;
+        private List<List<GameObject>> ActiveCharactersStatsText;
+        private List<GameObject> ActiveCharactersCarryWeightsText;
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
@@ -49,6 +51,20 @@ namespace FallenLand
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
             }
             VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
+
+            ActiveCharactersStatsText = new List<List<GameObject>>();
+            ActiveCharactersCarryWeightsText = new List<GameObject>();
+            for (int i = 0; i < 1; i++) //Constants.NUM_PARTY_MEMBERS when ui is fully updated
+            {
+                ActiveCharactersStatsText.Add(new List<GameObject>());
+                ActiveCharactersStatsText[i].Add(GameObject.Find("CombatSum" + (i + 1).ToString()));
+                ActiveCharactersStatsText[i].Add(GameObject.Find("SurvivalSum" + (i + 1).ToString()));
+                ActiveCharactersStatsText[i].Add(GameObject.Find("DiplomacySum" + (i + 1).ToString()));
+                ActiveCharactersStatsText[i].Add(GameObject.Find("MechanicalSum" + (i + 1).ToString()));
+                ActiveCharactersStatsText[i].Add(GameObject.Find("TechnicalSum" + (i + 1).ToString()));
+                ActiveCharactersStatsText[i].Add(GameObject.Find("MedicalSum" + (i + 1).ToString()));
+                ActiveCharactersCarryWeightsText.Add(GameObject.Find("CarryWeightSum" + (i + 1).ToString()));
+            }
         }
 
         void Start()
@@ -462,6 +478,17 @@ namespace FallenLand
                             imageObj2.GetComponentInChildren<MonoCard>().CardPtr = curSlotSpoils[curSpoilIndex];
                             image2.transform.SetAsFirstSibling(); //move to the back (on parent)
                         }
+                    }
+
+                    //Update stats
+                    if (activeIndex == 0) //TEMPORARY, only do it for the 1st character
+                    {
+                        Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(playerIndex, activeIndex);
+                        foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                        {
+                            (ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>()).text = curCharacterSlotStats[skill].ToString();
+                        }
+                        (ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>()).text = GameManagerInstance.GetActiveCharacterCarryWeight(playerIndex, activeIndex).ToString();
                     }
                 }
             }
