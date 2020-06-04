@@ -216,6 +216,26 @@ namespace FallenLand
 			return vehicle;
 		}
 
+		public Dictionary<Skills, int> GetActiveCharacterStats(int playerIndex, int characterIndex)
+		{
+			Dictionary<Skills, int> stats = null;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				stats = Players[playerIndex].GetActiveCharacterStats(characterIndex);
+			}
+			return stats;
+		}
+
+		public int GetActiveCharacterCarryWeight(int playerIndex, int characterIndex)
+		{
+			int weight = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				weight = Players[playerIndex].GetActiveCharacterCarryWeight(characterIndex);
+			}
+			return weight;
+		}
+
 		public int GetIndexForMyPlayer()
 		{
 			int returnIndex = 0;
