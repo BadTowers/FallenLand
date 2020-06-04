@@ -14,6 +14,7 @@ namespace FallenLand
 		private int AmountOfSalvage;
 		private int Id;
 		private List<Dictionary<Skills, int>> ActiveCharacterTotalStats;
+		private List<int> ActiveCharacterCarryWeights;
 		//private Dictionary<Skills, int> ActiveVehicleTotalStats; //TODO
 
 		public Player(Faction faction, int startingSalvage)
@@ -166,6 +167,16 @@ namespace FallenLand
 			return count;
 		}
 
+		public Dictionary<Skills, int> GetActiveCharacterStats(int characterIndex)
+		{
+			return ActiveCharacterTotalStats[characterIndex];
+		}
+
+		public int GetActiveCharacterCarryWeight(int characterIndex)
+		{
+			return ActiveCharacterCarryWeights[characterIndex];
+		}
+
 		public void AddTownTech(TownTech techToAdd)
 		{
 			if (techToAdd != null)
@@ -284,6 +295,7 @@ namespace FallenLand
 			TownRoster = new List<CharacterCard>();
 			ActiveCharacters = new List<CharacterCard>();
 			TownTechs = new List<TownTech>();
+			ActiveCharacterCarryWeights = new List<int>();
 
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
@@ -298,6 +310,7 @@ namespace FallenLand
 				{
 					ActiveCharacterTotalStats[i].Add(skill, 0);
 				}
+				ActiveCharacterCarryWeights.Add(0);
 			}
 		}
 
@@ -313,11 +326,11 @@ namespace FallenLand
 		private void updateCharacterSlotTotals(int indexToUpdate)
 		{
 			//Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills(); //Add back in when characters have base stats
+			List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
 			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 			{
 				//int tempSum = currentCharacterSkills[skill];
 				int tempSum = 0;
-				List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
 				for (int i = 0; i < equippedSpoils.Count; i++)
 				{
 					tempSum += equippedSpoils[i].GetBaseSkills()[skill];
@@ -325,6 +338,12 @@ namespace FallenLand
 
 				ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
 			}
+			int tempCarryWeight = 0;
+			for (int i = 0; i < equippedSpoils.Count; i++)
+			{
+				tempCarryWeight += equippedSpoils[i].GetCarryWeight();
+			}
+			ActiveCharacterCarryWeights[indexToUpdate] = tempCarryWeight;
 		}
 	}
 }
