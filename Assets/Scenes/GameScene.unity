@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 72054091}
   - component: {fileID: 72054090}
   m_Layer: 5
-  m_Name: SurvivalSum
+  m_Name: SurvivalSum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -893,7 +893,7 @@ GameObject:
   - component: {fileID: 90931623}
   - component: {fileID: 90931622}
   m_Layer: 5
-  m_Name: TechnicalSum
+  m_Name: TechnicalSum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2121,7 +2121,7 @@ GameObject:
   - component: {fileID: 329281691}
   - component: {fileID: 329281690}
   m_Layer: 5
-  m_Name: MechanicalSum
+  m_Name: MechanicalSum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2765,7 +2765,7 @@ GameObject:
   - component: {fileID: 436238682}
   - component: {fileID: 436238681}
   m_Layer: 5
-  m_Name: CarryWeightSum
+  m_Name: CarryWeightSum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4835,7 +4835,7 @@ GameObject:
   - component: {fileID: 818423358}
   - component: {fileID: 818423357}
   m_Layer: 5
-  m_Name: CombatSum
+  m_Name: CombatSum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7180,7 +7180,7 @@ GameObject:
   - component: {fileID: 1331588598}
   - component: {fileID: 1331588597}
   m_Layer: 5
-  m_Name: MedicalSum
+  m_Name: MedicalSum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7260,7 +7260,7 @@ GameObject:
   - component: {fileID: 1348440948}
   - component: {fileID: 1348440947}
   m_Layer: 5
-  m_Name: DiplomacySum
+  m_Name: DiplomacySum1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
