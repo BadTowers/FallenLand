@@ -371,13 +371,13 @@ namespace FallenLand
                         }
                         else
                         {
-                            int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                            if (characterIndex == Constants.VEHICLE_INDEX)
+                            if (panelMovingInto.name.Contains("VehicleSlotScrollView"))
                             {
-                                GameManagerInstance.AddVehicleToActiveParty(playerIndex, card);
+                                GameManagerInstance.AddSpoilsToActiveVehicle(playerIndex, card);
                             }
                             else
                             {
+                                int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
                                 GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, card);
                             }
                         }
@@ -634,7 +634,7 @@ namespace FallenLand
 
             int myIndex = (GameManagerInstance != null) ? GameManagerInstance.GetIndexForMyPlayer() : 0;
             CharacterCard card = (CharacterCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
-            if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
+            if (panelMovingInto.name.Contains("AuctionHouseScrollView") || panelMovingInto.name.Contains("VehicleSlotScrollView"))
             {
                 isAllowed = false;
             }
