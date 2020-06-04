@@ -13,6 +13,8 @@ namespace FallenLand
 		private List<TownTech> TownTechs;
 		private int AmountOfSalvage;
 		private int Id;
+		private List<Dictionary<Skills, int>> ActiveCharacterTotalStats;
+		//private Dictionary<Skills, int> ActiveVehicleTotalStats; //TODO
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -193,12 +195,14 @@ namespace FallenLand
 			if (ActiveCharacters[characterIndex].GetEquippedSpoils().Contains(card))
 			{
 				ActiveCharacters[characterIndex].RemoveSpoilsCard(card);
+				updateCharacterSlotTotals(characterIndex);
 			}
 		}
 
 		public void RemoveCharacterFromParty(int characterIndex)
 		{
 			ActiveCharacters[characterIndex] = null;
+			updateCharacterSlotTotals(characterIndex);
 		}
 
 		public void RemoveSpoilsCardFromActiveVehicle(SpoilsCard card)
@@ -219,6 +223,7 @@ namespace FallenLand
 			if (character != null && ActiveCharacters[characterIndex] == null)
 			{
 				ActiveCharacters[characterIndex] = character;
+				updateCharacterSlotTotals(characterIndex);
 			}
 		}
 
@@ -227,6 +232,7 @@ namespace FallenLand
 			if (ActiveCharacters[characterIndex] != null)
 			{
 				ActiveCharacters[characterIndex].AttachSpoilsCard(card);
+				updateCharacterSlotTotals(characterIndex);
 			}
 		}
 
@@ -283,6 +289,16 @@ namespace FallenLand
 			{
 				ActiveCharacters.Add(null);
 			}
+
+			ActiveCharacterTotalStats = new List<Dictionary<Skills, int>>();
+			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+			{
+				ActiveCharacterTotalStats.Add(new Dictionary<Skills, int>());
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					ActiveCharacterTotalStats[i].Add(skill, 0);
+				}
+			}
 		}
 
 		private void extractTownTechsFromFaction()
@@ -291,6 +307,23 @@ namespace FallenLand
 			if (techs != null)
 			{
 				TownTechs = techs;
+			}
+		}
+
+		private void updateCharacterSlotTotals(int indexToUpdate)
+		{
+			//Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills(); //Add back in when characters have base stats
+			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+			{
+				//int tempSum = currentCharacterSkills[skill];
+				int tempSum = 0;
+				List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
+				for (int i = 0; i < equippedSpoils.Count; i++)
+				{
+					tempSum += equippedSpoils[i].GetBaseSkills()[skill];
+				}
+
+				ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
 			}
 		}
 	}
