@@ -250,9 +250,16 @@ namespace FallenLand
         {
             Color color;
 
-            if (IsHoveringOverPanel && UiManager.CardIsAllowedToMoveHere(this.GetComponentInChildren<Image>(), HoveredOverPanel) && IsDragging)
+            if (IsHoveringOverPanel && IsDragging)
             {
-                color = new Color(88f / 255f, 121f / 255f, 214f / 255f, 1f);
+                if (UiManager.CardIsAllowedToMoveHere(this.GetComponentInChildren<Image>(), HoveredOverPanel))
+                {
+                    color = new Color(88f / 255f, 121f / 255f, 214f / 255f, 0.5f);
+                }
+                else
+                {
+                    color = new Color(166f / 255f, 0f, 0f, 0.5f);
+                }
             }
             else
             {
