@@ -54,7 +54,7 @@ namespace FallenLand
 
             ActiveCharactersStatsText = new List<List<GameObject>>();
             ActiveCharactersCarryWeightsText = new List<GameObject>();
-            for (int i = 0; i < 2; i++) //Constants.NUM_PARTY_MEMBERS when ui is fully updated
+            for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 ActiveCharactersStatsText.Add(new List<GameObject>());
                 ActiveCharactersStatsText[i].Add(GameObject.Find("CombatSum" + (i + 1).ToString()));
@@ -64,6 +64,13 @@ namespace FallenLand
                 ActiveCharactersStatsText[i].Add(GameObject.Find("TechnicalSum" + (i + 1).ToString()));
                 ActiveCharactersStatsText[i].Add(GameObject.Find("MedicalSum" + (i + 1).ToString()));
                 ActiveCharactersCarryWeightsText.Add(GameObject.Find("CarryWeightSum" + (i + 1).ToString()));
+
+                int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+                foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                {
+                    (ActiveCharactersStatsText[i][(int)skill].GetComponentInChildren<Text>()).text = "0";
+                }
+                (ActiveCharactersCarryWeightsText[i].GetComponentInChildren<Text>()).text = "0";
             }
         }
 
@@ -481,15 +488,12 @@ namespace FallenLand
                     }
 
                     //Update stats
-                    if (activeIndex == 0 || activeIndex == 1) //TEMPORARY, only do it for the 1st character
+                    Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(playerIndex, activeIndex);
+                    foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                     {
-                        Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(playerIndex, activeIndex);
-                        foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-                        {
-                            (ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>()).text = curCharacterSlotStats[skill].ToString();
-                        }
-                        (ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>()).text = GameManagerInstance.GetActiveCharacterCarryWeight(playerIndex, activeIndex).ToString();
+                        (ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>()).text = curCharacterSlotStats[skill].ToString();
                     }
+                    (ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>()).text = GameManagerInstance.GetActiveCharacterCarryWeight(playerIndex, activeIndex).ToString();
                 }
             }
         }
