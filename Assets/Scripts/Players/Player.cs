@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace FallenLand
 {
@@ -15,7 +15,8 @@ namespace FallenLand
 		private int Id;
 		private List<Dictionary<Skills, int>> ActiveCharacterTotalStats;
 		private List<int> ActiveCharacterCarryWeights;
-		//private Dictionary<Skills, int> ActiveVehicleTotalStats; //TODO
+	    private Dictionary<Skills, int> ActiveVehicleTotalStats;
+		private int ActiveVehicleCarryWeight;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -31,6 +32,7 @@ namespace FallenLand
 			AmountOfSalvage = startingSalvage;
 			FactionOfPlayer = faction;
 			Vehicle = null;
+			ActiveVehicleCarryWeight = 0;
 			initLists();
 			extractTownTechsFromFaction();
 		}
@@ -64,6 +66,7 @@ namespace FallenLand
 			if (vehicleCard != null && Vehicle == null && vehicleCard.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
 			{
 				Vehicle = vehicleCard;
+				updateVehicleSlotTotals();
 			}
 		}
 
@@ -72,6 +75,7 @@ namespace FallenLand
 			if (stowableCard != null && Vehicle != null && stowableCard.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
 			{
 				Vehicle.AttachSpoilsCard(stowableCard);
+				updateVehicleSlotTotals();
 			}
 		}
 
@@ -177,6 +181,16 @@ namespace FallenLand
 			return ActiveCharacterCarryWeights[characterIndex];
 		}
 
+		public Dictionary<Skills, int> GetActiveVehicleStats()
+		{
+			return ActiveVehicleTotalStats;
+		}
+
+		public int GetActiveVehicleCarryWeight()
+		{
+			return ActiveVehicleCarryWeight;
+		}
+
 		public void AddTownTech(TownTech techToAdd)
 		{
 			if (techToAdd != null)
@@ -221,12 +235,14 @@ namespace FallenLand
 			if (Vehicle != null && Vehicle.GetEquippedSpoils().Contains(card))
 			{
 				Vehicle.RemoveSpoilsCard(card);
+				updateVehicleSlotTotals();
 			}
 		}
 
 		public void RemoveActiveVehicle()
 		{
 			Vehicle = null;
+			updateVehicleSlotTotals();
 		}
 
 		public void AddCharacterToParty(int characterIndex, CharacterCard character)
@@ -312,6 +328,12 @@ namespace FallenLand
 				}
 				ActiveCharacterCarryWeights.Add(0);
 			}
+
+			ActiveVehicleTotalStats = new Dictionary<Skills, int>();
+			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+			{
+				ActiveVehicleTotalStats.Add(skill, 0);
+			}
 		}
 
 		private void extractTownTechsFromFaction()
@@ -353,6 +375,38 @@ namespace FallenLand
 				{
 					ActiveCharacterTotalStats[indexToUpdate][skill] = 0;
 					ActiveCharacterCarryWeights[indexToUpdate] = 0;
+				}
+			}
+		}
+
+		private void updateVehicleSlotTotals()
+		{
+			if (Vehicle != null)
+			{
+				List<SpoilsCard> equippedSpoils = Vehicle.GetEquippedSpoils();
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					int tempSum = Vehicle.GetBaseSkills()[skill];
+					for (int i = 0; i < equippedSpoils.Count; i++)
+					{
+						tempSum += equippedSpoils[i].GetBaseSkills()[skill];
+					}
+
+					ActiveVehicleTotalStats[skill] = tempSum;
+				}
+				int tempCarryWeight = 0;
+				for (int i = 0; i < equippedSpoils.Count; i++)
+				{
+					tempCarryWeight += equippedSpoils[i].GetCarryWeight();
+				}
+				ActiveVehicleCarryWeight = tempCarryWeight;
+			}
+			else
+			{
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					ActiveVehicleTotalStats[skill] = 0;
+					ActiveVehicleCarryWeight = 0;
 				}
 			}
 		}

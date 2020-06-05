@@ -23,6 +23,8 @@ namespace FallenLand
         private List<GameObject> ActiveCharactersScrollContent;
         private List<List<GameObject>> ActiveCharactersStatsText;
         private List<GameObject> ActiveCharactersCarryWeightsText;
+        private List<GameObject> ActiveVehicleStatsText;
+        private GameObject ActiveVehicleCarryWeightsText;
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
@@ -65,13 +67,28 @@ namespace FallenLand
                 ActiveCharactersStatsText[i].Add(GameObject.Find("MedicalSum" + (i + 1).ToString()));
                 ActiveCharactersCarryWeightsText.Add(GameObject.Find("CarryWeightSum" + (i + 1).ToString()));
 
-                int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
                 foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                 {
-                    (ActiveCharactersStatsText[i][(int)skill].GetComponentInChildren<Text>()).text = "0";
+                    ActiveCharactersStatsText[i][(int)skill].GetComponentInChildren<Text>().text = "0";
                 }
-                (ActiveCharactersCarryWeightsText[i].GetComponentInChildren<Text>()).text = "0";
+                ActiveCharactersCarryWeightsText[i].GetComponentInChildren<Text>().text = "0";
             }
+
+            ActiveVehicleStatsText = new List<GameObject>
+            {
+                GameObject.Find("CombatSumV"),
+                GameObject.Find("SurvivalSumV"),
+                GameObject.Find("DiplomacySumV"),
+                GameObject.Find("MechanicalSumV"),
+                GameObject.Find("TechnicalSumV"),
+                GameObject.Find("MedicalSumV")
+            };
+            ActiveVehicleCarryWeightsText = GameObject.Find("CarryWeightSumV");
+            foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+            {
+                ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = "0";
+            }
+            ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = "0";
         }
 
         void Start()
@@ -491,9 +508,9 @@ namespace FallenLand
                     Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(playerIndex, activeIndex);
                     foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                     {
-                        (ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>()).text = curCharacterSlotStats[skill].ToString();
+                        ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
                     }
-                    (ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>()).text = GameManagerInstance.GetActiveCharacterCarryWeight(playerIndex, activeIndex).ToString();
+                    ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveCharacterCarryWeight(playerIndex, activeIndex).ToString();
                 }
             }
         }
@@ -548,6 +565,14 @@ namespace FallenLand
                         image2.transform.SetAsFirstSibling(); //move to the back (on parent)
                     }
                 }
+
+                //Update stats
+                Dictionary<Skills, int> vehicleStats = GameManagerInstance.GetActiveVehicleStats(playerIndex);
+                foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                {
+                    ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = vehicleStats[skill].ToString();
+                }
+                ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleCarryWeight(playerIndex).ToString();
             }
         }
 
