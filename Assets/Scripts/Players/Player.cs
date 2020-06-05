@@ -325,25 +325,36 @@ namespace FallenLand
 
 		private void updateCharacterSlotTotals(int indexToUpdate)
 		{
-			//Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills(); //Add back in when characters have base stats
-			List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
-			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+			if (ActiveCharacters[indexToUpdate] != null)
 			{
-				//int tempSum = currentCharacterSkills[skill];
-				int tempSum = 0;
+				//Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills(); //Add back in when characters have base stats
+				List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					//int tempSum = currentCharacterSkills[skill];
+					int tempSum = 0;
+					for (int i = 0; i < equippedSpoils.Count; i++)
+					{
+						tempSum += equippedSpoils[i].GetBaseSkills()[skill];
+					}
+
+					ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
+				}
+				int tempCarryWeight = 0;
 				for (int i = 0; i < equippedSpoils.Count; i++)
 				{
-					tempSum += equippedSpoils[i].GetBaseSkills()[skill];
+					tempCarryWeight += equippedSpoils[i].GetCarryWeight();
 				}
-
-				ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
+				ActiveCharacterCarryWeights[indexToUpdate] = tempCarryWeight;
 			}
-			int tempCarryWeight = 0;
-			for (int i = 0; i < equippedSpoils.Count; i++)
+			else
 			{
-				tempCarryWeight += equippedSpoils[i].GetCarryWeight();
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					ActiveCharacterTotalStats[indexToUpdate][skill] = 0;
+					ActiveCharacterCarryWeights[indexToUpdate] = 0;
+				}
 			}
-			ActiveCharacterCarryWeights[indexToUpdate] = tempCarryWeight;
 		}
 	}
 }
