@@ -54,7 +54,7 @@ namespace FallenLand
 
             ActiveCharactersStatsText = new List<List<GameObject>>();
             ActiveCharactersCarryWeightsText = new List<GameObject>();
-            for (int i = 0; i < 1; i++) //Constants.NUM_PARTY_MEMBERS when ui is fully updated
+            for (int i = 0; i < 2; i++) //Constants.NUM_PARTY_MEMBERS when ui is fully updated
             {
                 ActiveCharactersStatsText.Add(new List<GameObject>());
                 ActiveCharactersStatsText[i].Add(GameObject.Find("CombatSum" + (i + 1).ToString()));
@@ -481,7 +481,7 @@ namespace FallenLand
                     }
 
                     //Update stats
-                    if (activeIndex == 0) //TEMPORARY, only do it for the 1st character
+                    if (activeIndex == 0 || activeIndex == 1) //TEMPORARY, only do it for the 1st character
                     {
                         Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(playerIndex, activeIndex);
                         foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
