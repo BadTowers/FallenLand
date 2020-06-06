@@ -28,6 +28,8 @@ namespace FallenLand
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
+        private Text ActualTurnNumberText;
+        private Text ActualTurnPhaseText;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
 
@@ -89,6 +91,9 @@ namespace FallenLand
                 ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = "0";
             }
             ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = "0";
+
+            ActualTurnNumberText = GameObject.Find("ActualTurnNumberText").GetComponent<Text>();
+            ActualTurnPhaseText = GameObject.Find("ActualTurnPhaseText").GetComponent<Text>();
         }
 
         void Start()
@@ -118,6 +123,8 @@ namespace FallenLand
             updateDebugOverlay();
 
             updateCharacterSpoilsScreen();
+
+            updateTurnInformation();
 
             EscapePressed = false;
         }
@@ -193,6 +200,12 @@ namespace FallenLand
         {
             CharacterAndSpoilsScreen.SetActive(false);
             MainOverlay.SetActive(true);
+        }
+
+        public void OnEndPhasePress()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            GameManagerInstance.EndPhase(myIndex);
         }
         #endregion
 
@@ -574,6 +587,12 @@ namespace FallenLand
                 }
                 ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleCarryWeight(playerIndex).ToString();
             }
+        }
+
+        private void updateTurnInformation()
+        {
+            ActualTurnNumberText.text = GameManagerInstance.GetTurn().ToString();
+            ActualTurnPhaseText.text = GameManagerInstance.GetPhase().ToString();
         }
 
         private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)

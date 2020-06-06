@@ -1,11 +1,11 @@
-using NUnit.Framework;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
 {
-	public class GameManager : MonoBehaviour
+	public class GameManager : MonoBehaviour, IMyTurnManagerCallbacks
 	{
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
@@ -29,11 +29,14 @@ namespace FallenLand
 		private string MyUserId;
 		private GameObject NewGameState;
 		private bool GameIsSetUpAtStart;
+		private MyTurnManager TurnManager;
 
-        #region UnityFunctions
-        void Start()
+		#region UnityFunctions
+		void Start()
 		{
 			MyUserId = "";
+			TurnManager = this.gameObject.AddComponent<MyTurnManager>();
+			TurnManager.TurnManagerListener = this;
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
@@ -93,7 +96,7 @@ namespace FallenLand
 
 
 			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
-			//SpoilsDeck = Card.ShuffleDeck(SpoilsDeck); //DON'T SHUFFLE FOR NOW FOR TESTING
+			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
 
 			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
 			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
@@ -131,12 +134,59 @@ namespace FallenLand
 				countTownTechsThatAreInUse();
 
 				GameIsSetUpAtStart = true;
+
+				StartTurn();
 			}
 		}
         #endregion
 
-        #region PublicAPI
-        public List<TownTech> GetTownTechs(int playerId)
+        #region TurnManagerCallbacks
+		public void OnTurnBegins(int turn)
+        {
+			Debug.Log("OnTurnBegins: " + turn);
+        }
+
+        public void OnTurnCompleted(int turn)
+		{
+			Debug.Log("OnTurnCompleted: " + turn);
+        }
+
+		public void OnPhaseBegins(Phases phase)
+		{
+			Debug.Log("OnPhaseBegins: " + phase.ToString());
+		}
+
+		public void OnPhaseCompleted(Phases phase)
+		{
+			Debug.Log("OnPhaseCompleted: " + phase.ToString());
+		}
+
+		public void OnPlayerMove(Photon.Realtime.Player player, Phases phase, object move)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public void OnPlayerFinished(Photon.Realtime.Player player, Phases phase, object move)
+		{
+            if (TurnManager.IsPhaseCompletedByAll)
+            {
+				//Go to next phase
+				TurnManager.BeginNextPhase();
+
+			}
+		}
+		#endregion
+
+		#region PublicAPI
+		public void StartTurn()
+		{
+			if (PhotonNetwork.IsMasterClient)
+			{
+				TurnManager.BeginNextTurn();
+			}
+		}
+
+		public List<TownTech> GetTownTechs(int playerId)
 		{
 			List<TownTech> techs = new List<TownTech>();
 			if (playerId < Players.Count)
@@ -269,6 +319,16 @@ namespace FallenLand
 			}
 
 			return returnIndex;
+		}
+
+		public int GetTurn()
+		{
+			return TurnManager.Turn;
+		}
+
+		public Phases GetPhase()
+		{
+			return TurnManager.Phase;
 		}
 
 		public void RemoveSpoilFromAuctionHouse(int playerIndex, SpoilsCard card)
@@ -414,10 +474,18 @@ namespace FallenLand
 			}
 			return count;
 		}
-        #endregion
 
-        #region HelperFunctions
-        private void extractGameModeFromGameCreationObject(GameObject newGameState)
+        public void EndPhase(int playerIndex)
+        {
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				TurnManager.SendMove(null, true);
+			}
+		}
+		#endregion
+
+		#region HelperFunctions
+		private void extractGameModeFromGameCreationObject(GameObject newGameState)
 		{
 			GameMode = newGameState.GetComponent<GameCreation>().GetMode();
 		}
@@ -476,11 +544,11 @@ namespace FallenLand
 		{
 			return playerIndex >= 0 && playerIndex < Players.Count;
 		}
-		#endregion
+        #endregion
 
 
 
-		/*
+        /*
 		 *
 		 * THOUGHTS ON GAME MANAGER AND GAME UI MANAGER INTERACTION
 		 *
@@ -510,5 +578,5 @@ namespace FallenLand
 		 *          This would then never change throughout the game since each PC connected would be one player
 		 *
 		 */
-	}
+    }
 }

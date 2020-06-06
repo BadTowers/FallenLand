@@ -4,6 +4,8 @@ namespace FallenLand
 {
 	public enum Phases
 	{
+		Game_Start_Setup,
+
 		Before_Effects_Phase,
 			Before_Effects_Resolve_Subphase,
 			Effects_Resolve_Subphase,
