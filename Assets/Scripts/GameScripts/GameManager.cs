@@ -1,5 +1,4 @@
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -321,9 +320,19 @@ namespace FallenLand
 			return returnIndex;
 		}
 
+		public string GetMyUserId()
+		{
+			return MyUserId;
+		}
+
 		public int GetTurn()
 		{
 			return TurnManager.Turn;
+		}
+
+		public Photon.Realtime.Player GetCurrentPlayer()
+		{
+			return TurnManager.CurrentPlayer;
 		}
 
 		public Phases GetPhase()

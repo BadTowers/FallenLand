@@ -1,9 +1,9 @@
 ﻿
-
 namespace FallenLand
 {
 	public enum Phases
 	{
+		Invalid,
 		Game_Start_Setup,
 
 		Before_Effects_Phase,
@@ -61,5 +61,14 @@ namespace FallenLand
 			End_Turn_Pass_First_Player,
 			After_End_Turn_Pass_First_Player,
 		After_End_Turn_Phase
+	}
+
+    public class PhaseStrings
+    {
+		public static string PhaseToString(Phases phase)
+		{
+			//TODO
+			return phase.ToString();
+		}
 	}
 }

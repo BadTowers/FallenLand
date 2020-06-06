@@ -41,7 +41,7 @@ namespace FallenLand
             EscapePressed = false;
             DebugOverlayShowing = false;
             CurrentState = GameMenuStates.Resume;
-            CurrentPhase = Phases.Game_Start_Setup;
+            CurrentPhase = Phases.Invalid;
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             PauseMenu = GameObject.Find("PauseMenu");
@@ -99,6 +99,7 @@ namespace FallenLand
             ActualTurnPhaseText = GameObject.Find("ActualTurnPhaseText").GetComponent<Text>();
 
             EndPhaseButton = GameObject.Find("EndPhaseButton").GetComponent<Button>();
+            EndPhaseButton.interactable = false;
         }
 
         void Start()
@@ -212,7 +213,7 @@ namespace FallenLand
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             GameManagerInstance.EndPhase(myIndex);
             EndPhaseButton.interactable = false;
-            EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting..."; //Doesn't exist?
+            EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting...";
         }
         #endregion
 
@@ -604,7 +605,7 @@ namespace FallenLand
 
         private void updateEndPhaseButton()
         {
-            if (GameManagerInstance.GetPhase() != CurrentPhase)
+            if (GameManagerInstance.GetPhase() != CurrentPhase && GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId())
             {
                 EndPhaseButton.interactable = true;
                 CurrentPhase = GameManagerInstance.GetPhase();
