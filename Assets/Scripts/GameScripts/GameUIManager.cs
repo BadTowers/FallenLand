@@ -30,8 +30,10 @@ namespace FallenLand
         private GameObject PauseMenu;
         private Text ActualTurnNumberText;
         private Text ActualTurnPhaseText;
+        private Button EndPhaseButton;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
+        private Phases CurrentPhase;
 
         #region UnityFunctions
         void Awake()
@@ -39,6 +41,7 @@ namespace FallenLand
             EscapePressed = false;
             DebugOverlayShowing = false;
             CurrentState = GameMenuStates.Resume;
+            CurrentPhase = Phases.Game_Start_Setup;
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             PauseMenu = GameObject.Find("PauseMenu");
@@ -94,6 +97,8 @@ namespace FallenLand
 
             ActualTurnNumberText = GameObject.Find("ActualTurnNumberText").GetComponent<Text>();
             ActualTurnPhaseText = GameObject.Find("ActualTurnPhaseText").GetComponent<Text>();
+
+            EndPhaseButton = GameObject.Find("EndPhaseButton").GetComponent<Button>();
         }
 
         void Start()
@@ -125,6 +130,8 @@ namespace FallenLand
             updateCharacterSpoilsScreen();
 
             updateTurnInformation();
+
+            updateEndPhaseButton();
 
             EscapePressed = false;
         }
@@ -184,8 +191,6 @@ namespace FallenLand
 
         public void OnQuit()
         {
-            //TODO make quit
-            //TODO warn to save
             Debug.Log("Quit");
         }
 
@@ -206,6 +211,8 @@ namespace FallenLand
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             GameManagerInstance.EndPhase(myIndex);
+            EndPhaseButton.interactable = false;
+            EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting..."; //Doesn't exist?
         }
         #endregion
 
@@ -593,6 +600,16 @@ namespace FallenLand
         {
             ActualTurnNumberText.text = GameManagerInstance.GetTurn().ToString();
             ActualTurnPhaseText.text = GameManagerInstance.GetPhase().ToString();
+        }
+
+        private void updateEndPhaseButton()
+        {
+            if (GameManagerInstance.GetPhase() != CurrentPhase)
+            {
+                EndPhaseButton.interactable = true;
+                CurrentPhase = GameManagerInstance.GetPhase();
+                EndPhaseButton.GetComponentInChildren<Text>().text = "End Phase";
+            }
         }
 
         private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
