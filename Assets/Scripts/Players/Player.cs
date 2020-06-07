@@ -70,7 +70,7 @@ namespace FallenLand
 			}
 		}
 
-		public void AddStowableToVehicle(SpoilsCard stowableCard)
+		public void AddStowableToActiveVehicle(SpoilsCard stowableCard)
 		{
 			if (stowableCard != null && Vehicle != null && stowableCard.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
 			{
@@ -230,7 +230,7 @@ namespace FallenLand
 			updateCharacterSlotTotals(characterIndex);
 		}
 
-		public void RemoveSpoilsCardFromActiveVehicle(SpoilsCard card)
+		public void RemoveStowableFromActiveVehicle(SpoilsCard card)
 		{
 			if (Vehicle != null && Vehicle.GetEquippedSpoils().Contains(card))
 			{

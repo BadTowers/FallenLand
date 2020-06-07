@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FallenLand;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -324,18 +325,148 @@ namespace Tests
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(nonstowableCard));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(null));
 
-			HumanPlayerInstance.AddStowableToVehicle(stowableCard);
+			HumanPlayerInstance.AddStowableToActiveVehicle(stowableCard);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
 			Assert.AreEqual(stowableCard, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils()[0]);
-			HumanPlayerInstance.AddStowableToVehicle(nonstowableCard);
+			HumanPlayerInstance.AddStowableToActiveVehicle(nonstowableCard);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
-			HumanPlayerInstance.AddStowableToVehicle(null);
+			HumanPlayerInstance.AddStowableToActiveVehicle(null);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
 
-			HumanPlayerInstance.RemoveSpoilsCardFromActiveVehicle(nonstowableCard);
+			HumanPlayerInstance.RemoveStowableFromActiveVehicle(nonstowableCard);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
-			HumanPlayerInstance.RemoveSpoilsCardFromActiveVehicle(stowableCard);
+			HumanPlayerInstance.RemoveStowableFromActiveVehicle(stowableCard);
 			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestVehicleStatsAndCarryWeight()
+		{
+			Dictionary<Skills, int> vehicleExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 3 },
+				{ Skills.Diplomacy, 0 },
+				{ Skills.Technical, 2 },
+				{ Skills.Combat, 0 },
+				{ Skills.Survival, 1 },
+				{ Skills.Medical, 8 }
+			};
+
+			Dictionary<Skills, int> stowableExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 2 },
+				{ Skills.Diplomacy, 2 },
+				{ Skills.Technical, 1 },
+				{ Skills.Combat, 5 },
+				{ Skills.Survival, 4 },
+				{ Skills.Medical, 0 }
+			};
+
+			Dictionary<Skills, int> totalExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, vehicleExpected[Skills.Mechanical] + stowableExpected[Skills.Mechanical] },
+				{ Skills.Diplomacy, vehicleExpected[Skills.Diplomacy] + stowableExpected[Skills.Diplomacy]  },
+				{ Skills.Technical, vehicleExpected[Skills.Technical] + stowableExpected[Skills.Technical]  },
+				{ Skills.Combat, vehicleExpected[Skills.Combat] + stowableExpected[Skills.Combat]  },
+				{ Skills.Survival, vehicleExpected[Skills.Survival] + stowableExpected[Skills.Survival]  },
+				{ Skills.Medical, vehicleExpected[Skills.Medical] + stowableExpected[Skills.Medical]  }
+			};
+
+			SpoilsCard vehicleSpoils = new SpoilsCard("Vehicle Spoils");
+			vehicleSpoils.AddSpoilsType(SpoilsTypes.Vehicle);
+			vehicleSpoils.SetBaseSkills(vehicleExpected);
+			SpoilsCard stowableSpoil = new SpoilsCard("Stowable spoils");
+			stowableSpoil.AddSpoilsType(SpoilsTypes.Stowable);
+			stowableSpoil.SetBaseSkills(stowableExpected);
+			stowableSpoil.SetCarryWeight(9);
+
+			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
+			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+
+			HumanPlayerInstance.AddStowableToActiveVehicle(stowableSpoil);
+			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveVehicleStats());
+			Assert.AreEqual(9, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+
+			HumanPlayerInstance.RemoveStowableFromActiveVehicle(stowableSpoil);
+			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestCharacterSlotStatsAndCarryWeight()
+		{
+			const int CHARACTER_INDEX = 0;
+
+			Dictionary<Skills, int> spoils1Expected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 3 },
+				{ Skills.Diplomacy, 0 },
+				{ Skills.Technical, 2 },
+				{ Skills.Combat, 0 },
+				{ Skills.Survival, 1 },
+				{ Skills.Medical, 8 }
+			};
+
+			Dictionary<Skills, int> spoils2Expected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 2 },
+				{ Skills.Diplomacy, 2 },
+				{ Skills.Technical, 1 },
+				{ Skills.Combat, 5 },
+				{ Skills.Survival, 4 },
+				{ Skills.Medical, 0 }
+			};
+
+			Dictionary<Skills, int> expectedZeros = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 0 },
+				{ Skills.Diplomacy, 0 },
+				{ Skills.Technical, 0 },
+				{ Skills.Combat, 0 },
+				{ Skills.Survival, 0 },
+				{ Skills.Medical, 0 }
+			};
+
+			Dictionary<Skills, int> totalExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, spoils1Expected[Skills.Mechanical] + spoils2Expected[Skills.Mechanical] },
+				{ Skills.Diplomacy, spoils1Expected[Skills.Diplomacy] + spoils2Expected[Skills.Diplomacy]  },
+				{ Skills.Technical, spoils1Expected[Skills.Technical] + spoils2Expected[Skills.Technical]  },
+				{ Skills.Combat, spoils1Expected[Skills.Combat] + spoils2Expected[Skills.Combat]  },
+				{ Skills.Survival, spoils1Expected[Skills.Survival] + spoils2Expected[Skills.Survival]  },
+				{ Skills.Medical, spoils1Expected[Skills.Medical] + spoils2Expected[Skills.Medical]  }
+			};
+
+			CharacterCard character = new CharacterCard("character");
+			SpoilsCard spoils1 = new SpoilsCard("Spoils1");
+			spoils1.AddSpoilsType(SpoilsTypes.Vehicle);
+			spoils1.SetBaseSkills(spoils1Expected);
+			spoils1.SetCarryWeight(2);
+			SpoilsCard spoils2 = new SpoilsCard("Spoils2");
+			spoils2.AddSpoilsType(SpoilsTypes.Stowable);
+			spoils2.SetBaseSkills(spoils2Expected);
+			spoils2.SetCarryWeight(5);
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_INDEX, character);
+			CollectionAssert.AreEquivalent(expectedZeros, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+
+			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils1);
+			CollectionAssert.AreEquivalent(spoils1Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
+			Assert.AreEqual(2, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+
+			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils2);
+			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
+			Assert.AreEqual(7, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+
+			HumanPlayerInstance.RemoveSpoilsCardFromActiveCharacter(CHARACTER_INDEX, spoils1);
+			CollectionAssert.AreEquivalent(spoils2Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
+			Assert.AreEqual(5, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
 
 			yield return null;
 		}

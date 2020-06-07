@@ -376,7 +376,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].RemoveSpoilsCardFromActiveVehicle(card);
+				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
 			}
 		}
 
@@ -432,7 +432,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].AddStowableToVehicle(card);
+				Players[playerIndex].AddStowableToActiveVehicle(card);
 			}
 		}
 
