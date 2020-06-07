@@ -11,10 +11,13 @@ namespace FallenLand
         //link. This would map some spoils card to some bonuses. ex) any two wheeled vehicle -> +1 movement and +6 carrying capacity TODO
         //specialAbilities. What bonuses the character card gets. TDC cost 3 less. Auto pass certain encounters. etc TODO
         private List<SpoilsCard> EquippedSpoils;
+        private bool HasFirstStrike;
+        ConditionalGain Link;
 
         public CharacterCard(string title) : base(title)
         {
             EquippedSpoils = new List<SpoilsCard>();
+            HasFirstStrike = false;
         }
 
         public void SetMaxHp(int maxHp)
@@ -75,6 +78,26 @@ namespace FallenLand
             {
                 EquippedSpoils.Remove(toRemove);
             }
+        }
+
+        public void SetLink(ConditionalGain link)
+        {
+            Link = link;
+        }
+
+        public ConditionalGain GetLink()
+        {
+            return Link;
+        }
+
+        public void SetHasFirstStrike(bool hasFirstStrike)
+        {
+            HasFirstStrike = hasFirstStrike;
+        }
+
+        public bool GetHasFirstStrike()
+        {
+            return HasFirstStrike;
         }
     }
 }
