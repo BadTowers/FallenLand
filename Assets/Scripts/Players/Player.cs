@@ -349,12 +349,11 @@ namespace FallenLand
 		{
 			if (ActiveCharacters[indexToUpdate] != null)
 			{
-				//Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills(); //Add back in when characters have base stats
+				Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills();
 				List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
 				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 				{
-					//int tempSum = currentCharacterSkills[skill];
-					int tempSum = 0;
+					int tempSum = currentCharacterSkills[skill];
 					for (int i = 0; i < equippedSpoils.Count; i++)
 					{
 						tempSum += equippedSpoils[i].GetBaseSkills()[skill];
