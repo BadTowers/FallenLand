@@ -168,6 +168,194 @@ namespace FallenLand
             curCard.SetId(curID);
 			curID++;
 			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("Ashton Campbell");
+			curCard.SetTitleSubString("Resourceful Scavenger");
+			curCard.SetQuote("As a salvager, I can find just about anything.");
+			curCard.SetCarryCapacity(17);
+			curCard.SetMaxHp(8);
+			curCard.SetPsychResistance(4);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 7},
+				{Skills.Diplomacy, 7},
+				{Skills.Mechanical, 5},
+				{Skills.Technical, 6},
+				{Skills.Medical, 6}
+			});
+			link = new ConditionalGain();
+			rewardChoice = new Dictionary<Gains, int>
+			{
+				{ Gains.Gain_Spoils_Cards, 2 }
+			};
+			link.AddRewardChoice(rewardChoice);
+			link.AddWhenRewardCanBeGained(new List<Times>() { Times.Binoculars_Equipped, Times.Flare_Gun_Equipped });
+			link.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curCard.SetLink(link);
+			conditionalGain = new ConditionalGain();
+			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.After_Successful_Store_Loot_Encounter });
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
+			rewardChoice = new Dictionary<Gains, int>
+			{
+				{ Gains.Gain_Spoils_Cards, 2 }
+			};
+			conditionalGain.AddRewardChoice(rewardChoice);
+			curCard.AddConditionalGain(conditionalGain);
+			conditionalGain = new ConditionalGain();
+			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.During_Rad_Zombie_Encounters });
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
+            rewardChoice = new Dictionary<Gains, int>
+            {
+                { Gains.Gain_Combat, 10 }
+            };
+            conditionalGain.AddRewardChoice(rewardChoice);
+            curCard.AddConditionalGain(conditionalGain);
+            curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("Peter Kelsey");
+			curCard.SetTitleSubString("Chatty Repairman");
+			curCard.SetQuote("I've been told I'm best in small doses.");
+			curCard.SetCarryCapacity(14);
+			curCard.SetMaxHp(6);
+			curCard.SetPsychResistance(3);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 4},
+				{Skills.Diplomacy, 5},
+				{Skills.Mechanical, 8},
+				{Skills.Technical, 9},
+				{Skills.Medical, 5}
+			});
+			//TODO add link
+			//TODO add conditional gain
+			//TODO add conditional gain
+			curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("SSG Carter Neil");
+			curCard.SetTitleSubString("Veteran Town Scout");
+			curCard.SetQuote("They won't even see us coming, until it's too late.");
+			curCard.SetCarryCapacity(16);
+			curCard.SetMaxHp(9);
+			curCard.SetPsychResistance(5);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 8},
+				{Skills.Survival, 8},
+				{Skills.Diplomacy, 6},
+				{Skills.Mechanical, 5},
+				{Skills.Technical, 6},
+				{Skills.Medical, 7}
+			});
+			//TODO add link
+			//TODO add conditional gain
+			curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("Orison Lech");
+			curCard.SetTitleSubString("Faction Bureaucrat");
+			curCard.SetQuote("Believe me. I'll always find a way to make our enemies pay.");
+			curCard.SetCarryCapacity(11);
+			curCard.SetMaxHp(6);
+			curCard.SetPsychResistance(3);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 5},
+				{Skills.Diplomacy, 9},
+				{Skills.Mechanical, 6},
+				{Skills.Technical, 6},
+				{Skills.Medical, 5}
+			});
+			//TODO add conditional gain
+			//TODO add conditional gain
+			curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("Bruce Stephens");
+			curCard.SetTitleSubString("Exile");
+			curCard.SetQuote("My last group sent me out here to die... I didn't...");
+			curCard.SetCarryCapacity(16);
+			curCard.SetMaxHp(7);
+			curCard.SetPsychResistance(5);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 8},
+				{Skills.Survival, 8},
+				{Skills.Diplomacy, 4},
+				{Skills.Mechanical, 9},
+				{Skills.Technical, 6},
+				{Skills.Medical, 5}
+			});
+			//TODO add link
+			//TODO add passive gain
+			curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("Wade Marlow");
+			curCard.SetTitleSubString("Friendly Iowan");
+			curCard.SetQuote("You've heard of Midwestern charm, right?");
+			curCard.SetCarryCapacity(11);
+			curCard.SetMaxHp(5);
+			curCard.SetPsychResistance(3);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5},
+				{Skills.Survival, 6},
+				{Skills.Diplomacy, 7},
+				{Skills.Mechanical, 5},
+				{Skills.Technical, 6},
+				{Skills.Medical, 6}
+			});
+			//TODO add link
+			//TODO add conditional gain
+			//TODO add conditional gain
+			curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
+
+
+			/****************************************************************************************************************************************************************/
+			curCard = new CharacterCard("Max Gibson");
+			curCard.SetTitleSubString("Wasteland Vigilante");
+			curCard.SetQuote("I've seen a few road wars. It's a nasty business.");
+			curCard.SetCarryCapacity(15);
+			curCard.SetMaxHp(9);
+			curCard.SetPsychResistance(4);
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 6},
+				{Skills.Survival, 7},
+				{Skills.Diplomacy, 6},
+				{Skills.Mechanical, 7},
+				{Skills.Technical, 5},
+				{Skills.Medical, 4}
+			});
+			//TODO add link
+			//TODO add conditional gain
+			curCard.SetId(curID);
+			curID++;
+			CharacterCards.Add(curCard);
 		}
 
 		public List<CharacterCard> GetCharacterCards()

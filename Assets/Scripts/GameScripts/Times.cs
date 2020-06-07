@@ -43,7 +43,9 @@ namespace FallenLand
 
 		//Specific card equipped
 		Axe_Equipped,
+		Binoculars_Equipped,
 		Compass_and_Maps_Equipped,
+		Flare_Gun_Equipped,
 		Indestructible_Tennis_Racquet_Equipped,
 		Rifle_Equipped,
 		Shotgun_Equipped,
@@ -158,6 +160,7 @@ namespace FallenLand
 		Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
 		During_Environmetal_Hazard_Encounter_Card,
 		During_Mission_Card_Sigma_In_Title_Any_Player,
+		After_Successful_Store_Loot_Encounter,
 
 
 		//Locations
