@@ -605,7 +605,7 @@ namespace FallenLand
 
         private void updateEndPhaseButton()
         {
-            if (GameManagerInstance.GetPhase() != CurrentPhase && GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId())
+            if (shouldEnableEndPhaseButton())
             {
                 EndPhaseButton.interactable = true;
                 CurrentPhase = GameManagerInstance.GetPhase();
@@ -798,6 +798,14 @@ namespace FallenLand
             {
                 Debug.LogError("Failed to find the card... " + cardImage.GetComponentInChildren<MonoCard>().CardPtr.GetTitle());
             }
+        }
+
+        private bool shouldEnableEndPhaseButton()
+        {
+            return GameManagerInstance.GetPhase() != CurrentPhase && 
+                ((GameManagerInstance.GetCurrentPlayer() != null &&
+                GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId()) || 
+                PhasesHelpers.IsAsyncPhase(GameManagerInstance.GetPhase()));
         }
         #endregion
     }

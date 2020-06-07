@@ -63,12 +63,18 @@ namespace FallenLand
 		After_End_Turn_Phase
 	}
 
-    public class PhaseStrings
+    public class PhasesHelpers
     {
 		public static string PhaseToString(Phases phase)
 		{
 			//TODO
 			return phase.ToString();
+		}
+
+        public static bool IsAsyncPhase(Phases phase)
+        {
+			return phase == Phases.Town_Business_Auction_House;
+
 		}
 	}
 }

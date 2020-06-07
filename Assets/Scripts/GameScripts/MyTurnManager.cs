@@ -15,6 +15,7 @@ namespace FallenLand
     public class MyTurnManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         Photon.Realtime.Player Sender;
+        private bool _MovedToNextPlayerAlready = false;
 
         public int Turn
         {
@@ -91,8 +92,9 @@ namespace FallenLand
         public void BeginNextTurn()
         {
             Debug.Log("BeginTurn");
-            Turn++;
             CurrentPlayer = PhotonNetwork.PlayerList[0]; //TODO change this to be the next player (since first player rotates). For now just always makes master first
+            _MovedToNextPlayerAlready = true;
+            Turn++;
         }
 
         public void BeginNextPhase()
@@ -106,6 +108,8 @@ namespace FallenLand
             }
             else
             {
+                CurrentPlayer = PhotonNetwork.PlayerList[0]; //TODO change this to be the current first player. For now just always makes master first
+                _MovedToNextPlayerAlready = true;
                 Phase++;
             }
         }
@@ -175,13 +179,13 @@ namespace FallenLand
                                 TurnManagerListener.OnPlayerFinished(Sender, phase, move);
                                 for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
                                 {
-                                    if (PhotonNetwork.PlayerList[i] == Sender)
+                                    if (PhotonNetwork.PlayerList[i] == Sender && !_MovedToNextPlayerAlready)
                                     {
                                         CurrentPlayer = PhotonNetwork.PlayerList[(i+1) % PhotonNetwork.PlayerList.Length];
                                         break;
                                     }
                                 }
-
+                                _MovedToNextPlayerAlready = false;
                             }
 
                             if (IsPhaseCompletedByAll)
