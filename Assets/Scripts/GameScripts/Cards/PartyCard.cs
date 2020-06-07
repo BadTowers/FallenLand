@@ -9,11 +9,13 @@ namespace FallenLand
 		private string TitleSubString;
 		private string Quote;
 		private List<ConditionalGain> ConditionalGains;
+		private Dictionary<Gains, int> PassiveGains;
 
 		public PartyCard(string text) : base(text)
 		{
 			BaseSkills = Constants.ALL_SKILLS_ZERO;
 			ConditionalGains = new List<ConditionalGain>();
+			PassiveGains = new Dictionary<Gains, int>();
 		}
 
 		public void SetBaseSkills(Dictionary<Skills, int> skills)
@@ -71,6 +73,16 @@ namespace FallenLand
         {
 			return ConditionalGains;
         }
+
+		public void AddPassiveGain(Gains gain, int amountGained)
+		{
+			PassiveGains.Add(gain, amountGained);
+		}
+
+		public Dictionary<Gains, int> GetPassiveGains()
+		{
+			return PassiveGains;
+		}
 	}
 
 }

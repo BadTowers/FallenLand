@@ -44,6 +44,11 @@ namespace FallenLand
 		//Specific card equipped
 		Axe_Equipped,
 		Compass_and_Maps_Equipped,
+		Indestructible_Tennis_Racquet_Equipped,
+		Rifle_Equipped,
+		Shotgun_Equipped,
+		Sledge_Hammer_Equipped,
+		Sock_Monkey_Puppet_Equipped,
 
 		//Skill checks
 		After_Combat_Skill_Check_Failure,
@@ -166,12 +171,16 @@ namespace FallenLand
 		First_Move_Into_Mountain_Hex,
 		First_Move_Into_CityRad_Hex,
 		Return_To_Town_Location,
+		Within_1_Hex_Of_The_War_Wagon,
 
 		//Deeds
 		During_Movement_Deed,
 		During_Healing_Deed,
 		During_Encounter_Deed,
 		During_Mission_Deed,
+
+		//Dice rolls
+		Rolled_10_On_This_Characters_Skill_Check,
 
 	}
 }

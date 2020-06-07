@@ -13,11 +13,13 @@ namespace FallenLand
         private List<SpoilsCard> EquippedSpoils;
         private bool HasFirstStrike;
         ConditionalGain Link;
+        private bool IsMaster;
 
         public CharacterCard(string title) : base(title)
         {
             EquippedSpoils = new List<SpoilsCard>();
             HasFirstStrike = false;
+            IsMaster = false;
         }
 
         public void SetMaxHp(int maxHp)
@@ -98,6 +100,16 @@ namespace FallenLand
         public bool GetHasFirstStrike()
         {
             return HasFirstStrike;
+        }
+
+        public void SetIsMaster(bool isMaster)
+        {
+            IsMaster = isMaster;
+        }
+
+        public bool GetIsMaster()
+        {
+            return IsMaster;
         }
     }
 }

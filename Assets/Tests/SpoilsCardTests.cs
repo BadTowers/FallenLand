@@ -211,11 +211,11 @@ namespace Tests
 			SpoilsCardInstance.SetConditionalGains(new List<Dictionary<Gains, int>>() { });
 			Assert.AreEqual(0, SpoilsCardInstance.GetConditionalGains().Count);
 
-			SpoilsCardInstance.SetConditionalGains(new Dictionary<Gains, int>() { {Gains.Gain_Salvage, 10}, {Gains.Lost_Salvage, 20} });
+			SpoilsCardInstance.SetConditionalGains(new Dictionary<Gains, int>() { {Gains.Gain_Salvage, 10}, {Gains.Lose_Salvage, 20} });
 			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains().Count);
 			Assert.AreEqual(Gains.Gain_Salvage, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(0).Key);
 			Assert.AreEqual(10, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(0).Value);
-			Assert.AreEqual(Gains.Lost_Salvage, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Key);
+			Assert.AreEqual(Gains.Lose_Salvage, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Key);
 			Assert.AreEqual(20, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Value);
 
 			SpoilsCardInstance.AddConditionalGain(new Dictionary<Gains, int>() { { Gains.Lose_Town_Health, 7} });

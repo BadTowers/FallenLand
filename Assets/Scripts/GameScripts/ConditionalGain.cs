@@ -9,12 +9,14 @@ namespace FallenLand
         private List<List<Times>> WhenRewardCanBeGained; //each outer list is AND'ed together, each inner list item is OR'ed together
         private Uses NumberOfTimesThisRewardCanBeClaimed;
         private bool DiscardAfterClaimingReward;
+        private List<Dictionary<Gains, int>> D6Options;
 
         public ConditionalGain()
         {
             Rewards = new List<Dictionary<Gains, int>>();
             WhenRewardCanBeGained = new List<List<Times>>();
             DiscardAfterClaimingReward = false;
+            D6Options = new List<Dictionary<Gains, int>>();
         }
 
         //If only one choice added, then it's just given if conditions are met
@@ -71,6 +73,11 @@ namespace FallenLand
         public bool GetDiscardAfterClaimingReward()
         {
             return DiscardAfterClaimingReward;
+        }
+
+        public void AddD6Option(Dictionary<Gains, int> gains)
+        {
+            D6Options.Add(gains);
         }
     }
 }

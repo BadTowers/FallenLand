@@ -141,6 +141,7 @@ namespace FallenLand
 		Steal_Spoils_From_Opposing_Town_Auction_House,
 		Steal_D6_Salvage,
 		Steal_D10_Salvage,
+		Steal_The_War_Wagon,
 
 		//Movement
 		Ignore_Delays,
@@ -151,6 +152,7 @@ namespace FallenLand
 		Mountain_Hexes_Cost,
 		Plains_Hexes_Cost,
 		CityRad_Hexes_Cost,
+		Gain_Week_Penalty_Chip,
 
 		//Clothing
 		Can_Combine_With_Armor,
@@ -321,5 +323,8 @@ namespace FallenLand
 		Gain_Mechanical,
 		Gain_Technical,
 		Gain_Medical,
+
+		//Dice rerolls
+		Reroll_Die_That_Were_10s,
 	}
 }
