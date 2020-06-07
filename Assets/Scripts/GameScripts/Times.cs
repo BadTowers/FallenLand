@@ -39,6 +39,11 @@ namespace FallenLand
 		When_Drawn,
 		After_Sell_Spoils_Card_From_Auction_House_To_Another_Player,
 		Negative_Action_Card_Against_Player,
+		After_Ally_Card_Is_Gained,
+
+		//Specific card equipped
+		Axe_Equipped,
+		Compass_and_Maps_Equipped,
 
 		//Skill checks
 		After_Combat_Skill_Check_Failure,

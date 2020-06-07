@@ -74,7 +74,7 @@ namespace FallenLand
 		Gain_Salvage,
 		Gain_Prestige,
 		Gain_Town_Health,
-		Lost_Salvage,
+		Lose_Salvage,
 		Lose_Prestige,
 		Lose_Town_Health,
 		Gain_Town_Defense_Chips,
@@ -88,7 +88,7 @@ namespace FallenLand
 		Move_To_Any_Mission_Chip,
 
 		//Ally
-		Prevent_Any_Character_Death_And_Set_HP_To, //In a dictionary, set the value as the HP they have after the prevention
+		Prevent_Any_Character_Death_And_Set_HP_To,
 
 		//Encounters/Missions
 		Ignore_Ambush_Encounters,
@@ -206,7 +206,8 @@ namespace FallenLand
 		//Cards general
 		Gain_Spoils_Cards, //Added, no catches
 		Gain_Action_Cards,
-		Gain_Character_Cards,
+		Gain_Character_Cards, //Go to town roster
+		Gain_Character_Cards_May_Be_Assigned_To_Party, //May go to town roster or into the party directly
 		Lose_Spoils_Cards,
 		Lose_Action_Cards,
 		Lose_Character_Cards,
@@ -312,5 +313,13 @@ namespace FallenLand
 
 		//Movement
 		Move_Through_Great_Lakes,
+
+		//Stats
+		Gain_Combat,
+		Gain_Survival,
+		Gain_Diplomacy,
+		Gain_Mechanical,
+		Gain_Technical,
+		Gain_Medical,
 	}
 }

@@ -131,6 +131,8 @@ namespace FallenLand
 			SpoilsCard curCard;
 			SpoilsCard tempCard;
 			int curID = 0;
+			ConditionalGain conditionalGain;
+			Dictionary<Gains, int> rewardChoice;
 
 			Debug.Log("Instantiating spoils cards...");
 
@@ -140,31 +142,27 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Stowable, SpoilsTypes.Alcohol, SpoilsTypes.Equipment); //Set all types the card fulfils
 			curCard.SetCarryWeight(2); //Set how much the item weights
 			curCard.SetSellValue(6); //Set the value of the card
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Diplomacy, 3},
-			{Skills.Medical, 1}
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Diplomacy, 3},
+				{Skills.Medical, 1}
+			});
 			/* No statics */
-			curCard.SetConditionalGains( //Set the active abilities the card can do
-				new Dictionary<Gains, int>{ //Set 1 of conditionals
-				{Gains.Gain_Spoils_Cards, 2}}, //1.1
-				new Dictionary<Gains, int>{ //Set 2 of conditionals
-				{Gains.Gain_Action_Cards, 2}} //2.1
-			);
-			curCard.SetWhenUsable( //Set when the conditionals are useable
-				new List<Times>(){ //Set 1
-				Times.After_Successful_Mission_Or_Encounter}, //1.1
-				new List<Times>(){ //Set 2
-				Times.After_Successful_Mission_Or_Encounter} //2.1
-			);
-			curCard.SetNumberOfUses( //Set how many uses each active has
-				Uses.Unlimited, //Set 1
-				Uses.Unlimited //Set 2
-			);
-			curCard.SetDiscard( //Set if the active use causes the card to be discarded
-				true, //Set 1
-				true //Set 2
-			);
+			conditionalGain = new ConditionalGain();
+            rewardChoice = new Dictionary<Gains, int>
+            {
+                { Gains.Gain_Spoils_Cards, 2 }
+            };
+            conditionalGain.AddRewardChoice(rewardChoice);
+            rewardChoice = new Dictionary<Gains, int>
+            {
+                { Gains.Gain_Action_Cards, 2 }
+            };
+            conditionalGain.AddRewardChoice(rewardChoice);
+			conditionalGain.SetWhenRewardCanBeGained(Times.After_Successful_Mission_Or_Encounter);
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
+			conditionalGain.SetDiscardAfterClaimingReward(true);
+			curCard.AddConditionalGain(conditionalGain);
 			/* No restrictions */
 			curCard.SetId(curID);
 			curID++;
@@ -176,15 +174,17 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Horse);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(12);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 4},
-			{Skills.Survival, 2},
-			{Skills.Diplomacy, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 1}, //Passive 1
-			{Gains.All_Hex_Movement_Cost, 1} //Passive 2
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 2},
+				{Skills.Diplomacy, 2}
+			});
+			curCard.SetStaticGains(new Dictionary<Gains, int>
+			{
+				{Gains.Gain_Movement, 1}, //Passive 1
+				{Gains.All_Hex_Movement_Cost, 1} //Passive 2
+			});
 			/* No conditionals */
 			/* No restrictions */
 			curCard.SetId(curID);
@@ -197,36 +197,35 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ally);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0); //Can't be sold
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Survival, 1},
-			{Skills.Diplomacy, 3},
-			{Skills.Mechanical, 4},
-			{Skills.Medical, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 2},
-			{Gains.Gain_Carry_Weight, 4},
-			{Gains.Prevent_Destruction, VALUE_NOT_NEEDED},
-			{Gains.Prevent_Theft, VALUE_NOT_NEEDED},
-			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
-		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
-			{Gains.Optional_Pay_Salvage, 5}
-		});
-			curCard.SetWhenUsable(new List<Times>(){
-			Times.Immediately
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			curCard.SetRestrictions(new List<Restrictions>(){ //Set 1 of restrictions
-			Restrictions.Equip_To_Vehicle, //1.1
-			Restrictions.Discard_If_Not_Purchased //1.2
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2},
+				{Skills.Survival, 1},
+				{Skills.Diplomacy, 3},
+				{Skills.Mechanical, 4},
+				{Skills.Medical, 2}
+			});
+			curCard.SetStaticGains(new Dictionary<Gains, int>
+			{
+				{Gains.Gain_Movement, 2},
+				{Gains.Gain_Carry_Weight, 4},
+				{Gains.Prevent_Destruction, VALUE_NOT_NEEDED},
+				{Gains.Prevent_Theft, VALUE_NOT_NEEDED},
+				{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
+			});
+			conditionalGain = new ConditionalGain();
+            rewardChoice = new Dictionary<Gains, int>
+            {
+                { Gains.Optional_Pay_Salvage, 5 }
+            };
+            conditionalGain.AddRewardChoice(rewardChoice);
+			conditionalGain.SetWhenRewardCanBeGained(Times.Immediately);
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
+			curCard.SetRestrictions(new List<Restrictions>()
+			{ //Set 1 of restrictions
+				Restrictions.Equip_To_Vehicle, //1.1
+				Restrictions.Discard_If_Not_Purchased //1.2
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);

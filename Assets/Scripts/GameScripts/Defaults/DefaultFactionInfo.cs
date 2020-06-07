@@ -201,7 +201,7 @@ namespace FallenLand
 			curPerk.AddD6Option(null); //4
 			curPerk.AddD6Option(null); //5
 			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
-			{Gains.Lost_Salvage, 7}
+			{Gains.Lose_Salvage, 7}
 		});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Mountaineering");
