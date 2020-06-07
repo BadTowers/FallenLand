@@ -246,36 +246,34 @@ namespace FallenLand
 
         public static void SetTurn(this Room room, int turn)
         {
-            if (room == null || room.CustomProperties == null)
+            if (room != null && room.CustomProperties != null)
             {
-                return;
+                Hashtable turnProps = new Hashtable
+                {
+                    [TurnPropKey] = turn
+                };
+
+                room.SetCustomProperties(turnProps);
             }
-
-            Hashtable turnProps = new Hashtable
-            {
-                [TurnPropKey] = turn
-            };
-
-            room.SetCustomProperties(turnProps);
         }
 
         public static void SetPhase(this Room room, Phases phase)
         {
-            if (room == null || room.CustomProperties == null)
+            if (room != null && room.CustomProperties != null)
             {
-                return;
+                Hashtable phaseProps = new Hashtable
+                {
+                    [PhasePropKey] = phase
+                };
+
+                room.SetCustomProperties(phaseProps);
             }
-
-            Hashtable phaseProps = new Hashtable();
-            phaseProps[PhasePropKey] = phase;
-
-            room.SetCustomProperties(phaseProps);
         }
 
         public static int GetTurn(this RoomInfo room)
         {
             int turn = 0;
-            if (!(room == null || room.CustomProperties == null || !room.CustomProperties.ContainsKey(TurnPropKey)))
+            if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(TurnPropKey))
             {
                 turn = (int)room.CustomProperties[TurnPropKey];
             }
@@ -286,7 +284,7 @@ namespace FallenLand
         public static Phases GetPhase(this RoomInfo room)
         {
             Phases phase = Phases.Game_Start_Setup;
-            if (!(room == null || room.CustomProperties == null || !room.CustomProperties.ContainsKey(PhasePropKey)))
+            if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(PhasePropKey))
             {
                 phase = (Phases)room.CustomProperties[PhasePropKey];
             }
@@ -296,39 +294,38 @@ namespace FallenLand
 
         public static int GetTurnStart(this RoomInfo room)
         {
-            if (room == null || room.CustomProperties == null || !room.CustomProperties.ContainsKey(TurnStartPropKey))
+            int turn = 0;
+            if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(TurnStartPropKey))
             {
-                return 0;
+                turn = (int)room.CustomProperties[TurnStartPropKey];
             }
 
-            return (int)room.CustomProperties[TurnStartPropKey];
+            return turn;
         }
 
         public static int GetFinishedTurn(this Photon.Realtime.Player player)
         {
             Room room = PhotonNetwork.CurrentRoom;
-            if (room == null || room.CustomProperties == null || !room.CustomProperties.ContainsKey(TurnPropKey))
+            int finishedTurn = 0;
+            if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(TurnPropKey))
             {
-                return 0;
+                string propKey = FinishedTurnPropKey + player.ActorNumber;
+                finishedTurn = (int)room.CustomProperties[propKey];
             }
-
-            string propKey = FinishedTurnPropKey + player.ActorNumber;
-            return (int)room.CustomProperties[propKey];
+            return finishedTurn;
         }
 
         public static void SetFinishedTurn(this Photon.Realtime.Player player, int turn)
         {
             Room room = PhotonNetwork.CurrentRoom;
-            if (room == null || room.CustomProperties == null)
+            if (room != null && room.CustomProperties != null)
             {
-                return;
+                string propKey = FinishedTurnPropKey + player.ActorNumber;
+                Hashtable finishedTurnProp = new Hashtable();
+                finishedTurnProp[propKey] = turn;
+
+                room.SetCustomProperties(finishedTurnProp);
             }
-
-            string propKey = FinishedTurnPropKey + player.ActorNumber;
-            Hashtable finishedTurnProp = new Hashtable();
-            finishedTurnProp[propKey] = turn;
-
-            room.SetCustomProperties(finishedTurnProp);
         }
 
         public static Photon.Realtime.Player GetCurrentPlayer(this RoomInfo room)

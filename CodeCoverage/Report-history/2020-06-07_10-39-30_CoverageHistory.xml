@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2020-06-07_10-39-30" tag="">
+  <assembly name="ScriptsAssembly">
+    <class name="FallenLand.ActionCard" coveredlines="12" coverablelines="12" totallines="31" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.CameraManager" coveredlines="34" coverablelines="80" totallines="130" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Card" coveredlines="68" coverablelines="68" totallines="115" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.CardMovementHandler" coveredlines="0" coverablelines="199" totallines="273" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.CharacterCard" coveredlines="46" coverablelines="46" totallines="81" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.CityRadCard" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.ComputerPlayer" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Constants" coveredlines="1" coverablelines="1" totallines="20" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Coordinates" coveredlines="32" coverablelines="32" totallines="55" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultActionCards" coveredlines="13" coverablelines="13" totallines="34" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultCharacterCards" coveredlines="14" coverablelines="14" totallines="36" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultFactionInfo" coveredlines="390" coverablelines="390" totallines="847" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultGame" coveredlines="2" coverablelines="2" totallines="57" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultMapLayout" coveredlines="860" coverablelines="860" totallines="3293" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultRandomNumberLocations" coveredlines="1" coverablelines="1" totallines="112" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultSpoilsCards" coveredlines="1659" coverablelines="1659" totallines="4017" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.DefaultTownTechs" coveredlines="90" coverablelines="90" totallines="163" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.EncounterCard" coveredlines="69" coverablelines="69" totallines="112" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Faction" coveredlines="67" coverablelines="67" totallines="116" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.GameCreation" coveredlines="58" coverablelines="74" totallines="127" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.GameInformation" coveredlines="0" coverablelines="21" totallines="111" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.GameManager" coveredlines="355" coverablelines="379" totallines="591" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.GameUIManager" coveredlines="24" coverablelines="584" totallines="829" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Hex" coveredlines="116" coverablelines="116" totallines="194" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.HumanPlayer" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MainMenuUIManager" coveredlines="331" coverablelines="580" totallines="898" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MapCreation" coveredlines="71" coverablelines="74" totallines="125" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MapLayout" coveredlines="55" coverablelines="55" totallines="104" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MissionCard" coveredlines="63" coverablelines="63" totallines="100" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MountainCard" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MouseManager" coveredlines="0" coverablelines="115" totallines="173" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.MyTurnManager" coveredlines="96" coverablelines="120" totallines="355" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.NonencounterCard" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.NonpartyCard" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.PartyCard" coveredlines="36" coverablelines="36" totallines="64" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Perk" coveredlines="66" coverablelines="66" totallines="110" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.PhasesHelpers" coveredlines="3" coverablelines="6" totallines="80" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.PlainsCard" coveredlines="3" coverablelines="3" totallines="11" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.Player" coveredlines="303" coverablelines="303" totallines="414" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.RoomNameInputField" coveredlines="19" coverablelines="19" totallines="36" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.SpoilsCard" coveredlines="313" coverablelines="313" totallines="448" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.ToggleDependency" coveredlines="13" coverablelines="13" totallines="37" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.TownTech" coveredlines="66" coverablelines="66" totallines="120" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.TurnExtensions" coveredlines="63" coverablelines="81" totallines="355" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.UIManager" coveredlines="23" coverablelines="23" totallines="40" coveredbranches="0" totalbranches="0" />
+    <class name="FallenLand.UserNameInputField" coveredlines="22" coverablelines="22" totallines="43" coveredbranches="0" totalbranches="0" />
+  </assembly>
+  <assembly name="TestsAssembly">
+    <class name="FallenLand.PhotonNetworkHelper" coveredlines="31" coverablelines="31" totallines="71" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.ActionCardTests" coveredlines="20" coverablelines="20" totallines="49" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.CameraManagerTests" coveredlines="21" coverablelines="21" totallines="53" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.CharacterCardTests" coveredlines="59" coverablelines="59" totallines="103" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.CityRadCardTests" coveredlines="10" coverablelines="10" totallines="32" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.ComputerPlayerTests" coveredlines="105" coverablelines="105" totallines="164" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.CoordinatesTests" coveredlines="63" coverablelines="63" totallines="113" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultActionCardsTests" coveredlines="11" coverablelines="11" totallines="35" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultCharacterCardTests" coveredlines="11" coverablelines="11" totallines="35" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultFactionInfoTests" coveredlines="20" coverablelines="20" totallines="46" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultGameTests" coveredlines="22" coverablelines="22" totallines="50" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultMapLayoutTests" coveredlines="69" coverablelines="69" totallines="131" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultRandomLocationsTests" coveredlines="8" coverablelines="8" totallines="23" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultSpoilsCardsTests" coveredlines="72" coverablelines="72" totallines="116" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.DefaultTownTechTests" coveredlines="21" coverablelines="21" totallines="47" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.FactionTests" coveredlines="64" coverablelines="64" totallines="119" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.GameCreationTests" coveredlines="52" coverablelines="52" totallines="108" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.GameManagerTests" coveredlines="162" coverablelines="162" totallines="312" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.GameUiManagerTests" coveredlines="24" coverablelines="24" totallines="53" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.HexTests" coveredlines="166" coverablelines="166" totallines="260" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.HumanPlayerTests" coveredlines="285" coverablelines="285" totallines="464" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.MainMenuUITests" coveredlines="237" coverablelines="237" totallines="390" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.MissionCardTests" coveredlines="119" coverablelines="119" totallines="195" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.MountainCardTests" coveredlines="10" coverablelines="10" totallines="32" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.PerkTests" coveredlines="78" coverablelines="78" totallines="136" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.PhasesHelpersTests" coveredlines="10" coverablelines="10" totallines="33" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.PlainsCardTests" coveredlines="10" coverablelines="10" totallines="32" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.RoomNameInputFieldTests" coveredlines="30" coverablelines="30" totallines="61" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.SpoilsCardTests" coveredlines="326" coverablelines="326" totallines="458" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.ToggleDependencyTests" coveredlines="19" coverablelines="19" totallines="45" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.TownTechTests" coveredlines="67" coverablelines="67" totallines="127" coveredbranches="0" totalbranches="0" />
+    <class name="Tests.UserNameInputFieldTests" coveredlines="37" coverablelines="37" totallines="73" coveredbranches="0" totalbranches="0" />
+  </assembly>
+</coverage>
