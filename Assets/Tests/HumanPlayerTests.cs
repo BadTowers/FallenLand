@@ -422,16 +422,6 @@ namespace Tests
 				{ Skills.Medical, 0 }
 			};
 
-			Dictionary<Skills, int> expectedZeros = new Dictionary<Skills, int>
-			{
-				{ Skills.Mechanical, 0 },
-				{ Skills.Diplomacy, 0 },
-				{ Skills.Technical, 0 },
-				{ Skills.Combat, 0 },
-				{ Skills.Survival, 0 },
-				{ Skills.Medical, 0 }
-			};
-
 			Dictionary<Skills, int> totalExpected = new Dictionary<Skills, int>
 			{
 				{ Skills.Mechanical, spoils1Expected[Skills.Mechanical] + spoils2Expected[Skills.Mechanical] },
@@ -453,7 +443,7 @@ namespace Tests
 			spoils2.SetCarryWeight(5);
 
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_INDEX, character);
-			CollectionAssert.AreEquivalent(expectedZeros, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
+			CollectionAssert.AreEquivalent(Constants.ALL_SKILLS_ZERO, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
 			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils1);

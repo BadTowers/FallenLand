@@ -51,6 +51,37 @@ namespace Tests
 		[Parallelizable(ParallelScope.None)]
 		public IEnumerator TestPublicInterfaceInVarietyOfWays()
 		{
+			Dictionary<Skills, int> vehicleExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 3 },
+				{ Skills.Diplomacy, 0 },
+				{ Skills.Technical, 2 },
+				{ Skills.Combat, 0 },
+				{ Skills.Survival, 1 },
+				{ Skills.Medical, 8 }
+			};
+
+			Dictionary<Skills, int> stowableExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, 2 },
+				{ Skills.Diplomacy, 2 },
+				{ Skills.Technical, 1 },
+				{ Skills.Combat, 5 },
+				{ Skills.Survival, 4 },
+				{ Skills.Medical, 0 }
+			};
+
+			Dictionary<Skills, int> totalExpected = new Dictionary<Skills, int>
+			{
+				{ Skills.Mechanical, vehicleExpected[Skills.Mechanical] + stowableExpected[Skills.Mechanical] },
+				{ Skills.Diplomacy, vehicleExpected[Skills.Diplomacy] + stowableExpected[Skills.Diplomacy]  },
+				{ Skills.Technical, vehicleExpected[Skills.Technical] + stowableExpected[Skills.Technical]  },
+				{ Skills.Combat, vehicleExpected[Skills.Combat] + stowableExpected[Skills.Combat]  },
+				{ Skills.Survival, vehicleExpected[Skills.Survival] + stowableExpected[Skills.Survival]  },
+				{ Skills.Medical, vehicleExpected[Skills.Medical] + stowableExpected[Skills.Medical]  }
+			};
+			const int expectedCarryWeight = 3;
+
 			//////Setup requires us to connect to the network and join a room
 			NetworkHelper.ConnectToMaster();
 			while (!NetworkHelper.GetConnectedToMaster())
@@ -66,6 +97,7 @@ namespace Tests
 			Debug.Log("Test1 JOINED room");
 
 
+
 			//////Actual test stuff
 			GameManagerObject.AddComponent<GameManager>();
 			GameManager gameManager = GameManagerObject.GetComponent<GameManager>();
@@ -74,6 +106,8 @@ namespace Tests
 			//player index too high will tell us we aren't allowed to attach anything
 			SpoilsCard stowableSpoil = new SpoilsCard("spoils");
 			stowableSpoil.AddSpoilsType(SpoilsTypes.Stowable);
+			stowableSpoil.SetBaseSkills(stowableExpected);
+			stowableSpoil.SetCarryWeight(expectedCarryWeight);
 			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(numPlayers+1, stowableSpoil, 0));
 			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(numPlayers+1, stowableSpoil));
 			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(numPlayers+1, 0));
@@ -90,6 +124,7 @@ namespace Tests
 			//Can't add vehicle if player index is invalid
 			SpoilsCard vehicle = new SpoilsCard("vehicle");
 			vehicle.AddSpoilsType(SpoilsTypes.Vehicle);
+			vehicle.SetBaseSkills(vehicleExpected);
 			gameManager.AddVehicleToActiveParty(numPlayers + 1, vehicle);
 			Assert.IsNull(gameManager.GetActiveVehicle(numPlayers + 1));
 			gameManager.RemoveActiveVehicle(numPlayers + 1);
@@ -155,6 +190,11 @@ namespace Tests
 			Assert.AreEqual(1, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils().Count);
 			Assert.AreEqual(stowableSpoil, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils()[0]);
 
+			//A valid ID should be able to get the stats and carry weight of an equipped vehicle
+			Assert.IsNotNull(gameManager.GetActiveVehicleStats(MY_PLAYER_INDEX));
+			CollectionAssert.AreEquivalent(totalExpected, gameManager.GetActiveVehicleStats(MY_PLAYER_INDEX));
+			Assert.AreEqual(expectedCarryWeight, gameManager.GetActiveVehicleCarryWeight(MY_PLAYER_INDEX));
+
 			//A valid ID can remove stowables from their active vehicle
 			gameManager.RemoveSpoilsCardFromActiveVehicle(MY_PLAYER_INDEX, null);
 			Assert.AreEqual(1, gameManager.GetActiveVehicle(MY_PLAYER_INDEX).GetEquippedSpoils().Count);
@@ -182,6 +222,11 @@ namespace Tests
 			gameManager.AssignSpoilsCardToCharacter(MY_PLAYER_INDEX, SLOT_0, stowableSpoil);
 			Assert.AreEqual(1, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0].GetEquippedSpoils().Count);
 			Assert.AreEqual(stowableSpoil, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0].GetEquippedSpoils()[0]);
+
+			//A valid ID should be able to get the stats and carry weight for an active character
+			Assert.IsNotNull(gameManager.GetActiveCharacterStats(MY_PLAYER_INDEX, SLOT_0));
+			CollectionAssert.AreNotEquivalent(Constants.ALL_SKILLS_ZERO, gameManager.GetActiveCharacterStats(MY_PLAYER_INDEX, SLOT_0));
+			Assert.AreEqual(expectedCarryWeight, gameManager.GetActiveCharacterCarryWeight(MY_PLAYER_INDEX, SLOT_0));
 
 			//A valid ID should be able to remove characters from their part and spoils from that member
 			gameManager.RemoveSpoilsCardFromPlayerActiveParty(MY_PLAYER_INDEX, SLOT_0, null);
@@ -222,7 +267,30 @@ namespace Tests
 
 			//A valid ID should have a non-zero amount of starting town techs
 			Assert.IsTrue(gameManager.GetTownTechs(MY_PLAYER_INDEX).Count > 0);
-			
+
+			//A valid ID should have a non-empty user ID
+			Assert.AreNotEqual("", gameManager.GetMyUserId());
+
+			//Wait for networking stuff to occur
+			yield return new WaitForSeconds(0.5f);
+
+			//As the only player, I should be the current player
+			Assert.IsNotNull(gameManager.GetCurrentPlayer());
+			Assert.AreEqual(gameManager.GetMyUserId(), gameManager.GetCurrentPlayer().UserId);
+
+			//Turn should be 1 to start the game
+			Assert.AreEqual(1, gameManager.GetTurn());
+
+			//Phase should begin as the game start
+			Assert.AreEqual(Phases.Game_Start_Setup, gameManager.GetPhase());
+
+			//When the lone user ends the phase, we should go to the next one
+			gameManager.EndPhase(MY_PLAYER_INDEX);
+			yield return new WaitForSeconds(0.5f);
+			Assert.AreEqual(1, gameManager.GetTurn());
+			Assert.AreEqual(Phases.Before_Effects_Phase, gameManager.GetPhase());
+
+
 
 
 			//////Teardown requires us to leave the room and disconnect from master

@@ -11,14 +11,7 @@ namespace FallenLand
 
 		public PartyCard(string text) : base(text)
 		{
-			BaseSkills = new Dictionary<Skills, int>();
-			foreach (Skills skill in Enum.GetValues(typeof(Skills)))
-			{
-				if (!BaseSkills.ContainsKey(skill))
-				{
-					BaseSkills.Add(skill, 0);
-				}
-			}
+			BaseSkills = Constants.ALL_SKILLS_ZERO;
 		}
 
 		public void SetBaseSkills(Dictionary<Skills, int> skills)

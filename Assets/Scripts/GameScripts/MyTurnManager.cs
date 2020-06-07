@@ -91,7 +91,7 @@ namespace FallenLand
 
         public void BeginNextTurn()
         {
-            Debug.Log("BeginTurn");
+            Debug.Log("TurnManager: BeginNextTurn");
             CurrentPlayer = PhotonNetwork.PlayerList[0]; //TODO change this to be the next player (since first player rotates). For now just always makes master first
             _MovedToNextPlayerAlready = true;
             Turn++;
@@ -99,10 +99,9 @@ namespace FallenLand
 
         public void BeginNextPhase()
         {
-            Debug.Log("BeginNextPhase");
+            Debug.Log("TurnManager: BeginNextPhase");
             if (Phase == Phases.After_End_Turn_Phase)
             {
-                Debug.Log("we have gone through all phases!");
                 Phase = Phases.Before_Effects_Phase;
                 BeginNextTurn();
             }
