@@ -6,7 +6,6 @@ namespace FallenLand
 {
     public class GameUIManager : UIManager
     {
-
         public enum GameMenuStates { Pause, Options, Resume, Save };
         public GameObject GameManagerGameObject;
         public GameObject ImageGameObject;
