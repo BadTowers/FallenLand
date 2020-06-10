@@ -64,7 +64,6 @@ namespace FallenLand
 		private List<GameObject> PlayerTexts;
 		private int CurrentPlayerIndex;
 		private bool ConnectedToRoom;
-		private bool ConnectedToLobby;
 		private bool ConnectedToMaster;
 		private bool FailedToConnectToRoom;
 		private string MyOnlineUserId;
@@ -309,7 +308,6 @@ namespace FallenLand
 		public override void OnLeftLobby()
 		{
 			Debug.Log("Left lobby callback");
-			ConnectedToLobby = false;
 		}
 		
 		public override void OnLeftRoom()
