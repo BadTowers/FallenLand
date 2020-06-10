@@ -152,7 +152,35 @@ namespace FallenLand
 
 		public void OnPhaseBegins(Phases phase)
 		{
-			Debug.Log("OnPhaseBegins: " + phase.ToString());
+			//Debug.Log("OnPhaseBegins: " + phase.ToString());
+
+			//Auto phases that require no user input
+            switch (phase)
+            {
+				case Phases.Effects_Resolve_Subphase:
+					Debug.Log("Resolve effects and move on!");
+					//TODO
+					TurnManager.BeginNextPhase();
+					break;
+				case Phases.Town_Business_Deal:
+					Debug.Log("Deal action cards!");
+					townBusinessPhase_DealSubphase();
+					//TODO
+					TurnManager.BeginNextPhase();
+					break;
+				case Phases.End_Turn_Adjust_Turn_Marker:
+					Debug.Log("Move turn marker chip!");
+					//TODO
+					TurnManager.BeginNextPhase();
+					break;
+				case Phases.End_Turn_Pass_First_Player:
+					Debug.Log("Next player becomes first player!");
+					//TODO
+					TurnManager.BeginNextPhase();
+					break;
+				default:
+					break;
+            }
 		}
 
 		public void OnPhaseCompleted(Phases phase)
@@ -553,11 +581,49 @@ namespace FallenLand
 		{
 			return playerIndex >= 0 && playerIndex < Players.Count;
 		}
-        #endregion
+
+		private void townBusinessPhase_DealSubphase()
+		{
+			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			{
+				Players[i].AddActionCardToHand(ActionDeck[0]);
+				Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
+				ActionDeck.RemoveAt(0);
+				List<TownTech> townTechs = Players[i].GetTownTechs();
+				for (int j = 0; j < townTechs.Count; j++)
+				{
+					if (townTechs[j].GetTechName() == "Law and Order")
+					{
+						Players[i].AddActionCardToHand(ActionDeck[0]);
+						Debug.Log("The player has law and order tier 1: dealt action card " + ActionDeck[0].GetTitle());
+						ActionDeck.RemoveAt(0);
+						if (townTechs[j].GetTier() == 2)
+						{
+							Players[i].AddActionCardToHand(ActionDeck[0]);
+							Debug.Log("The player has law and order tier 2: Dealt action card " + ActionDeck[0].GetTitle());
+							ActionDeck.RemoveAt(0);
+						}
+					}
+					else if (townTechs[j].GetTechName() == "Marketplace")
+					{
+						Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+						Debug.Log("The player has marketplace tier 1: dealt spoils card " + SpoilsDeck[0].GetTitle());
+						SpoilsDeck.RemoveAt(0);
+						if (townTechs[j].GetTier() == 2)
+						{
+							Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+							Debug.Log("The player has marketplace tier 2: Dealt spoils card " + SpoilsDeck[0].GetTitle());
+							SpoilsDeck.RemoveAt(0);
+						}
+					}
+				}
+			}
+		}
+		#endregion
 
 
 
-        /*
+		/*
 		 *
 		 * THOUGHTS ON GAME MANAGER AND GAME UI MANAGER INTERACTION
 		 *
@@ -587,5 +653,5 @@ namespace FallenLand
 		 *          This would then never change throughout the game since each PC connected would be one player
 		 *
 		 */
-    }
+	}
 }
