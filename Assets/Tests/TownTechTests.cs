@@ -88,5 +88,40 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestConditionalGains()
+		{
+			Assert.NotNull(TownTech.GetConditionalGains());
+
+			Dictionary<Gains, int> gains = new Dictionary<Gains, int>() { { Gains.Gain_Spoils_Cards, 2 } };
+			TownTech.SetConditionalGains(gains);
+			Assert.AreEqual(1, TownTech.GetConditionalGains().Count);
+			Assert.AreEqual(Gains.Gain_Spoils_Cards, TownTech.GetConditionalGains().ElementAt(0).Key);
+			Assert.AreEqual(2, TownTech.GetConditionalGains().ElementAt(0).Value);
+
+			TownTech.SetConditionalGains(null);
+			Assert.NotNull(TownTech.GetConditionalGains());
+			Assert.AreEqual(1, TownTech.GetConditionalGains().Count);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestTimes()
+		{
+			Assert.NotNull(TownTech.GetTimes());
+
+			List<Times> times = new List<Times>() { Times.After_Successful_Mission_Or_Encounter };
+			TownTech.SetTimes(times);
+			Assert.AreEqual(1, TownTech.GetTimes().Count);
+			Assert.AreEqual(Times.After_Successful_Mission_Or_Encounter, TownTech.GetTimes()[0]);
+
+			TownTech.SetTimes(null);
+			Assert.NotNull(TownTech.GetTimes());
+			Assert.AreEqual(1, TownTech.GetTimes().Count);
+
+			yield return null;
+		}
 	}
 }

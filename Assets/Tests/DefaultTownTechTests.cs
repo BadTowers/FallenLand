@@ -37,6 +37,8 @@ namespace Tests
 				Assert.IsTrue(DefaultTownTechs[i].GetUpgradeCost() == 30 || DefaultTownTechs[i].GetUpgradeCost() == 40);
 				Assert.AreNotEqual("", DefaultTownTechs[i].GetTechName());
 				Assert.Positive(DefaultTownTechs[i].GetId());
+				Assert.AreEqual(1, DefaultTownTechs[i].GetConditionalGains().Count);
+				Assert.AreEqual(1, DefaultTownTechs[i].GetTimes().Count);
 			}
 
 			yield return null;

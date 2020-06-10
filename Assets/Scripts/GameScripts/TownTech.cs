@@ -71,6 +71,32 @@ namespace FallenLand
 			return SellCost;
 		}
 
+		public void SetConditionalGains(Dictionary<Gains, int> condGains)
+		{
+			if (condGains != null)
+			{
+				ConditionalGains = condGains;
+			}
+		}
+
+		public Dictionary<Gains, int> GetConditionalGains()
+		{
+			return ConditionalGains;
+		}
+
+		public void SetTimes(List<Times> times)
+		{
+			if (times != null)
+			{
+				WhenUsable = times;
+			}
+		}
+
+		public List<Times> GetTimes()
+		{
+			return WhenUsable;
+		}
+
 		public void SetIsStartingTech(bool b)
 		{
 			IsStartingTech = b;
