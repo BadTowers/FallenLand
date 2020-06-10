@@ -4,6 +4,7 @@ namespace FallenLand
 	public enum Phases
 	{
 		Invalid,
+		Any,
 		Game_Start_Setup,
 
 		Before_Effects_Phase,
