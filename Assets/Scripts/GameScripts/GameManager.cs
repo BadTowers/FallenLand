@@ -589,34 +589,36 @@ namespace FallenLand
 				Players[i].AddActionCardToHand(ActionDeck[0]);
 				Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
 				ActionDeck.RemoveAt(0);
-				List<TownTech> townTechs = Players[i].GetTownTechs();
-				for (int j = 0; j < townTechs.Count; j++)
-				{
-					if (townTechs[j].GetTechName() == "Law and Order")
-					{
-						Players[i].AddActionCardToHand(ActionDeck[0]);
-						Debug.Log("The player has law and order tier 1: dealt action card " + ActionDeck[0].GetTitle());
-						ActionDeck.RemoveAt(0);
-						if (townTechs[j].GetTier() == 2)
-						{
-							Players[i].AddActionCardToHand(ActionDeck[0]);
-							Debug.Log("The player has law and order tier 2: Dealt action card " + ActionDeck[0].GetTitle());
-							ActionDeck.RemoveAt(0);
-						}
-					}
-					else if (townTechs[j].GetTechName() == "Marketplace")
-					{
-						Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-						Debug.Log("The player has marketplace tier 1: dealt spoils card " + SpoilsDeck[0].GetTitle());
-						SpoilsDeck.RemoveAt(0);
-						if (townTechs[j].GetTier() == 2)
-						{
-							Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-							Debug.Log("The player has marketplace tier 2: Dealt spoils card " + SpoilsDeck[0].GetTitle());
-							SpoilsDeck.RemoveAt(0);
-						}
-					}
-				}
+
+				//I think the way we should handle this is with a conditional processor of sorts that removes the logic from the game manager
+				//List<TownTech> townTechs = Players[i].GetTownTechs();
+				//for (int j = 0; j < townTechs.Count; j++)
+				//{
+				//	if (townTechs[j].GetTechName() == "Law and Order")
+				//	{
+				//		Players[i].AddActionCardToHand(ActionDeck[0]);
+				//		Debug.Log("The player has law and order tier 1: dealt action card " + ActionDeck[0].GetTitle());
+				//		ActionDeck.RemoveAt(0);
+				//		if (townTechs[j].GetTier() == 2)
+				//		{
+				//			Players[i].AddActionCardToHand(ActionDeck[0]);
+				//			Debug.Log("The player has law and order tier 2: Dealt action card " + ActionDeck[0].GetTitle());
+				//			ActionDeck.RemoveAt(0);
+				//		}
+				//	}
+				//	else if (townTechs[j].GetTechName() == "Marketplace")
+				//	{
+				//		Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+				//		Debug.Log("The player has marketplace tier 1: dealt spoils card " + SpoilsDeck[0].GetTitle());
+				//		SpoilsDeck.RemoveAt(0);
+				//		if (townTechs[j].GetTier() == 2)
+				//		{
+				//			Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+				//			Debug.Log("The player has marketplace tier 2: Dealt spoils card " + SpoilsDeck[0].GetTitle());
+				//			SpoilsDeck.RemoveAt(0);
+				//		}
+				//	}
+				//}
 			}
 		}
 		#endregion
