@@ -38,10 +38,10 @@ namespace Tests
 		{
 			Assert.IsNotNull(PerkInstance.GetTimes());
 
-			List<Times> times = new List<Times>(){Times.After_Action_House_Subphase, Times.During_Deal_Subphase};
+			List<Times> times = new List<Times>(){Times.After_Auction_House_Subphase, Times.During_Deal_Subphase};
 			PerkInstance.SetTimes(times);
 			Assert.AreEqual(2, PerkInstance.GetTimes().Count);
-			Assert.AreEqual(Times.After_Action_House_Subphase, PerkInstance.GetTimes()[0]);
+			Assert.AreEqual(Times.After_Auction_House_Subphase, PerkInstance.GetTimes()[0]);
 			Assert.AreEqual(Times.During_Deal_Subphase, PerkInstance.GetTimes()[1]);
 
 			PerkInstance.SetTimes(null);

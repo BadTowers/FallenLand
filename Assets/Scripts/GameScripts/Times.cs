@@ -113,7 +113,7 @@ namespace FallenLand
 		After_Town_Business_Phase,
 		After_Deal_Subphase,
 		After_Resource_Production_Subphase,
-		After_Action_House_Subphase,
+		After_Auction_House_Subphase,
 		After_Town_Events_Chart_Subphase,
 		After_Financial_Period_Subphase,
 		After_Sell_Subphase,
