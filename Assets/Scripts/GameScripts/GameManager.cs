@@ -29,6 +29,7 @@ namespace FallenLand
 		private GameObject NewGameState;
 		private bool GameIsSetUpAtStart;
 		private MyTurnManager TurnManager;
+		private Phases CurrentPhase;
 
 		#region UnityFunctions
 		void Start()
@@ -36,6 +37,7 @@ namespace FallenLand
 			MyUserId = "";
 			TurnManager = this.gameObject.AddComponent<MyTurnManager>();
 			TurnManager.TurnManagerListener = this;
+			CurrentPhase = Phases.Invalid;
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
@@ -152,10 +154,9 @@ namespace FallenLand
 
 		public void OnPhaseBegins(Phases phase)
 		{
-			//Debug.Log("OnPhaseBegins: " + phase.ToString());
-
+			CurrentPhase = phase;
 			//Auto phases that require no user input
-            switch (phase)
+			switch (phase)
             {
 				case Phases.Effects_Resolve_Subphase:
 					Debug.Log("Resolve effects and move on!");
@@ -165,7 +166,7 @@ namespace FallenLand
 				case Phases.Town_Business_Deal:
 					Debug.Log("Deal action cards!");
 					townBusinessPhase_DealSubphase();
-					//TODO
+					TownTechManager.HandlePhase(this);
 					TurnManager.BeginNextPhase();
 					break;
 				case Phases.End_Turn_Adjust_Turn_Marker:
@@ -211,6 +212,11 @@ namespace FallenLand
 			{
 				TurnManager.BeginNextTurn();
 			}
+		}
+
+		public Phases GetCurrentPhase()
+		{
+			return CurrentPhase;
 		}
 
 		public List<TownTech> GetTownTechs(int playerId)
@@ -368,6 +374,11 @@ namespace FallenLand
 			return TurnManager.Phase;
 		}
 
+        public List<Player> GetPlayers()
+        {
+			return Players;
+        }
+
 		public void RemoveSpoilFromAuctionHouse(int playerIndex, SpoilsCard card)
 		{
 			if (isPlayerIndexInRange(playerIndex))
@@ -519,6 +530,15 @@ namespace FallenLand
 				TurnManager.SendMove(null, true);
 			}
 		}
+
+		public void DealSpoilsToPlayer(int playerIndex, int numberOfCardsToDeal)
+		{
+			for (int i = 0; i < numberOfCardsToDeal; i++)
+			{
+				Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+				SpoilsDeck.RemoveAt(0);
+			}
+		}
 		#endregion
 
 		#region HelperFunctions
@@ -589,36 +609,6 @@ namespace FallenLand
 				Players[i].AddActionCardToHand(ActionDeck[0]);
 				Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
 				ActionDeck.RemoveAt(0);
-
-				//I think the way we should handle this is with a conditional processor of sorts that removes the logic from the game manager
-				//List<TownTech> townTechs = Players[i].GetTownTechs();
-				//for (int j = 0; j < townTechs.Count; j++)
-				//{
-				//	if (townTechs[j].GetTechName() == "Law and Order")
-				//	{
-				//		Players[i].AddActionCardToHand(ActionDeck[0]);
-				//		Debug.Log("The player has law and order tier 1: dealt action card " + ActionDeck[0].GetTitle());
-				//		ActionDeck.RemoveAt(0);
-				//		if (townTechs[j].GetTier() == 2)
-				//		{
-				//			Players[i].AddActionCardToHand(ActionDeck[0]);
-				//			Debug.Log("The player has law and order tier 2: Dealt action card " + ActionDeck[0].GetTitle());
-				//			ActionDeck.RemoveAt(0);
-				//		}
-				//	}
-				//	else if (townTechs[j].GetTechName() == "Marketplace")
-				//	{
-				//		Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-				//		Debug.Log("The player has marketplace tier 1: dealt spoils card " + SpoilsDeck[0].GetTitle());
-				//		SpoilsDeck.RemoveAt(0);
-				//		if (townTechs[j].GetTier() == 2)
-				//		{
-				//			Players[i].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-				//			Debug.Log("The player has marketplace tier 2: Dealt spoils card " + SpoilsDeck[0].GetTitle());
-				//			SpoilsDeck.RemoveAt(0);
-				//		}
-				//	}
-				//}
 			}
 		}
 		#endregion
