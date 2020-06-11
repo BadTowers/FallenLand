@@ -170,7 +170,7 @@ namespace FallenLand
 			return TimesWhenUsable;
 		}
 
-		public void SetConditionalGains(List<Dictionary<Gains, int>> gains)
+		public void SetConditionalGains_dep(List<Dictionary<Gains, int>> gains)
 		{
 			if (gains != null)
 			{
@@ -178,7 +178,7 @@ namespace FallenLand
 			}
 		}
 
-		public void SetConditionalGains(params Dictionary<Gains, int>[] conditionalGains)
+		public void SetConditionalGains_dep(params Dictionary<Gains, int>[] conditionalGains)
 		{
 			ConditionalGains = new List<Dictionary<Gains, int>>();
 			foreach (Dictionary<Gains, int> curConditionalGain in conditionalGains)
@@ -190,12 +190,12 @@ namespace FallenLand
 			}
 		}
 
-		public void AddConditionalGain(Gains gain, int value)
+		public void AddConditionalGain_dep(Gains gain, int value)
 		{
 			ConditionalGains.Add(new Dictionary<Gains, int> { { gain, value } });
 		}
 
-		public void AddConditionalGain(Dictionary<Gains, int> gain)
+		public void AddConditionalGain_dep(Dictionary<Gains, int> gain)
 		{
 			if (gain != null)
 			{
@@ -203,7 +203,7 @@ namespace FallenLand
 			}
 		}
 
-		public List<Dictionary<Gains, int>> GetConditionalGains()
+		public List<Dictionary<Gains, int>> GetConditionalGains_dep()
 		{
 			return ConditionalGains;
 		}
@@ -389,7 +389,7 @@ namespace FallenLand
 			newCard.SetSellValue(this.SellValue);
 			newCard.SetBaseSkills(this.GetBaseSkills());
 			newCard.SetStaticGains(this.StaticGains);
-			newCard.SetConditionalGains(this.ConditionalGains);
+			newCard.SetConditionalGains_dep(this.ConditionalGains);
 			newCard.SetWhenUsable(this.TimesWhenUsable);
 			newCard.SetNumberOfUses(this.NumberOfUses);
 			newCard.SetDiscard(this.DiscardsAfterConditionalGains);
@@ -412,7 +412,7 @@ namespace FallenLand
 			this.SetSellValue(cardToCopyFrom.SellValue);
 			this.SetBaseSkills(cardToCopyFrom.GetBaseSkills());
 			this.SetStaticGains(cardToCopyFrom.StaticGains);
-			this.SetConditionalGains(cardToCopyFrom.ConditionalGains);
+			this.SetConditionalGains_dep(cardToCopyFrom.ConditionalGains);
 			this.SetWhenUsable(cardToCopyFrom.TimesWhenUsable);
 			this.SetNumberOfUses(cardToCopyFrom.NumberOfUses);
 			this.SetDiscard(cardToCopyFrom.DiscardsAfterConditionalGains);

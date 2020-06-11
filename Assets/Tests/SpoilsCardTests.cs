@@ -27,7 +27,7 @@ namespace Tests
 		public IEnumerator TestSpoilsCardConstructors()
 		{
 			Assert.IsNotNull(SpoilsCardInstance.GetSpoilsTypes());
-			Assert.IsNotNull(SpoilsCardInstance.GetConditionalGains());
+			Assert.IsNotNull(SpoilsCardInstance.GetConditionalGains_dep());
 			Assert.IsNotNull(SpoilsCardInstance.GetStaticGains());
 			Assert.IsNotNull(SpoilsCardInstance.GetRestrictions());
 			Assert.IsNotNull(SpoilsCardInstance.GetWhenUsable());
@@ -41,7 +41,7 @@ namespace Tests
 			Assert.IsNotNull(spoilsCardListConstructor.GetSpoilsTypes());
 			Assert.AreEqual(1, spoilsCardListConstructor.GetSpoilsTypes().Count);
 			Assert.AreEqual(SpoilsTypes.Alcohol, spoilsCardListConstructor.GetSpoilsTypes()[0]);
-			Assert.IsNotNull(spoilsCardListConstructor.GetConditionalGains());
+			Assert.IsNotNull(spoilsCardListConstructor.GetConditionalGains_dep());
 			Assert.IsNotNull(spoilsCardListConstructor.GetStaticGains());
 			Assert.IsNotNull(spoilsCardListConstructor.GetRestrictions());
 			Assert.IsNotNull(spoilsCardListConstructor.GetWhenUsable());
@@ -56,7 +56,7 @@ namespace Tests
 			Assert.AreEqual(2, spoilsCardParamConstructor.GetSpoilsTypes().Count);
 			Assert.AreEqual(SpoilsTypes.Assault_Rifle, spoilsCardParamConstructor.GetSpoilsTypes()[0]);
 			Assert.AreEqual(SpoilsTypes.Heavy_Weapon, spoilsCardParamConstructor.GetSpoilsTypes()[1]);
-			Assert.IsNotNull(spoilsCardParamConstructor.GetConditionalGains());
+			Assert.IsNotNull(spoilsCardParamConstructor.GetConditionalGains_dep());
 			Assert.IsNotNull(spoilsCardParamConstructor.GetStaticGains());
 			Assert.IsNotNull(spoilsCardParamConstructor.GetRestrictions());
 			Assert.IsNotNull(spoilsCardParamConstructor.GetWhenUsable());
@@ -192,44 +192,44 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestConditionalGains()
 		{
-			Assert.IsNotNull(SpoilsCardInstance.GetConditionalGains());
-			Assert.AreEqual(0, SpoilsCardInstance.GetConditionalGains().Count);
+			Assert.IsNotNull(SpoilsCardInstance.GetConditionalGains_dep());
+			Assert.AreEqual(0, SpoilsCardInstance.GetConditionalGains_dep().Count);
 			List<Dictionary<Gains, int>> listOfConditionalGains = new List<Dictionary<Gains, int>>() { };
 			listOfConditionalGains.Add(new Dictionary<Gains, int>() { { Gains.Add_To_Roll, 1 }, { Gains.Ally_Hire_Cost_Less, 5 } });
 			listOfConditionalGains.Add(new Dictionary<Gains, int>() { { Gains.All_Town_Defense_Chips_Cost_Less, 3 }});
-			SpoilsCardInstance.SetConditionalGains(listOfConditionalGains);
-			Assert.AreEqual(2, SpoilsCardInstance.GetConditionalGains().Count);
-			Assert.AreEqual(2, SpoilsCardInstance.GetConditionalGains()[0].Count);
-			Assert.AreEqual(Gains.Add_To_Roll, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(0).Key);
-			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(0).Value);
-			Assert.AreEqual(Gains.Ally_Hire_Cost_Less, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Key);
-			Assert.AreEqual(5, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Value);
-			Assert.AreEqual(Gains.All_Town_Defense_Chips_Cost_Less, SpoilsCardInstance.GetConditionalGains()[1].ElementAt(0).Key);
-			Assert.AreEqual(3, SpoilsCardInstance.GetConditionalGains()[1].ElementAt(0).Value);
-			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains()[1].Count);
+			SpoilsCardInstance.SetConditionalGains_dep(listOfConditionalGains);
+			Assert.AreEqual(2, SpoilsCardInstance.GetConditionalGains_dep().Count);
+			Assert.AreEqual(2, SpoilsCardInstance.GetConditionalGains_dep()[0].Count);
+			Assert.AreEqual(Gains.Add_To_Roll, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(0).Key);
+			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(0).Value);
+			Assert.AreEqual(Gains.Ally_Hire_Cost_Less, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(1).Key);
+			Assert.AreEqual(5, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(1).Value);
+			Assert.AreEqual(Gains.All_Town_Defense_Chips_Cost_Less, SpoilsCardInstance.GetConditionalGains_dep()[1].ElementAt(0).Key);
+			Assert.AreEqual(3, SpoilsCardInstance.GetConditionalGains_dep()[1].ElementAt(0).Value);
+			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains_dep()[1].Count);
 
-			SpoilsCardInstance.SetConditionalGains(new List<Dictionary<Gains, int>>() { });
-			Assert.AreEqual(0, SpoilsCardInstance.GetConditionalGains().Count);
+			SpoilsCardInstance.SetConditionalGains_dep(new List<Dictionary<Gains, int>>() { });
+			Assert.AreEqual(0, SpoilsCardInstance.GetConditionalGains_dep().Count);
 
-			SpoilsCardInstance.SetConditionalGains(new Dictionary<Gains, int>() { {Gains.Gain_Salvage, 10}, {Gains.Lose_Salvage, 20} });
-			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains().Count);
-			Assert.AreEqual(Gains.Gain_Salvage, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(0).Key);
-			Assert.AreEqual(10, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(0).Value);
-			Assert.AreEqual(Gains.Lose_Salvage, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Key);
-			Assert.AreEqual(20, SpoilsCardInstance.GetConditionalGains()[0].ElementAt(1).Value);
+			SpoilsCardInstance.SetConditionalGains_dep(new Dictionary<Gains, int>() { {Gains.Gain_Salvage, 10}, {Gains.Lose_Salvage, 20} });
+			Assert.AreEqual(1, SpoilsCardInstance.GetConditionalGains_dep().Count);
+			Assert.AreEqual(Gains.Gain_Salvage, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(0).Key);
+			Assert.AreEqual(10, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(0).Value);
+			Assert.AreEqual(Gains.Lose_Salvage, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(1).Key);
+			Assert.AreEqual(20, SpoilsCardInstance.GetConditionalGains_dep()[0].ElementAt(1).Value);
 
-			SpoilsCardInstance.AddConditionalGain(new Dictionary<Gains, int>() { { Gains.Lose_Town_Health, 7} });
-			Assert.AreEqual(2, SpoilsCardInstance.GetConditionalGains().Count);
-			Assert.AreEqual(Gains.Lose_Town_Health, SpoilsCardInstance.GetConditionalGains()[1].ElementAt(0).Key);
-			Assert.AreEqual(7, SpoilsCardInstance.GetConditionalGains()[1].ElementAt(0).Value);
+			SpoilsCardInstance.AddConditionalGain_dep(new Dictionary<Gains, int>() { { Gains.Lose_Town_Health, 7} });
+			Assert.AreEqual(2, SpoilsCardInstance.GetConditionalGains_dep().Count);
+			Assert.AreEqual(Gains.Lose_Town_Health, SpoilsCardInstance.GetConditionalGains_dep()[1].ElementAt(0).Key);
+			Assert.AreEqual(7, SpoilsCardInstance.GetConditionalGains_dep()[1].ElementAt(0).Value);
 
-			SpoilsCardInstance.AddConditionalGain(Gains.Gain_Spoils_Cards, 4);
-			Assert.AreEqual(3, SpoilsCardInstance.GetConditionalGains().Count);
-			Assert.AreEqual(Gains.Gain_Spoils_Cards, SpoilsCardInstance.GetConditionalGains()[2].ElementAt(0).Key);
-			Assert.AreEqual(4, SpoilsCardInstance.GetConditionalGains()[2].ElementAt(0).Value);
+			SpoilsCardInstance.AddConditionalGain_dep(Gains.Gain_Spoils_Cards, 4);
+			Assert.AreEqual(3, SpoilsCardInstance.GetConditionalGains_dep().Count);
+			Assert.AreEqual(Gains.Gain_Spoils_Cards, SpoilsCardInstance.GetConditionalGains_dep()[2].ElementAt(0).Key);
+			Assert.AreEqual(4, SpoilsCardInstance.GetConditionalGains_dep()[2].ElementAt(0).Value);
 
-			SpoilsCardInstance.AddConditionalGain(null);
-			Assert.AreEqual(3, SpoilsCardInstance.GetConditionalGains().Count);
+			SpoilsCardInstance.AddConditionalGain_dep(null);
+			Assert.AreEqual(3, SpoilsCardInstance.GetConditionalGains_dep().Count);
 
 			yield return null;
 		}

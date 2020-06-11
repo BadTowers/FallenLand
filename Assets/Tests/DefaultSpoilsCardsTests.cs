@@ -34,7 +34,7 @@ namespace Tests
 
 				Assert.IsNotNull(curCard.GetAttachments());
 				Assert.IsNotNull(curCard.GetBaseSkills());
-				Assert.IsNotNull(curCard.GetConditionalGains());
+				Assert.IsNotNull(curCard.GetConditionalGains_dep());
 				Assert.IsNotNull(curCard.GetD10Options());
 				Assert.IsNotNull(curCard.GetD6Options());
 				Assert.IsNotNull(curCard.GetDiscard());
@@ -64,7 +64,7 @@ namespace Tests
 				}
 
 				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, and discards.
-				int sizeOfConditionals = DefaultSpoilsDeck[i].GetConditionalGains().Count;
+				int sizeOfConditionals = DefaultSpoilsDeck[i].GetConditionalGains_dep().Count;
 				Assert.AreEqual(sizeOfConditionals, curCard.GetNumberOfUses().Count);
 				Assert.AreEqual(sizeOfConditionals, curCard.GetWhenUsable().Count);
 				Assert.AreEqual(sizeOfConditionals, curCard.GetDiscard().Count);

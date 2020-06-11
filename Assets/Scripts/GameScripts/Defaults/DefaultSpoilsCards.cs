@@ -268,7 +268,7 @@ namespace FallenLand
 			{
 				//No statics
 			});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Give_Opponent_This_Item, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -384,7 +384,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Equip_Second_Vehicle_Face_Down, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -415,7 +415,7 @@ namespace FallenLand
 			{
 				//No statics
 			});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Draw_Spoils_Cards, 6}, //1.1
 			{Gains.Keep_Spoils_Cards, 4}, //1.2
 			{Gains.Swap_New_Characters_Freely, VALUE_NOT_NEEDED} //1.3
@@ -481,7 +481,7 @@ namespace FallenLand
 			{Skills.Technical, 4}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Technical_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -527,7 +527,7 @@ namespace FallenLand
 			{Skills.Medical, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Avoid_Death, VALUE_NOT_NEEDED},
 			{Gains.Remove_Character_Damage_All, VALUE_NOT_NEEDED}
 		});
@@ -559,7 +559,7 @@ namespace FallenLand
 			{Skills.Medical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -574,7 +574,7 @@ namespace FallenLand
 			/* No restrictions */
 			tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 1 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 1");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Reroll_Any_Critical_Fail, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -592,7 +592,7 @@ namespace FallenLand
 			curCard.AddD6Option(tempCard);
 			tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 2 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 2");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Action_Cards, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -610,7 +610,7 @@ namespace FallenLand
 			curCard.AddD6Option(tempCard);
 			tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 3 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 3");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Heal_D6_Damage_Physical, 2}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -628,7 +628,7 @@ namespace FallenLand
 			curCard.AddD6Option(tempCard);
 			tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 4 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 4");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -646,7 +646,7 @@ namespace FallenLand
 			curCard.AddD6Option(tempCard);
 			tempCard = new SpoilsCard("Pre-War Diaster Kit"); //When a 5 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 5");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 3}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -679,7 +679,7 @@ namespace FallenLand
 			{Skills.Medical, 4}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //Set 1 of conditionals
 				{Gains.Remove_Party_Physical_Damage_All, VALUE_NOT_NEEDED}, //1.1
 				{Gains.Remove_Party_Infected_Damage_All, VALUE_NOT_NEEDED}}, //1.2
@@ -716,7 +716,7 @@ namespace FallenLand
 			{Skills.Medical, 5}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Remove_Party_Physical_Damage_All, VALUE_NOT_NEEDED},
 			{Gains.Remove_Party_Infected_Damage_All, VALUE_NOT_NEEDED}
 		});
@@ -746,7 +746,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Deals_Infected_Damage, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Damage_Opponent_Character_By_Crown_Infected, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -791,7 +791,7 @@ namespace FallenLand
 			{Skills.Medical, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -806,7 +806,7 @@ namespace FallenLand
 			/* No restrictions */
 			tempCard = new SpoilsCard("Top o' the Line Stun Gun"); //When a 1 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 1");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -904,7 +904,7 @@ namespace FallenLand
 			{Skills.Diplomacy, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_PVP_Combat_Successes, 2}
 		});
 			curCard.SetWhenUsable(new List<Times>(){
@@ -955,7 +955,7 @@ namespace FallenLand
 			curCard.SetSellValue(0);
 			/* No base skills */
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 5}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1018,7 +1018,7 @@ namespace FallenLand
 			{Gains.Gain_Psych_Resistence, 1},
 			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Optional_Pay_Salvage, 4}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1052,7 +1052,7 @@ namespace FallenLand
 			{Gains.Gain_Prestige, 1},
 			{Gains.Deals_Radiation_Damage, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Damage_Opponent_Character_By_Crown_Radiation, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1080,7 +1080,7 @@ namespace FallenLand
 			{Skills.Mechanical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Mechanical_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1109,7 +1109,7 @@ namespace FallenLand
 			{Skills.Technical, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1124,7 +1124,7 @@ namespace FallenLand
 			/* No restrictions */
 			tempCard = new SpoilsCard("Compact Welding & Cutting Torch"); //When a 1 or 2 is rolled
 			tempCard.SetTitleSubString("Roll Bonus - 1/2");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 4}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -1190,7 +1190,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Reroll_Technical_Skill_Check, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1218,7 +1218,7 @@ namespace FallenLand
 			{Skills.Combat, 10}
 		});
 			/* No static gains */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Destroy_Oppenent_Vehicle, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1343,7 +1343,7 @@ namespace FallenLand
 			{Skills.Medical, 3}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Remove_Party_Physical_Damage, 3}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1374,7 +1374,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Psych_Resistence, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Combat_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1406,7 +1406,7 @@ namespace FallenLand
 			{Gains.Ignore_Break_Relic_Action_Cards, VALUE_NOT_NEEDED},
 			{Gains.Ignore_Broken_Action_Cards, VALUE_NOT_NEEDED}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1423,7 +1423,7 @@ namespace FallenLand
 		});
 			tempCard = new SpoilsCard("Unlimited Stash of Duct Tape");
 			tempCard.SetTitleSubString("Roll 1/2");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Take_Spoils_Cards_From_Top_Discard_Pile, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -1465,7 +1465,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 3}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Heal_D6_Damage_Physical_Or_Infected, 2}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1511,7 +1511,7 @@ namespace FallenLand
 			{Skills.Diplomacy, 4}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //Set 1
 				{Gains.Upgrade_Town_Tech_T2, 1} //1.1
 				},
@@ -1563,7 +1563,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Armor, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Steal_Opponent_Town_Tech, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1591,7 +1591,7 @@ namespace FallenLand
 			{Skills.Medical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1620,7 +1620,7 @@ namespace FallenLand
 			{Skills.Combat, 9}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Combat_Skill_Checks_Automatic_Pass, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1652,7 +1652,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 3}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Take_Characters_From_Opponent_Town_Roster_Into_Players_TR, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1681,7 +1681,7 @@ namespace FallenLand
 
 			});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Any_Nonevent_Spoils_Cards_From_Deck_Or_Discard, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1750,7 +1750,7 @@ namespace FallenLand
 			{Skills.Medical, 5}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Remove_Party_Physical_Damage, 5}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1778,7 +1778,7 @@ namespace FallenLand
 			{Skills.Medical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Remove_Party_Physical_Damage, 2}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1811,7 +1811,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 4}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Character_Cards, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1843,7 +1843,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D10, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1861,7 +1861,7 @@ namespace FallenLand
 			});
 			tempCard = new SpoilsCard("Macho Towing Truck"); //When a 1 is rolled
 			tempCard.SetTitleSubString("Bonus Roll - 1-3");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Any_Vehicle_Spoils_Cards_From_Discard, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -1926,7 +1926,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Keep_All_Stowables, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1955,7 +1955,7 @@ namespace FallenLand
 
 			});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 4}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -1986,7 +1986,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Lose_Movement, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Prevent_Destruction, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2024,7 +2024,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Discard_Equipped_Vehicle, VALUE_NOT_NEEDED},
 			{Gains.Lose_All_Stowables, VALUE_NOT_NEEDED}
 		});
@@ -2055,7 +2055,7 @@ namespace FallenLand
 			{Skills.Technical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2084,7 +2084,7 @@ namespace FallenLand
 			{Skills.Diplomacy, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Diplomacy_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2170,7 +2170,7 @@ namespace FallenLand
 			{Gains.Gain_Carry_Weight, 2},
 			{Gains.Gain_Psych_Resistence, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Prevent_Any_Character_Death_And_Set_HP_To, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2301,7 +2301,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 4}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 4}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2379,7 +2379,7 @@ namespace FallenLand
 			{Skills.Medical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Take_Spoils_Cards_From_Top_Discard_Pile, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2447,7 +2447,7 @@ namespace FallenLand
 			{Skills.Diplomacy, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Select_Character_From_Opposing_Party, 1},
 			{Gains.Roll_D6, 1}
 		});
@@ -2463,7 +2463,7 @@ namespace FallenLand
 			/* No restrictions */
 			tempCard = new SpoilsCard(".50 Caliber Sniper Rifle");
 			tempCard.SetTitleSubString("Roll - 1-4");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Kill_Selected_Character_From_Opposing_Party, 1},
 			{Gains.Discard_Selected_Opposing_Character_Equipment, VALUE_NOT_NEEDED}
 		});
@@ -2519,7 +2519,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Auto_Succeed_Lock_Picking_Encounters, VALUE_NOT_NEEDED}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Salvage, 2}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2546,7 +2546,7 @@ namespace FallenLand
 			{Skills.Combat, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2575,7 +2575,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Health, 1}
 		});
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //Set 1
 				{Gains.Combat_Skill_Checks_Automatic_Pass, 1} //1.1
 				},
@@ -2626,7 +2626,7 @@ namespace FallenLand
 			{Skills.Survival, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Mechanical_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2690,7 +2690,7 @@ namespace FallenLand
 			{Skills.Survival, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Ignore_Negatives_Of_Encounter_Or_Mission_Failure, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2754,7 +2754,7 @@ namespace FallenLand
 			{Skills.Technical, 3}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Any_Spoils_Cards_From_Discard, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2781,7 +2781,7 @@ namespace FallenLand
 			{Skills.Diplomacy, 4}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Diplomacy_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -2827,7 +2827,7 @@ namespace FallenLand
 			{Skills.Diplomacy, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //set 1
 				{Gains.Steal_Spoils_From_Opposing_Party_Excluding_Vehicles, 1} //1.1
 				},
@@ -2916,7 +2916,7 @@ namespace FallenLand
 			{Gains.Gain_Prestige, 2},
 			{Gains.Gain_Movement, 2}
 		});
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //Set 1
 				{Gains.Gain_Character_Cards, 2} //1.1
 				},
@@ -2942,7 +2942,7 @@ namespace FallenLand
 			/* No restrictions */
 			tempCard = new SpoilsCard("The War Wagon");
 			tempCard.SetTitleSubString("Roll - 1-3");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Prevent_Destruction, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
@@ -3046,7 +3046,7 @@ namespace FallenLand
 			{Skills.Combat, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3113,7 +3113,7 @@ namespace FallenLand
 			{Skills.Medical, 7}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //Set 1
 				{Gains.Remove_Party_Physical_Damage, 4} //1.1
 				},
@@ -3191,7 +3191,7 @@ namespace FallenLand
 			{Skills.Combat, 9}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Destroy_Oppenent_Vehicle, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3243,7 +3243,7 @@ namespace FallenLand
 			{Gains.Gain_Movement, 1},
 			{Gains.Stacks_With_Other_Vehicles, 1}
 		});
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //set 1
 				{Gains.Gain_Kurtis_Wyatt_Character_Card, VALUE_NOT_NEEDED} //1.1
 				},
@@ -3291,7 +3291,7 @@ namespace FallenLand
 			{Gains.All_Hex_Movement_Cost, 1},
 			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Optional_Pay_Salvage, 10}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3323,7 +3323,7 @@ namespace FallenLand
 			{Skills.Mechanical, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3355,7 +3355,7 @@ namespace FallenLand
 			{Gains.Stacks_With_Other_Vehicles, 1},
 			{Gains.Gain_Movement, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3373,7 +3373,7 @@ namespace FallenLand
 			});
 			tempCard = new SpoilsCard("Gyrocopter");
 			tempCard.SetTitleSubString("Roll - 1-2");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Draw_Encounter_Cards, 2},
 			{Gains.Keep_Encounter_Cards, 1}
 		});
@@ -3433,7 +3433,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Steal_D10_Salvage, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3462,7 +3462,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Ignore_Radiation_Damage_From_Hexes, VALUE_NOT_NEEDED}
 		});
-			curCard.SetConditionalGains(
+			curCard.SetConditionalGains_dep(
 				new Dictionary<Gains, int>{ //set 1
 				{Gains.Gain_Spoils_Cards, 1} //1.1
 				},
@@ -3535,7 +3535,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Movement, 2}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Reroll_Any_Skill_Check, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3604,7 +3604,7 @@ namespace FallenLand
 			{Skills.Technical, 2}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Mechanical_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3633,7 +3633,7 @@ namespace FallenLand
 		});
 
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Survival_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3683,7 +3683,7 @@ namespace FallenLand
 			{Skills.Medical, 3}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Medical_Skill_Checks_Automatic_Pass, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3712,7 +3712,7 @@ namespace FallenLand
 			{Skills.Combat, 10}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Auto_Succeed_Combat_Encounters, VALUE_NOT_NEEDED}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3817,7 +3817,7 @@ namespace FallenLand
 			curCard.SetStaticGains(new Dictionary<Gains, int>{
 			{Gains.Gain_Psych_Resistence, 1}
 		});
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3861,7 +3861,7 @@ namespace FallenLand
 			{Skills.Combat, 1}
 		});
 			/* No statics */
-			curCard.SetConditionalGains(new Dictionary<Gains, int>{
+			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Roll_D6, 1}
 		});
 			curCard.SetWhenUsable(new List<Times>{
@@ -3876,7 +3876,7 @@ namespace FallenLand
 			/* No restrictions */
 			tempCard = new SpoilsCard("Leather Bull Whip");
 			tempCard.SetTitleSubString("Roll - 1");
-			tempCard.SetConditionalGains(new Dictionary<Gains, int>{
+			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
 			{Gains.Gain_Spoils_Cards, 1}
 		});
 			tempCard.SetWhenUsable(new List<Times>(){
