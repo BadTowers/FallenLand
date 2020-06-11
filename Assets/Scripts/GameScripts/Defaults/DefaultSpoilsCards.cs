@@ -2588,15 +2588,15 @@ namespace FallenLand
 			);
 			curCard.SetWhenUsable(
 				new List<Times>{ //Set 1
-				Times.Equipped_With_An_Axe, //1.1
+				Times.Axe_Equipped, //1.1
 				Times.During_Encounter_Mission_Or_PvP, //1.2
 				},
 				new List<Times>{ //Set 2
-				Times.Equipped_With_Industrial_Chainsaw, //2.1
+				Times.Industrial_Chainsaw_Equipped, //2.1
 				Times.During_Encounter_Mission_Or_PvP,
 				},
 				new List<Times>{ //Set 3
-				Times.Equipped_With_Rusty_Cleaver, //3.1
+				Times.Rusty_Cleaver_Equipped, //3.1
 				Times.During_Encounter_Mission_Or_PvP,
 				}
 			);
