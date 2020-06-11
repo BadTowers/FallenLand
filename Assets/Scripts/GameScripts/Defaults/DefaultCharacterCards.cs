@@ -16,7 +16,7 @@ namespace FallenLand
 			CharacterCard curCard;
 			ConditionalGain link;
 			ConditionalGain conditionalGain;
-			Dictionary<Gains, int> rewardChoice;
+			List<Reward> rewardChoice;
 
 			Debug.Log("Instantiating character cards...");
 
@@ -38,10 +38,10 @@ namespace FallenLand
 				{Skills.Medical, 6}
 			});
 			link = new ConditionalGain();
-            rewardChoice = new Dictionary<Gains, int>
-            {
-                { Gains.Gain_Survival, 1 },
-                { Gains.Gain_Combat, 2 }
+            rewardChoice = new List<Reward>
+			{
+                //{ Gains.Gain_Survival, 1 },
+                //{ Gains.Gain_Combat, 2 }
             };
             link.AddRewardChoice(rewardChoice);
 			link.AddWhenRewardCanBeGained(new List<Times>() { Times.Axe_Equipped, Times.Compass_and_Maps_Equipped });
@@ -50,9 +50,9 @@ namespace FallenLand
 			conditionalGain = new ConditionalGain();
 			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.After_Ally_Card_Is_Gained });
 			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
-            rewardChoice = new Dictionary<Gains, int>
-            {
-                { Gains.Gain_Character_Cards_May_Be_Assigned_To_Party, 1 }
+            rewardChoice = new List<Reward>
+			{
+                //{ Gains.Gain_Character_Cards_May_Be_Assigned_To_Party, 1 }
             };
             conditionalGain.AddRewardChoice(rewardChoice);
 			curCard.AddConditionalGain(conditionalGain);
@@ -79,10 +79,10 @@ namespace FallenLand
 				{Skills.Medical, 6}
 			});
 			link = new ConditionalGain();
-			rewardChoice = new Dictionary<Gains, int>
+			rewardChoice = new List<Reward>
 			{
-				{ Gains.Gain_Movement, 1 },
-				{ Gains.Gain_Combat, 2 }
+				//{ Gains.Gain_Movement, 1 },
+				//{ Gains.Gain_Combat, 2 }
 			};
 			link.AddRewardChoice(rewardChoice);
 			link.AddWhenRewardCanBeGained(new List<Times>() { Times.Rifle_Equipped, Times.Shotgun_Equipped });
@@ -111,9 +111,9 @@ namespace FallenLand
 				{Skills.Medical, 6}
 			});
 			link = new ConditionalGain();
-			rewardChoice = new Dictionary<Gains, int>
+			rewardChoice = new List<Reward>
 			{
-				{ Gains.Gain_Diplomacy, 2 }
+				//{ Gains.Gain_Diplomacy, 2 }
 			};
 			link.AddRewardChoice(rewardChoice);
 			link.AddWhenRewardCanBeGained(new List<Times>() { Times.Indestructible_Tennis_Racquet_Equipped, Times.Sledge_Hammer_Equipped, Times.Sock_Monkey_Puppet_Equipped });
@@ -122,9 +122,9 @@ namespace FallenLand
 			conditionalGain = new ConditionalGain();
 			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.Rolled_10_On_This_Characters_Skill_Check });
 			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Turn);
-			rewardChoice = new Dictionary<Gains, int>
+			rewardChoice = new List<Reward>
 			{
-				{ Gains.Reroll_Die_That_Were_10s, 1 }
+				//{ Gains.Reroll_Die_That_Were_10s, 1 }
 			};
 			conditionalGain.AddRewardChoice(rewardChoice);
 			curCard.AddConditionalGain(conditionalGain);
@@ -153,17 +153,17 @@ namespace FallenLand
 			conditionalGain = new ConditionalGain();
 			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.During_Movement_Deed }, new List<Times>() { Times.Within_1_Hex_Of_The_War_Wagon});
 			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
-            rewardChoice = new Dictionary<Gains, int>
+            rewardChoice = new List<Reward>
             {
-                { Gains.Roll_D6, 1 }
+                //{ Gains.Roll_D6, 1 }
             };
             conditionalGain.AddRewardChoice(rewardChoice);
-			conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//1
-			conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//2
-			conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//3
-			conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//4
-			conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Gain_Week_Penalty_Chip, 1 } });//5
-			conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Gain_Week_Penalty_Chip, 1 } });//6
+			//conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//1
+			//conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//2
+			//conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//3
+			//conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Steal_The_War_Wagon, 1 } });//4
+			//conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Gain_Week_Penalty_Chip, 1 } });//5
+			//conditionalGain.AddD6Option(new Dictionary<Gains, int>() { { Gains.Gain_Week_Penalty_Chip, 1 } });//6
             curCard.AddConditionalGain(conditionalGain);
             curCard.SetId(curID);
 			curID++;
@@ -187,9 +187,9 @@ namespace FallenLand
 				{Skills.Medical, 6}
 			});
 			link = new ConditionalGain();
-			rewardChoice = new Dictionary<Gains, int>
+			rewardChoice = new List<Reward>
 			{
-				{ Gains.Gain_Spoils_Cards, 2 }
+				new GainSpoilsCards(2)
 			};
 			link.AddRewardChoice(rewardChoice);
 			link.AddWhenRewardCanBeGained(new List<Times>() { Times.Binoculars_Equipped, Times.Flare_Gun_Equipped });
@@ -198,18 +198,18 @@ namespace FallenLand
 			conditionalGain = new ConditionalGain();
 			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.After_Successful_Store_Loot_Encounter });
 			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
-			rewardChoice = new Dictionary<Gains, int>
+			rewardChoice = new List<Reward>
 			{
-				{ Gains.Gain_Spoils_Cards, 2 }
+				new GainSpoilsCards(2)
 			};
 			conditionalGain.AddRewardChoice(rewardChoice);
 			curCard.AddConditionalGain(conditionalGain);
 			conditionalGain = new ConditionalGain();
 			conditionalGain.SetWhenRewardCanBeGained(new List<Times>() { Times.During_Rad_Zombie_Encounters });
 			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Unlimited);
-            rewardChoice = new Dictionary<Gains, int>
-            {
-                { Gains.Gain_Combat, 10 }
+            rewardChoice = new List<Reward>
+			{
+                //{ Gains.Gain_Combat, 10 }
             };
             conditionalGain.AddRewardChoice(rewardChoice);
             curCard.AddConditionalGain(conditionalGain);

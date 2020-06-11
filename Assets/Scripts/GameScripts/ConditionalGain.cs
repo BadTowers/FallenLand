@@ -5,30 +5,30 @@ namespace FallenLand
 {
     public class ConditionalGain
     {
-        private List<Dictionary<Gains, int>> Rewards; //Everything in a dictionary is awarded if chosen, each list entry is a choice (so you can take dictionary 1's rewards or dictionary 2's rewards, for example
+        private List<List<Reward>> RewardChoices; //Everything in a dictionary is awarded if chosen, each list entry is a choice (so you can take dictionary 1's rewards or dictionary 2's rewards, for example
         private List<List<Times>> WhenRewardCanBeGained; //each outer list is AND'ed together, each inner list item is OR'ed together
         private Uses NumberOfTimesThisRewardCanBeClaimed;
         private bool DiscardAfterClaimingReward;
-        private List<Dictionary<Gains, int>> D6Options;
+        private List<List<Reward>> D6Options;
         private State StateWhenUsable;
 
         public ConditionalGain()
         {
-            Rewards = new List<Dictionary<Gains, int>>();
+            RewardChoices = new List<List<Reward>>();
             WhenRewardCanBeGained = new List<List<Times>>();
             DiscardAfterClaimingReward = false;
-            D6Options = new List<Dictionary<Gains, int>>();
+            D6Options = new List<List<Reward>>();
         }
 
         //If only one choice added, then it's just given if conditions are met
-        public void AddRewardChoice(Dictionary<Gains, int> choice)
+        public void AddRewardChoice(List<Reward> choice)
         {
-            Rewards.Add(choice);
+            RewardChoices.Add(choice);
         }
 
-        public List<Dictionary<Gains, int>> GetRewardChoices()
+        public List<List<Reward>> GetRewardChoices()
         {
-            return Rewards;
+            return RewardChoices;
         }
 
         public void SetWhenRewardCanBeGained(params List<Times>[] times)
@@ -81,7 +81,7 @@ namespace FallenLand
             return DiscardAfterClaimingReward;
         }
 
-        public void AddD6Option(Dictionary<Gains, int> gains)
+        public void AddD6Option(List<Reward> gains)
         {
             D6Options.Add(gains);
         }

@@ -13,14 +13,17 @@ namespace FallenLand
 			//Vars
 			TownTech curTech;
 			ConditionalGain conditionalGain;
-			Dictionary<Gains, int> reward;
+			List<Reward> reward;
 
 			/***************************************************/
 			curTech = new TownTech("Energy Production");
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int>	{{ Gains.Gain_Party_Technical_Skill_Check_Successes, 1 }};
+			reward = new List<Reward>
+			{ 
+				//{ Gains.Gain_Party_Technical_Skill_Check_Successes, 1 }
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Technical_Skill_Check });
@@ -33,7 +36,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int> {{ Gains.Gain_Party_Combat_Skill_Check_Successes, 1 }};
+			reward = new List<Reward> 
+			{ 
+				//{ Gains.Gain_Party_Combat_Skill_Check_Successes, 1 }
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Combat_Skill_Check });
@@ -46,7 +52,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(40);
 			curTech.SetUpgradeCost(40);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int>{{ Gains.Gain_Action_Cards, 1 }};
+			reward = new List<Reward>
+			{
+				new GainActionCards(1)
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Deal_Subphase });
@@ -59,7 +68,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int> {{ Gains.Gain_Party_Diplomacy_Skill_Check_Successes, 1 }};
+			reward = new List<Reward> 
+			{ 
+				//{ Gains.Gain_Party_Diplomacy_Skill_Check_Successes, 1 }
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Diplomacy_Skill_Check });
@@ -72,7 +84,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int>{{ Gains.Gain_Party_Mechanical_Skill_Check_Successes, 1 }};
+			reward = new List<Reward>
+			{
+				//{ Gains.Gain_Party_Mechanical_Skill_Check_Successes, 1 }
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Mechanical_Skill_Check });
@@ -85,7 +100,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(40);
 			curTech.SetUpgradeCost(40);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int>{{ Gains.Gain_Spoils_Cards, 1 }};
+			reward = new List<Reward>
+			{
+				new GainSpoilsCards(1)
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Deal_Subphase });
@@ -99,7 +117,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int> { { Gains.Gain_Party_Medical_Skill_Check_Successes, 1 } };
+			reward = new List<Reward>
+			{
+				//{ Gains.Gain_Party_Medical_Skill_Check_Successes, 1 } 
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Medical_Skill_Check });
@@ -122,7 +143,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			reward = new Dictionary<Gains, int> { { Gains.Gain_Party_Survival_Skill_Check_Successes, 1 } };
+			reward = new List<Reward>
+			{ 
+				//{ Gains.Gain_Party_Survival_Skill_Check_Successes, 1 } 
+			};
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Survival_Skill_Check });

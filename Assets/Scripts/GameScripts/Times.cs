@@ -111,7 +111,7 @@ namespace FallenLand
 		Before_End_Turn_Phase,
 		After_Effects_Phase,
 		After_Town_Business_Phase,
-		After_Deal_Subphase,
+		//After_Deal_Subphase,
 		After_Resource_Production_Subphase,
 		After_Auction_House_Subphase,
 		After_Town_Events_Chart_Subphase,

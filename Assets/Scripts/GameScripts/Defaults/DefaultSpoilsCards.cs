@@ -132,7 +132,7 @@ namespace FallenLand
 			SpoilsCard tempCard;
 			int curID = 0;
 			ConditionalGain conditionalGain;
-			Dictionary<Gains, int> rewardChoice;
+			List<Reward> rewardChoice;
 
 			Debug.Log("Instantiating spoils cards...");
 
@@ -149,14 +149,14 @@ namespace FallenLand
 			});
 			/* No statics */
 			conditionalGain = new ConditionalGain();
-            rewardChoice = new Dictionary<Gains, int>
-            {
-                { Gains.Gain_Spoils_Cards, 2 }
+			rewardChoice = new List<Reward>
+			{
+				new GainSpoilsCards(2)
             };
             conditionalGain.AddRewardChoice(rewardChoice);
-            rewardChoice = new Dictionary<Gains, int>
-            {
-                { Gains.Gain_Action_Cards, 2 }
+			rewardChoice = new List<Reward>
+			{
+				new GainActionCards(2)
             };
             conditionalGain.AddRewardChoice(rewardChoice);
 			conditionalGain.SetWhenRewardCanBeGained(Times.After_Successful_Mission_Or_Encounter);
@@ -214,9 +214,9 @@ namespace FallenLand
 				{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
 			});
 			conditionalGain = new ConditionalGain();
-            rewardChoice = new Dictionary<Gains, int>
-            {
-                { Gains.Optional_Pay_Salvage, 5 }
+			rewardChoice = new List<Reward>
+			{
+				new OptionalPaySavage(5)
             };
             conditionalGain.AddRewardChoice(rewardChoice);
 			conditionalGain.SetWhenRewardCanBeGained(Times.Immediately);

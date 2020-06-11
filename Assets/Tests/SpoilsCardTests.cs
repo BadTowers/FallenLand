@@ -173,10 +173,10 @@ namespace Tests
 			Assert.AreEqual(Times.After_Combat_Encounter_Success, SpoilsCardInstance.GetWhenUsable()[0][0]);
 			SpoilsCardInstance.SetWhenUsable(new List<List<Times>>() { });
 			Assert.AreEqual(0, SpoilsCardInstance.GetWhenUsable().Count);
-			SpoilsCardInstance.SetWhenUsable(new List<Times>() {Times.After_Deal_Subphase}, new List<Times>() {Times.After_Death});
+			SpoilsCardInstance.SetWhenUsable(new List<Times>() {Times.After_Auction_House_Subphase}, new List<Times>() {Times.After_Death});
 			Assert.AreEqual(2, SpoilsCardInstance.GetWhenUsable().Count);
 			Assert.AreEqual(1, SpoilsCardInstance.GetWhenUsable()[0].Count);
-			Assert.AreEqual(Times.After_Deal_Subphase, SpoilsCardInstance.GetWhenUsable()[0][0]);
+			Assert.AreEqual(Times.After_Auction_House_Subphase, SpoilsCardInstance.GetWhenUsable()[0][0]);
 			Assert.AreEqual(1, SpoilsCardInstance.GetWhenUsable()[1].Count);
 			Assert.AreEqual(Times.After_Death, SpoilsCardInstance.GetWhenUsable()[1][0]);
 			SpoilsCardInstance.AddWhenUsable(new List<Times>() {Times.After_Diplomacy_Skill_Check_Failure});
