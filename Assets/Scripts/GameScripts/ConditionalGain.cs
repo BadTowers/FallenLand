@@ -10,6 +10,7 @@ namespace FallenLand
         private Uses NumberOfTimesThisRewardCanBeClaimed;
         private bool DiscardAfterClaimingReward;
         private List<Dictionary<Gains, int>> D6Options;
+        private State StateWhenUsable;
 
         public ConditionalGain()
         {
@@ -83,6 +84,16 @@ namespace FallenLand
         public void AddD6Option(Dictionary<Gains, int> gains)
         {
             D6Options.Add(gains);
+        }
+
+        public void SetWhenRewardCanBeClaimed(State state)
+        {
+            StateWhenUsable = state;
+        }
+
+        public State GetWhenRewardCanBeClaimed()
+        {
+            return StateWhenUsable;
         }
     }
 }

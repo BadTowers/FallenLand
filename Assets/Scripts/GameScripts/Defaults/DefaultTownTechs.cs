@@ -89,6 +89,7 @@ namespace FallenLand
 			conditionalGain = new ConditionalGain();
 			conditionalGain.AddRewardChoice(reward);
 			conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Deal_Subphase });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringDealPhase());
 			curTech.SetConditionalGains(conditionalGain);
 			curTech.SetId(6);
 			Techs.Add(curTech);
