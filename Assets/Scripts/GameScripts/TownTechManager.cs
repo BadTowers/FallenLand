@@ -14,7 +14,7 @@ namespace FallenLand
             for (int i = 0; i < townTechs.Count; i++)
             {
                 ConditionalGain conditionalGain = townTechs[i].GetConditionalGain();
-                if (conditionalGain != null && TimesManager.AreTimeConstraintsMet(gameManager, conditionalGain.GetWhenRewardCanBeGained()))
+                if (conditionalGain != null && conditionalGain.GetWhenRewardCanBeClaimed() != null && conditionalGain.GetWhenRewardCanBeClaimed().IsStateOccurring(gameManager))
                 {
                     GainsManager.HandleGains(gameManager, conditionalGain.GetRewardChoices());
                 }
