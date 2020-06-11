@@ -92,34 +92,27 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestConditionalGains()
 		{
-			Assert.NotNull(TownTech.GetConditionalGains());
+			Assert.Null(TownTech.GetConditionalGain());
 
-			Dictionary<Gains, int> gains = new Dictionary<Gains, int>() { { Gains.Gain_Spoils_Cards, 2 } };
-			TownTech.SetConditionalGains(gains);
-			Assert.AreEqual(1, TownTech.GetConditionalGains().Count);
-			Assert.AreEqual(Gains.Gain_Spoils_Cards, TownTech.GetConditionalGains().ElementAt(0).Key);
-			Assert.AreEqual(2, TownTech.GetConditionalGains().ElementAt(0).Value);
+			ConditionalGain conditionalGain = new ConditionalGain();
+			TownTech.SetConditionalGains(conditionalGain);
+			Assert.NotNull(TownTech.GetConditionalGain());
 
 			TownTech.SetConditionalGains(null);
-			Assert.NotNull(TownTech.GetConditionalGains());
-			Assert.AreEqual(1, TownTech.GetConditionalGains().Count);
+			Assert.NotNull(TownTech.GetConditionalGain());
 
 			yield return null;
 		}
 
 		[UnityTest]
-		public IEnumerator TestTimes()
+		public IEnumerator TestPassiveGains()
 		{
-			Assert.NotNull(TownTech.GetTimes());
+			Assert.NotNull(TownTech.GetPassiveGains());
 
-			List<Times> times = new List<Times>() { Times.After_Successful_Mission_Or_Encounter };
-			TownTech.SetTimes(times);
-			Assert.AreEqual(1, TownTech.GetTimes().Count);
-			Assert.AreEqual(Times.After_Successful_Mission_Or_Encounter, TownTech.GetTimes()[0]);
-
-			TownTech.SetTimes(null);
-			Assert.NotNull(TownTech.GetTimes());
-			Assert.AreEqual(1, TownTech.GetTimes().Count);
+			TownTech.AddPassiveGain(Gains.Add_To_Roll, 2);
+			Assert.AreEqual(1, TownTech.GetPassiveGains().Count);
+			Assert.AreEqual(Gains.Add_To_Roll, TownTech.GetPassiveGains().Keys.ElementAt(0));
+			Assert.AreEqual(2, TownTech.GetPassiveGains().Values.ElementAt(0));
 
 			yield return null;
 		}

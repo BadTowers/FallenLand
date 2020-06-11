@@ -9,16 +9,15 @@ namespace FallenLand
 		private int UpgradeCost;
 		private int Tier; //tier 1 or 2
 		private int SellCost;
-		private Dictionary<Gains, int> ConditionalGains;
-		private List<Times> WhenUsable;
+		private ConditionalGain ConditionalGains;
+		private Dictionary<Gains, int> PassiveGains;
 		private bool IsStartingTech;
 		private int Id;
 
 		public TownTech(string name)
 		{
 			TechName = name;
-			ConditionalGains = new Dictionary<Gains, int>();
-			WhenUsable = new List<Times>();
+			PassiveGains = new Dictionary<Gains, int>();
 		}
 
 		public void SetTechName(string n)
@@ -71,7 +70,7 @@ namespace FallenLand
 			return SellCost;
 		}
 
-		public void SetConditionalGains(Dictionary<Gains, int> condGains)
+		public void SetConditionalGains(ConditionalGain condGains)
 		{
 			if (condGains != null)
 			{
@@ -79,22 +78,21 @@ namespace FallenLand
 			}
 		}
 
-		public Dictionary<Gains, int> GetConditionalGains()
+		public ConditionalGain GetConditionalGain()
 		{
 			return ConditionalGains;
 		}
 
-		public void SetTimes(List<Times> times)
-		{
-			if (times != null)
-			{
-				WhenUsable = times;
-			}
+        public void AddPassiveGain(Gains gain, int amount)
+        {
+			PassiveGains.Add(gain, amount);
+
 		}
 
-		public List<Times> GetTimes()
+		public Dictionary<Gains, int> GetPassiveGains()
 		{
-			return WhenUsable;
+			return PassiveGains;
+
 		}
 
 		public void SetIsStartingTech(bool b)
