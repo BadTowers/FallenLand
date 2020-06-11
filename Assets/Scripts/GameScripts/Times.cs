@@ -12,11 +12,6 @@ namespace FallenLand
 		//Town
 		Town_Target_Of_Action_Card_Or_World_Card,
 
-		//Clothing
-		Equipped_With_An_Axe,
-		Equipped_With_Industrial_Chainsaw,
-		Equipped_With_Rusty_Cleaver,
-
 		//Actions against player
 		Party_Target_Of_Theft,
 
@@ -47,7 +42,9 @@ namespace FallenLand
 		Compass_and_Maps_Equipped,
 		Flare_Gun_Equipped,
 		Indestructible_Tennis_Racquet_Equipped,
+		Industrial_Chainsaw_Equipped,
 		Rifle_Equipped,
+		Rusty_Cleaver_Equipped,
 		Shotgun_Equipped,
 		Sledge_Hammer_Equipped,
 		Sock_Monkey_Puppet_Equipped,
