@@ -55,6 +55,11 @@ namespace FallenLand
             WhenRewardCanBeGained.Add(times);
         }
 
+        public List<List<Times>> GetWhenRewardCanBeGained()
+        {
+            return WhenRewardCanBeGained;
+        }
+
         public void SetNumberOfTimesThisRewardCanBeClaimed(Uses use)
         {
             NumberOfTimesThisRewardCanBeClaimed = use;
