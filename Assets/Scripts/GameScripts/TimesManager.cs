@@ -43,7 +43,7 @@ namespace FallenLand
                 case Times.Anytime:
                     isMet = true;
                     break;
-                case Times.After_Action_House_Subphase:
+                case Times.After_Auction_House_Subphase:
                     UnityEngine.Debug.Log("Times.After_Action_House_Subphase was met");
                     isMet = (gameManager.GetCurrentPhase() == Phases.After_Town_Business_Auction_House);
                     break;
