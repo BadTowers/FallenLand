@@ -4,74 +4,43 @@ namespace FallenLand
 {
 	public class Perk
 	{
-		private List<Times> WhenUsable;
-		private List<Uses> NumberOfUses;
-		private Dictionary<Gains, int> StaticGains;
-		private Dictionary<Gains, int> ConditionalGains;
+		private Dictionary<Gains, int> PassiveGains;
+		private ConditionalGain ConditionalGain;
 		private string PerkTitle;
 		private string PerkDescription;
 		private List<Dictionary<Gains, int>> D6Options;
 
 		public Perk(string title)
 		{
-			WhenUsable = new List<Times>();
-			NumberOfUses = new List<Uses>();
-			StaticGains = new Dictionary<Gains, int>();
-			ConditionalGains = new Dictionary<Gains, int>();
+			PassiveGains = new Dictionary<Gains, int>();
 			PerkTitle = title;
 			D6Options = new List<Dictionary<Gains, int>>();
 		}
 
-		public void SetTimes(List<Times> whenUsable)
+		public void SetPassiveGains(Dictionary<Gains, int> passiveGains)
 		{
-			if (whenUsable != null)
+			if (passiveGains != null)
 			{
-				WhenUsable = whenUsable;
+				PassiveGains = passiveGains;
 			}
 		}
 
-		public List<Times> GetTimes()
+		public Dictionary<Gains, int> GetPassiveGains()
 		{
-			return WhenUsable;
+			return PassiveGains;
 		}
 
-		public void SetUses(List<Uses> numUses)
+		public void SetConditionalGain(ConditionalGain conditionalGain)
 		{
-			if (numUses != null)
+			if (conditionalGain != null)
 			{
-				NumberOfUses = numUses;
+				ConditionalGain = conditionalGain;
 			}
 		}
 
-		public List<Uses> GetUses()
+		public ConditionalGain GetConditionalGain()
 		{
-			return NumberOfUses;
-		}
-
-		public void SetStaticGains(Dictionary<Gains, int> staticGains)
-		{
-			if (staticGains != null)
-			{
-				StaticGains = staticGains;
-			}
-		}
-
-		public Dictionary<Gains, int> GetStaticGains()
-		{
-			return StaticGains;
-		}
-
-		public void SetConditionalGains(Dictionary<Gains, int> conditionalGains)
-		{
-			if (conditionalGains != null)
-			{
-				ConditionalGains = conditionalGains;
-			}
-		}
-
-		public Dictionary<Gains, int> GetConditionalGains()
-		{
-			return ConditionalGains;
+			return ConditionalGain;
 		}
 
 		public void SetPerkTitle(string title)

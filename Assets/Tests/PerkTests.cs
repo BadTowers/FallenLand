@@ -34,37 +34,19 @@ namespace Tests
 		}
 
 		[UnityTest]
-		public IEnumerator TestTimesWhenUsable()
-		{
-			Assert.IsNotNull(PerkInstance.GetTimes());
-
-			List<Times> times = new List<Times>(){Times.After_Auction_House_Subphase, Times.During_Deal_Subphase};
-			PerkInstance.SetTimes(times);
-			Assert.AreEqual(2, PerkInstance.GetTimes().Count);
-			Assert.AreEqual(Times.After_Auction_House_Subphase, PerkInstance.GetTimes()[0]);
-			Assert.AreEqual(Times.During_Deal_Subphase, PerkInstance.GetTimes()[1]);
-
-			PerkInstance.SetTimes(null);
-			Assert.IsNotNull(PerkInstance.GetTimes());
-			Assert.AreEqual(2, PerkInstance.GetTimes().Count);
-
-			yield return null;
-		}
-
-		[UnityTest]
 		public IEnumerator TestStaticGains()
 		{
-			Assert.IsNotNull(PerkInstance.GetStaticGains());
+			Assert.IsNotNull(PerkInstance.GetPassiveGains());
 
 			Dictionary<Gains, int> staticGains = new Dictionary<Gains, int>() { { Gains.Add_To_Roll, 2}};
-			PerkInstance.SetStaticGains(staticGains);
-			Assert.AreEqual(1, PerkInstance.GetStaticGains().Count);
-			Assert.AreEqual(Gains.Add_To_Roll, PerkInstance.GetStaticGains().ElementAt(0).Key);
-			Assert.AreEqual(2, PerkInstance.GetStaticGains().ElementAt(0).Value);
+			PerkInstance.SetPassiveGains(staticGains);
+			Assert.AreEqual(1, PerkInstance.GetPassiveGains().Count);
+			Assert.AreEqual(Gains.Add_To_Roll, PerkInstance.GetPassiveGains().ElementAt(0).Key);
+			Assert.AreEqual(2, PerkInstance.GetPassiveGains().ElementAt(0).Value);
 
-			PerkInstance.SetStaticGains(null);
-			Assert.IsNotNull(PerkInstance.GetStaticGains());
-			Assert.AreEqual(1, PerkInstance.GetStaticGains().Count);
+			PerkInstance.SetPassiveGains(null);
+			Assert.IsNotNull(PerkInstance.GetPassiveGains());
+			Assert.AreEqual(1, PerkInstance.GetPassiveGains().Count);
 
 			yield return null;
 		}
@@ -97,38 +79,19 @@ namespace Tests
 		}
 
 		[UnityTest]
-		public IEnumerator TestNumberOfUses()
-		{
-			Assert.IsNotNull(PerkInstance.GetUses());
-
-			List<Uses> numUses = new List<Uses>() { Uses.None, Uses.Once_Per_Game, Uses.Once_Per_PvP };
-			PerkInstance.SetUses(numUses);
-			Assert.AreEqual(3, PerkInstance.GetUses().Count);
-			Assert.AreEqual(Uses.None, PerkInstance.GetUses()[0]);
-			Assert.AreEqual(Uses.Once_Per_Game, PerkInstance.GetUses()[1]);
-			Assert.AreEqual(Uses.Once_Per_PvP, PerkInstance.GetUses()[2]);
-
-			PerkInstance.SetUses(null);
-			Assert.IsNotNull(PerkInstance.GetUses());
-			Assert.AreEqual(3, PerkInstance.GetUses().Count);
-
-			yield return null;
-		}
-
-		[UnityTest]
 		public IEnumerator TestConditionalGains()
 		{
-			Assert.IsNotNull(PerkInstance.GetConditionalGains());
+			Assert.IsNull(PerkInstance.GetConditionalGain());
 
-			Dictionary<Gains, int> conditionalGains = new Dictionary<Gains, int>() { { Gains.Gain_Spoils_Cards, 3 } };
-			PerkInstance.SetConditionalGains(conditionalGains);
-			Assert.AreEqual(1, PerkInstance.GetConditionalGains().Count);
-			Assert.AreEqual(Gains.Gain_Spoils_Cards, PerkInstance.GetConditionalGains().ElementAt(0).Key);
-			Assert.AreEqual(3, PerkInstance.GetConditionalGains().ElementAt(0).Value);
+			ConditionalGain conditionalGain = new ConditionalGain();
+			Reward reward = new GainSpoilsCards(3);
+			conditionalGain.AddRewardChoice(new List<Reward>() { reward });
+			PerkInstance.SetConditionalGain(conditionalGain);
+			Assert.IsTrue(PerkInstance.GetConditionalGain().GetRewardChoices()[0][0] is GainSpoilsCards);
+			Assert.AreEqual(3, PerkInstance.GetConditionalGain().GetRewardChoices()[0][0].GetRewardAmount());
 
-			PerkInstance.SetConditionalGains(null);
-			Assert.IsNotNull(PerkInstance.GetConditionalGains());
-			Assert.AreEqual(1, PerkInstance.GetConditionalGains().Count);
+			PerkInstance.SetConditionalGain(null);
+			Assert.IsNotNull(PerkInstance.GetConditionalGain());
 
 			yield return null;
 		}

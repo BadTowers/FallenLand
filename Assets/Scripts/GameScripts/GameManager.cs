@@ -37,7 +37,7 @@ namespace FallenLand
 			MyUserId = "";
 			TurnManager = this.gameObject.AddComponent<MyTurnManager>();
 			TurnManager.TurnManagerListener = this;
-			CurrentPhase = Phases.Invalid;
+			CurrentPhase = Phases.Game_Start_Setup;
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
@@ -130,6 +130,8 @@ namespace FallenLand
 					Players.Add(new HumanPlayer(faction, StartingSalvage));
 				}
 
+				FactionPerkManager.HandlePhase(this);
+
 				dealCardsToPlayers();
 
 				countTownTechsThatAreInUse();
@@ -154,6 +156,7 @@ namespace FallenLand
 
 		public void OnPhaseBegins(Phases phase)
 		{
+			bool techsHandled = false;
 			CurrentPhase = phase;
 			//Auto phases that require no user input
 			switch (phase)
@@ -167,6 +170,7 @@ namespace FallenLand
 					Debug.Log("Deal action cards!");
 					townBusinessPhase_DealSubphase();
 					TownTechManager.HandlePhase(this);
+					techsHandled = true;
 					TurnManager.BeginNextPhase();
 					break;
 				case Phases.End_Turn_Adjust_Turn_Marker:
@@ -182,6 +186,12 @@ namespace FallenLand
 				default:
 					break;
             }
+
+			FactionPerkManager.HandlePhase(this);
+			if (!techsHandled)
+			{
+				TownTechManager.HandlePhase(this);
+			}
 		}
 
 		public void OnPhaseCompleted(Phases phase)
@@ -539,6 +549,25 @@ namespace FallenLand
 				SpoilsDeck.RemoveAt(0);
 			}
 		}
+
+        public void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
+        {
+			bool found = false;
+			for (int i = 0; i < SpoilsDeck.Count; i++)
+			{
+				if (SpoilsDeck[i].GetTitle() == cardName)
+				{
+					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[i]);
+					SpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.LogError("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+			}
+        }
 		#endregion
 
 		#region HelperFunctions

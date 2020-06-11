@@ -16,58 +16,57 @@ namespace FallenLand
 			string lore;
 			int tempID = 1;
 			TownTech curTech;
+			ConditionalGain conditionalGain;
+			Reward rewardChoice;
 
 			/***************************************************/
 			curFac = new Faction("Coalition of the Black Angels", new Coordinates(19, 13));
 			curFac.SetBaseLocationString("Iowa City, Iowa");
 			curPerk = new Perk("Combat Medic");
 			curPerk.SetPerkDescription("Begin the game with the PARAMEDIC MED KIT spoils card");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_Paramedic_Med_Kit, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new GainParamedicMedKit();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Information Crossroads");
 			curPerk.SetPerkDescription("Once per turn, during the TOWN BUSINESS PHASE, you may pay 5 salvage coins to draw 1 action card");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
-			{Gains.Gain_Action_Cards, 1},
-			{Gains.Optional_Pay_Salvage, 5}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Business_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
+		//	{Gains.Gain_Action_Cards, 1},
+		//	{Gains.Optional_Pay_Salvage, 5}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Business_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Fight Club");
 			curPerk.SetPerkDescription("During party MELEE WEAPONS ONLY encounter cards, you receive 1 additional combat success");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
-			{Gains.Gain_Party_Combat_Skill_Check_Successes, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Melee_Weapons_Only
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Encounter
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
+		//	{Gains.Gain_Party_Combat_Skill_Check_Successes, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Melee_Weapons_Only
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Encounter
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Midwestern Charm");
 			curPerk.SetPerkDescription("Perform the HEALING DEED in any neutral starting town without having to pay the bank");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
-			{Gains.Healing_Deed_Salvage_Coin_Cost, 0}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.In_Neutral_Starting_Town
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>() {
+		//	{Gains.Healing_Deed_Salvage_Coin_Cost, 0}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.In_Neutral_Starting_Town
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "The residents of Iowa City panicked with the onset of the Great War, as many feared they would be targeted in the nuclear exchanged because of defense contractors, hospitals, " +
 				"and colleges. However, the anticipated hammer stroke never fell. Even when Des Moines was dusted and the ashen fallout drifted down like snow, Iowa City was again spared. " +
@@ -96,51 +95,48 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Great Falls, Montana");
 			curPerk = new Perk("Hunter's Instinct");
 			curPerk.SetPerkDescription("Begin the game with the COMPOUND HUNTING BOW spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_Compound_Hunting_Bow, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new GainCompoundHuntingBow();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Diplomatic Connections");
 			curPerk.SetPerkDescription("Each time you are the first player, SUBTRACT 2 FROM TOWN EVENTS ROLL.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Subtract_From_Roll, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Events_Chart_Subphase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Subtract_From_Roll, 2}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Events_Chart_Subphase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Wiley");
 			curPerk.SetPerkDescription("Your party GAINS +1 DURING FLIGHT ROLLS.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Add_To_Roll, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Encounter_Flight
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Encounter
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Add_To_Roll, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Encounter_Flight
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Encounter
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Kismet");
 			curPerk.SetPerkDescription("Once per turn, during a solo encounter card, REROLL A FAILED SKILL CHECK.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Reroll_Failed_Skill_Check, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Solo_Encounter
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Reroll_Failed_Skill_Check, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Solo_Encounter
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "The remote location of Great Falls spared it from the nuclear exchange that destroyed civilization. However, as supplies became scarce during the dark years of the Maddening, many " +
 				"militia groups in the region turned to raiding settlements. The raider’s swift attacks devastated and outgunned the small communities. To bring the fight to the raiders, the Blackfoot " +
@@ -168,66 +164,63 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Battle Mountain, Nevada");
 			curPerk = new Perk("Natural Defenses");
 			curPerk.SetPerkDescription("Begin the game with 1 TOWN DEFENSE CHIP.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Town_Defense_Chips, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			//rewardChoice = new Reward();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("High Rollers");
 			curPerk.SetPerkDescription("During the TOWN EVENTS PHASE, you must roll 1d6. On a 1-3, receive 5 salvage coins from the bank. However, on a 6, you lose 7 salvage coins or its equivilent in spoils cards.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Roll_D6, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Events_Chart_Subphase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
-			{Gains.Gain_Salvage, 5}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
-			{Gains.Gain_Salvage, 5}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //3
-			{Gains.Gain_Salvage, 5}
-		});
-			curPerk.AddD6Option(null); //4
-			curPerk.AddD6Option(null); //5
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
-			{Gains.Lose_Salvage, 7}
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Roll_D6, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Events_Chart_Subphase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
+		//	{Gains.Gain_Salvage, 5}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
+		//	{Gains.Gain_Salvage, 5}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //3
+		//	{Gains.Gain_Salvage, 5}
+		//});
+		//	curPerk.AddD6Option(null); //4
+		//	curPerk.AddD6Option(null); //5
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
+		//	{Gains.Lose_Salvage, 7}
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Mountaineering");
 			curPerk.SetPerkDescription("Each MOVEMENT DEED, the 1st mountain hex your party passes through costs 1 movement instead of two.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Mountain_Hexes_Cost, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.First_Move_Into_Mountain_Hex
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Movement_Deed
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Mountain_Hexes_Cost, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.First_Move_Into_Mountain_Hex
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Movement_Deed
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("The Mineshaft Gap");
 			curPerk.SetPerkDescription("Once per turn, if your town roster is empty, you may draw a character card and place it there.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Draw_Character_Cards, 1},
-			{Gains.Place_Into_Town_Roster, -1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Anytime
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Draw_Character_Cards, 1},
+		//	{Gains.Place_Into_Town_Roster, -1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Anytime
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "The local warning sirens wailed across the mining community as death rained from the skies. Only the residents that fled to the mines survived. Within its depths, the survivors found " +
 				"shelter and safety from the fallout. During the long, dark years of the Maddening, as chaos reigned in the wastes, the survivors that chose to reside in the mine continued to prosper. " +
@@ -258,53 +251,50 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Shreveport, Louisiana");
 			curPerk = new Perk("Connected");
 			curPerk.SetPerkDescription("Begin the game with a resource location of your choosing.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Resource_Location, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			//rewardChoice = new Reward();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Southern Ingenuity");
 			curPerk.SetPerkDescription("Once per turn, during the effects phase, you may DISCARD AN ACTION CARD TO DRAW A SPOILS CARD for your auction house.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Discard_Action_Cards, 1},
-			{Gains.Draw_Spoils_Cards, 1},
-			{Gains.Place_Into_Auction_House, -1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Effects_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Discard_Action_Cards, 1},
+		//	{Gains.Draw_Spoils_Cards, 1},
+		//	{Gains.Place_Into_Auction_House, -1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Effects_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Smugglers Network");
 			curPerk.SetPerkDescription("Each time you sell a spoils card from your auction house to another player, receive 3 salvage coin from the bank.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Salvage, 3}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.After_Sell_Spoils_Card_From_Auction_House_To_Another_Player
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Gain_Salvage, 3}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.After_Sell_Spoils_Card_From_Auction_House_To_Another_Player
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Born on the Bayou");
 			curPerk.SetPerkDescription("Your party gains +2 FLIGHT during PVP.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Add_To_Roll, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_PVP_Flight
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Encounter
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Add_To_Roll, 2}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_PVP_Flight
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Encounter
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "Shreveport sustained mass casualties from the biological weapons used in the Great War. Many residents suffered horrible deaths, while others looted and pillaged the city gripped by " +
 				"madness and set it ablaze. Other horrors followed, like radiation sickness and cannibalism. When several damns upriver failed, they unleased the power of the mighty Mississippi. Mother " +
@@ -333,63 +323,60 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Albany, Georgia");
 			curPerk = new Perk("Armory Cache");
 			curPerk.SetPerkDescription("Begin the game with the MILITIA RIFLE spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_Militia_Rifle, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new GainMilitiaRifle();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Weapons Bazaar");
 			curPerk.SetPerkDescription("During the town business phase, roll 1d6. On 1-2, remove first weapons spoils card (top to bottom) from discard pile and place into auction house.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Roll_D6, 1},
-			{Gains.Place_Into_Auction_House, -1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Business_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
-			{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
-			{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
-		});
-			curPerk.AddD6Option(null); //3
-			curPerk.AddD6Option(null); //4
-			curPerk.AddD6Option(null); //5
-			curPerk.AddD6Option(null); //6
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Roll_D6, 1},
+		//	{Gains.Place_Into_Auction_House, -1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Business_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
+		//	{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
+		//	{Gains.Gain_First_Weapon_Spoils_From_Discard, 1}
+		//});
+		//	curPerk.AddD6Option(null); //3
+		//	curPerk.AddD6Option(null); //4
+		//	curPerk.AddD6Option(null); //5
+		//	curPerk.AddD6Option(null); //6
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Navigators");
 			curPerk.SetPerkDescription("City and radiation hexes cost 2 movement instead of 3.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.CityRad_Hexes_Cost, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Anytime
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.CityRad_Hexes_Cost, 2}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Anytime
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Mercenary Haven");
 			curPerk.SetPerkDescription("Pay 2 salvage coins less to hire an NPCM action card or ALLY spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.NPCM_Hire_Cost_Less, 2},
-			{Gains.Ally_Hire_Cost_Less, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Anytime
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.NPCM_Hire_Cost_Less, 2},
+		//	{Gains.Ally_Hire_Cost_Less, 2}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Anytime
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "In the early hours of the Great War, Albany braced for attack. Washington D.C. was already gone, and the long list of dusted cities just kept growing. The first missiles targeting " +
 				"Albany were destroyed by THAAD missile defense batteries. The next round was detonated in the atmosphere and caused a series of electromagnetic pulses that knocked out power and " +
@@ -422,53 +409,50 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Amarillo, Texas");
 			curPerk = new Perk("The Cownboy Way");
 			curPerk.SetPerkDescription("Begin the game with the SIX FAST HORSES spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_Six_Fast_Horses, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new GainSixFastHorses();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Cattle Drivers");
 			curPerk.SetPerkDescription("Each town business phase, choose another faction. You each receive 3 salvage coins.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Pick_Other_Factions_Share_Gains, 1},
-			{Gains.Gain_Salvage, 3}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Business_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Pick_Other_Factions_Share_Gains, 1},
+		//	{Gains.Gain_Salvage, 3}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Business_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Into the Wild");
 			curPerk.SetPerkDescription("During End Turn Phase, you may move your STARTING TOWN LOCATION up to 2 hexes by paying 3 salvage coins. Cannot occupy hex containing another town, resource, radiation, or water. Mission locations are rerolled.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Optional_Pay_Salvage, 3},
-			{Gains.Move_Town_Location_Number_Hexes, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_End_Turn_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Optional_Pay_Salvage, 3},
+		//	{Gains.Move_Town_Location_Number_Hexes, 2}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_End_Turn_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Rangers");
 			curPerk.SetPerkDescription("You may purchase the tier 1 LAW AND ORDER TOWN TECHNOLOGY for 30 salvage coins.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Town_Tech_Law_And_Order_Tier_One_Cost, 30},
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Purchase_Subphase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Town_Tech_Law_And_Order_Tier_One_Cost, 30},
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Purchase_Subphase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "By the time the radioactive fallout drifted across the plains, the US government was already gone and the country’s infrastructure had collapsed. No help was coming. The " +
 				"nuclear and biological warheads used in The Great War had darkened the skies, and this lack of sunshine combined with unprecedented chaos and violence became known as The " +
@@ -499,55 +483,50 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Sturgis, South Dakota");
 			curPerk = new Perk("Motorcycle Culture");
 			curPerk.SetPerkDescription("Begin the game with the AMERICAN IRON CUSTOM CHOPPERS spoils card. Cannot be sold or traded.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1},
-			{Gains.Reward_Cannot_Be_Traded, -1},
-			{Gains.Reward_Cannot_Be_Sold, -1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new GainAmericanIronCustomChoppers();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Caravan Escort");
 			curPerk.SetPerkDescription("Each town business phase, select another faction. You each gain 2 salvage coins.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Pick_Other_Factions_Share_Gains, 1},
-			{Gains.Gain_Salvage, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Business_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Pick_Other_Factions_Share_Gains, 1},
+		//	{Gains.Gain_Salvage, 2}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Business_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("The Riddle of Steel");
 			curPerk.SetPerkDescription("If your party returns to town without a vehicle, immediately retrieve the AMERICAN IRON CUSTOM CHOPPERS spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Return_To_Town_Location,
-			Times.Has_No_Vehicle
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Gain_Spoils_Card_American_Iron_Custom_Choppers, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Return_To_Town_Location,
+		//	Times.Has_No_Vehicle
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Road Warriors");
 			curPerk.SetPerkDescription("Each time a VEHICLE COMBAT or BIKER GANG ENCOUNTER CARD is drawn by any player, you GAIN 1 PRESTIGE.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Prestige, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Encounter
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Gain_Prestige, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Vehicle_Combat_Or_Biker_Gang_Encounter_Drawn,
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Encounter
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "After the bombs fells, the motorcycle clubs that survived were forced to rely on mobility and safety in numbers. Those that escaped the gridlock and chaos made the pilgrimage to " +
 				"the mecca of motorcycle culture, Sturgis, South Dakota. Many motorcycle clubs (MCs) were represented there and most put aside their long-standing rivalries. A vision emerged to unite " +
@@ -578,77 +557,74 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Saint George, Utah");
 			curPerk = new Perk("Blade Cult");
 			curPerk.SetPerkDescription("Begin the game with the VENDETTA DAGGERS spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_Vendetta_Daggers, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new GainVendettaDaggers();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Wasteland Scavengers");
 			curPerk.SetPerkDescription("Each TOWN BUSINESS PHASE, roll 1d6 and gain that many salvage coins.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Roll_D6, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Town_Business_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
-			{Gains.Gain_Salvage, 1}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
-			{Gains.Gain_Salvage, 2}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //3
-			{Gains.Gain_Salvage, 3}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //4
-			{Gains.Gain_Salvage, 4}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //5
-			{Gains.Gain_Salvage, 5}
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
-			{Gains.Gain_Salvage, 6}
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Roll_D6, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Town_Business_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
+		//	{Gains.Gain_Salvage, 1}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //2
+		//	{Gains.Gain_Salvage, 2}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //3
+		//	{Gains.Gain_Salvage, 3}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //4
+		//	{Gains.Gain_Salvage, 4}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //5
+		//	{Gains.Gain_Salvage, 5}
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //6
+		//	{Gains.Gain_Salvage, 6}
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Down With the Sickness");
 			curPerk.SetPerkDescription("When an opponent plays a \"negative\" action card against one of your characters or party, roll 1d6. On a 1, each of their party members suffers 1 radiation damage.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Roll_D6, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Negative_Action_Card_Against_Player
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Card
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
-			{Gains.Inflict_Rad_Damage_On_Opposing_Party, 1}
-		});
-			curPerk.AddD6Option(null); //2
-			curPerk.AddD6Option(null); //3
-			curPerk.AddD6Option(null); //4
-			curPerk.AddD6Option(null); //5
-			curPerk.AddD6Option(null); //6
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Roll_D6, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Negative_Action_Card_Against_Player
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Card
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
+		//	{Gains.Inflict_Rad_Damage_On_Opposing_Party, 1}
+		//});
+		//	curPerk.AddD6Option(null); //2
+		//	curPerk.AddD6Option(null); //3
+		//	curPerk.AddD6Option(null); //4
+		//	curPerk.AddD6Option(null); //5
+		//	curPerk.AddD6Option(null); //6
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Survival Instincts");
 			curPerk.SetPerkDescription("Your party ignores all negative effects from ENVIRONMENTAL HAZARD encounter cards.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Ignore_Negatives_Of_Enoucnter_Failure, -1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Environmetal_Hazard_Encounter_Card
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Card
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Ignore_Negatives_Of_Enoucnter_Failure, -1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Environmetal_Hazard_Encounter_Card
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Card
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "The red sandstone bluffs surrounding Saint George provided little reprieve from the fallout of the dusted West Coast cities. Isolated and forgotten, the windswept town of Saint George " +
 				"was forced to turn inward and became more and more xenophobic of “out-dwellers”. For a while, the arid soil provided subsistence farming. When this failed, scouting parties were dispatched " +
@@ -679,62 +655,58 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Grand Haven, Michigan");
 			curPerk = new Perk("Hidden Agenda");
 			curPerk.SetPerkDescription("Begin the game with TWO ADDITIONAL ACTION CARDS.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Action_Cards, 2}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			//rewardChoice = new Reward();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("River Traders");
 			curPerk.SetPerkDescription("Each EFFECTS PHASE, you may draw a spoils card. To keep it, pay a random player 1/2 its value in salvage (rounded up).");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Draw_Spoils_Cards, 1},
-			{Gains.Pay_Random_Player_Half_Salvage_Value_To_Keep, -1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Effects_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Turn
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Draw_Spoils_Cards, 1},
+		//	{Gains.Pay_Random_Player_Half_Salvage_Value_To_Keep, -1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Effects_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Turn
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Anchors Aweigh");
 			curPerk.SetPerkDescription("When your town is the target of an action card or world card effect, roll 1d6. On a 1, ignore the effects.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Roll_D6, 1},
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Town_Target_Of_Action_Card_Or_World_Card
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Card
-		});
-			curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
-			{Gains.Ignore_Negative_Effects_Of_Card, 1}
-		});
-			curPerk.AddD6Option(null); //2
-			curPerk.AddD6Option(null); //3
-			curPerk.AddD6Option(null); //4
-			curPerk.AddD6Option(null); //5
-			curPerk.AddD6Option(null); //6
-			curFac.AddPerk(curPerk);
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Roll_D6, 1},
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.Town_Target_Of_Action_Card_Or_World_Card
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Card
+		//});
+		//	curPerk.AddD6Option(new Dictionary<Gains, int>(){ //1
+		//	{Gains.Ignore_Negative_Effects_Of_Card, 1}
+		//});
+		//	curPerk.AddD6Option(null); //2
+		//	curPerk.AddD6Option(null); //3
+		//	curPerk.AddD6Option(null); //4
+		//	curPerk.AddD6Option(null); //5
+		//	curPerk.AddD6Option(null); //6
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Amphibious");
 			curPerk.SetPerkDescription("Your party may MOVE THROUGH THE GREAT LAKES. Each lake costs 1 salvage and 1 movement. Cannot end movement deed in water hex.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Move_Through_Great_Lakes, 1},
-			{Gains.Optional_Pay_Salvage, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Movement_Deed
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Unlimited
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Move_Through_Great_Lakes, 1},
+		//	{Gains.Optional_Pay_Salvage, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Movement_Deed
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Unlimited
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "In the early hours of the Great War, Chicago and Detroit were hit simultaneously by multiple ICBMs. But above them on the peninsula, a last-minute shift in the winds saved Grand " +
 				"Haven, “Coast Guard City USA”. Still, many people with boards fled to the water of the Great Lakes to survive. The old adage “safety in numbers” proved true during the Maddening, " +
@@ -765,52 +737,45 @@ namespace FallenLand
 			curFac.SetBaseLocationString("Emporium, Pennsylvania");
 			curPerk = new Perk("The Long Walk");
 			curPerk.SetPerkDescription("Begin the game with the 6.8mm ADVANCED RIFLE spoils card.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Spoils_Card_68mm_Advanced_Rifle, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			rewardChoice = new Gain68mmAdvancedRifle();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Veritable Fortress");
 			curPerk.SetPerkDescription("Begin the game with 2 TOWN DEFENSE CHIPS. All other town defense chips cost 4 extra salvage coins.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Town_Defense_Chips, 2},
-			{Gains.All_Town_Defense_Chips_Cost_More, 4}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.Start_Of_Game
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+			conditionalGain = new ConditionalGain();
+			//rewardChoice = new Reward();
+			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
+			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
+			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Excavation");
 			curPerk.SetPerkDescription("If any player draws a mission card with the word SIGMA IN THE TITLE, YOU GAIN 3 TOWN HEALTH.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Gain_Town_Health, 3}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Mission_Card_Sigma_In_Title_Any_Player
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Card
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Gain_Town_Health, 3}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Mission_Card_Sigma_In_Title_Any_Player
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Card
+		//});
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Black Ops");
 			curPerk.SetPerkDescription("Once per game, during your party exploits phase, move your party to any mission location on the map.");
-			curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
-			{Gains.Move_To_Any_Mission_Chip, 1}
-		});
-			curPerk.SetTimes(new List<Times>(){
-			Times.During_Party_Exploits_Phase
-		});
-			curPerk.SetUses(new List<Uses>(){
-			Uses.Once_Per_Game
-		});
+		//	curPerk.SetConditionalGains(new Dictionary<Gains, int>(){
+		//	{Gains.Move_To_Any_Mission_Chip, 1}
+		//});
+		//	curPerk.SetTimes(new List<Times>(){
+		//	Times.During_Party_Exploits_Phase
+		//});
+		//	curPerk.SetUses(new List<Uses>(){
+		//	Uses.Once_Per_Game
+		//});
 			curFac.AddPerk(curPerk);
 			lore = "After 9/11 and the ensuing \"war on terror\", Emporium, Pennsylvania found itself the thirteenth site of the U.S. government’s top-secret Sigma Series program. Fearing " +
 				"a catastrophe loomed on the horizon, these new state-of-the-art bunkers were designed to survive a nuclear war, biological catastrophe, or extinction level event. A vast " +

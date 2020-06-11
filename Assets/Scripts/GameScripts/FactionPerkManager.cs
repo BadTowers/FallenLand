@@ -3,17 +3,17 @@ using UnityEngine;
 
 namespace FallenLand
 {
-    public class TownTechManager
+    public class FactionPerkManager
     {
         public static void HandlePhase(GameManager gameManager)
         {
             List<Player> players = gameManager.GetPlayers();
             int myIndex = gameManager.GetIndexForMyPlayer();
 
-            List<TownTech> townTechs = players[myIndex].GetTownTechs();
-            for (int i = 0; i < townTechs.Count; i++)
+            List<Perk> perks = players[myIndex].GetPlayerFaction().GetPerks();
+            for (int i = 0; i < perks.Count; i++)
             {
-                ConditionalGain conditionalGain = townTechs[i].GetConditionalGain();
+                ConditionalGain conditionalGain = perks[i].GetConditionalGain();
                 ConditionalGainHelpers.HandleConditionalGain(gameManager, conditionalGain);
             }
         }
