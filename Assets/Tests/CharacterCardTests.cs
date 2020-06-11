@@ -99,5 +99,39 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestFirstStrike()
+		{
+			Assert.IsFalse(CharacterCardInstance.GetHasFirstStrike());
+			CharacterCardInstance.SetHasFirstStrike(true);
+			Assert.IsTrue(CharacterCardInstance.GetHasFirstStrike());
+			CharacterCardInstance.SetHasFirstStrike(false);
+			Assert.IsFalse(CharacterCardInstance.GetHasFirstStrike());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestIsMaster()
+		{
+			Assert.IsFalse(CharacterCardInstance.GetIsMaster());
+			CharacterCardInstance.SetIsMaster(true);
+			Assert.IsTrue(CharacterCardInstance.GetIsMaster());
+			CharacterCardInstance.SetIsMaster(false);
+			Assert.IsFalse(CharacterCardInstance.GetIsMaster());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestLink()
+		{
+			Assert.IsNull(CharacterCardInstance.GetLink());
+			CharacterCardInstance.SetLink(new ConditionalGain());
+			Assert.IsNotNull(CharacterCardInstance.GetLink());
+
+			yield return null;
+		}
 	}
 }

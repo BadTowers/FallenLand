@@ -550,7 +550,7 @@ namespace FallenLand
 			}
 		}
 
-        public void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
+        public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
 			bool found = false;
 			for (int i = 0; i < SpoilsDeck.Count; i++)
@@ -565,7 +565,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.LogError("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
 			}
         }
 		#endregion

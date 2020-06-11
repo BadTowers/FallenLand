@@ -26,7 +26,7 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestDefaultActionCards()
 		{
-			const int EXPECTED_NUM_DEFAULT_ACTION_CARDS = 80;
+			const int EXPECTED_NUM_DEFAULT_ACTION_CARDS = 22;
 			Assert.AreEqual(EXPECTED_NUM_DEFAULT_ACTION_CARDS, ActionCards.Count);
 
 			yield return null;
