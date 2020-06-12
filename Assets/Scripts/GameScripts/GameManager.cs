@@ -570,6 +570,8 @@ namespace FallenLand
         }
 		#endregion
 
+
+
 		#region HelperFunctions
 		private void extractGameModeFromGameCreationObject(GameObject newGameState)
 		{
@@ -668,8 +670,6 @@ namespace FallenLand
 		 *      Give the GameUIManager the list of player IDs
 		 *      Inform the GameUIManager which player it is
 		 *          The GameManger knows this from the list of IPs, which map to their IDs
-		 *      For local multiplayer, this would rotate out between the human players
-		 *          GameManager could inform the GameUIManager when the current player changes
 		 *      For internet multiplayer, this would be told to the GameUIManager upon initialization
 		 *          This would then never change throughout the game since each PC connected would be one player
 		 *
