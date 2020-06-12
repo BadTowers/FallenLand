@@ -16,6 +16,7 @@ namespace FallenLand
     {
         Photon.Realtime.Player Sender;
         private bool _MovedToNextPlayerAlready = false;
+        private int CurrentFirstPlayerIndex;
 
         public int Turn
         {
@@ -79,7 +80,8 @@ namespace FallenLand
 
         void Start()
         {
-            CurrentPlayer = PhotonNetwork.PlayerList[0];
+            CurrentFirstPlayerIndex = 0;
+            CurrentPlayer = PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
         }
 
 
@@ -92,7 +94,8 @@ namespace FallenLand
         public void BeginNextTurn()
         {
             Debug.Log("TurnManager: BeginNextTurn");
-            CurrentPlayer = PhotonNetwork.PlayerList[0]; //TODO change this to be the next player (since first player rotates). For now just always makes master first
+            CurrentFirstPlayerIndex = (CurrentFirstPlayerIndex + 1) % PhotonNetwork.PlayerList.Length;
+            CurrentPlayer = PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
             _MovedToNextPlayerAlready = true;
             Turn++;
         }
@@ -107,7 +110,7 @@ namespace FallenLand
             }
             else
             {
-                CurrentPlayer = PhotonNetwork.PlayerList[0]; //TODO change this to be the current first player. For now just always makes master first
+                CurrentPlayer = PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
                 _MovedToNextPlayerAlready = true;
                 Phase++;
             }
