@@ -193,6 +193,18 @@ namespace FallenLand
 			updateVehicleSlotTotals();
 		}
 
+		public void RemoveOwnedResource(Coordinates coord)
+		{
+			for (int i = 0; i < OwnedResourceLocations.Count; i++)
+			{
+                if (OwnedResourceLocations[i].GetX() == coord.GetX() && OwnedResourceLocations[i].GetY() == coord.GetY())
+                {
+					OwnedResourceLocations.RemoveAt(i);
+					break;
+				}
+			}
+		}
+
 		public void AddOwnedResource(Coordinates coord)
 		{
 			if (coord != null)
