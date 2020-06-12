@@ -460,5 +460,20 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestOwnedResources()
+		{
+			Coordinates loc1 = new Coordinates(1, 2);
+
+			Assert.IsNotNull(HumanPlayerInstance.GetOwnedResources());
+			Assert.AreEqual(0, HumanPlayerInstance.GetOwnedResources().Count);
+
+			HumanPlayerInstance.AddOwnedResource(loc1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetOwnedResources().Count);
+			Assert.AreEqual(loc1, HumanPlayerInstance.GetOwnedResources()[0]);
+
+			yield return null;
+		}
 	}
 }

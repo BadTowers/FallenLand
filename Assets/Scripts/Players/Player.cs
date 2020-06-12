@@ -17,6 +17,7 @@ namespace FallenLand
 		private List<int> ActiveCharacterCarryWeights;
 	    private Dictionary<Skills, int> ActiveVehicleTotalStats;
 		private int ActiveVehicleCarryWeight;
+		private List<Coordinates> OwnedResourceLocations;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -35,48 +36,6 @@ namespace FallenLand
 			ActiveVehicleCarryWeight = 0;
 			initLists();
 			extractTownTechsFromFaction();
-		}
-
-		public void AddSpoilsCardToAuctionHouse(SpoilsCard spoilsCard)
-		{
-			if (spoilsCard != null)
-			{
-				AuctionHouse.Add(spoilsCard);
-			}
-		}
-
-		public void AddCharacterCardToTownRoster(CharacterCard characterCard)
-		{
-			if (characterCard != null)
-			{
-				TownRoster.Add(characterCard);
-			}
-		}
-
-		public void AddActionCardToHand(ActionCard actionCard)
-		{
-			if (actionCard != null)
-			{
-				ActionCardsInHand.Add(actionCard);
-			}
-		}
-
-		public void AddVehicleToParty(SpoilsCard vehicleCard)
-		{
-			if (vehicleCard != null && Vehicle == null && vehicleCard.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
-			{
-				Vehicle = vehicleCard;
-				updateVehicleSlotTotals();
-			}
-		}
-
-		public void AddStowableToActiveVehicle(SpoilsCard stowableCard)
-		{
-			if (stowableCard != null && Vehicle != null && stowableCard.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
-			{
-				Vehicle.AttachSpoilsCard(stowableCard);
-				updateVehicleSlotTotals();
-			}
 		}
 
 		public List<SpoilsCard> GetAuctionHouseCards()
@@ -111,26 +70,6 @@ namespace FallenLand
 		public int GetSalvageAmount()
 		{
 			return AmountOfSalvage;
-		}
-
-		public void AddSalvageToPlayer(int salvageToAdd)
-		{
-			if (salvageToAdd > 0)
-			{
-				AmountOfSalvage += salvageToAdd;
-			}
-		}
-
-		public void RemoveSalvageFromPlayer(int salvageToRemove)
-		{
-			if (salvageToRemove > 0)
-			{
-				AmountOfSalvage -= salvageToRemove;
-			}
-			if (AmountOfSalvage < 0)
-			{
-				AmountOfSalvage = 0;
-			}
 		}
 
 		public List<TownTech> GetTownTechs()
@@ -191,11 +130,20 @@ namespace FallenLand
 			return ActiveVehicleCarryWeight;
 		}
 
-		public void AddTownTech(TownTech techToAdd)
+		public List<Coordinates> GetOwnedResources()
 		{
-			if (techToAdd != null)
+			return OwnedResourceLocations;
+		}
+
+		public void RemoveSalvageFromPlayer(int salvageToRemove)
+		{
+			if (salvageToRemove > 0)
 			{
-				TownTechs.Add(techToAdd);
+				AmountOfSalvage -= salvageToRemove;
+			}
+			if (AmountOfSalvage < 0)
+			{
+				AmountOfSalvage = 0;
 			}
 		}
 
@@ -243,6 +191,72 @@ namespace FallenLand
 		{
 			Vehicle = null;
 			updateVehicleSlotTotals();
+		}
+
+		public void AddOwnedResource(Coordinates coord)
+		{
+			if (coord != null)
+			{
+				OwnedResourceLocations.Add(coord);
+			}
+		}
+
+		public void AddSalvageToPlayer(int salvageToAdd)
+		{
+			if (salvageToAdd > 0)
+			{
+				AmountOfSalvage += salvageToAdd;
+			}
+		}
+
+		public void AddSpoilsCardToAuctionHouse(SpoilsCard spoilsCard)
+		{
+			if (spoilsCard != null)
+			{
+				AuctionHouse.Add(spoilsCard);
+			}
+		}
+
+		public void AddCharacterCardToTownRoster(CharacterCard characterCard)
+		{
+			if (characterCard != null)
+			{
+				TownRoster.Add(characterCard);
+			}
+		}
+
+		public void AddActionCardToHand(ActionCard actionCard)
+		{
+			if (actionCard != null)
+			{
+				ActionCardsInHand.Add(actionCard);
+			}
+		}
+
+		public void AddVehicleToParty(SpoilsCard vehicleCard)
+		{
+			if (vehicleCard != null && Vehicle == null && vehicleCard.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
+			{
+				Vehicle = vehicleCard;
+				updateVehicleSlotTotals();
+			}
+		}
+
+		public void AddStowableToActiveVehicle(SpoilsCard stowableCard)
+		{
+			if (stowableCard != null && Vehicle != null && stowableCard.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
+			{
+				Vehicle.AttachSpoilsCard(stowableCard);
+				updateVehicleSlotTotals();
+			}
+		}
+
+		public void AddTownTech(TownTech techToAdd)
+		{
+			if (techToAdd != null)
+			{
+				TownTechs.Add(techToAdd);
+			}
 		}
 
 		public void AddCharacterToParty(int characterIndex, CharacterCard character)
@@ -312,6 +326,7 @@ namespace FallenLand
 			ActiveCharacters = new List<CharacterCard>();
 			TownTechs = new List<TownTech>();
 			ActiveCharacterCarryWeights = new List<int>();
+			OwnedResourceLocations = new List<Coordinates>();
 
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
