@@ -74,7 +74,7 @@ namespace FallenLand
 
         public static bool IsAsyncPhase(Phases phase)
         {
-			return phase == Phases.Town_Business_Auction_House;
+			return phase == Phases.Town_Business_Auction_House || phase == Phases.Game_Start_Setup;
 
 		}
 	}
