@@ -158,30 +158,31 @@ namespace FallenLand
 		{
 			bool techsHandled = false;
 			CurrentPhase = phase;
+
 			//Auto phases that require no user input
 			switch (phase)
             {
 				case Phases.Effects_Resolve_Subphase:
 					Debug.Log("Resolve effects and move on!");
 					//TODO
-					TurnManager.BeginNextPhase();
+					EndPhase(GetIndexForMyPlayer());
 					break;
 				case Phases.Town_Business_Deal:
 					Debug.Log("Deal action cards!");
 					townBusinessPhase_DealSubphase();
 					TownTechManager.HandlePhase(this);
 					techsHandled = true;
-					TurnManager.BeginNextPhase();
+					EndPhase(GetIndexForMyPlayer());
 					break;
 				case Phases.End_Turn_Adjust_Turn_Marker:
 					Debug.Log("Move turn marker chip!");
 					//TODO
-					TurnManager.BeginNextPhase();
+					EndPhase(GetIndexForMyPlayer());
 					break;
 				case Phases.End_Turn_Pass_First_Player:
 					Debug.Log("Next player becomes first player!");
 					//TODO
-					TurnManager.BeginNextPhase();
+					EndPhase(GetIndexForMyPlayer());
 					break;
 				default:
 					break;
