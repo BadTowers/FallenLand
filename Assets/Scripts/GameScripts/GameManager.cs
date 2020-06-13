@@ -58,20 +58,12 @@ namespace FallenLand
 
 				//Figure out our user ID
 				Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
-				Photon.Realtime.Player[] allPlayersButMe = PhotonNetwork.PlayerListOthers;
 				for (int i = 0; i < allPlayers.Length; i++)
 				{
-					bool found = false;
-					for (int j = 0; j < allPlayersButMe.Length; j++)
-					{
-						if (allPlayers[i].UserId == allPlayersButMe[j].UserId)
-						{
-							found = true;
-						}
-					}
-					if (!found)
-					{
+                    if (allPlayers[i].IsLocal)
+                    {
 						MyUserId = allPlayers[i].UserId;
+						break;
 					}
 				}
 				if (MyUserId == "")
@@ -209,9 +201,7 @@ namespace FallenLand
 		{
             if (TurnManager.IsPhaseCompletedByAll)
             {
-				//Go to next phase
 				TurnManager.BeginNextPhase();
-
 			}
 		}
 		#endregion
