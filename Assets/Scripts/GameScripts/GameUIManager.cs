@@ -9,6 +9,7 @@ namespace FallenLand
         public enum GameMenuStates { Pause, Options, Resume, Save };
         public GameObject GameManagerGameObject;
         public GameObject ImageGameObject;
+        public GameObject ImageNoDragGameObject;
         public GameObject gameCamera;
 
         private bool EscapePressed;
@@ -19,6 +20,8 @@ namespace FallenLand
         private GameObject AuctionHouseScrollContent;
         private GameObject TownRosterScrollContent;
         private GameObject VehicleSlotScrollContent;
+        private GameObject ActionCardsScreen;
+        private GameObject ActionCardsScrollContent;
         private List<GameObject> ActiveCharactersScrollContent;
         private List<List<GameObject>> ActiveCharactersStatsText;
         private List<GameObject> ActiveCharactersCarryWeightsText;
@@ -45,6 +48,7 @@ namespace FallenLand
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             PauseMenu = GameObject.Find("PauseMenu");
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
+            ActionCardsScreen = GameObject.Find("ActionCardsPanel");
             DebugOverlay = GameObject.Find("DebugOverlay");
             MainOverlay = GameObject.Find("MainOverlay");
 
@@ -52,6 +56,7 @@ namespace FallenLand
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
+            ActionCardsScrollContent = GameObject.Find("ActionCardsScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
@@ -106,6 +111,7 @@ namespace FallenLand
             PauseMenu.SetActive(false);
             DebugOverlay.SetActive(false);
             MainOverlay.SetActive(false);
+            ActionCardsScreen.SetActive(true);
             CharacterAndSpoilsScreen.SetActive(true);
         }
 
@@ -201,9 +207,23 @@ namespace FallenLand
             redrawCharacterSpoilsScreen();
         }
 
+        public void OnOpenActionCardsScreenPress()
+        {
+            ActionCardsScreen.SetActive(true);
+            MainOverlay.SetActive(false);
+            redrawActionCardsScreen(true);
+        }
+
         public void OnDoneInCharacterAndSpoilsScreenPress()
         {
             CharacterAndSpoilsScreen.SetActive(false);
+            ActionCardsScreen.SetActive(false);
+            MainOverlay.SetActive(true);
+        }
+
+        public void OnDoneInActionCardsScreenPress()
+        {
+            ActionCardsScreen.SetActive(false);
             MainOverlay.SetActive(true);
         }
 
@@ -325,6 +345,42 @@ namespace FallenLand
             updateAuctionHouseUi(true);
             updateCharacterPanels(true);
             updateVehiclePanel(true);
+        }
+
+        private void redrawActionCardsScreen(bool forceRedraw)
+        {
+            const float OFFSET_X = 200;
+            const float OFFSET_Y = 300;
+            int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            List<ActionCard> actionHand = GameManagerInstance.GetActionCards(playerIndex);
+            if ((ActionCardsScrollContent.transform.childCount < actionHand.Count || forceRedraw) && !CardIsDragging)
+            {
+                //Clear old
+                foreach (Transform child in ActionCardsScrollContent.transform)
+                {
+                    Debug.Log("Deleting old action cards");
+                    GameObject.Destroy(child.gameObject);
+                }
+
+                //Add new
+                for (int i = 0; i < actionHand.Count; i++)
+                {
+                    GameObject imageObj = Instantiate(ImageNoDragGameObject) as GameObject;
+                    Image image = imageObj.GetComponent<Image>();
+                    string fileName = "Cards/ActionCards/ActionCard" + actionHand[i].GetId().ToString();
+                    Sprite curSprite = Resources.Load<Sprite>(fileName);
+                    image.sprite = curSprite;
+                    imageObj.name = "ActionCard" + actionHand[i].GetId().ToString();
+                    image.transform.SetParent(ActionCardsScrollContent.transform);
+                    image.transform.localPosition = new Vector3(150f + (i % 5 * OFFSET_X), -200f - (i / 5 * OFFSET_Y), 0f);
+                    image.transform.localScale = new Vector3(1f, 1f, 1f);
+                    image.rectTransform.sizeDelta = new Vector2(180, 280);
+                    image.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+                    imageObj.GetComponentInChildren<MonoCard>().CardPtr = actionHand[i];
+                }
+            }
         }
 
         private void updateStoredCharacterAndSpoilsData(Image cardImage, GameObject panelMovingInto)
