@@ -651,7 +651,7 @@ namespace FallenLand
 				for (int j = 0; j < Players.Count; j++)
 				{
 					Players[j].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-					Debug.Log("Dealt card " + SpoilsDeck[0].GetTitle());
+					Debug.Log("Dealt spoils card " + SpoilsDeck[0].GetTitle());
 					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
 					{
 						object content = SpoilsDeck[0];
@@ -672,7 +672,7 @@ namespace FallenLand
 				for (int j = 0; j < Players.Count; j++)
 				{
 					Players[j].AddCharacterCardToTownRoster(CharacterDeck[0]);
-					Debug.Log("Dealt card " + CharacterDeck[0].GetTitle());
+					Debug.Log("Dealt character card " + CharacterDeck[0].GetTitle());
 					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
 					{
 						object content = CharacterDeck[0];
@@ -692,7 +692,7 @@ namespace FallenLand
 				for (int j = 0; j < Players.Count; j++)
 				{
 					Players[j].AddActionCardToHand(ActionDeck[0]);
-					Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
+					Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
 					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
 					{
 						object content = ActionDeck[0];
