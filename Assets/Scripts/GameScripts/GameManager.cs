@@ -91,7 +91,7 @@ namespace FallenLand
 					if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
 					{
 						object content = new FactionNetworking(factionName, playerIndex);
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[playerIndex].ActorNumber } };
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 						SendOptions sendOptions = new SendOptions { Reliability = true };
 						PhotonNetwork.RaiseEvent(Constants.EvSendFactionInformation, content, raiseEventOptions, sendOptions);
 					}
@@ -241,7 +241,6 @@ namespace FallenLand
 
 			if (eventCode == Constants.EvDealCard)
 			{
-				Debug.Log("Got a card dealt to me!");
 				if (photonEvent.CustomData is SpoilsCard)
 				{
 					SpoilsCard data = (SpoilsCard)photonEvent.CustomData;
