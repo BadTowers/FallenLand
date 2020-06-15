@@ -133,5 +133,15 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestSerializeAndDeserialize()
+		{
+			byte[] byteArray = CharacterCard.SerializeCharacterCard(CharacterCardInstance);
+			CharacterCard newCharacterCard = (CharacterCard)CharacterCard.DeserializeCharacterCard(byteArray);
+			Assert.AreEqual(newCharacterCard.GetTitle(), CharacterCardInstance.GetTitle());
+
+			yield return null;
+		}
 	}
 }

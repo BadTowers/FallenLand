@@ -86,7 +86,6 @@ namespace FallenLand
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("Mouse stopped hovering");
             if (!IsDragging && IsClicked)
             {
                 makeSmall();

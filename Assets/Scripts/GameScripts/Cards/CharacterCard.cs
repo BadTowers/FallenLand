@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace FallenLand
 {
@@ -20,6 +21,19 @@ namespace FallenLand
             EquippedSpoils = new List<SpoilsCard>();
             HasFirstStrike = false;
             IsMaster = false;
+        }
+
+        public static object DeserializeCharacterCard(byte[] data)
+        {
+            string str = Encoding.ASCII.GetString(data);
+            CharacterCard result = new CharacterCard(str);
+            return result;
+        }
+
+        public static byte[] SerializeCharacterCard(object customType)
+        {
+            CharacterCard characterCard = (CharacterCard)customType;
+            return Encoding.ASCII.GetBytes(characterCard.GetTitle());
         }
 
         public void SetMaxHp(int maxHp)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace FallenLand
 {
@@ -20,25 +21,24 @@ namespace FallenLand
 		private List<SpoilsCard> Attachments;
 		private bool PlaceOnTopOfDiscard;
 		private List<SpoilsCard> EquippedSpoils;
+		private bool IsStartingCard;
 
 		public SpoilsCard(string title) : base(title)
 		{
 			initVariables();
 		}
 
-		public SpoilsCard(string title, List<SpoilsTypes> types) : base(title)
+		public static object DeserializeSpoilsCard(byte[] data)
 		{
-			initVariables();
-			Types = types;
+			string str = Encoding.ASCII.GetString(data);
+			SpoilsCard result = new SpoilsCard(str);
+			return result;
 		}
 
-		public SpoilsCard(string title, params SpoilsTypes[] types) : base(title)
+		public static byte[] SerializeSpoilsCard(object customType)
 		{
-			initVariables();
-			foreach (SpoilsTypes item in types)
-			{
-				Types.Add(item);
-			}
+			SpoilsCard spoilsCard = (SpoilsCard)customType;
+			return Encoding.ASCII.GetBytes(spoilsCard.GetTitle());
 		}
 
 		public void SetSpoilsTypes(List<SpoilsTypes> types)
@@ -76,6 +76,16 @@ namespace FallenLand
 		public int GetSellValue()
 		{
 			return SellValue;
+		}
+
+		public void SetIsStartingCard(bool isStarting)
+		{
+			IsStartingCard = isStarting;
+		}
+
+		public bool GetIsStartingCard()
+		{
+			return IsStartingCard;
 		}
 
 		public void SetCarryWeight(int carryWeight)
@@ -399,6 +409,7 @@ namespace FallenLand
 			newCard.SetD6Options(this.D6Options);
 			newCard.SetD10Options(this.D10Options);
 			newCard.SetDiscardToTop(this.PlaceOnTopOfDiscard);
+			newCard.SetIsStartingCard(this.IsStartingCard);
 
 			return newCard;
 		}
@@ -422,6 +433,7 @@ namespace FallenLand
 			this.SetD6Options(cardToCopyFrom.D6Options);
 			this.SetD10Options(cardToCopyFrom.D10Options);
 			this.SetDiscardToTop(cardToCopyFrom.PlaceOnTopOfDiscard);
+			this.SetIsStartingCard(cardToCopyFrom.IsStartingCard);
 		}
 
 		private void initVariables()
@@ -443,6 +455,7 @@ namespace FallenLand
 			IsTemporary = false;
 			WhenTempGainsExpire = Times.Never;
 			PlaceOnTopOfDiscard = true; //all cards default to going on the top of the discard pile
+			IsStartingCard = false;
 		}
 	}
 }

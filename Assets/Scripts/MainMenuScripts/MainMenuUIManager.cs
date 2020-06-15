@@ -172,7 +172,6 @@ namespace FallenLand
 					updatePlayerList();
 					updatePing();
 					updateStartButton();
-					Debug.Log("Message resends: " + PhotonNetwork.ResentReliableCommands);
 					break;
 				default:
 					//Default will be to show the main menu in case of error
@@ -548,7 +547,6 @@ namespace FallenLand
 
 				gatherDataForNextScene();
 
-				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SendData(true);
 				PhotonNetwork.LoadLevel("GameScene");
 			}
 		}
@@ -863,7 +861,7 @@ namespace FallenLand
 		{
 			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
 			{
-				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().AddFaction(PhotonNetwork.PlayerList[i].UserId, (string)PhotonNetwork.PlayerList[i].CustomProperties["FactionName"]);
+				GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().AddFaction(i, (string)PhotonNetwork.PlayerList[i].CustomProperties["FactionName"]);
 			}
 
 			GameObject.Find("GameCreation").GetComponentInChildren<GameCreation>().SetMode(GameInformation.GameModes.NormalGame);

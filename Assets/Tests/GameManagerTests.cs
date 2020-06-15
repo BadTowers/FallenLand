@@ -161,9 +161,9 @@ namespace Tests
 			Assert.AreEqual(0, gameManager.GetTownRoster(-1).Count);
 
 			//Make sure we can extract out our faction
-			Dictionary<string, string> myFaction = new Dictionary<string, string>
+			Dictionary<int, string> myFaction = new Dictionary<int, string>
 			{
-				{ PhotonNetwork.PlayerList[0].UserId, new DefaultFactionInfo().GetDefaultFactionList()[1].GetName()}
+				{ MY_PLAYER_INDEX, new DefaultFactionInfo().GetDefaultFactionList()[1].GetName()}
 			};
 			GameCreationObject.GetComponent<GameCreation>().SetFactions(myFaction);
 			yield return null; //progress a frame so the update function runs

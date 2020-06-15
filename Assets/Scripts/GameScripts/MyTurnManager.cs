@@ -88,8 +88,6 @@ namespace FallenLand
         public IMyTurnManagerCallbacks TurnManagerListener;
         private readonly HashSet<Photon.Realtime.Player> FinishedPlayers = new HashSet<Photon.Realtime.Player>();
         public const byte TurnManagerEventOffset = 0;
-        public const byte EvMove = 1 + TurnManagerEventOffset;
-        public const byte EvFinalMove = 2 + TurnManagerEventOffset;
 
         public void BeginNextTurn()
         {
@@ -127,7 +125,7 @@ namespace FallenLand
                 { "Move", move }
                 };
 
-                byte evCode = (finished) ? EvFinalMove : EvMove;
+                byte evCode = (finished) ? Constants.EvFinalMove : Constants.EvMove;
                 PhotonNetwork.RaiseEvent(evCode, moveHt, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache }, SendOptions.SendReliable);
                 if (finished)
                 {
@@ -160,7 +158,7 @@ namespace FallenLand
                 
                 switch (eventCode)
                 {
-                    case EvMove:
+                    case Constants.EvMove:
                         {
                             Hashtable evTable = content as Hashtable;
                             Phases phase = (Phases)evTable["Phase"];
@@ -169,7 +167,7 @@ namespace FallenLand
 
                             break;
                         }
-                    case EvFinalMove:
+                    case Constants.EvFinalMove:
                         {
                             Hashtable evTable = content as Hashtable;
                             Phases phase = (Phases)evTable["Phase"];

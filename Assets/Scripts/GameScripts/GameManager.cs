@@ -1,10 +1,12 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
 {
-	public class GameManager : MonoBehaviour, IMyTurnManagerCallbacks
+	public class GameManager : MonoBehaviour, IMyTurnManagerCallbacks, IOnEventCallback
 	{
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
@@ -28,6 +30,7 @@ namespace FallenLand
 		private string MyUserId;
 		private GameObject NewGameState;
 		private bool GameIsSetUpAtStart;
+		private bool ReceivedMyFactionInformation;
 		private MyTurnManager TurnManager;
 		private Phases CurrentPhase;
 
@@ -35,16 +38,43 @@ namespace FallenLand
 		void Start()
 		{
 			MyUserId = "";
+			GameIsSetUpAtStart = false;
+			ReceivedMyFactionInformation = false;
 			TurnManager = this.gameObject.AddComponent<MyTurnManager>();
 			TurnManager.TurnManagerListener = this;
 			CurrentPhase = Phases.Game_Start_Setup;
+			NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
+			NumComputerPlayers = 0; //No computer players implemented for now. Will change when AI is added
+
+			registerPhotonCallbacks();
+
+			//Add placeholder players
+			for (int i = 0; i < NumHumanPlayers; i++)
+            {
+				Faction faction = new Faction("Dummy", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
+                Players.Add(new HumanPlayer(faction, StartingSalvage));
+            }
+
+            //Figure out our user ID
+            Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
+			for (int i = 0; i < allPlayers.Length; i++)
+			{
+				if (allPlayers[i].IsLocal)
+				{
+					MyUserId = allPlayers[i].UserId;
+					break;
+				}
+			}
+			if (MyUserId == "")
+			{
+				Debug.LogError("Didn't find user's id...");
+			}
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
 
-			if (NewGameState != null)
+			if (NewGameState != null && PhotonNetwork.IsMasterClient)
 			{
-				//Grab the game mode
 				extractGameModeFromGameCreationObject(NewGameState);
 
 				//Extract the Solo II difficulty if needed
@@ -52,35 +82,32 @@ namespace FallenLand
 				//	soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
 				//}
 
-				//Set the number of human and computer players
-				NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
-				NumComputerPlayers = 0; //No computer players implemented for now. Will change when AI is added
-
-				//Figure out our user ID
-				Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
-				for (int i = 0; i < allPlayers.Length; i++)
+				//Send the factions to the other players
+				Dictionary<int, string> factions = NewGameState.GetComponent<GameCreation>().GetFactions();
+				foreach (KeyValuePair<int, string> entry in factions)
 				{
-                    if (allPlayers[i].IsLocal)
-                    {
-						MyUserId = allPlayers[i].UserId;
-						break;
+					int playerIndex = entry.Key;
+					string factionName = entry.Value;
+					if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
+					{
+						object content = new FactionNetworking(factionName, playerIndex);
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[playerIndex].ActorNumber } };
+						SendOptions sendOptions = new SendOptions { Reliability = true };
+						PhotonNetwork.RaiseEvent(Constants.EvSendFactionInformation, content, raiseEventOptions, sendOptions);
 					}
+					DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
+					Faction faction = defaultFactionInfo.GetFactionFromName(factionName);
+					if (faction == null)
+					{
+						Debug.LogError("Faction info passed in was bad... We got " + factionName + " but couldn't find such a faction.");
+					}
+					Players[playerIndex] = new HumanPlayer(faction, StartingSalvage);
 				}
-				if (MyUserId == "")
-				{
-					Debug.LogError("Didn't find user's id...");
-				}
+				ReceivedMyFactionInformation = true;
 
 				//Interpret any modifiers
 				//TODO when these are implemented
 			}
-			else
-			{
-				//TODO handle this better probably. This is the case where I start debugging from the game scene rather than the main menu
-				Debug.LogError("Game info not received from game setup.");
-				Players.Add(new HumanPlayer(new DefaultFactionInfo().GetDefaultFactionList()[0], StartingSalvage));
-			}
-
 
 			//Create the map layout according to the game state that was passed in
 			GameObject mapCreationGO = GameObject.Find("Map");
@@ -112,30 +139,33 @@ namespace FallenLand
 
 		void Update()
 		{
-			if (NewGameState.GetComponent<GameCreation>().GetFactions().Count > 0 && !GameIsSetUpAtStart)
+            if (!GameIsSetUpAtStart && ReceivedMyFactionInformation)
 			{
-				Debug.Log("Factions have come through!");
-				for (int i = 0; i < NumHumanPlayers; i++)
-				{
-					string currentUserId = PhotonNetwork.PlayerList[i].UserId;
-					Faction faction = NewGameState.GetComponent<GameCreation>().GetFaction(currentUserId);
-					Players.Add(new HumanPlayer(faction, StartingSalvage));
-				}
-
 				FactionPerkManager.HandlePhase(this);
 
-				dealCardsToPlayers();
-
-				countTownTechsThatAreInUse();
+				if (PhotonNetwork.IsMasterClient)
+				{
+					dealCardsToPlayers();
+					countTownTechsThatAreInUse();
+					StartTurn();
+				}
 
 				GameIsSetUpAtStart = true;
+            }
+        }
 
-				StartTurn();
-			}
+		public void OnEnable()
+		{
+			PhotonNetwork.AddCallbackTarget(this);
 		}
-        #endregion
 
-        #region TurnManagerCallbacks
+		public void OnDisable()
+		{
+			PhotonNetwork.RemoveCallbackTarget(this);
+		}
+		#endregion
+
+		#region TurnManagerCallbacks
 		public void OnTurnBegins(int turn)
         {
 			Debug.Log("OnTurnBegins: " + turn);
@@ -202,6 +232,48 @@ namespace FallenLand
             if (TurnManager.IsPhaseCompletedByAll)
             {
 				TurnManager.BeginNextPhase();
+			}
+		}
+
+		public void OnEvent(EventData photonEvent)
+		{
+			byte eventCode = photonEvent.Code;
+
+			if (eventCode == Constants.EvDealCard)
+			{
+				Debug.Log("Got a card dealt to me!");
+				if (photonEvent.CustomData is SpoilsCard)
+				{
+					SpoilsCard data = (SpoilsCard)photonEvent.CustomData;
+					dealSpecificSpoilToPlayer(GetIndexForMyPlayer(), data.GetTitle());
+				}
+				else if (photonEvent.CustomData is CharacterCard)
+				{
+					CharacterCard data = (CharacterCard)photonEvent.CustomData;
+					dealSpecificCharacterToPlayer(GetIndexForMyPlayer(), data.GetTitle());
+				}
+				else if (photonEvent.CustomData is ActionCard)
+				{
+					ActionCard data = (ActionCard)photonEvent.CustomData;
+					dealSpecificActionCardToPlayer(GetIndexForMyPlayer(), data.GetTitle());
+				}
+			}
+			else if (eventCode == Constants.EvSendFactionInformation)
+			{
+				Debug.Log("Got faction info sent to me!");
+				FactionNetworking factionInfo = (FactionNetworking)photonEvent.CustomData;
+				DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
+				Faction faction = defaultFactionInfo.GetFactionFromName(factionInfo.GetFactionName());
+				if (faction == null)
+				{
+					Debug.LogError("OnEvent: Faction info passed in was bad... We got " + factionInfo.GetFactionName() + " but couldn't find such a faction.");
+				}
+				Players[factionInfo.GetPlayerIndex()] = new HumanPlayer(faction, StartingSalvage);
+
+				if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
+				{
+					ReceivedMyFactionInformation = true;
+				}
 			}
 		}
 		#endregion
@@ -543,6 +615,111 @@ namespace FallenLand
 
         public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
+			if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
+			{
+				object content = new SpoilsCard(cardName);
+				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[playerIndex].ActorNumber } };
+				SendOptions sendOptions = new SendOptions { Reliability = true };
+				PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
+			}
+
+			dealSpecificSpoilToPlayer(playerIndex, cardName);
+		}
+		#endregion
+
+
+
+		#region HelperFunctions
+		private void extractGameModeFromGameCreationObject(GameObject newGameState)
+		{
+			GameMode = newGameState.GetComponent<GameCreation>().GetMode();
+		}
+
+		private void dealCardsToPlayers()
+		{
+			Debug.Log("dealCardsToPlayers");
+			dealSpoilsCardsToPlayers();
+			dealCharacterCardsToPlayers();
+			dealActionCardsToPlayers();
+		}
+
+        public void dealSpoilsCardsToPlayers()
+		{
+			moveStartingCardsToTheEndOfTheDeck(); //Ensure we don't deal away someone's starting card
+			for (int i = 0; i < StartingSpoilsCards; i++)
+			{
+				for (int j = 0; j < Players.Count; j++)
+				{
+					Players[j].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+					Debug.Log("Dealt card " + SpoilsDeck[0].GetTitle());
+					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
+					{
+						object content = SpoilsDeck[0];
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[j].ActorNumber } };
+						SendOptions sendOptions = new SendOptions { Reliability = true };
+						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
+					}
+					SpoilsDeck.RemoveAt(0);
+				}
+			}
+			Card.ShuffleDeck(SpoilsDeck);
+		}
+
+		public void dealCharacterCardsToPlayers()
+		{
+			for (int i = 0; i < StartingCharacterCards; i++)
+			{
+				for (int j = 0; j < Players.Count; j++)
+				{
+					Players[j].AddCharacterCardToTownRoster(CharacterDeck[0]);
+					Debug.Log("Dealt card " + CharacterDeck[0].GetTitle());
+					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
+					{
+						object content = CharacterDeck[0];
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[j].ActorNumber } };
+						SendOptions sendOptions = new SendOptions { Reliability = true };
+						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
+					}
+					CharacterDeck.RemoveAt(0);
+				}
+			}
+		}
+
+		public void dealActionCardsToPlayers()
+		{
+			for (int i = 0; i < StartingActionCards; i++)
+			{
+				for (int j = 0; j < Players.Count; j++)
+				{
+					Players[j].AddActionCardToHand(ActionDeck[0]);
+					Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
+					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
+					{
+						object content = ActionDeck[0];
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[j].ActorNumber } };
+						SendOptions sendOptions = new SendOptions { Reliability = true };
+						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
+					}
+					ActionDeck.RemoveAt(0);
+				}
+			}
+		}
+
+		public void moveStartingCardsToTheEndOfTheDeck()
+		{
+			for (int i = 0; i < SpoilsDeck.Count; i++)
+			{
+				if (SpoilsDeck[i].GetIsStartingCard())
+				{
+					SpoilsCard card = SpoilsDeck[i];
+					SpoilsDeck.RemoveAt(i);
+					SpoilsDeck.Add(card);
+				}
+			}
+		}
+
+		public void dealSpecificSpoilToPlayer(int playerIndex, string cardName)
+		{
 			bool found = false;
 			for (int i = 0; i < SpoilsDeck.Count; i++)
 			{
@@ -558,46 +735,43 @@ namespace FallenLand
 			{
 				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
 			}
-        }
-		#endregion
-
-
-
-		#region HelperFunctions
-		private void extractGameModeFromGameCreationObject(GameObject newGameState)
-		{
-			GameMode = newGameState.GetComponent<GameCreation>().GetMode();
 		}
 
-		private void dealCardsToPlayers()
+		public void dealSpecificCharacterToPlayer(int playerIndex, string cardName)
 		{
-			Debug.Log("dealCardsToPlayers");
-			for (int i = 0; i < StartingSpoilsCards; i++)
+			bool found = false;
+			for (int i = 0; i < CharacterDeck.Count; i++)
 			{
-				for (int j = 0; j < Players.Count; j++)
+				if (CharacterDeck[i].GetTitle() == cardName)
 				{
-					Players[j].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]); //Add the first card to the next player's hand
-					Debug.Log("Dealt card " + SpoilsDeck[0].GetTitle());
-					SpoilsDeck.RemoveAt(0); //Remove that card from the deck of cards
+					Players[playerIndex].AddCharacterCardToTownRoster(CharacterDeck[i]);
+					CharacterDeck.RemoveAt(i);
+					found = true;
+					break;
 				}
 			}
-			for (int i = 0; i < StartingCharacterCards; i++)
+			if (!found)
 			{
-				for (int j = 0; j < Players.Count; j++)
+				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+			}
+		}
+
+		public void dealSpecificActionCardToPlayer(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < ActionDeck.Count; i++)
+			{
+				if (ActionDeck[i].GetTitle() == cardName)
 				{
-					Players[j].AddCharacterCardToTownRoster(CharacterDeck[0]);
-					Debug.Log("Dealt card " + CharacterDeck[0].GetTitle());
-					CharacterDeck.RemoveAt(0);
+					Players[playerIndex].AddActionCardToHand(ActionDeck[i]);
+					ActionDeck.RemoveAt(i);
+					found = true;
+					break;
 				}
 			}
-			for (int i = 0; i < StartingActionCards; i++)
+			if (!found)
 			{
-				for (int j = 0; j < Players.Count; j++)
-				{
-					Players[j].AddActionCardToHand(ActionDeck[0]);
-					Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
-					ActionDeck.RemoveAt(0);
-				}
+				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -624,20 +798,35 @@ namespace FallenLand
 			return playerIndex >= 0 && playerIndex < Players.Count;
 		}
 
+		private void registerPhotonCallbacks()
+		{
+			PhotonPeer.RegisterType(typeof(SpoilsCard), Constants.EvDealCard, SpoilsCard.SerializeSpoilsCard, SpoilsCard.DeserializeSpoilsCard);
+			PhotonPeer.RegisterType(typeof(FactionNetworking), Constants.EvSendFactionInformation, FactionNetworking.SerializeFaction, FactionNetworking.DeserializeFaction);
+			PhotonPeer.RegisterType(typeof(CharacterCard), Constants.SendCharacterCardEventRegistration, CharacterCard.SerializeCharacterCard, CharacterCard.DeserializeCharacterCard);
+			PhotonPeer.RegisterType(typeof(ActionCard), Constants.SendActionCardEventRegistration, ActionCard.SerializeActionCard, ActionCard.DeserializeActionCard);
+		}
+
 		private void townBusinessPhase_DealSubphase()
 		{
-			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			for (int i = 0; i < Players.Count; i++)
 			{
 				Players[i].AddActionCardToHand(ActionDeck[0]);
-				Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
+				Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
+				if (!PhotonNetwork.PlayerList[i].IsMasterClient)
+				{
+					object content = ActionDeck[0];
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[i].ActorNumber } };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
+				}
 				ActionDeck.RemoveAt(0);
 			}
-		}
-		#endregion
+        }
+        #endregion
 
 
 
-		/*
+        /*
 		 *
 		 * THOUGHTS ON GAME MANAGER AND GAME UI MANAGER INTERACTION
 		 *
@@ -665,5 +854,5 @@ namespace FallenLand
 		 *          This would then never change throughout the game since each PC connected would be one player
 		 *
 		 */
-	}
+    }
 }

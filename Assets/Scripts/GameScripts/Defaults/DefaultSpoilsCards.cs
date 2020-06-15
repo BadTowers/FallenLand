@@ -1763,6 +1763,7 @@ namespace FallenLand
 				true
 			);
 			/* No restrictions */
+			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2113,6 +2114,7 @@ namespace FallenLand
 			/* No statics */
 			/* No conditionals */
 			/* No restrictions */
+			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2202,6 +2204,7 @@ namespace FallenLand
 			/* No statics */
 			/* No conditionals */
 			/* No restrictions */
+			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2649,10 +2652,12 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(15);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 7},
-			{Skills.Survival, 1}
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 7},
+				{Skills.Survival, 1}
+			});
+			curCard.SetIsStartingCard(true);
 			/* No statics */
 			/* No conditionals */
 			/* No restrictions */
@@ -2720,6 +2725,7 @@ namespace FallenLand
 			/* No statics */
 			/* No conditionals */
 			/* No restrictions */
+			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -3589,6 +3595,7 @@ namespace FallenLand
 		});
 			/* No conditionals */
 			/* No restrictions */
+			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -3979,6 +3986,7 @@ namespace FallenLand
 		});
 			/* No conditionals */
 			/* No restrictions */
+			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);

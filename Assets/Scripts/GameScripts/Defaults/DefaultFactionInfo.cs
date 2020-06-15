@@ -5,7 +5,7 @@ namespace FallenLand
 {
 	public class DefaultFactionInfo
 	{
-		private List<Faction> Factions;
+		private readonly List<Faction> Factions;
 
 		public DefaultFactionInfo()
 		{
@@ -807,6 +807,20 @@ namespace FallenLand
 		public List<Faction> GetDefaultFactionList()
 		{
 			return Factions;
+		}
+
+		public Faction GetFactionFromName(string name)
+		{
+			Faction faction = null;
+			for (int i = 0; i < Factions.Count; i++)
+			{
+				if (Factions[i].GetName() == name)
+				{
+					faction = Factions[i];
+					break;
+				}
+			}
+			return faction;
 		}
 	}
 }

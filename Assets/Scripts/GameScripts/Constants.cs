@@ -17,5 +17,15 @@ namespace FallenLand
 				{ Skills.Survival, 0 },
 				{ Skills.Medical, 0 }
 			};
+
+		//Strictly used for callbacks
+		public const byte SendCharacterCardEventRegistration = 5;
+		public const byte SendActionCardEventRegistration = 6;
+
+		//Used for both callbacks and for event code
+		public const byte EvMove = 1;
+		public const byte EvFinalMove = 2;
+		public const byte EvDealCard = 3;
+		public const byte EvSendFactionInformation = 4;
 	}
 }

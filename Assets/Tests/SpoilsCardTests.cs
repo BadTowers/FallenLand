@@ -37,35 +37,6 @@ namespace Tests
 			Assert.IsNotNull(SpoilsCardInstance.GetD10Options());
 			Assert.IsNotNull(SpoilsCardInstance.GetAttachments());
 
-			SpoilsCard spoilsCardListConstructor = new SpoilsCard("list constructor", new List<SpoilsTypes>() { SpoilsTypes.Alcohol });
-			Assert.IsNotNull(spoilsCardListConstructor.GetSpoilsTypes());
-			Assert.AreEqual(1, spoilsCardListConstructor.GetSpoilsTypes().Count);
-			Assert.AreEqual(SpoilsTypes.Alcohol, spoilsCardListConstructor.GetSpoilsTypes()[0]);
-			Assert.IsNotNull(spoilsCardListConstructor.GetConditionalGains_dep());
-			Assert.IsNotNull(spoilsCardListConstructor.GetStaticGains());
-			Assert.IsNotNull(spoilsCardListConstructor.GetRestrictions());
-			Assert.IsNotNull(spoilsCardListConstructor.GetWhenUsable());
-			Assert.IsNotNull(spoilsCardListConstructor.GetNumberOfUses());
-			Assert.IsNotNull(spoilsCardListConstructor.GetDiscard());
-			Assert.IsNotNull(spoilsCardListConstructor.GetD6Options());
-			Assert.IsNotNull(spoilsCardListConstructor.GetD10Options());
-			Assert.IsNotNull(spoilsCardListConstructor.GetAttachments());
-
-			SpoilsCard spoilsCardParamConstructor = new SpoilsCard("param constructor", SpoilsTypes.Assault_Rifle, SpoilsTypes.Heavy_Weapon);
-			Assert.IsNotNull(spoilsCardParamConstructor.GetSpoilsTypes());
-			Assert.AreEqual(2, spoilsCardParamConstructor.GetSpoilsTypes().Count);
-			Assert.AreEqual(SpoilsTypes.Assault_Rifle, spoilsCardParamConstructor.GetSpoilsTypes()[0]);
-			Assert.AreEqual(SpoilsTypes.Heavy_Weapon, spoilsCardParamConstructor.GetSpoilsTypes()[1]);
-			Assert.IsNotNull(spoilsCardParamConstructor.GetConditionalGains_dep());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetStaticGains());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetRestrictions());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetWhenUsable());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetNumberOfUses());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetDiscard());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetD6Options());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetD10Options());
-			Assert.IsNotNull(spoilsCardParamConstructor.GetAttachments());
-
 			yield return null;
 		}
 
@@ -73,12 +44,6 @@ namespace Tests
 		public IEnumerator TestSpoilsCardTitle()
 		{
 			Assert.AreEqual("constructor spoils card title", SpoilsCardInstance.GetTitle());
-
-			SpoilsCard spoilsCardListConstructor = new SpoilsCard("list constructor", new List<SpoilsTypes>() { SpoilsTypes.Alcohol });
-			Assert.AreEqual("list constructor", spoilsCardListConstructor.GetTitle());
-
-			SpoilsCard spoilsCardParamConstructor = new SpoilsCard("param constructor", SpoilsTypes.Assault_Rifle, SpoilsTypes.Heavy_Weapon);
-			Assert.AreEqual("param constructor", spoilsCardParamConstructor.GetTitle());
 
 			yield return null;
 		}

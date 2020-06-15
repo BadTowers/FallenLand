@@ -45,5 +45,15 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestSerializeAndDeserialize()
+		{
+			byte[] byteArray = ActionCard.SerializeActionCard(ActionCardInstance);
+			ActionCard newActionCard = (ActionCard)ActionCard.DeserializeActionCard(byteArray);
+			Assert.AreEqual(newActionCard.GetTitle(), ActionCardInstance.GetTitle());
+
+			yield return null;
+		}
 	}
 }
