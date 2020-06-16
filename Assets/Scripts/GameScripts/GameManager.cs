@@ -88,13 +88,13 @@ namespace FallenLand
 				{
 					int playerIndex = entry.Key;
 					string factionName = entry.Value;
-					if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
-					{
-						object content = new FactionNetworking(factionName, playerIndex);
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-						SendOptions sendOptions = new SendOptions { Reliability = true };
-						PhotonNetwork.RaiseEvent(Constants.EvSendFactionInformation, content, raiseEventOptions, sendOptions);
-					}
+
+					//Send faction information to other players
+					object content = new FactionNetworking(factionName, playerIndex);
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvSendFactionInformation, content, raiseEventOptions, sendOptions);
+
 					DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
 					Faction faction = defaultFactionInfo.GetFactionFromName(factionName);
 					if (faction == null)
@@ -615,13 +615,10 @@ namespace FallenLand
 
         public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
-			if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
-			{
-				object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
-				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-				SendOptions sendOptions = new SendOptions { Reliability = true };
-				PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
-			}
+			object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+			SendOptions sendOptions = new SendOptions { Reliability = true };
+			PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 
 			dealSpecificSpoilToPlayer(playerIndex, cardName);
 		}
@@ -652,13 +649,10 @@ namespace FallenLand
 				{
 					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
 					Debug.Log("Dealt spoils card " + SpoilsDeck[0].GetTitle());
-					if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
-					{
-						object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-						SendOptions sendOptions = new SendOptions { Reliability = true };
-						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
-					}
+					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 					SpoilsDeck.RemoveAt(0);
 				}
 			}
@@ -673,13 +667,10 @@ namespace FallenLand
 				{
 					Players[j].AddCharacterCardToTownRoster(CharacterDeck[0]);
 					Debug.Log("Dealt character card " + CharacterDeck[0].GetTitle());
-					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
-					{
-						object content = new CardNetworking(CharacterDeck[0].GetTitle(), j, Constants.CHARACTER_CARD);
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-						SendOptions sendOptions = new SendOptions { Reliability = true };
-						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
-					}
+					object content = new CardNetworking(CharacterDeck[0].GetTitle(), j, Constants.CHARACTER_CARD);
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 					CharacterDeck.RemoveAt(0);
 				}
 			}
@@ -693,13 +684,10 @@ namespace FallenLand
 				{
 					Players[j].AddActionCardToHand(ActionDeck[0]);
 					Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
-					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
-					{
-						object content = new CardNetworking(ActionDeck[0].GetTitle(), j, Constants.ACTION_CARD);
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-						SendOptions sendOptions = new SendOptions { Reliability = true };
-						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
-					}
+					object content = new CardNetworking(ActionDeck[0].GetTitle(), j, Constants.ACTION_CARD);
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 					ActionDeck.RemoveAt(0);
 				}
 			}
@@ -810,13 +798,10 @@ namespace FallenLand
 			{
 				Players[i].AddActionCardToHand(ActionDeck[0]);
 				Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
-				if (!PhotonNetwork.PlayerList[i].IsMasterClient)
-				{
-					object content = ActionDeck[0];
-					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[i].ActorNumber } };
-					SendOptions sendOptions = new SendOptions { Reliability = true };
-					PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
-				}
+				object content = ActionDeck[0];
+				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+				SendOptions sendOptions = new SendOptions { Reliability = true };
+				PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 				ActionDeck.RemoveAt(0);
 			}
         }
