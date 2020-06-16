@@ -241,20 +241,21 @@ namespace FallenLand
 
 			if (eventCode == Constants.EvDealCard)
 			{
-				if (photonEvent.CustomData is SpoilsCard)
+				Debug.Log("Card we sent to me!");
+				CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
+				int playerIndex = cardInfo.GetPlayerIndex();
+				string cardName = cardInfo.GetCardName();
+                if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
+                {
+                    dealSpecificSpoilToPlayer(playerIndex, cardName);
+                }
+				else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
 				{
-					SpoilsCard data = (SpoilsCard)photonEvent.CustomData;
-					dealSpecificSpoilToPlayer(GetIndexForMyPlayer(), data.GetTitle());
+					dealSpecificCharacterToPlayer(playerIndex, cardName);
 				}
-				else if (photonEvent.CustomData is CharacterCard)
+				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
 				{
-					CharacterCard data = (CharacterCard)photonEvent.CustomData;
-					dealSpecificCharacterToPlayer(GetIndexForMyPlayer(), data.GetTitle());
-				}
-				else if (photonEvent.CustomData is ActionCard)
-				{
-					ActionCard data = (ActionCard)photonEvent.CustomData;
-					dealSpecificActionCardToPlayer(GetIndexForMyPlayer(), data.GetTitle());
+					dealSpecificActionCardToPlayer(playerIndex, cardName);
 				}
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
@@ -616,8 +617,8 @@ namespace FallenLand
         {
 			if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
 			{
-				object content = new SpoilsCard(cardName);
-				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[playerIndex].ActorNumber } };
+				object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
+				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 				SendOptions sendOptions = new SendOptions { Reliability = true };
 				PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 			}
@@ -647,14 +648,14 @@ namespace FallenLand
 			moveStartingCardsToTheEndOfTheDeck(); //Ensure we don't deal away someone's starting card
 			for (int i = 0; i < StartingSpoilsCards; i++)
 			{
-				for (int j = 0; j < Players.Count; j++)
+				for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
 				{
-					Players[j].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
+					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
 					Debug.Log("Dealt spoils card " + SpoilsDeck[0].GetTitle());
-					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
+					if (!PhotonNetwork.PlayerList[playerIndex].IsMasterClient)
 					{
-						object content = SpoilsDeck[0];
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[j].ActorNumber } };
+						object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 						SendOptions sendOptions = new SendOptions { Reliability = true };
 						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 					}
@@ -674,8 +675,8 @@ namespace FallenLand
 					Debug.Log("Dealt character card " + CharacterDeck[0].GetTitle());
 					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
 					{
-						object content = CharacterDeck[0];
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[j].ActorNumber } };
+						object content = new CardNetworking(CharacterDeck[0].GetTitle(), j, Constants.CHARACTER_CARD);
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 						SendOptions sendOptions = new SendOptions { Reliability = true };
 						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 					}
@@ -694,8 +695,8 @@ namespace FallenLand
 					Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
 					if (!PhotonNetwork.PlayerList[j].IsMasterClient)
 					{
-						object content = ActionDeck[0];
-						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { TargetActors = new int[] { PhotonNetwork.PlayerList[j].ActorNumber } };
+						object content = new CardNetworking(ActionDeck[0].GetTitle(), j, Constants.ACTION_CARD);
+						RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 						SendOptions sendOptions = new SendOptions { Reliability = true };
 						PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 					}
@@ -799,10 +800,8 @@ namespace FallenLand
 
 		private void registerPhotonCallbacks()
 		{
-			PhotonPeer.RegisterType(typeof(SpoilsCard), Constants.EvDealCard, SpoilsCard.SerializeSpoilsCard, SpoilsCard.DeserializeSpoilsCard);
+			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
 			PhotonPeer.RegisterType(typeof(FactionNetworking), Constants.EvSendFactionInformation, FactionNetworking.SerializeFaction, FactionNetworking.DeserializeFaction);
-			PhotonPeer.RegisterType(typeof(CharacterCard), Constants.SendCharacterCardEventRegistration, CharacterCard.SerializeCharacterCard, CharacterCard.DeserializeCharacterCard);
-			PhotonPeer.RegisterType(typeof(ActionCard), Constants.SendActionCardEventRegistration, ActionCard.SerializeActionCard, ActionCard.DeserializeActionCard);
 		}
 
 		private void townBusinessPhase_DealSubphase()
