@@ -1,3 +1,5 @@
+using Castle.Core.Internal;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +32,7 @@ namespace FallenLand
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
+        private List<GameObject> PlayerPanels;
         private Text ActualTurnNumberText;
         private Text ActualTurnPhaseText;
         private Button EndPhaseButton;
@@ -104,6 +107,12 @@ namespace FallenLand
 
             EndPhaseButton = GameObject.Find("EndPhaseButton").GetComponent<Button>();
             EndPhaseButton.interactable = false;
+
+            PlayerPanels = new List<GameObject>();
+            for (int i = 0; i < Constants.MAX_NUM_PLAYERS; i++)
+            {
+                PlayerPanels.Add(GameObject.Find("PlayerPanel" + (i + 1).ToString()));
+            }
         }
 
         void Start()
@@ -113,6 +122,15 @@ namespace FallenLand
             MainOverlay.SetActive(false);
             ActionCardsScreen.SetActive(true);
             CharacterAndSpoilsScreen.SetActive(true);
+
+            for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+            {
+                if (PhotonNetwork.PlayerList[i].IsLocal)
+                {
+                    CurrentViewedID = i;
+                    break;
+                }
+            }
         }
 
         void Update()
@@ -138,6 +156,8 @@ namespace FallenLand
             updateTurnInformation();
 
             updateEndPhaseButton();
+
+            updatePlayerPanels();
 
             EscapePressed = false;
         }
@@ -862,23 +882,32 @@ namespace FallenLand
                 GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId()) || 
                 PhasesHelpers.IsAsyncPhase(GameManagerInstance.GetPhase()));
         }
+
+        private void updatePlayerPanels()
+        {
+            int numPlayers = PhotonNetwork.PlayerList.Length;
+            for (int i = 0; i < Constants.MAX_NUM_PLAYERS; i++)
+            {
+                if (i < numPlayers && GameManagerInstance.GetFaction(i) != null)
+                {
+                    Debug.Log("Setting faction information for player " + i);
+                    PlayerPanels[i].SetActive(true);
+                    Color color = PlayerPanels[i].GetComponentInChildren<Image>().color;
+                    color.a = (i == CurrentViewedID) ? 150f/255f : 244f/255f;
+                    PlayerPanels[i].GetComponentInChildren<Image>().color = color;
+                    string factionPath = "Factions/FactionSymbols/FactionSymbol" + GameManagerInstance.GetFaction(i).GetId().ToString();
+                    Sprite factionSprite = Resources.Load<Sprite>(factionPath);
+                    PlayerPanels[i].transform.Find("FactionImage").GetComponentInChildren<Image>().sprite = factionSprite;
+                    PlayerPanels[i].transform.Find("PlayerNameText").GetComponentInChildren<Text>().text = PhotonNetwork.PlayerList[i].NickName;
+                    PlayerPanels[i].transform.Find("PrestigeActualText").GetComponentInChildren<Text>().text = "0";
+                    PlayerPanels[i].transform.Find("TownHealthActualText").GetComponentInChildren<Text>().text = "0";
+                }
+                else
+                {
+                    PlayerPanels[i].SetActive(false);
+                }
+            }
+        }
         #endregion
     }
 }
-
-
-//Code for displaying one card in one specific image GameObject
-/*
-//DEBUG THINGY TODO
-//Display cards
-Debug.Log(players[0].getActiveSpoilsCards().Count);
-//for(int i = 0; i < startingActionCards; i++) {
-	string fileName = "Cards/SpoilsCards/SpoilsCard" + players[0].getActiveSpoilsCard(0).getID().ToString(); //TODO don't hardcode to player[0]
-Debug.Log(fileName);
-Sprite curSprite = Resources.Load<Sprite>(fileName);
-if(curSprite == null) {
-	Debug.Log("null");
-}
-spoilsCard1.sprite = curSprite;
-//}
-*/
