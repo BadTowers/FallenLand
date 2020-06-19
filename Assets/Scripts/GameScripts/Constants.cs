@@ -35,6 +35,8 @@ namespace FallenLand
 		public const byte REMOVE_SPOILS_FROM_SLOT = 8;
 		public const byte ADD_SPOILS_TO_VEHICLE = 9;
 		public const byte REMOVE_SPOILS_FROM_VEHICLE = 10;
+		public const byte ADD_TO_TOWN_ROSTER = 11;
+		public const byte ADD_TO_AUCTION_HOUSE = 12;
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
