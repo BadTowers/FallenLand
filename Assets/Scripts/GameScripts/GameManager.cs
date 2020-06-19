@@ -466,6 +466,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_AUCTION_HOUSE, card.GetTitle());
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -474,7 +476,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle(), Constants.DONT_CARE);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -484,6 +486,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -492,6 +496,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveCharacterFromParty(characterSlotFoundIn);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_CHARACTER_FROM_SLOT, "", characterSlotFoundIn);
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -500,6 +506,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -508,6 +516,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveActiveVehicle();
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_VEHICLE, "");
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -516,6 +526,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -534,6 +546,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_AUCTION_HOUSE, card.GetTitle());
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -542,6 +556,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddCharacterCardToTownRoster(card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_TOWN_ROSTER, card.GetTitle());
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -550,6 +566,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddVehicleToParty(card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -558,6 +576,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddStowableToActiveVehicle(card);
+				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
+				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -788,6 +808,69 @@ namespace FallenLand
 			}
 		}
 
+		private void removeSpecificCardFromAuctionHouse(int playerIndex, string cardName)
+		{
+			bool found = false;
+			List<SpoilsCard> auctionHouse = GetAuctionHouse(playerIndex);
+			for (int i = 0; i < auctionHouse.Count; i++)
+			{
+				if (auctionHouse[i].GetTitle() == cardName)
+				{
+					SpoilsCard spoilsCard = auctionHouse[i];
+					Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(spoilsCard);
+					SpoilsDeck.Add(spoilsCard); //TODO something else with this later, like a temp holding place
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to remove specific spoils card " + cardName + " from player auction house, but it was not found");
+			}
+		}
+
+		private void removeSpecificSpoilsFromSlot(int playerIndex, int slotIndex, string cardName)
+		{
+			bool found = false;
+			List<SpoilsCard> equippedCards = Players[playerIndex].GetActiveCharacters()[slotIndex].GetEquippedSpoils();
+			for (int i = 0; i < equippedCards.Count; i++)
+			{
+				if (equippedCards[i].GetTitle() == cardName)
+				{
+					SpoilsCard spoilsCard = equippedCards[i];
+					Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(slotIndex, equippedCards[i]);
+					SpoilsDeck.Add(spoilsCard); //TODO don't add to the deck but rather some temp place
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to remove specific spoils " + cardName + " from player slot, but it was not found");
+			}
+		}
+
+		private void removeSpecificSpoilsFromVehicle(int playerIndex, string cardName)
+		{
+			bool found = false;
+			List<SpoilsCard> stowables = Players[playerIndex].GetActiveVehicle().GetEquippedSpoils();
+			for (int i = 0; i < stowables.Count; i++)
+			{
+				if (stowables[i].GetTitle() == cardName)
+				{
+					SpoilsCard stowable = stowables[i];
+					Players[playerIndex].RemoveStowableFromActiveVehicle(stowables[i]);
+					SpoilsDeck.Add(stowable); //TODO don't add to spoils deck. Store in temp location
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to remove specific spoils " + cardName + " from vehicle slot, but it was not found");
+			}
+		}
+
 		private void addSpecificCharacterToSlot(int playerIndex, int slotIndex, string cardName)
 		{
 			bool found = false;
@@ -806,6 +889,105 @@ namespace FallenLand
 				Debug.Log("Tried to add specific character " + cardName + " to player slot, but it was not found");
 			}
 		}
+
+		private void addSpecificSpoilsToSlot(int playerIndex, int slotIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < SpoilsDeck.Count; i++) //TODO don't grab from deck but some temp location (rework removeSpecificCardFromTownRoster)
+			{
+				if (SpoilsDeck[i].GetTitle() == cardName)
+				{
+					Players[playerIndex].AddSpoilsToCharacter(slotIndex, SpoilsDeck[i]);
+					SpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to add specific spoils " + cardName + " to player slot, but it was not found");
+			}
+		}
+
+		private void addSpecificSpoilsToVehicle(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < SpoilsDeck.Count; i++) //TODO don't grab from deck but some temp location
+			{
+				if (SpoilsDeck[i].GetTitle() == cardName)
+				{
+					Players[playerIndex].AddStowableToActiveVehicle(SpoilsDeck[i]);
+					SpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to add specific spoils " + cardName + " to vehicle slot, but it was not found");
+			}
+		}
+
+		private void addSpecificCardToTownRoster(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < CharacterDeck.Count; i++)
+			{
+				if (CharacterDeck[i].GetTitle() == cardName)
+				{
+					CharacterCard characterCard = CharacterDeck[i];
+					Players[playerIndex].AddCharacterCardToTownRoster(characterCard);
+					CharacterDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to add specific character card " + cardName + " to player town roster, but it was not found");
+			}
+		}
+
+        private void addSpecificCardToAuctionHouse(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < SpoilsDeck.Count; i++)
+			{
+				if (SpoilsDeck[i].GetTitle() == cardName)
+				{
+					SpoilsCard spoilsCard = SpoilsDeck[i];
+					Players[playerIndex].AddSpoilsCardToAuctionHouse(spoilsCard);
+					SpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to add specific spoils card " + cardName + " to player auction house, but it was not found");
+			}
+		}
+
+		private void addSpecificVehicleToParty(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < SpoilsDeck.Count; i++)
+			{
+				if (SpoilsDeck[i].GetTitle() == cardName)
+				{
+					SpoilsCard spoilsCard = SpoilsDeck[i];
+					Players[playerIndex].AddVehicleToParty(spoilsCard);
+					SpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to add specific vehicle card " + cardName + " to player party, but it was not found");
+			}
+		}
+
 
 		private void countTownTechsThatAreInUse()
 		{
@@ -854,46 +1036,59 @@ namespace FallenLand
 			}
 			string cardName = playerInfo.GetCardName();
 			int slotIndex = playerInfo.GetSlotIndex();
-			if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_TOWN_ROSTER)
-			{
-				removeSpecificCardFromTownRoster(playerIndex, cardName);
+            if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_TOWN_ROSTER)
+            {
+                removeSpecificCardFromTownRoster(playerIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_AUCTION_HOUSE)
+            {
+				removeSpecificCardFromAuctionHouse(playerIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.ADD_CHARACTER_TO_SLOT)
+            {
+                addSpecificCharacterToSlot(playerIndex, slotIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.REMOVE_CHARACTER_FROM_SLOT)
+            {
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[slotIndex];
+				Players[playerIndex].RemoveCharacterFromParty(slotIndex);
+				CharacterDeck.Add(character); //TODO don't add to character deck
 			}
-			else if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_AUCTION_HOUSE)
-			{
-				//TODO
+            else if (playerInfo.GetActionByte() == Constants.ADD_VEHICLE)
+            {
+				addSpecificVehicleToParty(playerIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
+            {
+				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
+				Players[playerIndex].RemoveActiveVehicle();
+				SpoilsDeck.Add(vehicle); //TODO don't add to spoils deck
 			}
-			else if (playerInfo.GetActionByte() == Constants.ADD_CHARACTER_TO_SLOT)
-			{
-				addSpecificCharacterToSlot(playerIndex, slotIndex, cardName);
+            else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_SLOT)
+            {
+				addSpecificSpoilsToSlot(playerIndex, slotIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_SLOT)
+            {
+				removeSpecificSpoilsFromSlot(playerIndex, slotIndex, cardName);
 			}
-			else if (playerInfo.GetActionByte() == Constants.REMOVE_CHARACTER_FROM_SLOT)
-			{
-				//TODO
+            else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_VEHICLE)
+            {
+				addSpecificSpoilsToVehicle(playerIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_VEHICLE)
+            {
+				removeSpecificSpoilsFromVehicle(playerIndex, cardName);
+            }
+            else if (playerInfo.GetActionByte() == Constants.ADD_TO_TOWN_ROSTER)
+            {
+				addSpecificCardToTownRoster(playerIndex, cardName);
 			}
-			else if (playerInfo.GetActionByte() == Constants.ADD_VEHICLE)
-			{
-				//TODO
+			else if (playerInfo.GetActionByte() == Constants.ADD_TO_AUCTION_HOUSE)
+            {
+				addSpecificCardToAuctionHouse(playerIndex, cardName);
 			}
-			else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
-			{
-				//TODO
-			}
-			else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_SLOT)
-			{
-				//TODO
-			}
-			else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_SLOT)
-			{
-				//TODO
-			}
-			else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_VEHICLE)
-			{
-				//TODO
-			}
-			else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_VEHICLE)
-			{
-				//TODO
-			}
+
 			GameObject.Find("UIManager").GetComponent<GameUIManager>().ForceRedrawCharacterScreen();
 		}
 
