@@ -628,7 +628,7 @@ namespace FallenLand
                             GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
                             if (CurrentViewedID != playerIndex)
                             {
-                                Destroy(imageObj.GetComponent<CardMovementHandler>());
+                                Destroy(imageObj2.GetComponent<CardMovementHandler>());
                             }
                             Image image2 = imageObj2.GetComponent<Image>();
                             string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
@@ -651,7 +651,7 @@ namespace FallenLand
                     {
                         ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
                     }
-                    ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveCharacterCarryWeight(playerIndex, activeIndex).ToString();
+                    ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveCharacterCarryWeight(CurrentViewedID, activeIndex).ToString();
                 }
             }
         }
@@ -698,7 +698,7 @@ namespace FallenLand
                         GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
                         if (CurrentViewedID != playerIndex)
                         {
-                            Destroy(imageObj.GetComponent<CardMovementHandler>());
+                            Destroy(imageObj2.GetComponent<CardMovementHandler>());
                         }
                         Image image2 = imageObj2.GetComponent<Image>();
                         string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
@@ -716,12 +716,12 @@ namespace FallenLand
                 }
 
                 //Update stats
-                Dictionary<Skills, int> vehicleStats = GameManagerInstance.GetActiveVehicleStats(playerIndex);
+                Dictionary<Skills, int> vehicleStats = GameManagerInstance.GetActiveVehicleStats(CurrentViewedID);
                 foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                 {
                     ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = vehicleStats[skill].ToString();
                 }
-                ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleCarryWeight(playerIndex).ToString();
+                ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleCarryWeight(CurrentViewedID).ToString();
             }
         }
 
