@@ -18,6 +18,14 @@ namespace FallenLand
 			SlotIndex = slotIndex;
 		}
 
+		public PlayerNetworking(int playerIndex, byte actionByte, string cardName)
+		{
+			PlayerIndex = playerIndex;
+			ActionByte = actionByte;
+			CardName = cardName;
+			SlotIndex = Constants.DONT_CARE;
+		}
+
 		public static object DeserializePlayer(byte[] data)
 		{
 			int playerIndex = data[0];
