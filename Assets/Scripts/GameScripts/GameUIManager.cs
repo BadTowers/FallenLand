@@ -1,7 +1,8 @@
-using Castle.Core.Internal;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FallenLand
@@ -36,6 +37,7 @@ namespace FallenLand
         private Text ActualTurnNumberText;
         private Text ActualTurnPhaseText;
         private Button EndPhaseButton;
+        private Button ActionCardsButton;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
         private Phases CurrentPhase;
@@ -108,6 +110,8 @@ namespace FallenLand
             EndPhaseButton = GameObject.Find("EndPhaseButton").GetComponent<Button>();
             EndPhaseButton.interactable = false;
 
+            ActionCardsButton = GameObject.Find("ActionCardsButton").GetComponent<Button>();
+
             PlayerPanels = new List<GameObject>();
             for (int i = 0; i < Constants.MAX_NUM_PLAYERS; i++)
             {
@@ -151,6 +155,8 @@ namespace FallenLand
 
             updateDebugOverlay();
 
+            updateActionButton();
+
             updateCharacterSpoilsScreen();
 
             updateTurnInformation();
@@ -176,7 +182,7 @@ namespace FallenLand
 
         public void UpdateAfterCardWasMoved(Image cardImage, GameObject panelMovingInto)
         {
-            updateStoredCharacterAndSpoilsData(cardImage, panelMovingInto);
+            updateStoredVehicleCharacterAndSpoilsData(cardImage, panelMovingInto);
             redrawCharacterSpoilsScreen();
         }
 
@@ -193,6 +199,11 @@ namespace FallenLand
             }
 
             return isAllowed;
+        }
+
+        public void ForceRedrawCharacterScreen()
+        {
+            redrawCharacterSpoilsScreen();
         }
         #endregion
 
@@ -253,6 +264,14 @@ namespace FallenLand
             GameManagerInstance.EndPhase(myIndex);
             EndPhaseButton.interactable = false;
             EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting...";
+        }
+
+        public void OnPlayerPanelClicked()
+        {
+            string parentName = EventSystem.current.currentSelectedGameObject.transform.parent.name;
+            string panelNumberString = parentName.Substring(parentName.Length - 1);
+            int panelNumber = Int32.Parse(panelNumberString);
+            CurrentViewedID = panelNumber-1;
         }
         #endregion
 
@@ -357,6 +376,11 @@ namespace FallenLand
         {
             updateAuctionHouseUi(false);
             updateTownRosterUi(false);
+            if (CurrentViewedID != GameManagerInstance.GetIndexForMyPlayer())
+            {
+                updateCharacterPanels(false);
+                updateVehiclePanel(false);
+            }
         }
 
         private void redrawCharacterSpoilsScreen()
@@ -403,7 +427,7 @@ namespace FallenLand
             }
         }
 
-        private void updateStoredCharacterAndSpoilsData(Image cardImage, GameObject panelMovingInto)
+        private void updateStoredVehicleCharacterAndSpoilsData(Image cardImage, GameObject panelMovingInto)
         {
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
             List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
@@ -483,7 +507,7 @@ namespace FallenLand
             const float OFFSET_Y = 85;
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
-            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
+            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(CurrentViewedID);
             if ((AuctionHouseScrollContent.transform.childCount < auctionHouse.Count || forceRedraw) && !CardIsDragging)
             {
                 //Clear old
@@ -496,6 +520,10 @@ namespace FallenLand
                 for (int i = 0; i < auctionHouse.Count; i++)
                 {
                     GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    if (playerIndex != CurrentViewedID)
+                    {
+                        Destroy(imageObj.GetComponent<CardMovementHandler>());
+                    }
                     Image image = imageObj.GetComponent<Image>();
                     string fileName = "Cards/SpoilsCards/SpoilsCard" + auctionHouse[i].GetId().ToString();
                     Sprite curSprite = Resources.Load<Sprite>(fileName);
@@ -519,7 +547,16 @@ namespace FallenLand
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
             List<CharacterCard> townRoster = GameManagerInstance.GetTownRoster(playerIndex);
-            if ((TownRosterScrollContent.transform.childCount < townRoster.Count || forceRedraw) && !CardIsDragging)
+            if (playerIndex != CurrentViewedID)
+            {
+                //Clear old
+                foreach (Transform child in TownRosterScrollContent.transform)
+                {
+                    Debug.Log("Deleting old town roster cards");
+                    GameObject.Destroy(child.gameObject);
+                }
+            }
+            else if ((TownRosterScrollContent.transform.childCount < townRoster.Count || forceRedraw) && !CardIsDragging)
             {
                 //Clear old
                 foreach (Transform child in TownRosterScrollContent.transform)
@@ -553,7 +590,7 @@ namespace FallenLand
             const float OFFSET_Y = 24.5f;
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
-            List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(playerIndex);
+            List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
             for (int activeIndex = 0; activeIndex < activeCharacters.Count; activeIndex++)
             {
                 if ((ActiveCharactersScrollContent[activeIndex].transform.childCount < activeCharacters.Count || forceRedraw) && !CardIsDragging)
@@ -568,6 +605,10 @@ namespace FallenLand
                     {
                         //Add character back to slot
                         GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                        if (CurrentViewedID != playerIndex)
+                        {
+                            Destroy(imageObj.GetComponent<CardMovementHandler>());
+                        }
                         Image image = imageObj.GetComponent<Image>();
                         string fileName = "Cards/CharacterCards/CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
                         Sprite curSprite = Resources.Load<Sprite>(fileName);
@@ -585,6 +626,10 @@ namespace FallenLand
                         for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                         {
                             GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                            if (CurrentViewedID != playerIndex)
+                            {
+                                Destroy(imageObj.GetComponent<CardMovementHandler>());
+                            }
                             Image image2 = imageObj2.GetComponent<Image>();
                             string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
                             Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
@@ -601,7 +646,7 @@ namespace FallenLand
                     }
 
                     //Update stats
-                    Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(playerIndex, activeIndex);
+                    Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(CurrentViewedID, activeIndex);
                     foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                     {
                         ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
@@ -616,7 +661,7 @@ namespace FallenLand
             const float OFFSET_Y = 24.5f;
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
-            SpoilsCard activeVehicle = GameManagerInstance.GetActiveVehicle(playerIndex);
+            SpoilsCard activeVehicle = GameManagerInstance.GetActiveVehicle(CurrentViewedID);
             if (((activeVehicle != null && VehicleSlotScrollContent.transform.childCount < activeVehicle.GetEquippedSpoils().Count + 1) || forceRedraw) && !CardIsDragging)
             {
                 //Clear old
@@ -629,6 +674,10 @@ namespace FallenLand
                 {
                     //Add vehicle back to slot
                     GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    if (CurrentViewedID != playerIndex)
+                    {
+                        Destroy(imageObj.GetComponent<CardMovementHandler>());
+                    }
                     Image image = imageObj.GetComponent<Image>();
                     string fileName = "Cards/SpoilsCards/SpoilsCard" + activeVehicle.GetId().ToString();
                     Sprite curSprite = Resources.Load<Sprite>(fileName);
@@ -647,6 +696,10 @@ namespace FallenLand
                     for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                     {
                         GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                        if (CurrentViewedID != playerIndex)
+                        {
+                            Destroy(imageObj.GetComponent<CardMovementHandler>());
+                        }
                         Image image2 = imageObj2.GetComponent<Image>();
                         string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
                         Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
@@ -893,7 +946,7 @@ namespace FallenLand
                     Debug.Log("Setting faction information for player " + i);
                     PlayerPanels[i].SetActive(true);
                     Color color = PlayerPanels[i].GetComponentInChildren<Image>().color;
-                    color.a = (i == CurrentViewedID) ? 150f/255f : 244f/255f;
+                    color.a = (i == CurrentViewedID) ? 244f / 255f : 150f / 255f;
                     PlayerPanels[i].GetComponentInChildren<Image>().color = color;
                     string factionPath = "Factions/FactionSymbols/FactionSymbol" + GameManagerInstance.GetFaction(i).GetId().ToString();
                     Sprite factionSprite = Resources.Load<Sprite>(factionPath);
@@ -907,6 +960,11 @@ namespace FallenLand
                     PlayerPanels[i].SetActive(false);
                 }
             }
+        }
+
+        private void updateActionButton()
+        {
+            ActionCardsButton.interactable = (CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer());
         }
         #endregion
     }

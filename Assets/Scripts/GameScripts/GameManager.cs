@@ -245,17 +245,17 @@ namespace FallenLand
 				CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
 				int playerIndex = cardInfo.GetPlayerIndex();
 				string cardName = cardInfo.GetCardName();
-                if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
-                {
-                    dealSpecificSpoilToPlayer(playerIndex, cardName);
-                }
+				if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
+				{
+					dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
+				}
 				else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
 				{
-					dealSpecificCharacterToPlayer(playerIndex, cardName);
+					dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
 				}
 				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
 				{
-					dealSpecificActionCardToPlayer(playerIndex, cardName);
+					dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
 				}
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
@@ -274,6 +274,67 @@ namespace FallenLand
 				{
 					ReceivedMyFactionInformation = true;
 				}
+			}
+			else if (eventCode == Constants.EvSendPlayerInformation)
+			{
+				Debug.Log("Received updated player information");
+				PlayerNetworking playerInfo = (PlayerNetworking)photonEvent.CustomData;
+				int playerIndex = playerInfo.GetPlayerIndex();
+                if (playerIndex == GetIndexForMyPlayer())
+                {
+					return;
+				}
+				string cardName = playerInfo.GetCardName();
+				int slotIndex = playerInfo.GetSlotIndex();
+				if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_TOWN_ROSTER)
+				{
+					removeSpecificCardFromTownRoster(playerIndex, cardName);
+				}
+				else if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_AUCTION_HOUSE)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.ADD_CHARACTER_TO_SLOT)
+				{
+					addSpecificCharacterToSlot(playerIndex, slotIndex, cardName);
+				}
+				else if (playerInfo.GetActionByte() == Constants.REMOVE_CHARACTER_FROM_SLOT)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.ADD_VEHICLE)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_SLOT)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_SLOT)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_VEHICLE)
+				{
+					//TODO
+				}
+				else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_VEHICLE)
+				{
+					//TODO
+				}
+				GameObject.Find("UIManager").GetComponent<GameUIManager>().ForceRedrawCharacterScreen();
+			}
+			else if (eventCode == Constants.EvRequestUpdateToPlayerInformation)
+			{
+				Debug.Log("Got a request to update player information");
+				object playerInfo = photonEvent.CustomData;
+				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+				SendOptions sendOptions = new SendOptions { Reliability = true };
+				PhotonNetwork.RaiseEvent(Constants.EvSendPlayerInformation, playerInfo, raiseEventOptions, sendOptions);
 			}
 		}
 		#endregion
@@ -465,6 +526,13 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
+				if (!PhotonNetwork.IsMasterClient)
+				{
+					object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle(), Constants.DONT_CARE);
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvRequestUpdateToPlayerInformation, content, raiseEventOptions, sendOptions);
+				}
 			}
 		}
 
@@ -513,6 +581,13 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
+				if (!PhotonNetwork.IsMasterClient)
+				{
+					object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_CHARACTER_TO_SLOT, card.GetTitle(), characterIndex);
+					RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+					SendOptions sendOptions = new SendOptions { Reliability = true };
+					PhotonNetwork.RaiseEvent(Constants.EvRequestUpdateToPlayerInformation, content, raiseEventOptions, sendOptions);
+				}
 			}
 		}
 
@@ -620,7 +695,7 @@ namespace FallenLand
 			SendOptions sendOptions = new SendOptions { Reliability = true };
 			PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
 
-			dealSpecificSpoilToPlayer(playerIndex, cardName);
+			dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
 		}
 		#endregion
 
@@ -640,7 +715,7 @@ namespace FallenLand
 			dealActionCardsToPlayers();
 		}
 
-        public void dealSpoilsCardsToPlayers()
+		private void dealSpoilsCardsToPlayers()
 		{
 			moveStartingCardsToTheEndOfTheDeck(); //Ensure we don't deal away someone's starting card
 			for (int i = 0; i < StartingSpoilsCards; i++)
@@ -659,7 +734,7 @@ namespace FallenLand
 			Card.ShuffleDeck(SpoilsDeck);
 		}
 
-		public void dealCharacterCardsToPlayers()
+		private void dealCharacterCardsToPlayers()
 		{
 			for (int i = 0; i < StartingCharacterCards; i++)
 			{
@@ -676,7 +751,7 @@ namespace FallenLand
 			}
 		}
 
-		public void dealActionCardsToPlayers()
+		private void dealActionCardsToPlayers()
 		{
 			for (int i = 0; i < StartingActionCards; i++)
 			{
@@ -693,7 +768,7 @@ namespace FallenLand
 			}
 		}
 
-		public void moveStartingCardsToTheEndOfTheDeck()
+		private void moveStartingCardsToTheEndOfTheDeck()
 		{
 			for (int i = 0; i < SpoilsDeck.Count; i++)
 			{
@@ -706,7 +781,7 @@ namespace FallenLand
 			}
 		}
 
-		public void dealSpecificSpoilToPlayer(int playerIndex, string cardName)
+		private void dealSpecificSpoilToPlayerFromDeck(int playerIndex, string cardName)
 		{
 			bool found = false;
 			for (int i = 0; i < SpoilsDeck.Count; i++)
@@ -725,7 +800,7 @@ namespace FallenLand
 			}
 		}
 
-		public void dealSpecificCharacterToPlayer(int playerIndex, string cardName)
+		private void dealSpecificCharacterToPlayerFromDeck(int playerIndex, string cardName)
 		{
 			bool found = false;
 			for (int i = 0; i < CharacterDeck.Count; i++)
@@ -744,7 +819,7 @@ namespace FallenLand
 			}
 		}
 
-		public void dealSpecificActionCardToPlayer(int playerIndex, string cardName)
+		private void dealSpecificActionCardToPlayerFromDeck(int playerIndex, string cardName)
 		{
 			bool found = false;
 			for (int i = 0; i < ActionDeck.Count; i++)
@@ -760,6 +835,46 @@ namespace FallenLand
 			if (!found)
 			{
 				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+			}
+		}
+
+		private void removeSpecificCardFromTownRoster(int playerIndex, string cardName)
+		{
+			bool found = false;
+			List<CharacterCard> townRoster = GetTownRoster(playerIndex);
+			for (int i = 0; i < townRoster.Count; i++)
+			{
+				if (townRoster[i].GetTitle() == cardName)
+				{
+					CharacterCard characterCard = townRoster[i];
+					Players[playerIndex].RemoveCharacterFromTownRoster(characterCard);
+					CharacterDeck.Add(characterCard); //TODO something else with this later, like a temp holding place
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to remove specific character card " + cardName + " from player town roster, but it was not found");
+			}
+		}
+
+		private void addSpecificCharacterToSlot(int playerIndex, int slotIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < CharacterDeck.Count; i++) //TODO don't grab from deck but some temp location (rework removeSpecificCardFromTownRoster)
+			{
+				if (CharacterDeck[i].GetTitle() == cardName)
+				{
+					Players[playerIndex].AddCharacterToParty(slotIndex, CharacterDeck[i]);
+					CharacterDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to add specific character " + cardName + " to player slot, but it was not found");
 			}
 		}
 
@@ -790,6 +905,8 @@ namespace FallenLand
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
 			PhotonPeer.RegisterType(typeof(FactionNetworking), Constants.EvSendFactionInformation, FactionNetworking.SerializeFaction, FactionNetworking.DeserializeFaction);
+			PhotonPeer.RegisterType(typeof(PlayerNetworking), Constants.EvSendPlayerInformation, PlayerNetworking.SerializePlayer, PlayerNetworking.DeserializePlayer);
+			PhotonPeer.RegisterType(typeof(PlayerNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerNetworking.SerializePlayer, PlayerNetworking.DeserializePlayer);
 		}
 
 		private void townBusinessPhase_DealSubphase()
