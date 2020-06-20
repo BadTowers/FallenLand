@@ -325,12 +325,12 @@ namespace Tests
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(nonstowableCard));
 			Assert.IsFalse(HumanPlayerInstance.IsAllowedToEquipSpoilsToVehicle(null));
 
-			HumanPlayerInstance.AddStowableToActiveVehicle(stowableCard);
+			HumanPlayerInstance.AddSpoilsToActiveVehicle(stowableCard);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
 			Assert.AreEqual(stowableCard, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils()[0]);
-			HumanPlayerInstance.AddStowableToActiveVehicle(nonstowableCard);
+			HumanPlayerInstance.AddSpoilsToActiveVehicle(nonstowableCard);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
-			HumanPlayerInstance.AddStowableToActiveVehicle(null);
+			HumanPlayerInstance.AddSpoilsToActiveVehicle(null);
 			Assert.AreEqual(1, HumanPlayerInstance.GetActiveVehicle().GetEquippedSpoils().Count);
 
 			HumanPlayerInstance.RemoveStowableFromActiveVehicle(nonstowableCard);
@@ -386,7 +386,7 @@ namespace Tests
 			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
 			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicleCarryWeight());
 
-			HumanPlayerInstance.AddStowableToActiveVehicle(stowableSpoil);
+			HumanPlayerInstance.AddSpoilsToActiveVehicle(stowableSpoil);
 			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveVehicleStats());
 			Assert.AreEqual(9, HumanPlayerInstance.GetActiveVehicleCarryWeight());
 

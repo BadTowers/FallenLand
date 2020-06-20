@@ -575,7 +575,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].AddStowableToActiveVehicle(card);
+				Players[playerIndex].AddSpoilsToActiveVehicle(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
@@ -916,7 +916,7 @@ namespace FallenLand
 			{
 				if (SpoilsDeck[i].GetTitle() == cardName)
 				{
-					Players[playerIndex].AddStowableToActiveVehicle(SpoilsDeck[i]);
+					Players[playerIndex].AddSpoilsToActiveVehicle(SpoilsDeck[i]);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;

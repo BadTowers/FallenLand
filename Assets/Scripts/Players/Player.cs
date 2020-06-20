@@ -14,9 +14,9 @@ namespace FallenLand
 		private int AmountOfSalvage;
 		private int Id;
 		private List<Dictionary<Skills, int>> ActiveCharacterTotalStats;
-		private List<int> ActiveCharacterCarryWeights;
+		private List<int> ActiveCharacterRemainingCarryWeights;
 	    private Dictionary<Skills, int> ActiveVehicleTotalStats;
-		private int ActiveVehicleCarryWeight;
+		private int ActiveVehicleRemainingCarryWeight;
 		private List<Coordinates> OwnedResourceLocations;
 
 		public Player(Faction faction, int startingSalvage)
@@ -33,7 +33,7 @@ namespace FallenLand
 			AmountOfSalvage = startingSalvage;
 			FactionOfPlayer = faction;
 			Vehicle = null;
-			ActiveVehicleCarryWeight = 0;
+			ActiveVehicleRemainingCarryWeight = 0;
 			initLists();
 			extractTownTechsFromFaction();
 		}
@@ -117,7 +117,7 @@ namespace FallenLand
 
 		public int GetActiveCharacterCarryWeight(int characterIndex)
 		{
-			return ActiveCharacterCarryWeights[characterIndex];
+			return ActiveCharacterRemainingCarryWeights[characterIndex];
 		}
 
 		public Dictionary<Skills, int> GetActiveVehicleStats()
@@ -127,7 +127,7 @@ namespace FallenLand
 
 		public int GetActiveVehicleCarryWeight()
 		{
-			return ActiveVehicleCarryWeight;
+			return ActiveVehicleRemainingCarryWeight;
 		}
 
 		public List<Coordinates> GetOwnedResources()
@@ -254,11 +254,11 @@ namespace FallenLand
 			}
 		}
 
-		public void AddStowableToActiveVehicle(SpoilsCard stowableCard)
+		public void AddSpoilsToActiveVehicle(SpoilsCard spoilsCard)
 		{
-			if (stowableCard != null && Vehicle != null && stowableCard.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
+			if (IsAllowedToEquipSpoilsToVehicle(spoilsCard))
 			{
-				Vehicle.AttachSpoilsCard(stowableCard);
+				Vehicle.AttachSpoilsCard(spoilsCard);
 				updateVehicleSlotTotals();
 			}
 		}
@@ -292,7 +292,9 @@ namespace FallenLand
 		public bool IsAllowedToAddSpoilsCardToCharacter(int characterIndex, SpoilsCard card)
 		{
 			bool isAllowed = false;
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null && !card.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle))
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null && 
+				!card.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle) && !card.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle_Equipment) &&
+				ActiveCharacterRemainingCarryWeights[characterIndex] - card.GetCarryWeight() >= 0)
 			{
 				isAllowed = true;
 			}
@@ -312,7 +314,8 @@ namespace FallenLand
 		public bool IsAllowedToEquipSpoilsToVehicle(SpoilsCard card)
 		{
 			bool isAllowed = false;
-			if (Vehicle != null && card != null && card.GetSpoilsTypes().Contains(SpoilsTypes.Stowable))
+			if (Vehicle != null && card != null && ActiveVehicleRemainingCarryWeight - card.GetCarryWeight() >= 0 &&
+				(card.GetSpoilsTypes().Contains(SpoilsTypes.Stowable) || card.GetSpoilsTypes().Contains(SpoilsTypes.Vehicle_Equipment)))
 			{
 				isAllowed = true;
 			}
@@ -337,7 +340,7 @@ namespace FallenLand
 			TownRoster = new List<CharacterCard>();
 			ActiveCharacters = new List<CharacterCard>();
 			TownTechs = new List<TownTech>();
-			ActiveCharacterCarryWeights = new List<int>();
+			ActiveCharacterRemainingCarryWeights = new List<int>();
 			OwnedResourceLocations = new List<Coordinates>();
 
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -353,7 +356,7 @@ namespace FallenLand
 				{
 					ActiveCharacterTotalStats[i].Add(skill, 0);
 				}
-				ActiveCharacterCarryWeights.Add(0);
+				ActiveCharacterRemainingCarryWeights.Add(0);
 			}
 
 			ActiveVehicleTotalStats = new Dictionary<Skills, int>();
@@ -388,19 +391,19 @@ namespace FallenLand
 
 					ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
 				}
-				int tempCarryWeight = 0;
+				int tempCarryWeight = ActiveCharacters[indexToUpdate].GetCarryCapacity();
 				for (int i = 0; i < equippedSpoils.Count; i++)
 				{
-					tempCarryWeight += equippedSpoils[i].GetCarryWeight();
+					tempCarryWeight -= equippedSpoils[i].GetCarryWeight();
 				}
-				ActiveCharacterCarryWeights[indexToUpdate] = tempCarryWeight;
+				ActiveCharacterRemainingCarryWeights[indexToUpdate] = tempCarryWeight;
 			}
 			else
 			{
 				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 				{
 					ActiveCharacterTotalStats[indexToUpdate][skill] = 0;
-					ActiveCharacterCarryWeights[indexToUpdate] = 0;
+					ActiveCharacterRemainingCarryWeights[indexToUpdate] = 0;
 				}
 			}
 		}
@@ -420,19 +423,19 @@ namespace FallenLand
 
 					ActiveVehicleTotalStats[skill] = tempSum;
 				}
-				int tempCarryWeight = 0;
+				int tempCarryWeight = Vehicle.GetCarryWeight();
 				for (int i = 0; i < equippedSpoils.Count; i++)
 				{
-					tempCarryWeight += equippedSpoils[i].GetCarryWeight();
+					tempCarryWeight -= equippedSpoils[i].GetCarryWeight();
 				}
-				ActiveVehicleCarryWeight = tempCarryWeight;
+				ActiveVehicleRemainingCarryWeight = tempCarryWeight;
 			}
 			else
 			{
 				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 				{
 					ActiveVehicleTotalStats[skill] = 0;
-					ActiveVehicleCarryWeight = 0;
+					ActiveVehicleRemainingCarryWeight = 0;
 				}
 			}
 		}
