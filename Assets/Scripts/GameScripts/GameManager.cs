@@ -187,7 +187,10 @@ namespace FallenLand
 					break;
 				case Phases.Town_Business_Deal:
 					Debug.Log("Deal action cards!");
-					townBusinessPhase_DealSubphase();
+					if (PhotonNetwork.IsMasterClient)
+					{
+						townBusinessPhase_DealSubphase();
+					}
 					TownTechManager.HandlePhase(this);
 					techsHandled = true;
 					EndPhase(GetIndexForMyPlayer());
@@ -225,7 +228,7 @@ namespace FallenLand
 
 		public void OnPlayerFinished(Photon.Realtime.Player player, Phases phase, object move)
 		{
-            if (TurnManager.IsPhaseCompletedByAll)
+            if (TurnManager.IsPhaseCompletedByAll && PhotonNetwork.IsMasterClient)
             {
 				TurnManager.BeginNextPhase();
 			}
@@ -1106,7 +1109,7 @@ namespace FallenLand
 
 		private void townBusinessPhase_DealSubphase()
 		{
-			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
 			{
 				Players[playerIndex].AddActionCardToHand(ActionDeck[0]);
 				Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
