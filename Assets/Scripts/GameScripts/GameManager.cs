@@ -411,7 +411,7 @@ namespace FallenLand
 			return stats;
 		}
 
-		public int GetActiveVehicleCarryWeight(int playerIndex)
+		public int GetActiveVehicleRemainingCarryWeight(int playerIndex)
 		{
 			int weight = 0;
 			if (isPlayerIndexInRange(playerIndex))
@@ -463,7 +463,7 @@ namespace FallenLand
 
 		public void RemoveSpoilFromAuctionHouse(int playerIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_AUCTION_HOUSE, card.GetTitle());
@@ -473,7 +473,7 @@ namespace FallenLand
 
 		public void RemoveCharacterFromTownRoster(int playerIndex, CharacterCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle());
@@ -483,7 +483,7 @@ namespace FallenLand
 
 		public void RemoveSpoilsCardFromPlayerActiveParty(int playerIndex, int characterSlotIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
@@ -503,7 +503,7 @@ namespace FallenLand
 
 		public void RemoveSpoilsCardFromActiveVehicle(int playerIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
@@ -523,7 +523,7 @@ namespace FallenLand
 
 		public void AssignSpoilsCardToCharacter(int playerIndex, int characterIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
@@ -533,7 +533,7 @@ namespace FallenLand
 
 		public void AssignCharacterToParty(int playerIndex, int characterIndex, CharacterCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_CHARACTER_TO_SLOT, card.GetTitle(), characterIndex);
@@ -543,7 +543,7 @@ namespace FallenLand
 
 		public void AddSpoilsToAuctionHouse(int playerIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_AUCTION_HOUSE, card.GetTitle());
@@ -553,7 +553,7 @@ namespace FallenLand
 
 		public void AddCharacterToTownRoster(int playerIndex, CharacterCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddCharacterCardToTownRoster(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_TOWN_ROSTER, card.GetTitle());
@@ -563,7 +563,7 @@ namespace FallenLand
 
 		public void AddVehicleToActiveParty(int playerIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddVehicleToParty(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
@@ -573,7 +573,7 @@ namespace FallenLand
 
 		public void AddSpoilsToActiveVehicle(int playerIndex, SpoilsCard card)
 		{
-			if (isPlayerIndexInRange(playerIndex))
+			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToActiveVehicle(card);
 				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());

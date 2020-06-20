@@ -721,7 +721,7 @@ namespace FallenLand
                 {
                     ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = vehicleStats[skill].ToString();
                 }
-                ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleCarryWeight(CurrentViewedID).ToString();
+                ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleRemainingCarryWeight(CurrentViewedID).ToString();
             }
         }
 

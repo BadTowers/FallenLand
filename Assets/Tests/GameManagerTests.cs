@@ -81,6 +81,7 @@ namespace Tests
 				{ Skills.Medical, vehicleExpected[Skills.Medical] + stowableExpected[Skills.Medical]  }
 			};
 			const int expectedCarryWeight = 3;
+			const int vehicleCarryWeight = 100;
 
 			//////Setup requires us to connect to the network and join a room
 			NetworkHelper.ConnectToMaster();
@@ -125,6 +126,7 @@ namespace Tests
 			SpoilsCard vehicle = new SpoilsCard("vehicle");
 			vehicle.AddSpoilsType(SpoilsTypes.Vehicle);
 			vehicle.SetBaseSkills(vehicleExpected);
+			vehicle.SetCarryWeight(vehicleCarryWeight);
 			gameManager.AddVehicleToActiveParty(numPlayers + 1, vehicle);
 			Assert.IsNull(gameManager.GetActiveVehicle(numPlayers + 1));
 			gameManager.RemoveActiveVehicle(numPlayers + 1);
@@ -193,7 +195,7 @@ namespace Tests
 			//A valid ID should be able to get the stats and carry weight of an equipped vehicle
 			Assert.IsNotNull(gameManager.GetActiveVehicleStats(MY_PLAYER_INDEX));
 			CollectionAssert.AreEquivalent(totalExpected, gameManager.GetActiveVehicleStats(MY_PLAYER_INDEX));
-			Assert.AreEqual(expectedCarryWeight, gameManager.GetActiveVehicleCarryWeight(MY_PLAYER_INDEX));
+			Assert.AreEqual(vehicleCarryWeight - expectedCarryWeight, gameManager.GetActiveVehicleRemainingCarryWeight(MY_PLAYER_INDEX));
 
 			//A valid ID can remove stowables from their active vehicle
 			gameManager.RemoveSpoilsCardFromActiveVehicle(MY_PLAYER_INDEX, null);
@@ -208,6 +210,8 @@ namespace Tests
 
 			//A valid ID should be able to equip characters to their party and add spoils to that member
 			CharacterCard character = new CharacterCard("character");
+			const int characterCarryCapacity = 50;
+			character.SetCarryCapacity(characterCarryCapacity);
 			const int SLOT_0 = 0;
 			const int SLOT_1 = 1;
 			Assert.IsNotNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX));
@@ -226,7 +230,7 @@ namespace Tests
 			//A valid ID should be able to get the stats and carry weight for an active character
 			Assert.IsNotNull(gameManager.GetActiveCharacterStats(MY_PLAYER_INDEX, SLOT_0));
 			CollectionAssert.AreNotEquivalent(Constants.ALL_SKILLS_ZERO, gameManager.GetActiveCharacterStats(MY_PLAYER_INDEX, SLOT_0));
-			Assert.AreEqual(expectedCarryWeight, gameManager.GetActiveCharacterCarryWeight(MY_PLAYER_INDEX, SLOT_0));
+			Assert.AreEqual(characterCarryCapacity - expectedCarryWeight, gameManager.GetActiveCharacterCarryWeight(MY_PLAYER_INDEX, SLOT_0));
 
 			//A valid ID should be able to remove characters from their part and spoils from that member
 			gameManager.RemoveSpoilsCardFromPlayerActiveParty(MY_PLAYER_INDEX, SLOT_0, null);

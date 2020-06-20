@@ -377,6 +377,7 @@ namespace Tests
 			SpoilsCard vehicleSpoils = new SpoilsCard("Vehicle Spoils");
 			vehicleSpoils.AddSpoilsType(SpoilsTypes.Vehicle);
 			vehicleSpoils.SetBaseSkills(vehicleExpected);
+			vehicleSpoils.SetCarryWeight(10);
 			SpoilsCard stowableSpoil = new SpoilsCard("Stowable spoils");
 			stowableSpoil.AddSpoilsType(SpoilsTypes.Stowable);
 			stowableSpoil.SetBaseSkills(stowableExpected);
@@ -384,15 +385,15 @@ namespace Tests
 
 			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
 			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
-			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveVehicleCarryWeight());
 
 			HumanPlayerInstance.AddSpoilsToActiveVehicle(stowableSpoil);
 			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveVehicleStats());
-			Assert.AreEqual(9, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+			Assert.AreEqual(10-9, HumanPlayerInstance.GetActiveVehicleCarryWeight());
 
 			HumanPlayerInstance.RemoveStowableFromActiveVehicle(stowableSpoil);
 			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
-			Assert.AreEqual(0, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveVehicleCarryWeight());
 
 			yield return null;
 		}
@@ -433,6 +434,7 @@ namespace Tests
 			};
 
 			CharacterCard character = new CharacterCard("character");
+			character.SetCarryCapacity(10);
 			SpoilsCard spoils1 = new SpoilsCard("Spoils1");
 			spoils1.AddSpoilsType(SpoilsTypes.Vehicle);
 			spoils1.SetBaseSkills(spoils1Expected);
@@ -444,19 +446,19 @@ namespace Tests
 
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_INDEX, character);
 			CollectionAssert.AreEquivalent(Constants.ALL_SKILLS_ZERO, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils1);
 			CollectionAssert.AreEquivalent(spoils1Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(2, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10-2, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils2);
 			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(7, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10-2-5, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.RemoveSpoilsCardFromActiveCharacter(CHARACTER_INDEX, spoils1);
 			CollectionAssert.AreEquivalent(spoils2Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(5, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10-5, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
 
 			yield return null;
 		}
