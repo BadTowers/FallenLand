@@ -1106,14 +1106,12 @@ namespace FallenLand
 
 		private void townBusinessPhase_DealSubphase()
 		{
-			for (int i = 0; i < Players.Count; i++)
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
 			{
-				Players[i].AddActionCardToHand(ActionDeck[0]);
-				Debug.Log("Dealt card " + ActionDeck[0].GetTitle());
-				object content = ActionDeck[0];
-				RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-				SendOptions sendOptions = new SendOptions { Reliability = true };
-				PhotonNetwork.RaiseEvent(Constants.EvDealCard, content, raiseEventOptions, sendOptions);
+				Players[playerIndex].AddActionCardToHand(ActionDeck[0]);
+				Debug.Log("Dealt action card " + ActionDeck[0].GetTitle());
+				object content = new CardNetworking(ActionDeck[0].GetTitle(), playerIndex, Constants.ACTION_CARD);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 				ActionDeck.RemoveAt(0);
 			}
         }
