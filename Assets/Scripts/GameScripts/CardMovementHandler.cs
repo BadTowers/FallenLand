@@ -5,26 +5,25 @@ using UnityEngine.UI;
 
 namespace FallenLand
 {
-    public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerExitHandler
+    public class CardMovementHandler : MonoBehaviour, IDragHandler, IEndDragHandler
     {
         private bool IsDragging;
-        private bool IsClicked;
         private bool IsOldParentSet;
         private bool IsHoveringOverPanel;
-        private const float ZoomedScale = 2.5f;
         private Vector2 ImageSize = new Vector2(75, 100);
-        private Vector3 PreHoverLocation = new Vector3(-1, -1, -1);
+        private Vector3 PreDragLocation = new Vector3(-1, -1, -1);
         private float PreHoverScrollSensitivity;
         private GameObject OldParent;
         private GameObject HoveredOverPanel;
         private GameUIManager UiManager;
         private int SiblingOrder;
+        private CardClickHandler ClickHandler;
 
         void Start()
         {
             PreHoverScrollSensitivity = GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity;
-
             UiManager = GameObject.Find("UIManager").GetComponentInChildren<GameUIManager>();
+            ClickHandler = gameObject.transform.GetComponentInParent<CardClickHandler>();
         }
 
         void Update()
@@ -32,16 +31,28 @@ namespace FallenLand
             checkIfWeAreHoveredOverPanel();
         }
 
+        public bool GetIsDragging()
+        {
+            return IsDragging;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 Debug.Log("Dragging");
-                if (!IsDragging && !IsClicked)
+                if (!IsDragging)
                 {
-                    PreHoverLocation = transform.position;
                     UiManager.SetCardIsDragging(true);
                     SiblingOrder = transform.GetSiblingIndex();
+                    if (!ClickHandler.GetIsClicked())
+                    {
+                        PreDragLocation = transform.position;
+                    }
+                    else
+                    {
+                        PreDragLocation = ClickHandler.GetPreClickLocation();
+                    }
                 }
                 IsDragging = true;
                 figureOutCurrentParent();
@@ -71,7 +82,7 @@ namespace FallenLand
                 else
                 {
                     resetParent();
-                    transform.position = PreHoverLocation;
+                    transform.position = PreDragLocation;
                 }
                 enableScroll();
                 OldParent = null;
@@ -84,85 +95,7 @@ namespace FallenLand
             }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (!IsDragging && IsClicked)
-            {
-                makeSmall();
-                IsClicked = false;
-            }
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                Debug.Log("Mouse click");
-                Debug.Log(transform.localPosition);
-                if (!IsDragging)
-                {
-                    if (!IsClicked)
-                    {
-                        IsClicked = true;
-                        PreHoverLocation = transform.position;
-                        makeLarge();
-                    }
-                    else
-                    {
-                        makeSmall();
-                        IsClicked = false;
-                    }
-                }
-            }
-        }
-
         #region HelperFunctions
-        private void makeSmall()
-        {
-            this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
-            transform.position = PreHoverLocation;
-            enableScroll();
-            transform.SetSiblingIndex(SiblingOrder);
-        }
-
-        private void makeLarge()
-        {
-            this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x * ZoomedScale, ImageSize.y * ZoomedScale);
-            float newX = getNewX();
-            float newY = getNewY();
-            transform.localPosition = new Vector3(newX, newY, transform.localPosition.z);
-            disableScroll();
-            SiblingOrder = transform.GetSiblingIndex();
-            transform.SetAsLastSibling(); //move to the front (on parent)
-        }
-
-        private float getNewX()
-        {
-            float newX = transform.localPosition.x;
-            if (transform.localPosition.x < 140)
-            {
-                newX = 140;
-            }
-            else if (transform.localPosition.x > 405)
-            {
-                newX = 405;
-            }
-            return newX;
-        }
-
-        private float getNewY()
-        {
-            float newY = transform.localPosition.y;
-            if (transform.localPosition.y > -90)
-            {
-                newY = -90;
-            }
-            else if (transform.localPosition.y < -170)
-            {
-                newY = -170;
-            }
-            return newY;
-        }
 
         private void disableScroll()
         {

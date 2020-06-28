@@ -376,11 +376,6 @@ namespace FallenLand
         {
             updateAuctionHouseUi(false);
             updateTownRosterUi(false);
-            if (CurrentViewedID != GameManagerInstance.GetIndexForMyPlayer())
-            {
-                updateCharacterPanels(false);
-                updateVehiclePanel(false);
-            }
         }
 
         private void redrawCharacterSpoilsScreen()
@@ -519,7 +514,7 @@ namespace FallenLand
                 //Add new
                 for (int i = 0; i < auctionHouse.Count; i++)
                 {
-                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    GameObject imageObj = Instantiate(ImageGameObject);
                     if (playerIndex != CurrentViewedID)
                     {
                         Destroy(imageObj.GetComponent<CardMovementHandler>());
@@ -568,7 +563,7 @@ namespace FallenLand
                 //Add new
                 for (int i = 0; i < townRoster.Count; i++)
                 {
-                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    GameObject imageObj = Instantiate(ImageGameObject);
                     Image image = imageObj.GetComponent<Image>();
                     string fileName = "Cards/CharacterCards/CharacterCard" + townRoster[i].GetId().ToString();
                     Sprite curSprite = Resources.Load<Sprite>(fileName);
@@ -604,7 +599,7 @@ namespace FallenLand
                     if (activeCharacters[activeIndex] != null)
                     {
                         //Add character back to slot
-                        GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                        GameObject imageObj = Instantiate(ImageGameObject);
                         if (CurrentViewedID != playerIndex)
                         {
                             Destroy(imageObj.GetComponent<CardMovementHandler>());
@@ -625,7 +620,7 @@ namespace FallenLand
                         List<SpoilsCard> curSlotSpoils = activeCharacters[activeIndex].GetEquippedSpoils();
                         for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                         {
-                            GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                            GameObject imageObj2 = Instantiate(ImageGameObject);
                             if (CurrentViewedID != playerIndex)
                             {
                                 Destroy(imageObj2.GetComponent<CardMovementHandler>());
@@ -673,7 +668,7 @@ namespace FallenLand
                 if (activeVehicle != null)
                 {
                     //Add vehicle back to slot
-                    GameObject imageObj = Instantiate(ImageGameObject) as GameObject;
+                    GameObject imageObj = Instantiate(ImageGameObject);
                     if (CurrentViewedID != playerIndex)
                     {
                         Destroy(imageObj.GetComponent<CardMovementHandler>());
@@ -695,7 +690,7 @@ namespace FallenLand
                     Debug.Log("There are currently " + curSlotSpoils.Count + " spoils attached to the vehicle");
                     for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                     {
-                        GameObject imageObj2 = Instantiate(ImageGameObject) as GameObject;
+                        GameObject imageObj2 = Instantiate(ImageGameObject);
                         if (CurrentViewedID != playerIndex)
                         {
                             Destroy(imageObj2.GetComponent<CardMovementHandler>());
@@ -930,6 +925,7 @@ namespace FallenLand
 
         private bool shouldEnableEndPhaseButton()
         {
+            //TODO here
             return GameManagerInstance.GetPhase() != CurrentPhase && 
                 ((GameManagerInstance.GetCurrentPlayer() != null &&
                 GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId()) || 
