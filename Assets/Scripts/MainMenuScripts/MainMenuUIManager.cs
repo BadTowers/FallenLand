@@ -69,8 +69,6 @@ namespace FallenLand
 		private bool FailedToConnectToRoom;
 		private string MyOnlineUserId;
         private bool LoadingGame;
-		private float LoadingScreenTimer;
-		private const float LOADING_TIMEOUT = 0.05f;
 		private const string CURRENT_SCENE_PROPERTY = "curScn";
 		private const string MAIN_MENU_SCENE_NAME = "MainMenu";
 		[SerializeField]
@@ -90,7 +88,6 @@ namespace FallenLand
 
 			//Initialize default values
 			CurrentFactionNumber = 1;
-			LoadingScreenTimer = 0.0f;
 			FactionWasChanged = true;
 			GameModeWasChanged = true;
 			LoadingGame = false;
@@ -852,7 +849,7 @@ namespace FallenLand
 
 		private void updateStartButton()
 		{
-			MultiplayerStartButton.interactable = (PhotonNetwork.IsMasterClient) && (PhotonNetwork.PlayerList.Length > 1);
+			MultiplayerStartButton.interactable = true;// (PhotonNetwork.IsMasterClient) && (PhotonNetwork.PlayerList.Length > 1);
 		}
 
 		private void instantiateGameObjects()
@@ -927,24 +924,6 @@ namespace FallenLand
 			if (LoadingGame)
 			{
 				LoadingPanel.SetActive(true);
-				if (LoadingScreenTimer >= LOADING_TIMEOUT)
-				{
-					Text loadingText = LoadingPanel.GetComponentInChildren<Text>();
-					if (loadingText.text == "Loading.")
-					{
-						loadingText.text = "Loading..";
-					}
-					else if (loadingText.text == "Loading..")
-					{
-						loadingText.text = "Loading...";
-					}
-					else
-					{
-						loadingText.text = "Loading.";
-					}
-					LoadingScreenTimer = 0;
-				}
-				LoadingScreenTimer += Time.deltaTime;
 			}
 		}
 		#endregion
