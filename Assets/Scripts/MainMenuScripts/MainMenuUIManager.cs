@@ -36,6 +36,7 @@ namespace FallenLand
 		public GameObject ModifiersContainer;
 		public string gameVersion = "1";
 
+		private GameObject LoadingPanel;
 		private Image TownLogoImage;
 		private Image TownSymbolImage;
 		private Image TownTech1Image;
@@ -67,6 +68,11 @@ namespace FallenLand
 		private bool ConnectedToMaster;
 		private bool FailedToConnectToRoom;
 		private string MyOnlineUserId;
+        private bool LoadingGame;
+		private float LoadingScreenTimer;
+		private const float LOADING_TIMEOUT = 0.05f;
+		private const string CURRENT_SCENE_PROPERTY = "curScn";
+		private const string MAIN_MENU_SCENE_NAME = "MainMenu";
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
@@ -84,8 +90,10 @@ namespace FallenLand
 
 			//Initialize default values
 			CurrentFactionNumber = 1;
+			LoadingScreenTimer = 0.0f;
 			FactionWasChanged = true;
 			GameModeWasChanged = true;
+			LoadingGame = false;
 			Factions = (new DefaultFactionInfo()).GetDefaultFactionList();
 
 			FactionLabels = new List<GameObject>();
@@ -133,6 +141,9 @@ namespace FallenLand
 			PingText = GameObject.Find("ActualPingText").GetComponent<Text>();
 			UserIdText = GameObject.Find("UserIdText").GetComponent<Text>();
 			MultiplayerStartButton = GameObject.Find("StartGameButton").GetComponent<Button>();
+			LoadingPanel = GameObject.Find("LoadingPanel");
+
+			LoadingPanel.SetActive(false);
 		}
 
 		void Update()
@@ -178,6 +189,8 @@ namespace FallenLand
 					SetActiveMenu(MainMenu);
 					break;
 			}
+
+			handleLoading();
 		}
 		#endregion
 
@@ -325,6 +338,22 @@ namespace FallenLand
 		{
 			Debug.Log("OnPlayerLeftRoom callback. Name: " + player.NickName + " ID: " + player.UserId);
 			updateUserOnlineInformation();
+		}
+
+		public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+		{
+			Debug.Log("OnRoomPropertiesUpdate in MainMenuUIManager");
+			if (propertiesThatChanged.ContainsKey(CURRENT_SCENE_PROPERTY))
+			{
+				object sceneId = PhotonNetwork.CurrentRoom.CustomProperties[CURRENT_SCENE_PROPERTY];
+				if (sceneId is string)
+				{
+					if (MAIN_MENU_SCENE_NAME != (string)sceneId)
+					{
+						LoadingGame = true;
+					}
+				}
+			}
 		}
 		#endregion
 
@@ -546,6 +575,9 @@ namespace FallenLand
 				Debug.Log("PhotonNetwork : Loading game");
 
 				gatherDataForNextScene();
+
+				//Show loading screen
+				LoadingGame = true;
 
 				PhotonNetwork.LoadLevel("GameScene");
 			}
@@ -887,6 +919,32 @@ namespace FallenLand
 			{
 				Debug.Log("Changing color");
 				PlayerTexts[playerIndex].GetComponent<Text>().color = new Color(r, g, b);
+			}
+		}
+
+		private void handleLoading()
+		{
+			if (LoadingGame)
+			{
+				LoadingPanel.SetActive(true);
+				if (LoadingScreenTimer >= LOADING_TIMEOUT)
+				{
+					Text loadingText = LoadingPanel.GetComponentInChildren<Text>();
+					if (loadingText.text == "Loading.")
+					{
+						loadingText.text = "Loading..";
+					}
+					else if (loadingText.text == "Loading..")
+					{
+						loadingText.text = "Loading...";
+					}
+					else
+					{
+						loadingText.text = "Loading.";
+					}
+					LoadingScreenTimer = 0;
+				}
+				LoadingScreenTimer += Time.deltaTime;
 			}
 		}
 		#endregion
