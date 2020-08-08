@@ -38,6 +38,7 @@ namespace FallenLand
         private Text ActualTurnPhaseText;
         private Button EndPhaseButton;
         private Button ActionCardsButton;
+        private Button AuctionHouseTradeButton;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
         private Phases CurrentPhase;
@@ -117,6 +118,9 @@ namespace FallenLand
             {
                 PlayerPanels.Add(GameObject.Find("PlayerPanel" + (i + 1).ToString()));
             }
+
+            AuctionHouseTradeButton = GameObject.Find("AuctionHouseTradeButton").GetComponent<Button>();
+            AuctionHouseTradeButton.interactable = false;
         }
 
         void Start()
@@ -273,6 +277,11 @@ namespace FallenLand
             int panelNumber = Int32.Parse(panelNumberString);
             CurrentViewedID = panelNumber-1;
         }
+
+        public void OnTradeAuctionHousePress()
+        {
+            Debug.Log("Trade time");
+        }
         #endregion
 
         #region HelperFunctions
@@ -376,6 +385,7 @@ namespace FallenLand
         {
             updateAuctionHouseUi(false);
             updateTownRosterUi(false);
+            AuctionHouseTradeButton.interactable = (CurrentViewedID != GameManagerInstance.GetIndexForMyPlayer());
         }
 
         private void redrawCharacterSpoilsScreen()
