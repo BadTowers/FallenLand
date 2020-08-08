@@ -945,25 +945,26 @@ namespace FallenLand
         private void updatePlayerPanels()
         {
             int numPlayers = PhotonNetwork.PlayerList.Length;
-            for (int i = 0; i < Constants.MAX_NUM_PLAYERS; i++)
+            for (int currentPlayerIndex = 0; currentPlayerIndex < Constants.MAX_NUM_PLAYERS; currentPlayerIndex++)
             {
-                if (i < numPlayers && GameManagerInstance.GetFaction(i) != null)
+                if (currentPlayerIndex < numPlayers && GameManagerInstance.GetFaction(currentPlayerIndex) != null)
                 {
-                    Debug.Log("Setting faction information for player " + i);
-                    PlayerPanels[i].SetActive(true);
-                    Color color = PlayerPanels[i].GetComponentInChildren<Image>().color;
-                    color.a = (i == CurrentViewedID) ? 244f / 255f : 150f / 255f;
-                    PlayerPanels[i].GetComponentInChildren<Image>().color = color;
-                    string factionPath = "Factions/FactionSymbols/FactionSymbol" + GameManagerInstance.GetFaction(i).GetId().ToString();
+                    Debug.Log("Setting faction information for player " + currentPlayerIndex);
+                    PlayerPanels[currentPlayerIndex].SetActive(true);
+                    Color color = PlayerPanels[currentPlayerIndex].GetComponentInChildren<Image>().color;
+                    color.a = (currentPlayerIndex == CurrentViewedID) ? 244f / 255f : 150f / 255f;
+                    PlayerPanels[currentPlayerIndex].GetComponentInChildren<Image>().color = color;
+                    string factionPath = "Factions/FactionSymbols/FactionSymbol" + GameManagerInstance.GetFaction(currentPlayerIndex).GetId().ToString();
                     Sprite factionSprite = Resources.Load<Sprite>(factionPath);
-                    PlayerPanels[i].transform.Find("FactionImage").GetComponentInChildren<Image>().sprite = factionSprite;
-                    PlayerPanels[i].transform.Find("PlayerNameText").GetComponentInChildren<Text>().text = PhotonNetwork.PlayerList[i].NickName;
-                    PlayerPanels[i].transform.Find("PrestigeActualText").GetComponentInChildren<Text>().text = "0";
-                    PlayerPanels[i].transform.Find("TownHealthActualText").GetComponentInChildren<Text>().text = "0";
+                    PlayerPanels[currentPlayerIndex].transform.Find("FactionImage").GetComponentInChildren<Image>().sprite = factionSprite;
+                    PlayerPanels[currentPlayerIndex].transform.Find("PlayerNameText").GetComponentInChildren<Text>().text = PhotonNetwork.PlayerList[currentPlayerIndex].NickName;
+                    PlayerPanels[currentPlayerIndex].transform.Find("PrestigeActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetPrestige(currentPlayerIndex).ToString();
+                    PlayerPanels[currentPlayerIndex].transform.Find("TownHealthActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetTownHealth(currentPlayerIndex).ToString();
+                    PlayerPanels[currentPlayerIndex].transform.Find("SalvageActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetSalvage(currentPlayerIndex).ToString();
                 }
                 else
                 {
-                    PlayerPanels[i].SetActive(false);
+                    PlayerPanels[currentPlayerIndex].SetActive(false);
                 }
             }
         }

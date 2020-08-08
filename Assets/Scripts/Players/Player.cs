@@ -18,6 +18,8 @@ namespace FallenLand
 	    private Dictionary<Skills, int> ActiveVehicleTotalStats;
 		private int ActiveVehicleRemainingCarryWeight;
 		private List<Coordinates> OwnedResourceLocations;
+		private int TownHealth;
+		private int Prestige;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -36,6 +38,8 @@ namespace FallenLand
 			ActiveVehicleRemainingCarryWeight = 0;
 			initLists();
 			extractTownTechsFromFaction();
+			TownHealth = 0;
+			Prestige = 0;
 		}
 
 		public List<SpoilsCard> GetAuctionHouseCards()
@@ -133,6 +137,64 @@ namespace FallenLand
 		public List<Coordinates> GetOwnedResources()
 		{
 			return OwnedResourceLocations;
+		}
+
+        public int GetTownHealth()
+        {
+			return TownHealth;
+        }
+
+        public void SetTownHealth(int townHealth)
+        {
+            if (townHealth >= 0)
+            {
+				TownHealth = townHealth;
+            }
+        }
+
+		public void AddTownHealth(int amountToAdd)
+		{
+			if (amountToAdd >= 0)
+			{
+				TownHealth += amountToAdd;
+			}
+		}
+
+		public void SubtractTownHealth(int amountToSubtract)
+		{
+			if (amountToSubtract >= 0)
+			{
+				TownHealth -= amountToSubtract;
+			}
+		}
+
+		public int GetPrestige()
+		{
+			return Prestige;
+		}
+
+		public void SetPrestige(int prestige)
+		{
+			if (prestige >= 0)
+			{
+				Prestige = prestige;
+			}
+		}
+
+		public void AddPrestige(int amountToAdd)
+		{
+			if (amountToAdd >= 0)
+			{
+				Prestige += amountToAdd;
+			}
+		}
+
+		public void SubtractPrestige(int amountToSubtract)
+		{
+			if (amountToSubtract >= 0)
+			{
+				Prestige -= amountToSubtract;
+			}
 		}
 
 		public void RemoveSalvageFromPlayer(int salvageToRemove)

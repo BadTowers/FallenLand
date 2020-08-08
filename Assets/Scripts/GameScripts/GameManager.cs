@@ -26,6 +26,8 @@ namespace FallenLand
 		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
 		private const int StartingSalvage = 10;
+		private const int StartingTownHealth = 30;
+		private const int StartingPrestige = 1;
 		private string MyUserId;
 		private GameObject NewGameState;
 		private bool GameIsSetUpAtStart;
@@ -50,7 +52,7 @@ namespace FallenLand
 			for (int i = 0; i < NumHumanPlayers; i++)
             {
 				Faction faction = new Faction("Dummy", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
-                Players.Add(new HumanPlayer(faction, StartingSalvage));
+				Players.Add(new HumanPlayer(faction, StartingSalvage));
             }
 
             //Figure out our user ID
@@ -97,7 +99,10 @@ namespace FallenLand
 					{
 						Debug.LogError("Faction info passed in was bad... We got " + factionName + " but couldn't find such a faction.");
 					}
-					Players[playerIndex] = new HumanPlayer(faction, StartingSalvage);
+					Player newPlayer = new HumanPlayer(faction, StartingSalvage);
+					newPlayer.SetTownHealth(StartingTownHealth);
+					newPlayer.SetPrestige(StartingPrestige);
+					Players[playerIndex] = newPlayer;
 				}
 				ReceivedMyFactionInformation = true;
 
@@ -267,7 +272,10 @@ namespace FallenLand
 				{
 					Debug.LogError("OnEvent: Faction info passed in was bad... We got " + factionInfo.GetFactionName() + " but couldn't find such a faction.");
 				}
-				Players[factionInfo.GetPlayerIndex()] = new HumanPlayer(faction, StartingSalvage);
+				Player newPlayer = new HumanPlayer(faction, StartingSalvage);
+				newPlayer.SetTownHealth(StartingTownHealth);
+				newPlayer.SetPrestige(StartingPrestige);
+				Players[factionInfo.GetPlayerIndex()] = newPlayer;
 
 				if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
 				{
@@ -322,6 +330,26 @@ namespace FallenLand
 				salvage = Players[playerIndex].GetSalvageAmount();
 			}
 			return salvage;
+		}
+
+		public int GetTownHealth(int playerIndex)
+		{
+			int townHealth = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				townHealth = Players[playerIndex].GetTownHealth();
+			}
+			return townHealth;
+		}
+
+		public int GetPrestige(int playerIndex)
+		{
+			int prestige = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				prestige = Players[playerIndex].GetPrestige();
+			}
+			return prestige;
 		}
 
 		public Faction GetFaction(int playerIndex)

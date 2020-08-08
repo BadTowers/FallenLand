@@ -485,5 +485,87 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestTownHealth()
+		{
+			Assert.AreEqual(0, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SetTownHealth(20);
+			Assert.AreEqual(20, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SetTownHealth(-10);
+			Assert.AreEqual(20, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SetTownHealth(0);
+			Assert.AreEqual(0, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.AddTownHealth(0);
+			Assert.AreEqual(0, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.AddTownHealth(9);
+			Assert.AreEqual(9, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.AddTownHealth(-5);
+			Assert.AreEqual(9, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.AddTownHealth(2);
+			Assert.AreEqual(11, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SubtractTownHealth(2);
+			Assert.AreEqual(9, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SubtractTownHealth(0);
+			Assert.AreEqual(9, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SubtractTownHealth(-11);
+			Assert.AreEqual(9, HumanPlayerInstance.GetTownHealth());
+
+			HumanPlayerInstance.SubtractTownHealth(8);
+			Assert.AreEqual(1, HumanPlayerInstance.GetTownHealth());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPrestige()
+		{
+			Assert.AreEqual(0, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SetPrestige(20);
+			Assert.AreEqual(20, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SetPrestige(-10);
+			Assert.AreEqual(20, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SetPrestige(0);
+			Assert.AreEqual(0, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.AddPrestige(0);
+			Assert.AreEqual(0, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.AddPrestige(9);
+			Assert.AreEqual(9, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.AddPrestige(-5);
+			Assert.AreEqual(9, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.AddPrestige(2);
+			Assert.AreEqual(11, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SubtractPrestige(2);
+			Assert.AreEqual(9, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SubtractPrestige(0);
+			Assert.AreEqual(9, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SubtractPrestige(-11);
+			Assert.AreEqual(9, HumanPlayerInstance.GetPrestige());
+
+			HumanPlayerInstance.SubtractPrestige(8);
+			Assert.AreEqual(1, HumanPlayerInstance.GetPrestige());
+
+			yield return null;
+		}
 	}
 }
