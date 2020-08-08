@@ -29,6 +29,8 @@ namespace Tests
 			Assert.IsFalse(GameUIManagerInstance.GetCardIsDragging());
 			GameUIManagerInstance.SetCardIsDragging(true);
 			Assert.IsTrue(GameUIManagerInstance.GetCardIsDragging());
+			GameUIManagerInstance.SetCardIsDragging(false);
+			Assert.IsFalse(GameUIManagerInstance.GetCardIsDragging());
 
 			yield return null;
 		}
