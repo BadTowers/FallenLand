@@ -208,7 +208,7 @@ namespace FallenLand
             Debug.Log("OnRoomPropertiesUpdate in TurnManager");
             if (propertiesThatChanged.ContainsKey("Phase"))
             {
-                Debug.Log("propertiesThatChanged constains Phase");
+                Debug.Log("propertiesThatChanged contains Phase");
                 FinishedPlayers.Clear();
                 TurnManagerListener.OnPhaseBegins(Phase);
             }
