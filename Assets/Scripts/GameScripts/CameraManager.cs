@@ -94,36 +94,36 @@ namespace FallenLand
 
         #region HelperFunctions
         private void zoomIn()
-		{
-			float newY = Camera.main.transform.position.y - ZoomSpeed;
-			if (newY < MinZoom)
-			{
-				newY = MinZoom;
-			}
-			Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
-		}
+        {
+            float newY = Camera.main.transform.position.y - ZoomSpeed;
+            if (newY < MinZoom)
+            {
+                newY = MinZoom;
+            }
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
+        }
 
-		private void zoomOut()
-		{
-			float newY = ZoomSpeed + Camera.main.transform.position.y;
-			if (newY > MaxZoom)
-			{
-				newY = MaxZoom;
-			}
-			Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
-		}
+        private void zoomOut()
+        {
+            float newY = ZoomSpeed + Camera.main.transform.position.y;
+            if (newY > MaxZoom)
+            {
+                newY = MaxZoom;
+            }
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, newY, Camera.main.transform.position.z);
+        }
 
-		private void updateIsAllowedToPan()
-		{
-			if (!PauseMenu.activeSelf && !CharacterSpoilsOverlay.activeSelf)
-			{
-				CameraMovementIsAllowed = true;
-			}
-			else
-			{
-				CameraMovementIsAllowed = false;
-			}
-		}
+        private void updateIsAllowedToPan()
+        {
+            if (!PauseMenu.activeSelf && !CharacterSpoilsOverlay.activeSelf)
+            {
+                CameraMovementIsAllowed = true;
+            }
+            else
+            {
+                CameraMovementIsAllowed = false;
+            }
+        }
 		#endregion
 	}
 }
