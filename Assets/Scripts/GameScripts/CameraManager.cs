@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace FallenLand
 {
-	public class CameraManager : MonoBehaviour
-	{
+    public class CameraManager : MonoBehaviour
+    {
         public const float PanSpeed = MapCreation.MAP_SCALE;
         public const float ZoomSpeed = 4f;
         public const float MinZoom = 10f;
