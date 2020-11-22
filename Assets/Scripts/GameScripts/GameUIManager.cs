@@ -33,6 +33,7 @@ namespace FallenLand
         private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
+        private GameObject TradeOverlay;
         private List<GameObject> PlayerPanels;
         private Text ActualTurnNumberText;
         private Text ActualTurnPhaseText;
@@ -57,6 +58,7 @@ namespace FallenLand
             ActionCardsScreen = GameObject.Find("ActionCardsPanel");
             DebugOverlay = GameObject.Find("DebugOverlay");
             MainOverlay = GameObject.Find("MainOverlay");
+            TradeOverlay = GameObject.Find("TradeOverlay");
 
             ActiveCharactersScrollContent = new List<GameObject>();
 
@@ -130,6 +132,7 @@ namespace FallenLand
             MainOverlay.SetActive(false);
             ActionCardsScreen.SetActive(true);
             CharacterAndSpoilsScreen.SetActive(true);
+            TradeOverlay.SetActive(false);
 
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
@@ -280,7 +283,19 @@ namespace FallenLand
 
         public void OnTradeAuctionHousePress()
         {
-            Debug.Log("Trade time");
+            TradeOverlay.SetActive(true);
+        }
+
+        public void OnCancelTradePress()
+        {
+            TradeOverlay.SetActive(false);
+        }
+
+        public void OnSendTradePress()
+        {
+            TradeOverlay.SetActive(false);
+            //TODO show "trade sent" somewhere
+            //TODO actually send the trade
         }
         #endregion
 
