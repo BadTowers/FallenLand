@@ -7,17 +7,17 @@ namespace FallenLand
 {
 	public class CameraManager : MonoBehaviour
 	{
-		public const float PanSpeed = MapCreation.MAP_SCALE;
-		public const float ZoomSpeed = 4f;
-		public const float MinZoom = 10f;
-		public const float MaxZoom = 50f;
+        public const float PanSpeed = MapCreation.MAP_SCALE;
+        public const float ZoomSpeed = 4f;
+        public const float MinZoom = 10f;
+        public const float MaxZoom = 50f;
 
-		private GameObject PauseMenu;
-		private GameObject CharacterSpoilsOverlay;
-		private bool IsPanning = false;
-		private bool CameraMovementIsAllowed = false;
-		private Vector3 oldMouseLocation = new Vector3(-1, -1, -1);
-		private Vector3 newMouseLocation = new Vector3(-1, -1, -1);
+        private GameObject PauseMenu;
+        private GameObject CharacterSpoilsOverlay;
+        private bool IsPanning = false;
+        private bool CameraMovementIsAllowed = false;
+        private Vector3 oldMouseLocation = new Vector3(-1, -1, -1);
+        private Vector3 newMouseLocation = new Vector3(-1, -1, -1);
 
         #region UnityFunctions
         void Awake()
@@ -124,6 +124,6 @@ namespace FallenLand
                 CameraMovementIsAllowed = false;
             }
         }
-		#endregion
+        #endregion
 	}
 }
