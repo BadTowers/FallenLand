@@ -21,16 +21,16 @@ namespace FallenLand
 
         #region UnityFunctions
         void Awake()
-		{
-			PauseMenu = GameObject.Find("PauseMenu");
-			CharacterSpoilsOverlay = GameObject.Find("CharacterAndSpoilsAssigningPanel");
-		}
+        {
+            PauseMenu = GameObject.Find("PauseMenu");
+            CharacterSpoilsOverlay = GameObject.Find("CharacterAndSpoilsAssigningPanel");
+        }
 
-		void Start()
-		{
-			//Center the camera
-			Camera.main.transform.position = new Vector3(12 * MapCreation.MAP_SCALE, MinZoom, 5 * MapCreation.MAP_SCALE);
-		}
+        void Start()
+        {
+            //Center the camera
+            Camera.main.transform.position = new Vector3(12 * MapCreation.MAP_SCALE, MinZoom, 5 * MapCreation.MAP_SCALE);
+        }
 
         void Update()
         {
