@@ -7,7 +7,7 @@ namespace FallenLand
 {
     public class CameraManager : MonoBehaviour
     {
-        public const float PanSpeed = MapCreation.MAP_SCALE;
+        public const float PanSpeed = MapCreation.HEX_PREFAB_SCALE;
         public const float ZoomSpeed = 4f;
         public const float MinZoom = 10f;
         public const float MaxZoom = 50f;
@@ -29,7 +29,7 @@ namespace FallenLand
         void Start()
         {
             //Center the camera
-            Camera.main.transform.position = new Vector3(12 * MapCreation.MAP_SCALE, MinZoom, 5 * MapCreation.MAP_SCALE);
+            Camera.main.transform.position = new Vector3(12 * MapCreation.HEX_PREFAB_SCALE, MinZoom, 5 * MapCreation.HEX_PREFAB_SCALE);
         }
 
         void Update()
@@ -74,8 +74,8 @@ namespace FallenLand
                 //Ensure we are still in the the map bounds
                 float newPanX = transform.position.x;
                 float newPanZ = transform.position.z;
-                newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.MAP_SCALE, 27 * MapCreation.MAP_SCALE);
-                newPanZ = Mathf.Clamp(newPanZ, -1 * MapCreation.MAP_SCALE, 16 * MapCreation.MAP_SCALE);
+                newPanX = Mathf.Clamp(newPanX, -1 * MapCreation.HEX_PREFAB_SCALE, 27 * MapCreation.HEX_PREFAB_SCALE);
+                newPanZ = Mathf.Clamp(newPanZ, -1 * MapCreation.HEX_PREFAB_SCALE, 16 * MapCreation.HEX_PREFAB_SCALE);
                 //Update the camera if we went over the bounds
                 transform.position = new Vector3(newPanX, transform.position.y, newPanZ);
             }

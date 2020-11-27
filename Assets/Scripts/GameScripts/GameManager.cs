@@ -34,6 +34,7 @@ namespace FallenLand
 		private bool ReceivedMyFactionInformation;
 		private MyTurnManager TurnManager;
 		private Phases CurrentPhase;
+		private GamePieceManager PieceManager;
 
 		#region UnityFunctions
 		void Start()
@@ -45,6 +46,7 @@ namespace FallenLand
 			TurnManager.TurnManagerListener = this;
 			CurrentPhase = Phases.Game_Start_Setup;
 			NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
+			PieceManager = this.gameObject.AddComponent<GamePieceManager>();
 
 			registerPhotonCallbacks();
 
@@ -69,6 +71,12 @@ namespace FallenLand
 			{
 				Debug.LogError("Didn't find user's id...");
 			}
+
+			//Create the map layout according to the game state that was passed in
+			GameObject mapCreationGO = GameObject.Find("Map");
+			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
+			mapCreation.CreateMap();
+			PieceManager.SetMap(mapCreation);
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
@@ -103,18 +111,13 @@ namespace FallenLand
 					newPlayer.SetTownHealth(StartingTownHealth);
 					newPlayer.SetPrestige(StartingPrestige);
 					Players[playerIndex] = newPlayer;
+					PieceManager.CreatePiece(faction);
 				}
 				ReceivedMyFactionInformation = true;
 
 				//Interpret any modifiers
 				//TODO when these are implemented
 			}
-
-			//Create the map layout according to the game state that was passed in
-			GameObject mapCreationGO = GameObject.Find("Map");
-			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
-			mapCreation.CreateMap();
-
 
 			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
 			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
@@ -281,6 +284,8 @@ namespace FallenLand
 				{
 					ReceivedMyFactionInformation = true;
 				}
+				
+				PieceManager.CreatePiece(faction);
 			}
 			else if (eventCode == Constants.EvSendPlayerInformation)
 			{
@@ -434,7 +439,7 @@ namespace FallenLand
 
 		public Dictionary<Skills, int> GetActiveVehicleStats(int playerIndex)
 		{
-			Dictionary<Skills, int> stats = null;
+			Dictionary<Skills, int> stats = new Dictionary<Skills, int>();
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				stats = Players[playerIndex].GetActiveVehicleStats();

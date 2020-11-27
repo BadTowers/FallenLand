@@ -41,8 +41,8 @@ namespace Tests
 		public IEnumerator TestStartingCamPosition()
 		{
             const int STARTING_Y = 10;
-            const int STARTING_X = 12 * MapCreation.MAP_SCALE;
-            const int STARTING_Z = 5 * MapCreation.MAP_SCALE;
+            const int STARTING_X = 12 * MapCreation.HEX_PREFAB_SCALE;
+            const int STARTING_Z = 5 * MapCreation.HEX_PREFAB_SCALE;
             yield return null;
 
             Assert.AreEqual(STARTING_X, Cam.transform.position.x);

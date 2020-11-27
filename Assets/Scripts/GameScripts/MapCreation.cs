@@ -7,15 +7,24 @@ namespace FallenLand
 	{
 		public const int MAP_HEIGHT = 23;
 		public const int MAP_WIDTH = 34;
-		public const int MAP_SCALE = 3;
+		public const int HEX_PREFAB_SCALE = 3;
+		public const float HEX_HEIGHT = 0.134497f * HEX_PREFAB_SCALE; //snagged from blender
+		public const float HEX_WIDTH = 1.0001f * HEX_PREFAB_SCALE;
+		public const float HEX_LENGTH = 0.86834f * HEX_PREFAB_SCALE;
 
-		private const float LeftRightOffset = .860f * MAP_SCALE;
-		private const float UpDownOffset = .740f * MAP_SCALE;
+		private const float LeftRightOffset = .860f * HEX_PREFAB_SCALE;
+		private const float UpDownOffset = .740f * HEX_PREFAB_SCALE;
 		private const int NUM_RANDOM_LOCATIONS = 100;
-		private GameObject[,] MapOfHexes;
+		private readonly GameObject[,] MapOfHexes;
 		private List<Faction> Factions;
 		private GameObject HexTilePrefab;
 		private MapLayout MapLayout;
+
+		public MapCreation()
+		{
+			//Set map size
+			MapOfHexes = new GameObject[MAP_WIDTH, MAP_HEIGHT];
+		}
 
 		public void CreateMap()
 		{
@@ -24,9 +33,6 @@ namespace FallenLand
 			{
 				Debug.LogError("HexTilePrefab null");
 			}
-
-			//Set map size
-			MapOfHexes = new GameObject[MAP_WIDTH, MAP_HEIGHT];
 
 			if (MapLayout == null)
 			{
@@ -55,8 +61,9 @@ namespace FallenLand
 					//Create a hex and change its starting information
 					if (MapLayout.IsHexInGame(LR, UD))
 					{
+						//Debug.Log("lr " + lrPos + " ud " + udPos);
 						curHex = (GameObject)Instantiate(HexTilePrefab, new Vector3(lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
-						configureHex(curHex, LR, UD);
+						configureHex(curHex, LR, UD, lrPos, udPos);
 					}
 
 					//Store the hex
@@ -65,7 +72,33 @@ namespace FallenLand
 			}
 		}
 
-		private void configureHex(GameObject go, int x, int y)
+		public GameWorldCoordinates GetGameLocationFromCoordinates(Coordinates coords)
+		{
+			GameWorldCoordinates worldCoords = null;
+			for (int LR = 0; LR < MAP_WIDTH; LR++)
+			{
+				for (int UD = 0; UD < MAP_HEIGHT; UD++)
+				{
+					GameObject go = MapOfHexes[LR, UD];
+					if (go != null)
+					{
+						Hex hex = go.GetComponent<Hex>();
+						if (hex != null && hex.IsFactionBase())
+						{
+							Coordinates baseLoc = hex.GetFaction().GetBaseLocation();
+							if (baseLoc.Equals(coords))
+							{
+								worldCoords = hex.GetGameWorldCoords();
+							}
+						}
+					}
+				}
+			}
+
+			return worldCoords;
+		}
+
+		private void configureHex(GameObject go, int x, int y, float xInGameWorld, float yInGameWorld)
 		{
 			go.name = "Hex_" + x + "_" + y; //Name the hex
 			go.transform.SetParent(this.transform); //Put the hex into the map object
@@ -73,8 +106,10 @@ namespace FallenLand
 
 			//Define the hex's attributes
 			Coordinates coords = new Coordinates(x, y);
+			GameWorldCoordinates gameCoords = new GameWorldCoordinates(xInGameWorld, yInGameWorld);
 			go.AddComponent<Hex>();
 			go.GetComponent<Hex>().SetCoordinates(coords);
+			go.GetComponent<Hex>().SetGameWorldCoordinates(gameCoords);
 			go.GetComponent<Hex>().SetIsCity(MapLayout.IsCity(coords));
 			go.GetComponent<Hex>().SetIsMountain(MapLayout.IsMountain(coords));
 			go.GetComponent<Hex>().SetIsRad(MapLayout.IsRad(coords));

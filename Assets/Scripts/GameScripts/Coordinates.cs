@@ -30,16 +30,18 @@ namespace FallenLand
             return Y;
         }
 
-        public override bool Equals(object Obj)
+        public override bool Equals(object obj)
         {
-            if (X == ((Coordinates)Obj).X && Y == ((Coordinates)Obj).Y)
+            bool areEqual = false;
+            if (obj is Coordinates rightHand)
             {
-                return true;
+                if (X == rightHand.X && Y == rightHand.Y)
+                {
+                    areEqual = true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return areEqual;
         }
 
         public override int GetHashCode()

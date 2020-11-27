@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace FallenLand
 {
 	public class Hex : MonoBehaviour, IHexInterface
 	{
 		private Coordinates CoordinatesInstance;
+		private GameWorldCoordinates GameWorldCoords;
 		private bool IsCityHex;
 		private bool IsRadHex;
 		private bool IsMountainHex;
@@ -20,6 +21,7 @@ namespace FallenLand
 		public Hex()
 		{
 			CoordinatesInstance = new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION);
+			GameWorldCoords = new GameWorldCoordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION);
 			FactionInstance = new Faction("invalid faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
 		}
 
@@ -51,6 +53,11 @@ namespace FallenLand
 			}
 		}
 
+		public void SetGameWorldCoordinates(GameWorldCoordinates gameCoords)
+		{
+			GameWorldCoords = gameCoords;
+		}
+
 		public void SetCoordinates(int x, int y)
 		{
 			setXAndYCoordinates(x, y);
@@ -59,6 +66,11 @@ namespace FallenLand
 		public Coordinates GetCoordinates()
 		{
 			return CoordinatesInstance;
+		}
+
+		public GameWorldCoordinates GetGameWorldCoords()
+		{
+			return GameWorldCoords;
 		}
 
 		public bool IsCity()
