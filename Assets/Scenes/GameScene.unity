@@ -858,10 +858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f232e7d1c8367f41aa7a5e889b0f3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanSpeed: 0.6
-  ZoomSpeed: 4
-  MinZoom: 20
-  MaxZoom: 50
 --- !u!1 &69035737
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,7 +3094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.4470588, g: 0.9040296, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6093,7 +6089,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 266930837}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14969,7 +14965,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 339198848}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15945,7 +15941,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1860161525}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -17608,7 +17604,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 755921196}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24004,7 +24000,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1131498503}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24886,7 +24882,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 665422820}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
