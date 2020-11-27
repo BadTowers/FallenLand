@@ -6,97 +6,97 @@ namespace FallenLand
 	{
 		protected enum HexType { CITY, RAD, MOUNTAIN, PLAINS, WATER, BASE, RAND_LOC, RESOURCE, VALID };
 
-		protected Dictionary<HexType, bool>[,] arrayOfHexes = new Dictionary<HexType, bool>[MapCreation.MAP_WIDTH, MapCreation.MAP_HEIGHT]; //2D array of dictionaries that map an int from the enum above -> boolean
+		protected Dictionary<HexType, bool>[,] ArrayOfHexes = new Dictionary<HexType, bool>[MapCreation.MAP_WIDTH, MapCreation.MAP_HEIGHT]; //2D array of dictionaries that map an int from the enum above -> boolean
 
 
 		public bool IsHexInGame(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.VALID];
+			return ArrayOfHexes[x, y][HexType.VALID];
 		}
 
 		public bool IsHexInGame(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.VALID];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.VALID];
 		}
 
 		public bool IsCity(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.CITY];
+			return ArrayOfHexes[x, y][HexType.CITY];
 		}
 
 		public bool IsCity(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.CITY];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.CITY];
 		}
 
 		public bool IsRad(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.RAD];
+			return ArrayOfHexes[x, y][HexType.RAD];
 		}
 
 		public bool IsRad(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.RAD];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.RAD];
 		}
 
 		public bool IsMountain(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.MOUNTAIN];
+			return ArrayOfHexes[x, y][HexType.MOUNTAIN];
 		}
 
 		public bool IsMountain(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.MOUNTAIN];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.MOUNTAIN];
 		}
 
 		public bool IsPlains(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.PLAINS];
+			return ArrayOfHexes[x, y][HexType.PLAINS];
 		}
 
 		public bool IsPlains(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.PLAINS];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.PLAINS];
 		}
 
 		public bool IsWater(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.WATER];
+			return ArrayOfHexes[x, y][HexType.WATER];
 		}
 
 		public bool IsWater(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.WATER];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.WATER];
 		}
 
 		public bool IsFactionBase(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.BASE];
+			return ArrayOfHexes[x, y][HexType.BASE];
 		}
 
 		public bool IsFactionBase(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.BASE];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.BASE];
 		}
 
 		public bool IsRandomLocation(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.RAND_LOC];
+			return ArrayOfHexes[x, y][HexType.RAND_LOC];
 		}
 
 		public bool IsRandomLocation(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.RAND_LOC];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.RAND_LOC];
 		}
 
 		public bool IsResource(int x, int y)
 		{
-			return arrayOfHexes[x, y][HexType.RESOURCE];
+			return ArrayOfHexes[x, y][HexType.RESOURCE];
 		}
 
 		public bool IsResource(Coordinates coords)
 		{
-			return arrayOfHexes[coords.GetX(), coords.GetY()][HexType.RESOURCE];
+			return ArrayOfHexes[coords.GetX(), coords.GetY()][HexType.RESOURCE];
 		}
 
 		public abstract void InitializeMapOfHexes();
