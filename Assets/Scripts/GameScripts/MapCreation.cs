@@ -163,7 +163,7 @@ namespace FallenLand
 		private void createBoard()
 		{
 			GameBoardPrefab = (GameObject)Resources.Load("Prefabs/GameBoard", typeof(GameObject));
-			GameObject boardObject = (GameObject)Instantiate(GameBoardPrefab, new Vector3(44.5f, -0.01f, 24.6f), Quaternion.identity); //Create hexTile, at given vector, with no rotation
+			GameObject boardObject = (GameObject)Instantiate(GameBoardPrefab, new Vector3(44.5f, -0.01f, 24.6f), Quaternion.identity);
 			boardObject.transform.Rotate(-90, 0, -90);
 		}
 	}
