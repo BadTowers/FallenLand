@@ -19,6 +19,7 @@ namespace FallenLand
 		private List<Faction> Factions;
 		private GameObject HexTilePrefab;
 		private MapLayout MapLayout;
+		private GameObject GameBoardPrefab;
 
 		public MapCreation()
 		{
@@ -70,6 +71,8 @@ namespace FallenLand
 					MapOfHexes[LR, UD] = curHex;
 				}
 			}
+
+			createBoard();
 		}
 
 		public GameWorldCoordinates GetGameLocationFromCoordinates(Coordinates coords)
@@ -155,6 +158,13 @@ namespace FallenLand
 			string fileName = "Hexes/Hex_" + x.ToString() + "_" + y.ToString();
 			Texture2D loadTex = Resources.Load(fileName) as Texture2D;
 			go.GetComponentInChildren<Renderer>().material.mainTexture = loadTex;
+		}
+
+		private void createBoard()
+		{
+			GameBoardPrefab = (GameObject)Resources.Load("Prefabs/GameBoard", typeof(GameObject));
+			GameObject boardObject = (GameObject)Instantiate(GameBoardPrefab, new Vector3(44.5f, -0.01f, 24.6f), Quaternion.identity); //Create hexTile, at given vector, with no rotation
+			boardObject.transform.Rotate(-90, 0, -90);
 		}
 	}
 }
