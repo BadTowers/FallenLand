@@ -3,27 +3,27 @@ using UnityEngine;
 
 namespace FallenLand
 {
-    public class GamePieceManager : MonoBehaviour
+    public class PlayerPieceManager : MonoBehaviour
     {
-        private List<GameObject> GamePiecesPrefabs;
+        private List<GameObject> PlayerPiecePrefabs;
         private MapCreation Map;
         private const float X_OFFSET = 0.04f;
         private const float Y_OFFSET = 0f;
 
-        public GamePieceManager()
+        public PlayerPieceManager()
         {
         }
 
         public void CreatePiece(Faction faction)
         {
-            GamePiecesPrefabs = new List<GameObject>();
+            PlayerPiecePrefabs = new List<GameObject>();
             string pieceName = "Piece" + faction.GetId().ToString();
-            GamePiecesPrefabs.Add((GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject)));
+            PlayerPiecePrefabs.Add((GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject)));
 
             if (Map != null)
             {
                 GameWorldCoordinates gameCoords = Map.GetGameLocationFromCoordinates(faction.GetBaseLocation());
-                GameObject curPiece = (GameObject)Instantiate(GamePiecesPrefabs[0], new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
+                GameObject curPiece = (GameObject)Instantiate(PlayerPiecePrefabs[0], new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
                 curPiece.transform.Rotate(0, 180, 0);
                 curPiece.name = pieceName;
                 curPiece.isStatic = true;

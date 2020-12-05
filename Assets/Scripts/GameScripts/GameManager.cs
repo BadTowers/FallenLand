@@ -34,7 +34,7 @@ namespace FallenLand
 		private bool ReceivedMyFactionInformation;
 		private MyTurnManager TurnManager;
 		private Phases CurrentPhase;
-		private GamePieceManager PieceManager;
+		private PlayerPieceManager PieceManager;
 
 		#region UnityFunctions
 		void Start()
@@ -46,7 +46,7 @@ namespace FallenLand
 			TurnManager.TurnManagerListener = this;
 			CurrentPhase = Phases.Game_Start_Setup;
 			NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
-			PieceManager = this.gameObject.AddComponent<GamePieceManager>();
+			PieceManager = this.gameObject.AddComponent<PlayerPieceManager>();
 
 			registerPhotonCallbacks();
 
