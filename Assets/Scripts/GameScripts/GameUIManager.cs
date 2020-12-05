@@ -283,17 +283,17 @@ namespace FallenLand
 
         public void OnTradeAuctionHousePress()
         {
-            TradeOverlay.SetActive(true);
+            //TradeOverlay.SetActive(true);
         }
 
         public void OnCancelTradePress()
         {
-            TradeOverlay.SetActive(false);
+            //TradeOverlay.SetActive(false);
         }
 
         public void OnSendTradePress()
         {
-            TradeOverlay.SetActive(false);
+            //TradeOverlay.SetActive(false);
             //TODO show "trade sent" somewhere
             //TODO actually send the trade
         }
