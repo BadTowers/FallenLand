@@ -26,7 +26,7 @@ namespace FallenLand
 			SlotIndex = Constants.DONT_CARE;
 		}
 
-		public static object DeserializePlayer(byte[] data)
+		public static object DeserializePlayerCard(byte[] data)
 		{
 			int playerIndex = data[0];
 			byte actionByte = data[1];
@@ -41,7 +41,7 @@ namespace FallenLand
 			return result;
 		}
 
-		public static byte[] SerializePlayer(object customType)
+		public static byte[] SerializePlayerCard(object customType)
 		{
 			PlayerCardNetworking playerInfo = (PlayerCardNetworking)customType;
 			List<byte> byteListFinal = new List<byte>

@@ -1092,8 +1092,8 @@ namespace FallenLand
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
 			PhotonPeer.RegisterType(typeof(FactionNetworking), Constants.EvSendFactionInformation, FactionNetworking.SerializeFaction, FactionNetworking.DeserializeFaction);
-			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvSendPlayerInformation, PlayerCardNetworking.SerializePlayer, PlayerCardNetworking.DeserializePlayer);
-			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerCardNetworking.SerializePlayer, PlayerCardNetworking.DeserializePlayer);
+			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvSendPlayerInformation, PlayerCardNetworking.SerializePlayerCard, PlayerCardNetworking.DeserializePlayerCard);
+			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerCardNetworking.SerializePlayerCard, PlayerCardNetworking.DeserializePlayerCard);
 			PhotonPeer.RegisterType(typeof(MissionLocationNetworking), Constants.EvMissionLocation, MissionLocationNetworking.SerializeMissionLocation, MissionLocationNetworking.DeserializeMissionLocation);
 		}
 
