@@ -5,14 +5,11 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Realtime;
-using Photon.Pun;
-using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace FallenLand
 {
-    public class MyTurnManager : MonoBehaviourPunCallbacks, IOnEventCallback
+    public class MyTurnManager : Photon.Pun.MonoBehaviourPunCallbacks, Photon.Realtime.IOnEventCallback
     {
         Photon.Realtime.Player Sender;
         private bool _MovedToNextPlayerAlready = false;
@@ -22,11 +19,11 @@ namespace FallenLand
         {
             get
             {
-                return PhotonNetwork.CurrentRoom.GetTurn();
+                return Photon.Pun.PhotonNetwork.CurrentRoom.GetTurn();
             }
             private set
             {
-                PhotonNetwork.CurrentRoom.SetTurn(value);
+                Photon.Pun.PhotonNetwork.CurrentRoom.SetTurn(value);
             }
         }
 
@@ -34,11 +31,11 @@ namespace FallenLand
         {
             get
             {
-                return PhotonNetwork.CurrentRoom.GetPhase();
+                return Photon.Pun.PhotonNetwork.CurrentRoom.GetPhase();
             }
             private set
             {
-                PhotonNetwork.CurrentRoom.SetPhase(value);
+                Photon.Pun.PhotonNetwork.CurrentRoom.SetPhase(value);
             }
         }
 
@@ -46,11 +43,11 @@ namespace FallenLand
         {
             get
             {
-                return PhotonNetwork.CurrentRoom.GetCurrentPlayer();
+                return Photon.Pun.PhotonNetwork.CurrentRoom.GetCurrentPlayer();
             }
             private set
             {
-                PhotonNetwork.CurrentRoom.SetCurrentPlayer(value);
+                Photon.Pun.PhotonNetwork.CurrentRoom.SetCurrentPlayer(value);
             }
         }
 
@@ -58,7 +55,7 @@ namespace FallenLand
         {
             get
             {
-                return ((float)(PhotonNetwork.ServerTimestamp - PhotonNetwork.CurrentRoom.GetTurnStart())) / 1000.0f;
+                return ((float)(Photon.Pun.PhotonNetwork.ServerTimestamp - Photon.Pun.PhotonNetwork.CurrentRoom.GetTurnStart())) / 1000.0f;
             }
         }
 
@@ -66,7 +63,7 @@ namespace FallenLand
         {
             get
             {
-                return PhotonNetwork.CurrentRoom != null && Turn > 0 && this.FinishedPlayers.Count == PhotonNetwork.CurrentRoom.PlayerCount;
+                return Photon.Pun.PhotonNetwork.CurrentRoom != null && Turn > 0 && this.FinishedPlayers.Count == Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount;
             }
         }
 
@@ -74,14 +71,14 @@ namespace FallenLand
         {
             get
             {
-                return this.FinishedPlayers.Contains(PhotonNetwork.LocalPlayer);
+                return this.FinishedPlayers.Contains(Photon.Pun.PhotonNetwork.LocalPlayer);
             }
         }
 
         void Start()
         {
             CurrentFirstPlayerIndex = 0;
-            CurrentPlayer = PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
+            CurrentPlayer = Photon.Pun.PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
         }
 
 
@@ -92,8 +89,8 @@ namespace FallenLand
         public void BeginNextTurn()
         {
             Debug.Log("TurnManager: BeginNextTurn");
-            CurrentFirstPlayerIndex = (CurrentFirstPlayerIndex + 1) % PhotonNetwork.PlayerList.Length;
-            CurrentPlayer = PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
+            CurrentFirstPlayerIndex = (CurrentFirstPlayerIndex + 1) % Photon.Pun.PhotonNetwork.PlayerList.Length;
+            CurrentPlayer = Photon.Pun.PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
             _MovedToNextPlayerAlready = true;
             Turn++;
         }
@@ -108,7 +105,7 @@ namespace FallenLand
             }
             else
             {
-                CurrentPlayer = PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
+                CurrentPlayer = Photon.Pun.PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
                 _MovedToNextPlayerAlready = true;
                 Phase++;
             }
@@ -126,15 +123,15 @@ namespace FallenLand
                 };
 
                 byte evCode = (finished) ? Constants.EvFinalMove : Constants.EvMove;
-                PhotonNetwork.RaiseEvent(evCode, moveHt, new RaiseEventOptions() { CachingOption = EventCaching.AddToRoomCache }, SendOptions.SendReliable);
+                Photon.Pun.PhotonNetwork.RaiseEvent(evCode, moveHt, new Photon.Realtime.RaiseEventOptions() { CachingOption = Photon.Realtime.EventCaching.AddToRoomCache }, ExitGames.Client.Photon.SendOptions.SendReliable);
                 if (finished)
                 {
-                    PhotonNetwork.LocalPlayer.SetFinishedTurn(Turn);
+                    Photon.Pun.PhotonNetwork.LocalPlayer.SetFinishedTurn(Turn);
                 }
 
                 // the server won't send the event back to the origin (by default). to get the event, call it locally
                 // (note: the order of events might be mixed up as we do this locally)
-                ProcessOnEvent(evCode, moveHt, PhotonNetwork.LocalPlayer.ActorNumber);
+                ProcessOnEvent(evCode, moveHt, Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber);
             }
         }
 
@@ -154,7 +151,7 @@ namespace FallenLand
         {
             if (senderId != -1)
             {
-                Sender = PhotonNetwork.CurrentRoom.GetPlayer(senderId);
+                Sender = Photon.Pun.PhotonNetwork.CurrentRoom.GetPlayer(senderId);
                 
                 switch (eventCode)
                 {
@@ -177,11 +174,11 @@ namespace FallenLand
                                 FinishedPlayers.Add(Sender);
 
                                 TurnManagerListener.OnPlayerFinished(Sender, phase, move);
-                                for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+                                for (int i = 0; i < Photon.Pun.PhotonNetwork.PlayerList.Length; i++)
                                 {
-                                    if (PhotonNetwork.PlayerList[i] == Sender && !_MovedToNextPlayerAlready)
+                                    if (Photon.Pun.PhotonNetwork.PlayerList[i] == Sender && !_MovedToNextPlayerAlready)
                                     {
-                                        CurrentPlayer = PhotonNetwork.PlayerList[(i+1) % PhotonNetwork.PlayerList.Length];
+                                        CurrentPlayer = Photon.Pun.PhotonNetwork.PlayerList[(i+1) % Photon.Pun.PhotonNetwork.PlayerList.Length];
                                         break;
                                     }
                                 }
@@ -198,7 +195,7 @@ namespace FallenLand
             }
         }
 
-		public void OnEvent(EventData photonEvent)
+		public void OnEvent(ExitGames.Client.Photon.EventData photonEvent)
         {
             this.ProcessOnEvent(photonEvent.Code, photonEvent.CustomData, photonEvent.Sender);
         }
@@ -245,7 +242,7 @@ namespace FallenLand
         public static readonly string FinishedTurnPropKey = "FToA";
         public static readonly string CurrentPlayerKey = "CurPlayer";
 
-        public static void SetTurn(this Room room, int turn)
+        public static void SetTurn(this Photon.Realtime.Room room, int turn)
         {
             if (room != null && room.CustomProperties != null)
             {
@@ -258,7 +255,7 @@ namespace FallenLand
             }
         }
 
-        public static void SetPhase(this Room room, Phases phase)
+        public static void SetPhase(this Photon.Realtime.Room room, Phases phase)
         {
             if (room != null && room.CustomProperties != null)
             {
@@ -271,7 +268,7 @@ namespace FallenLand
             }
         }
 
-        public static int GetTurn(this RoomInfo room)
+        public static int GetTurn(this Photon.Realtime.RoomInfo room)
         {
             int turn = 0;
             if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(TurnPropKey))
@@ -282,7 +279,7 @@ namespace FallenLand
             return turn;
         }
 
-        public static Phases GetPhase(this RoomInfo room)
+        public static Phases GetPhase(this Photon.Realtime.RoomInfo room)
         {
             Phases phase = Phases.Game_Start_Setup;
             if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(PhasePropKey))
@@ -293,7 +290,7 @@ namespace FallenLand
             return phase;
         }
 
-        public static int GetTurnStart(this RoomInfo room)
+        public static int GetTurnStart(this Photon.Realtime.RoomInfo room)
         {
             int turn = 0;
             if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(TurnStartPropKey))
@@ -306,7 +303,7 @@ namespace FallenLand
 
         public static int GetFinishedTurn(this Photon.Realtime.Player player)
         {
-            Room room = PhotonNetwork.CurrentRoom;
+            Photon.Realtime.Room room = Photon.Pun.PhotonNetwork.CurrentRoom;
             int finishedTurn = 0;
             if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(TurnPropKey))
             {
@@ -318,7 +315,7 @@ namespace FallenLand
 
         public static void SetFinishedTurn(this Photon.Realtime.Player player, int turn)
         {
-            Room room = PhotonNetwork.CurrentRoom;
+            Photon.Realtime.Room room = Photon.Pun.PhotonNetwork.CurrentRoom;
             if (room != null && room.CustomProperties != null)
             {
                 string propKey = FinishedTurnPropKey + player.ActorNumber;
@@ -329,21 +326,21 @@ namespace FallenLand
             }
         }
 
-        public static Photon.Realtime.Player GetCurrentPlayer(this RoomInfo room)
+        public static Photon.Realtime.Player GetCurrentPlayer(this Photon.Realtime.RoomInfo room)
         {
             Photon.Realtime.Player playerToReturn = null;
             if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(CurrentPlayerKey))
             {
                 int currentActorNumber = (int)room.CustomProperties[CurrentPlayerKey];
-                playerToReturn = PhotonNetwork.CurrentRoom.GetPlayer(currentActorNumber);
+                playerToReturn = Photon.Pun.PhotonNetwork.CurrentRoom.GetPlayer(currentActorNumber);
             }
 
             return playerToReturn;
         }
 
-        public static void SetCurrentPlayer(this RoomInfo roomInfo, Photon.Realtime.Player player)
+        public static void SetCurrentPlayer(this Photon.Realtime.RoomInfo roomInfo, Photon.Realtime.Player player)
         {
-            Room room = PhotonNetwork.CurrentRoom;
+            Photon.Realtime.Room room = Photon.Pun.PhotonNetwork.CurrentRoom;
             if (room != null && room.CustomProperties != null && player != null)
             {
                 Hashtable currentPlayerHashTable = new Hashtable();
