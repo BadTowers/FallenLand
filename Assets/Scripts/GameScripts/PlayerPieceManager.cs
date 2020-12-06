@@ -19,7 +19,7 @@ namespace FallenLand
         {
             if (Map != null)
             {
-                string pieceName = "Piece" + faction.GetId().ToString();
+                string pieceName = "PlayerPiece" + faction.GetId().ToString();
                 GameObject playerPiecePrefab = (GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject));
 
                 GameWorldCoordinates gameCoords = Map.GetFactionGameLocationFromCoordinates(faction.GetBaseLocation());
@@ -28,7 +28,7 @@ namespace FallenLand
                 curPiece.name = pieceName;
                 curPiece.isStatic = true;
 
-                curPiece.transform.Find("CylinderOuter").GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+                curPiece.transform.Find("CylinderOuter").GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
 
                 PlayerPieces.Add(curPiece);
             }
