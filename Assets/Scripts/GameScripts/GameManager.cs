@@ -28,13 +28,16 @@ namespace FallenLand
 		private const int StartingSalvage = 10;
 		private const int StartingTownHealth = 30;
 		private const int StartingPrestige = 1;
+		private const int NumberOfMissions = 7;
 		private string MyUserId;
 		private GameObject NewGameState;
 		private bool GameIsSetUpAtStart;
 		private bool ReceivedMyFactionInformation;
 		private MyTurnManager TurnManager;
 		private Phases CurrentPhase;
-		private PlayerPieceManager PieceManager;
+		private PlayerPieceManager PlayerPieceManagerInst;
+		private MissionManager MissionManagerInst;
+		private Dice DiceRoller;
 
 		#region UnityFunctions
 		void Start()
@@ -46,7 +49,9 @@ namespace FallenLand
 			TurnManager.TurnManagerListener = this;
 			CurrentPhase = Phases.Game_Start_Setup;
 			NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
-			PieceManager = this.gameObject.AddComponent<PlayerPieceManager>();
+			PlayerPieceManagerInst = this.gameObject.AddComponent<PlayerPieceManager>();
+			MissionManagerInst = new MissionManager();
+			DiceRoller = new Dice();
 
 			registerPhotonCallbacks();
 
@@ -76,7 +81,8 @@ namespace FallenLand
 			GameObject mapCreationGO = GameObject.Find("Map");
 			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
 			mapCreation.CreateMap();
-			PieceManager.SetMap(mapCreation);
+			PlayerPieceManagerInst.SetMap(mapCreation);
+			MissionManagerInst.SetMap(mapCreation);
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
@@ -89,6 +95,20 @@ namespace FallenLand
 				//if(gameMode == GameInformation.GameModes.SoloII) {
 				//	soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
 				//}
+
+				//Generate the mission locations
+				List<int> randomLocations = new List<int>();
+				for (int missionNumber = 1; missionNumber <= NumberOfMissions; missionNumber++)
+				{
+					int missionLocation;
+					do
+					{
+						missionLocation = DiceRoller.RollDice(100);
+					} while (randomLocations.Contains(missionLocation));
+
+					randomLocations.Add(missionLocation);
+					MissionManagerInst.AddMissionLocation(missionNumber, missionLocation);
+				}
 
 				//Send the factions to the other players
 				Dictionary<int, string> factions = NewGameState.GetComponent<GameCreation>().GetFactions();
@@ -111,7 +131,7 @@ namespace FallenLand
 					newPlayer.SetTownHealth(StartingTownHealth);
 					newPlayer.SetPrestige(StartingPrestige);
 					Players[playerIndex] = newPlayer;
-					PieceManager.CreatePiece(faction);
+					PlayerPieceManagerInst.CreatePiece(faction);
 				}
 				ReceivedMyFactionInformation = true;
 
@@ -285,7 +305,7 @@ namespace FallenLand
 					ReceivedMyFactionInformation = true;
 				}
 				
-				PieceManager.CreatePiece(faction);
+				PlayerPieceManagerInst.CreatePiece(faction);
 			}
 			else if (eventCode == Constants.EvSendPlayerInformation)
 			{

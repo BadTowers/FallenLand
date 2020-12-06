@@ -75,7 +75,7 @@ namespace FallenLand
 			createBoard();
 		}
 
-		public GameWorldCoordinates GetGameLocationFromCoordinates(Coordinates coords)
+		public GameWorldCoordinates GetFactionGameLocationFromCoordinates(Coordinates coords)
 		{
 			GameWorldCoordinates worldCoords = null;
 			for (int LR = 0; LR < MAP_WIDTH; LR++)
@@ -90,6 +90,32 @@ namespace FallenLand
 						{
 							Coordinates baseLoc = hex.GetFaction().GetBaseLocation();
 							if (baseLoc.Equals(coords))
+							{
+								worldCoords = hex.GetGameWorldCoords();
+							}
+						}
+					}
+				}
+			}
+
+			return worldCoords;
+		}
+
+		public GameWorldCoordinates GetRandomLocGameLocationFromCoordinates(Coordinates coords)
+		{
+			GameWorldCoordinates worldCoords = null;
+			for (int LR = 0; LR < MAP_WIDTH; LR++)
+			{
+				for (int UD = 0; UD < MAP_HEIGHT; UD++)
+				{
+					GameObject go = MapOfHexes[LR, UD];
+					if (go != null)
+					{
+						Hex hex = go.GetComponent<Hex>();
+						if (hex != null && hex.IsRandomLocation())
+						{
+							Coordinates randomLoc = hex.GetCoordinates();
+							if (randomLoc.Equals(coords))
 							{
 								worldCoords = hex.GetGameWorldCoords();
 							}

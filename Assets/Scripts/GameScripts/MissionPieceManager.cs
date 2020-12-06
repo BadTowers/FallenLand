@@ -9,6 +9,7 @@ namespace FallenLand
         private MapCreation Map;
         private const float X_OFFSET = 0.04f;
         private const float Y_OFFSET = 0f;
+        private const float Z_OFFSET = 0.1f;
 
         public MissionPieceManager()
         {
@@ -20,12 +21,11 @@ namespace FallenLand
             if (Map != null)
             {
                 string pieceName = "MissionPiece" + missionNum.ToString();
-                Debug.Log("Mission piece name is " + pieceName);
                 GameObject missionPrefab = (GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject));
 
-                GameWorldCoordinates gameCoords = Map.GetGameLocationFromCoordinates(coords);
-                GameObject curPiece = (GameObject)Instantiate(missionPrefab, new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
-                curPiece.transform.Rotate(0, 180, 0);
+                GameWorldCoordinates gameCoords = Map.GetRandomLocGameLocationFromCoordinates(coords);
+                GameObject curPiece = (GameObject)Instantiate(missionPrefab, new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT + Z_OFFSET, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
+                curPiece.transform.Rotate(-90, 180, 0);
                 curPiece.name = pieceName;
                 curPiece.isStatic = true;
 

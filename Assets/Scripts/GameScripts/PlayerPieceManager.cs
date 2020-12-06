@@ -22,7 +22,7 @@ namespace FallenLand
                 string pieceName = "Piece" + faction.GetId().ToString();
                 GameObject playerPiecePrefab = (GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject));
 
-                GameWorldCoordinates gameCoords = Map.GetGameLocationFromCoordinates(faction.GetBaseLocation());
+                GameWorldCoordinates gameCoords = Map.GetFactionGameLocationFromCoordinates(faction.GetBaseLocation());
                 GameObject curPiece = (GameObject)Instantiate(playerPiecePrefab, new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
                 curPiece.transform.Rotate(0, 180, 0);
                 curPiece.name = pieceName;
