@@ -8,6 +8,7 @@ namespace FallenLand
         private GameObject MissionPieceManagerGameObject;
         private MissionPieceManager MissionPieceManagerInst;
         private List<Coordinates> MissionLocations;
+        private List<int> RandomNumberLocations;
 
         public MissionManager()
         {
@@ -15,6 +16,7 @@ namespace FallenLand
             MissionPieceManagerGameObject.AddComponent<MissionPieceManager>();
             MissionPieceManagerInst = MissionPieceManagerGameObject.GetComponent<MissionPieceManager>();
             MissionLocations = new List<Coordinates>();
+            RandomNumberLocations = new List<int>();
         }
 
         public void SetMap(MapCreation map)
@@ -26,7 +28,13 @@ namespace FallenLand
         {
             Coordinates coord = DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[randomLocationNumber];
             MissionLocations.Add(coord);
+            RandomNumberLocations.Add(randomLocationNumber);
             MissionPieceManagerInst.CreatePiece(missionNumber, coord);
+        }
+
+        public List<int> GetRandomNumberLocations()
+        {
+            return RandomNumberLocations;
         }
     }
 }
