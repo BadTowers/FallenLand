@@ -110,6 +110,8 @@ namespace FallenLand
 					MissionManagerInst.AddMissionLocation(missionNumber, missionLocation);
 				}
 
+				//TODO next send these to the other player and update the callback to handle them populating the map too
+
 				//Send the factions to the other players
 				Dictionary<int, string> factions = NewGameState.GetComponent<GameCreation>().GetFactions();
 				foreach (KeyValuePair<int, string> entry in factions)
