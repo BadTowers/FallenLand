@@ -5,30 +5,32 @@ namespace FallenLand
 {
     public class PlayerPieceManager : MonoBehaviour
     {
-        private List<GameObject> PlayerPiecePrefabs;
+        private List<GameObject> PlayerPieces;
         private MapCreation Map;
         private const float X_OFFSET = 0.04f;
         private const float Y_OFFSET = 0f;
 
         public PlayerPieceManager()
         {
+            PlayerPieces = new List<GameObject>();
         }
 
         public void CreatePiece(Faction faction)
         {
-            PlayerPiecePrefabs = new List<GameObject>();
-            string pieceName = "Piece" + faction.GetId().ToString();
-            PlayerPiecePrefabs.Add((GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject)));
-
             if (Map != null)
             {
+                string pieceName = "Piece" + faction.GetId().ToString();
+                GameObject playerPiecePrefab = (GameObject)Resources.Load("Prefabs/" + pieceName, typeof(GameObject));
+
                 GameWorldCoordinates gameCoords = Map.GetGameLocationFromCoordinates(faction.GetBaseLocation());
-                GameObject curPiece = (GameObject)Instantiate(PlayerPiecePrefabs[0], new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
+                GameObject curPiece = (GameObject)Instantiate(playerPiecePrefab, new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET), Quaternion.identity);
                 curPiece.transform.Rotate(0, 180, 0);
                 curPiece.name = pieceName;
                 curPiece.isStatic = true;
 
                 curPiece.transform.Find("CylinderOuter").GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+
+                PlayerPieces.Add(curPiece);
             }
             else
             {
