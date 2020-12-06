@@ -3,14 +3,14 @@ using System.Text;
 
 namespace FallenLand
 {
-	public class PlayerNetworking
+	public class PlayerCardNetworking
 	{
 		private readonly int PlayerIndex;
 		private readonly byte ActionByte;
 		private readonly string CardName;
 		private readonly int SlotIndex;
 
-		public PlayerNetworking(int playerIndex, byte actionByte, string cardName, int slotIndex)
+		public PlayerCardNetworking(int playerIndex, byte actionByte, string cardName, int slotIndex)
 		{
 			PlayerIndex = playerIndex;
 			ActionByte = actionByte;
@@ -18,7 +18,7 @@ namespace FallenLand
 			SlotIndex = slotIndex;
 		}
 
-		public PlayerNetworking(int playerIndex, byte actionByte, string cardName)
+		public PlayerCardNetworking(int playerIndex, byte actionByte, string cardName)
 		{
 			PlayerIndex = playerIndex;
 			ActionByte = actionByte;
@@ -37,13 +37,13 @@ namespace FallenLand
 			byteList.RemoveAt(0); //remove slot index
 			byte[] byteArray = byteList.ToArray(); //grab card name next
 			string cardNameString = Encoding.ASCII.GetString(byteArray);
-			PlayerNetworking result = new PlayerNetworking(playerIndex, actionByte, cardNameString, slotIndex);
+			PlayerCardNetworking result = new PlayerCardNetworking(playerIndex, actionByte, cardNameString, slotIndex);
 			return result;
 		}
 
 		public static byte[] SerializePlayer(object customType)
 		{
-			PlayerNetworking playerInfo = (PlayerNetworking)customType;
+			PlayerCardNetworking playerInfo = (PlayerCardNetworking)customType;
 			List<byte> byteListFinal = new List<byte>
             {
 				(byte)playerInfo.GetPlayerIndex(),

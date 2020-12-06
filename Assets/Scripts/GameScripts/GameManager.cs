@@ -299,7 +299,7 @@ namespace FallenLand
             else if (eventCode == Constants.EvSendPlayerInformation)
             {
                 Debug.Log("Received updated player information");
-                PlayerNetworking playerInfo = (PlayerNetworking)photonEvent.CustomData;
+                PlayerCardNetworking playerInfo = (PlayerCardNetworking)photonEvent.CustomData;
                 handlePlayerNetworkUpdate(playerInfo);
             }
             else if (eventCode == Constants.EvRequestUpdateToPlayerInformation)
@@ -307,7 +307,7 @@ namespace FallenLand
                 Debug.Log("Got a request to update player information");
                 object playerInfo = photonEvent.CustomData;
                 sendNetworkEvent(playerInfo, ReceiverGroup.Others, Constants.EvSendPlayerInformation);
-                handlePlayerNetworkUpdate((PlayerNetworking)playerInfo);
+                handlePlayerNetworkUpdate((PlayerCardNetworking)playerInfo);
             }
             else if (eventCode == Constants.EvMissionLocation)
             {
@@ -517,7 +517,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_AUCTION_HOUSE, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_AUCTION_HOUSE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -527,7 +527,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -537,7 +537,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -547,7 +547,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveCharacterFromParty(characterSlotFoundIn);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_CHARACTER_FROM_SLOT, "", characterSlotFoundIn);
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_CHARACTER_FROM_SLOT, "", characterSlotFoundIn);
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -557,7 +557,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -567,7 +567,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveActiveVehicle();
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.REMOVE_VEHICLE, "");
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_VEHICLE, "");
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -577,7 +577,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -587,7 +587,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_CHARACTER_TO_SLOT, card.GetTitle(), characterIndex);
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_CHARACTER_TO_SLOT, card.GetTitle(), characterIndex);
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -597,7 +597,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_AUCTION_HOUSE, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_AUCTION_HOUSE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -607,7 +607,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddCharacterCardToTownRoster(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_TOWN_ROSTER, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_TOWN_ROSTER, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -617,7 +617,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddVehicleToParty(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -627,7 +627,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToActiveVehicle(card);
-				object content = new PlayerNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
 		}
@@ -1092,8 +1092,8 @@ namespace FallenLand
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
 			PhotonPeer.RegisterType(typeof(FactionNetworking), Constants.EvSendFactionInformation, FactionNetworking.SerializeFaction, FactionNetworking.DeserializeFaction);
-			PhotonPeer.RegisterType(typeof(PlayerNetworking), Constants.EvSendPlayerInformation, PlayerNetworking.SerializePlayer, PlayerNetworking.DeserializePlayer);
-			PhotonPeer.RegisterType(typeof(PlayerNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerNetworking.SerializePlayer, PlayerNetworking.DeserializePlayer);
+			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvSendPlayerInformation, PlayerCardNetworking.SerializePlayer, PlayerCardNetworking.DeserializePlayer);
+			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerCardNetworking.SerializePlayer, PlayerCardNetworking.DeserializePlayer);
 			PhotonPeer.RegisterType(typeof(MissionLocationNetworking), Constants.EvMissionLocation, MissionLocationNetworking.SerializeMissionLocation, MissionLocationNetworking.DeserializeMissionLocation);
 		}
 
@@ -1104,7 +1104,7 @@ namespace FallenLand
 			PhotonNetwork.RaiseEvent(eventCode, content, raiseEventOptions, sendOptions);
 		}
 
-		private void handlePlayerNetworkUpdate(PlayerNetworking playerInfo)
+		private void handlePlayerNetworkUpdate(PlayerCardNetworking playerInfo)
 		{
 			int playerIndex = playerInfo.GetPlayerIndex();
 			if (playerIndex == GetIndexForMyPlayer())
