@@ -194,15 +194,14 @@ namespace FallenLand
 			bool techsHandled = false;
 			CurrentPhase = phase;
 
-			//Auto phases that require no user input
 			switch (phase)
             {
-				case Phases.Effects_Resolve_Subphase:
+				case Phases.Effects_Resolve_Subphase: //Auto phase that require no user input
 					Debug.Log("Resolve effects and move on!");
 					//TODO
 					EndPhase(GetIndexForMyPlayer());
 					break;
-				case Phases.Town_Business_Deal:
+				case Phases.Town_Business_Deal: //Auto phase that require no user input
 					Debug.Log("Deal action cards!");
 					if (PhotonNetwork.IsMasterClient)
 					{
@@ -212,12 +211,12 @@ namespace FallenLand
 					techsHandled = true;
 					EndPhase(GetIndexForMyPlayer());
 					break;
-				case Phases.End_Turn_Adjust_Turn_Marker:
+				case Phases.End_Turn_Adjust_Turn_Marker: //Auto phase that require no user input
 					Debug.Log("Move turn marker chip!");
 					//TODO
 					EndPhase(GetIndexForMyPlayer());
 					break;
-				case Phases.End_Turn_Pass_First_Player:
+				case Phases.End_Turn_Pass_First_Player: //Auto phase that require no user input
 					Debug.Log("Next player becomes first player!");
 					//TODO
 					EndPhase(GetIndexForMyPlayer());
@@ -311,9 +310,18 @@ namespace FallenLand
             }
             else if (eventCode == Constants.EvMissionLocation)
             {
-				Debug.Log("Received mission location information");
-				MissionLocationNetworking missionLocationInfo = (MissionLocationNetworking)photonEvent.CustomData;
-				MissionManagerInst.AddMissionLocation(missionLocationInfo.GetMissionNumber(), missionLocationInfo.GetRandomLocationNumber());
+                Debug.Log("Received mission location information");
+                MissionLocationNetworking missionLocationInfo = (MissionLocationNetworking)photonEvent.CustomData;
+                MissionManagerInst.AddMissionLocation(missionLocationInfo.GetMissionNumber(), missionLocationInfo.GetRandomLocationNumber());
+            }
+            else if (eventCode == Constants.EvTownEventRoll)
+            {
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    Debug.Log("Master received a town event roll from a player");
+					sendNetworkEvent(photonEvent.CustomData, ReceiverGroup.Others, Constants.EvTownEventRoll);
+				}
+				handleTownEventRollNetworkUpdate(photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -703,6 +711,19 @@ namespace FallenLand
 			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 			dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
 		}
+
+		public int RollTownEvents(int playerIndex)
+		{
+			int d10Roll = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				d10Roll = DiceRoller.RollDice(10);
+				object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
+				sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvTownEventRoll);
+			}
+
+			return d10Roll;
+		}
 		#endregion
 
 
@@ -1088,6 +1109,46 @@ namespace FallenLand
 			}
 		}
 
+        private void handleTownEventRoll(int playerIndex, int townEventRoll)
+        {
+			switch (townEventRoll)
+			{
+				case 1:
+					//Gain 2 prestige, 4 town health, and 1 action/spoils/character (pick 1)
+					//TODO deal the card after the user picks which
+					Players[playerIndex].AddPrestige(2);
+					Players[playerIndex].AddTownHealth(4);
+					break;
+				case 2:
+					Players[playerIndex].AddPrestige(1);
+					Players[playerIndex].AddTownHealth(2);
+					break;
+				case 3:
+					Players[playerIndex].AddTownHealth(1);
+					break;
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+					//No effect
+					break;
+				case 8:
+					Players[playerIndex].SubtractTownHealth(1);
+					break;
+				case 9:
+					Players[playerIndex].SubtractPrestige(1);
+					Players[playerIndex].SubtractTownHealth(2);
+					break;
+				case 10:
+					//Lose 1 resource of your choosing
+					//TODO for now, no effect
+					break;
+				default:
+					//No efect
+					break;
+			}
+		}
+
 		private void registerPhotonCallbacks()
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
@@ -1095,6 +1156,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvSendPlayerInformation, PlayerCardNetworking.SerializePlayerCard, PlayerCardNetworking.DeserializePlayerCard);
 			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerCardNetworking.SerializePlayerCard, PlayerCardNetworking.DeserializePlayerCard);
 			PhotonPeer.RegisterType(typeof(MissionLocationNetworking), Constants.EvMissionLocation, MissionLocationNetworking.SerializeMissionLocation, MissionLocationNetworking.DeserializeMissionLocation);
+			PhotonPeer.RegisterType(typeof(TownEventNetworking), Constants.EvTownEventRoll, TownEventNetworking.SerializeTownEventRoll, TownEventNetworking.DeserializeTownEventRoll);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -1179,6 +1241,12 @@ namespace FallenLand
 			{
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvSendPlayerInformation);
 			}
+		}
+
+		private void handleTownEventRollNetworkUpdate(object content)
+		{
+			TownEventNetworking townEvent = (TownEventNetworking)content;
+			handleTownEventRoll(townEvent.GetPlayerIndex(), townEvent.GetTownEventRoll());
 		}
 
 		private void townBusinessPhase_DealSubphase()

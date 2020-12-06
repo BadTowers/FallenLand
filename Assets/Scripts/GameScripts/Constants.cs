@@ -46,5 +46,6 @@ namespace FallenLand
 		public const byte EvSendPlayerInformation = 5;
 		public const byte EvRequestUpdateToPlayerInformation = 6;
 		public const byte EvMissionLocation = 7;
+		public const byte EvTownEventRoll = 8;
 	}
 }

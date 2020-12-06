@@ -16,7 +16,6 @@ namespace FallenLand
         public GameObject gameCamera;
 
         private bool EscapePressed;
-        private bool DebugOverlayShowing;
         private int CurrentViewedID; //Current ID of player's stuff UI is displaying
         private GameManager GameManagerInstance;
         private GameObject CharacterAndSpoilsScreen;
@@ -30,7 +29,6 @@ namespace FallenLand
         private List<GameObject> ActiveCharactersCarryWeightsText;
         private List<GameObject> ActiveVehicleStatsText;
         private GameObject ActiveVehicleCarryWeightsText;
-        private GameObject DebugOverlay;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
         private GameObject TradeOverlay;
@@ -43,12 +41,14 @@ namespace FallenLand
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
         private Phases CurrentPhase;
+        private GameObject TownEventsRollPanel;
+        private GameObject RollTownEventButtonGameObject;
+        private GameObject RollTownEventTextGameObject;
 
         #region UnityFunctions
         void Awake()
         {
             EscapePressed = false;
-            DebugOverlayShowing = false;
             CurrentState = GameMenuStates.Resume;
             CurrentPhase = Phases.Invalid;
 
@@ -56,9 +56,11 @@ namespace FallenLand
             PauseMenu = GameObject.Find("PauseMenu");
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
             ActionCardsScreen = GameObject.Find("ActionCardsPanel");
-            DebugOverlay = GameObject.Find("DebugOverlay");
             MainOverlay = GameObject.Find("MainOverlay");
             TradeOverlay = GameObject.Find("TradeOverlay");
+            TownEventsRollPanel = GameObject.Find("TownEventsPanel");
+            RollTownEventButtonGameObject = GameObject.Find("RollTownEventsButton");
+            RollTownEventTextGameObject = GameObject.Find("RollTownEventsText");
 
             ActiveCharactersScrollContent = new List<GameObject>();
 
@@ -123,12 +125,13 @@ namespace FallenLand
 
             AuctionHouseTradeButton = GameObject.Find("AuctionHouseTradeButton").GetComponent<Button>();
             AuctionHouseTradeButton.interactable = false;
+
+            TownEventsRollPanel.SetActive(false);
         }
 
         void Start()
         {
             PauseMenu.SetActive(false);
-            DebugOverlay.SetActive(false);
             MainOverlay.SetActive(false);
             ActionCardsScreen.SetActive(true);
             CharacterAndSpoilsScreen.SetActive(true);
@@ -151,22 +154,16 @@ namespace FallenLand
             {
                 EscapePressed = true;
             }
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
-                DebugOverlayShowing = !DebugOverlayShowing;
-            }
 
             checkCurrentMenuState();
-
-            DebugOverlay.SetActive(DebugOverlayShowing);
-
-            updateDebugOverlay();
 
             updateActionButton();
 
             updateCharacterSpoilsScreen();
 
             updateTurnInformation();
+
+            updateTownEventsUi();
 
             updateEndPhaseButton();
 
@@ -297,57 +294,58 @@ namespace FallenLand
             //TODO show "trade sent" somewhere
             //TODO actually send the trade
         }
+
+        public void OnRollTownEventsPress()
+        {
+            int d10Roll = GameManagerInstance.RollTownEvents(GameManagerInstance.GetIndexForMyPlayer());
+            string eventsText = "";
+            switch (d10Roll)
+            {
+                case 1:
+                    eventsText = "1! You gain 2 prestige, 4 town health, and get to choose either an action card, spoils card, or character card.";
+                    break;
+                case 2:
+                    eventsText = "2. You gain 1 prestige and 2 town health.";
+                    break;
+                case 3:
+                    eventsText = "3. You gain 1 town health.";
+                    break;
+                case 4:
+                    eventsText = "4. No effect.";
+                    break;
+                case 5:
+                    eventsText = "5. No effect.";
+                    break;
+                case 6:
+                    eventsText = "6. No effect.";
+                    break;
+                case 7:
+                    eventsText = "7. No effect.";
+                    break;
+                case 8:
+                    eventsText = "8. Lose 1 town health.";
+                    break;
+                case 9:
+                    eventsText = "9. Lose 1 prestige and 2 town health.";
+                    break;
+                case 10:
+                    eventsText = "10! Pick one resource to lose and suffer all consequences (note, this is not implemented at this time).";
+                    break;
+                default:
+                    eventsText = "Roll glitched. No effect";
+                    //No efect
+                    break;
+            }
+
+            //Update description for user to see the effects
+            RollTownEventTextGameObject.GetComponent<Text>().text = eventsText;
+
+            //Disable the roll button now because we only roll once per turn
+            RollTownEventButtonGameObject.GetComponent<Button>().interactable = false;
+        }
         #endregion
 
         #region HelperFunctions
-        //A function to grab all the required information from the game manager to display it here
-        private void updateDebugOverlay()
-        {
-            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-
-            //Retrieve information
-            int salvage = GameManagerInstance.GetSalvage(myIndex);
-            Faction faction = GameManagerInstance.GetFaction(myIndex);
-            string spoilsCardString = getSpoilsCardString(myIndex);
-            string townTechString = getTownTechString(myIndex);
-            //List<ActionCard> actionCards = GameMangerInstance.GetActionCards(0);
-            //List <CharacterCard> townRoster = GameMangerInstance.GetTownRoster(0);
-            //List<CharacterCard> townRoster = GameObject.Find("GameManager").GetComponentInChildren<GameManager>().GetTownRoster(0);
-
-            //Display information in the debug overlay
-            Text[] textComponenetsInDebugOverlay = DebugOverlay.GetComponentsInChildren<Text>();
-            foreach (Text curText in textComponenetsInDebugOverlay)
-            {
-                switch (curText.name)
-                {
-                    case "DebugSpoilsCardText":
-                        curText.text = "Spoils: " + spoilsCardString;
-                        break;
-                    case "DebugAuctionHouseText":
-                        //todo
-                        break;
-                    case "DebugCharacterCardText":
-                        //todo
-                        break;
-                    case "DebugTownRosterText":
-                        //curText.text = "Characters: " + characterCardsString;
-                        break;
-                    case "DebugActionCardText":
-                        //TODO
-                        break;
-                    case "DebugTownTechText":
-                        curText.text = "TTs: " + townTechString;
-                        break;
-                    case "DebugSalvageText":
-                        curText.text = "Salvage: " + salvage.ToString();
-                        break;
-                    case "DebugFactionText":
-                        curText.text = "Faction name: " + faction.GetName();
-                        break;
-                }
-            }
-        }
-
         //A function to display and hide menus as needed
         private void checkCurrentMenuState()
         {
@@ -749,6 +747,24 @@ namespace FallenLand
         {
             ActualTurnNumberText.text = GameManagerInstance.GetTurn().ToString();
             ActualTurnPhaseText.text = GameManagerInstance.GetPhase().ToString();
+        }
+
+        private void updateTownEventsUi()
+        {
+            Phases currentPhase = GameManagerInstance.GetPhase();
+            if ((currentPhase == Phases.Town_Business_Town_Events_Chart || currentPhase == Phases.After_Town_Business_Town_Events_Chart) &&
+                (GameManagerInstance.GetCurrentPlayer() != null &&
+                GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId()))
+            {
+                TownEventsRollPanel.SetActive(true);
+            }
+            else
+            {
+                TownEventsRollPanel.SetActive(false);
+                //Reset the UI once it's deactivated so it's ready for next time it shows
+                RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
+                RollTownEventTextGameObject.GetComponent<Text>().text = "Roll to see effects...";
+            }
         }
 
         private void updateEndPhaseButton()
