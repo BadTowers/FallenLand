@@ -38,6 +38,7 @@ namespace FallenLand
 		private PlayerPieceManager PlayerPieceManagerInst;
 		private MissionManager MissionManagerInst;
 		private Dice DiceRoller;
+		private bool IsMyPhaseEnded;
 
 		#region UnityFunctions
 		void Start()
@@ -45,6 +46,7 @@ namespace FallenLand
 			MyUserId = "";
 			GameIsSetUpAtStart = false;
 			ReceivedMyFactionInformation = false;
+			IsMyPhaseEnded = false;
 			TurnManager = this.gameObject.AddComponent<MyTurnManager>();
 			TurnManager.TurnManagerListener = this;
 			CurrentPhase = Phases.Game_Start_Setup;
@@ -193,13 +195,16 @@ namespace FallenLand
 		{
 			bool techsHandled = false;
 			CurrentPhase = phase;
+			IsMyPhaseEnded = false;
+
+			Debug.Log("OnPhaseBegins: " + phase.ToString());
 
 			switch (phase)
             {
 				case Phases.Effects_Resolve_Subphase: //Auto phase that require no user input
 					Debug.Log("Resolve effects and move on!");
 					//TODO
-					EndPhase(GetIndexForMyPlayer());
+					//EndPhase(GetIndexForMyPlayer());
 					break;
 				case Phases.Town_Business_Deal: //Auto phase that require no user input
 					Debug.Log("Deal action cards!");
@@ -209,17 +214,17 @@ namespace FallenLand
 					}
 					TownTechManager.HandlePhase(this);
 					techsHandled = true;
-					EndPhase(GetIndexForMyPlayer());
+					//EndPhase(GetIndexForMyPlayer());
 					break;
 				case Phases.End_Turn_Adjust_Turn_Marker: //Auto phase that require no user input
 					Debug.Log("Move turn marker chip!");
 					//TODO
-					EndPhase(GetIndexForMyPlayer());
+					//EndPhase(GetIndexForMyPlayer());
 					break;
 				case Phases.End_Turn_Pass_First_Player: //Auto phase that require no user input
 					Debug.Log("Next player becomes first player!");
 					//TODO
-					EndPhase(GetIndexForMyPlayer());
+					//EndPhase(GetIndexForMyPlayer());
 					break;
 				default:
 					break;
@@ -316,9 +321,10 @@ namespace FallenLand
             }
             else if (eventCode == Constants.EvTownEventRoll)
             {
-                if (!PhotonNetwork.IsMasterClient)
+				Debug.Log("Received a town event roll networking event");
+				if (PhotonNetwork.IsMasterClient)
                 {
-                    Debug.Log("Master received a town event roll from a player");
+                    Debug.Log("We are master, so we have to send this to the other playes");
 					sendNetworkEvent(photonEvent.CustomData, ReceiverGroup.Others, Constants.EvTownEventRoll);
 				}
 				handleTownEventRollNetworkUpdate(photonEvent.CustomData);
@@ -690,6 +696,8 @@ namespace FallenLand
 
         public void EndPhase(int playerIndex)
         {
+			//TODO consider removing player index from this function...
+			IsMyPhaseEnded = true;
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				TurnManager.SendMove(null, true);
@@ -718,11 +726,36 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				d10Roll = DiceRoller.RollDice(10);
-				object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
-				sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvTownEventRoll);
+				if (PhotonNetwork.IsMasterClient)
+				{
+					object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvTownEventRoll);
+					handleTownEventRoll(GetIndexForMyPlayer(), d10Roll);
+				}
+				else
+				{
+					object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
+					sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvTownEventRoll);
+				}
 			}
 
 			return d10Roll;
+		}
+
+		public bool GetIsItMyTurn()
+		{
+			bool isItMyTurn = false;
+
+            if (IsMyPhaseEnded)
+            {
+				isItMyTurn = false;
+            }
+			else if (PhasesHelpers.IsAsyncPhase(CurrentPhase) || (GetCurrentPlayer() != null && GetCurrentPlayer().UserId == MyUserId))
+			{
+				isItMyTurn = true;
+			}
+
+			return isItMyTurn;
 		}
 		#endregion
 

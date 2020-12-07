@@ -25,13 +25,11 @@ namespace FallenLand
 		public static byte[] SerializeTownEventRoll(object customType)
 		{
 			TownEventNetworking townEventRoll = (TownEventNetworking)customType;
-			UnityEngine.Debug.Log("Serialization: town event roll is " + townEventRoll.GetTownEventRoll());
             List<byte> byteListFinal = new List<byte>
             {
 				(byte)townEventRoll.GetPlayerIndex(),
             	(byte)townEventRoll.GetTownEventRoll()
             };
-            UnityEngine.Debug.Log("Serialization for town event: size is " + byteListFinal.Count);
 
             return byteListFinal.ToArray();
         }

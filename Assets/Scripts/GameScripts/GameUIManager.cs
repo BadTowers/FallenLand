@@ -44,6 +44,7 @@ namespace FallenLand
         private GameObject TownEventsRollPanel;
         private GameObject RollTownEventButtonGameObject;
         private GameObject RollTownEventTextGameObject;
+        private bool UserRolledTownEventsThisTurn;
 
         #region UnityFunctions
         void Awake()
@@ -51,6 +52,7 @@ namespace FallenLand
             EscapePressed = false;
             CurrentState = GameMenuStates.Resume;
             CurrentPhase = Phases.Invalid;
+            UserRolledTownEventsThisTurn = false;
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             PauseMenu = GameObject.Find("PauseMenu");
@@ -298,6 +300,7 @@ namespace FallenLand
         public void OnRollTownEventsPress()
         {
             int d10Roll = GameManagerInstance.RollTownEvents(GameManagerInstance.GetIndexForMyPlayer());
+            UserRolledTownEventsThisTurn = true;
             string eventsText = "";
             switch (d10Roll)
             {
@@ -752,11 +755,17 @@ namespace FallenLand
         private void updateTownEventsUi()
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
-            if ((currentPhase == Phases.Town_Business_Town_Events_Chart || currentPhase == Phases.After_Town_Business_Town_Events_Chart) &&
-                (GameManagerInstance.GetCurrentPlayer() != null &&
-                GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId()))
+            if ((currentPhase == Phases.Town_Business_Town_Events_Chart || currentPhase == Phases.After_Town_Business_Town_Events_Chart))
             {
                 TownEventsRollPanel.SetActive(true);
+                if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && !UserRolledTownEventsThisTurn)
+                {
+                    RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
+                }
+                else
+                {
+                    RollTownEventButtonGameObject.GetComponent<Button>().interactable = false;
+                }
             }
             else
             {
@@ -764,16 +773,29 @@ namespace FallenLand
                 //Reset the UI once it's deactivated so it's ready for next time it shows
                 RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
                 RollTownEventTextGameObject.GetComponent<Text>().text = "Roll to see effects...";
+                UserRolledTownEventsThisTurn = false;
             }
         }
 
         private void updateEndPhaseButton()
         {
-            if (shouldEnableEndPhaseButton())
+            if (GameManagerInstance.GetIsItMyTurn())
             {
-                EndPhaseButton.interactable = true;
-                CurrentPhase = GameManagerInstance.GetPhase();
-                EndPhaseButton.GetComponentInChildren<Text>().text = "End Phase";
+                if (GameManagerInstance.GetCurrentPhase() == Phases.Town_Business_Town_Events_Chart && !UserRolledTownEventsThisTurn)
+                {
+                    EndPhaseButton.interactable = false;
+                    EndPhaseButton.GetComponentInChildren<Text>().text = "Roll...";
+                }
+                else
+                {
+                    EndPhaseButton.interactable = true;
+                    EndPhaseButton.GetComponentInChildren<Text>().text = "End Phase";
+                }
+            }
+            else
+            {
+                EndPhaseButton.interactable = false;
+                EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting...";
             }
         }
 
@@ -962,15 +984,6 @@ namespace FallenLand
             {
                 Debug.LogError("Failed to find the card... " + cardImage.GetComponentInChildren<MonoCard>().CardPtr.GetTitle());
             }
-        }
-
-        private bool shouldEnableEndPhaseButton()
-        {
-            //TODO here
-            return GameManagerInstance.GetPhase() != CurrentPhase && 
-                ((GameManagerInstance.GetCurrentPlayer() != null &&
-                GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId()) || 
-                PhasesHelpers.IsAsyncPhase(GameManagerInstance.GetPhase()));
         }
 
         private void updatePlayerPanels()

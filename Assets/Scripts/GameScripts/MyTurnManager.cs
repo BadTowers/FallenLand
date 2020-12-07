@@ -126,6 +126,7 @@ namespace FallenLand
                 Photon.Pun.PhotonNetwork.RaiseEvent(evCode, moveHt, new Photon.Realtime.RaiseEventOptions() { CachingOption = Photon.Realtime.EventCaching.AddToRoomCache }, ExitGames.Client.Photon.SendOptions.SendReliable);
                 if (finished)
                 {
+                    Debug.Log("Local player is finished");
                     Photon.Pun.PhotonNetwork.LocalPlayer.SetFinishedTurn(Turn);
                 }
 
@@ -133,17 +134,6 @@ namespace FallenLand
                 // (note: the order of events might be mixed up as we do this locally)
                 ProcessOnEvent(evCode, moveHt, Photon.Pun.PhotonNetwork.LocalPlayer.ActorNumber);
             }
-        }
-
-        public bool GetPlayerFinishedTurn(Photon.Realtime.Player player)
-        {
-            bool isPlayerFinishedTurn = false;
-            if (player != null && this.FinishedPlayers != null && this.FinishedPlayers.Contains(player))
-            {
-                isPlayerFinishedTurn = true;
-            }
-
-            return isPlayerFinishedTurn;
         }
 
         #region Callbacks
@@ -176,7 +166,8 @@ namespace FallenLand
                                 TurnManagerListener.OnPlayerFinished(Sender, phase, move);
                                 for (int i = 0; i < Photon.Pun.PhotonNetwork.PlayerList.Length; i++)
                                 {
-                                    if (Photon.Pun.PhotonNetwork.PlayerList[i] == Sender && !_MovedToNextPlayerAlready)
+                                    //Don't change "current player" during an async phase because we will handle moving out of that phase by seeing all players in FinishedPlayers (i.e, IsPhaseCompletedByAll)
+                                    if (Photon.Pun.PhotonNetwork.PlayerList[i] == Sender && !_MovedToNextPlayerAlready && !PhasesHelpers.IsAsyncPhase(Phase))
                                     {
                                         CurrentPlayer = Photon.Pun.PhotonNetwork.PlayerList[(i+1) % Photon.Pun.PhotonNetwork.PlayerList.Length];
                                         break;

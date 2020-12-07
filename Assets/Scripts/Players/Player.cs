@@ -38,8 +38,8 @@ namespace FallenLand
 			ActiveVehicleRemainingCarryWeight = 0;
 			initLists();
 			extractTownTechsFromFaction();
-			TownHealth = 0;
-			Prestige = 0;
+			TownHealth = 1;
+			Prestige = 1;
 		}
 
 		public List<SpoilsCard> GetAuctionHouseCards()
@@ -146,10 +146,14 @@ namespace FallenLand
 
         public void SetTownHealth(int townHealth)
         {
-            if (townHealth >= 0)
-            {
+			if (townHealth > 0)
+			{
 				TownHealth = townHealth;
-            }
+			}
+			else
+			{
+				TownHealth = 1;
+			}
         }
 
 		public void AddTownHealth(int amountToAdd)
@@ -164,7 +168,14 @@ namespace FallenLand
 		{
 			if (amountToSubtract >= 0)
 			{
-				TownHealth -= amountToSubtract;
+				if (TownHealth - amountToSubtract > 0)
+				{
+					TownHealth -= amountToSubtract;
+				}
+				else
+				{
+					TownHealth = 1;
+				}
 			}
 		}
 
@@ -175,9 +186,13 @@ namespace FallenLand
 
 		public void SetPrestige(int prestige)
 		{
-			if (prestige >= 0)
+			if (prestige > 0)
 			{
 				Prestige = prestige;
+			}
+			else
+            {
+				Prestige = 1;
 			}
 		}
 
@@ -193,7 +208,14 @@ namespace FallenLand
 		{
 			if (amountToSubtract >= 0)
 			{
-				Prestige -= amountToSubtract;
+				if (Prestige - amountToSubtract > 0)
+				{
+					Prestige -= amountToSubtract;
+				}
+				else
+				{
+					Prestige = 1;
+				}
 			}
 		}
 
