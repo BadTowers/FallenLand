@@ -203,8 +203,11 @@ namespace FallenLand
             {
 				case Phases.Effects_Resolve_Subphase: //Auto phase that require no user input
 					Debug.Log("Resolve effects and move on!");
-					//TODO
-					//EndPhase(GetIndexForMyPlayer());
+					//TODO resolve effects
+					if(PhotonNetwork.IsMasterClient)
+                    {
+						endPhaseForAllPlayers();
+					}
 					break;
 				case Phases.Town_Business_Deal: //Auto phase that require no user input
 					Debug.Log("Deal action cards!");
@@ -214,17 +217,26 @@ namespace FallenLand
 					}
 					TownTechManager.HandlePhase(this);
 					techsHandled = true;
-					//EndPhase(GetIndexForMyPlayer());
+					if (PhotonNetwork.IsMasterClient)
+					{
+						endPhaseForAllPlayers();
+					}
 					break;
 				case Phases.End_Turn_Adjust_Turn_Marker: //Auto phase that require no user input
 					Debug.Log("Move turn marker chip!");
 					//TODO
-					//EndPhase(GetIndexForMyPlayer());
+					if (PhotonNetwork.IsMasterClient)
+					{
+						endPhaseForAllPlayers();
+					}
 					break;
 				case Phases.End_Turn_Pass_First_Player: //Auto phase that require no user input
 					Debug.Log("Next player becomes first player!");
 					//TODO
-					//EndPhase(GetIndexForMyPlayer());
+					if (PhotonNetwork.IsMasterClient)
+					{
+						endPhaseForAllPlayers();
+					}
 					break;
 				default:
 					break;
@@ -1293,11 +1305,16 @@ namespace FallenLand
 				ActionDeck.RemoveAt(0);
 			}
         }
-        #endregion
+
+        private void endPhaseForAllPlayers()
+        {
+			TurnManager.BeginNextPhase();
+		}
+		#endregion
 
 
 
-        /*
+		/*
 		 *
 		 * THOUGHTS ON GAME MANAGER AND GAME UI MANAGER INTERACTION
 		 *
@@ -1325,5 +1342,5 @@ namespace FallenLand
 		 *          This would then never change throughout the game since each PC connected would be one player
 		 *
 		 */
-    }
+	}
 }
