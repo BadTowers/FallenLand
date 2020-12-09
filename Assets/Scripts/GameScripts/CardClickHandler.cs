@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -75,7 +75,6 @@ namespace FallenLand
         {
             this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
             transform.position = PreClickLocation;
-            enableScroll();
             transform.SetSiblingIndex(SiblingOrder);
         }
 
@@ -85,7 +84,6 @@ namespace FallenLand
             float newX = getNewX();
             float newY = getNewY();
             transform.localPosition = new Vector3(newX, newY, transform.localPosition.z);
-            disableScroll();
             SiblingOrder = transform.GetSiblingIndex();
             transform.SetAsLastSibling(); //move to the front (on parent)
         }
@@ -116,20 +114,6 @@ namespace FallenLand
                 newY = -170;
             }
             return newY;
-        }
-
-        private void disableScroll()
-        {
-            Debug.Log("disabled scrolling");
-            GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = 0;
-            GameObject.Find("TownRosterScrollView").GetComponent<ScrollRect>().scrollSensitivity = 0;
-        }
-
-        private void enableScroll()
-        {
-            Debug.Log("enabled scrolling");
-            GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
-            GameObject.Find("TownRosterScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
         }
         #endregion
     }

@@ -61,7 +61,6 @@ namespace FallenLand
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(myCanvas.transform as RectTransform, Input.mousePosition, myCanvas.worldCamera, out Vector2 pos);
                 transform.position = myCanvas.transform.TransformPoint(pos);
                 this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
-                disableScroll();
                 transform.SetAsLastSibling(); //move to the front (on parent)
             }
         }
@@ -84,7 +83,6 @@ namespace FallenLand
                     resetParent();
                     transform.position = PreDragLocation;
                 }
-                enableScroll();
                 OldParent = null;
                 IsOldParentSet = false;
                 if (HoveredOverPanel != null)
@@ -96,20 +94,6 @@ namespace FallenLand
         }
 
         #region HelperFunctions
-
-        private void disableScroll()
-        {
-            Debug.Log("disabled scrolling");
-            GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = 0;
-            GameObject.Find("TownRosterScrollView").GetComponent<ScrollRect>().scrollSensitivity = 0;
-        }
-
-        private void enableScroll()
-        {
-            Debug.Log("enabled scrolling");
-            GameObject.Find("AuctionHouseScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
-            GameObject.Find("TownRosterScrollView").GetComponent<ScrollRect>().scrollSensitivity = PreHoverScrollSensitivity;
-        }
 
         private void figureOutCurrentParent()
         {
