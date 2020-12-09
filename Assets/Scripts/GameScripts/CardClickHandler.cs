@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -49,25 +49,25 @@ namespace FallenLand
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                Debug.Log("Mouse click");
-                Debug.Log(transform.localPosition);
-                if (!MovementHandler.GetIsDragging())
-                {
-                    if (!IsClicked)
-                    {
-                        IsClicked = true;
-                        PreClickLocation = transform.position;
-                        makeLarge();
-                    }
-                    else
-                    {
-                        makeSmall();
-                        IsClicked = false;
-                    }
-                }
-            }
+            //if (eventData.button == PointerEventData.InputButton.Left)
+            //{
+            //    Debug.Log("Mouse click");
+            //    Debug.Log(transform.localPosition);
+            //    if (!MovementHandler.GetIsDragging())
+            //    {
+            //        if (!IsClicked)
+            //        {
+            //            IsClicked = true;
+            //            PreClickLocation = transform.position;
+            //            makeLarge();
+            //        }
+            //        else
+            //        {
+            //            makeSmall();
+            //            IsClicked = false;
+            //        }
+            //    }
+            //}
         }
 
         #region HelperFunctions
