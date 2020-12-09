@@ -551,7 +551,7 @@ namespace FallenLand
                     image.sprite = curSprite;
                     imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
                     image.transform.SetParent(AuctionHouseScrollContent.transform);
-                    image.transform.localPosition = new Vector3(102f + (i % 8 * OFFSET_X), -67f - (i / 8 * OFFSET_Y), 0f);
+                    image.transform.localPosition = new Vector3(97f + (i % 8 * OFFSET_X), -64f - (i / 8 * OFFSET_Y), 0f);
                     image.transform.localScale = new Vector3(1f, 1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
@@ -596,7 +596,7 @@ namespace FallenLand
                     image.sprite = curSprite;
                     imageObj.name = "CharacterCard" + townRoster[i].GetId().ToString();
                     image.transform.SetParent(TownRosterScrollContent.transform);
-                    image.transform.localPosition = new Vector3(102f + (i % 8 * OFFSET_X), -67f - (i / 8 * OFFSET_Y), 0f);
+                    image.transform.localPosition = new Vector3(97f + (i % 8 * OFFSET_X), -64f - (i / 8 * OFFSET_Y), 0f);
                     image.transform.localScale = new Vector3(1f, 1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
@@ -693,6 +693,8 @@ namespace FallenLand
                     GameObject.Destroy(child.gameObject);
                 }
 
+                const float FIRST_CARD_Y = -50f;
+                const float CARD_X = 60f;
                 if (activeVehicle != null)
                 {
                     //Add vehicle back to slot
@@ -707,7 +709,7 @@ namespace FallenLand
                     image.sprite = curSprite;
                     imageObj.name = "SpoilsCard" + activeVehicle.GetId().ToString();
                     image.transform.SetParent(VehicleSlotScrollContent.transform);
-                    image.transform.localPosition = new Vector3(90f, -40f, 0f);
+                    image.transform.localPosition = new Vector3(CARD_X, FIRST_CARD_Y, 0f);
                     image.transform.localScale = new Vector3(1f, 1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
@@ -729,7 +731,7 @@ namespace FallenLand
                         image2.sprite = curSprite2;
                         imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
                         image2.transform.SetParent(VehicleSlotScrollContent.transform);
-                        image2.transform.localPosition = new Vector3(90f, -40f - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
+                        image2.transform.localPosition = new Vector3(CARD_X, FIRST_CARD_Y - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
                         image2.transform.localScale = new Vector3(1f, 1f, 1f);
                         image2.rectTransform.sizeDelta = new Vector2(75, 100);
                         image2.transform.eulerAngles = new Vector3(0f, 0f, 90f);
