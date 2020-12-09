@@ -749,7 +749,7 @@ namespace FallenLand
         private void updateTurnInformation()
         {
             ActualTurnNumberText.text = GameManagerInstance.GetTurn().ToString();
-            ActualTurnPhaseText.text = GameManagerInstance.GetPhase().ToString();
+            ActualTurnPhaseText.text = PhasesHelpers.PhaseToString(GameManagerInstance.GetPhase());
         }
 
         private void updateTownEventsUi()
