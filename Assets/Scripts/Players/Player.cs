@@ -178,6 +178,16 @@ namespace FallenLand
 			return maxHealth;
 		}
 
+		public int GetActiveCharacterPsychResistance(int characterIndex)
+		{
+			int psychRes = 0;
+			if (ActiveCharacters[characterIndex] != null)
+			{
+				psychRes = ActiveCharacters[characterIndex].GetPsychResistance();
+			}
+			return psychRes;
+		}
+
 
 		public Dictionary<Skills, int> GetActiveVehicleStats()
 		{

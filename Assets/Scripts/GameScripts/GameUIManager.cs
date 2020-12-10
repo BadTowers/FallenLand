@@ -26,6 +26,7 @@ namespace FallenLand
         private GameObject ActionCardsScrollContent;
         private List<GameObject> ActiveCharactersScrollContent;
         private List<List<GameObject>> ActiveCharactersStatsText;
+        private List<GameObject> ActiveCharactersPsychResistance;
         private List<GameObject> ActiveCharactersCarryWeightsText;
         private List<GameObject> ActiveCharactersHealthText;
         private List<GameObject> ActiveCharactersPsychText;
@@ -79,6 +80,7 @@ namespace FallenLand
 
             ActiveCharactersStatsText = new List<List<GameObject>>();
             ActiveCharactersCarryWeightsText = new List<GameObject>();
+            ActiveCharactersPsychResistance = new List<GameObject>();
             ActiveCharactersHealthText = new List<GameObject>();
             ActiveCharactersPsychText = new List<GameObject>();
             for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -90,6 +92,7 @@ namespace FallenLand
                 ActiveCharactersStatsText[i].Add(GameObject.Find("MechanicalSum" + (i + 1).ToString()));
                 ActiveCharactersStatsText[i].Add(GameObject.Find("TechnicalSum" + (i + 1).ToString()));
                 ActiveCharactersStatsText[i].Add(GameObject.Find("MedicalSum" + (i + 1).ToString()));
+                ActiveCharactersPsychResistance.Add(GameObject.Find("PsychResistance" + (i + 1).ToString()));
                 ActiveCharactersCarryWeightsText.Add(GameObject.Find("CarryWeightSum" + (i + 1).ToString()));
                 ActiveCharactersHealthText.Add(GameObject.Find("HealthSum" + (i + 1).ToString()));
                 ActiveCharactersPsychText.Add(GameObject.Find("PsychSum" + (i + 1).ToString()));
@@ -98,6 +101,7 @@ namespace FallenLand
                 {
                     ActiveCharactersStatsText[i][(int)skill].GetComponentInChildren<Text>().text = "0";
                 }
+                ActiveCharactersPsychResistance[i].GetComponentInChildren<Text>().text = "0";
                 ActiveCharactersCarryWeightsText[i].GetComponentInChildren<Text>().text = "0/0";
                 ActiveCharactersHealthText[i].GetComponentInChildren<Text>().text = "1/1";
                 ActiveCharactersPsychText[i].GetComponentInChildren<Text>().text = "3/3";
@@ -682,6 +686,11 @@ namespace FallenLand
                     {
                         ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
                     }
+
+                    //Update psych resistance
+                    int psychResistance = GameManagerInstance.GetActiveCharacterPsychResistance(CurrentViewedID, activeIndex);
+                    ActiveCharactersPsychResistance[activeIndex].GetComponentInChildren<Text>().text = psychResistance.ToString();
+
                     //Update carry weight
                     int totalCarryWeight = GameManagerInstance.GetActiveCharacterTotalCarryWeight(CurrentViewedID, activeIndex);
                     int usedCarryWeight = GameManagerInstance.GetActiveCharacterUsedCarryWeight(CurrentViewedID, activeIndex);
