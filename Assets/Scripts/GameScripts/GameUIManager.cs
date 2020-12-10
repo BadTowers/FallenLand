@@ -43,10 +43,10 @@ namespace FallenLand
         private Button AuctionHouseTradeButton;
         private bool CardIsDragging;
         private GameMenuStates CurrentState;
-        private Phases CurrentPhase;
         private GameObject TownEventsRollPanel;
         private GameObject RollTownEventButtonGameObject;
         private GameObject RollTownEventTextGameObject;
+        private GameObject PartyExploitsPanelGameObject;
         private bool UserRolledTownEventsThisTurn;
 
         #region UnityFunctions
@@ -54,7 +54,6 @@ namespace FallenLand
         {
             EscapePressed = false;
             CurrentState = GameMenuStates.Resume;
-            CurrentPhase = Phases.Invalid;
             UserRolledTownEventsThisTurn = false;
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
@@ -66,6 +65,7 @@ namespace FallenLand
             TownEventsRollPanel = GameObject.Find("TownEventsPanel");
             RollTownEventButtonGameObject = GameObject.Find("RollTownEventsButton");
             RollTownEventTextGameObject = GameObject.Find("RollTownEventsText");
+            PartyExploitsPanelGameObject = GameObject.Find("PartyExploitsPanel");
 
             ActiveCharactersScrollContent = new List<GameObject>();
 
@@ -141,6 +141,7 @@ namespace FallenLand
             AuctionHouseTradeButton.interactable = false;
 
             TownEventsRollPanel.SetActive(false);
+            PartyExploitsPanelGameObject.SetActive(false);
         }
 
         void Start()
@@ -178,6 +179,8 @@ namespace FallenLand
             updateTurnInformation();
 
             updateTownEventsUi();
+
+            updatePartyExploitsUi();
 
             updateEndPhaseButton();
 
@@ -357,6 +360,36 @@ namespace FallenLand
 
             //Disable the roll button now because we only roll once per turn
             RollTownEventButtonGameObject.GetComponent<Button>().interactable = false;
+        }
+
+        public void OnMovementDeedPress()
+        {
+            Debug.Log("Movement deed selected");
+        }
+
+        public void OnEncounterDeedPress()
+        {
+        
+        }
+
+        public void OnPvpDeedPress()
+        {
+        
+        }
+
+        public void OnResourceDeedPress()
+        {
+        
+        }
+
+        public void OnHealingDeedPress()
+        {
+        
+        }
+
+        public void OnMissionDeedPress()
+        {
+            
         }
         #endregion
 
@@ -789,7 +822,7 @@ namespace FallenLand
         private void updateTownEventsUi()
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
-            if ((currentPhase == Phases.Town_Business_Town_Events_Chart || currentPhase == Phases.After_Town_Business_Town_Events_Chart))
+            if (currentPhase == Phases.Town_Business_Town_Events_Chart || currentPhase == Phases.After_Town_Business_Town_Events_Chart)
             {
                 TownEventsRollPanel.SetActive(true);
                 if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && !UserRolledTownEventsThisTurn)
@@ -808,6 +841,19 @@ namespace FallenLand
                 RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
                 RollTownEventTextGameObject.GetComponent<Text>().text = "Roll to see effects...";
                 UserRolledTownEventsThisTurn = false;
+            }
+        }
+
+        private void updatePartyExploitsUi()
+        {
+            Phases currentPhase = GameManagerInstance.GetPhase();
+            if (currentPhase == Phases.Party_Exploits_Party)
+            {
+                PartyExploitsPanelGameObject.SetActive(true);
+            }
+            else
+            {
+                PartyExploitsPanelGameObject.SetActive(false);
             }
         }
 
