@@ -230,7 +230,7 @@ namespace Tests
 			//A valid ID should be able to get the stats and carry weight for an active character
 			Assert.IsNotNull(gameManager.GetActiveCharacterStats(MY_PLAYER_INDEX, SLOT_0));
 			CollectionAssert.AreNotEquivalent(Constants.ALL_SKILLS_ZERO, gameManager.GetActiveCharacterStats(MY_PLAYER_INDEX, SLOT_0));
-			Assert.AreEqual(characterCarryCapacity - expectedCarryWeight, gameManager.GetActiveCharacterCarryWeight(MY_PLAYER_INDEX, SLOT_0));
+			Assert.AreEqual(characterCarryCapacity - expectedCarryWeight, gameManager.GetActiveCharacterRemainingCarryWeight(MY_PLAYER_INDEX, SLOT_0));
 
 			//A valid ID should be able to remove characters from their part and spoils from that member
 			gameManager.RemoveSpoilsCardFromPlayerActiveParty(MY_PLAYER_INDEX, SLOT_0, null);

@@ -15,7 +15,8 @@ namespace FallenLand
 		private int Id;
 		private List<Dictionary<Skills, int>> ActiveCharacterTotalStats;
 		private List<int> ActiveCharacterRemainingCarryWeights;
-	    private Dictionary<Skills, int> ActiveVehicleTotalStats;
+		private List<int> ActiveCharacterUsedCarryWeights;
+		private Dictionary<Skills, int> ActiveVehicleTotalStats;
 		private int ActiveVehicleRemainingCarryWeight;
 		private List<Coordinates> OwnedResourceLocations;
 		private int TownHealth;
@@ -119,10 +120,64 @@ namespace FallenLand
 			return ActiveCharacterTotalStats[characterIndex];
 		}
 
-		public int GetActiveCharacterCarryWeight(int characterIndex)
+		public int GetActiveCharacterRemainingCarryWeight(int characterIndex)
 		{
 			return ActiveCharacterRemainingCarryWeights[characterIndex];
 		}
+
+		public int GetActiveCharacterUsedCarryWeight(int characterIndex)
+		{
+			return ActiveCharacterUsedCarryWeights[characterIndex];
+		}
+
+		public int GetActiveCharacterTotalCarryWeight(int characterIndex)
+		{
+			int carryWeight = 0;
+			if (ActiveCharacters[characterIndex] != null)
+			{
+				carryWeight = ActiveCharacters[characterIndex].GetCarryCapacity();
+			}
+			return carryWeight;
+		}
+
+		public int GetActiveCharacterRemainingPsych(int characterIndex)
+		{
+			int remainingPsych = 0;
+			if (ActiveCharacters[characterIndex] != null)
+			{
+				remainingPsych = ActiveCharacters[characterIndex].GetPsychRemaning();
+			}
+			return remainingPsych;
+		}
+
+		public void SetActiveCharacterRemainingPsych(int characterIndex, int remaining)
+		{
+			if (ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].SetPsychRemaining(remaining);
+			}
+		}
+
+        public int GetActiveCharacterRemainingHealth(int characterIndex)
+        {
+			int remainingHealth = 0;
+			if (ActiveCharacters[characterIndex] != null)
+			{
+				remainingHealth = ActiveCharacters[characterIndex].GetHpRemaining();
+			}
+			return remainingHealth;
+		}
+
+		public int GetActiveCharacterMaxHealth(int characterIndex)
+		{
+			int maxHealth = 0;
+			if (ActiveCharacters[characterIndex] != null)
+			{
+				maxHealth = ActiveCharacters[characterIndex].GetMaxHp();
+			}
+			return maxHealth;
+		}
+
 
 		public Dictionary<Skills, int> GetActiveVehicleStats()
 		{
@@ -425,6 +480,7 @@ namespace FallenLand
 			ActiveCharacters = new List<CharacterCard>();
 			TownTechs = new List<TownTech>();
 			ActiveCharacterRemainingCarryWeights = new List<int>();
+			ActiveCharacterUsedCarryWeights = new List<int>();
 			OwnedResourceLocations = new List<Coordinates>();
 
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -441,6 +497,7 @@ namespace FallenLand
 					ActiveCharacterTotalStats[i].Add(skill, 0);
 				}
 				ActiveCharacterRemainingCarryWeights.Add(0);
+				ActiveCharacterUsedCarryWeights.Add(0);
 			}
 
 			ActiveVehicleTotalStats = new Dictionary<Skills, int>();
@@ -475,12 +532,15 @@ namespace FallenLand
 
 					ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
 				}
-				int tempCarryWeight = ActiveCharacters[indexToUpdate].GetCarryCapacity();
+				int remainingCarryWeightTemp = ActiveCharacters[indexToUpdate].GetCarryCapacity();
+				int usedCarryWeightTemp = 0;
 				for (int i = 0; i < equippedSpoils.Count; i++)
 				{
-					tempCarryWeight -= equippedSpoils[i].GetCarryWeight();
+					remainingCarryWeightTemp -= equippedSpoils[i].GetCarryWeight();
+					usedCarryWeightTemp += equippedSpoils[i].GetCarryWeight();
 				}
-				ActiveCharacterRemainingCarryWeights[indexToUpdate] = tempCarryWeight;
+				ActiveCharacterRemainingCarryWeights[indexToUpdate] = remainingCarryWeightTemp;
+				ActiveCharacterUsedCarryWeights[indexToUpdate] = usedCarryWeightTemp;
 			}
 			else
 			{
@@ -488,6 +548,7 @@ namespace FallenLand
 				{
 					ActiveCharacterTotalStats[indexToUpdate][skill] = 0;
 					ActiveCharacterRemainingCarryWeights[indexToUpdate] = 0;
+					ActiveCharacterUsedCarryWeights[indexToUpdate] = 0;
 				}
 			}
 		}

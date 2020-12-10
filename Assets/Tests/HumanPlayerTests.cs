@@ -446,19 +446,19 @@ namespace Tests
 
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_INDEX, character);
 			CollectionAssert.AreEquivalent(Constants.ALL_SKILLS_ZERO, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils1);
 			CollectionAssert.AreEquivalent(spoils1Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10-2, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10-2, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils2);
 			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10-2-5, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10-2-5, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.RemoveSpoilsCardFromActiveCharacter(CHARACTER_INDEX, spoils1);
 			CollectionAssert.AreEquivalent(spoils2Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10-5, HumanPlayerInstance.GetActiveCharacterCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10-5, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
 
 			yield return null;
 		}

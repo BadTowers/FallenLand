@@ -9,6 +9,8 @@ namespace FallenLand
         private int MaxHp;
         private int PsychResistance;
         private int CarryCapacity;
+        private int CurrentPsychRemaning;
+        private int CurrentHp;
         //link. This would map some spoils card to some bonuses. ex) any two wheeled vehicle -> +1 movement and +6 carrying capacity TODO
         //specialAbilities. What bonuses the character card gets. TDC cost 3 less. Auto pass certain encounters. etc TODO
         private List<SpoilsCard> EquippedSpoils;
@@ -21,6 +23,7 @@ namespace FallenLand
             EquippedSpoils = new List<SpoilsCard>();
             HasFirstStrike = false;
             IsMaster = false;
+            CurrentPsychRemaning = 3;
         }
 
         public static object DeserializeCharacterCard(byte[] data)
@@ -41,12 +44,31 @@ namespace FallenLand
             if (maxHp > 0)
             {
                 MaxHp = maxHp;
+                CurrentHp = MaxHp;
             }
         }
 
         public int GetMaxHp()
         {
             return MaxHp;
+        }
+
+        public int GetHpRemaining()
+        {
+            return CurrentHp;
+        }
+
+        public void SetHpRemaining(int hpRemaining)
+        {
+            if (hpRemaining < 0)
+            {
+                hpRemaining = 0;
+            }
+            else if (hpRemaining > MaxHp)
+            {
+                hpRemaining = MaxHp;
+            }
+            CurrentHp = hpRemaining;
         }
 
         public void SetPsychResistance(int psychResistance)
@@ -124,6 +146,24 @@ namespace FallenLand
         public bool GetIsMaster()
         {
             return IsMaster;
+        }
+
+        public int GetPsychRemaning()
+        {
+            return CurrentPsychRemaning;
+        }
+
+        public void SetPsychRemaining(int remaining)
+        {
+            if (remaining < 0)
+            {
+                remaining = 0;
+            }
+            else if (remaining > 3)
+            {
+                remaining = 3;
+            }
+            CurrentPsychRemaning = remaining;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace FallenLand
 		private const int MaxActionCards = 7;
 		private const int MaxCharacterCards = -1;
 		private const int MaxSpoilsCards = -1;
+		private const int MaxPsych = 3;
 		private List<TownTech> TownTechs;
 		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
@@ -468,15 +469,79 @@ namespace FallenLand
 			return stats;
 		}
 
-		public int GetActiveCharacterCarryWeight(int playerIndex, int characterIndex)
+		public int GetActiveCharacterRemainingCarryWeight(int playerIndex, int characterIndex)
 		{
 			int weight = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				weight = Players[playerIndex].GetActiveCharacterCarryWeight(characterIndex);
+				weight = Players[playerIndex].GetActiveCharacterRemainingCarryWeight(characterIndex);
 			}
 			return weight;
 		}
+
+		public int GetActiveCharacterTotalCarryWeight(int playerIndex, int characterIndex)
+        {
+			int weight = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				weight = Players[playerIndex].GetActiveCharacterTotalCarryWeight(characterIndex);
+			}
+			return weight;
+		}
+
+		public int GetActiveCharacterUsedCarryWeight(int playerIndex, int characterIndex)
+		{
+			int weight = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				weight = Players[playerIndex].GetActiveCharacterUsedCarryWeight(characterIndex);
+			}
+			return weight;
+		}
+
+		public int GetActiveCharacterRemainingPsych(int playerIndex, int characterIndex)
+		{
+			int remainingPsych = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				remainingPsych = Players[playerIndex].GetActiveCharacterRemainingPsych(characterIndex);
+			}
+			return remainingPsych;
+		}
+
+		public void SetActiveCharacterRemainingPsych(int playerIndex, int characterIndex, int remainingPsych)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SetActiveCharacterRemainingPsych(characterIndex, remainingPsych);
+			}
+		}
+
+		public int GetMaxPsych()
+		{
+			return MaxPsych;
+		}
+
+		public int GetActiveCharacterRemainingHealth(int playerIndex, int characterIndex)
+		{
+			int remainingHealth = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				remainingHealth = Players[playerIndex].GetActiveCharacterRemainingHealth(characterIndex);
+			}
+			return remainingHealth;
+		}
+
+		public int GetActiveCharacterMaxHealth(int playerIndex, int characterIndex)
+		{
+			int maxHealth = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				maxHealth = Players[playerIndex].GetActiveCharacterMaxHealth(characterIndex);
+			}
+			return maxHealth;
+		}
+
 
 		public Dictionary<Skills, int> GetActiveVehicleStats(int playerIndex)
 		{
