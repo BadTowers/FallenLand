@@ -23,6 +23,8 @@ namespace FallenLand
 		private const int MaxCharacterCards = -1;
 		private const int MaxSpoilsCards = -1;
 		private const int MaxPsych = 3;
+		private const int MaxNumberOfPlayers = 5;
+		private const int MovementWeekCost = 1;
 		private List<TownTech> TownTechs;
 		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
@@ -40,6 +42,7 @@ namespace FallenLand
 		private MissionManager MissionManagerInst;
 		private Dice DiceRoller;
 		private bool IsMyPhaseEnded;
+		private MouseManager MouseManagerInst;
 
 		#region UnityFunctions
 		void Start()
@@ -55,6 +58,7 @@ namespace FallenLand
 			PlayerPieceManagerInst = this.gameObject.AddComponent<PlayerPieceManager>();
 			MissionManagerInst = new MissionManager();
 			DiceRoller = new Dice();
+			MouseManagerInst = GameObject.Find("MouseManager").GetComponent<MouseManager>();
 
 			registerPhotonCallbacks();
 
@@ -120,7 +124,7 @@ namespace FallenLand
 					newPlayer.SetTownHealth(StartingTownHealth);
 					newPlayer.SetPrestige(StartingPrestige);
 					Players[playerIndex] = newPlayer;
-					PlayerPieceManagerInst.CreatePiece(faction);
+					PlayerPieceManagerInst.CreatePiece(faction, playerIndex);
 				}
 				ReceivedMyFactionInformation = true;
 
@@ -168,7 +172,22 @@ namespace FallenLand
 
 				GameIsSetUpAtStart = true;
             }
-        }
+
+			int myIndex = GetIndexForMyPlayer();
+			if (Players[myIndex].GetPlayerIsMoving())
+			{
+				Coordinates lastClickedHexCoordinates = MouseManagerInst.GetLastHexClickedCoodinates();
+				if (lastClickedHexCoordinates != null)
+				{
+					MouseManagerInst.ClearLastHexClickedCoodinates();
+					Players[myIndex].SetPlayerIsMoving(false);
+					int previousWeeksRemaining = Players[myIndex].GetRemainingPartyExploitWeeks();
+					Players[myIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - MovementWeekCost);
+					PlayerPieceManagerInst.MovePiece(myIndex, lastClickedHexCoordinates);
+					//asdfasdf TODO network this to other players
+				}
+			}
+		}
 
 		public void OnEnable()
 		{
@@ -311,7 +330,7 @@ namespace FallenLand
                     ReceivedMyFactionInformation = true;
                 }
 
-                PlayerPieceManagerInst.CreatePiece(faction);
+                PlayerPieceManagerInst.CreatePiece(faction, factionInfo.GetPlayerIndex());
             }
             else if (eventCode == Constants.EvSendPlayerInformation)
             {
@@ -522,6 +541,11 @@ namespace FallenLand
 			return MaxPsych;
 		}
 
+		public int GetMaxNumberOfPlayers()
+		{
+			return MaxNumberOfPlayers;
+		}
+
 		public int GetActiveCharacterRemainingHealth(int playerIndex, int characterIndex)
 		{
 			int remainingHealth = 0;
@@ -550,6 +574,16 @@ namespace FallenLand
 				psychRes = Players[playerIndex].GetActiveCharacterPsychResistance(characterIndex);
 			}
 			return psychRes;
+		}
+
+		public int GetRemainingPartyExploitWeeks(int playerIndex)
+		{
+			int remainingWeeks = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				remainingWeeks = Players[playerIndex].GetRemainingPartyExploitWeeks();
+			}
+			return remainingWeeks;
 		}
 
 
@@ -843,6 +877,24 @@ namespace FallenLand
 			}
 
 			return isItMyTurn;
+		}
+
+		public void SetPlayerIsMoving(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SetPlayerIsMoving(true);
+			}
+		}
+
+		public bool GetPlayerIsMoving(int playerIndex)
+		{
+			bool playerIsMoving = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				playerIsMoving = Players[playerIndex].GetPlayerIsMoving();
+			}
+			return playerIsMoving;
 		}
 		#endregion
 

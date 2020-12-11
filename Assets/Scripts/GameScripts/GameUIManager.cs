@@ -48,6 +48,8 @@ namespace FallenLand
         private GameObject RollTownEventTextGameObject;
         private GameObject PartyExploitsPanelGameObject;
         private bool UserRolledTownEventsThisTurn;
+        private GameObject ActualRemainingWeeksTextGameObject;
+        private GameObject PartyExploitsInformationTextGameObject;
 
         #region UnityFunctions
         void Awake()
@@ -66,6 +68,8 @@ namespace FallenLand
             RollTownEventButtonGameObject = GameObject.Find("RollTownEventsButton");
             RollTownEventTextGameObject = GameObject.Find("RollTownEventsText");
             PartyExploitsPanelGameObject = GameObject.Find("PartyExploitsPanel");
+            ActualRemainingWeeksTextGameObject = GameObject.Find("ActualRemainingWeeksText");
+            PartyExploitsInformationTextGameObject = GameObject.Find("PartyExploitsInformationText");
 
             ActiveCharactersScrollContent = new List<GameObject>();
 
@@ -142,6 +146,8 @@ namespace FallenLand
 
             TownEventsRollPanel.SetActive(false);
             PartyExploitsPanelGameObject.SetActive(false);
+
+            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
         }
 
         void Start()
@@ -365,6 +371,8 @@ namespace FallenLand
         public void OnMovementDeedPress()
         {
             Debug.Log("Movement deed selected");
+            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the hex you would like your party to move to.";
+            GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer());
         }
 
         public void OnEncounterDeedPress()
@@ -850,6 +858,11 @@ namespace FallenLand
             if (currentPhase == Phases.Party_Exploits_Party)
             {
                 PartyExploitsPanelGameObject.SetActive(true);
+                ActualRemainingWeeksTextGameObject.GetComponent<Text>().text = GameManagerInstance.GetRemainingPartyExploitWeeks(CurrentViewedID).ToString();
+                if (!GameManagerInstance.GetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer()))
+                {
+                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+                }
             }
             else
             {

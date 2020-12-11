@@ -13,9 +13,15 @@ namespace FallenLand
         public PlayerPieceManager()
         {
             PlayerPieces = new List<GameObject>();
+            //GameManager GameManagerInst = GameObject.Find("GameManager").GetComponent<GameManager>();
+            //for (int i = 0; i < GameManagerInst.GetMaxNumberOfPlayers(); i++)
+            for (int i = 0; i < 6; i++)
+            {
+                PlayerPieces.Add(null);
+            }
         }
 
-        public void CreatePiece(Faction faction)
+        public void CreatePiece(Faction faction, int playerIndex)
         {
             if (Map != null)
             {
@@ -30,7 +36,14 @@ namespace FallenLand
 
                 curPiece.transform.Find("CylinderOuter").GetComponentInChildren<MeshRenderer>().material.color = Color.magenta;
 
-                PlayerPieces.Add(curPiece);
+                if (playerIndex < PlayerPieces.Count)
+                {
+                    PlayerPieces[playerIndex] = curPiece;
+                }
+                else
+                {
+                    Debug.LogError("Tried to create a player piece for player index " + playerIndex.ToString() + ", but that's larger than the max number of players!");
+                }
             }
             else
             {
@@ -41,6 +54,12 @@ namespace FallenLand
         public void SetMap(MapCreation map)
         {
             Map = map;
+        }
+
+        public void MovePiece(int playerIndex, Coordinates newLocation)
+        {
+            GameWorldCoordinates gameCoords = Map.GetGameLocationFromCoordinates(newLocation);
+            PlayerPieces[playerIndex].transform.position = new Vector3(gameCoords.GetX() + X_OFFSET, MapCreation.HEX_HEIGHT, gameCoords.GetY() + Y_OFFSET);
         }
     }
 }

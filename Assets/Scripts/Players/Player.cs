@@ -21,6 +21,8 @@ namespace FallenLand
 		private List<Coordinates> OwnedResourceLocations;
 		private int TownHealth;
 		private int Prestige;
+		private int RemainingPartyExploitWeeks;
+		private bool PlayerIsMoving;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -41,6 +43,7 @@ namespace FallenLand
 			extractTownTechsFromFaction();
 			TownHealth = 1;
 			Prestige = 1;
+			RemainingPartyExploitWeeks = 4;
 		}
 
 		public List<SpoilsCard> GetAuctionHouseCards()
@@ -479,6 +482,30 @@ namespace FallenLand
 				isAllowed = true;
 			}
 			return isAllowed;
+		}
+
+		public int GetRemainingPartyExploitWeeks()
+		{
+			return RemainingPartyExploitWeeks;
+		}
+
+		public void SetRemainingPartyExploitWeeks(int remainingWeeks)
+		{
+            if (remainingWeeks < 0)
+            {
+				remainingWeeks = 0;
+            }
+			RemainingPartyExploitWeeks = remainingWeeks;
+		}
+
+		public void SetPlayerIsMoving(bool isMoving)
+		{
+			PlayerIsMoving = isMoving;
+		}
+
+		public bool GetPlayerIsMoving()
+		{
+			return PlayerIsMoving;
 		}
 
 

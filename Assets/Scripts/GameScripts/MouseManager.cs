@@ -11,12 +11,14 @@ namespace FallenLand
 		private GameObject HexInformationBackground;
 		private GameObject HexInformationText;
 		private string ToolTipText = "";
+		private Coordinates LastClickHexCoodinates;
 
         #region UnityFunctions
         void Awake()
 		{
 			HexInformationBackground = GameObject.Find("HexInformationBackground");
 			HexInformationText = GameObject.Find("HexInformationText");
+			LastClickHexCoodinates = null;
 		}
 
 		void Start()
@@ -58,10 +60,20 @@ namespace FallenLand
 				HexInformationText.GetComponent<Text>().text = ToolTipText;
 			}
 		}
-        #endregion
 
-        #region HelperFunctions
-        private void mouseOverHex(GameObject go)
+		public Coordinates GetLastHexClickedCoodinates()
+		{
+			return LastClickHexCoodinates;
+		}
+
+		public void ClearLastHexClickedCoodinates()
+		{
+			LastClickHexCoodinates = null;
+		}
+		#endregion
+
+		#region HelperFunctions
+		private void mouseOverHex(GameObject go)
 		{
 			//If left clicking
 			if (Input.GetMouseButtonDown(0))
@@ -87,6 +99,10 @@ namespace FallenLand
 				}
 
 				toggleColor(mr);
+				if (go.GetComponentInParent<Hex>() != null)
+				{
+					LastClickHexCoodinates = go.GetComponentInParent<Hex>().GetCoordinates();
+				}
 			}
 			else
 			{

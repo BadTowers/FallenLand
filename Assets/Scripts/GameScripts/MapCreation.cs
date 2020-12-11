@@ -127,6 +127,31 @@ namespace FallenLand
 			return worldCoords;
 		}
 
+		public GameWorldCoordinates GetGameLocationFromCoordinates(Coordinates coords)
+		{
+			GameWorldCoordinates worldCoords = null;
+			for (int LR = 0; LR < MAP_WIDTH; LR++)
+			{
+				for (int UD = 0; UD < MAP_HEIGHT; UD++)
+				{
+					GameObject go = MapOfHexes[LR, UD];
+					if (go != null)
+					{
+						Hex hex = go.GetComponent<Hex>();
+						if (hex != null)
+						{
+							Coordinates hexLocation = hex.GetCoordinates();
+							if (hexLocation.Equals(coords))
+							{
+								worldCoords = hex.GetGameWorldCoords();
+							}
+						}
+					}
+				}
+			}
+			return worldCoords;
+		}
+
 		private void configureHex(GameObject go, int x, int y, float xInGameWorld, float yInGameWorld)
 		{
 			go.name = "Hex_" + x + "_" + y; //Name the hex
@@ -157,7 +182,6 @@ namespace FallenLand
 					if (f.GetBaseLocation().Equals(go.GetComponent<Hex>().GetCoordinates()))
 					{
 						go.GetComponent<Hex>().SetFaction(f);
-						//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.white; //Debug thingy
 					}
 				}
 			}
@@ -170,14 +194,12 @@ namespace FallenLand
 					if (DefaultRandomNumberLocations.RAND_NUM_LOCATIONS[loc].Equals(go.GetComponentInChildren<Hex>().GetCoordinates()))
 					{
 						go.GetComponent<Hex>().SetRandomLocationNumber(loc);
-						//go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.cyan; //Debug thingy
 						break;
 					}
 				}
 			}
 
 			//Set the start color of the hex
-			//go.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
 			go.transform.Find("OuterHex").GetComponentInChildren<MeshRenderer>().material.color = Color.gray;
 
 			//Set the texture of the hex
