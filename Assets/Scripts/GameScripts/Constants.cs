@@ -38,6 +38,14 @@ namespace FallenLand
 		public const byte ADD_TO_TOWN_ROSTER = 11;
 		public const byte ADD_TO_AUCTION_HOUSE = 12;
 
+		//Used for EvTownEventRoll
+		public const byte PARTY_EXPLOITS_MOVEMENT = 1;
+		public const byte PARTY_EXPLOITS_ENCOUNTER = 2;
+		public const byte PARTY_EXPLOITS_MISSION = 3;
+		public const byte PARTY_EXPLOITS_HEALING = 4;
+		public const byte PARTY_EXPLOITS_PVP = 5;
+		public const byte PARTY_EXPLOITS_RESOURCE = 6;
+
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
 		public const byte EvFinalMove = 2;
@@ -47,5 +55,6 @@ namespace FallenLand
 		public const byte EvRequestUpdateToPlayerInformation = 6;
 		public const byte EvMissionLocation = 7;
 		public const byte EvTownEventRoll = 8;
+		public const byte EvPartyExploits = 9;
 	}
 }

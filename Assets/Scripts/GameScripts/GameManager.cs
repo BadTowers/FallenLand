@@ -181,10 +181,22 @@ namespace FallenLand
 				{
 					MouseManagerInst.ClearLastHexClickedCoodinates();
 					Players[myIndex].SetPlayerIsMoving(false);
-					int previousWeeksRemaining = Players[myIndex].GetRemainingPartyExploitWeeks();
-					Players[myIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - MovementWeekCost);
-					PlayerPieceManagerInst.MovePiece(myIndex, lastClickedHexCoordinates);
-					//asdfasdf TODO network this to other players
+					if (isAllowedToMoveHere(myIndex, lastClickedHexCoordinates))
+					{
+						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
+						content.SetMoveToLocation(lastClickedHexCoordinates);
+						if (PhotonNetwork.IsMasterClient)
+                        {
+							//Send this move to everyone else
+							sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
+							handlePartyExploitsNetworkUpdate((object)content);
+						}
+						else
+                        {
+							//Send this move to master
+							sendNetworkEvent((object)content, ReceiverGroup.MasterClient, Constants.EvPartyExploits);
+						}
+					}
 				}
 			}
 		}
@@ -291,75 +303,85 @@ namespace FallenLand
 		{
 			byte eventCode = photonEvent.Code;
 
-            if (eventCode == Constants.EvDealCard)
-            {
-                Debug.Log("Card we sent to me!");
-                CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
-                int playerIndex = cardInfo.GetPlayerIndex();
-                string cardName = cardInfo.GetCardName();
-                if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
-                {
-                    dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
-                }
-                else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
-                {
-                    dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
-                }
-                else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
-                {
-                    dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
-                }
-            }
-            else if (eventCode == Constants.EvSendFactionInformation)
-            {
-                Debug.Log("Got faction info sent to me!");
-                FactionNetworking factionInfo = (FactionNetworking)photonEvent.CustomData;
-                DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
-                Faction faction = defaultFactionInfo.GetFactionFromName(factionInfo.GetFactionName());
-                if (faction == null)
-                {
-                    Debug.LogError("OnEvent: Faction info passed in was bad... We got " + factionInfo.GetFactionName() + " but couldn't find such a faction.");
-                }
-                Player newPlayer = new HumanPlayer(faction, StartingSalvage);
-                newPlayer.SetTownHealth(StartingTownHealth);
-                newPlayer.SetPrestige(StartingPrestige);
-                Players[factionInfo.GetPlayerIndex()] = newPlayer;
+			if (eventCode == Constants.EvDealCard)
+			{
+				Debug.Log("Card we sent to me!");
+				CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
+				int playerIndex = cardInfo.GetPlayerIndex();
+				string cardName = cardInfo.GetCardName();
+				if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
+				{
+					dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
+				}
+				else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
+				{
+					dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
+				}
+				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
+				{
+					dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
+				}
+			}
+			else if (eventCode == Constants.EvSendFactionInformation)
+			{
+				Debug.Log("Got faction info sent to me!");
+				FactionNetworking factionInfo = (FactionNetworking)photonEvent.CustomData;
+				DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
+				Faction faction = defaultFactionInfo.GetFactionFromName(factionInfo.GetFactionName());
+				if (faction == null)
+				{
+					Debug.LogError("OnEvent: Faction info passed in was bad... We got " + factionInfo.GetFactionName() + " but couldn't find such a faction.");
+				}
+				Player newPlayer = new HumanPlayer(faction, StartingSalvage);
+				newPlayer.SetTownHealth(StartingTownHealth);
+				newPlayer.SetPrestige(StartingPrestige);
+				Players[factionInfo.GetPlayerIndex()] = newPlayer;
 
-                if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
-                {
-                    ReceivedMyFactionInformation = true;
-                }
+				if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
+				{
+					ReceivedMyFactionInformation = true;
+				}
 
-                PlayerPieceManagerInst.CreatePiece(faction, factionInfo.GetPlayerIndex());
-            }
-            else if (eventCode == Constants.EvSendPlayerInformation)
-            {
-                Debug.Log("Received updated player information");
-                PlayerCardNetworking playerInfo = (PlayerCardNetworking)photonEvent.CustomData;
-                handlePlayerNetworkUpdate(playerInfo);
-            }
-            else if (eventCode == Constants.EvRequestUpdateToPlayerInformation)
-            {
-                Debug.Log("Got a request to update player information");
-                object playerInfo = photonEvent.CustomData;
-                sendNetworkEvent(playerInfo, ReceiverGroup.Others, Constants.EvSendPlayerInformation);
-                handlePlayerNetworkUpdate((PlayerCardNetworking)playerInfo);
-            }
-            else if (eventCode == Constants.EvMissionLocation)
-            {
-                Debug.Log("Received mission location information");
-                MissionLocationNetworking missionLocationInfo = (MissionLocationNetworking)photonEvent.CustomData;
-                MissionManagerInst.AddMissionLocation(missionLocationInfo.GetMissionNumber(), missionLocationInfo.GetRandomLocationNumber());
-            }
-            else if (eventCode == Constants.EvTownEventRoll)
-            {
+				PlayerPieceManagerInst.CreatePiece(faction, factionInfo.GetPlayerIndex());
+			}
+			else if (eventCode == Constants.EvSendPlayerInformation)
+			{
+				Debug.Log("Received updated player information");
+				PlayerCardNetworking playerInfo = (PlayerCardNetworking)photonEvent.CustomData;
+				handlePlayerNetworkUpdate(playerInfo);
+			}
+			else if (eventCode == Constants.EvRequestUpdateToPlayerInformation)
+			{
+				Debug.Log("Got a request to update player information");
+				object playerInfo = photonEvent.CustomData;
+				sendNetworkEvent(playerInfo, ReceiverGroup.Others, Constants.EvSendPlayerInformation);
+				handlePlayerNetworkUpdate((PlayerCardNetworking)playerInfo);
+			}
+			else if (eventCode == Constants.EvMissionLocation)
+			{
+				Debug.Log("Received mission location information");
+				MissionLocationNetworking missionLocationInfo = (MissionLocationNetworking)photonEvent.CustomData;
+				MissionManagerInst.AddMissionLocation(missionLocationInfo.GetMissionNumber(), missionLocationInfo.GetRandomLocationNumber());
+			}
+			else if (eventCode == Constants.EvTownEventRoll)
+			{
 				Debug.Log("Received a town event roll networking event");
 				if (PhotonNetwork.IsMasterClient)
-                {
-                    Debug.Log("We are master, so we have to send this to the other playes");
+				{
+					Debug.Log("We are master, so we have to send this to the other players");
 					sendNetworkEvent(photonEvent.CustomData, ReceiverGroup.Others, Constants.EvTownEventRoll);
 				}
 				handleTownEventRollNetworkUpdate(photonEvent.CustomData);
+			}
+			else if (eventCode == Constants.EvPartyExploits)
+			{
+				Debug.Log("Received a party exploits event");
+				if (PhotonNetwork.IsMasterClient)
+				{
+					Debug.Log("We are master, so we have to send this to the other players");
+					sendNetworkEvent(photonEvent.CustomData, ReceiverGroup.Others, Constants.EvPartyExploits);
+				}
+				handlePartyExploitsNetworkUpdate(photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -1255,6 +1277,12 @@ namespace FallenLand
 			return playerIndex >= 0 && playerIndex < Players.Count;
 		}
 
+		private bool isAllowedToMoveHere(int playerIndex, Coordinates coords)
+		{
+			//TODO implement this function
+			return true;
+		}
+
 		private void generateMissionLocations()
 		{
 			List<int> randomLocations = new List<int>();
@@ -1321,6 +1349,13 @@ namespace FallenLand
 			}
 		}
 
+		private void handlePartyExploitsMovement(int playerIndex, Coordinates coords)
+		{
+			int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
+			Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - MovementWeekCost);
+			PlayerPieceManagerInst.MovePiece(playerIndex, coords);
+		}
+
 		private void registerPhotonCallbacks()
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
@@ -1329,6 +1364,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(PlayerCardNetworking), Constants.EvRequestUpdateToPlayerInformation, PlayerCardNetworking.SerializePlayerCard, PlayerCardNetworking.DeserializePlayerCard);
 			PhotonPeer.RegisterType(typeof(MissionLocationNetworking), Constants.EvMissionLocation, MissionLocationNetworking.SerializeMissionLocation, MissionLocationNetworking.DeserializeMissionLocation);
 			PhotonPeer.RegisterType(typeof(TownEventNetworking), Constants.EvTownEventRoll, TownEventNetworking.SerializeTownEventRoll, TownEventNetworking.DeserializeTownEventRoll);
+			PhotonPeer.RegisterType(typeof(PartyExploitsNetworking), Constants.EvPartyExploits, PartyExploitsNetworking.SerializePartyExploits, PartyExploitsNetworking.DeserializePartyExploits);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -1419,6 +1455,15 @@ namespace FallenLand
 		{
 			TownEventNetworking townEvent = (TownEventNetworking)content;
 			handleTownEventRoll(townEvent.GetPlayerIndex(), townEvent.GetTownEventRoll());
+		}
+
+		private void handlePartyExploitsNetworkUpdate(object content)
+		{
+			PartyExploitsNetworking partyExploitsEvent = (PartyExploitsNetworking)content;
+			if (partyExploitsEvent.GetPartyExploitsAction() == Constants.PARTY_EXPLOITS_MOVEMENT)
+			{
+				handlePartyExploitsMovement(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetMoveToLocation());
+			}
 		}
 
 		private void townBusinessPhase_DealSubphase()
