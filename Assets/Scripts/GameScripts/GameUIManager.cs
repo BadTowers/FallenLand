@@ -859,6 +859,7 @@ namespace FallenLand
             {
                 PartyExploitsPanelGameObject.SetActive(true);
                 ActualRemainingWeeksTextGameObject.GetComponent<Text>().text = GameManagerInstance.GetRemainingPartyExploitWeeks(CurrentViewedID).ToString();
+                changePartyExploitsButtonStatesAsNeeded();
                 if (!GameManagerInstance.GetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer()))
                 {
                     PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
@@ -874,10 +875,16 @@ namespace FallenLand
         {
             if (GameManagerInstance.GetIsItMyTurn())
             {
-                if (GameManagerInstance.GetCurrentPhase() == Phases.Town_Business_Town_Events_Chart && !UserRolledTownEventsThisTurn)
+                Phases currentPhase = GameManagerInstance.GetCurrentPhase();
+                if (currentPhase == Phases.Town_Business_Town_Events_Chart && !UserRolledTownEventsThisTurn)
                 {
                     EndPhaseButton.interactable = false;
                     EndPhaseButton.GetComponentInChildren<Text>().text = "Roll...";
+                }
+                else if (currentPhase == Phases.Party_Exploits_Party && GameManagerInstance.GetRemainingPartyExploitWeeks(GameManagerInstance.GetIndexForMyPlayer()) > 0)
+                {
+                    EndPhaseButton.interactable = false;
+                    EndPhaseButton.GetComponentInChildren<Text>().text = "Deeds...";
                 }
                 else
                 {
@@ -889,6 +896,23 @@ namespace FallenLand
             {
                 EndPhaseButton.interactable = false;
                 EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting...";
+            }
+        }
+
+        private void changePartyExploitsButtonStatesAsNeeded()
+        {
+            if (GameManagerInstance.GetIsItMyTurn() && GameManagerInstance.GetRemainingPartyExploitWeeks(GameManagerInstance.GetIndexForMyPlayer()) > 0)
+            {
+                GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
+            }
+            else
+            {
+                GameObject.Find("MovementButton").GetComponent<Button>().interactable = false;
+                GameObject.Find("EncounterButton").GetComponent<Button>().interactable = false;
+                GameObject.Find("PVPButton").GetComponent<Button>().interactable = false;
+                GameObject.Find("ResourceButton").GetComponent<Button>().interactable = false;
+                GameObject.Find("HealingButton").GetComponent<Button>().interactable = false;
+                GameObject.Find("MissionButton").GetComponent<Button>().interactable = false;
             }
         }
 
