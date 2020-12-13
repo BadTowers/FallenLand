@@ -228,7 +228,7 @@ namespace FallenLand
 
 		public void OnPhaseBegins(Phases phase)
 		{
-			//bool techsHandled = false;
+			bool techsHandled = false;
 			CurrentPhase = phase;
 			IsMyPhaseEnded = false;
 
@@ -250,8 +250,8 @@ namespace FallenLand
 					{
 						townBusinessPhase_DealSubphase();
 					}
-					//TownTechManager.HandlePhase(this);
-					//techsHandled = true;
+					TownTechManager.HandlePhase(this);
+					techsHandled = true;
 					if (PhotonNetwork.IsMasterClient)
 					{
 						endPhaseForAllPlayers();
@@ -278,10 +278,10 @@ namespace FallenLand
             }
 
 			FactionPerkManager.HandlePhase(this);
-			//if (!techsHandled)
-			//{
-			//	TownTechManager.HandlePhase(this);
-			//}
+			if (!techsHandled)
+			{
+				TownTechManager.HandlePhase(this);
+			}
 		}
 
 		public void OnPhaseCompleted(Phases phase)
@@ -907,6 +907,11 @@ namespace FallenLand
 					}
 				}
 			}
+		}
+
+		public void ApplyPsychDamageToWholeParty(int playerIndex, int amountOfDamage)
+		{
+			//TODO
 		}
 
 
