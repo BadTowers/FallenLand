@@ -312,17 +312,31 @@ namespace FallenLand
 				CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
 				int playerIndex = cardInfo.GetPlayerIndex();
 				string cardName = cardInfo.GetCardName();
-				if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
+				bool isRequestForMaster = cardInfo.GetIsRequestForMaster();
+				if (isRequestForMaster && PhotonNetwork.IsMasterClient)
 				{
+					object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 					dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
 				}
-				else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
+				else if (!isRequestForMaster)
 				{
-					dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
+					if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
+					{
+						dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
+					}
+					else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
+					{
+						dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
+					}
+					else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
+					{
+						dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
+					}
 				}
-				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
+				else
 				{
-					dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
+					Debug.LogError("It was a request for master, but we aren't master... we should not do that.");
 				}
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
@@ -858,11 +872,19 @@ namespace FallenLand
 
 		public void DealSpoilsToPlayer(int playerIndex, int numberOfCardsToDeal)
 		{
-			//TODO no networking??
 			for (int i = 0; i < numberOfCardsToDeal; i++)
 			{
-				Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-				SpoilsDeck.RemoveAt(0);
+				if (PhotonNetwork.IsMasterClient)
+				{
+					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+					dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[0].GetTitle());
+				}
+				else
+				{
+					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD, true);
+					sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvDealCard);
+				}
 			}
 		}
 
@@ -874,7 +896,14 @@ namespace FallenLand
 				{
 					if (PhotonNetwork.IsMasterClient)
 					{
-						DealSpecificSpoilToPlayer(playerIndex, SpoilsDeck[i].GetTitle());
+						object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+						sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+						dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[i].GetTitle());
+					}
+					else
+					{
+						object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD, true);
+						sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvDealCard);
 					}
 				}
 			}
@@ -883,10 +912,17 @@ namespace FallenLand
 
 		public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
-			//TODO what if not master client??
-			object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
-			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-			dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
+			if (PhotonNetwork.IsMasterClient)
+			{
+				object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+				dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
+			}
+			else
+			{
+				object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD, true);
+				sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvDealCard);
+			}
 		}
 
 		public int RollTownEvents(int playerIndex)
@@ -995,12 +1031,16 @@ namespace FallenLand
 
 		private void dealCardsToPlayers()
 		{
-			Debug.Log("dealCardsToPlayers");
-			dealSpoilsCardsToPlayers();
-			dealCharacterCardsToPlayers();
-			dealActionCardsToPlayers();
+			if (PhotonNetwork.IsMasterClient)
+			{
+				Debug.Log("dealCardsToPlayers as master");
+				dealSpoilsCardsToPlayers();
+				dealCharacterCardsToPlayers();
+				dealActionCardsToPlayers();
+			}
 		}
 
+		//Only called by master client
 		private void dealSpoilsCardsToPlayers()
 		{
 			moveStartingCardsToTheEndOfTheDeck(); //Ensure we don't deal away someone's starting card
@@ -1018,6 +1058,7 @@ namespace FallenLand
 			Card.ShuffleDeck(SpoilsDeck);
 		}
 
+		//Only called by master client
 		private void dealCharacterCardsToPlayers()
 		{
 			for (int i = 0; i < StartingCharacterCards; i++)
@@ -1033,6 +1074,7 @@ namespace FallenLand
 			}
 		}
 
+		//Only called by master client
 		private void dealActionCardsToPlayers()
 		{
 			for (int i = 0; i < StartingActionCards; i++)
