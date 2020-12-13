@@ -11,6 +11,7 @@ namespace FallenLand
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();
+		private List<PlainsCard> PlainsDeck = new List<PlainsCard>();
 		private int NumHumanPlayers;
 		private GameInformation.GameModes GameMode;
 		//private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
@@ -20,8 +21,6 @@ namespace FallenLand
 		private const int StartingCharacterCards = 6;
 		private const int StartingSpoilsCards = 10;
 		private const int MaxActionCards = 7;
-		private const int MaxCharacterCards = -1;
-		private const int MaxSpoilsCards = -1;
 		private const int MaxPsych = 3;
 		private const int MaxNumberOfPlayers = 5;
 		private const int MovementWeekCost = 1;
@@ -43,6 +42,7 @@ namespace FallenLand
 		private Dice DiceRoller;
 		private bool IsMyPhaseEnded;
 		private MouseManager MouseManagerInst;
+		private MapLayout MapLayoutInst;
 
 		#region UnityFunctions
 		void Start()
@@ -59,6 +59,7 @@ namespace FallenLand
 			MissionManagerInst = new MissionManager();
 			DiceRoller = new Dice();
 			MouseManagerInst = GameObject.Find("MouseManager").GetComponent<MouseManager>();
+			MapLayoutInst = new DefaultMapLayout();
 
 			registerPhotonCallbacks();
 
@@ -87,7 +88,7 @@ namespace FallenLand
 			//Create the map layout according to the game state that was passed in
 			GameObject mapCreationGO = GameObject.Find("Map");
 			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
-			mapCreation.CreateMap();
+			mapCreation.CreateMap(MapLayoutInst);
 			PlayerPieceManagerInst.SetMap(mapCreation);
 			MissionManagerInst.SetMap(mapCreation);
 
@@ -125,6 +126,7 @@ namespace FallenLand
 					newPlayer.SetPrestige(StartingPrestige);
 					Players[playerIndex] = newPlayer;
 					PlayerPieceManagerInst.CreatePiece(faction, playerIndex);
+					Players[playerIndex].SetPartyLocation(faction.GetBaseLocation());
 				}
 				ReceivedMyFactionInformation = true;
 
@@ -149,7 +151,8 @@ namespace FallenLand
 
 
 			//TODO create the deck of plains cards
-
+			//PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
+			//PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 
 			//TODO create the deck of mountain cards
 
@@ -225,7 +228,7 @@ namespace FallenLand
 
 		public void OnPhaseBegins(Phases phase)
 		{
-			bool techsHandled = false;
+			//bool techsHandled = false;
 			CurrentPhase = phase;
 			IsMyPhaseEnded = false;
 
@@ -247,8 +250,8 @@ namespace FallenLand
 					{
 						townBusinessPhase_DealSubphase();
 					}
-					TownTechManager.HandlePhase(this);
-					techsHandled = true;
+					//TownTechManager.HandlePhase(this);
+					//techsHandled = true;
 					if (PhotonNetwork.IsMasterClient)
 					{
 						endPhaseForAllPlayers();
@@ -275,10 +278,10 @@ namespace FallenLand
             }
 
 			FactionPerkManager.HandlePhase(this);
-			if (!techsHandled)
-			{
-				TownTechManager.HandlePhase(this);
-			}
+			//if (!techsHandled)
+			//{
+			//	TownTechManager.HandlePhase(this);
+			//}
 		}
 
 		public void OnPhaseCompleted(Phases phase)
@@ -336,6 +339,7 @@ namespace FallenLand
 				newPlayer.SetTownHealth(StartingTownHealth);
 				newPlayer.SetPrestige(StartingPrestige);
 				Players[factionInfo.GetPlayerIndex()] = newPlayer;
+				Players[factionInfo.GetPlayerIndex()].SetPartyLocation(faction.GetBaseLocation());
 
 				if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
 				{
@@ -398,6 +402,11 @@ namespace FallenLand
 		public Phases GetCurrentPhase()
 		{
 			return CurrentPhase;
+		}
+
+		public MapLayout GetMapLayout()
+		{
+			return MapLayoutInst;
 		}
 
 		public List<TownTech> GetTownTechs(int playerId)
@@ -849,6 +858,7 @@ namespace FallenLand
 
 		public void DealSpoilsToPlayer(int playerIndex, int numberOfCardsToDeal)
 		{
+			//TODO no networking??
 			for (int i = 0; i < numberOfCardsToDeal; i++)
 			{
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
@@ -856,8 +866,24 @@ namespace FallenLand
 			}
 		}
 
-        public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
+		public void DealNextRelicSpoilsToPlayer(int playerIndex)
+		{
+			for (int i = 0; i < SpoilsDeck.Count; i++)
+			{
+				if (SpoilsDeck[i].GetIsRelic())
+				{
+					if (PhotonNetwork.IsMasterClient)
+					{
+						DealSpecificSpoilToPlayer(playerIndex, SpoilsDeck[i].GetTitle());
+					}
+				}
+			}
+		}
+
+
+		public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
+			//TODO what if not master client??
 			object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
 			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 			dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
@@ -917,6 +943,45 @@ namespace FallenLand
 				playerIsMoving = Players[playerIndex].GetPlayerIsMoving();
 			}
 			return playerIsMoving;
+		}
+
+		public Coordinates GetPartyLocation(int playerIndex)
+		{
+			Coordinates location = null;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				location = Players[playerIndex].GetPartyLocation();
+			}
+			return location;
+		}
+
+		public void SetPlayerIsDoingAnEncounter(int playerIndex, byte encounterType)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SetPlayerIsDoingAnEncounter(true);
+				Players[playerIndex].SetEncounterType(encounterType);
+			}
+		}
+
+		public bool GetPlayerIsDoingAnEncounter(int playerIndex)
+		{
+			bool isDoing = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				isDoing = Players[playerIndex].GetPlayerIsDoingAnEncounter();
+			}
+			return isDoing;
+		}
+
+		public int GetPlayerEncounterType(int playerIndex)
+		{
+			int encounterType = Constants.ENCOUNTER_NONE;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				encounterType = Players[playerIndex].GetEncounterType();
+			}
+			return encounterType;
 		}
 		#endregion
 
@@ -1354,6 +1419,7 @@ namespace FallenLand
 			int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
 			Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - MovementWeekCost);
 			PlayerPieceManagerInst.MovePiece(playerIndex, coords);
+			Players[playerIndex].SetPartyLocation(coords);
 		}
 
 		private void registerPhotonCallbacks()

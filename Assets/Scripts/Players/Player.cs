@@ -23,6 +23,9 @@ namespace FallenLand
 		private int Prestige;
 		private int RemainingPartyExploitWeeks;
 		private bool PlayerIsMoving;
+		private Coordinates PartyLocation;
+		private bool PlayerIsDoingAnEncounter;
+		private int EncounterType;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -44,6 +47,8 @@ namespace FallenLand
 			TownHealth = 1;
 			Prestige = 1;
 			RemainingPartyExploitWeeks = 4;
+			PlayerIsDoingAnEncounter = false;
+			EncounterType = Constants.ENCOUNTER_NONE;
 		}
 
 		public List<SpoilsCard> GetAuctionHouseCards()
@@ -207,7 +212,40 @@ namespace FallenLand
 			return OwnedResourceLocations;
 		}
 
-        public int GetTownHealth()
+		public Coordinates GetPartyLocation()
+		{
+			return PartyLocation;
+		}
+
+		public void SetPartyLocation(Coordinates coords)
+		{
+			PartyLocation = coords;
+		}
+
+		public void SetPlayerIsDoingAnEncounter(bool isDoing)
+		{
+			PlayerIsDoingAnEncounter = isDoing;
+		}
+
+		public bool GetPlayerIsDoingAnEncounter()
+		{
+			return PlayerIsDoingAnEncounter;
+		}
+
+		public void SetEncounterType(int encounterType)
+		{
+			if (encounterType >= Constants.ENCOUNTER_NONE && encounterType <= Constants.ENCOUNTER_CITY_RAD)
+			{
+				EncounterType = encounterType;
+			}
+		}
+
+		public int GetEncounterType()
+		{
+			return EncounterType;
+		}
+
+		public int GetTownHealth()
         {
 			return TownHealth;
         }

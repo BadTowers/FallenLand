@@ -18,7 +18,7 @@ namespace FallenLand
 		private readonly GameObject[,] MapOfHexes;
 		private List<Faction> Factions;
 		private GameObject HexTilePrefab;
-		private MapLayout MapLayout;
+		private MapLayout MapLayoutInst;
 		private GameObject GameBoardPrefab;
 
 		public MapCreation()
@@ -27,7 +27,7 @@ namespace FallenLand
 			MapOfHexes = new GameObject[MAP_WIDTH, MAP_HEIGHT];
 		}
 
-		public void CreateMap()
+		public void CreateMap(MapLayout mapLayout)
 		{
 			HexTilePrefab = (GameObject)Resources.Load("Prefabs/HexNoSlantsPrefab", typeof(GameObject));
 			if (HexTilePrefab == null)
@@ -35,10 +35,14 @@ namespace FallenLand
 				Debug.LogError("HexTilePrefab null");
 			}
 
-			if (MapLayout == null)
+			if (MapLayoutInst != null || mapLayout != null)
 			{
-				Debug.Log("Error, map layout not set. Using default");
-				MapLayout = new DefaultMapLayout();
+				MapLayoutInst = mapLayout;
+			}
+			else
+			{
+				Debug.LogError("Error, map layout not set. Using default");
+				MapLayoutInst = new DefaultMapLayout();
 			}
 
 			//Load default factions
@@ -60,7 +64,7 @@ namespace FallenLand
 					GameObject curHex = null;
 
 					//Create a hex and change its starting information
-					if (MapLayout.IsHexInGame(LR, UD))
+					if (MapLayoutInst.IsHexInGame(LR, UD))
 					{
 						//Debug.Log("lr " + lrPos + " ud " + udPos);
 						curHex = (GameObject)Instantiate(HexTilePrefab, new Vector3(lrPos, 0, udPos), Quaternion.identity); //Create hexTile, at given vector, with no rotation
@@ -164,15 +168,15 @@ namespace FallenLand
 			go.AddComponent<Hex>();
 			go.GetComponent<Hex>().SetCoordinates(coords);
 			go.GetComponent<Hex>().SetGameWorldCoordinates(gameCoords);
-			go.GetComponent<Hex>().SetIsCity(MapLayout.IsCity(coords));
-			go.GetComponent<Hex>().SetIsMountain(MapLayout.IsMountain(coords));
-			go.GetComponent<Hex>().SetIsRad(MapLayout.IsRad(coords));
-			go.GetComponent<Hex>().SetIsFactionBase(MapLayout.IsFactionBase(coords));
-			go.GetComponent<Hex>().SetIsPlains(MapLayout.IsPlains(coords));
-			go.GetComponent<Hex>().SetIsRandomLocation(MapLayout.IsRandomLocation(coords));
-			go.GetComponent<Hex>().SetIsWater(MapLayout.IsWater(coords));
-			go.GetComponent<Hex>().SetIsResource(MapLayout.IsResource(coords));
-			go.GetComponent<Hex>().SetIsHexInGame(MapLayout.IsHexInGame(coords));
+			go.GetComponent<Hex>().SetIsCity(MapLayoutInst.IsCity(coords));
+			go.GetComponent<Hex>().SetIsMountain(MapLayoutInst.IsMountain(coords));
+			go.GetComponent<Hex>().SetIsRad(MapLayoutInst.IsRad(coords));
+			go.GetComponent<Hex>().SetIsFactionBase(MapLayoutInst.IsFactionBase(coords));
+			go.GetComponent<Hex>().SetIsPlains(MapLayoutInst.IsPlains(coords));
+			go.GetComponent<Hex>().SetIsRandomLocation(MapLayoutInst.IsRandomLocation(coords));
+			go.GetComponent<Hex>().SetIsWater(MapLayoutInst.IsWater(coords));
+			go.GetComponent<Hex>().SetIsResource(MapLayoutInst.IsResource(coords));
+			go.GetComponent<Hex>().SetIsHexInGame(MapLayoutInst.IsHexInGame(coords));
 
 			//Set the faction base, if needed
 			if (go.GetComponent<Hex>().IsFactionBase())

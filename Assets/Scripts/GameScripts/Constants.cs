@@ -46,6 +46,12 @@ namespace FallenLand
 		public const byte PARTY_EXPLOITS_PVP = 5;
 		public const byte PARTY_EXPLOITS_RESOURCE = 6;
 
+		//
+		public const int ENCOUNTER_NONE = 0;
+		public const int ENCOUNTER_PLAINS = 1;
+		public const int ENCOUNTER_MOUNTAINS = 2;
+		public const int ENCOUNTER_CITY_RAD = 3;
+
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
 		public const byte EvFinalMove = 2;

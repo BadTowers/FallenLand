@@ -102,13 +102,13 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestSuccessText()
 		{
-			Assert.AreEqual("", MissionCardInstance.GetSuccessText());
+			Assert.AreEqual("", MissionCardInstance.GetSuccessHeaderText());
 
-			MissionCardInstance.SetSuccessText("You did it!");
-			Assert.AreEqual("You did it!", MissionCardInstance.GetSuccessText());
+			MissionCardInstance.SetSuccessHeaderText("You did it!");
+			Assert.AreEqual("You did it!", MissionCardInstance.GetSuccessHeaderText());
 
-			MissionCardInstance.SetSuccessText("");
-			Assert.AreEqual("", MissionCardInstance.GetSuccessText());
+			MissionCardInstance.SetSuccessHeaderText("");
+			Assert.AreEqual("", MissionCardInstance.GetSuccessHeaderText());
 
 			yield return null;
 		}
@@ -116,13 +116,13 @@ namespace Tests
 		[UnityTest]
 		public IEnumerator TestFailureText()
 		{
-			Assert.AreEqual("", MissionCardInstance.GetFailureText());
+			Assert.AreEqual("", MissionCardInstance.GetFailureHeaderText());
 
-			MissionCardInstance.SetFailureText("You didn't do it!");
-			Assert.AreEqual("You didn't do it!", MissionCardInstance.GetFailureText());
+			MissionCardInstance.SetFailureHeaderText("You didn't do it!");
+			Assert.AreEqual("You didn't do it!", MissionCardInstance.GetFailureHeaderText());
 
-			MissionCardInstance.SetFailureText("");
-			Assert.AreEqual("", MissionCardInstance.GetFailureText());
+			MissionCardInstance.SetFailureHeaderText("");
+			Assert.AreEqual("", MissionCardInstance.GetFailureHeaderText());
 
 			yield return null;
 		}

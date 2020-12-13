@@ -6,10 +6,15 @@ namespace FallenLand
 	{
 		private int SalvageReward;
 		private Dictionary<Skills, int> SkillChecksRequired;
+		private List<bool> ArePartySkillChecks = new List<bool>();
+		private string DescriptionText;
+		private bool PsychCheckAfterEncounter;
 		//SuccessRewards. The reward the player gets for succeeding the skill checks TODO
-		private string SuccessText;
+		private string SuccessHeaderText;
+		private string SuccessDescriptionText;
 		//FailurePunishments. The punishment the player gets for failing the skill checks TODO
-		private string FailureText;
+		private string FailureHeaderText;
+		private string FailureDescriptionText;
 		//specificInstructions. Things that must be true or must be done to complete the card (move to nearest rad hex, don't complete if you don't have vehicle, etc) TODO
 		//classifiation. Some cards are classified (vehicle combat, biker gang, sigma, etc. Can be none) TODO
 
@@ -52,24 +57,74 @@ namespace FallenLand
 			return SkillChecksRequired;
 		}
 
-		public void SetSuccessText(string successText)
+		public void SetArePartySkillCheck(List<bool> arePartySkillChecks)
 		{
-			SuccessText = successText;
+			ArePartySkillChecks = arePartySkillChecks;
 		}
 
-		public string GetSuccessText()
+		public List<bool> GetArePartySkillCheck()
 		{
-			return SuccessText;
+			return ArePartySkillChecks;
 		}
 
-		public void SetFailureText(string failureText)
+		public void SetMakePsychCheckAfterEncounter(bool psychCheck)
 		{
-			FailureText = failureText;
+			PsychCheckAfterEncounter = psychCheck;
 		}
 
-		public string GetFailureText()
+		public bool GetMaePsychCheckAfterEncounter()
 		{
-			return FailureText;
+			return PsychCheckAfterEncounter;
+		}
+
+		public void SetDescriptionText(string text)
+		{
+			DescriptionText = text;
+		}
+
+		public string GetDescriptionText()
+		{
+			return DescriptionText;
+		}
+
+		public void SetSuccessHeaderText(string successText)
+		{
+			SuccessHeaderText = successText;
+		}
+
+		public string GetSuccessHeaderText()
+		{
+			return SuccessHeaderText;
+		}
+
+		public void SetSuccessDescriptionText(string descriptionText)
+		{
+			SuccessDescriptionText = descriptionText;
+		}
+
+		public string GetSuccessDescriptionText()
+		{
+			return SuccessDescriptionText;
+		}
+
+		public void SetFailureHeaderText(string failureText)
+		{
+			FailureHeaderText = failureText;
+		}
+
+		public string GetFailureHeaderText()
+		{
+			return FailureHeaderText;
+		}
+
+		public void SetFailureDescriptionText(string descriptionText)
+		{
+			FailureDescriptionText = descriptionText;
+		}
+
+		public string GetFailureDescriptionText()
+		{
+			return FailureDescriptionText;
 		}
 
 		public void SetSalvageReward(int salvageReward)
@@ -88,8 +143,8 @@ namespace FallenLand
 
 		private void initText()
 		{
-			FailureText = "";
-			SuccessText = "";
+			FailureHeaderText = "";
+			SuccessHeaderText = "";
 		}
 
 		private void initSkillChecks(Dictionary<Skills, int> skillChecks)

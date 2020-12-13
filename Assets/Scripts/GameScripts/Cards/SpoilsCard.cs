@@ -390,6 +390,16 @@ namespace FallenLand
 			}
 		}
 
+		public bool GetIsRelic()
+		{
+			bool isRelic = false;
+			if (Types.Contains(SpoilsTypes.Relic))
+			{
+				isRelic = true;
+			}
+			return isRelic;
+		}
+
 		public SpoilsCard DeepCopy()
 		{
 			SpoilsCard newCard = new SpoilsCard(this.GetTitle());
