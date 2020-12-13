@@ -40,7 +40,7 @@ namespace FallenLand
 			curCard.AddSuccessReward(new GainNextRelicSpoilsCard());
 			//TODO add success gain is that you have the ability to move to the nearest mission and do it at no weeks cost
 			curCard.SetFailureHeaderText("All Party members automatically suffer 1 point of Psychological Damage.");
-			curCard.SetFailureDescriptionText("Inconsolable at the los of Ol' Betsy, a heartbroken Mac ushers you out. As you pass the rusted mailbox at the end of the drive, a lone gunshot " +
+			curCard.SetFailureDescriptionText("Inconsolable at the loss of Ol' Betsy, a heartbroken Mac ushers you out. As you pass the rusted mailbox at the end of the drive, a lone gunshot " +
 				"echoes from within the house.");
 			curCard.AddFailPunishment(new ApplyPsychDamageToWholeParty(1));
 			curCard.SetId(curID);
