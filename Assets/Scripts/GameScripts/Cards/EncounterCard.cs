@@ -9,7 +9,8 @@ namespace FallenLand
 		private List<bool> ArePartySkillChecks = new List<bool>();
 		private string DescriptionText;
 		private bool PsychCheckAfterEncounter;
-		//SuccessRewards. The reward the player gets for succeeding the skill checks TODO
+		List<Reward> Rewards = new List<Reward>();
+		List<Punishment> Punishments = new List<Punishment>();
 		private string SuccessHeaderText;
 		private string SuccessDescriptionText;
 		//FailurePunishments. The punishment the player gets for failing the skill checks TODO
@@ -140,6 +141,25 @@ namespace FallenLand
 			return SalvageReward;
 		}
 
+        public void AddSuccessReward(Reward reward)
+        {
+			Rewards.Add(reward);
+		}
+
+		public List<Reward> GetSuccessRewards()
+		{
+			return Rewards;
+		}
+
+		public void AddFailPunishment(Punishment punishment)
+		{
+			Punishments.Add(punishment);
+		}
+
+		public List<Punishment> GetFailPunishments()
+		{
+			return Punishments;
+		}
 
 		private void initText()
 		{
