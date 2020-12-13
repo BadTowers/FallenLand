@@ -31,11 +31,7 @@ namespace FallenLand
 			int playerIndex = data[0]; //grab index first
 			byte cardByte = data[1]; //grab card byte second
 			int isRequest = data[2];
-			bool isRequestToMaster = false;
-			if (isRequest == 1)
-			{
-				isRequestToMaster = true;
-			}
+			bool isRequestToMaster = (isRequest == 1);
 
 			List<byte> byteList = new List<byte>(data);
 			byteList.RemoveAt(0); //remove index
