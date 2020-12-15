@@ -141,22 +141,22 @@ namespace FallenLand
 			return SalvageReward;
 		}
 
-        public void AddSuccessReward(Reward reward)
+        public void AddReward(Reward reward)
         {
 			Rewards.Add(reward);
 		}
 
-		public List<Reward> GetSuccessRewards()
+		public List<Reward> GetRewards()
 		{
 			return Rewards;
 		}
 
-		public void AddFailPunishment(Punishment punishment)
+		public void AddPunishment(Punishment punishment)
 		{
 			Punishments.Add(punishment);
 		}
 
-		public List<Punishment> GetFailPunishments()
+		public List<Punishment> GetPunishments()
 		{
 			return Punishments;
 		}

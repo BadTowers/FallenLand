@@ -904,6 +904,10 @@ namespace FallenLand
                 {
                     PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
                 }
+                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && GameManagerInstance.GetCurrentEncounter() != null)
+                {
+                    //TODO update the UI because we now have an encounter card to show the user
+                }
             }
             else
             {

@@ -43,6 +43,7 @@ namespace FallenLand
 		private bool IsMyPhaseEnded;
 		private MouseManager MouseManagerInst;
 		private MapLayout MapLayoutInst;
+		private EncounterCard CurrentPlayerEncounter;
 
 		#region UnityFunctions
 		void Start()
@@ -151,7 +152,7 @@ namespace FallenLand
 
 
 			//TODO create the deck of plains cards
-			//PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
+			PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
 			//PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 
 			//TODO create the deck of mountain cards
@@ -189,17 +190,37 @@ namespace FallenLand
 						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
 						content.SetMoveToLocation(lastClickedHexCoordinates);
 						if (PhotonNetwork.IsMasterClient)
-                        {
+						{
 							//Send this move to everyone else
 							sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
 							handlePartyExploitsNetworkUpdate((object)content);
 						}
 						else
-                        {
+						{
 							//Send this move to master
 							sendNetworkEvent((object)content, ReceiverGroup.MasterClient, Constants.EvPartyExploits);
 						}
 					}
+				}
+			}
+			else if (Players[myIndex].GetPlayerIsDoingAnEncounter())
+			{
+				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
+				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
+				if (PhotonNetwork.IsMasterClient)
+				{
+					//Send this move to everyone else
+					content.SetIsRequestToMaster(false);
+					string nextPlainsEncounterCardName = PlainsDeck[0].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
+					content.SetEncounterCardName(nextPlainsEncounterCardName);
+					sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
+					handlePartyExploitsNetworkUpdate((object)content);
+				}
+				else
+				{
+					//Send this move to master
+					content.SetIsRequestToMaster(true);
+					sendNetworkEvent((object)content, ReceiverGroup.MasterClient, Constants.EvPartyExploits);
 				}
 			}
 		}
@@ -394,11 +415,6 @@ namespace FallenLand
 			else if (eventCode == Constants.EvPartyExploits)
 			{
 				Debug.Log("Received a party exploits event");
-				if (PhotonNetwork.IsMasterClient)
-				{
-					Debug.Log("We are master, so we have to send this to the other players");
-					sendNetworkEvent(photonEvent.CustomData, ReceiverGroup.Others, Constants.EvPartyExploits);
-				}
 				handlePartyExploitsNetworkUpdate(photonEvent.CustomData);
 			}
 		}
@@ -691,6 +707,11 @@ namespace FallenLand
         {
 			return Players;
         }
+
+		public EncounterCard GetCurrentEncounter()
+		{
+			return CurrentPlayerEncounter;
+		}
 
 		public void RemoveSpoilFromAuctionHouse(int playerIndex, SpoilsCard card)
 		{
@@ -1469,6 +1490,29 @@ namespace FallenLand
 			Players[playerIndex].SetPartyLocation(coords);
 		}
 
+		private void handlePartyExploitsEncounter(int playerIndex, byte encounterType, string encounterCardName)
+		{
+			if (playerIndex == GetIndexForMyPlayer() && CurrentPlayerEncounter == null)
+			{
+				if (encounterType == Constants.ENCOUNTER_PLAINS)
+				{
+					CurrentPlayerEncounter = PlainsCard.FindCardInDeckByTitle(encounterCardName, PlainsDeck); //TODO write static function to find card from deck
+					if (CurrentPlayerEncounter == null)
+					{
+						Debug.LogError("Error. Couldn't find plains encounter card with title " + encounterCardName);
+					}
+				}
+				else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
+				{
+					//TODO when this deck is implemented
+				}
+				else if (encounterType == Constants.ENCOUNTER_CITY_RAD)
+				{
+					//TODO when this deck is implemented
+				}
+			}
+		}
+
 		private void registerPhotonCallbacks()
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
@@ -1576,6 +1620,41 @@ namespace FallenLand
 			if (partyExploitsEvent.GetPartyExploitsAction() == Constants.PARTY_EXPLOITS_MOVEMENT)
 			{
 				handlePartyExploitsMovement(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetMoveToLocation());
+			}
+			else if (partyExploitsEvent.GetPartyExploitsAction() == Constants.PARTY_EXPLOITS_ENCOUNTER)
+			{
+				bool isRequestForMaster = partyExploitsEvent.GetIsRequestToMaster();
+				if (isRequestForMaster && PhotonNetwork.IsMasterClient)
+				{
+					//Pass this off to everyone else with the encounter card name
+					byte encounterType = partyExploitsEvent.GetEncounterType();
+					string encounterCardName = "";
+					if (encounterType == Constants.ENCOUNTER_PLAINS)
+					{
+						encounterCardName = PlainsDeck[0].GetTitle();
+					}
+					else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
+					{
+						//TODO get the string name for the top card in this deck once that deck is implemented
+					}
+					else if (encounterType == Constants.ENCOUNTER_CITY_RAD)
+					{
+						//TODO get the string name for the top card in this deck once that deck is implemented
+					}
+					partyExploitsEvent.SetEncounterCardName(encounterCardName);
+					partyExploitsEvent.SetIsRequestToMaster(false);
+					sendNetworkEvent((object)partyExploitsEvent, ReceiverGroup.Others, Constants.EvPartyExploits);
+
+					handlePartyExploitsEncounter(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetEncounterType(), partyExploitsEvent.GetEncounterCardName()); //process the event as master
+				}
+				else if (!isRequestForMaster)
+				{
+					handlePartyExploitsEncounter(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetEncounterType(), partyExploitsEvent.GetEncounterCardName());
+				}
+				else
+				{
+					Debug.LogError("The request was for master but we aren't master. We should not have gotten this party exploits encounter event!");
+				}
 			}
 		}
 

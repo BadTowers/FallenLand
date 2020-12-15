@@ -35,14 +35,14 @@ namespace FallenLand
 				true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
-			curCard.SetSuccessHeaderText("Draw the next Relic Spoils card, discarding all others. You may place your party on the nearest Mission chip and attempt it at no cost in weeks (NOT IMPLEMENTED YET).");
+			curCard.SetSuccessHeaderText("Draw the next Relic Spoils card, discarding all others. You may place your party on the nearest Mission chip and attempt it at no cost in weeks.");
 			curCard.SetSuccessDescriptionText("Mac is filled with joy and smiling as he gives you the reward.");
-			curCard.AddSuccessReward(new GainNextRelicSpoilsCard());
+			curCard.AddReward(new GainNextRelicSpoilsCard());
 			//TODO add success gain is that you have the ability to move to the nearest mission and do it at no weeks cost
 			curCard.SetFailureHeaderText("All Party members automatically suffer 1 point of Psychological Damage.");
 			curCard.SetFailureDescriptionText("Inconsolable at the loss of Ol' Betsy, a heartbroken Mac ushers you out. As you pass the rusted mailbox at the end of the drive, a lone gunshot " +
 				"echoes from within the house.");
-			curCard.AddFailPunishment(new ApplyPsychDamageToWholeParty(1));
+			curCard.AddPunishment(new ApplyPsychDamageToWholeParty(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -51,6 +51,20 @@ namespace FallenLand
 		public List<PlainsCard> GetPlainsCards()
 		{
 			return PlainsCards;
+		}
+
+		public PlainsCard GetPlainsCardFromName(string name)
+		{
+			PlainsCard plainsCard = null;
+			for (int i = 0; i < PlainsCards.Count; i++)
+			{
+				if (PlainsCards[i].GetTitle() == name)
+				{
+					plainsCard = PlainsCards[i];
+					break;
+				}
+			}
+			return plainsCard;
 		}
 	}
 }
