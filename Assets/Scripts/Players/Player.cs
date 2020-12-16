@@ -26,6 +26,7 @@ namespace FallenLand
 		private Coordinates PartyLocation;
 		private bool PlayerIsDoingAnEncounter;
 		private int EncounterType;
+		private int ActiveVehicleUsedCarryWeight;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -202,12 +203,27 @@ namespace FallenLand
 			return ActiveVehicleTotalStats;
 		}
 
-		public int GetActiveVehicleCarryWeight()
+		public int GetActiveVehicleRemainingCarryWeight()
 		{
 			return ActiveVehicleRemainingCarryWeight;
 		}
 
-		public List<Coordinates> GetOwnedResources()
+		public int GetActiveVehicleUsedCarryWeight()
+		{
+			return ActiveVehicleUsedCarryWeight;
+		}
+
+        public int GetActiveVehicleTotalCarryWeight()
+        {
+            int carryWeight = 0;
+            if (Vehicle != null)
+            {
+                carryWeight = Vehicle.GetCarryWeight();
+            }
+            return carryWeight;
+        }
+
+        public List<Coordinates> GetOwnedResources()
 		{
 			return OwnedResourceLocations;
 		}
@@ -649,6 +665,7 @@ namespace FallenLand
 					tempCarryWeight -= equippedSpoils[i].GetCarryWeight();
 				}
 				ActiveVehicleRemainingCarryWeight = tempCarryWeight;
+				ActiveVehicleUsedCarryWeight = Vehicle.GetCarryWeight() - ActiveVehicleRemainingCarryWeight;
 			}
 			else
 			{
@@ -656,6 +673,7 @@ namespace FallenLand
 				{
 					ActiveVehicleTotalStats[skill] = 0;
 					ActiveVehicleRemainingCarryWeight = 0;
+					ActiveVehicleUsedCarryWeight = 0;
 				}
 			}
 		}

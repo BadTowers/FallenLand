@@ -385,15 +385,15 @@ namespace Tests
 
 			HumanPlayerInstance.AddVehicleToParty(vehicleSpoils);
 			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
-			Assert.AreEqual(10, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveVehicleRemainingCarryWeight());
 
 			HumanPlayerInstance.AddSpoilsToActiveVehicle(stowableSpoil);
 			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveVehicleStats());
-			Assert.AreEqual(10-9, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+			Assert.AreEqual(10-9, HumanPlayerInstance.GetActiveVehicleRemainingCarryWeight());
 
 			HumanPlayerInstance.RemoveStowableFromActiveVehicle(stowableSpoil);
 			CollectionAssert.AreEquivalent(vehicleExpected, HumanPlayerInstance.GetActiveVehicleStats());
-			Assert.AreEqual(10, HumanPlayerInstance.GetActiveVehicleCarryWeight());
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveVehicleRemainingCarryWeight());
 
 			yield return null;
 		}

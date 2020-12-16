@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace FallenLand
 {
@@ -25,13 +26,13 @@ namespace FallenLand
         private GameObject ActionCardsScreen;
         private GameObject ActionCardsScrollContent;
         private List<GameObject> ActiveCharactersScrollContent;
-        private List<List<GameObject>> ActiveCharactersStatsText;
-        private List<GameObject> ActiveCharactersPsychResistance;
-        private List<GameObject> ActiveCharactersCarryWeightsText;
-        private List<GameObject> ActiveCharactersHealthText;
-        private List<GameObject> ActiveCharactersPsychText;
-        private List<GameObject> ActiveVehicleStatsText;
-        private GameObject ActiveVehicleCarryWeightsText;
+        private List<List<List<GameObject>>> ActiveCharactersStatsText;
+        private List<List<GameObject>> ActiveCharactersPsychResistance;
+        private List<List<GameObject>> ActiveCharactersCarryWeightsText;
+        private List<List<GameObject>> ActiveCharactersHealthText;
+        private List<List<GameObject>> ActiveCharactersPsychText;
+        private List<List<GameObject>> ActiveVehicleStatsText;
+        private List<GameObject> ActiveVehicleCarryWeightsText;
         private GameObject MainOverlay;
         private GameObject PauseMenu;
         private GameObject TradeOverlay;
@@ -84,50 +85,107 @@ namespace FallenLand
             }
             VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
 
-            ActiveCharactersStatsText = new List<List<GameObject>>();
-            ActiveCharactersCarryWeightsText = new List<GameObject>();
-            ActiveCharactersPsychResistance = new List<GameObject>();
-            ActiveCharactersHealthText = new List<GameObject>();
-            ActiveCharactersPsychText = new List<GameObject>();
+            ActiveCharactersStatsText = new List<List<List<GameObject>>>(); //dim1 = characterIndex, dim2 = skill, dim3 = all ui elements for that skill
+            ActiveCharactersCarryWeightsText = new List<List<GameObject>>();
+            ActiveCharactersPsychResistance = new List<List<GameObject>>();
+            ActiveCharactersHealthText = new List<List<GameObject>>();
+            ActiveCharactersPsychText = new List<List<GameObject>>();
+            ActiveVehicleStatsText = new List<List<GameObject>>();
+            //Get the UI stuff for the 5 characters
             for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
-                ActiveCharactersStatsText.Add(new List<GameObject>());
-                ActiveCharactersStatsText[i].Add(GameObject.Find("CombatSum" + (i + 1).ToString()));
-                ActiveCharactersStatsText[i].Add(GameObject.Find("SurvivalSum" + (i + 1).ToString()));
-                ActiveCharactersStatsText[i].Add(GameObject.Find("DiplomacySum" + (i + 1).ToString()));
-                ActiveCharactersStatsText[i].Add(GameObject.Find("MechanicalSum" + (i + 1).ToString()));
-                ActiveCharactersStatsText[i].Add(GameObject.Find("TechnicalSum" + (i + 1).ToString()));
-                ActiveCharactersStatsText[i].Add(GameObject.Find("MedicalSum" + (i + 1).ToString()));
-                ActiveCharactersPsychResistance.Add(GameObject.Find("PsychResistance" + (i + 1).ToString()));
-                ActiveCharactersCarryWeightsText.Add(GameObject.Find("CarryWeightSum" + (i + 1).ToString()));
-                ActiveCharactersHealthText.Add(GameObject.Find("HealthSum" + (i + 1).ToString()));
-                ActiveCharactersPsychText.Add(GameObject.Find("PsychSum" + (i + 1).ToString()));
+                ActiveCharactersStatsText.Add(new List<List<GameObject>>());
 
+                GameObject[] combatObjects = GameObject.FindGameObjectsWithTag("CharacterCombat" + (i + 1).ToString());
+                ActiveCharactersStatsText[i].Add(combatObjects.OfType<GameObject>().ToList());
+
+                GameObject[] survivalObjects = GameObject.FindGameObjectsWithTag("CharacterSurvival" + (i + 1).ToString());
+                ActiveCharactersStatsText[i].Add(survivalObjects.OfType<GameObject>().ToList());
+
+                GameObject[] diplomacyObjects = GameObject.FindGameObjectsWithTag("CharacterDiplomacy" + (i + 1).ToString());
+                ActiveCharactersStatsText[i].Add(diplomacyObjects.OfType<GameObject>().ToList());
+
+                GameObject[] mechanicalObjects = GameObject.FindGameObjectsWithTag("CharacterMechanical" + (i + 1).ToString());
+                ActiveCharactersStatsText[i].Add(mechanicalObjects.OfType<GameObject>().ToList());
+
+                GameObject[] technicalObjects = GameObject.FindGameObjectsWithTag("CharacterTechnical" + (i + 1).ToString());
+                ActiveCharactersStatsText[i].Add(technicalObjects.OfType<GameObject>().ToList());
+
+                GameObject[] medicalObjects = GameObject.FindGameObjectsWithTag("CharacterMedical" + (i + 1).ToString());
+                ActiveCharactersStatsText[i].Add(medicalObjects.OfType<GameObject>().ToList());
+                
+                GameObject[] psychResistanceObjects = GameObject.FindGameObjectsWithTag("CharacterPsychResistance" + (i + 1).ToString());
+                ActiveCharactersPsychResistance.Add(psychResistanceObjects.OfType<GameObject>().ToList());
+
+                GameObject[] carryWeightObjects = GameObject.FindGameObjectsWithTag("CharacterCarryWeight" + (i + 1).ToString());
+                ActiveCharactersCarryWeightsText.Add(carryWeightObjects.OfType<GameObject>().ToList());
+
+                GameObject[] healthObjects = GameObject.FindGameObjectsWithTag("CharacterHealth" + (i + 1).ToString());
+                ActiveCharactersHealthText.Add(healthObjects.OfType<GameObject>().ToList());
+
+                GameObject[] psychObjects = GameObject.FindGameObjectsWithTag("CharacterPsych" + (i + 1).ToString());
+                ActiveCharactersPsychText.Add(psychObjects.OfType<GameObject>().ToList());
+
+                //Set default values
                 foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                 {
-                    ActiveCharactersStatsText[i][(int)skill].GetComponentInChildren<Text>().text = "0";
+                    for (int j = 0; j < ActiveCharactersStatsText[i][(int)skill].Count; j++)
+                    {
+                        ActiveCharactersStatsText[i][(int)skill][j].GetComponentInChildren<Text>().text = "0";
+                    }
                 }
-                ActiveCharactersPsychResistance[i].GetComponentInChildren<Text>().text = "0";
-                ActiveCharactersCarryWeightsText[i].GetComponentInChildren<Text>().text = "0/0";
-                ActiveCharactersHealthText[i].GetComponentInChildren<Text>().text = "1/1";
-                ActiveCharactersPsychText[i].GetComponentInChildren<Text>().text = "3/3";
+                for (int j = 0; j < ActiveCharactersPsychResistance[i].Count; j++)
+                {
+                    ActiveCharactersPsychResistance[i][j].GetComponentInChildren<Text>().text = "0";
+                }
+                for (int j = 0; j < ActiveCharactersCarryWeightsText[i].Count; j++)
+                {
+                    ActiveCharactersCarryWeightsText[i][j].GetComponentInChildren<Text>().text = "0/0";
+                }
+                for (int j = 0; j < ActiveCharactersHealthText[i].Count; j++)
+                {
+                    ActiveCharactersHealthText[i][j].GetComponentInChildren<Text>().text = "1/2";
+                }
+                for (int j = 0; j < ActiveCharactersPsychText[i].Count; j++)
+                {
+                    ActiveCharactersPsychText[i][j].GetComponentInChildren<Text>().text = "3/3";
+                }
             }
 
-            ActiveVehicleStatsText = new List<GameObject>
-            {
-                GameObject.Find("CombatSumV"),
-                GameObject.Find("SurvivalSumV"),
-                GameObject.Find("DiplomacySumV"),
-                GameObject.Find("MechanicalSumV"),
-                GameObject.Find("TechnicalSumV"),
-                GameObject.Find("MedicalSumV")
-            };
-            ActiveVehicleCarryWeightsText = GameObject.Find("CarryWeightSumV");
+            //Get stuff for vehicle slot
+            GameObject[] vehicleCombatObjects = GameObject.FindGameObjectsWithTag("CharacterCombatV");
+            ActiveVehicleStatsText.Add(vehicleCombatObjects.OfType<GameObject>().ToList());
+
+            GameObject[] vehicleSurvivalObjects = GameObject.FindGameObjectsWithTag("CharacterSurvivalV");
+            ActiveVehicleStatsText.Add(vehicleSurvivalObjects.OfType<GameObject>().ToList());
+
+            GameObject[] vehicleDeplomacyObjects = GameObject.FindGameObjectsWithTag("CharacterDiplomacyV");
+            ActiveVehicleStatsText.Add(vehicleDeplomacyObjects.OfType<GameObject>().ToList());
+
+            GameObject[] vehicleMechanicalObjects = GameObject.FindGameObjectsWithTag("CharacterMechanicalV");
+            ActiveVehicleStatsText.Add(vehicleMechanicalObjects.OfType<GameObject>().ToList());
+
+            GameObject[] vehicleTechnicalObjects = GameObject.FindGameObjectsWithTag("CharacterTechnicalV");
+            ActiveVehicleStatsText.Add(vehicleTechnicalObjects.OfType<GameObject>().ToList());
+
+            GameObject[] vehicleMedicalObjects = GameObject.FindGameObjectsWithTag("CharacterMedicalV");
+            ActiveVehicleStatsText.Add(vehicleMedicalObjects.OfType<GameObject>().ToList());
+
+            GameObject[] vehicleCarryWeightObjects = GameObject.FindGameObjectsWithTag("CharacterCarryWeightV");
+            ActiveVehicleCarryWeightsText = vehicleCarryWeightObjects.OfType<GameObject>().ToList();
+
+            //Give vehicle stats default values
             foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
             {
-                ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = "0";
+                for (int i = 0; i < ActiveVehicleStatsText[(int)skill].Count; i++)
+                {
+                    ActiveVehicleStatsText[(int)skill][i].GetComponentInChildren<Text>().text = "0";
+                }
             }
-            ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = "0";
+            for (int i = 0; i < ActiveVehicleCarryWeightsText.Count; i++)
+            {
+                ActiveVehicleCarryWeightsText[i].GetComponentInChildren<Text>().text = "0/0";            
+            }
 
             ActualTurnNumberText = GameObject.Find("ActualTurnNumberText").GetComponent<Text>();
             ActualTurnPhaseText = GameObject.Find("ActualTurnPhaseText").GetComponent<Text>();
@@ -765,27 +823,42 @@ namespace FallenLand
                     Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(CurrentViewedID, activeIndex);
                     foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                     {
-                        ActiveCharactersStatsText[activeIndex][(int)skill].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
+                        for (int i = 0; i < ActiveCharactersStatsText[activeIndex][(int)skill].Count; i++)
+                        {
+                            ActiveCharactersStatsText[activeIndex][(int)skill][i].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
+                        }
                     }
 
                     //Update psych resistance
                     int psychResistance = GameManagerInstance.GetActiveCharacterPsychResistance(CurrentViewedID, activeIndex);
-                    ActiveCharactersPsychResistance[activeIndex].GetComponentInChildren<Text>().text = psychResistance.ToString();
+                    for (int i = 0; i < ActiveCharactersPsychResistance[activeIndex].Count; i++)
+                    {
+                        ActiveCharactersPsychResistance[activeIndex][i].GetComponentInChildren<Text>().text = psychResistance.ToString();
+                    }
 
                     //Update carry weight
                     int totalCarryWeight = GameManagerInstance.GetActiveCharacterTotalCarryWeight(CurrentViewedID, activeIndex);
                     int usedCarryWeight = GameManagerInstance.GetActiveCharacterUsedCarryWeight(CurrentViewedID, activeIndex);
-                    ActiveCharactersCarryWeightsText[activeIndex].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
+                    for (int i = 0; i < ActiveCharactersCarryWeightsText[activeIndex].Count; i++)
+                    {
+                        ActiveCharactersCarryWeightsText[activeIndex][i].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
+                    }
 
                     //Update psych
                     int remainingPsych = GameManagerInstance.GetActiveCharacterRemainingPsych(CurrentViewedID, activeIndex);
                     int maxPsych = GameManagerInstance.GetMaxPsych();
-                    ActiveCharactersPsychText[activeIndex].GetComponentInChildren<Text>().text = remainingPsych.ToString() + "/" + maxPsych.ToString();
+                    for (int i = 0; i < ActiveCharactersPsychText[activeIndex].Count; i++)
+                    {
+                        ActiveCharactersPsychText[activeIndex][i].GetComponentInChildren<Text>().text = remainingPsych.ToString() + "/" + maxPsych.ToString();
+                    }
 
                     //Update health
                     int remainingHealth = GameManagerInstance.GetActiveCharacterRemainingHealth(CurrentViewedID, activeIndex);
                     int maxHealth = GameManagerInstance.GetActiveCharacterMaxHealth(CurrentViewedID, activeIndex);
-                    ActiveCharactersHealthText[activeIndex].GetComponentInChildren<Text>().text = remainingHealth.ToString() + "/" + maxHealth.ToString();
+                    for (int i = 0; i < ActiveCharactersHealthText[activeIndex].Count; i++)
+                    {
+                        ActiveCharactersHealthText[activeIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString() + "/" + maxHealth.ToString();
+                    }
                 }
             }
         }
@@ -855,9 +928,17 @@ namespace FallenLand
                 Dictionary<Skills, int> vehicleStats = GameManagerInstance.GetActiveVehicleStats(CurrentViewedID);
                 foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                 {
-                    ActiveVehicleStatsText[(int)skill].GetComponentInChildren<Text>().text = vehicleStats[skill].ToString();
+                    for (int i = 0; i < ActiveVehicleStatsText[(int)skill].Count; i++)
+                    {
+                        ActiveVehicleStatsText[(int)skill][i].GetComponentInChildren<Text>().text = vehicleStats[skill].ToString();
+                    }
                 }
-                ActiveVehicleCarryWeightsText.GetComponentInChildren<Text>().text = GameManagerInstance.GetActiveVehicleRemainingCarryWeight(CurrentViewedID).ToString();
+                int totalCarryWeight = GameManagerInstance.GetActiveVehicleTotalCarryWeight(CurrentViewedID);
+                int usedCarryWeight = GameManagerInstance.GetActiveVehicleUsedCarryWeight(CurrentViewedID);
+                for (int i = 0; i < ActiveVehicleCarryWeightsText.Count; i++)
+                {
+                    ActiveVehicleCarryWeightsText[i].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
+                }
             }
         }
 

@@ -597,6 +597,26 @@ namespace FallenLand
 			}
 		}
 
+		public int GetActiveVehicleTotalCarryWeight(int playerIndex)
+		{
+			int weight = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				weight = Players[playerIndex].GetActiveVehicleTotalCarryWeight();
+			}
+			return weight;
+		}
+
+		public int GetActiveVehicleUsedCarryWeight(int playerIndex)
+		{
+			int weight = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				weight = Players[playerIndex].GetActiveVehicleUsedCarryWeight();
+			}
+			return weight;
+		}
+
 		public int GetMaxPsych()
 		{
 			return MaxPsych;
@@ -663,7 +683,7 @@ namespace FallenLand
 			int weight = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				weight = Players[playerIndex].GetActiveVehicleCarryWeight();
+				weight = Players[playerIndex].GetActiveVehicleRemainingCarryWeight();
 			}
 			return weight;
 		}

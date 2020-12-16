@@ -3,7 +3,64 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CharacterCombat1
+  - CharacterCombat2
+  - CharacterCombat3
+  - CharacterCombat4
+  - CharacterCombat5
+  - CharacterCombatV
+  - CharacterDiplomacy1
+  - CharacterDiplomacy2
+  - CharacterDiplomacy3
+  - CharacterDiplomacy4
+  - CharacterDiplomacy5
+  - CharacterDiplomacyV
+  - CharacterMechanical1
+  - CharacterMechanical2
+  - CharacterMechanical3
+  - CharacterMechanical4
+  - CharacterMechanical5
+  - CharacterMechanicalV
+  - CharacterTechnical1
+  - CharacterTechnical2
+  - CharacterTechnical3
+  - CharacterTechnical4
+  - CharacterTechnical5
+  - CharacterTechnicalV
+  - CharacterMedical1
+  - CharacterMedical2
+  - CharacterMedical3
+  - CharacterMedical4
+  - CharacterMedical5
+  - CharacterMedicalV
+  - CharacterHealth1
+  - CharacterHealth2
+  - CharacterHealth3
+  - CharacterHealth4
+  - CharacterHealth5
+  - CharacterPsych1
+  - CharacterPsych2
+  - CharacterPsych3
+  - CharacterPsych4
+  - CharacterPsych5
+  - CharacterPsychResistance1
+  - CharacterPsychResistance2
+  - CharacterPsychResistance3
+  - CharacterPsychResistance4
+  - CharacterPsychResistance5
+  - CharacterSurvival1
+  - CharacterSurvival2
+  - CharacterSurvival3
+  - CharacterSurvival4
+  - CharacterSurvival5
+  - CharacterSurvivalV
+  - CharacterCarryWeight1
+  - CharacterCarryWeight2
+  - CharacterCarryWeight3
+  - CharacterCarryWeight4
+  - CharacterCarryWeight5
+  - CharacterCarryWeightV
   layers:
   - Default
   - TransparentFX
