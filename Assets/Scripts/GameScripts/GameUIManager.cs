@@ -52,6 +52,7 @@ namespace FallenLand
         private GameObject ActualRemainingWeeksTextGameObject;
         private GameObject PartyExploitsInformationTextGameObject;
         private GameObject EncounterSelectionPanelGameObject;
+        private GameObject OverallEncounterPanelGameObject;
 
         #region UnityFunctions
         void Awake()
@@ -73,6 +74,7 @@ namespace FallenLand
             ActualRemainingWeeksTextGameObject = GameObject.Find("ActualRemainingWeeksText");
             PartyExploitsInformationTextGameObject = GameObject.Find("PartyExploitsInformationText");
             EncounterSelectionPanelGameObject = GameObject.Find("EncounterSelectionPanel");
+            OverallEncounterPanelGameObject = GameObject.Find("OverallEncounterPanel"); 
 
             ActiveCharactersScrollContent = new List<GameObject>();
 
@@ -208,6 +210,8 @@ namespace FallenLand
             PartyExploitsPanelGameObject.SetActive(false);
 
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+
+            OverallEncounterPanelGameObject.SetActive(false);
         }
 
         void Start()
@@ -987,7 +991,8 @@ namespace FallenLand
                 }
                 if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && GameManagerInstance.GetCurrentEncounter() != null)
                 {
-                    //TODO update the UI because we now have an encounter card to show the user
+                    OverallEncounterPanelGameObject.SetActive(true);
+                    loadEncounterCard();
                 }
             }
             else
@@ -1043,6 +1048,29 @@ namespace FallenLand
                 GameObject.Find("HealingButton").GetComponent<Button>().interactable = false;
                 GameObject.Find("MissionButton").GetComponent<Button>().interactable = false;
             }
+        }
+
+        private void loadEncounterCard()
+        {
+            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter();
+            string imageLocation = "Cards/EncounterCards/";
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            if (GameManagerInstance.GetPlayerEncounterType(myIndex) == Constants.ENCOUNTER_PLAINS)
+            {
+                imageLocation += "Plains/";
+            }
+            else if (GameManagerInstance.GetPlayerEncounterType(myIndex) == Constants.ENCOUNTER_MOUNTAINS)
+            {
+                imageLocation += "Mountains/";
+            }
+            else if (GameManagerInstance.GetPlayerEncounterType(myIndex) == Constants.ENCOUNTER_CITY_RAD)
+            {
+                imageLocation += "CityRad/";
+            }
+            imageLocation += "Plains" + encounterCard.GetId().ToString();
+            Sprite img = (Sprite)Resources.Load<Sprite>(imageLocation);
+            Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
+            cardImage.sprite = img;
         }
 
         private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
