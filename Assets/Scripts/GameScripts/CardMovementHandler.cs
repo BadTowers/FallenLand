@@ -45,14 +45,7 @@ namespace FallenLand
                 {
                     UiManager.SetCardIsDragging(true);
                     SiblingOrder = transform.GetSiblingIndex();
-                    if (!ClickHandler.GetIsClicked())
-                    {
-                        PreDragLocation = transform.position;
-                    }
-                    else
-                    {
-                        PreDragLocation = ClickHandler.GetPreClickLocation();
-                    }
+                    PreDragLocation = transform.position;
                 }
                 IsDragging = true;
                 figureOutCurrentParent();
