@@ -255,8 +255,6 @@ namespace FallenLand
                 EscapePressed = true;
             }
 
-            checkCurrentMenuState();
-
             updateActionButton();
 
             updateCharacterSpoilsScreen();
@@ -272,6 +270,8 @@ namespace FallenLand
             updatePlayerPanels();
 
             updateFullScreenCard();
+
+            checkCurrentMenuState();
 
             EscapePressed = false;
         }
@@ -1332,6 +1332,11 @@ namespace FallenLand
 
         private void updateFullScreenCard()
         {
+            if (EscapePressed && CardIsClicked)
+            {
+                closeFullScreenCard();
+                EscapePressed = false;
+            }
             if (CardIsClicked)
             {
                 CardFullScreenGameObject.SetActive(true);
@@ -1342,6 +1347,7 @@ namespace FallenLand
 
                 FullScreenCardVertical.GetComponent<Image>().sprite = CardSpriteThatWasClicked;
             }
+            
         }
 
         private void closeFullScreenCard()
