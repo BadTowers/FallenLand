@@ -61,6 +61,8 @@ namespace FallenLand
         private GameObject FullScreenCardHorizontal;
         private GameObject VerticalCloseButton;
         private GameObject HorizontalCloseButton;
+        private List<List<GameObject>> OverallEncounterPlayerStatPanels;
+        private List<GameObject> OverallEncounterVehicleStatPanels;
 
         #region UnityFunctions
         void Awake()
@@ -90,6 +92,7 @@ namespace FallenLand
             HorizontalCloseButton = GameObject.Find("HorizontalCloseButton");
 
             ActiveCharactersScrollContent = new List<GameObject>();
+            OverallEncounterVehicleStatPanels = new List<GameObject>();
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
@@ -106,10 +109,12 @@ namespace FallenLand
             ActiveCharactersHealthText = new List<List<GameObject>>();
             ActiveCharactersPsychText = new List<List<GameObject>>();
             ActiveVehicleStatsText = new List<List<GameObject>>();
+            OverallEncounterPlayerStatPanels = new List<List<GameObject>>();
             //Get the UI stuff for the 5 characters
             for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 ActiveCharactersStatsText.Add(new List<List<GameObject>>());
+                OverallEncounterPlayerStatPanels.Add(new List<GameObject>());
 
                 GameObject[] combatObjects = GameObject.FindGameObjectsWithTag("CharacterCombat" + (i + 1).ToString());
                 ActiveCharactersStatsText[i].Add(combatObjects.OfType<GameObject>().ToList());
@@ -141,6 +146,13 @@ namespace FallenLand
                 GameObject[] psychObjects = GameObject.FindGameObjectsWithTag("CharacterPsych" + (i + 1).ToString());
                 ActiveCharactersPsychText.Add(psychObjects.OfType<GameObject>().ToList());
 
+                OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("CombatPanel" + (i + 1).ToString()));
+                OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("SurvivalPanel" + (i + 1).ToString()));
+                OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("DiplomacyPanel" + (i + 1).ToString()));
+                OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("MechanicalPanel" + (i + 1).ToString()));
+                OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("TechnicalPanel" + (i + 1).ToString()));
+                OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("MedicalPanel" + (i + 1).ToString()));
+
                 //Set default values
                 foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                 {
@@ -170,21 +182,27 @@ namespace FallenLand
             //Get stuff for vehicle slot
             GameObject[] vehicleCombatObjects = GameObject.FindGameObjectsWithTag("CharacterCombatV");
             ActiveVehicleStatsText.Add(vehicleCombatObjects.OfType<GameObject>().ToList());
+            OverallEncounterVehicleStatPanels.Add(GameObject.Find("CombatPanelV"));
 
             GameObject[] vehicleSurvivalObjects = GameObject.FindGameObjectsWithTag("CharacterSurvivalV");
             ActiveVehicleStatsText.Add(vehicleSurvivalObjects.OfType<GameObject>().ToList());
+            OverallEncounterVehicleStatPanels.Add(GameObject.Find("SurvivalPanelV"));
 
             GameObject[] vehicleDeplomacyObjects = GameObject.FindGameObjectsWithTag("CharacterDiplomacyV");
             ActiveVehicleStatsText.Add(vehicleDeplomacyObjects.OfType<GameObject>().ToList());
+            OverallEncounterVehicleStatPanels.Add(GameObject.Find("DiplomacyPanelV"));
 
             GameObject[] vehicleMechanicalObjects = GameObject.FindGameObjectsWithTag("CharacterMechanicalV");
             ActiveVehicleStatsText.Add(vehicleMechanicalObjects.OfType<GameObject>().ToList());
+            OverallEncounterVehicleStatPanels.Add(GameObject.Find("MechanicalPanelV"));
 
             GameObject[] vehicleTechnicalObjects = GameObject.FindGameObjectsWithTag("CharacterTechnicalV");
             ActiveVehicleStatsText.Add(vehicleTechnicalObjects.OfType<GameObject>().ToList());
+            OverallEncounterVehicleStatPanels.Add(GameObject.Find("TechnicalPanelV"));
 
             GameObject[] vehicleMedicalObjects = GameObject.FindGameObjectsWithTag("CharacterMedicalV");
             ActiveVehicleStatsText.Add(vehicleMedicalObjects.OfType<GameObject>().ToList());
+            OverallEncounterVehicleStatPanels.Add(GameObject.Find("MedicalPanelV"));
 
             GameObject[] vehicleCarryWeightObjects = GameObject.FindGameObjectsWithTag("CharacterCarryWeightV");
             ActiveVehicleCarryWeightsText = vehicleCarryWeightObjects.OfType<GameObject>().ToList();
@@ -1031,6 +1049,7 @@ namespace FallenLand
                 {
                     OverallEncounterPanelGameObject.SetActive(true);
                     loadEncounterCard();
+                    updateStatPanelsForOverallEncounterPage();
                 }
             }
             else
@@ -1109,6 +1128,45 @@ namespace FallenLand
             Sprite img = (Sprite)Resources.Load<Sprite>(imageLocation);
             Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
             cardImage.sprite = img;
+        }
+
+        private void updateStatPanelsForOverallEncounterPage()
+        {
+            EncounterCard card = GameManagerInstance.GetCurrentEncounter();
+            if (card != null)
+            {
+                Dictionary<Skills, int> skillChecks = card.GetSkillChecks();
+                List<bool> partySkillChecks = card.GetArePartySkillCheck();
+                for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+                {
+                    foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                    {
+                        Color color = OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color;
+                        if (skillChecks[skill] != 0 && partySkillChecks[(int)skill]) //TODO doesn't handle character specific checks
+                        {
+                            color.a = 128;
+                        }
+                        else
+                        {
+                            color.a = 0;
+                        }
+                        OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
+                    }
+                }
+                foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                {
+                    Color color = OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color;
+                    if (skillChecks[skill] != 0 && partySkillChecks[(int)skill]) //TODO doesn't handle vehicle specific checks 
+                    {
+                        color.a = 128;
+                    }
+                    else
+                    {
+                        color.a = 0;
+                    }
+                    OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color = color;
+                }
+            }
         }
 
         private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)

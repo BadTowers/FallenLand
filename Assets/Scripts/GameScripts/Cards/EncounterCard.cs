@@ -73,7 +73,7 @@ namespace FallenLand
 			PsychCheckAfterEncounter = psychCheck;
 		}
 
-		public bool GetMaePsychCheckAfterEncounter()
+		public bool GetMakePsychCheckAfterEncounter()
 		{
 			return PsychCheckAfterEncounter;
 		}

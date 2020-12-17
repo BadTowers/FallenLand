@@ -460,7 +460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.029706609}
+  m_AnchoredPosition: {x: 0, y: 0.0000038940534}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &28902734
@@ -2440,7 +2440,7 @@ GameObject:
   - component: {fileID: 128800396}
   - component: {fileID: 128800395}
   m_Layer: 5
-  m_Name: SurvivalPanel
+  m_Name: SurvivalPanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3153,7 +3153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -392.49997, y: 175}
+  m_AnchoredPosition: {x: -392.5, y: 175}
   m_SizeDelta: {x: -785, y: -350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &187063383
@@ -5361,7 +5361,7 @@ GameObject:
   - component: {fileID: 281194689}
   - component: {fileID: 281194688}
   m_Layer: 5
-  m_Name: CombatPanel
+  m_Name: CombatPanelV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5896,7 +5896,7 @@ GameObject:
   - component: {fileID: 298662318}
   - component: {fileID: 298662317}
   m_Layer: 5
-  m_Name: TechnicalPanel
+  m_Name: TechnicalPanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6663,7 +6663,7 @@ GameObject:
   - component: {fileID: 345767343}
   - component: {fileID: 345767342}
   m_Layer: 5
-  m_Name: SurvivalPanel
+  m_Name: SurvivalPanelV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7602,7 +7602,7 @@ GameObject:
   - component: {fileID: 391954402}
   - component: {fileID: 391954401}
   m_Layer: 5
-  m_Name: DiplomacyPanel
+  m_Name: DiplomacyPanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8619,7 +8619,7 @@ GameObject:
   - component: {fileID: 447769965}
   - component: {fileID: 447769964}
   m_Layer: 5
-  m_Name: SurvivalPanel
+  m_Name: SurvivalPanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9412,7 +9412,7 @@ GameObject:
   - component: {fileID: 483001288}
   - component: {fileID: 483001287}
   m_Layer: 5
-  m_Name: MechanicalPanel
+  m_Name: MechanicalPanelV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9906,7 +9906,7 @@ GameObject:
   - component: {fileID: 507865031}
   - component: {fileID: 507865030}
   m_Layer: 5
-  m_Name: TechnicalPanel
+  m_Name: TechnicalPanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11848,7 +11848,7 @@ GameObject:
   - component: {fileID: 568184455}
   - component: {fileID: 568184454}
   m_Layer: 5
-  m_Name: CombatPanel
+  m_Name: CombatPanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12117,7 +12117,7 @@ GameObject:
   - component: {fileID: 602213155}
   - component: {fileID: 602213154}
   m_Layer: 5
-  m_Name: CombatPanel
+  m_Name: CombatPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12464,7 +12464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -140.1}
+  m_AnchoredPosition: {x: 0.000061035156, y: -140.10004}
   m_SizeDelta: {x: -40.408783, y: -486.06445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617205097
@@ -13234,7 +13234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -367.49997, y: 0}
+  m_AnchoredPosition: {x: -367.5, y: 0}
   m_SizeDelta: {x: -735.069, y: -61.988525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &638020353
@@ -13356,7 +13356,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 937168237}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.8457534
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15349,7 +15349,7 @@ GameObject:
   - component: {fileID: 733105082}
   - component: {fileID: 733105081}
   m_Layer: 5
-  m_Name: MedicalPanel
+  m_Name: MedicalPanelV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15990,7 +15990,7 @@ GameObject:
   - component: {fileID: 764981794}
   - component: {fileID: 764981793}
   m_Layer: 5
-  m_Name: TechnicalPanel
+  m_Name: TechnicalPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16399,7 +16399,7 @@ GameObject:
   - component: {fileID: 774985060}
   - component: {fileID: 774985059}
   m_Layer: 5
-  m_Name: DiplomacyPanel
+  m_Name: DiplomacyPanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16920,7 +16920,7 @@ GameObject:
   - component: {fileID: 793856944}
   - component: {fileID: 793856943}
   m_Layer: 5
-  m_Name: DiplomacyPanel
+  m_Name: DiplomacyPanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17147,7 +17147,7 @@ GameObject:
   - component: {fileID: 804179256}
   - component: {fileID: 804179255}
   m_Layer: 5
-  m_Name: DiplomacyPanel
+  m_Name: DiplomacyPanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17905,7 +17905,7 @@ GameObject:
   - component: {fileID: 834573928}
   - component: {fileID: 834573927}
   m_Layer: 5
-  m_Name: DiplomacyPanel
+  m_Name: DiplomacyPanelV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18598,7 +18598,7 @@ GameObject:
   - component: {fileID: 858894259}
   - component: {fileID: 858894258}
   m_Layer: 5
-  m_Name: TechnicalPanel
+  m_Name: TechnicalPanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18892,7 +18892,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1566574543}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.8457534
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -20038,7 +20038,7 @@ GameObject:
   - component: {fileID: 908874712}
   - component: {fileID: 908874711}
   m_Layer: 5
-  m_Name: CombatPanel
+  m_Name: CombatPanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21001,7 +21001,7 @@ GameObject:
   - component: {fileID: 946747003}
   - component: {fileID: 946747002}
   m_Layer: 5
-  m_Name: TechnicalPanel
+  m_Name: TechnicalPanelV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21155,7 +21155,7 @@ GameObject:
   - component: {fileID: 951950222}
   - component: {fileID: 951950221}
   m_Layer: 5
-  m_Name: MedicalPanel
+  m_Name: MedicalPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21557,7 +21557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.029706609}
+  m_AnchoredPosition: {x: 0, y: 0.0000038940534}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &967462876
@@ -22183,7 +22183,7 @@ GameObject:
   - component: {fileID: 985451318}
   - component: {fileID: 985451317}
   m_Layer: 5
-  m_Name: SurvivalPanel
+  m_Name: SurvivalPanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22333,7 +22333,7 @@ GameObject:
   - component: {fileID: 993807909}
   - component: {fileID: 993807908}
   m_Layer: 5
-  m_Name: SurvivalPanel
+  m_Name: SurvivalPanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23495,7 +23495,7 @@ GameObject:
   - component: {fileID: 1043885565}
   - component: {fileID: 1043885564}
   m_Layer: 5
-  m_Name: MechanicalPanel
+  m_Name: MechanicalPanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28025,7 +28025,7 @@ GameObject:
   - component: {fileID: 1255667365}
   - component: {fileID: 1255667364}
   m_Layer: 5
-  m_Name: TechnicalPanel
+  m_Name: TechnicalPanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28203,7 +28203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -72.19998}
+  m_AnchoredPosition: {x: 0.000061035156, y: -72.20001}
   m_SizeDelta: {x: -40.408783, y: -486.06445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266125316
@@ -29147,7 +29147,7 @@ GameObject:
   - component: {fileID: 1295369886}
   - component: {fileID: 1295369885}
   m_Layer: 5
-  m_Name: MechanicalPanel
+  m_Name: MechanicalPanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30724,7 +30724,7 @@ GameObject:
   - component: {fileID: 1377325903}
   - component: {fileID: 1377325902}
   m_Layer: 5
-  m_Name: MechanicalPanel
+  m_Name: MechanicalPanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32173,7 +32173,7 @@ GameObject:
   - component: {fileID: 1412926331}
   - component: {fileID: 1412926330}
   m_Layer: 5
-  m_Name: CombatPanel
+  m_Name: CombatPanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32557,7 +32557,7 @@ GameObject:
   - component: {fileID: 1420402386}
   - component: {fileID: 1420402385}
   m_Layer: 5
-  m_Name: CombatPanel
+  m_Name: CombatPanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35751,7 +35751,7 @@ GameObject:
   - component: {fileID: 1576190707}
   - component: {fileID: 1576190706}
   m_Layer: 5
-  m_Name: MedicalPanel
+  m_Name: MedicalPanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35827,7 +35827,7 @@ GameObject:
   - component: {fileID: 1589542456}
   - component: {fileID: 1589542455}
   m_Layer: 5
-  m_Name: MedicalPanel
+  m_Name: MedicalPanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37190,7 +37190,7 @@ GameObject:
   - component: {fileID: 1658242915}
   - component: {fileID: 1658242914}
   m_Layer: 5
-  m_Name: MechanicalPanel
+  m_Name: MechanicalPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40682,7 +40682,7 @@ GameObject:
   - component: {fileID: 1789013419}
   - component: {fileID: 1789013418}
   m_Layer: 5
-  m_Name: MedicalPanel
+  m_Name: MedicalPanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43689,7 +43689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -449.32993, y: -148.38998}
+  m_AnchoredPosition: {x: -449.32996, y: -148.39001}
   m_SizeDelta: {x: -898.69476, y: -296.84296}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933909503
@@ -45284,7 +45284,7 @@ GameObject:
   - component: {fileID: 2001872586}
   - component: {fileID: 2001872585}
   m_Layer: 5
-  m_Name: MedicalPanel
+  m_Name: MedicalPanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45952,7 +45952,7 @@ GameObject:
   - component: {fileID: 2032352906}
   - component: {fileID: 2032352905}
   m_Layer: 5
-  m_Name: DiplomacyPanel
+  m_Name: DiplomacyPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47244,7 +47244,7 @@ GameObject:
   - component: {fileID: 2103411525}
   - component: {fileID: 2103411524}
   m_Layer: 5
-  m_Name: MechanicalPanel
+  m_Name: MechanicalPanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47397,7 +47397,7 @@ GameObject:
   - component: {fileID: 2108539221}
   - component: {fileID: 2108539220}
   m_Layer: 5
-  m_Name: SurvivalPanel
+  m_Name: SurvivalPanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
