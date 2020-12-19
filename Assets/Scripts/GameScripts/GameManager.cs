@@ -1014,6 +1014,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].SetPlayerIsMoving(true);
+				MouseManagerInst.ClearLastHexClickedCoodinates();
 			}
 		}
 
