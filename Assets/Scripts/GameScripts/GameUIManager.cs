@@ -47,7 +47,7 @@ namespace FallenLand
         private GameObject TownEventsRollPanel;
         private GameObject RollTownEventButtonGameObject;
         private GameObject RollTownEventTextGameObject;
-        private GameObject PartyExploitsPanelGameObject;
+        private GameObject PartyExploitsPanel;
         private bool UserRolledTownEventsThisTurn;
         private GameObject ActualRemainingWeeksTextGameObject;
         private GameObject PartyExploitsInformationTextGameObject;
@@ -63,6 +63,9 @@ namespace FallenLand
         private GameObject HorizontalCloseButton;
         private List<List<GameObject>> OverallEncounterPlayerStatPanels;
         private List<GameObject> OverallEncounterVehicleStatPanels;
+        private GameObject PartyOverviewPanel;
+        private GameObject MainEncounterCardImage;
+        private bool EncounterHasBegun;
 
         #region UnityFunctions
         void Awake()
@@ -75,12 +78,12 @@ namespace FallenLand
             PauseMenu = GameObject.Find("PauseMenu");
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
             ActionCardsScreen = GameObject.Find("ActionCardsPanel");
-            MainOverlay = GameObject.Find("MainOverlay");
+            MainOverlay = GameObject.Find("MainOverlayCanvas");
             TradeOverlay = GameObject.Find("TradeOverlay");
             TownEventsRollPanel = GameObject.Find("TownEventsPanel");
             RollTownEventButtonGameObject = GameObject.Find("RollTownEventsButton");
             RollTownEventTextGameObject = GameObject.Find("RollTownEventsText");
-            PartyExploitsPanelGameObject = GameObject.Find("PartyExploitsPanel");
+            PartyExploitsPanel = GameObject.Find("PartyExploitsPanel");
             ActualRemainingWeeksTextGameObject = GameObject.Find("ActualRemainingWeeksText");
             PartyExploitsInformationTextGameObject = GameObject.Find("PartyExploitsInformationText");
             EncounterSelectionPanelGameObject = GameObject.Find("EncounterSelectionPanel");
@@ -90,6 +93,8 @@ namespace FallenLand
             FullScreenCardHorizontal = GameObject.Find("LargeCardImageHorizontal");
             VerticalCloseButton = GameObject.Find("VerticalCloseButton");
             HorizontalCloseButton = GameObject.Find("HorizontalCloseButton");
+            PartyOverviewPanel = GameObject.Find("PartyOverviewPanel");
+            MainEncounterCardImage = GameObject.Find("MainEncounterCardImage");
 
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
@@ -171,11 +176,11 @@ namespace FallenLand
                 }
                 for (int j = 0; j < ActiveCharactersHealthText[i].Count; j++)
                 {
-                    ActiveCharactersHealthText[i][j].GetComponentInChildren<Text>().text = "1/2";
+                    ActiveCharactersHealthText[i][j].GetComponentInChildren<Text>().text = "0/0";
                 }
                 for (int j = 0; j < ActiveCharactersPsychText[i].Count; j++)
                 {
-                    ActiveCharactersPsychText[i][j].GetComponentInChildren<Text>().text = "3/3";
+                    ActiveCharactersPsychText[i][j].GetComponentInChildren<Text>().text = "0/0";
                 }
             }
 
@@ -238,13 +243,13 @@ namespace FallenLand
             AuctionHouseTradeButton.interactable = false;
 
             TownEventsRollPanel.SetActive(false);
-            PartyExploitsPanelGameObject.SetActive(false);
+            PartyExploitsPanel.SetActive(false);
 
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
 
             OverallEncounterPanelGameObject.SetActive(false);
-
             CardFullScreenGameObject.SetActive(false);
+            MainEncounterCardImage.SetActive(false);
         }
 
         void Start()
@@ -371,14 +376,12 @@ namespace FallenLand
         public void OnOpenCharacterAndSpoilsScreenPress()
         {
             CharacterAndSpoilsScreen.SetActive(true);
-            MainOverlay.SetActive(false);
             redrawCharacterSpoilsScreen();
         }
 
         public void OnOpenActionCardsScreenPress()
         {
             ActionCardsScreen.SetActive(true);
-            MainOverlay.SetActive(false);
             redrawActionCardsScreen(true);
         }
 
@@ -386,13 +389,11 @@ namespace FallenLand
         {
             CharacterAndSpoilsScreen.SetActive(false);
             ActionCardsScreen.SetActive(false);
-            MainOverlay.SetActive(true);
         }
 
         public void OnDoneInActionCardsScreenPress()
         {
             ActionCardsScreen.SetActive(false);
-            MainOverlay.SetActive(true);
         }
 
         public void OnEndPhasePress()
@@ -556,6 +557,16 @@ namespace FallenLand
         public void OnHorizontalClosePress()
         {
             closeFullScreenCard();
+        }
+
+        public void OnBeginEncounterPress()
+        {
+            PartyOverviewPanel.SetActive(false);
+            OverallEncounterPanelGameObject.SetActive(false);
+            MainEncounterCardImage.SetActive(true);
+            PartyExploitsPanel.SetActive(false);
+            MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
+            EncounterHasBegun = true;
         }
         #endregion
 
@@ -1036,25 +1047,26 @@ namespace FallenLand
         private void updatePartyExploitsUi()
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
-            if (currentPhase == Phases.Party_Exploits_Party)
+            if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun)
             {
-                PartyExploitsPanelGameObject.SetActive(true);
+                PartyExploitsPanel.SetActive(true);
                 ActualRemainingWeeksTextGameObject.GetComponent<Text>().text = GameManagerInstance.GetRemainingPartyExploitWeeks(CurrentViewedID).ToString();
                 changePartyExploitsButtonStatesAsNeeded();
                 if (!GameManagerInstance.GetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer()) && !GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()))
                 {
                     PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
                 }
-                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && GameManagerInstance.GetCurrentEncounter() != null)
+                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && GameManagerInstance.GetCurrentEncounter() != null && !EncounterHasBegun)
                 {
                     OverallEncounterPanelGameObject.SetActive(true);
-                    loadEncounterCard();
+                    Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
+                    cardImage.sprite = loadEncounterCard();
                     updateStatPanelsForOverallEncounterPage();
                 }
             }
             else
             {
-                PartyExploitsPanelGameObject.SetActive(false);
+                PartyExploitsPanel.SetActive(false);
             }
         }
 
@@ -1107,7 +1119,7 @@ namespace FallenLand
             }
         }
 
-        private void loadEncounterCard()
+        private Sprite loadEncounterCard()
         {
             EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter();
             string imageLocation = "Cards/EncounterCards/";
@@ -1125,9 +1137,7 @@ namespace FallenLand
                 imageLocation += "CityRad/";
             }
             imageLocation += "Plains" + encounterCard.GetId().ToString();
-            Sprite img = (Sprite)Resources.Load<Sprite>(imageLocation);
-            Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
-            cardImage.sprite = img;
+            return (Sprite)Resources.Load<Sprite>(imageLocation);
         }
 
         private void updateStatPanelsForOverallEncounterPage()
@@ -1400,10 +1410,11 @@ namespace FallenLand
                 CardFullScreenGameObject.SetActive(true);
                 FullScreenCardVertical.SetActive(!CardIsHorizontal);
                 FullScreenCardHorizontal.SetActive(CardIsHorizontal);
-                HorizontalCloseButton.SetActive(!CardIsHorizontal);
-                VerticalCloseButton.SetActive(CardIsHorizontal);
+                HorizontalCloseButton.SetActive(CardIsHorizontal);
+                VerticalCloseButton.SetActive(!CardIsHorizontal);
 
                 FullScreenCardVertical.GetComponent<Image>().sprite = CardSpriteThatWasClicked;
+                FullScreenCardHorizontal.GetComponent<Image>().sprite = CardSpriteThatWasClicked;
             }
             
         }

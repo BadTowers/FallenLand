@@ -20,11 +20,11 @@ namespace FallenLand
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 Debug.Log("Mouse click");
-                if (!MovementHandler.GetIsDragging())
+                if (MovementHandler == null || !MovementHandler.GetIsDragging())
                 {
                     //tell ui manager to show window for this card
                     UiManager.SetCardIsClicked(gameObject.transform.GetComponentInParent<Image>().sprite);
-                    UiManager.SetCardIsHorizontal(gameObject.transform.rotation.z == 90);
+                    UiManager.SetCardIsHorizontal(gameObject.transform.rotation.z != 0);
                 }
             }
         }
