@@ -17,6 +17,7 @@ namespace FallenLand
         private bool HasFirstStrike;
         ConditionalGain Link;
         private bool IsMaster;
+        private UnityEngine.Sprite CardImage;
 
         public CharacterCard(string title) : base(title)
         {
@@ -164,6 +165,16 @@ namespace FallenLand
                 remaining = 3;
             }
             CurrentPsychRemaning = remaining;
+        }
+
+        public UnityEngine.Sprite GetCardImage()
+        {
+            if (CardImage == null)
+            {
+                string fileName = "Cards/CharacterCards/CharacterCard" + GetId().ToString();
+                CardImage = UnityEngine.Resources.Load<UnityEngine.Sprite>(fileName);
+            }
+            return CardImage;
         }
     }
 }

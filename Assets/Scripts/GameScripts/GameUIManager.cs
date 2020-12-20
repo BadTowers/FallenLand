@@ -66,6 +66,15 @@ namespace FallenLand
         private GameObject PartyOverviewPanel;
         private GameObject MainEncounterCardImage;
         private bool EncounterHasBegun;
+        private GameObject EncounterRollPanel;
+        private GameObject EncounterStatsPanel;
+        private List<GameObject> CharacterEncounterRollImages;
+        private List<GameObject> CharacterEncounterCurrentStatText;
+        private List<GameObject> CharacterEncounterPanels;
+        private GameObject VehicleEncounterRollImage;
+        private GameObject VehicleEncounterCurrentStatText;
+        private GameObject VehicleEncounterPanel;
+        private List<GameObject> CurrentEncounterRollSymbols;
 
         #region UnityFunctions
         void Awake()
@@ -78,7 +87,7 @@ namespace FallenLand
             PauseMenu = GameObject.Find("PauseMenu");
             CharacterAndSpoilsScreen = GameObject.Find("CharacterAndSpoilsAssigningPanel");
             ActionCardsScreen = GameObject.Find("ActionCardsPanel");
-            MainOverlay = GameObject.Find("MainOverlayCanvas");
+            MainOverlay = GameObject.Find("MainOverlay");
             TradeOverlay = GameObject.Find("TradeOverlay");
             TownEventsRollPanel = GameObject.Find("TownEventsPanel");
             RollTownEventButtonGameObject = GameObject.Find("RollTownEventsButton");
@@ -95,6 +104,10 @@ namespace FallenLand
             HorizontalCloseButton = GameObject.Find("HorizontalCloseButton");
             PartyOverviewPanel = GameObject.Find("PartyOverviewPanel");
             MainEncounterCardImage = GameObject.Find("MainEncounterCardImage");
+            EncounterRollPanel = GameObject.Find("EncounterRollPanel");
+            EncounterStatsPanel = GameObject.Find("EncounterStatsPanel");
+
+            findEncounterRollGameObjects();
 
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
@@ -250,6 +263,8 @@ namespace FallenLand
             OverallEncounterPanelGameObject.SetActive(false);
             CardFullScreenGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(false);
+            EncounterRollPanel.SetActive(false);
+            EncounterStatsPanel.SetActive(false);
         }
 
         void Start()
@@ -565,8 +580,40 @@ namespace FallenLand
             OverallEncounterPanelGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(true);
             PartyExploitsPanel.SetActive(false);
+            EncounterRollPanel.SetActive(true);
+            EncounterStatsPanel.SetActive(true);
             MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
             EncounterHasBegun = true;
+        }
+
+        public void OnCharacter1RollPress()
+        {
+        
+        }
+
+        public void OnCharacter2RollPress()
+        {
+
+        }
+
+        public void OnCharacter3RollPress()
+        {
+
+        }
+
+        public void OnCharacter4RollPress()
+        {
+
+        }
+
+        public void OnCharacter5RollPress()
+        {
+
+        }
+
+        public void OnVehicleRollPress()
+        {
+
         }
         #endregion
 
@@ -768,9 +815,7 @@ namespace FallenLand
                         Destroy(imageObj.GetComponent<CardMovementHandler>());
                     }
                     Image image = imageObj.GetComponent<Image>();
-                    string fileName = "Cards/SpoilsCards/SpoilsCard" + auctionHouse[i].GetId().ToString();
-                    Sprite curSprite = Resources.Load<Sprite>(fileName);
-                    image.sprite = curSprite;
+                    image.sprite = auctionHouse[i].GetCardImage();
                     imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
                     image.transform.SetParent(AuctionHouseScrollContent.transform);
                     image.transform.localPosition = new Vector3(97f + (i % 8 * OFFSET_X), -64f - (i / 8 * OFFSET_Y), 0f);
@@ -813,9 +858,7 @@ namespace FallenLand
                 {
                     GameObject imageObj = Instantiate(ImageGameObject);
                     Image image = imageObj.GetComponent<Image>();
-                    string fileName = "Cards/CharacterCards/CharacterCard" + townRoster[i].GetId().ToString();
-                    Sprite curSprite = Resources.Load<Sprite>(fileName);
-                    image.sprite = curSprite;
+                    image.sprite = townRoster[i].GetCardImage();
                     imageObj.name = "CharacterCard" + townRoster[i].GetId().ToString();
                     image.transform.SetParent(TownRosterScrollContent.transform);
                     image.transform.localPosition = new Vector3(97f + (i % 8 * OFFSET_X), -64f - (i / 8 * OFFSET_Y), 0f);
@@ -855,9 +898,7 @@ namespace FallenLand
                             Destroy(imageObj.GetComponent<CardMovementHandler>());
                         }
                         Image image = imageObj.GetComponent<Image>();
-                        string fileName = "Cards/CharacterCards/CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
-                        Sprite curSprite = Resources.Load<Sprite>(fileName);
-                        image.sprite = curSprite;
+                        image.sprite = activeCharacters[activeIndex].GetCardImage();
                         imageObj.name = "CharacterCard" + activeCharacters[activeIndex].GetId().ToString();
                         image.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
                         image.transform.localPosition = new Vector3(CARD_X, FIRST_CARD_Y, 0f);
@@ -876,9 +917,7 @@ namespace FallenLand
                                 Destroy(imageObj2.GetComponent<CardMovementHandler>());
                             }
                             Image image2 = imageObj2.GetComponent<Image>();
-                            string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
-                            Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
-                            image2.sprite = curSprite2;
+                            image2.sprite = curSlotSpoils[curSpoilIndex].GetCardImage();
                             imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
                             image2.transform.SetParent(ActiveCharactersScrollContent[activeIndex].transform);
                             image2.transform.localPosition = new Vector3(CARD_X, FIRST_CARD_Y - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
@@ -959,9 +998,7 @@ namespace FallenLand
                         Destroy(imageObj.GetComponent<CardMovementHandler>());
                     }
                     Image image = imageObj.GetComponent<Image>();
-                    string fileName = "Cards/SpoilsCards/SpoilsCard" + activeVehicle.GetId().ToString();
-                    Sprite curSprite = Resources.Load<Sprite>(fileName);
-                    image.sprite = curSprite;
+                    image.sprite = activeVehicle.GetCardImage();
                     imageObj.name = "SpoilsCard" + activeVehicle.GetId().ToString();
                     image.transform.SetParent(VehicleSlotScrollContent.transform);
                     image.transform.localPosition = new Vector3(CARD_X, FIRST_CARD_Y, 0f);
@@ -981,9 +1018,7 @@ namespace FallenLand
                             Destroy(imageObj2.GetComponent<CardMovementHandler>());
                         }
                         Image image2 = imageObj2.GetComponent<Image>();
-                        string fileName2 = "Cards/SpoilsCards/SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
-                        Sprite curSprite2 = Resources.Load<Sprite>(fileName2);
-                        image2.sprite = curSprite2;
+                        image2.sprite = curSlotSpoils[curSpoilIndex].GetCardImage();
                         imageObj2.name = "SpoilsCard" + curSlotSpoils[curSpoilIndex].GetId().ToString();
                         image2.transform.SetParent(VehicleSlotScrollContent.transform);
                         image2.transform.localPosition = new Vector3(CARD_X, FIRST_CARD_Y - ((curSpoilIndex + 1) * OFFSET_Y), 0f);
@@ -1064,6 +1099,35 @@ namespace FallenLand
                     updateStatPanelsForOverallEncounterPage();
                 }
             }
+            else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
+            {
+                //Enable character panels that have someone assigned to it
+                List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
+                for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+                {
+                    if (characterCards[i] != null)
+                    {
+                        CharacterEncounterPanels[i].SetActive(true);
+                        CharacterEncounterRollImages[i].GetComponent<Image>().sprite = characterCards[i].GetCardImage();
+                    }
+                    else
+                    {
+                        CharacterEncounterPanels[i].SetActive(false);
+                    }
+                }
+
+                //Enable vehicle panel if something is assigned to it
+                SpoilsCard vehicleCard = GameManagerInstance.GetActiveVehicle(GameManagerInstance.GetIndexForMyPlayer());
+                if (vehicleCard != null)
+                {
+                    VehicleEncounterPanel.SetActive(true);
+                    VehicleEncounterRollImage.GetComponent<Image>().sprite = vehicleCard.GetCardImage();
+                }
+                else
+                {
+                    VehicleEncounterPanel.SetActive(false);
+                }
+            }
             else
             {
                 PartyExploitsPanel.SetActive(false);
@@ -1138,6 +1202,24 @@ namespace FallenLand
             }
             imageLocation += "Plains" + encounterCard.GetId().ToString();
             return (Sprite)Resources.Load<Sprite>(imageLocation);
+        }
+
+        private void findEncounterRollGameObjects()
+        {
+            CharacterEncounterRollImages = new List<GameObject>();
+            CharacterEncounterCurrentStatText = new List<GameObject>();
+            CharacterEncounterPanels = new List<GameObject>();
+            for (int i = 1; i <= Constants.NUM_PARTY_MEMBERS; i++)
+            {
+                CharacterEncounterRollImages.Add(GameObject.Find("Character" + i.ToString()));
+                CharacterEncounterCurrentStatText.Add(GameObject.Find("CharacterStatText" + i.ToString()));
+                CharacterEncounterPanels.Add(GameObject.Find("CharacterEncounterPanel" + i.ToString()));
+            }
+            VehicleEncounterRollImage = GameObject.Find("CharacterV");
+            VehicleEncounterCurrentStatText = GameObject.Find("CharacterStatTextV");
+            VehicleEncounterPanel = GameObject.Find("CharacterEncounterPanelV");
+
+            CurrentEncounterRollSymbols = GameObject.FindGameObjectsWithTag("CurrentEncounterRollSymbol").ToList();
         }
 
         private void updateStatPanelsForOverallEncounterPage()

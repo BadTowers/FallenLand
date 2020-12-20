@@ -22,6 +22,7 @@ namespace FallenLand
 		private bool PlaceOnTopOfDiscard;
 		private List<SpoilsCard> EquippedSpoils;
 		private bool IsStartingCard;
+		private UnityEngine.Sprite CardImage;
 
 		public SpoilsCard(string title) : base(title)
 		{
@@ -398,6 +399,16 @@ namespace FallenLand
 				isRelic = true;
 			}
 			return isRelic;
+		}
+
+		public UnityEngine.Sprite GetCardImage()
+		{
+			if (CardImage == null)
+			{
+				string fileName = "Cards/SpoilsCards/SpoilsCard" + GetId().ToString();
+				CardImage = UnityEngine.Resources.Load<UnityEngine.Sprite>(fileName);
+			}
+			return CardImage;
 		}
 
 		public SpoilsCard DeepCopy()

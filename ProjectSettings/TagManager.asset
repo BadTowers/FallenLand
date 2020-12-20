@@ -61,6 +61,7 @@ TagManager:
   - CharacterCarryWeight4
   - CharacterCarryWeight5
   - CharacterCarryWeightV
+  - CurrentEncounterRollSymbol
   layers:
   - Default
   - TransparentFX
