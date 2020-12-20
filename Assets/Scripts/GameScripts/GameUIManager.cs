@@ -75,6 +75,8 @@ namespace FallenLand
         private GameObject VehicleEncounterCurrentStatText;
         private GameObject VehicleEncounterPanel;
         private List<GameObject> CurrentEncounterRollSymbols;
+        private Dictionary<int, Skills> PageToSkillMapping;
+        private int CurrentEncounterSkillPage;
 
         #region UnityFunctions
         void Awake()
@@ -615,6 +617,31 @@ namespace FallenLand
         {
 
         }
+
+        public void OnRollAllPress()
+        {
+        
+        }
+
+        public void OnPreviousEncounterStatPress()
+        {
+            CurrentEncounterSkillPage++;
+            if (CurrentEncounterSkillPage >= PageToSkillMapping.Count())
+            {
+                CurrentEncounterSkillPage = 0;
+            }
+            updateSkillIcons();
+        }
+
+        public void OnNextEncounterStatPress()
+        {
+            CurrentEncounterSkillPage--;
+            if (CurrentEncounterSkillPage < 0)
+            {
+                CurrentEncounterSkillPage = PageToSkillMapping.Count() - 1;
+            }
+            updateSkillIcons();
+        }
         #endregion
 
         #region HelperFunctions
@@ -1082,6 +1109,7 @@ namespace FallenLand
         private void updatePartyExploitsUi()
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
+            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter();
             if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun)
             {
                 PartyExploitsPanel.SetActive(true);
@@ -1091,7 +1119,7 @@ namespace FallenLand
                 {
                     PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
                 }
-                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && GameManagerInstance.GetCurrentEncounter() != null && !EncounterHasBegun)
+                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && encounterCard != null && !EncounterHasBegun)
                 {
                     OverallEncounterPanelGameObject.SetActive(true);
                     Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
@@ -1101,6 +1129,9 @@ namespace FallenLand
             }
             else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
             {
+                createSkillToPageMappingIfNeeded(encounterCard);
+                updateSkillIcons();
+
                 //Enable character panels that have someone assigned to it
                 List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -1127,6 +1158,9 @@ namespace FallenLand
                 {
                     VehicleEncounterPanel.SetActive(false);
                 }
+
+                //Update skill panel
+                updateEncounterSkillPanel();
             }
             else
             {
@@ -1222,19 +1256,84 @@ namespace FallenLand
             CurrentEncounterRollSymbols = GameObject.FindGameObjectsWithTag("CurrentEncounterRollSymbol").ToList();
         }
 
+        private void createSkillToPageMappingIfNeeded(EncounterCard encounterCard)
+        {
+            if (PageToSkillMapping == null)
+            {
+                PageToSkillMapping = new Dictionary<int, Skills>();
+                int currentPageIndex = 0;
+                Dictionary<Skills, int> skillChecks = encounterCard.GetSkillChecks();
+                foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                {
+                    if (skillChecks.ContainsKey(skill))
+                    {
+                        PageToSkillMapping[currentPageIndex] = skill;
+                        currentPageIndex += 1;
+                    }
+                }
+                CurrentEncounterSkillPage = 0;
+            }
+        }
+
+        private void updateSkillIcons()
+        {
+            //Determine sprite
+            string spriteString = "Cards/CardInformation/";
+            Sprite sprite;
+            switch (PageToSkillMapping[CurrentEncounterSkillPage])
+            {
+                case Skills.Combat:
+                    spriteString += "Combat";
+                    break;
+                case Skills.Diplomacy:
+                    spriteString += "Diplomacy";
+                    break;
+                case Skills.Mechanical:
+                    spriteString += "Mechanical";
+                    break;
+                case Skills.Medical:
+                    spriteString += "Medical";
+                    break;
+                case Skills.Survival:
+                    spriteString += "Survival";
+                    break;
+                case Skills.Technical:
+                    spriteString += "Technical";
+                    break;
+                default:
+                    Debug.LogError("Failed to load skill image for encounter");
+                    spriteString += "CarryWeight"; //random to denote issue
+                    break;
+            }
+
+            //Load sprite
+            sprite = (Sprite)Resources.Load<Sprite>(spriteString);
+
+            //Assign sprite
+            for (int i = 0; i < CurrentEncounterRollSymbols.Count; i++)
+            {
+                CurrentEncounterRollSymbols[i].GetComponent<Image>().sprite = sprite;
+            }
+        }
+
+        private void updateEncounterSkillPanel()
+        {
+            GameObject.Find("StatPageTitleText").GetComponent<Text>().text = PageToSkillMapping[CurrentEncounterSkillPage].ToString();
+        }
+
         private void updateStatPanelsForOverallEncounterPage()
         {
             EncounterCard card = GameManagerInstance.GetCurrentEncounter();
             if (card != null)
             {
                 Dictionary<Skills, int> skillChecks = card.GetSkillChecks();
-                List<bool> partySkillChecks = card.GetArePartySkillCheck();
+                Dictionary<Skills, bool> partySkillChecks = card.GetArePartySkillCheck();
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
                 {
                     foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                     {
                         Color color = OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color;
-                        if (skillChecks[skill] != 0 && partySkillChecks[(int)skill]) //TODO doesn't handle character specific checks
+                        if (skillChecks.ContainsKey(skill) && partySkillChecks.ContainsKey(skill) && partySkillChecks[skill]) //TODO doesn't handle character specific checks
                         {
                             color.a = 128;
                         }
@@ -1248,7 +1347,7 @@ namespace FallenLand
                 foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
                 {
                     Color color = OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color;
-                    if (skillChecks[skill] != 0 && partySkillChecks[(int)skill]) //TODO doesn't handle vehicle specific checks 
+                    if (skillChecks.ContainsKey(skill) && partySkillChecks.ContainsKey(skill) && partySkillChecks[skill]) //TODO doesn't handle vehicle specific checks 
                     {
                         color.a = 128;
                     }

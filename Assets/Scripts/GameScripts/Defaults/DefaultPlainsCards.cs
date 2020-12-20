@@ -26,21 +26,13 @@ namespace FallenLand
 				"substantial reward if you are successful.");
             curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
-				[Skills.Combat] = 0,
-				[Skills.Survival] = 0,
-				[Skills.Diplomacy] = 0,
 				[Skills.Mechanical] = 4,
-				[Skills.Technical] = 3,
-				[Skills.Medical] = 0
+				[Skills.Technical] = 3
 			});
-			curCard.SetArePartySkillCheck(new List<bool>
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
 			{
-				false,
-				false,
-				false,
-				true,
-				true,
-				false
+				[Skills.Mechanical] = true,
+				[Skills.Technical] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("Draw the next Relic Spoils card, discarding all others. You may place your party on the nearest Mission chip and attempt it at no cost in weeks.");

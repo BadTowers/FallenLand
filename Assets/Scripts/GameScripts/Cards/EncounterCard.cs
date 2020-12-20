@@ -6,7 +6,7 @@ namespace FallenLand
 	{
 		private int SalvageReward;
 		private Dictionary<Skills, int> SkillChecksRequired;
-		private List<bool> ArePartySkillChecks = new List<bool>();
+		private Dictionary<Skills, bool> ArePartySkillChecks = new Dictionary<Skills, bool>();
 		private string DescriptionText;
 		private bool PsychCheckAfterEncounter;
 		List<Reward> Rewards = new List<Reward>();
@@ -58,12 +58,12 @@ namespace FallenLand
 			return SkillChecksRequired;
 		}
 
-		public void SetArePartySkillCheck(List<bool> arePartySkillChecks)
+		public void SetArePartySkillCheck(Dictionary<Skills, bool> arePartySkillChecks)
 		{
 			ArePartySkillChecks = arePartySkillChecks;
 		}
 
-		public List<bool> GetArePartySkillCheck()
+		public Dictionary<Skills, bool> GetArePartySkillCheck()
 		{
 			return ArePartySkillChecks;
 		}
