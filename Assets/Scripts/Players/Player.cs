@@ -43,7 +43,7 @@ namespace FallenLand
 			FactionOfPlayer = faction;
 			Vehicle = null;
 			ActiveVehicleRemainingCarryWeight = 0;
-			initLists();
+			initDataStructures();
 			extractTownTechsFromFaction();
 			TownHealth = 1;
 			Prestige = 1;
@@ -562,8 +562,84 @@ namespace FallenLand
 			return PlayerIsMoving;
 		}
 
+		public int GetTotalForCharacterSkill(int characterIndex, Skills skill)
+		{
+			return ActiveCharacterTotalStats[characterIndex][skill];
+		}
 
-		private void initLists()
+		public int GetTotalForVehicleSkill(Skills skill)
+		{
+			return ActiveVehicleTotalStats[skill];
+		}
+
+		public int GetCharacterAutoSuccesses(int characterIndex, Skills skill)
+		{
+			//Calculate the number of auto successes from their stat
+			int autoSuccesses = (int)(ActiveCharacterTotalStats[characterIndex][skill] / 10);
+
+			//Add 1 on for each 10 rolled
+			//TODO
+
+			return autoSuccesses;
+		}
+
+		public int GetCharacterRolledSuccesses(int characterIndex, Skills skill)
+		{
+			return 0; //TODO
+		}
+
+		public int GetVehicleAutoSuccesses(Skills skill)
+		{
+			//Calculate the number of auto successes from the stat
+			int autoSuccesses = (int)(ActiveVehicleTotalStats[skill] / 10);
+
+			//Add 1 on for each 10 rolled
+			//TODO
+
+			return autoSuccesses;
+		}
+
+		public int GetVehicleRolledSuccesses(Skills skill)
+		{
+			return 0; //TODO
+		}
+
+		public int GetTotalSuccesses(Skills skill)
+		{
+			int totalSuccesses = 0;
+			for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+			{
+				totalSuccesses += GetCharacterAutoSuccesses(characterIndex, skill);
+				totalSuccesses += GetCharacterRolledSuccesses(characterIndex, skill);
+			}
+			totalSuccesses += GetVehicleAutoSuccesses(skill);
+			totalSuccesses += GetVehicleRolledSuccesses(skill);
+
+			return totalSuccesses;
+		}
+
+		public void AddCharacterDiceRoll(int characterIndex, Skills skill, int diceRoll)
+		{
+			//TODO
+		}
+
+		public void AddVehicleDiceRoll(Skills skill, int diceRoll)
+		{
+			//TODO
+		}
+
+		public void ResetAllCharacterDiceRolls()
+		{
+			//TODO
+		}
+
+		public void ResetAllVehicleDiceRolls()
+		{
+			//TODO
+		}
+
+
+		private void initDataStructures()
 		{
 			AuctionHouse = new List<SpoilsCard>();
 			ActionCardsInHand = new List<ActionCard>();

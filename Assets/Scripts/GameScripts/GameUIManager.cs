@@ -77,6 +77,12 @@ namespace FallenLand
         private List<GameObject> CurrentEncounterRollSymbols;
         private Dictionary<int, Skills> PageToSkillMapping;
         private int CurrentEncounterSkillPage;
+        private List<GameObject> CurrentEncounterCharacterAutoSuccesses;
+        private List<GameObject> CurrentEncounterCharacterRolledSuccesses;
+        private GameObject CurrentEncounterVehicleAutoSuccesses;
+        private GameObject CurrentEncounterVehicleRolledSuccesses;
+        private GameObject TotalSuccessesNeededText;
+        private GameObject NumberOfTotalSuccessesText;
 
         #region UnityFunctions
         void Awake()
@@ -108,8 +114,11 @@ namespace FallenLand
             MainEncounterCardImage = GameObject.Find("MainEncounterCardImage");
             EncounterRollPanel = GameObject.Find("EncounterRollPanel");
             EncounterStatsPanel = GameObject.Find("EncounterStatsPanel");
+            TotalSuccessesNeededText = GameObject.Find("TotalSuccessesNeededText");
+            NumberOfTotalSuccessesText = GameObject.Find("NumberOfTotalSuccessesText");
 
             findEncounterRollGameObjects();
+            findEncounterStatGameObjects();
 
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
@@ -1131,6 +1140,7 @@ namespace FallenLand
             {
                 createSkillToPageMappingIfNeeded(encounterCard);
                 updateSkillIcons();
+                updateSkillValues();
 
                 //Enable character panels that have someone assigned to it
                 List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
@@ -1243,17 +1253,31 @@ namespace FallenLand
             CharacterEncounterRollImages = new List<GameObject>();
             CharacterEncounterCurrentStatText = new List<GameObject>();
             CharacterEncounterPanels = new List<GameObject>();
-            for (int i = 1; i <= Constants.NUM_PARTY_MEMBERS; i++)
+            for (int characterNumber = 1; characterNumber <= Constants.NUM_PARTY_MEMBERS; characterNumber++)
             {
-                CharacterEncounterRollImages.Add(GameObject.Find("Character" + i.ToString()));
-                CharacterEncounterCurrentStatText.Add(GameObject.Find("CharacterStatText" + i.ToString()));
-                CharacterEncounterPanels.Add(GameObject.Find("CharacterEncounterPanel" + i.ToString()));
+                CharacterEncounterRollImages.Add(GameObject.Find("Character" + characterNumber.ToString()));
+                CharacterEncounterCurrentStatText.Add(GameObject.Find("CharacterStatText" + characterNumber.ToString()));
+                CharacterEncounterPanels.Add(GameObject.Find("CharacterEncounterPanel" + characterNumber.ToString()));
             }
             VehicleEncounterRollImage = GameObject.Find("CharacterV");
             VehicleEncounterCurrentStatText = GameObject.Find("CharacterStatTextV");
             VehicleEncounterPanel = GameObject.Find("CharacterEncounterPanelV");
 
             CurrentEncounterRollSymbols = GameObject.FindGameObjectsWithTag("CurrentEncounterRollSymbol").ToList();
+        }
+
+        private void findEncounterStatGameObjects()
+        {
+            CurrentEncounterCharacterAutoSuccesses = new List<GameObject>();
+            CurrentEncounterCharacterRolledSuccesses = new List<GameObject>();
+
+            for(int characterNumber = 1; characterNumber <= Constants.MAX_NUM_PLAYERS; characterNumber++)
+            {
+                CurrentEncounterCharacterAutoSuccesses.Add(GameObject.Find("NumberOfAutoSuccessesText" + characterNumber.ToString()));
+                CurrentEncounterCharacterRolledSuccesses.Add(GameObject.Find("NumberOfRolledSuccessesText" + characterNumber.ToString()));
+            }
+            CurrentEncounterVehicleAutoSuccesses = GameObject.Find("NumberOfAutoSuccessesTextV");
+            CurrentEncounterVehicleRolledSuccesses = GameObject.Find("NumberOfRolledSuccessesTextV");
         }
 
         private void createSkillToPageMappingIfNeeded(EncounterCard encounterCard)
@@ -1316,9 +1340,38 @@ namespace FallenLand
             }
         }
 
+        private void updateSkillValues()
+        {
+            //Update character values
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+            }
+
+            //Update vehicle value
+            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(GameManagerInstance.GetIndexForMyPlayer(), PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+        }
+
         private void updateEncounterSkillPanel()
         {
             GameObject.Find("StatPageTitleText").GetComponent<Text>().text = PageToSkillMapping[CurrentEncounterSkillPage].ToString();
+
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            //Update character success values
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterAutoSuccesses(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+                CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterRolledSuccesses(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+            }
+            //Update vehicle success values
+            CurrentEncounterVehicleAutoSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleAutoSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+            CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+
+            //Update total successes needed
+            TotalSuccessesNeededText.GetComponent<Text>().text = GameManagerInstance.GetCurrentEncounter().GetSkillChecks()[PageToSkillMapping[CurrentEncounterSkillPage]].ToString();
+
+            //Update number of successes had
+            NumberOfTotalSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetTotalSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
         }
 
         private void updateStatPanelsForOverallEncounterPage()
@@ -1330,7 +1383,7 @@ namespace FallenLand
                 Dictionary<Skills, bool> partySkillChecks = card.GetArePartySkillCheck();
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
                 {
-                    foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                    foreach (Skills skill in Enum.GetValues(typeof(Skills)))
                     {
                         Color color = OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color;
                         if (skillChecks.ContainsKey(skill) && partySkillChecks.ContainsKey(skill) && partySkillChecks[skill]) //TODO doesn't handle character specific checks
@@ -1344,7 +1397,7 @@ namespace FallenLand
                         OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
                     }
                 }
-                foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+                foreach (Skills skill in Enum.GetValues(typeof(Skills)))
                 {
                     Color color = OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color;
                     if (skillChecks.ContainsKey(skill) && partySkillChecks.ContainsKey(skill) && partySkillChecks[skill]) //TODO doesn't handle vehicle specific checks 

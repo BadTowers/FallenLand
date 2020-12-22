@@ -1066,6 +1066,76 @@ namespace FallenLand
 			}
 			return encounterType;
 		}
+
+		public int GetSkillTotalForCharacter(int playerIndex, int characterIndex, Skills skill)
+		{
+			int skillValue = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				skillValue = Players[playerIndex].GetTotalForCharacterSkill(characterIndex, skill);
+			}
+			return skillValue;
+		}
+
+		public int GetSkillTotalForVehicle(int playerIndex, Skills skill)
+		{
+			int skillValue = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				skillValue = Players[playerIndex].GetTotalForVehicleSkill(skill);
+			}
+			return skillValue;
+		}
+
+		public int GetCharacterAutoSuccesses(int playerIndex, int characterIndex, Skills skill)
+		{
+			int autoSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				autoSuccesses = Players[playerIndex].GetCharacterAutoSuccesses(characterIndex, skill);
+			}
+			return autoSuccesses;
+		}
+
+		public int GetCharacterRolledSuccesses(int playerIndex, int characterIndex, Skills skill)
+		{
+			int rolledSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				rolledSuccesses = Players[playerIndex].GetCharacterRolledSuccesses(characterIndex, skill);
+			}
+			return rolledSuccesses;
+		}
+
+		public int GetVehicleAutoSuccesses(int playerIndex, Skills skill)
+		{
+			int autoSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				autoSuccesses = Players[playerIndex].GetVehicleAutoSuccesses(skill);
+			}
+			return autoSuccesses;
+		}
+
+		public int GetVehicleRolledSuccesses(int playerIndex, Skills skill)
+		{
+			int rolledSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				rolledSuccesses = Players[playerIndex].GetVehicleRolledSuccesses(skill);
+			}
+			return rolledSuccesses;
+		}
+
+		public int GetTotalSuccesses(int playerIndex, Skills skill)
+		{
+			int totalSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				totalSuccesses = Players[playerIndex].GetTotalSuccesses(skill);
+			}
+			return totalSuccesses;
+		}
 		#endregion
 
 
