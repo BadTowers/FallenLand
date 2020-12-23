@@ -1269,6 +1269,9 @@ namespace FallenLand
 				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), EncounterWasSuccessful(playerIndex), CurrentPlayerEncounter.GetTitle());
 				sendNetworkEvent((object)encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
+
+				Players[playerIndex].ResetAllCharacterDiceRolls();
+				Players[playerIndex].ResetAllVehicleDiceRolls();
 			}
 		}
 		#endregion
