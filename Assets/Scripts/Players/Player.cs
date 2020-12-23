@@ -654,12 +654,16 @@ namespace FallenLand
 
 		public int GetLastCharacterDiceRoll(int characterIndex, Skills skill)
 		{
-			int lastRoll = -1;
+			int lastRoll = Constants.HAS_NOT_ROLLED;
 			int numRollsInList = CharacterDiceRolls[characterIndex][skill].Count;
 
 			if (numRollsInList > 0)
 			{
 				lastRoll = CharacterDiceRolls[characterIndex][skill][numRollsInList - 1];
+			}
+			else if (ActiveCharacters[characterIndex] == null)
+			{
+				lastRoll = Constants.CRIT_FAIL;
 			}
 
 			return lastRoll;
@@ -667,12 +671,16 @@ namespace FallenLand
 
 		public int GetLastVehicleDiceRoll(Skills skill)
 		{
-			int lastRoll = -1;
+			int lastRoll = Constants.HAS_NOT_ROLLED;
 			int numRollsInList = VehicleDiceRolls[skill].Count;
 
 			if (numRollsInList > 0)
 			{
 				lastRoll = VehicleDiceRolls[skill][numRollsInList - 1];
+			}
+			else if (Vehicle == null)
+			{
+				lastRoll = Constants.CRIT_FAIL;
 			}
 
 			return lastRoll;

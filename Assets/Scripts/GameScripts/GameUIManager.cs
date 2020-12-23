@@ -87,6 +87,8 @@ namespace FallenLand
         private GameObject VehicleRollButton;
         private List<GameObject> LastCharacterDiceRollText;
         private GameObject LastVehicleDiceRollText;
+        private GameObject RollAllButton;
+        private GameObject EncounterFinishedPanel;
 
         #region UnityFunctions
         void Awake()
@@ -638,7 +640,21 @@ namespace FallenLand
 
         public void OnRollAllPress()
         {
-            //TODO
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            //characters
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+                {
+                    GameManagerInstance.RollCharacterEncounter(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                }
+            }
+
+            //vehicle
+            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+            {
+                GameManagerInstance.RollVehicleEncounter(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+            }
         }
 
         public void OnPreviousEncounterStatPress()
@@ -659,6 +675,20 @@ namespace FallenLand
                 CurrentEncounterSkillPage = PageToSkillMapping.Count() - 1;
             }
             updateSkillIcons();
+        }
+
+        public void OnAcceptEncounterResultsPress()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            GameManagerInstance.SetEncounterResultAccepted(myIndex);
+
+            PartyOverviewPanel.SetActive(true);
+            MainEncounterCardImage.SetActive(false);
+            PartyExploitsPanel.SetActive(true);
+            EncounterRollPanel.SetActive(false);
+            EncounterStatsPanel.SetActive(false);
+            EncounterFinishedPanel.SetActive(false);
+            EncounterHasBegun = false;
         }
         #endregion
 
@@ -685,30 +715,6 @@ namespace FallenLand
                 default:
                     break;
             }
-        }
-
-        private string getSpoilsCardString(int playerIndex)
-        {
-            List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(playerIndex);
-            string spoilsCardString = "";
-            for (int i = 0; i < auctionHouse.Count; i++)
-            {
-                spoilsCardString += auctionHouse[i].GetTitle();
-                spoilsCardString += ", ";
-            }
-            return spoilsCardString;
-        }
-
-        private string getTownTechString(int playerIndex)
-        {
-            List<TownTech> townTechs = GameManagerInstance.GetTownTechs(playerIndex);
-            string townTechString = "";
-            for (int i = 0; i < townTechs.Count; i++)
-            {
-                townTechString += townTechs[i].GetTechName();
-                townTechString += ", ";
-            }
-            return townTechString;
         }
 
         private void updateCharacterSpoilsScreen()
@@ -1180,10 +1186,12 @@ namespace FallenLand
 
                 updateEncounterSkillPanel();
                 updateEncounterRollButtons();
+                updateEncounterFinishedPanel();
             }
             else
             {
                 PartyExploitsPanel.SetActive(false);
+                EncounterFinishedPanel.SetActive(false);
             }
         }
 
@@ -1279,6 +1287,9 @@ namespace FallenLand
             LastVehicleDiceRollText = GameObject.Find("LastDiceRollTextV");
 
             CurrentEncounterRollSymbols = GameObject.FindGameObjectsWithTag("CurrentEncounterRollSymbol").ToList();
+
+            RollAllButton = GameObject.Find("RollAllButton");
+            EncounterFinishedPanel = GameObject.Find("EncounterFinishedPanel");
         }
 
         private void findEncounterStatGameObjects()
@@ -1399,8 +1410,8 @@ namespace FallenLand
                 if (activeCharacters[characterIndex] != null)
                 {
                     int previousCharacterRoll = GameManagerInstance.GetLastCharacterRoll(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
-                    CharacterEncounterRollButtons[characterIndex].GetComponent<Button>().interactable = (previousCharacterRoll == Constants.CRIT_SUCCESS || previousCharacterRoll == -1);
-                    if (previousCharacterRoll == -1)
+                    CharacterEncounterRollButtons[characterIndex].GetComponent<Button>().interactable = GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                    if (previousCharacterRoll == Constants.HAS_NOT_ROLLED)
                     {
                         LastCharacterDiceRollText[characterIndex].GetComponent<Text>().text = "--";
                     }
@@ -1415,14 +1426,47 @@ namespace FallenLand
             if (GameManagerInstance.GetActiveVehicle(myIndex) != null)
             {
                 int previousVehicleRoll = GameManagerInstance.GetLastVehicleRoll(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
-                VehicleRollButton.GetComponent<Button>().interactable = (previousVehicleRoll == Constants.CRIT_SUCCESS || previousVehicleRoll == -1);
-                if (previousVehicleRoll == -1)
+                VehicleRollButton.GetComponent<Button>().interactable = GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                if (previousVehicleRoll == Constants.HAS_NOT_ROLLED)
                 {
                     LastVehicleDiceRollText.GetComponent<Text>().text = "--";
                 }
                 else
                 {
                     LastVehicleDiceRollText.GetComponent<Text>().text = previousVehicleRoll.ToString();
+                }
+            }
+
+            //Update roll all button
+            bool enableRollAllButton = false;
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+                {
+                    enableRollAllButton = true;
+                    break;
+                }
+            }
+            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+            {
+                enableRollAllButton = true;
+            }
+            RollAllButton.GetComponent<Button>().interactable = enableRollAllButton;
+        }
+
+        private void updateEncounterFinishedPanel()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex) && GameManagerInstance.IsEncounterFinished(myIndex))
+            {
+                EncounterFinishedPanel.SetActive(true);
+                if (GameManagerInstance.EncounterWasSuccessful(myIndex))
+                {
+                    EncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter was successful!";
+                }
+                else
+                {
+                    EncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter failed!";
                 }
             }
         }

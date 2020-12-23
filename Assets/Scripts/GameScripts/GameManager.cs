@@ -24,6 +24,7 @@ namespace FallenLand
 		private const int MaxPsych = 3;
 		private const int MaxNumberOfPlayers = 5;
 		private const int MovementWeekCost = 1;
+		private const int EncounterWeekCost = 1;
 		private List<TownTech> TownTechs;
 		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
@@ -44,6 +45,7 @@ namespace FallenLand
 		private MouseManager MouseManagerInst;
 		private MapLayout MapLayoutInst;
 		private EncounterCard CurrentPlayerEncounter;
+		private bool EncounterWasSent;
 
 		#region UnityFunctions
 		void Start()
@@ -178,7 +180,7 @@ namespace FallenLand
             }
 
 			int myIndex = GetIndexForMyPlayer();
-			if (Players[myIndex].GetPlayerIsMoving())
+			if (isPlayerIndexInRange(myIndex) && Players[myIndex].GetPlayerIsMoving())
 			{
 				Coordinates lastClickedHexCoordinates = MouseManagerInst.GetLastHexClickedCoodinates();
 				if (lastClickedHexCoordinates != null)
@@ -189,21 +191,14 @@ namespace FallenLand
 					{
 						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
 						content.SetMoveToLocation(lastClickedHexCoordinates);
-						if (PhotonNetwork.IsMasterClient)
-						{
-							//Send this move to everyone else
-							sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
-							handlePartyExploitsNetworkUpdate((object)content);
-						}
-						else
-						{
-							//Send this move to master
-							sendNetworkEvent((object)content, ReceiverGroup.MasterClient, Constants.EvPartyExploits);
-						}
+						
+						//Movement is not sent to master first. Always send it to everyone else
+						sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
+						handlePartyExploitsNetworkUpdate((object)content);
 					}
 				}
 			}
-			else if (Players[myIndex].GetPlayerIsDoingAnEncounter())
+			else if (isPlayerIndexInRange(myIndex) && Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
@@ -222,6 +217,7 @@ namespace FallenLand
 					content.SetIsRequestToMaster(true);
 					sendNetworkEvent((object)content, ReceiverGroup.MasterClient, Constants.EvPartyExploits);
 				}
+				EncounterWasSent = true;
 			}
 		}
 
@@ -416,6 +412,10 @@ namespace FallenLand
 			{
 				Debug.Log("Received a party exploits event");
 				handlePartyExploitsNetworkUpdate(photonEvent.CustomData);
+			}
+			else if (eventCode == Constants.EvEncounterStatus)
+			{
+				handleEncounterStatusEvent((EncounterStatusNetworking)photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -1174,6 +1174,103 @@ namespace FallenLand
 				Players[playerIndex].AddVehicleDiceRoll(skill, diceRoll);
 			}
 		}
+
+		public bool DoesCharacterHaveRollsRemainingForSkill(int playerIndex, int characterIndex, Skills skill)
+		{
+			bool hasRemaining = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				int lastRoll = Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skill);
+                if (lastRoll == Constants.HAS_NOT_ROLLED || lastRoll == Constants.CRIT_SUCCESS)
+                {
+					hasRemaining = true;
+				}
+			}
+            return hasRemaining;
+		}
+
+        public bool DoesVehicleHaveRollsRemainingForSkill(int playerIndex, Skills skill)
+        {
+			bool hasRemaining = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				int lastRoll = Players[playerIndex].GetLastVehicleDiceRoll(skill);
+				if (lastRoll == Constants.HAS_NOT_ROLLED || lastRoll == Constants.CRIT_SUCCESS)
+				{
+					hasRemaining = true;
+				}
+			}
+			return hasRemaining;
+		}
+
+		public bool IsEncounterFinished(int playerIndex)
+		{
+			bool isFinished = true;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+                if (!EncounterWasSuccessful(playerIndex))
+                {
+					//Check all characters
+					for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+					{
+						foreach (Skills skill in CurrentPlayerEncounter.GetSkillChecks().Keys)
+						{
+							if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skill))
+							{
+								isFinished = false;
+								break;
+							}
+						}
+					}
+
+					//Check vehicle
+					foreach (Skills skill in CurrentPlayerEncounter.GetSkillChecks().Keys)
+					{
+						if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skill))
+						{
+							isFinished = false;
+							break;
+						}
+					}
+				}
+			}
+
+			return isFinished;
+		}
+
+		public bool EncounterWasSuccessful(int playerIndex)
+		{
+			bool wasSuccessful = true;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Dictionary<Skills, int> skillChecks = CurrentPlayerEncounter.GetSkillChecks();
+				foreach (Skills skill in skillChecks.Keys)
+				{
+					if (GetTotalSuccesses(playerIndex, skill) < skillChecks[skill])
+					{
+						wasSuccessful = false;
+						break;
+					}
+				}
+			}
+
+			return wasSuccessful;
+		}
+
+		public void SetEncounterResultAccepted(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
+				Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
+
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), EncounterWasSuccessful(playerIndex), CurrentPlayerEncounter.GetTitle());
+				sendNetworkEvent((object)encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
+				handleEncounterStatusEvent(encounterStatus);
+			}
+		}
 		#endregion
 
 
@@ -1642,6 +1739,25 @@ namespace FallenLand
 			}
 		}
 
+		private void handleEncounterStatusEvent(EncounterStatusNetworking eventStatus)
+		{
+			int playerIndex = eventStatus.GetPlayerIndex();
+			if (PhotonNetwork.IsMasterClient)
+			{
+				//todo deal with rewards or punishments
+			}
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				//todo remove card from top of deck and place into discard pile
+				Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
+				Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
+
+				int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
+				Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
+			}
+		}
+
 		private void registerPhotonCallbacks()
 		{
 			PhotonPeer.RegisterType(typeof(CardNetworking), Constants.EvDealCard, CardNetworking.SerializeCard, CardNetworking.DeserializeCard);
@@ -1651,6 +1767,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(MissionLocationNetworking), Constants.EvMissionLocation, MissionLocationNetworking.SerializeMissionLocation, MissionLocationNetworking.DeserializeMissionLocation);
 			PhotonPeer.RegisterType(typeof(TownEventNetworking), Constants.EvTownEventRoll, TownEventNetworking.SerializeTownEventRoll, TownEventNetworking.DeserializeTownEventRoll);
 			PhotonPeer.RegisterType(typeof(PartyExploitsNetworking), Constants.EvPartyExploits, PartyExploitsNetworking.SerializePartyExploits, PartyExploitsNetworking.DeserializePartyExploits);
+			PhotonPeer.RegisterType(typeof(EncounterStatusNetworking), Constants.EvEncounterStatus, EncounterStatusNetworking.SerializeEncounterStatus, EncounterStatusNetworking.DeserializeEncounterStatus);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)

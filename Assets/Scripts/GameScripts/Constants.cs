@@ -15,6 +15,7 @@ namespace FallenLand
 		public const int D100 = 100;
 		public const int CRIT_SUCCESS = 1;
 		public const int CRIT_FAIL = 10;
+		public const int HAS_NOT_ROLLED = -1;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 			{
 				{ Skills.Mechanical, 0 },
@@ -44,7 +45,7 @@ namespace FallenLand
 		public const byte ADD_TO_TOWN_ROSTER = 11;
 		public const byte ADD_TO_AUCTION_HOUSE = 12;
 
-		//Used for EvTownEventRoll
+		//Used for EvPartyExploits
 		public const byte PARTY_EXPLOITS_MOVEMENT = 1;
 		public const byte PARTY_EXPLOITS_ENCOUNTER = 2;
 		public const byte PARTY_EXPLOITS_MISSION = 3;
@@ -52,7 +53,7 @@ namespace FallenLand
 		public const byte PARTY_EXPLOITS_PVP = 5;
 		public const byte PARTY_EXPLOITS_RESOURCE = 6;
 
-		//
+		//Used for EvPartyExploits
 		public const int ENCOUNTER_NONE = 0;
 		public const int ENCOUNTER_PLAINS = 1;
 		public const int ENCOUNTER_MOUNTAINS = 2;
@@ -68,5 +69,6 @@ namespace FallenLand
 		public const byte EvMissionLocation = 7;
 		public const byte EvTownEventRoll = 8;
 		public const byte EvPartyExploits = 9;
+		public const byte EvEncounterStatus = 10;
 	}
 }
