@@ -1,10 +1,10 @@
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Linq;
 
 namespace FallenLand
 {
@@ -83,6 +83,10 @@ namespace FallenLand
         private GameObject CurrentEncounterVehicleRolledSuccesses;
         private GameObject TotalSuccessesNeededText;
         private GameObject NumberOfTotalSuccessesText;
+        private List<GameObject> CharacterEncounterRollButtons;
+        private GameObject VehicleRollButton;
+        private List<GameObject> LastCharacterDiceRollText;
+        private GameObject LastVehicleDiceRollText;
 
         #region UnityFunctions
         void Awake()
@@ -599,37 +603,42 @@ namespace FallenLand
 
         public void OnCharacter1RollPress()
         {
-        
+            int characterIndex = 0;
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
         }
 
         public void OnCharacter2RollPress()
         {
-
+            int characterIndex = 1;
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
         }
 
         public void OnCharacter3RollPress()
         {
-
+            int characterIndex = 2;
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
         }
 
         public void OnCharacter4RollPress()
         {
-
+            int characterIndex = 3;
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
         }
 
         public void OnCharacter5RollPress()
         {
-
+            int characterIndex = 4;
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
         }
 
         public void OnVehicleRollPress()
         {
-
+            GameManagerInstance.RollVehicleEncounter(GameManagerInstance.GetIndexForMyPlayer(), PageToSkillMapping[CurrentEncounterSkillPage]);
         }
 
         public void OnRollAllPress()
         {
-        
+            //TODO
         }
 
         public void OnPreviousEncounterStatPress()
@@ -1169,8 +1178,8 @@ namespace FallenLand
                     VehicleEncounterPanel.SetActive(false);
                 }
 
-                //Update skill panel
                 updateEncounterSkillPanel();
+                updateEncounterRollButtons();
             }
             else
             {
@@ -1253,15 +1262,21 @@ namespace FallenLand
             CharacterEncounterRollImages = new List<GameObject>();
             CharacterEncounterCurrentStatText = new List<GameObject>();
             CharacterEncounterPanels = new List<GameObject>();
+            CharacterEncounterRollButtons = new List<GameObject>();
+            LastCharacterDiceRollText = new List<GameObject>();
             for (int characterNumber = 1; characterNumber <= Constants.NUM_PARTY_MEMBERS; characterNumber++)
             {
                 CharacterEncounterRollImages.Add(GameObject.Find("Character" + characterNumber.ToString()));
                 CharacterEncounterCurrentStatText.Add(GameObject.Find("CharacterStatText" + characterNumber.ToString()));
                 CharacterEncounterPanels.Add(GameObject.Find("CharacterEncounterPanel" + characterNumber.ToString()));
+                CharacterEncounterRollButtons.Add(GameObject.Find("RollButton" + characterNumber.ToString()));
+                LastCharacterDiceRollText.Add(GameObject.Find("LastDiceRollText" + characterNumber.ToString()));
             }
             VehicleEncounterRollImage = GameObject.Find("CharacterV");
             VehicleEncounterCurrentStatText = GameObject.Find("CharacterStatTextV");
             VehicleEncounterPanel = GameObject.Find("CharacterEncounterPanelV");
+            VehicleRollButton = GameObject.Find("RollButtonV");
+            LastVehicleDiceRollText = GameObject.Find("LastDiceRollTextV");
 
             CurrentEncounterRollSymbols = GameObject.FindGameObjectsWithTag("CurrentEncounterRollSymbol").ToList();
         }
@@ -1372,6 +1387,44 @@ namespace FallenLand
 
             //Update number of successes had
             NumberOfTotalSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetTotalSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+        }
+
+        private void updateEncounterRollButtons()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            //Update character roll buttons
+            List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(myIndex);
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                if (activeCharacters[characterIndex] != null)
+                {
+                    int previousCharacterRoll = GameManagerInstance.GetLastCharacterRoll(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                    CharacterEncounterRollButtons[characterIndex].GetComponent<Button>().interactable = (previousCharacterRoll == Constants.CRIT_SUCCESS || previousCharacterRoll == -1);
+                    if (previousCharacterRoll == -1)
+                    {
+                        LastCharacterDiceRollText[characterIndex].GetComponent<Text>().text = "--";
+                    }
+                    else
+                    {
+                        LastCharacterDiceRollText[characterIndex].GetComponent<Text>().text = previousCharacterRoll.ToString();
+                    }
+                }
+            }
+
+            //Update vehicle roll button
+            if (GameManagerInstance.GetActiveVehicle(myIndex) != null)
+            {
+                int previousVehicleRoll = GameManagerInstance.GetLastVehicleRoll(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                VehicleRollButton.GetComponent<Button>().interactable = (previousVehicleRoll == Constants.CRIT_SUCCESS || previousVehicleRoll == -1);
+                if (previousVehicleRoll == -1)
+                {
+                    LastVehicleDiceRollText.GetComponent<Text>().text = "--";
+                }
+                else
+                {
+                    LastVehicleDiceRollText.GetComponent<Text>().text = previousVehicleRoll.ToString();
+                }
+            }
         }
 
         private void updateStatPanelsForOverallEncounterPage()

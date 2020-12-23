@@ -976,7 +976,7 @@ namespace FallenLand
 			int d10Roll = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				d10Roll = DiceRoller.RollDice(10);
+				d10Roll = DiceRoller.RollDice(Constants.D10);
 				if (PhotonNetwork.IsMasterClient)
 				{
 					object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
@@ -1135,6 +1135,44 @@ namespace FallenLand
 				totalSuccesses = Players[playerIndex].GetTotalSuccesses(skill);
 			}
 			return totalSuccesses;
+		}
+
+		public int GetLastCharacterRoll(int playerIndex, int characterIndex, Skills skill)
+		{
+			int lastRoll = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				lastRoll = Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skill);
+			}
+			return lastRoll;
+		}
+
+		public int GetLastVehicleRoll(int playerIndex, Skills skill)
+		{
+			int lastRoll = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				lastRoll = Players[playerIndex].GetLastVehicleDiceRoll(skill);
+			}
+			return lastRoll;
+		}
+
+		public void RollCharacterEncounter(int playerIndex, int characterIndex, Skills skill)
+		{
+			int diceRoll = DiceRoller.RollDice(Constants.D10);
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddCharacterDiceRoll(characterIndex, skill, diceRoll);
+			}
+		}
+
+		public void RollVehicleEncounter(int playerIndex, Skills skill)
+		{
+			int diceRoll = DiceRoller.RollDice(Constants.D10);
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddVehicleDiceRoll(skill, diceRoll);
+			}
 		}
 		#endregion
 
@@ -1515,7 +1553,7 @@ namespace FallenLand
 				int missionLocation;
 				do
 				{
-					missionLocation = DiceRoller.RollDice(100);
+					missionLocation = DiceRoller.RollDice(Constants.D100);
 				} while (randomLocations.Contains(missionLocation));
 
 				randomLocations.Add(missionLocation);

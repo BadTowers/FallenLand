@@ -9,6 +9,12 @@ namespace FallenLand
 		public const int NUM_PARTY_MEMBERS = 5;
 		public const int VEHICLE_INDEX = 5;
 		public const int MAX_NUM_PLAYERS = 5;
+		public const int D6 = 6;
+		public const int D10 = 10;
+		public const int D20 = 20;
+		public const int D100 = 100;
+		public const int CRIT_SUCCESS = 1;
+		public const int CRIT_FAIL = 10;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 			{
 				{ Skills.Mechanical, 0 },
