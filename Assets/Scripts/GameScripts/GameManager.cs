@@ -44,7 +44,7 @@ namespace FallenLand
 		private bool IsMyPhaseEnded;
 		private MouseManager MouseManagerInst;
 		private MapLayout MapLayoutInst;
-		private EncounterCard CurrentPlayerEncounter;
+		private List<EncounterCard> CurrentPlayerEncounter;
 		private bool EncounterWasSent;
 
 		#region UnityFunctions
@@ -63,6 +63,7 @@ namespace FallenLand
 			DiceRoller = new Dice();
 			MouseManagerInst = GameObject.Find("MouseManager").GetComponent<MouseManager>();
 			MapLayoutInst = new DefaultMapLayout();
+			CurrentPlayerEncounter = new List<EncounterCard>();
 
 			registerPhotonCallbacks();
 
@@ -71,7 +72,9 @@ namespace FallenLand
             {
 				Faction faction = new Faction("Dummy", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
 				Players.Add(new HumanPlayer(faction, StartingSalvage));
-            }
+				CurrentPlayerEncounter.Add(null);
+
+			}
 
             //Figure out our user ID
             Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
@@ -698,9 +701,14 @@ namespace FallenLand
 			return Players;
         }
 
-		public EncounterCard GetCurrentEncounter()
+		public EncounterCard GetCurrentEncounter(int playerIndex)
 		{
-			return CurrentPlayerEncounter;
+			EncounterCard encounter = null;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				encounter = CurrentPlayerEncounter[playerIndex];
+			}
+			return encounter;
 		}
 
 		public void RemoveSpoilFromAuctionHouse(int playerIndex, SpoilsCard card)
@@ -900,13 +908,22 @@ namespace FallenLand
 					object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 					dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[i].GetTitle());
+					break;
 				}
 			}
 		}
 
 		public void ApplyPsychDamageToWholeParty(int playerIndex, int amountOfDamage)
 		{
-			//TODO
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				{
+					int currentCharacterPsychLeft = Players[playerIndex].GetActiveCharacterRemainingPsych(characterIndex);
+					currentCharacterPsychLeft -= amountOfDamage;
+					Players[playerIndex].SetActiveCharacterRemainingPsych(characterIndex, currentCharacterPsychLeft);
+				}
+			}
 		}
 
 
@@ -1152,7 +1169,7 @@ namespace FallenLand
 					//Check all characters
 					for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
 					{
-						foreach (Skills skill in CurrentPlayerEncounter.GetSkillChecks().Keys)
+						foreach (Skills skill in CurrentPlayerEncounter[playerIndex].GetSkillChecks().Keys)
 						{
 							if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skill))
 							{
@@ -1163,7 +1180,7 @@ namespace FallenLand
 					}
 
 					//Check vehicle
-					foreach (Skills skill in CurrentPlayerEncounter.GetSkillChecks().Keys)
+					foreach (Skills skill in CurrentPlayerEncounter[playerIndex].GetSkillChecks().Keys)
 					{
 						if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skill))
 						{
@@ -1183,7 +1200,7 @@ namespace FallenLand
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Dictionary<Skills, int> skillChecks = CurrentPlayerEncounter.GetSkillChecks();
+				Dictionary<Skills, int> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
 				foreach (Skills skill in skillChecks.Keys)
 				{
 					if (GetTotalSuccesses(playerIndex, skill) < skillChecks[skill])
@@ -1201,15 +1218,9 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
-				Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
-
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), EncounterWasSuccessful(playerIndex), CurrentPlayerEncounter.GetTitle());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), EncounterWasSuccessful(playerIndex), CurrentPlayerEncounter[playerIndex].GetTitle());
 				sendNetworkEvent((object)encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
-
-				Players[playerIndex].ResetAllCharacterDiceRolls();
-				Players[playerIndex].ResetAllVehicleDiceRolls();
 			}
 		}
 		#endregion
@@ -1659,12 +1670,12 @@ namespace FallenLand
 
 		private void handlePartyExploitsEncounter(int playerIndex, byte encounterType, string encounterCardName)
 		{
-			if (playerIndex == GetIndexForMyPlayer() && CurrentPlayerEncounter == null)
+			if (playerIndex == GetIndexForMyPlayer() && CurrentPlayerEncounter[playerIndex] == null)
 			{
 				if (encounterType == Constants.ENCOUNTER_PLAINS)
 				{
-					CurrentPlayerEncounter = PlainsCard.FindCardInDeckByTitle(encounterCardName, PlainsDeck); //TODO write static function to find card from deck
-					if (CurrentPlayerEncounter == null)
+					CurrentPlayerEncounter[playerIndex] = PlainsCard.FindCardInDeckByTitle(encounterCardName, PlainsDeck);
+					if (CurrentPlayerEncounter[playerIndex] == null)
 					{
 						Debug.LogError("Error. Couldn't find plains encounter card with title " + encounterCardName);
 					}
@@ -1683,19 +1694,27 @@ namespace FallenLand
 		private void handleEncounterStatusEvent(EncounterStatusNetworking eventStatus)
 		{
 			int playerIndex = eventStatus.GetPlayerIndex();
-			if (PhotonNetwork.IsMasterClient)
-			{
-				//todo deal with rewards or punishments
-			}
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				//todo remove card from top of deck and place into discard pile
+				//todo encounter card from deck and place it into discard once more encounters are implemented
 				Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
 				Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
 
 				int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
 				Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
+
+				if (eventStatus.GetWasSuccess())
+				{
+					EncounterResultsHandler.HandleSuccess(this, playerIndex);
+				}
+				else
+				{
+					EncounterResultsHandler.HandleFailure(this, playerIndex);
+				}
+
+				Players[playerIndex].ResetAllCharacterDiceRolls();
+				Players[playerIndex].ResetAllVehicleDiceRolls();
 			}
 		}
 

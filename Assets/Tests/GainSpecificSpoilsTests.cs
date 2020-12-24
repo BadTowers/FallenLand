@@ -24,7 +24,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new Gain68mmAdvancedRifle();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "6.8mm Advanced Rifle")), Moq.Times.Once());
 
@@ -37,7 +37,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new GainAmericanIronCustomChoppers();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "American Iron Custom Choppers")), Moq.Times.Once());
 
@@ -50,7 +50,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new GainCompoundHuntingBow();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "Compound Hunting Bow")), Moq.Times.Once());
 
@@ -63,7 +63,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new GainMilitiaRifle();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "Militia Rifle")), Moq.Times.Once());
 
@@ -76,7 +76,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new GainParamedicMedKit();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "Paramedic Medical Kit")), Moq.Times.Once());
 
@@ -89,7 +89,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new GainSixFastHorses();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "6 Fast Horses")), Moq.Times.Once());
 
@@ -102,7 +102,7 @@ namespace Tests
 			Moq.Mock<GameManager> mockGameManager = new Moq.Mock<GameManager>();
 
 			Reward reward = new GainVendettaDaggers();
-			reward.HandleReward(mockGameManager.Object);
+			reward.HandleReward(mockGameManager.Object, 0);
 
 			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "Vendetta Daggers")), Moq.Times.Once());
 

@@ -7,10 +7,9 @@ namespace FallenLand
         {
         }
 
-        public override void HandlePunishment(GameManager gameManager)
+        public override void HandlePunishment(GameManager gameManager, int playerIndex)
         {
-            int myIndex = gameManager.GetIndexForMyPlayer();
-            gameManager.ApplyPsychDamageToWholeParty(myIndex, base.GetPunishmentAmount());
+            gameManager.ApplyPsychDamageToWholeParty(playerIndex, base.GetPunishmentAmount());
         }
     }
 }

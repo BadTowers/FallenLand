@@ -7,10 +7,13 @@ namespace FallenLand
         {
         }
 
-        public override void HandleReward(GameManager gameManager)
+        public override void HandleReward(GameManager gameManager, int playerIndex)
         {
             int myIndex = gameManager.GetIndexForMyPlayer();
-            gameManager.DealSpecificSpoilToPlayer(myIndex, "Militia Rifle");
+            if (playerIndex == myIndex)
+            {
+                gameManager.DealSpecificSpoilToPlayer(myIndex, "Militia Rifle");
+            }
         }
     }
 }

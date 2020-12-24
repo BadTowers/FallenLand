@@ -312,6 +312,8 @@ namespace FallenLand
 
             updateActionButton();
 
+            updatePartyHealthValues();
+
             updateCharacterSpoilsScreen();
 
             updateTurnInformation();
@@ -1004,22 +1006,6 @@ namespace FallenLand
                     {
                         ActiveCharactersCarryWeightsText[activeIndex][i].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
                     }
-
-                    //Update psych
-                    int remainingPsych = GameManagerInstance.GetActiveCharacterRemainingPsych(CurrentViewedID, activeIndex);
-                    int maxPsych = GameManagerInstance.GetMaxPsych();
-                    for (int i = 0; i < ActiveCharactersPsychText[activeIndex].Count; i++)
-                    {
-                        ActiveCharactersPsychText[activeIndex][i].GetComponentInChildren<Text>().text = remainingPsych.ToString() + "/" + maxPsych.ToString();
-                    }
-
-                    //Update health
-                    int remainingHealth = GameManagerInstance.GetActiveCharacterRemainingHealth(CurrentViewedID, activeIndex);
-                    int maxHealth = GameManagerInstance.GetActiveCharacterMaxHealth(CurrentViewedID, activeIndex);
-                    for (int i = 0; i < ActiveCharactersHealthText[activeIndex].Count; i++)
-                    {
-                        ActiveCharactersHealthText[activeIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString() + "/" + maxHealth.ToString();
-                    }
                 }
             }
         }
@@ -1133,7 +1119,7 @@ namespace FallenLand
         private void updatePartyExploitsUi()
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
-            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter();
+            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
             if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun)
             {
                 PartyExploitsPanel.SetActive(true);
@@ -1225,7 +1211,7 @@ namespace FallenLand
 
         private void changePartyExploitsButtonStatesAsNeeded()
         {
-            if (GameManagerInstance.GetIsItMyTurn() && GameManagerInstance.GetRemainingPartyExploitWeeks(GameManagerInstance.GetIndexForMyPlayer()) > 0)
+            if (GameManagerInstance.GetIsItMyTurn() && GameManagerInstance.GetRemainingPartyExploitWeeks(GameManagerInstance.GetIndexForMyPlayer()) > 0 && CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer())
             {
                 GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
 
@@ -1246,7 +1232,7 @@ namespace FallenLand
 
         private Sprite loadEncounterCard()
         {
-            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter();
+            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
             string imageLocation = "Cards/EncounterCards/";
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             if (GameManagerInstance.GetPlayerEncounterType(myIndex) == Constants.ENCOUNTER_PLAINS)
@@ -1394,7 +1380,7 @@ namespace FallenLand
             CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
 
             //Update total successes needed
-            TotalSuccessesNeededText.GetComponent<Text>().text = GameManagerInstance.GetCurrentEncounter().GetSkillChecks()[PageToSkillMapping[CurrentEncounterSkillPage]].ToString();
+            TotalSuccessesNeededText.GetComponent<Text>().text = GameManagerInstance.GetCurrentEncounter(myIndex).GetSkillChecks()[PageToSkillMapping[CurrentEncounterSkillPage]].ToString();
 
             //Update number of successes had
             NumberOfTotalSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetTotalSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
@@ -1473,7 +1459,7 @@ namespace FallenLand
 
         private void updateStatPanelsForOverallEncounterPage()
         {
-            EncounterCard card = GameManagerInstance.GetCurrentEncounter();
+            EncounterCard card = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
             if (card != null)
             {
                 Dictionary<Skills, int> skillChecks = card.GetSkillChecks();
@@ -1727,6 +1713,28 @@ namespace FallenLand
         private void updateActionButton()
         {
             ActionCardsButton.interactable = (CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer());
+        }
+
+        private void updatePartyHealthValues()
+        {
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                //Update psych
+                int remainingPsych = GameManagerInstance.GetActiveCharacterRemainingPsych(CurrentViewedID, characterIndex);
+                int maxPsych = GameManagerInstance.GetMaxPsych();
+                for (int i = 0; i < ActiveCharactersPsychText[characterIndex].Count; i++)
+                {
+                    ActiveCharactersPsychText[characterIndex][i].GetComponentInChildren<Text>().text = remainingPsych.ToString() + "/" + maxPsych.ToString();
+                }
+
+                //Update health
+                int remainingHealth = GameManagerInstance.GetActiveCharacterRemainingHealth(CurrentViewedID, characterIndex);
+                int maxHealth = GameManagerInstance.GetActiveCharacterMaxHealth(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersHealthText[characterIndex].Count; i++)
+                {
+                    ActiveCharactersHealthText[characterIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString() + "/" + maxHealth.ToString();
+                }
+            }
         }
 
         private void updateFullScreenCard()

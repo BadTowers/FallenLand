@@ -108,7 +108,7 @@ namespace FallenLand
                 {
                     for (int rewardIndex = 0; rewardIndex < rewards[0].Count; rewardIndex++)
                     {
-                        rewards[0][rewardIndex].HandleReward(gameManager);
+                        rewards[0][rewardIndex].HandleReward(gameManager, gameManager.GetIndexForMyPlayer());
                     }
                 }
                 else

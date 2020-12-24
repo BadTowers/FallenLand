@@ -7,10 +7,13 @@ namespace FallenLand
         {
         }
 
-        public override void HandleReward(GameManager gameManager)
+        public override void HandleReward(GameManager gameManager, int playerIndex)
         {
             int myIndex = gameManager.GetIndexForMyPlayer();
-            gameManager.DealNextRelicSpoilsToPlayer(myIndex);
+            if (playerIndex == myIndex)
+            {
+                gameManager.DealNextRelicSpoilsToPlayer(myIndex);
+            }
         }
     }
 }

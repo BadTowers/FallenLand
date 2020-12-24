@@ -144,7 +144,7 @@ namespace FallenLand
 		public int GetActiveCharacterTotalCarryWeight(int characterIndex)
 		{
 			int carryWeight = 0;
-			if (ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				carryWeight = ActiveCharacters[characterIndex].GetCarryCapacity();
 			}
@@ -154,7 +154,7 @@ namespace FallenLand
 		public int GetActiveCharacterRemainingPsych(int characterIndex)
 		{
 			int remainingPsych = 0;
-			if (ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				remainingPsych = ActiveCharacters[characterIndex].GetPsychRemaning();
 			}
@@ -163,7 +163,7 @@ namespace FallenLand
 
 		public void SetActiveCharacterRemainingPsych(int characterIndex, int remaining)
 		{
-			if (ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				ActiveCharacters[characterIndex].SetPsychRemaining(remaining);
 			}
@@ -172,7 +172,7 @@ namespace FallenLand
         public int GetActiveCharacterRemainingHealth(int characterIndex)
         {
 			int remainingHealth = 0;
-			if (ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				remainingHealth = ActiveCharacters[characterIndex].GetHpRemaining();
 			}
@@ -182,7 +182,7 @@ namespace FallenLand
 		public int GetActiveCharacterMaxHealth(int characterIndex)
 		{
 			int maxHealth = 0;
-			if (ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				maxHealth = ActiveCharacters[characterIndex].GetMaxHp();
 			}
@@ -192,7 +192,7 @@ namespace FallenLand
 		public int GetActiveCharacterPsychResistance(int characterIndex)
 		{
 			int psychRes = 0;
-			if (ActiveCharacters[characterIndex] != null)
+			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				psychRes = ActiveCharacters[characterIndex].GetPsychResistance();
 			}

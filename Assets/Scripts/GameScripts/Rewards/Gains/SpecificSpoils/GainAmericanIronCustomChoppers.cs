@@ -7,10 +7,13 @@ namespace FallenLand
         {
         }
 
-        public override void HandleReward(GameManager gameManager)
+        public override void HandleReward(GameManager gameManager, int playerIndex)
         {
             int myIndex = gameManager.GetIndexForMyPlayer();
-            gameManager.DealSpecificSpoilToPlayer(myIndex, "American Iron Custom Choppers");
+            if (myIndex == playerIndex)
+            {
+                gameManager.DealSpecificSpoilToPlayer(myIndex, "American Iron Custom Choppers");
+            }
         }
     }
 }

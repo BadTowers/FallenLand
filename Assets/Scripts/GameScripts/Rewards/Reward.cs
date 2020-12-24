@@ -15,6 +15,6 @@ namespace FallenLand
             return Amount;
         }
 
-        public abstract void HandleReward(GameManager gameManager);
+        public abstract void HandleReward(GameManager gameManager, int playerIndex);
     }
 }

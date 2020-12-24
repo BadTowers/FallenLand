@@ -15,6 +15,6 @@ namespace FallenLand
             return Amount;
         }
 
-        public abstract void HandlePunishment(GameManager gameManager);
+        public abstract void HandlePunishment(GameManager gameManager, int playerIndex);
     }
 }
