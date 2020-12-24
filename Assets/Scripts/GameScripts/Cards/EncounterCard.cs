@@ -13,7 +13,6 @@ namespace FallenLand
 		List<Punishment> Punishments = new List<Punishment>();
 		private string SuccessHeaderText;
 		private string SuccessDescriptionText;
-		//FailurePunishments. The punishment the player gets for failing the skill checks TODO
 		private string FailureHeaderText;
 		private string FailureDescriptionText;
 		//specificInstructions. Things that must be true or must be done to complete the card (move to nearest rad hex, don't complete if you don't have vehicle, etc) TODO
