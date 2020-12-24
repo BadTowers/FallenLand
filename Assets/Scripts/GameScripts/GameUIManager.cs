@@ -52,7 +52,7 @@ namespace FallenLand
         private bool UserRolledTownEventsThisTurn;
         private GameObject ActualRemainingWeeksTextGameObject;
         private GameObject PartyExploitsInformationTextGameObject;
-        private GameObject EncounterSelectionPanelGameObject;
+        private GameObject EncounterSelectionPanel;
         private GameObject OverallEncounterPanelGameObject;
         private GameObject CardFullScreenGameObject;
         private Sprite CardSpriteThatWasClicked;
@@ -113,7 +113,7 @@ namespace FallenLand
             PartyExploitsPanel = GameObject.Find("PartyExploitsPanel");
             ActualRemainingWeeksTextGameObject = GameObject.Find("ActualRemainingWeeksText");
             PartyExploitsInformationTextGameObject = GameObject.Find("PartyExploitsInformationText");
-            EncounterSelectionPanelGameObject = GameObject.Find("EncounterSelectionPanel");
+            EncounterSelectionPanel = GameObject.Find("EncounterSelectionPanel");
             OverallEncounterPanelGameObject = GameObject.Find("OverallEncounterPanel");
             CardFullScreenGameObject = GameObject.Find("CardFullScreenPanel");
             FullScreenCardVertical = GameObject.Find("LargeCardImageVertical");
@@ -289,6 +289,7 @@ namespace FallenLand
             MainEncounterCardImage.SetActive(false);
             EncounterRollPanel.SetActive(false);
             EncounterStatsPanel.SetActive(false);
+            EncounterSelectionPanel.SetActive(false);
             PopupPanel.SetActive(false);
         }
 
@@ -544,7 +545,7 @@ namespace FallenLand
         {
             Debug.Log("Encounter deed selected");
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the encounter type...";
-            EncounterSelectionPanelGameObject.SetActive(true);
+            EncounterSelectionPanel.SetActive(true);
             Coordinates partyLocation = GameManagerInstance.GetPartyLocation(GameManagerInstance.GetIndexForMyPlayer());
             MapLayout mapLayout = GameManagerInstance.GetMapLayout();
             if (mapLayout.IsPlains(partyLocation) || mapLayout.IsResource(partyLocation))
@@ -587,7 +588,7 @@ namespace FallenLand
             GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = false;
             GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = false;
             GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = false;
-            EncounterSelectionPanelGameObject.SetActive(false);
+            EncounterSelectionPanel.SetActive(false);
 
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Time for a plains encounter...";
             GameManagerInstance.SetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer(), Constants.ENCOUNTER_PLAINS);
