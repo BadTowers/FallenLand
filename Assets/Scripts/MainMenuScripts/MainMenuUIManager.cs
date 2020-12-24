@@ -141,6 +141,10 @@ namespace FallenLand
 			LoadingPanel = GameObject.Find("LoadingPanel");
 
 			LoadingPanel.SetActive(false);
+
+			//Limit the frame rate
+			QualitySettings.vSyncCount = 0;  // VSync must be disabled
+			Application.targetFrameRate = 144;
 		}
 
 		void Update()
