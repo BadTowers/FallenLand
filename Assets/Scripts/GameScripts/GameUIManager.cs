@@ -302,6 +302,18 @@ namespace FallenLand
             }
         }
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            EventManager.OnSpoilsCardDiscarded += onShowSpoilsCardDiscardedPopup;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            EventManager.OnSpoilsCardDiscarded -= onShowSpoilsCardDiscardedPopup;
+        }
+
         void Update()
         {
             //TODO refactor to a function that returns a list of buttons pressed. That list can then later be passed to an interpretter
@@ -603,6 +615,7 @@ namespace FallenLand
             EncounterStatsPanel.SetActive(true);
             MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
             EncounterHasBegun = true;
+            GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer());
         }
 
         public void OnCharacter1RollPress()
@@ -695,6 +708,11 @@ namespace FallenLand
         #endregion
 
         #region HelperFunctions
+        private void onShowSpoilsCardDiscardedPopup(string cardName)
+        {
+            //TODO show popup for discarded card
+        }
+
         //A function to display and hide menus as needed
         private void checkCurrentMenuState()
         {

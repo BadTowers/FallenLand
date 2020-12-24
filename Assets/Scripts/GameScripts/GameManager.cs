@@ -12,6 +12,10 @@ namespace FallenLand
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();
 		private List<PlainsCard> PlainsDeck = new List<PlainsCard>();
+		private List<SpoilsCard> DiscardedSpoils = new List<SpoilsCard>();
+		private List<CharacterCard> DiscardedCharacters = new List<CharacterCard>();
+		private List<ActionCard> DiscardedActionCards = new List<ActionCard>();
+		private List<PlainsCard> DiscardedPlainsCards = new List<PlainsCard>();
 		private int NumHumanPlayers;
 		private GameInformation.GameModes GameMode;
 		//private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
@@ -205,7 +209,7 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[0].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
+				string nextPlainsEncounterCardName = PlainsDeck[1].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
 				handlePartyExploitsNetworkUpdate((object)content);
@@ -926,6 +930,82 @@ namespace FallenLand
 			}
 		}
 
+		public void LoseMostValuableSpoilsThatAreNotVehicle(int playerIndex, int amountOfCardsToLose)
+		{
+			int mostExpensiveAmount = 0;
+			SpoilsCard mostExpensiveCard = null;
+			int characterIndexFoundOn = 0;
+			bool wasOnCharacter = false;
+			bool wasOnVehicle = false;
+			bool wasInAuctionHouse = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				//Look through all characters
+				for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				{
+					if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null)
+					{
+						List<SpoilsCard> equippedCharacterSpoils = Players[playerIndex].GetActiveCharacters()[characterIndex].GetEquippedSpoils();
+						for (int spoilsIndex = 0; spoilsIndex < equippedCharacterSpoils.Count; spoilsIndex++)
+						{
+							if (equippedCharacterSpoils[spoilsIndex].GetSellValue() > mostExpensiveAmount)
+							{
+								mostExpensiveAmount = equippedCharacterSpoils[spoilsIndex].GetSellValue();
+								mostExpensiveCard = equippedCharacterSpoils[spoilsIndex];
+								wasOnCharacter = true;
+								characterIndexFoundOn = characterIndex;
+							}
+						}
+					}
+				}
+				//Look through vehicle
+				if (Players[playerIndex].GetActiveVehicle() != null)
+				{
+					List<SpoilsCard> equippedVehicleSpoils = Players[playerIndex].GetActiveVehicle().GetEquippedSpoils();
+					for (int spoilsIndex = 0; spoilsIndex < equippedVehicleSpoils.Count; spoilsIndex++)
+					{
+						if (equippedVehicleSpoils[spoilsIndex].GetSellValue() > mostExpensiveAmount)
+						{
+							mostExpensiveAmount = equippedVehicleSpoils[spoilsIndex].GetSellValue();
+							mostExpensiveCard = equippedVehicleSpoils[spoilsIndex];
+							wasOnCharacter = false;
+							wasOnVehicle = true;
+						}
+					}
+				}
+				//Look through auction house
+				List<SpoilsCard> auctionHouseSpoils = Players[playerIndex].GetAuctionHouseCards();
+				for (int spoilsIndex = 0; spoilsIndex < auctionHouseSpoils.Count; spoilsIndex++)
+				{
+					if (auctionHouseSpoils[spoilsIndex].GetSellValue() > mostExpensiveAmount)
+					{
+						mostExpensiveAmount = auctionHouseSpoils[spoilsIndex].GetSellValue();
+						mostExpensiveCard = auctionHouseSpoils[spoilsIndex];
+						wasOnCharacter = false;
+						wasOnVehicle = false;
+						wasInAuctionHouse = true;
+					}
+				}
+
+				if (wasOnCharacter)
+				{
+					Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterIndexFoundOn, mostExpensiveCard);
+					DiscardedSpoils.Add(mostExpensiveCard);
+				}
+				else if (wasOnVehicle)
+				{
+					Players[playerIndex].RemoveStowableFromActiveVehicle(mostExpensiveCard);
+					DiscardedSpoils.Add(mostExpensiveCard);
+				}
+				else if (wasInAuctionHouse)
+				{
+					Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(mostExpensiveCard);
+					DiscardedSpoils.Add(mostExpensiveCard);
+				}
+
+				EventManager.SpoilsCardDiscard(mostExpensiveCard.GetTitle());
+			}
+		}
 
 		public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
@@ -1223,6 +1303,14 @@ namespace FallenLand
 				handleEncounterStatusEvent(encounterStatus);
 			}
 		}
+
+		public void AddSalvageAtStartOfEncounter(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddSalvageToPlayer(CurrentPlayerEncounter[playerIndex].GetSalvageReward());
+			}
+		}
 		#endregion
 
 
@@ -1262,7 +1350,6 @@ namespace FallenLand
 			Card.ShuffleDeck(SpoilsDeck);
 		}
 
-		//Only called by master client
 		private void dealCharacterCardsToPlayers()
 		{
 			for (int i = 0; i < StartingCharacterCards; i++)
@@ -1278,7 +1365,6 @@ namespace FallenLand
 			}
 		}
 
-		//Only called by master client
 		private void dealActionCardsToPlayers()
 		{
 			for (int i = 0; i < StartingActionCards; i++)
