@@ -202,21 +202,10 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				if (PhotonNetwork.IsMasterClient)
-				{
-					//Send this move to everyone else
-					content.SetIsRequestToMaster(false);
-					string nextPlainsEncounterCardName = PlainsDeck[0].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
-					content.SetEncounterCardName(nextPlainsEncounterCardName);
-					sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
-					handlePartyExploitsNetworkUpdate((object)content);
-				}
-				else
-				{
-					//Send this move to master
-					content.SetIsRequestToMaster(true);
-					sendNetworkEvent((object)content, ReceiverGroup.MasterClient, Constants.EvPartyExploits);
-				}
+				string nextPlainsEncounterCardName = PlainsDeck[0].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
+				content.SetEncounterCardName(nextPlainsEncounterCardName);
+				sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
+				handlePartyExploitsNetworkUpdate((object)content);
 				EncounterWasSent = true;
 			}
 		}
@@ -329,31 +318,17 @@ namespace FallenLand
 				CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
 				int playerIndex = cardInfo.GetPlayerIndex();
 				string cardName = cardInfo.GetCardName();
-				bool isRequestForMaster = cardInfo.GetIsRequestForMaster();
-				if (isRequestForMaster && PhotonNetwork.IsMasterClient)
+				if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
 				{
-					object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
-					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 					dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
 				}
-				else if (!isRequestForMaster)
+				else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
 				{
-					if (cardInfo.GetCardByte() == Constants.SPOILS_CARD)
-					{
-						dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
-					}
-					else if (cardInfo.GetCardByte() == Constants.CHARACTER_CARD)
-					{
-						dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
-					}
-					else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
-					{
-						dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
-					}
+					dealSpecificCharacterToPlayerFromDeck(playerIndex, cardName);
 				}
-				else
+				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
 				{
-					Debug.LogError("It was a request for master, but we aren't master... we should not do that.");
+					dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
 				}
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
@@ -401,11 +376,6 @@ namespace FallenLand
 			else if (eventCode == Constants.EvTownEventRoll)
 			{
 				Debug.Log("Received a town event roll networking event");
-				if (PhotonNetwork.IsMasterClient)
-				{
-					Debug.Log("We are master, so we have to send this to the other players");
-					sendNetworkEvent(photonEvent.CustomData, ReceiverGroup.Others, Constants.EvTownEventRoll);
-				}
 				handleTownEventRollNetworkUpdate(photonEvent.CustomData);
 			}
 			else if (eventCode == Constants.EvPartyExploits)
@@ -915,17 +885,9 @@ namespace FallenLand
 		{
 			for (int i = 0; i < numberOfCardsToDeal; i++)
 			{
-				if (PhotonNetwork.IsMasterClient)
-				{
-					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
-					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-					dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[0].GetTitle());
-				}
-				else
-				{
-					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD, true);
-					sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvDealCard);
-				}
+				object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+				dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[0].GetTitle());
 			}
 		}
 
@@ -935,17 +897,9 @@ namespace FallenLand
 			{
 				if (SpoilsDeck[i].GetIsRelic())
 				{
-					if (PhotonNetwork.IsMasterClient)
-					{
-						object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD);
-						sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-						dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[i].GetTitle());
-					}
-					else
-					{
-						object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD, true);
-						sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvDealCard);
-					}
+					object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+					dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[i].GetTitle());
 				}
 			}
 		}
@@ -958,17 +912,9 @@ namespace FallenLand
 
 		public virtual void DealSpecificSpoilToPlayer(int playerIndex, string cardName)
         {
-			if (PhotonNetwork.IsMasterClient)
-			{
-				object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
-				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-				dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
-			}
-			else
-			{
-				object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD, true);
-				sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvDealCard);
-			}
+			object content = new CardNetworking(cardName, playerIndex, Constants.SPOILS_CARD);
+			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+			dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
 		}
 
 		public int RollTownEvents(int playerIndex)
@@ -977,17 +923,9 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				d10Roll = DiceRoller.RollDice(Constants.D10);
-				if (PhotonNetwork.IsMasterClient)
-				{
-					object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
-					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvTownEventRoll);
-					handleTownEventRoll(GetIndexForMyPlayer(), d10Roll);
-				}
-				else
-				{
-					object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
-					sendNetworkEvent(content, ReceiverGroup.MasterClient, Constants.EvTownEventRoll);
-				}
+				object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvTownEventRoll);
+				handleTownEventRoll(GetIndexForMyPlayer(), d10Roll);
 			}
 
 			return d10Roll;
@@ -1872,38 +1810,7 @@ namespace FallenLand
 			}
 			else if (partyExploitsEvent.GetPartyExploitsAction() == Constants.PARTY_EXPLOITS_ENCOUNTER)
 			{
-				bool isRequestForMaster = partyExploitsEvent.GetIsRequestToMaster();
-				if (isRequestForMaster && PhotonNetwork.IsMasterClient)
-				{
-					//Pass this off to everyone else with the encounter card name
-					byte encounterType = partyExploitsEvent.GetEncounterType();
-					string encounterCardName = "";
-					if (encounterType == Constants.ENCOUNTER_PLAINS)
-					{
-						encounterCardName = PlainsDeck[0].GetTitle();
-					}
-					else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
-					{
-						//TODO get the string name for the top card in this deck once that deck is implemented
-					}
-					else if (encounterType == Constants.ENCOUNTER_CITY_RAD)
-					{
-						//TODO get the string name for the top card in this deck once that deck is implemented
-					}
-					partyExploitsEvent.SetEncounterCardName(encounterCardName);
-					partyExploitsEvent.SetIsRequestToMaster(false);
-					sendNetworkEvent((object)partyExploitsEvent, ReceiverGroup.Others, Constants.EvPartyExploits);
-
-					handlePartyExploitsEncounter(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetEncounterType(), partyExploitsEvent.GetEncounterCardName()); //process the event as master
-				}
-				else if (!isRequestForMaster)
-				{
-					handlePartyExploitsEncounter(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetEncounterType(), partyExploitsEvent.GetEncounterCardName());
-				}
-				else
-				{
-					Debug.LogError("The request was for master but we aren't master. We should not have gotten this party exploits encounter event!");
-				}
+				handlePartyExploitsEncounter(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetEncounterType(), partyExploitsEvent.GetEncounterCardName());
 			}
 		}
 
