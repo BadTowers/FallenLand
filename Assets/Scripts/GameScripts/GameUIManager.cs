@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -89,6 +90,9 @@ namespace FallenLand
         private GameObject LastVehicleDiceRollText;
         private GameObject RollAllButton;
         private GameObject EncounterFinishedPanel;
+        private GameObject PopupPanel;
+        private GameObject DiscardedCardImage;
+        private GameObject DiscardedPanel;
 
         #region UnityFunctions
         void Awake()
@@ -122,6 +126,9 @@ namespace FallenLand
             EncounterStatsPanel = GameObject.Find("EncounterStatsPanel");
             TotalSuccessesNeededText = GameObject.Find("TotalSuccessesNeededText");
             NumberOfTotalSuccessesText = GameObject.Find("NumberOfTotalSuccessesText");
+            PopupPanel = GameObject.Find("PopupPanel");
+            DiscardedCardImage = GameObject.Find("DiscardedCardImage");
+            DiscardedPanel = GameObject.Find("DiscardedPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -282,6 +289,7 @@ namespace FallenLand
             MainEncounterCardImage.SetActive(false);
             EncounterRollPanel.SetActive(false);
             EncounterStatsPanel.SetActive(false);
+            PopupPanel.SetActive(false);
         }
 
         void Start()
@@ -705,12 +713,21 @@ namespace FallenLand
             EncounterFinishedPanel.SetActive(false);
             EncounterHasBegun = false;
         }
+
+        public void OnDiscardPanelOkPress()
+        {
+            PopupPanel.SetActive(false);
+        }
         #endregion
 
         #region HelperFunctions
-        private void onShowSpoilsCardDiscardedPopup(string cardName)
+        private void onShowSpoilsCardDiscardedPopup(SpoilsCard card)
         {
             //TODO show popup for discarded card
+            PopupPanel.SetActive(true);
+            DiscardedCardImage.GetComponent<Image>().sprite = card.GetCardImage();
+            DiscardedPanel.transform.localScale = new Vector3(0f, 0f, 0f);
+            LeanTween.scale(DiscardedPanel, new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeOutCubic);
         }
 
         //A function to display and hide menus as needed

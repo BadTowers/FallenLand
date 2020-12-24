@@ -1003,7 +1003,7 @@ namespace FallenLand
 					DiscardedSpoils.Add(mostExpensiveCard);
 				}
 
-				EventManager.SpoilsCardDiscard(mostExpensiveCard.GetTitle());
+				EventManager.SpoilsCardDiscard(mostExpensiveCard);
 			}
 		}
 

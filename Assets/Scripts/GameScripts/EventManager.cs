@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
-public class EventManager : MonoBehaviour
+namespace FallenLand
 {
-    public delegate void SpoilsCardDiscarded(string cardName);
-    public static event SpoilsCardDiscarded OnSpoilsCardDiscarded;
-
-    public static void SpoilsCardDiscard(string cardName)
+    public class EventManager : MonoBehaviour
     {
-        OnSpoilsCardDiscarded?.Invoke(cardName);
+        public delegate void SpoilsCardDiscarded(SpoilsCard card);
+        public static event SpoilsCardDiscarded OnSpoilsCardDiscarded;
+
+        public static void SpoilsCardDiscard(SpoilsCard card)
+        {
+            OnSpoilsCardDiscarded?.Invoke(card);
+        }
     }
 }
