@@ -147,6 +147,51 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Bamboozeled");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Combat] = 4
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Combat] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(1));
+			//TODO add reward as gain the next alcohol spoils. If none are in the deck, gain 5 salvage
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			//TODO add punishment. roll 1d6 to determine character. If 6 or crown empty, ignore, else that crown sustains 2d6 physical damage
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Eaters Hunting Party");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Combat] = 6
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Combat] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6InfectedDamage(4));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
