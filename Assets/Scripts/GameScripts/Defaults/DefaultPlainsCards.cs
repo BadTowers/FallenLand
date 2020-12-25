@@ -124,6 +124,29 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Gruesome Cannibal Carnival");
+			curCard.SetSalvageReward(5);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Combat] = 7
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Combat] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.AddReward(new GainActionCards(3));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6InfectedDamage(6));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
