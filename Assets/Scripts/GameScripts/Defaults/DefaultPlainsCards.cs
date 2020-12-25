@@ -70,6 +70,60 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Signs of the False Prophet");
+			curCard.SetSalvageReward(4);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Survival] = 4,
+				[Skills.Technical] = 4,
+				[Skills.Combat] = 5
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Survival] = true,
+				[Skills.Technical] = true,
+				[Skills.Combat] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.AddReward(new GainActionCards(1));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6Damage(5));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Mass Exodus");
+			curCard.SetSalvageReward(4);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Survival] = 5,
+				[Skills.Diplomacy] = 4
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Survival] = true,
+				[Skills.Diplomacy] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(1));
+			curCard.AddReward(new GainPrestige(2));
+			curCard.AddReward(new GainTownHealth(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new LosePrestige(1));
+			//TODO add punishment for 2 week penalty chip when that is implemented
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()

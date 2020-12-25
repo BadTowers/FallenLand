@@ -90,9 +90,10 @@ namespace FallenLand
         private GameObject LastVehicleDiceRollText;
         private GameObject RollAllButton;
         private GameObject EncounterFinishedPanel;
-        private GameObject PopupPanel;
+        private GameObject DiscardPopupPanel;
         private GameObject DiscardedCardImage;
         private GameObject DiscardedPanel;
+        private GameObject DistributeD6DamagePopupPanel;
 
         #region UnityFunctions
         void Awake()
@@ -126,9 +127,10 @@ namespace FallenLand
             EncounterStatsPanel = GameObject.Find("EncounterStatsPanel");
             TotalSuccessesNeededText = GameObject.Find("TotalSuccessesNeededText");
             NumberOfTotalSuccessesText = GameObject.Find("NumberOfTotalSuccessesText");
-            PopupPanel = GameObject.Find("PopupPanel");
+            DiscardPopupPanel = GameObject.Find("DiscardPopupPanel");
             DiscardedCardImage = GameObject.Find("DiscardedCardImage");
             DiscardedPanel = GameObject.Find("DiscardedPanel");
+            DistributeD6DamagePopupPanel = GameObject.Find("DistributeD6DamagePopupPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -290,7 +292,8 @@ namespace FallenLand
             EncounterRollPanel.SetActive(false);
             EncounterStatsPanel.SetActive(false);
             EncounterSelectionPanel.SetActive(false);
-            PopupPanel.SetActive(false);
+            DiscardPopupPanel.SetActive(false);
+            DistributeD6DamagePopupPanel.SetActive(false);
         }
 
         void Start()
@@ -315,12 +318,14 @@ namespace FallenLand
         {
             base.OnEnable();
             EventManager.OnSpoilsCardDiscarded += onShowSpoilsCardDiscardedPopup;
+            EventManager.OnD6DamageNeedsToBeDistributed += onDistributeD6DamagePopup;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
             EventManager.OnSpoilsCardDiscarded -= onShowSpoilsCardDiscardedPopup;
+            EventManager.OnD6DamageNeedsToBeDistributed -= onDistributeD6DamagePopup;
         }
 
         void Update()
@@ -717,7 +722,7 @@ namespace FallenLand
 
         public void OnDiscardPanelOkPress()
         {
-            PopupPanel.SetActive(false);
+            DiscardPopupPanel.SetActive(false);
         }
         #endregion
 
@@ -725,10 +730,16 @@ namespace FallenLand
         private void onShowSpoilsCardDiscardedPopup(SpoilsCard card)
         {
             //TODO show popup for discarded card
-            PopupPanel.SetActive(true);
+            DiscardPopupPanel.SetActive(true);
             DiscardedCardImage.GetComponent<Image>().sprite = card.GetCardImage();
             DiscardedPanel.transform.localScale = new Vector3(0f, 0f, 0f);
             LeanTween.scale(DiscardedPanel, new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeOutCubic);
+        }
+
+        private void onDistributeD6DamagePopup(int numD6s)
+        {
+            Debug.LogError("TODO");
+            //eventually, show this panel and do the do's DistributeD6DamagePopupPanel
         }
 
         //A function to display and hide menus as needed

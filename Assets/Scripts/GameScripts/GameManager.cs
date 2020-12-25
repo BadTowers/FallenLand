@@ -209,7 +209,7 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[1].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
+				string nextPlainsEncounterCardName = PlainsDeck[3].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
 				handlePartyExploitsNetworkUpdate((object)content);
@@ -1003,7 +1003,18 @@ namespace FallenLand
 					DiscardedSpoils.Add(mostExpensiveCard);
 				}
 
-				EventManager.SpoilsCardDiscard(mostExpensiveCard);
+				if (playerIndex == GetIndexForMyPlayer())
+				{
+					EventManager.SpoilsCardDiscard(mostExpensiveCard);
+				}
+			}
+		}
+
+		public void DistributeD6DamageToParty(int playerIndex, int numOfD6s)
+		{
+			if (playerIndex == GetIndexForMyPlayer())
+			{
+				EventManager.D6DamageNeedsDistributing(numOfD6s);
 			}
 		}
 
@@ -1309,6 +1320,30 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddSalvageToPlayer(CurrentPlayerEncounter[playerIndex].GetSalvageReward());
+			}
+		}
+
+		public void GainPrestige(int playerIndex, int prestigeAmount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddPrestige(prestigeAmount);
+			}
+		}
+
+		public void GainTownHealth(int playerIndex, int townHealthAmount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddTownHealth(townHealthAmount);
+			}
+		}
+
+		public void LosePrestige(int playerIndex, int prestigeAmount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SubtractPrestige(prestigeAmount);
 			}
 		}
 		#endregion
