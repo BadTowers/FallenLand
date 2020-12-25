@@ -93,7 +93,7 @@ namespace FallenLand
 			curCard.AddReward(new GainActionCards(1));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6Damage(5));
+			curCard.AddPunishment(new TakeD6PhysicalDamage(5));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
