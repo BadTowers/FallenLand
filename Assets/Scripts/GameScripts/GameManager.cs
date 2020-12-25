@@ -237,6 +237,7 @@ namespace FallenLand
         public void OnTurnCompleted(int turn)
 		{
 			Debug.Log("OnTurnCompleted: " + turn);
+			Players[GetIndexForMyPlayer()].SetRemainingPartyExploitWeeks(4);
         }
 
 		public void OnPhaseBegins(Phases phase)
