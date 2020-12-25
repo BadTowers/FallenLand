@@ -904,6 +904,16 @@ namespace FallenLand
 			}
 		}
 
+		public void DealCharactersToPlayer(int playerIndex, int numberOfCardsToDeal)
+		{
+			for (int i = 0; i < numberOfCardsToDeal; i++)
+			{
+				object content = new CardNetworking(CharacterDeck[0].GetTitle(), playerIndex, Constants.CHARACTER_CARD);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+				dealSpecificCharacterToPlayerFromDeck(playerIndex, CharacterDeck[0].GetTitle());
+			}
+		}
+
 		public void DealNextRelicSpoilsToPlayer(int playerIndex)
 		{
 			for (int i = 0; i < SpoilsDeck.Count; i++)
@@ -1353,6 +1363,24 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].SubtractPrestige(prestigeAmount);
+			}
+		}
+
+		public void LoseTownHealth(int playerIndex, int townHealthAmount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SubtractTownHealth(townHealthAmount);
+			}
+		}
+
+		public void GainPartyExploitsWeeks(int playerIndex, int weeksToGain)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				int currentRemainingWeeks = Players[playerIndex].GetRemainingPartyExploitWeeks();
+				currentRemainingWeeks += weeksToGain;
+				Players[playerIndex].SetRemainingPartyExploitWeeks(currentRemainingWeeks);
 			}
 		}
 		#endregion
