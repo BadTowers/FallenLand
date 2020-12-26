@@ -335,6 +335,29 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Caravan Escort");
+			curCard.SetSalvageReward(4);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Technical] = 4
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Technical] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddReward(new GainTownHealth(3));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new LoseTownHealth(3));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
