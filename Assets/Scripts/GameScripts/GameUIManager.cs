@@ -64,7 +64,7 @@ namespace FallenLand
         private GameObject HorizontalCloseButton;
         private List<List<GameObject>> OverallEncounterPlayerStatPanels;
         private List<GameObject> OverallEncounterVehicleStatPanels;
-        private GameObject PartyOverviewPanel;
+        private GameObject MainPartyOverviewPanel;
         private GameObject MainEncounterCardImage;
         private bool EncounterHasBegun;
         private GameObject EncounterRollPanel;
@@ -122,7 +122,7 @@ namespace FallenLand
             FullScreenCardHorizontal = GameObject.Find("LargeCardImageHorizontal");
             VerticalCloseButton = GameObject.Find("VerticalCloseButton");
             HorizontalCloseButton = GameObject.Find("HorizontalCloseButton");
-            PartyOverviewPanel = GameObject.Find("PartyOverviewPanel");
+            MainPartyOverviewPanel = GameObject.Find("MainPartyOverviewPanel");
             MainEncounterCardImage = GameObject.Find("MainEncounterCardImage");
             EncounterRollPanel = GameObject.Find("EncounterRollPanel");
             EncounterStatsPanel = GameObject.Find("EncounterStatsPanel");
@@ -624,7 +624,7 @@ namespace FallenLand
 
         public void OnBeginEncounterPress()
         {
-            PartyOverviewPanel.SetActive(false);
+            MainPartyOverviewPanel.SetActive(false);
             OverallEncounterPanelGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(true);
             PartyExploitsPanel.SetActive(false);
@@ -714,7 +714,7 @@ namespace FallenLand
         {
             GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer());
 
-            PartyOverviewPanel.SetActive(true);
+            MainPartyOverviewPanel.SetActive(true);
             MainEncounterCardImage.SetActive(false);
             PartyExploitsPanel.SetActive(true);
             EncounterRollPanel.SetActive(false);
