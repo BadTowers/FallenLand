@@ -71,6 +71,8 @@ namespace FallenLand
         private bool LoadingGame;
 		private const string CURRENT_SCENE_PROPERTY = "curScn";
 		private const string MAIN_MENU_SCENE_NAME = "MainMenu";
+		private GameObject CreateLobbyButton;
+		private GameObject JoinGameButton;
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
@@ -139,6 +141,8 @@ namespace FallenLand
 			UserIdText = GameObject.Find("UserIdText").GetComponent<Text>();
 			MultiplayerStartButton = GameObject.Find("StartGameButton").GetComponent<Button>();
 			LoadingPanel = GameObject.Find("LoadingPanel");
+			CreateLobbyButton = GameObject.Find("CreateLobbyButton");
+			JoinGameButton = GameObject.Find("JoinGameButton");
 
 			LoadingPanel.SetActive(false);
 
@@ -285,6 +289,17 @@ namespace FallenLand
 			}
 		}
 
+		public override void OnCreateRoomFailed(short returnCode, string message)
+		{
+			Debug.LogWarningFormat("OnCreateRoomFailed() was called by PUN with reason {0}", message);
+			Debug.Log("OnCreateRoomFailed() was called by PUN with reason " + message);
+			FailedToConnectToRoom = true;
+			ConnectedToRoom = false;
+			FeedbackText.text = "Failed to create lobby: " + message;
+			CreateLobbyButton.GetComponent<Button>().interactable = true;
+			JoinGameButton.GetComponent<Button>().interactable = true;
+		}
+
 		public override void OnJoinRoomFailed(short returnCode, string message)
 		{
 			Debug.LogWarningFormat("OnJoinRoomFailed() was called by PUN with reason {0}", message);
@@ -292,6 +307,8 @@ namespace FallenLand
 			FailedToConnectToRoom = true;
 			ConnectedToRoom = false;
 			FeedbackText.text = "Failed to join lobby: " + message;
+			CreateLobbyButton.GetComponent<Button>().interactable = true;
+			JoinGameButton.GetComponent<Button>().interactable = true;
 		}
 
 		public override void OnJoinedRoom()
@@ -555,13 +572,17 @@ namespace FallenLand
 
 		public void onJoinMultiplayerGame()
 		{
-			Debug.Log("Join multiplayer game button pressed");
+			CreateLobbyButton.GetComponent<Button>().interactable = false;
+			JoinGameButton.GetComponent<Button>().interactable = false;
+			FeedbackText.text = "Attempting to join...";
 			JoinRoom();
 		}
 
 		public void onCreateMultiplayerGame()
 		{
-			Debug.Log("Create multiplayer game button pressed");
+			CreateLobbyButton.GetComponent<Button>().interactable = false;
+			JoinGameButton.GetComponent<Button>().interactable = false;
+			FeedbackText.text = "Creating lobby...";
 			CreateRoom();
 		}
 
