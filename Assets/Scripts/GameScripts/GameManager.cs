@@ -1494,7 +1494,6 @@ namespace FallenLand
         {
 			if (isPlayerIndexInRange(playerIndex))
             {
-				Debug.LogError("CharacterCrownTakesD6Damage was not networked and needs to be implemented to do so!");
 				int damage = 0;
 				for (int i = 0; i < numOfD6s; i++)
 				{
