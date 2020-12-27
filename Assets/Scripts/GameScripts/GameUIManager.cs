@@ -630,6 +630,7 @@ namespace FallenLand
             MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
             EncounterHasBegun = true;
             GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer());
+            GameManagerInstance.HandleActionsOnBegin();
         }
 
         public void OnCharacter1RollPress()

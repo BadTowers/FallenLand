@@ -59,6 +59,10 @@ namespace FallenLand
 		public const int ENCOUNTER_MOUNTAINS = 2;
 		public const int ENCOUNTER_CITY_RAD = 3;
 
+		//Used for EvMovement
+		public const int PARTY_MOVEMENT = 0;
+		//NPCM movement might be here later
+
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
 		public const byte EvFinalMove = 2;
@@ -70,5 +74,6 @@ namespace FallenLand
 		public const byte EvTownEventRoll = 8;
 		public const byte EvPartyExploits = 9;
 		public const byte EvEncounterStatus = 10;
+		public const byte EvMovement = 11;
 	}
 }

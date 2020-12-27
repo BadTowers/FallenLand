@@ -15,6 +15,7 @@ namespace FallenLand
 		private string SuccessDescriptionText;
 		private string FailureHeaderText;
 		private string FailureDescriptionText;
+		private List<Action> ActionsOnBegin = new List<Action>();
 		//specificInstructions. Things that must be true or must be done to complete the card (move to nearest rad hex, don't complete if you don't have vehicle, etc) TODO
 		//classifiation. Some cards are classified (vehicle combat, biker gang, sigma, etc. Can be none) TODO
 
@@ -159,6 +160,16 @@ namespace FallenLand
 		{
 			return Punishments;
 		}
+
+		public void AddActionOnBegin(Action action)
+		{
+			ActionsOnBegin.Add(action);
+		}
+
+        public List<Action> GetActionsOnBegin()
+        {
+			return ActionsOnBegin;
+        }
 
 		private void initText()
 		{

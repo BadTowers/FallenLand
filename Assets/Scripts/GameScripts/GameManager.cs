@@ -199,7 +199,6 @@ namespace FallenLand
 						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
 						content.SetMoveToLocation(lastClickedHexCoordinates);
 						
-						//Movement is not sent to master first. Always send it to everyone else
 						sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
 						handlePartyExploitsNetworkUpdate((object)content);
 					}
@@ -209,7 +208,7 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[4].GetTitle(); //TODO, probably at some point, stick this in a class var for some usage
+				string nextPlainsEncounterCardName = PlainsDeck[15].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
 				handlePartyExploitsNetworkUpdate((object)content);
@@ -394,6 +393,10 @@ namespace FallenLand
 			else if (eventCode == Constants.EvEncounterStatus)
 			{
 				handleEncounterStatusEvent((EncounterStatusNetworking)photonEvent.CustomData);
+			}
+			else if (eventCode == Constants.EvMovement)
+			{
+				handleMovementNetworkEvent(photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -1358,6 +1361,14 @@ namespace FallenLand
 			}
 		}
 
+		public void GainSalvageCoins(int playerIndex, int amountToGain)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddSalvageToPlayer(amountToGain);
+			}
+		}
+
 		public void LosePrestige(int playerIndex, int prestigeAmount)
 		{
 			if (isPlayerIndexInRange(playerIndex))
@@ -1381,6 +1392,29 @@ namespace FallenLand
 				int currentRemainingWeeks = Players[playerIndex].GetRemainingPartyExploitWeeks();
 				currentRemainingWeeks += weeksToGain;
 				Players[playerIndex].SetRemainingPartyExploitWeeks(currentRemainingWeeks);
+			}
+		}
+
+		public void MovePartyToStartingTownLocation(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Coordinates startingTownLocation = Players[playerIndex].GetPlayerFaction().GetBaseLocation();
+				MovementNetworking movement = new MovementNetworking(playerIndex, Constants.PARTY_MOVEMENT, startingTownLocation);
+				sendNetworkEvent(movement, ReceiverGroup.Others, Constants.EvMovement);
+				handleMovementNetworkEvent(movement);
+			}
+		}
+
+		public void HandleActionsOnBegin()
+		{
+			int myIndex = GetIndexForMyPlayer();
+			if (CurrentPlayerEncounter[myIndex] != null && CurrentPlayerEncounter[myIndex].GetActionsOnBegin().Count > 0)
+			{
+				for (int i = 0; i < CurrentPlayerEncounter[myIndex].GetActionsOnBegin().Count; i++)
+				{
+					CurrentPlayerEncounter[myIndex].GetActionsOnBegin()[i].HandleAction(this, myIndex);
+				}
 			}
 		}
 		#endregion
@@ -1886,6 +1920,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(TownEventNetworking), Constants.EvTownEventRoll, TownEventNetworking.SerializeTownEventRoll, TownEventNetworking.DeserializeTownEventRoll);
 			PhotonPeer.RegisterType(typeof(PartyExploitsNetworking), Constants.EvPartyExploits, PartyExploitsNetworking.SerializePartyExploits, PartyExploitsNetworking.DeserializePartyExploits);
 			PhotonPeer.RegisterType(typeof(EncounterStatusNetworking), Constants.EvEncounterStatus, EncounterStatusNetworking.SerializeEncounterStatus, EncounterStatusNetworking.DeserializeEncounterStatus);
+			PhotonPeer.RegisterType(typeof(MovementNetworking), Constants.EvMovement, MovementNetworking.SerializeMovement, MovementNetworking.DeserializeMovement);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -1988,6 +2023,18 @@ namespace FallenLand
 			else if (partyExploitsEvent.GetPartyExploitsAction() == Constants.PARTY_EXPLOITS_ENCOUNTER)
 			{
 				handlePartyExploitsEncounter(partyExploitsEvent.GetPlayerIndex(), partyExploitsEvent.GetEncounterType(), partyExploitsEvent.GetEncounterCardName());
+			}
+		}
+
+		private void handleMovementNetworkEvent(object content)
+		{
+			MovementNetworking movement = (MovementNetworking)content;
+			if (movement.GetMovementType() == Constants.PARTY_MOVEMENT)
+			{
+				int playerIndex = movement.GetPlayerIndex();
+				Coordinates coords = movement.GetLocationToMoveTo();
+				PlayerPieceManagerInst.MovePiece(playerIndex, coords);
+				Players[playerIndex].SetPartyLocation(coords);
 			}
 		}
 
