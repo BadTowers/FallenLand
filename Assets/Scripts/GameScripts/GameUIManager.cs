@@ -95,6 +95,7 @@ namespace FallenLand
         private GameObject DiscardedPanel;
         private GameObject DistributeD6DamagePopupPanel;
         private List<GameObject> PartyOverviewInfectedSymbols;
+        private List<GameObject> PartyOverviewRadiationSymbols;
 
         #region UnityFunctions
         void Awake()
@@ -139,6 +140,7 @@ namespace FallenLand
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
             PartyOverviewInfectedSymbols = new List<GameObject>();
+            PartyOverviewRadiationSymbols = new List<GameObject>();
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
@@ -147,7 +149,9 @@ namespace FallenLand
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
                 PartyOverviewInfectedSymbols.Add(GameObject.Find("InfectedImage" + (i + 1).ToString()));
+                PartyOverviewRadiationSymbols.Add(GameObject.Find("RadiationImage" + (i + 1).ToString()));
                 PartyOverviewInfectedSymbols[i].SetActive(false);
+                PartyOverviewRadiationSymbols[i].SetActive(false);
             }
             VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
 
