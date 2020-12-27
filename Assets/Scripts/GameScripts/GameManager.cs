@@ -1945,6 +1945,7 @@ namespace FallenLand
 					//todo encounter card from deck and place it into discard once more encounters are implemented
 					Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
 					Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
+					EncounterWasSent = false;
 
 					int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
 					Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
