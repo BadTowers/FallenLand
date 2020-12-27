@@ -25,3 +25,4 @@ namespace FallenLand
             OnD6HealingNeedsDistributed?.Invoke(numD6s);
         }
     }
+}

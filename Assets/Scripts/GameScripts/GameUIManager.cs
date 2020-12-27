@@ -94,6 +94,7 @@ namespace FallenLand
         private GameObject DiscardedCardImage;
         private GameObject DiscardedPanel;
         private GameObject DistributeD6DamagePopupPanel;
+        private List<GameObject> PartyOverviewInfectedSymbols;
 
         #region UnityFunctions
         void Awake()
@@ -137,6 +138,7 @@ namespace FallenLand
 
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
+            PartyOverviewInfectedSymbols = new List<GameObject>();
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
@@ -144,6 +146,8 @@ namespace FallenLand
             for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
+                PartyOverviewInfectedSymbols.Add(GameObject.Find("InfectedImage" + (i + 1).ToString()));
+                PartyOverviewInfectedSymbols[i].SetActive(false);
             }
             VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
 
@@ -294,10 +298,7 @@ namespace FallenLand
             EncounterSelectionPanel.SetActive(false);
             DiscardPopupPanel.SetActive(false);
             DistributeD6DamagePopupPanel.SetActive(false);
-        }
 
-        void Start()
-        {
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
             ActionCardsScreen.SetActive(true);
@@ -711,8 +712,7 @@ namespace FallenLand
 
         public void OnAcceptEncounterResultsPress()
         {
-            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            GameManagerInstance.SetEncounterResultAccepted(myIndex);
+            GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer());
 
             PartyOverviewPanel.SetActive(true);
             MainEncounterCardImage.SetActive(false);
@@ -1198,7 +1198,7 @@ namespace FallenLand
                 updateSkillValues();
 
                 //Enable character panels that have someone assigned to it
-                List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
+                List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
                 {
                     if (characterCards[i] != null)
@@ -1213,7 +1213,7 @@ namespace FallenLand
                 }
 
                 //Enable vehicle panel if something is assigned to it
-                SpoilsCard vehicleCard = GameManagerInstance.GetActiveVehicle(GameManagerInstance.GetIndexForMyPlayer());
+                SpoilsCard vehicleCard = GameManagerInstance.GetActiveVehicle(CurrentViewedID);
                 if (vehicleCard != null)
                 {
                     VehicleEncounterPanel.SetActive(true);
@@ -1744,7 +1744,6 @@ namespace FallenLand
             {
                 if (currentPlayerIndex < numPlayers && GameManagerInstance.GetFaction(currentPlayerIndex) != null)
                 {
-                    Debug.Log("Setting faction information for player " + currentPlayerIndex);
                     PlayerPanels[currentPlayerIndex].SetActive(true);
                     Color color = PlayerPanels[currentPlayerIndex].GetComponentInChildren<Image>().color;
                     color.a = (currentPlayerIndex == CurrentViewedID) ? 244f / 255f : 150f / 255f;
@@ -1787,6 +1786,16 @@ namespace FallenLand
                 for (int i = 0; i < ActiveCharactersHealthText[characterIndex].Count; i++)
                 {
                     ActiveCharactersHealthText[characterIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString() + "/" + maxHealth.ToString();
+                }
+
+                //Update infected symbol
+                if (GameManagerInstance.CharacterHasInfectedDamage(CurrentViewedID, characterIndex))
+                {
+                    PartyOverviewInfectedSymbols[characterIndex].SetActive(true);
+                }
+                else
+                {
+                    PartyOverviewInfectedSymbols[characterIndex].SetActive(false);
                 }
             }
         }

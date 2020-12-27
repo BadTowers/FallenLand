@@ -52,7 +52,7 @@ namespace FallenLand
 		private bool EncounterWasSent;
 
 		#region UnityFunctions
-		void Start()
+		void Awake()
 		{
 			MyUserId = "";
 			GameIsSetUpAtStart = false;
@@ -199,19 +199,20 @@ namespace FallenLand
 						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
 						content.SetMoveToLocation(lastClickedHexCoordinates);
 						
-						sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
-						handlePartyExploitsNetworkUpdate((object)content);
+						sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
+						handlePartyExploitsNetworkUpdate(content);
 					}
 				}
 			}
 			else if (isPlayerIndexInRange(myIndex) && Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
 			{
+				Debug.Log("Picking an encounter card to do");
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[16].GetTitle();
+				string nextPlainsEncounterCardName = PlainsDeck[17].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
-				sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
-				handlePartyExploitsNetworkUpdate((object)content);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
+				handlePartyExploitsNetworkUpdate(content);
 				EncounterWasSent = true;
 			}
 		}
@@ -1340,7 +1341,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), EncounterWasSuccessful(playerIndex), CurrentPlayerEncounter[playerIndex].GetTitle());
-				sendNetworkEvent((object)encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
+				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
 		}
@@ -1393,6 +1394,14 @@ namespace FallenLand
 			}
 		}
 
+		public void EveryoneLoseTownHealth(int townHealthAmount)
+		{
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			{
+				Players[playerIndex].SubtractTownHealth(townHealthAmount);
+			}
+		}
+
 		public void GainPartyExploitsWeeks(int playerIndex, int weeksToGain)
 		{
 			if (isPlayerIndexInRange(playerIndex))
@@ -1425,7 +1434,36 @@ namespace FallenLand
 				}
 			}
 		}
+
+		public void DealSetAmountOfInfectedDamageToParty(int playerIndex, int amountOfDamage)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				{
+					Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, amountOfDamage);
+				}
+			}
+		}
+
+		public bool CharacterHasInfectedDamage(int playerIndex, int characterIndex)
+		{
+			bool hasInfected = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				hasInfected = Players[playerIndex].CharacterHasInfectedDamage(characterIndex);
+			}
+
+			return hasInfected;
+		}
 		#endregion
+
+
+
+
+
+
+
 
 
 

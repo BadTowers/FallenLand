@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace FallenLand
 {
@@ -11,13 +12,14 @@ namespace FallenLand
         private int CarryCapacity;
         private int CurrentPsychRemaning;
         private int CurrentHp;
+        private int AmountOfInfectedDamage;
         //link. This would map some spoils card to some bonuses. ex) any two wheeled vehicle -> +1 movement and +6 carrying capacity TODO
         //specialAbilities. What bonuses the character card gets. TDC cost 3 less. Auto pass certain encounters. etc TODO
         private List<SpoilsCard> EquippedSpoils;
         private bool HasFirstStrike;
         ConditionalGain Link;
         private bool IsMaster;
-        private UnityEngine.Sprite CardImage;
+        private Sprite CardImage;
 
         public CharacterCard(string title) : base(title)
         {
@@ -167,14 +169,35 @@ namespace FallenLand
             CurrentPsychRemaning = remaining;
         }
 
-        public UnityEngine.Sprite GetCardImage()
+        public Sprite GetCardImage()
         {
             if (CardImage == null)
             {
                 string fileName = "Cards/CharacterCards/CharacterCard" + GetId().ToString();
-                CardImage = UnityEngine.Resources.Load<UnityEngine.Sprite>(fileName);
+                CardImage = Resources.Load<Sprite>(fileName);
             }
             return CardImage;
+        }
+
+        public void AddInfectedDamage(int amountOfDamage)
+        {
+            AmountOfInfectedDamage += amountOfDamage;
+            CurrentHp -= amountOfDamage;
+        }
+
+        public int GetAmountOfInfectedDamage()
+        {
+            return AmountOfInfectedDamage;
+        }
+
+        public bool CharacterHasInfectedDamage()
+        {
+            bool hasInfected = false;
+            if (AmountOfInfectedDamage > 0)
+            {
+                hasInfected = true;
+            }
+            return hasInfected;
         }
     }
 }
