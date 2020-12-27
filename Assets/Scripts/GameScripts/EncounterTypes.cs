@@ -5,5 +5,6 @@ namespace FallenLand
 	{
 		EnvironmentalHazard,
 		Special,
+		TheBrotherhood,
 	}
 }

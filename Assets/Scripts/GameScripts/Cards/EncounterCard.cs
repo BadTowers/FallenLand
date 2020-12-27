@@ -17,6 +17,7 @@ namespace FallenLand
 		private string FailureDescriptionText;
 		private List<Action> ActionsOnBegin = new List<Action>();
 		private List<EncounterTypes> Classifications = new List<EncounterTypes>();
+		private List<Precheck> PrechecksAfterDraw = new List<Precheck>();
 
 		public EncounterCard(string title) : base(title)
 		{
@@ -178,6 +179,16 @@ namespace FallenLand
 		public List<EncounterTypes> GetClassifications()
 		{
 			return Classifications;
+		}
+
+		public void AddPrecheck(Precheck check)
+		{
+			PrechecksAfterDraw.Add(check);
+		}
+
+		public List<Precheck> GetPrechecks()
+		{
+			return PrechecksAfterDraw;
 		}
 
 		private void initText()

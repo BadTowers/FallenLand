@@ -209,7 +209,33 @@ namespace FallenLand
 				Debug.Log("Picking an encounter card to do");
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[0].GetTitle();
+				int cardIndex = 0;
+				do
+				{
+					List<Precheck> prechecks = PlainsDeck[cardIndex].GetPrechecks();
+					if (prechecks.Count == 0)
+					{
+						break;
+					}
+					for (int precheckIndex = 0; precheckIndex < prechecks.Count; precheckIndex++)
+					{
+						if (!prechecks[precheckIndex].PrechecksHold(this, myIndex))
+						{
+							Debug.Log("Precheck didn't hold. Moving to next encounter card.");
+							cardIndex++;
+							break;
+						}
+					}
+
+					if(cardIndex >= PlainsDeck.Count)
+                    {
+						Debug.LogError("Ran out of cards. Should shuffle and network to everyone else to shuffle!");
+						//should reset cardIndex = 0 after the shuffle. for now, just take the 0th anyway
+						cardIndex = 0;
+					}
+				}
+				while (cardIndex < PlainsDeck.Count);
+				string nextPlainsEncounterCardName = PlainsDeck[cardIndex].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
 				handlePartyExploitsNetworkUpdate(content);
