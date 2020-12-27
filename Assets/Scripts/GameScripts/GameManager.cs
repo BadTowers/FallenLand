@@ -1908,24 +1908,21 @@ namespace FallenLand
 
 		private void handlePartyExploitsEncounter(int playerIndex, byte encounterType, string encounterCardName)
 		{
-			if (playerIndex == GetIndexForMyPlayer() && CurrentPlayerEncounter[playerIndex] == null)
+			if (encounterType == Constants.ENCOUNTER_PLAINS)
 			{
-				if (encounterType == Constants.ENCOUNTER_PLAINS)
+				CurrentPlayerEncounter[playerIndex] = PlainsCard.FindCardInDeckByTitle(encounterCardName, PlainsDeck);
+				if (CurrentPlayerEncounter[playerIndex] == null)
 				{
-					CurrentPlayerEncounter[playerIndex] = PlainsCard.FindCardInDeckByTitle(encounterCardName, PlainsDeck);
-					if (CurrentPlayerEncounter[playerIndex] == null)
-					{
-						Debug.LogError("Error. Couldn't find plains encounter card with title " + encounterCardName);
-					}
+					Debug.LogError("Error. Couldn't find plains encounter card with title " + encounterCardName);
 				}
-				else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
-				{
-					//TODO when this deck is implemented
-				}
-				else if (encounterType == Constants.ENCOUNTER_CITY_RAD)
-				{
-					//TODO when this deck is implemented
-				}
+			}
+			else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
+			{
+				//TODO when this deck is implemented
+			}
+			else if (encounterType == Constants.ENCOUNTER_CITY_RAD)
+			{
+				//TODO when this deck is implemented
 			}
 		}
 

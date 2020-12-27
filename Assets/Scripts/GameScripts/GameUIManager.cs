@@ -1314,13 +1314,13 @@ namespace FallenLand
             LastCharacterDiceRollText = new List<GameObject>();
             for (int characterNumber = 1; characterNumber <= Constants.NUM_PARTY_MEMBERS; characterNumber++)
             {
-                CharacterEncounterRollImages.Add(GameObject.Find("Character" + characterNumber.ToString()));
+                CharacterEncounterRollImages.Add(GameObject.Find("EncounterCharacter" + characterNumber.ToString()));
                 CharacterEncounterCurrentStatText.Add(GameObject.Find("CharacterStatText" + characterNumber.ToString()));
                 CharacterEncounterPanels.Add(GameObject.Find("CharacterEncounterPanel" + characterNumber.ToString()));
                 CharacterEncounterRollButtons.Add(GameObject.Find("RollButton" + characterNumber.ToString()));
                 LastCharacterDiceRollText.Add(GameObject.Find("LastDiceRollText" + characterNumber.ToString()));
             }
-            VehicleEncounterRollImage = GameObject.Find("CharacterV");
+            VehicleEncounterRollImage = GameObject.Find("EncounterCharacterV");
             VehicleEncounterCurrentStatText = GameObject.Find("CharacterStatTextV");
             VehicleEncounterPanel = GameObject.Find("CharacterEncounterPanelV");
             VehicleRollButton = GameObject.Find("RollButtonV");
