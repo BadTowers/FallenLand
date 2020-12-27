@@ -232,12 +232,12 @@ namespace FallenLand
 		public void OnTurnBegins(int turn)
         {
 			Debug.Log("OnTurnBegins: " + turn);
-        }
+			Players[GetIndexForMyPlayer()].SetRemainingPartyExploitWeeks(4);
+		}
 
         public void OnTurnCompleted(int turn)
 		{
 			Debug.Log("OnTurnCompleted: " + turn);
-			Players[GetIndexForMyPlayer()].SetRemainingPartyExploitWeeks(4);
         }
 
 		public void OnPhaseBegins(Phases phase)
