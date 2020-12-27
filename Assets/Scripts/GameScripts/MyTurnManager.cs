@@ -88,11 +88,16 @@ namespace FallenLand
 
         public void BeginNextTurn()
         {
+            TurnManagerListener.OnTurnCompleted(Turn);
             Debug.Log("TurnManager: BeginNextTurn");
-            CurrentFirstPlayerIndex = (CurrentFirstPlayerIndex + 1) % Photon.Pun.PhotonNetwork.PlayerList.Length;
+            if (Turn > 0) //Don't move current player the first turn
+            {
+                CurrentFirstPlayerIndex = (CurrentFirstPlayerIndex + 1) % Photon.Pun.PhotonNetwork.PlayerList.Length;
+            }
             CurrentPlayer = Photon.Pun.PhotonNetwork.PlayerList[CurrentFirstPlayerIndex];
             _MovedToNextPlayerAlready = true;
             Turn++;
+            TurnManagerListener.OnTurnBegins(Turn);
         }
 
         public void BeginNextPhase()
