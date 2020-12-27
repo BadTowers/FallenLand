@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
@@ -453,6 +453,30 @@ namespace FallenLand
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishment(new TakeInfectedDamage(1));
 			curCard.AddPunishment(new EveryoneLoseTownHealth(3));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Hungry Locals");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Medical] = 4
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Medical] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainActionCards(2));
+			//TODO reward -- draw the next 4 encounter cards for one deck and order them however you'd like
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new LoseTownHealth(1));
+			//TODO punishment -- discard all "ally" spoils cards
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
