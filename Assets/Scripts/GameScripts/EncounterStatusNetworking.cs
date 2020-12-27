@@ -7,14 +7,14 @@ namespace FallenLand
 	{
 		private readonly int PlayerIndex;
 		private readonly byte EncounterType;
-		private readonly bool WasASuccess;
+		private readonly byte Status;
 		private readonly string CardName;
 
-		public EncounterStatusNetworking(int playerIndex, byte encounterType, bool wasSuccess, string cardName)
+		public EncounterStatusNetworking(int playerIndex, byte encounterType, byte status, string cardName)
 		{
 			PlayerIndex = playerIndex;
 			EncounterType = encounterType;
-			WasASuccess = wasSuccess;
+			Status = status;
 			CardName = cardName;
 		}
 
@@ -22,7 +22,7 @@ namespace FallenLand
 		{
             int playerIndex = data[0];
 			byte encounterType = data[1];
-			bool wasSuccess = (data[2] != 0);
+			byte status = data[2];
 
 			List<byte> byteList = new List<byte>(data);
 			byteList.RemoveAt(0);
@@ -31,7 +31,7 @@ namespace FallenLand
 			byte[] byteArray = byteList.ToArray();
 			string cardName = Encoding.ASCII.GetString(byteArray);
 
-			EncounterStatusNetworking result = new EncounterStatusNetworking(playerIndex, encounterType, wasSuccess, cardName);
+			EncounterStatusNetworking result = new EncounterStatusNetworking(playerIndex, encounterType, status, cardName);
 
 			return result;
 		}
@@ -39,17 +39,13 @@ namespace FallenLand
 		public static byte[] SerializeEncounterStatus(object customType)
 		{
 			EncounterStatusNetworking encounterStatus = (EncounterStatusNetworking)customType;
-			byte wasSuccess = 0;
-			if (encounterStatus.GetWasSuccess())
-			{
-				wasSuccess = 1;
-			}
+			byte status = encounterStatus.GetStatus();
 
             List<byte> byteListFinal = new List<byte>
             {
                 (byte)encounterStatus.GetPlayerIndex(),
 				encounterStatus.GetEncounterType(),
-				wasSuccess
+				status
 			};
 
 			List<byte> byteListString = new List<byte>(Encoding.ASCII.GetBytes(encounterStatus.GetCardName()));
@@ -72,9 +68,9 @@ namespace FallenLand
 			return EncounterType;
 		}
 
-		public bool GetWasSuccess()
+		public byte GetStatus()
 		{
-			return WasASuccess;
+			return Status;
 		}
 
 		public string GetCardName()

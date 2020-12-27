@@ -1340,7 +1340,8 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), EncounterWasSuccessful(playerIndex), CurrentPlayerEncounter[playerIndex].GetTitle());
+				byte status = (EncounterWasSuccessful(playerIndex)) ? Constants.STATUS_PASSED : Constants.STATUS_FAILED;
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, CurrentPlayerEncounter[playerIndex].GetTitle());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
@@ -1350,7 +1351,9 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].AddSalvageToPlayer(CurrentPlayerEncounter[playerIndex].GetSalvageReward());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, CurrentPlayerEncounter[playerIndex].GetTitle());
+				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
+				handleEncounterStatusEvent(encounterStatus);
 			}
 		}
 
@@ -1929,27 +1932,35 @@ namespace FallenLand
 		private void handleEncounterStatusEvent(EncounterStatusNetworking eventStatus)
 		{
 			int playerIndex = eventStatus.GetPlayerIndex();
+			byte status = eventStatus.GetStatus();
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				//todo encounter card from deck and place it into discard once more encounters are implemented
-				Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
-				Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
+                if (status == Constants.STATUS_BEGIN)
+                {
+					Players[playerIndex].AddSalvageToPlayer(CurrentPlayerEncounter[playerIndex].GetSalvageReward());
+                }
+                else if (status == Constants.STATUS_FAILED || status == Constants.STATUS_PASSED)
+                {
+					//todo encounter card from deck and place it into discard once more encounters are implemented
+					Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
+					Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
 
-				int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
-				Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
+					int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
+					Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
 
-				if (eventStatus.GetWasSuccess())
-				{
-					EncounterResultsHandler.HandleSuccess(this, playerIndex);
+					if (status == Constants.STATUS_PASSED)
+					{
+						EncounterResultsHandler.HandleSuccess(this, playerIndex);
+					}
+					else
+					{
+						EncounterResultsHandler.HandleFailure(this, playerIndex);
+					}
+
+					Players[playerIndex].ResetAllCharacterDiceRolls();
+					Players[playerIndex].ResetAllVehicleDiceRolls();
 				}
-				else
-				{
-					EncounterResultsHandler.HandleFailure(this, playerIndex);
-				}
-
-				Players[playerIndex].ResetAllCharacterDiceRolls();
-				Players[playerIndex].ResetAllVehicleDiceRolls();
 			}
 		}
 

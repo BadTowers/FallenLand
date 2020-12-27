@@ -59,6 +59,12 @@ namespace FallenLand
 		public const int ENCOUNTER_MOUNTAINS = 2;
 		public const int ENCOUNTER_CITY_RAD = 3;
 
+		//Used for EvEncounterStatus
+		public const byte STATUS_BEGIN = 0;
+		public const byte STATUS_FLIGHT = 1;
+		public const byte STATUS_PASSED = 2;
+		public const byte STATUS_FAILED = 3;
+
 		//Used for EvMovement
 		public const int PARTY_MOVEMENT = 0;
 		//NPCM movement might be here later

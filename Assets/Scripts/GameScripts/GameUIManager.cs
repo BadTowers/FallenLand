@@ -341,7 +341,7 @@ namespace FallenLand
 
             updateActionButton();
 
-            updatePartyHealthValues();
+            updatePartyOverviewValues();
 
             updateCharacterSpoilsScreen();
 
@@ -1052,14 +1052,6 @@ namespace FallenLand
                     {
                         ActiveCharactersPsychResistance[activeIndex][i].GetComponentInChildren<Text>().text = psychResistance.ToString();
                     }
-
-                    //Update carry weight
-                    int totalCarryWeight = GameManagerInstance.GetActiveCharacterTotalCarryWeight(CurrentViewedID, activeIndex);
-                    int usedCarryWeight = GameManagerInstance.GetActiveCharacterUsedCarryWeight(CurrentViewedID, activeIndex);
-                    for (int i = 0; i < ActiveCharactersCarryWeightsText[activeIndex].Count; i++)
-                    {
-                        ActiveCharactersCarryWeightsText[activeIndex][i].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
-                    }
                 }
             }
         }
@@ -1768,7 +1760,7 @@ namespace FallenLand
             ActionCardsButton.interactable = (CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer());
         }
 
-        private void updatePartyHealthValues()
+        private void updatePartyOverviewValues()
         {
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
@@ -1796,6 +1788,14 @@ namespace FallenLand
                 else
                 {
                     PartyOverviewInfectedSymbols[characterIndex].SetActive(false);
+                }
+
+                //Update carry weight
+                int totalCarryWeight = GameManagerInstance.GetActiveCharacterTotalCarryWeight(CurrentViewedID, characterIndex);
+                int usedCarryWeight = GameManagerInstance.GetActiveCharacterUsedCarryWeight(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersCarryWeightsText[characterIndex].Count; i++)
+                {
+                    ActiveCharactersCarryWeightsText[characterIndex][i].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
                 }
             }
         }
