@@ -230,7 +230,7 @@ namespace FallenLand
 					if(cardIndex >= PlainsDeck.Count)
                     {
 						Debug.LogError("Ran out of cards. Should shuffle and network to everyone else to shuffle!");
-						//should reset cardIndex = 0 after the shuffle. for now, just take the 0th anyway
+						//TODO actually shuffle
 						cardIndex = 0;
 					}
 				}
@@ -1485,7 +1485,25 @@ namespace FallenLand
 
 			return hasInfected;
 		}
+
+		public void CharacterCrownTakesD6Damage(int playerIndex, int characterIndex, int numOfD6s)
+        {
+			if (isPlayerIndexInRange(playerIndex))
+            {
+				//TODO network the damage to others
+				Debug.LogError("CharacterCrownTakesD6Damage was not networked and needs to be implemented to do so!");
+				int damage = 0;
+				for (int i = 0; i < numOfD6s; i++)
+				{
+					damage += DiceRoller.RollDice(6);
+				}
+				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, damage);
+				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage);
+			}
+		}
 		#endregion
+
+
 
 
 

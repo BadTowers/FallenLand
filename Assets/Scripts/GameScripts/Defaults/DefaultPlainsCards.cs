@@ -534,6 +534,29 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("A Shining Example");
+			curCard.SetSalvageReward(5);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Survival] = 3
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Survival] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(1));
+			//TODO reward -- may place party on nearest mission chip and attempt it at no week cost
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new CharacterCrownTakesD6PhysicalDamage(1));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()

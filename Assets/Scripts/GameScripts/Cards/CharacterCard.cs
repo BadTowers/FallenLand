@@ -185,11 +185,6 @@ namespace FallenLand
             CurrentHp -= amountOfDamage;
         }
 
-        public int GetAmountOfInfectedDamage()
-        {
-            return AmountOfInfectedDamage;
-        }
-
         public bool CharacterHasInfectedDamage()
         {
             bool hasInfected = false;
@@ -198,6 +193,11 @@ namespace FallenLand
                 hasInfected = true;
             }
             return hasInfected;
+        }
+
+        public void AddPhysicalDamage(int amountOfDamage)
+        {
+            CurrentHp -= amountOfDamage;
         }
     }
 }

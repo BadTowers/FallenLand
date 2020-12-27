@@ -96,6 +96,9 @@ namespace FallenLand
         private GameObject DistributeD6DamagePopupPanel;
         private List<GameObject> PartyOverviewInfectedSymbols;
         private List<GameObject> PartyOverviewRadiationSymbols;
+        private GameObject CharacterCrownTakenDamagePopupPanel;
+        private GameObject CharacterCrownDamageTakenPanel;
+        private GameObject CharacterTakenDamagePopupText;
 
         #region UnityFunctions
         void Awake()
@@ -133,6 +136,9 @@ namespace FallenLand
             DiscardedCardImage = GameObject.Find("DiscardedCardImage");
             DiscardedPanel = GameObject.Find("DiscardedPanel");
             DistributeD6DamagePopupPanel = GameObject.Find("DistributeD6DamagePopupPanel");
+            CharacterCrownTakenDamagePopupPanel = GameObject.Find("CharacterCrownTakenDamagePopupPanel");
+            CharacterCrownDamageTakenPanel = GameObject.Find("CharacterCrownDamageTakenPanel");
+            CharacterTakenDamagePopupText = GameObject.Find("CharacterTakenDamagePopupText");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -302,6 +308,7 @@ namespace FallenLand
             EncounterSelectionPanel.SetActive(false);
             DiscardPopupPanel.SetActive(false);
             DistributeD6DamagePopupPanel.SetActive(false);
+            CharacterCrownTakenDamagePopupPanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -325,6 +332,7 @@ namespace FallenLand
             EventManager.OnSpoilsCardDiscarded += onShowSpoilsCardDiscardedPopup;
             EventManager.OnD6DamageNeedsToBeDistributed += onDistributeD6DamagePopup;
             EventManager.OnD6HealingNeedsDistributed += onDistributeD6HealingPopup;
+            EventManager.OnCharacterCrownTakesDamage += onCharacterCrownTakesDamage;
         }
 
         public override void OnDisable()
@@ -333,6 +341,7 @@ namespace FallenLand
             EventManager.OnSpoilsCardDiscarded -= onShowSpoilsCardDiscardedPopup;
             EventManager.OnD6DamageNeedsToBeDistributed -= onDistributeD6DamagePopup;
             EventManager.OnD6HealingNeedsDistributed -= onDistributeD6HealingPopup;
+            EventManager.OnCharacterCrownTakesDamage -= onCharacterCrownTakesDamage;
         }
 
         void Update()
@@ -732,6 +741,11 @@ namespace FallenLand
         {
             DiscardPopupPanel.SetActive(false);
         }
+
+        public void OnCharacterCrownDamageTakenOkPress()
+        {
+            CharacterCrownTakenDamagePopupPanel.SetActive(false);
+        }
         #endregion
 
         #region HelperFunctions
@@ -739,8 +753,7 @@ namespace FallenLand
         {
             DiscardPopupPanel.SetActive(true);
             DiscardedCardImage.GetComponent<Image>().sprite = card.GetCardImage();
-            DiscardedPanel.transform.localScale = new Vector3(0f, 0f, 0f);
-            LeanTween.scale(DiscardedPanel, new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeOutCubic);
+            showPopup(DiscardedPanel);
         }
 
         private void onDistributeD6DamagePopup(int numD6s)
@@ -752,6 +765,20 @@ namespace FallenLand
         private void onDistributeD6HealingPopup(int numD6s)
         {
             Debug.LogError("TODO onDistributeD6HealingPopup");
+        }
+
+        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage)
+        {
+            CharacterCrownTakenDamagePopupPanel.SetActive(true);
+            CharacterTakenDamagePopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " damage!";
+            //TODO show diff popup if noone is equipped to character crown 1
+            showPopup(CharacterCrownDamageTakenPanel);
+        }
+
+        private void showPopup(GameObject go)
+        {
+            go.transform.localScale = new Vector3(0f, 0f, 0f);
+            LeanTween.scale(go, new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeOutCubic);
         }
 
         //A function to display and hide menus as needed
