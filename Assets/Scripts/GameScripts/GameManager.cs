@@ -1497,7 +1497,7 @@ namespace FallenLand
 				int damage = 0;
 				for (int i = 0; i < numOfD6s; i++)
 				{
-					damage += DiceRoller.RollDice(6);
+					damage += DiceRoller.RollDice(Constants.D6);
 				}
 				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, damage);
 				handleCharacterHealthEvent(characterHealth);
