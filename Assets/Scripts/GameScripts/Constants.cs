@@ -69,6 +69,12 @@ namespace FallenLand
 		public const int PARTY_MOVEMENT = 0;
 		//NPCM movement might be here later
 
+		//Used for EvCharacterHealth
+		public const byte DAMAGE_PHYSICAL = 0;
+		public const byte DAMAGE_PSYCHOLOGICAL = 1;
+		public const byte DAMAGE_INFECTED = 2;
+		public const byte DAMAGE_RADIATION = 3;
+
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
 		public const byte EvFinalMove = 2;
@@ -81,5 +87,6 @@ namespace FallenLand
 		public const byte EvPartyExploits = 9;
 		public const byte EvEncounterStatus = 10;
 		public const byte EvMovement = 11;
+		public const byte EvCharacterHealth = 12;
 	}
 }

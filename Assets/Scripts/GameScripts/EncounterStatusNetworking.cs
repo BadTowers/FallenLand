@@ -39,13 +39,12 @@ namespace FallenLand
 		public static byte[] SerializeEncounterStatus(object customType)
 		{
 			EncounterStatusNetworking encounterStatus = (EncounterStatusNetworking)customType;
-			byte status = encounterStatus.GetStatus();
 
             List<byte> byteListFinal = new List<byte>
             {
                 (byte)encounterStatus.GetPlayerIndex(),
 				encounterStatus.GetEncounterType(),
-				status
+				encounterStatus.GetStatus()
 			};
 
 			List<byte> byteListString = new List<byte>(Encoding.ASCII.GetBytes(encounterStatus.GetCardName()));

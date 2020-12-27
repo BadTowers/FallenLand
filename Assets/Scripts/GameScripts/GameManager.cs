@@ -425,6 +425,10 @@ namespace FallenLand
 			{
 				handleMovementNetworkEvent(photonEvent.CustomData);
 			}
+			else if (eventCode == Constants.EvCharacterHealth)
+			{
+				handleCharacterHealthEvent(photonEvent.CustomData);
+			}
 		}
 		#endregion
 
@@ -1486,19 +1490,19 @@ namespace FallenLand
 			return hasInfected;
 		}
 
-		public void CharacterCrownTakesD6Damage(int playerIndex, int characterIndex, int numOfD6s)
+		public void CharacterCrownTakesD6Damage(int playerIndex, int characterIndex, int numOfD6s, byte damageType)
         {
 			if (isPlayerIndexInRange(playerIndex))
             {
-				//TODO network the damage to others
 				Debug.LogError("CharacterCrownTakesD6Damage was not networked and needs to be implemented to do so!");
 				int damage = 0;
 				for (int i = 0; i < numOfD6s; i++)
 				{
 					damage += DiceRoller.RollDice(6);
 				}
-				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, damage);
-				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage);
+				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, damage);
+				handleCharacterHealthEvent(characterHealth);
+				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage, damageType);
 			}
 		}
 		#endregion
@@ -2038,6 +2042,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(PartyExploitsNetworking), Constants.EvPartyExploits, PartyExploitsNetworking.SerializePartyExploits, PartyExploitsNetworking.DeserializePartyExploits);
 			PhotonPeer.RegisterType(typeof(EncounterStatusNetworking), Constants.EvEncounterStatus, EncounterStatusNetworking.SerializeEncounterStatus, EncounterStatusNetworking.DeserializeEncounterStatus);
 			PhotonPeer.RegisterType(typeof(MovementNetworking), Constants.EvMovement, MovementNetworking.SerializeMovement, MovementNetworking.DeserializeMovement);
+			PhotonPeer.RegisterType(typeof(CharacterHealthNetworking), Constants.EvCharacterHealth, CharacterHealthNetworking.SerializeCharacterHealth, CharacterHealthNetworking.DeserializeCharacterHealth);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -2152,6 +2157,15 @@ namespace FallenLand
 				Coordinates coords = movement.GetLocationToMoveTo();
 				PlayerPieceManagerInst.MovePiece(playerIndex, coords);
 				Players[playerIndex].SetPartyLocation(coords);
+			}
+		}
+
+		private void handleCharacterHealthEvent(object content)
+		{
+			CharacterHealthNetworking characterHealth = (CharacterHealthNetworking)content;
+			if (characterHealth.GetDamageType() == Constants.DAMAGE_PHYSICAL)
+			{
+				Players[characterHealth.GetPlayerIndex()].AddPhysicalDamageToCharacter(characterHealth.GetCharacterIndex(), characterHealth.GetAmountOfDamage());
 			}
 		}
 

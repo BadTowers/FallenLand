@@ -1,6 +1,5 @@
 using Photon.Pun;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -96,9 +95,9 @@ namespace FallenLand
         private GameObject DistributeD6DamagePopupPanel;
         private List<GameObject> PartyOverviewInfectedSymbols;
         private List<GameObject> PartyOverviewRadiationSymbols;
-        private GameObject CharacterCrownTakenDamagePopupPanel;
-        private GameObject CharacterCrownDamageTakenPanel;
-        private GameObject CharacterTakenDamagePopupText;
+        private GameObject GenericPopupWithTwoLinesOfTextPanel;
+        private GameObject GenericPopupTextPanel;
+        private GameObject GenericPopupText;
 
         #region UnityFunctions
         void Awake()
@@ -136,9 +135,9 @@ namespace FallenLand
             DiscardedCardImage = GameObject.Find("DiscardedCardImage");
             DiscardedPanel = GameObject.Find("DiscardedPanel");
             DistributeD6DamagePopupPanel = GameObject.Find("DistributeD6DamagePopupPanel");
-            CharacterCrownTakenDamagePopupPanel = GameObject.Find("CharacterCrownTakenDamagePopupPanel");
-            CharacterCrownDamageTakenPanel = GameObject.Find("CharacterCrownDamageTakenPanel");
-            CharacterTakenDamagePopupText = GameObject.Find("CharacterTakenDamagePopupText");
+            GenericPopupWithTwoLinesOfTextPanel = GameObject.Find("GenericPopupWithTwoLinesOfTextPanel");
+            GenericPopupTextPanel = GameObject.Find("GenericPopupTextPanel");
+            GenericPopupText = GameObject.Find("GenericPopupText");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -308,7 +307,7 @@ namespace FallenLand
             EncounterSelectionPanel.SetActive(false);
             DiscardPopupPanel.SetActive(false);
             DistributeD6DamagePopupPanel.SetActive(false);
-            CharacterCrownTakenDamagePopupPanel.SetActive(false);
+            GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -742,9 +741,9 @@ namespace FallenLand
             DiscardPopupPanel.SetActive(false);
         }
 
-        public void OnCharacterCrownDamageTakenOkPress()
+        public void OnGenericPopupOkPress()
         {
-            CharacterCrownTakenDamagePopupPanel.SetActive(false);
+            GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
         }
         #endregion
 
@@ -767,12 +766,33 @@ namespace FallenLand
             Debug.LogError("TODO onDistributeD6HealingPopup");
         }
 
-        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage)
+        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType)
         {
-            CharacterCrownTakenDamagePopupPanel.SetActive(true);
-            CharacterTakenDamagePopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " damage!";
-            //TODO show diff popup if noone is equipped to character crown 1
-            showPopup(CharacterCrownDamageTakenPanel);
+            GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
+            if (GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer())[characterIndex] == null)
+            {
+                GenericPopupText.GetComponent<Text>().text = "Character crown " + (characterIndex + 1) + " was empty. No damage taken!";
+            }
+            else
+            {
+                if (damageType == Constants.DAMAGE_PHYSICAL)
+                {
+                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " physical damage!";
+                }
+                else if (damageType == Constants.DAMAGE_RADIATION)
+                {
+                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " radiation damage!";
+                }
+                else if (damageType == Constants.DAMAGE_INFECTED)
+                {
+                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " infected damage!";
+                }
+                else if (damageType == Constants.DAMAGE_PSYCHOLOGICAL)
+                {
+                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " psychological damage!";
+                }
+            }
+            showPopup(GenericPopupTextPanel);
         }
 
         private void showPopup(GameObject go)

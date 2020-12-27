@@ -13,7 +13,7 @@ namespace FallenLand
             if (myIndex == playerIndex)
             {
                 const int characterCrownIndex = 0;
-                gameManager.CharacterCrownTakesD6Damage(playerIndex, characterCrownIndex, base.GetPunishmentAmount());
+                gameManager.CharacterCrownTakesD6Damage(playerIndex, characterCrownIndex, base.GetPunishmentAmount(), Constants.DAMAGE_PHYSICAL);
             }
         }
     }
