@@ -9,7 +9,11 @@ namespace FallenLand
 
         public override void HandlePunishment(GameManager gameManager, int playerIndex)
         {
-            gameManager.DistributeD6PhysicalDamageToParty(playerIndex, base.GetPunishmentAmount());
+            int myIndex = gameManager.GetIndexForMyPlayer();
+            if (myIndex == playerIndex)
+            {
+                gameManager.DistributeD6PhysicalDamageToParty(playerIndex, base.GetPunishmentAmount());
+            }
         }
     }
 }

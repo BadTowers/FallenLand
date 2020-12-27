@@ -9,7 +9,11 @@ namespace FallenLand
 
         public override void HandleReward(GameManager gameManager, int playerIndex)
         {
-            gameManager.DistributeD6HealingPhysicalDamage(playerIndex, base.GetRewardAmount());
+            int myIndex = gameManager.GetIndexForMyPlayer();
+            if (myIndex == playerIndex)
+            {
+                gameManager.DistributeD6HealingPhysicalDamage(playerIndex, base.GetRewardAmount());
+            }
         }
     }
 }
