@@ -208,7 +208,7 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[15].GetTitle();
+				string nextPlainsEncounterCardName = PlainsDeck[16].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent((object)content, ReceiverGroup.Others, Constants.EvPartyExploits);
 				handlePartyExploitsNetworkUpdate((object)content);
@@ -1037,6 +1037,14 @@ namespace FallenLand
 			if (playerIndex == GetIndexForMyPlayer())
 			{
 				EventManager.D6DamageNeedsDistributing(numOfD6s); //TODO specify it's infected damage
+			}
+		}
+
+		public void DistributeD6HealingPhysicalDamage(int playerIndex, int numOfD6s)
+		{
+			if (playerIndex == GetIndexForMyPlayer())
+			{
+				EventManager.D6HealingNeedsDistributing(numOfD6s); //TODO specify it's physical damage
 			}
 		}
 

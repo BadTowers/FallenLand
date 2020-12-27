@@ -16,8 +16,7 @@ namespace FallenLand
 		private string FailureHeaderText;
 		private string FailureDescriptionText;
 		private List<Action> ActionsOnBegin = new List<Action>();
-		//specificInstructions. Things that must be true or must be done to complete the card (move to nearest rad hex, don't complete if you don't have vehicle, etc) TODO
-		//classifiation. Some cards are classified (vehicle combat, biker gang, sigma, etc. Can be none) TODO
+		private List<EncounterTypes> Classifications = new List<EncounterTypes>();
 
 		public EncounterCard(string title) : base(title)
 		{
@@ -170,6 +169,16 @@ namespace FallenLand
         {
 			return ActionsOnBegin;
         }
+
+		public void AddClassification(EncounterTypes type)
+		{
+			Classifications.Add(type);
+		}
+
+		public List<EncounterTypes> GetClassifications()
+		{
+			return Classifications;
+		}
 
 		private void initText()
 		{

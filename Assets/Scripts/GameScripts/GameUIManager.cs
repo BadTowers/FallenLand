@@ -319,6 +319,7 @@ namespace FallenLand
             base.OnEnable();
             EventManager.OnSpoilsCardDiscarded += onShowSpoilsCardDiscardedPopup;
             EventManager.OnD6DamageNeedsToBeDistributed += onDistributeD6DamagePopup;
+            EventManager.OnD6HealingNeedsDistributed += onDistributeD6HealingPopup;
         }
 
         public override void OnDisable()
@@ -326,6 +327,7 @@ namespace FallenLand
             base.OnDisable();
             EventManager.OnSpoilsCardDiscarded -= onShowSpoilsCardDiscardedPopup;
             EventManager.OnD6DamageNeedsToBeDistributed -= onDistributeD6DamagePopup;
+            EventManager.OnD6HealingNeedsDistributed -= onDistributeD6HealingPopup;
         }
 
         void Update()
@@ -730,7 +732,6 @@ namespace FallenLand
         #region HelperFunctions
         private void onShowSpoilsCardDiscardedPopup(SpoilsCard card)
         {
-            //TODO show popup for discarded card
             DiscardPopupPanel.SetActive(true);
             DiscardedCardImage.GetComponent<Image>().sprite = card.GetCardImage();
             DiscardedPanel.transform.localScale = new Vector3(0f, 0f, 0f);
@@ -739,8 +740,13 @@ namespace FallenLand
 
         private void onDistributeD6DamagePopup(int numD6s)
         {
-            Debug.LogError("TODO");
+            Debug.LogError("TODO onDistributeD6DamagePopup");
             //eventually, show this panel and do the do's DistributeD6DamagePopupPanel
+        }
+
+        private void onDistributeD6HealingPopup(int numD6s)
+        {
+            Debug.LogError("TODO onDistributeD6HealingPopup");
         }
 
         //A function to display and hide menus as needed

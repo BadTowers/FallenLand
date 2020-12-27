@@ -17,5 +17,11 @@ namespace FallenLand
         {
             OnD6DamageNeedsToBeDistributed?.Invoke(numD6s);
         }
+
+        public delegate void D6HealingNeedsDistributed(int numD6s);
+        public static event D6HealingNeedsDistributed OnD6HealingNeedsDistributed;
+        public static void D6HealingNeedsDistributing(int numD6s)
+        {
+            OnD6HealingNeedsDistributed?.Invoke(numD6s);
+        }
     }
-}

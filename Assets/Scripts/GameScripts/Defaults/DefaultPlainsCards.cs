@@ -408,6 +408,30 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Smooth Sailing");
+			curCard.SetSalvageReward(0);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Diplomacy] = 0
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Diplomacy] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.AddClassification(EncounterTypes.Special);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainPartyExploitsWeeks(1));
+			curCard.AddReward(new GainHealD6PhysicalDamage(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			//No punishments for this card
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
