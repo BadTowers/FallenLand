@@ -162,7 +162,7 @@ namespace FallenLand
 
 			//TODO create the deck of plains cards
 			PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
-			//PlainsDeck = Card.ShuffleDeck(PlainsDeck);
+			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 
 			//TODO create the deck of mountain cards
 
@@ -209,7 +209,7 @@ namespace FallenLand
 				Debug.Log("Picking an encounter card to do");
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				string nextPlainsEncounterCardName = PlainsDeck[17].GetTitle();
+				string nextPlainsEncounterCardName = PlainsDeck[0].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
 				handlePartyExploitsNetworkUpdate(content);
@@ -1961,6 +1961,24 @@ namespace FallenLand
 
 					Players[playerIndex].ResetAllCharacterDiceRolls();
 					Players[playerIndex].ResetAllVehicleDiceRolls();
+
+                    if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_PLAINS)
+                    {
+						PlainsCard card = PlainsCard.FindCardInDeckByTitle(eventStatus.GetCardName(), PlainsDeck);
+						DiscardedPlainsCards.Add(card);
+                        PlainsDeck.Remove(card);
+                        CurrentPlayerEncounter[playerIndex] = null;
+                    }
+                    else if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_MOUNTAINS)
+                    {
+						//TODO when implemented
+                    }
+					else if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_CITY_RAD)
+					{
+						//TODO when implemented
+                    }
+
+					shuffleEncounterDecksIfNeeded();
 				}
 			}
 		}
@@ -2108,6 +2126,23 @@ namespace FallenLand
         private void endPhaseForAllPlayers()
         {
 			TurnManager.BeginNextPhase();
+		}
+
+		private void shuffleEncounterDecksIfNeeded()
+        {
+			if (PlainsDeck.Count == 0)
+			{
+				while (DiscardedPlainsCards.Count > 0)
+				{
+					PlainsDeck.Add(DiscardedPlainsCards[0]);
+					DiscardedPlainsCards.RemoveAt(0);
+				}
+				PlainsDeck = Card.ShuffleDeck(PlainsDeck);
+			}
+
+			//todo for mountains
+
+			//todo for city/rad
 		}
 		#endregion
 
