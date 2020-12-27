@@ -505,6 +505,35 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Don't Drink the Punch");
+			curCard.SetSalvageReward(2);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Technical] = 3,
+				[Skills.Combat] = 5
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Technical] = true,
+				[Skills.Combat] = true
+			});
+			curCard.AddClassification(EncounterTypes.TheBrotherhood);
+			curCard.AddClassification(EncounterTypes.Mystery);
+			curCard.AddPrecheck(new NotPlayingBrotherhood());
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainPrestige(1));
+			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6PhysicalDamage(5));
+			curCard.AddPunishment(new LosePrestige(1));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
