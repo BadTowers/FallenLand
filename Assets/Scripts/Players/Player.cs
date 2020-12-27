@@ -12,7 +12,6 @@ namespace FallenLand
 		private Faction FactionOfPlayer;
 		private List<TownTech> TownTechs;
 		private int AmountOfSalvage;
-		private int Id;
 		private List<Dictionary<Skills, int>> ActiveCharacterTotalStats;
 		private List<int> ActiveCharacterRemainingCarryWeights;
 		private List<int> ActiveCharacterUsedCarryWeights;
