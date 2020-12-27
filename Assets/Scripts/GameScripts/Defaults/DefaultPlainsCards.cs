@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
@@ -205,6 +205,7 @@ namespace FallenLand
 				[Skills.Survival] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.AddClassification(EncounterTypes.EnvironmentalHazard);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainActionCards(1));

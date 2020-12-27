@@ -3,6 +3,7 @@ namespace FallenLand
 {
 	public enum EncounterTypes
 	{
+		EnvironmentalHazard,
 		Special,
 	}
 }
