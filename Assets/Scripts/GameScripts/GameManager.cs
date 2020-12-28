@@ -1531,6 +1531,22 @@ namespace FallenLand
 			}
 		}
 
+		public void CharacterCrownTakesSetAmountOfDamage(int playerIndex, int characterIndex, int amountOfDamage, byte damageType)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+            {
+				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, amountOfDamage);
+				sendNetworkEvent(characterHealth, ReceiverGroup.Others, Constants.EvCharacterHealth);
+				int remainingHp = -1;
+				if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null)
+				{
+					remainingHp = Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() - amountOfDamage;
+				}
+				handleCharacterHealthEvent(characterHealth);
+				EventManager.CharacterCrownHasTakenDamage(characterIndex, amountOfDamage, damageType, remainingHp);
+			}
+		}
+
 		public void DestroyVehicle(int playerIndex)
 		{
             if (isPlayerIndexInRange(playerIndex))
