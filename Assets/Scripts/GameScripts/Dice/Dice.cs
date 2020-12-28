@@ -7,7 +7,7 @@ namespace FallenLand
 
 		public Dice()
 		{
-			RandomGen = new System.Random();
+			RandomGen = new System.Random(System.Guid.NewGuid().GetHashCode());
 		}
 
 		public int RollDice(int numberOfSides)
