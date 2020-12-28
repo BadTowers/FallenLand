@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -113,15 +113,12 @@ namespace FallenLand
 
 		private void toggleColor(MeshRenderer mr)
 		{
-			Debug.Log("toggleColor");
 			if (mr.material.color == Color.white)
 			{
-				Debug.Log("blue");
 				mr.material.color = Color.blue;
 			}
 			else
 			{
-				Debug.Log("white");
 				mr.material.color = Color.white;
 			}
 		}
