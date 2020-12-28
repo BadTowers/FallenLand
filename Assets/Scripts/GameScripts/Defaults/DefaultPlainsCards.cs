@@ -645,7 +645,7 @@ namespace FallenLand
 			});
 			int characterCrownIndex = 0;
 			int amountOfDamage = 3;
-			curCard.AddActionOnBegin(new DealPhysicalDamageToCharacterCrown(characterCrownIndex, amountOfDamage));
+			curCard.AddActionOnBegin(new DealSetAmountOfPhysicalDamageToCharacterCrown(characterCrownIndex, amountOfDamage));
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -670,7 +670,7 @@ namespace FallenLand
 			});
 			characterCrownIndex = 2;
 			amountOfDamage = 3;
-			curCard.AddActionOnBegin(new DealPhysicalDamageToCharacterCrown(characterCrownIndex, amountOfDamage));
+			curCard.AddActionOnBegin(new DealSetAmountOfPhysicalDamageToCharacterCrown(characterCrownIndex, amountOfDamage));
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -704,6 +704,31 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishment(new LoseRandomCharacterCrownAndTheirEquipment());
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Scare Crow");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Combat] = 5
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Combat] = true
+			});
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			int numD6s = 2;
+			characterCrownIndex = 2;
+			curCard.AddActionOnBegin(new DealD6PhysicalDamageToCharacterCrown(characterCrownIndex, numD6s));
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6PhysicalDamage(4));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);

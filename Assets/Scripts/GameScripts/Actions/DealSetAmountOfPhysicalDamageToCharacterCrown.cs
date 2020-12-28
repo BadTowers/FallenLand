@@ -1,12 +1,12 @@
 ﻿
 namespace FallenLand
 {
-    public class DealPhysicalDamageToCharacterCrown : Action
+    public class DealSetAmountOfPhysicalDamageToCharacterCrown : Action
     {
         private int AmountOfDamage = 0;
         private int CharacterCrownIndex;
 
-        public DealPhysicalDamageToCharacterCrown(int characterCrownIndex, int amount)
+        public DealSetAmountOfPhysicalDamageToCharacterCrown(int characterCrownIndex, int amount)
         {
             AmountOfDamage = amount;
             CharacterCrownIndex = characterCrownIndex;
