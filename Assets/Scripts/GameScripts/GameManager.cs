@@ -232,6 +232,7 @@ namespace FallenLand
 						Debug.LogError("Ran out of cards. Should shuffle and network to everyone else to shuffle!");
 						//TODO actually shuffle
 						cardIndex = 0;
+						break; //for now
 					}
 				}
 				while (cardIndex < PlainsDeck.Count);
