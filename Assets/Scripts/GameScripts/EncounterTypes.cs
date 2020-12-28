@@ -10,5 +10,6 @@ namespace FallenLand
 		Special,
 		TheBrotherhood,
 		VehicleCombat,
+		WildAnimals,
 	}
 }

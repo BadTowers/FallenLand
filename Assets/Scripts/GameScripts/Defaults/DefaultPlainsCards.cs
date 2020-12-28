@@ -732,6 +732,32 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Wild Horses");
+			curCard.SetSalvageReward(4);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Survival] = 3 //TODO Needs to be performed twice to be a success
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Survival] = true
+			});
+			curCard.AddClassification(EncounterTypes.WildAnimals);
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainPrestige(1));
+			curCard.AddReward(new GainTownHealth(3));
+			curCard.AddReward(new GainSpecificSpoilsElseSalvage("6 Fast Horses", 15));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6PhysicalDamage(3));
+			//todo punishment -- you are delayed 1 week
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()

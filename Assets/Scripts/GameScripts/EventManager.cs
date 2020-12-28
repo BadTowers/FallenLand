@@ -38,5 +38,12 @@ namespace FallenLand
         {
             OnVehicleDestroyed?.Invoke();
         }
+
+        public delegate void ShowTheGenericPopup(string textToShow);
+        public static event ShowTheGenericPopup OnShowGenericPopup;
+        public static void ShowGenericPopup(string textToShow)
+        {
+            OnShowGenericPopup?.Invoke(textToShow);
+        }
     }
 }

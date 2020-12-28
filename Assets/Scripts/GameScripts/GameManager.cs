@@ -13,7 +13,7 @@ namespace FallenLand
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();
 		private List<PlainsCard> PlainsDeck = new List<PlainsCard>();
-		private List<SpoilsCard> DiscardedSpoils = new List<SpoilsCard>();
+		private List<SpoilsCard> DiscardedSpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> DiscardedCharacters = new List<CharacterCard>();
 		private List<ActionCard> DiscardedActionCards = new List<ActionCard>();
 		private List<PlainsCard> DiscardedPlainsCards = new List<PlainsCard>();
@@ -159,13 +159,11 @@ namespace FallenLand
 			ActionDeck = (new DefaultActionCards()).GetActionCards();
 			ActionDeck = Card.ShuffleDeck(ActionDeck);
 
+			PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
+			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 
 			//TODO create the deck of mission cards
 
-
-			//TODO create the deck of plains cards
-			PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
-			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 
 			//TODO create the deck of mountain cards
 
@@ -374,6 +372,10 @@ namespace FallenLand
 				else if (cardInfo.GetCardByte() == Constants.SPECIAL_SPOILS_CARD)
 				{
 					dealSpecificSpoilToPlayerFromSpecialDeck(playerIndex, cardName);
+				}
+				else if(cardInfo.GetCardByte() == Constants.DISCARDED_SPOILS_CARD)
+                {
+					dealSpecificSpoilToPlayerFromDiscardDeck(playerIndex, cardName);
 				}
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
@@ -1063,17 +1065,17 @@ namespace FallenLand
 				if (wasOnCharacter)
 				{
 					Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterIndexFoundOn, mostExpensiveCard);
-					DiscardedSpoils.Add(mostExpensiveCard);
+					DiscardedSpoilsDeck.Add(mostExpensiveCard);
 				}
 				else if (wasOnVehicle)
 				{
 					Players[playerIndex].RemoveStowableFromActiveVehicle(mostExpensiveCard);
-					DiscardedSpoils.Add(mostExpensiveCard);
+					DiscardedSpoilsDeck.Add(mostExpensiveCard);
 				}
 				else if (wasInAuctionHouse)
 				{
 					Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(mostExpensiveCard);
-					DiscardedSpoils.Add(mostExpensiveCard);
+					DiscardedSpoilsDeck.Add(mostExpensiveCard);
 				}
 
 				if (playerIndex == GetIndexForMyPlayer())
@@ -1119,6 +1121,13 @@ namespace FallenLand
 			object content = new CardNetworking(cardName, playerIndex, Constants.SPECIAL_SPOILS_CARD);
 			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 			dealSpecificSpoilToPlayerFromSpecialDeck(playerIndex, cardName);
+		}
+
+		public virtual void DealSpecificSpoilToPlayerFromDiscardPile(int playerIndex, string cardName)
+		{
+			object content = new CardNetworking(cardName, playerIndex, Constants.DISCARDED_SPOILS_CARD);
+			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+			dealSpecificSpoilToPlayerFromDiscardDeck(playerIndex, cardName);
 		}
 
 		public int RollTownEvents(int playerIndex)
@@ -1576,12 +1585,12 @@ namespace FallenLand
 						SpoilsCard currentStowable = stowedSpoils[spoilsIndex];
 						removeSpecificSpoilsFromVehicle(playerIndex, currentStowable.GetTitle());
 						SpoilsDeck.Remove(currentStowable);
-						DiscardedSpoils.Add(currentStowable);
+						DiscardedSpoilsDeck.Add(currentStowable);
 					}
 
 					//Discard the vehicle
 					Players[playerIndex].RemoveActiveVehicle();
-					DiscardedSpoils.Add(vehicle);
+					DiscardedSpoilsDeck.Add(vehicle);
 
 					if (playerIndex == GetIndexForMyPlayer())
 					{
@@ -1601,6 +1610,38 @@ namespace FallenLand
 				handleCharacterHealthEvent(healthNetworking);
 				EventManager.CharacterCrownHasTakenDamage(characterCrownIndex, 1000, Constants.DAMAGE_PHYSICAL, remainingHp, true);
 			}
+		}
+
+		public bool IsSpecificCardInSpoilsDeck(string cardName)
+		{
+			bool isInDeck = false;
+
+			for (int i = 0; i < SpoilsDeck.Count; i++)
+			{
+				if (SpoilsDeck[i].GetTitle().Equals(cardName))
+				{
+					isInDeck = true;
+					break;
+				}
+			}
+
+			return isInDeck;
+		}
+
+		public bool IsSpecificCardInDiscardedSpoilsDeck(string cardName)
+		{
+			bool isInDeck = false;
+
+			for (int i = 0; i < DiscardedSpoilsDeck.Count; i++)
+			{
+				if (DiscardedSpoilsDeck[i].GetTitle().Equals(cardName))
+				{
+					isInDeck = true;
+					break;
+				}
+			}
+
+			return isInDeck;
 		}
 
 		public Dice GetDiceRoller()
@@ -1714,6 +1755,25 @@ namespace FallenLand
 			if (!found)
 			{
 				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+			}
+		}
+
+		private void dealSpecificSpoilToPlayerFromDiscardDeck(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < DiscardedSpoilsDeck.Count; i++)
+			{
+				if (DiscardedSpoilsDeck[i].GetTitle() == cardName)
+				{
+					Players[playerIndex].AddSpoilsCardToAuctionHouse(DiscardedSpoilsDeck[i]);
+					DiscardedSpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.Log("Tried to deal specific DISCARDED SPOILS card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -2307,7 +2367,7 @@ namespace FallenLand
 					if (shouldDiscardEquipmentOnDeath)
 					{
 						SpoilsDeck.Remove(card);
-						DiscardedSpoils.Add(card);
+						DiscardedSpoilsDeck.Add(card);
 					}
 					else
 					{
