@@ -29,11 +29,6 @@ namespace FallenLand
 				[Skills.Mechanical] = 4,
 				[Skills.Technical] = 3
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Mechanical] = true,
-				[Skills.Technical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("Draw the next Relic Spoils card, discarding all others. You may place your party on the nearest Mission chip and attempt it at no cost in weeks.");
 			curCard.SetSuccessDescriptionText("Mac is filled with joy and smiling as he gives you the reward.");
@@ -55,11 +50,6 @@ namespace FallenLand
 				[Skills.Mechanical] = 3,
 				[Skills.Technical] = 3
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Mechanical] = true,
-				[Skills.Technical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -80,12 +70,6 @@ namespace FallenLand
 				[Skills.Technical] = 4,
 				[Skills.Combat] = 5
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Survival] = true,
-				[Skills.Technical] = true,
-				[Skills.Combat] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -105,11 +89,6 @@ namespace FallenLand
 			{
 				[Skills.Survival] = 5,
 				[Skills.Diplomacy] = 4
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Survival] = true,
-				[Skills.Diplomacy] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -132,10 +111,6 @@ namespace FallenLand
 			{
 				[Skills.Combat] = 7
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -154,10 +129,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 4
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -178,10 +149,6 @@ namespace FallenLand
 			{
 				[Skills.Combat] = 6
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -199,10 +166,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Survival] = 4
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Survival] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.AddClassification(EncounterTypes.EnvironmentalHazard);
@@ -225,11 +188,6 @@ namespace FallenLand
 				[Skills.Diplomacy] = 4,
 				[Skills.Medical] = 3
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true,
-				[Skills.Medical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -249,10 +207,6 @@ namespace FallenLand
 			{
 				[Skills.Diplomacy] = 3
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -270,10 +224,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Diplomacy] = 3
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -294,11 +244,6 @@ namespace FallenLand
 				[Skills.Mechanical] = 3,
 				[Skills.Technical] = 3
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Mechanical] = true,
-				[Skills.Technical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -318,10 +263,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Diplomacy] = 3
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -344,10 +285,6 @@ namespace FallenLand
 			{
 				[Skills.Technical] = 4
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Technical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -368,11 +305,6 @@ namespace FallenLand
 				[Skills.Survival] = 3,
 				[Skills.Combat] = 6
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Survival] = true,
-				[Skills.Combat] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -391,10 +323,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 6
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.AddActionOnBegin(new MovePartyToStartingTownLocation());
@@ -417,10 +345,6 @@ namespace FallenLand
 			{
 				[Skills.Diplomacy] = 0
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.AddClassification(EncounterTypes.Special);
 			curCard.SetSuccessHeaderText("");
@@ -440,10 +364,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Medical] = 3
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Medical] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -465,10 +385,6 @@ namespace FallenLand
 			{
 				[Skills.Medical] = 4
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Medical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -488,10 +404,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 7
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			curCard.AddClassification(EncounterTypes.TheBrotherhood);
 			curCard.AddPrecheck(new NotPlayingBrotherhood());
@@ -513,11 +425,6 @@ namespace FallenLand
 			{
 				[Skills.Technical] = 3,
 				[Skills.Combat] = 5
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Technical] = true,
-				[Skills.Combat] = true
 			});
 			curCard.AddClassification(EncounterTypes.TheBrotherhood);
 			curCard.AddClassification(EncounterTypes.Mystery);
@@ -542,10 +449,6 @@ namespace FallenLand
 			{
 				[Skills.Survival] = 3
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Survival] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -565,10 +468,6 @@ namespace FallenLand
 			{
 				[Skills.Diplomacy] = 5
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -586,10 +485,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 7
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			curCard.AddClassification(EncounterTypes.VehicleCombat);
 			curCard.AddClassification(EncounterTypes.BikerGang);
@@ -614,11 +509,6 @@ namespace FallenLand
 				[Skills.Medical] = 3,
 				[Skills.Survival] = 4
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Medical] = true,
-				[Skills.Survival] = true
-			});
 			curCard.AddClassification(EncounterTypes.Perishables);
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
@@ -638,10 +528,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 6
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			int characterCrownIndex = 0;
 			int amountOfDamage = 3;
@@ -663,10 +549,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 5
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			characterCrownIndex = 2;
 			amountOfDamage = 3;
@@ -691,12 +573,6 @@ namespace FallenLand
 				[Skills.Technical] = 4,
 				[Skills.Mechanical] = 4
 			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Diplomacy] = true,
-				[Skills.Technical] = true,
-				[Skills.Mechanical] = true
-			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -714,10 +590,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Combat] = 5
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Combat] = true
 			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			int numD6s = 2;
@@ -739,10 +611,6 @@ namespace FallenLand
 			curCard.SetSkillChecks(new Dictionary<Skills, int>
 			{
 				[Skills.Survival] = 3 //TODO Needs to be performed twice to be a success
-			});
-			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
-			{
-				[Skills.Survival] = true
 			});
 			curCard.AddClassification(EncounterTypes.WildAnimals);
 			curCard.SetMakePsychCheckAfterEncounter(false);

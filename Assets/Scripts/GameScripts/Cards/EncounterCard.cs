@@ -50,6 +50,14 @@ namespace FallenLand
 			if (skillChecks != null)
 			{
 				SkillChecksRequired = skillChecks;
+				//Assume all the checks are party checks by default
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+                    if (SkillChecksRequired.ContainsKey(skill))
+                    {
+						ArePartySkillChecks[skill] = true;
+                    }
+				}
 			}
 		}
 
