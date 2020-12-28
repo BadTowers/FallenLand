@@ -1500,8 +1500,13 @@ namespace FallenLand
 					damage += DiceRoller.RollDice(Constants.D6);
 				}
 				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, damage);
+				int remainingHp = -1;
+				if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null)
+				{
+					remainingHp = Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() - damage;
+				}
 				handleCharacterHealthEvent(characterHealth);
-				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage, damageType);
+				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage, damageType, remainingHp);
 			}
 		}
 		#endregion
@@ -2162,9 +2167,34 @@ namespace FallenLand
 		private void handleCharacterHealthEvent(object content)
 		{
 			CharacterHealthNetworking characterHealth = (CharacterHealthNetworking)content;
+			int playerIndex = characterHealth.GetPlayerIndex();
+			int characterIndex = characterHealth.GetCharacterIndex();
 			if (characterHealth.GetDamageType() == Constants.DAMAGE_PHYSICAL)
 			{
-				Players[characterHealth.GetPlayerIndex()].AddPhysicalDamageToCharacter(characterHealth.GetCharacterIndex(), characterHealth.GetAmountOfDamage());
+				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, characterHealth.GetAmountOfDamage());
+			}
+
+			handleCharacterDeathIfNecessary(playerIndex, characterIndex);
+		}
+
+		private void handleCharacterDeathIfNecessary(int playerIndex, int characterIndex)
+		{
+			if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null && Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() <= 0)
+			{
+				//Remove spoils
+				List<SpoilsCard> equippedSpoilsToMoveBackToAuctionHouse = Players[playerIndex].GetActiveCharacters()[characterIndex].GetEquippedSpoils();
+				for (int spoilsIndex = equippedSpoilsToMoveBackToAuctionHouse.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+				{
+					string cardName = equippedSpoilsToMoveBackToAuctionHouse[spoilsIndex].GetTitle();
+					removeSpecificSpoilsFromSlot(playerIndex, characterIndex, cardName);
+					addSpecificCardToAuctionHouse(playerIndex, cardName);
+				}
+
+				//Remove character
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+				Players[playerIndex].RemoveCharacterFromParty(characterIndex);
+				CharacterDeck.Remove(character);
+				DiscardedCharacters.Add(character);
 			}
 		}
 

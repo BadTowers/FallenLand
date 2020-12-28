@@ -766,10 +766,10 @@ namespace FallenLand
             Debug.LogError("TODO onDistributeD6HealingPopup");
         }
 
-        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType)
+        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType, int remainingHp)
         {
             GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
-            if (GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer())[characterIndex] == null)
+            if (GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer())[characterIndex] == null && remainingHp == -1)
             {
                 GenericPopupText.GetComponent<Text>().text = "Character crown " + (characterIndex + 1) + " was empty. No damage taken!";
             }
@@ -790,6 +790,11 @@ namespace FallenLand
                 else if (damageType == Constants.DAMAGE_PSYCHOLOGICAL)
                 {
                     GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " psychological damage!";
+                }
+
+                if (remainingHp <= 0)
+                {
+                    GenericPopupText.GetComponent<Text>().text = GenericPopupText.GetComponent<Text>().text + " They died...";
                 }
             }
             showPopup(GenericPopupTextPanel);
