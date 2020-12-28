@@ -28,6 +28,7 @@ namespace FallenLand
 		Mechanical,
 		Medical,
 		Melee_Weapon,
+		Motorized,
 		Party_Equipment,
 		Permenant,
 		Ranged_Weapon,

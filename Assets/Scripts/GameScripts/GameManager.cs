@@ -210,8 +210,10 @@ namespace FallenLand
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
 				int cardIndex = 0;
+				bool prechecksHeld;
 				do
 				{
+					prechecksHeld = true;
 					List<Precheck> prechecks = PlainsDeck[cardIndex].GetPrechecks();
 					if (prechecks.Count == 0)
 					{
@@ -223,6 +225,7 @@ namespace FallenLand
 						{
 							Debug.Log("Precheck didn't hold. Moving to next encounter card.");
 							cardIndex++;
+							prechecksHeld = false;
 							break;
 						}
 					}
@@ -235,7 +238,7 @@ namespace FallenLand
 						break; //for now
 					}
 				}
-				while (cardIndex < PlainsDeck.Count);
+				while (cardIndex < PlainsDeck.Count && !prechecksHeld);
 				string nextPlainsEncounterCardName = PlainsDeck[cardIndex].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
@@ -963,6 +966,23 @@ namespace FallenLand
 			}
 		}
 
+		public bool DealNextMasterCharacterToPlayer(int playerIndex)
+		{
+			bool characterDealt = false;
+			for (int i = 0; i < CharacterDeck.Count; i++)
+			{
+				if (CharacterDeck[i].GetIsMaster())
+				{
+					object content = new CardNetworking(CharacterDeck[i].GetTitle(), playerIndex, Constants.CHARACTER_CARD);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+					dealSpecificCharacterToPlayerFromDeck(playerIndex, CharacterDeck[i].GetTitle());
+					characterDealt = true;
+					break;
+				}
+			}
+			return characterDealt;
+		}
+
 		public void ApplyPsychDamageToWholeParty(int playerIndex, int amountOfDamage)
 		{
 			if (isPlayerIndexInRange(playerIndex))
@@ -1508,6 +1528,35 @@ namespace FallenLand
 				}
 				handleCharacterHealthEvent(characterHealth);
 				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage, damageType, remainingHp);
+			}
+		}
+
+		public void DestroyVehicle(int playerIndex)
+		{
+            if (isPlayerIndexInRange(playerIndex))
+            {
+				//Discard all the spoils attached to the vehicle
+				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
+				if(vehicle != null)
+                {
+					List<SpoilsCard> stowedSpoils = vehicle.GetAttachments();
+					for (int spoilsIndex = stowedSpoils.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+					{
+						SpoilsCard currentStowable = stowedSpoils[spoilsIndex];
+						removeSpecificSpoilsFromVehicle(playerIndex, currentStowable.GetTitle());
+						SpoilsDeck.Remove(currentStowable);
+						DiscardedSpoils.Add(currentStowable);
+					}
+
+					//Discard the vehicle
+					Players[playerIndex].RemoveActiveVehicle();
+					DiscardedSpoils.Add(vehicle);
+
+					if (playerIndex == GetIndexForMyPlayer())
+					{
+						EventManager.VehicleIsDestroyed();
+					}
+				}
 			}
 		}
 		#endregion

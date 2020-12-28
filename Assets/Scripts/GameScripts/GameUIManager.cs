@@ -332,6 +332,7 @@ namespace FallenLand
             EventManager.OnD6DamageNeedsToBeDistributed += onDistributeD6DamagePopup;
             EventManager.OnD6HealingNeedsDistributed += onDistributeD6HealingPopup;
             EventManager.OnCharacterCrownTakesDamage += onCharacterCrownTakesDamage;
+            EventManager.OnVehicleDestroyed += onVehicleDestroyed;
         }
 
         public override void OnDisable()
@@ -341,6 +342,7 @@ namespace FallenLand
             EventManager.OnD6DamageNeedsToBeDistributed -= onDistributeD6DamagePopup;
             EventManager.OnD6HealingNeedsDistributed -= onDistributeD6HealingPopup;
             EventManager.OnCharacterCrownTakesDamage -= onCharacterCrownTakesDamage;
+            EventManager.OnVehicleDestroyed -= onVehicleDestroyed;
         }
 
         void Update()
@@ -797,6 +799,13 @@ namespace FallenLand
                     GenericPopupText.GetComponent<Text>().text = GenericPopupText.GetComponent<Text>().text + " They died...";
                 }
             }
+            showPopup(GenericPopupTextPanel);
+        }
+
+        private void onVehicleDestroyed()
+        {
+            GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
+            GenericPopupText.GetComponent<Text>().text = "Vehicle was destroyed with all its gear!";
             showPopup(GenericPopupTextPanel);
         }
 

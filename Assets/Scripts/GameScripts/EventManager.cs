@@ -31,5 +31,12 @@ namespace FallenLand
         {
             OnCharacterCrownTakesDamage?.Invoke(characterCrown, amountOfDamage, damageType, remainingHp);
         }
+
+        public delegate void VehicleDestroyed();
+        public static event VehicleDestroyed OnVehicleDestroyed;
+        public static void VehicleIsDestroyed()
+        {
+            OnVehicleDestroyed?.Invoke();
+        }
     }
 }

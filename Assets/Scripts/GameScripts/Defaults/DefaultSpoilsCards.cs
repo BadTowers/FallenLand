@@ -288,7 +288,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Matching Baja Buggies");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(8);
 			curCard.SetSellValue(14);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -371,7 +371,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Semi Truck");
 			curCard.SetTitleSubString("With Trailer");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(20);
 			curCard.SetSellValue(26);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -926,7 +926,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Armored Humvee");
 			curCard.SetTitleSubString("With .50 Caliber MG Turret");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(29);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1176,7 +1176,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Dork Squad");
 			curCard.SetTitleSubString("Computer Repair Car");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(17);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1452,7 +1452,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Practically New Ambulance");
 			curCard.SetTitleSubString("With Obnoxiously Loud Sirens");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(14);
 			curCard.SetSellValue(29);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1641,7 +1641,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Police Interceptor");
 			curCard.SetTitleSubString("With Hypnotic Lights");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1800,7 +1800,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Classic All American");
 			curCard.SetTitleSubString("Performance Muscle Car");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1832,7 +1832,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Macho Tow Truck");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Six_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Six_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(13);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -1913,7 +1913,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Contact Truck");
 			curCard.SetTitleSubString("With Matching Yellow Hardhats");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(18);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2011,7 +2011,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("5 Matching Pink Mopeds");
 			curCard.SetQuote("At least the thieves had a sense of humor...");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Jinxed, SpoilsTypes.Two_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Jinxed, SpoilsTypes.Two_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2290,7 +2290,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Espresso Van");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(10);
 			curCard.SetSellValue(23);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -2907,7 +2907,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("The War Wagon");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Six_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Six_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(16);
 			curCard.SetSellValue(40);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3234,7 +3234,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Ol' Rusty");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3426,7 +3426,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Luxury SUV");
 			curCard.SetTitleSubString("With Spinner Rims and Hydraulics");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(19);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3527,7 +3527,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Enigma Van");
 			curCard.SetTitleSubString("With Custom 60's Paint Job");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(20);
 			curCard.SetSellValue(24);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
@@ -3971,7 +3971,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("American Iron Custom Choppers");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Two_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Two_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(13);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>{
