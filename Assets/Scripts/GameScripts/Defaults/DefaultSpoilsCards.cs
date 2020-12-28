@@ -1256,28 +1256,15 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Survival, 2},
-			{Skills.Diplomacy, 2},
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 2},
-			{Skills.Medical, 2}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Take_Spoils_Cards_From_Top_Discard_Pile, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.Opponent_Discarded_Book_Spoils
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2},
+				{Skills.Survival, 2},
+				{Skills.Diplomacy, 2},
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 2},
+				{Skills.Medical, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1288,19 +1275,14 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(20);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Survival, 1},
-			{Skills.Diplomacy, 3},
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 4},
-			{Skills.Medical, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Prestige, 1},
-			{Gains.Auto_Succeed_Sigma_Bunker_Missions, VALUE_NOT_NEEDED}
-		});
-			/* No conditionals */
-			/* No restrctions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Survival, 1},
+				{Skills.Diplomacy, 3},
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 4},
+				{Skills.Medical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1311,12 +1293,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt, SpoilsTypes.Sporting_Goods);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(3);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrctions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1327,50 +1307,12 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(6);
 			curCard.SetSellValue(22);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 8},
-			{Skills.Survival, 2},
-			{Skills.Diplomacy, 1}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Select_Character_From_Opposing_Party, 1},
-			{Gains.Roll_D6, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.Before_PvP
-		});
-			curCard.SetNumberOfUses(
-				Uses.Once_Per_Game
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
-			tempCard = new SpoilsCard(".50 Caliber Sniper Rifle");
-			tempCard.SetTitleSubString("Roll - 1-4");
-			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Kill_Selected_Character_From_Opposing_Party, 1},
-			{Gains.Discard_Selected_Opposing_Character_Equipment, VALUE_NOT_NEEDED}
-		});
-			tempCard.SetWhenUsable(new List<Times>(){
-			Times.Immediately
-		});
-			tempCard.SetNumberOfUses(
-				Uses.Once_Per_Game
-			);
-			tempCard.SetDiscard(
-				true
-			);
-			tempCard.SetWhenTempEnd(
-				Times.After_Party_Exploits_Phase
-			);
-			curCard.AddD6Option(tempCard); //1
-			curCard.AddD6Option(tempCard);
-			curCard.AddD6Option(tempCard);
-			curCard.AddD6Option(tempCard); //4
-			curCard.AddD6Option(null); //5
-			curCard.AddD6Option(null); //6
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 8},
+				{Skills.Survival, 2},
+				{Skills.Diplomacy, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1381,13 +1323,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(5);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 3}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1398,26 +1338,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Auto_Succeed_Lock_Picking_Encounters, VALUE_NOT_NEEDED}
-		});
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Gain_Salvage, 2}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.During_End_Turn_Phase
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1428,23 +1353,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Fist);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.During_Gladiatorial_Events_Encounters
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1455,48 +1367,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Health, 1}
-		});
-			curCard.SetConditionalGains_dep(
-				new Dictionary<Gains, int>{ //Set 1
-				{Gains.Combat_Skill_Checks_Automatic_Pass, 1} //1.1
-				},
-				new Dictionary<Gains, int>{ //Set 2
-				{Gains.Combat_Skill_Checks_Automatic_Pass, 1} //2.1
-				},
-				new Dictionary<Gains, int>{ //Set 3
-				{Gains.Combat_Skill_Checks_Automatic_Pass, 1} //3.1
-				}
-			);
-			curCard.SetWhenUsable(
-				new List<Times>{ //Set 1
-				Times.Axe_Equipped, //1.1
-				Times.During_Encounter_Mission_Or_PvP, //1.2
-				},
-				new List<Times>{ //Set 2
-				Times.Industrial_Chainsaw_Equipped, //2.1
-				Times.During_Encounter_Mission_Or_PvP,
-				},
-				new List<Times>{ //Set 3
-				Times.Rusty_Cleaver_Equipped, //3.1
-				Times.During_Encounter_Mission_Or_PvP,
-				}
-			);
-			curCard.SetNumberOfUses(
-				Uses.Unlimited,
-				Uses.Unlimited,
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false,
-				false,
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1507,24 +1381,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Axe);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(6);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1},
-			{Skills.Survival, 1}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Mechanical_Skill_Checks_Automatic_Pass, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.During_Lock_Picking_Encounters
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1},
+				{Skills.Survival, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1551,15 +1412,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Backpack, SpoilsTypes.Camping_Gear);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(10);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Survival, 2},
-			{Skills.Medical, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Carry_Weight, 5}
-		});
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Survival, 2},
+				{Skills.Medical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1570,24 +1427,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(4);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1},
-			{Skills.Survival, 2}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Ignore_Negatives_Of_Encounter_Or_Mission_Failure, VALUE_NOT_NEEDED}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Failed_Mission_Or_Encounter
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1},
+				{Skills.Survival, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1614,15 +1458,13 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Survival, 1},
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 2},
-			{Skills.Medical, 1}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Survival, 1},
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 2},
+				{Skills.Medical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1633,24 +1475,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(8);
 			curCard.SetSellValue(14);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Mechanical, 5},
-			{Skills.Technical, 3}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Any_Spoils_Cards_From_Discard, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.Anytime
-		});
-			curCard.SetNumberOfUses(
-				Uses.Once_Per_Game
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Mechanical, 5},
+				{Skills.Technical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1661,23 +1490,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Diplomacy, 4}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Diplomacy_Skill_Checks_Automatic_Pass, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Diplomacy_Skill_Check_Failure
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Diplomacy, 4}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1688,15 +1504,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(12);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5},
-			{Skills.Survival, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.First_Strike, VALUE_NOT_NEEDED}
-		});
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5},
+				{Skills.Survival, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1707,35 +1519,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(7);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Diplomacy, 1}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(
-				new Dictionary<Gains, int>{ //set 1
-				{Gains.Steal_Spoils_From_Opposing_Party_Excluding_Vehicles, 1} //1.1
-				},
-				new Dictionary<Gains, int>{ //set 2
-				{Gains.Steal_Spoils_From_Opposing_Town_Auction_House, 1} //2.1
-				}
-			);
-			curCard.SetWhenUsable(
-				new List<Times>{ //set 1
-				Times.Within_1_Hex_Of_Enemy_Party //1.1
-				},
-				new List<Times>{ //set 2
-				Times.Within_1_Hex_Of_Enemy_Town //2.1
-				}
-			);
-			curCard.SetNumberOfUses(
-				Uses.Once_Per_Turn,
-				Uses.Once_Per_Turn
-			);
-			curCard.SetDiscard(
-				false,
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Diplomacy, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1749,13 +1536,8 @@ namespace FallenLand
 			curCard.SetSellValue(13);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
 			{
-
+				//No base skills
 			});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Prestige, 2}
-		});
-			/* No conditionals */
-			/* No restrictions */
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1766,18 +1548,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle_Equipment, SpoilsTypes.Permenant);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 1},
-			{Gains.Ignore_All_Vehicle_Equipment_Movement_Penalties, VALUE_NOT_NEEDED}
-		});
-			/* No conditionals */
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Equip_To_Vehicle,
-			Restrictions.Four_Wheels_Or_More
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1788,65 +1562,15 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Six_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(16);
 			curCard.SetSellValue(40);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 10},
-			{Skills.Survival, 3},
-			{Skills.Diplomacy, 4},
-			{Skills.Mechanical, 3},
-			{Skills.Technical, 2},
-			{Skills.Medical, 4}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Prestige, 2},
-			{Gains.Gain_Movement, 2}
-		});
-			curCard.SetConditionalGains_dep(
-				new Dictionary<Gains, int>{ //Set 1
-				{Gains.Gain_Character_Cards, 2} //1.1
-				},
-				new Dictionary<Gains, int>{ //Set 2
-				{Gains.Roll_D6, 1} //2.1
-				}
-			);
-			curCard.SetWhenUsable(
-				new List<Times>{ //Set 1
-				Times.Immediately
-				},
-				new List<Times>{ //Set 2
-				Times.Vehicle_Destroyed
-				}
-			);
-			curCard.SetNumberOfUses(
-				Uses.Unlimited,
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false, false
-			);
-			/* No restrictions */
-			tempCard = new SpoilsCard("The War Wagon");
-			tempCard.SetTitleSubString("Roll - 1-3");
-			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Prevent_Destruction, 1}
-		});
-			tempCard.SetWhenUsable(new List<Times>(){
-			Times.Immediately
-		});
-			tempCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			tempCard.SetDiscard(
-				true
-			);
-			tempCard.SetWhenTempEnd(
-				Times.Immediately
-			);
-			curCard.AddD6Option(tempCard); //1
-			curCard.AddD6Option(tempCard);
-			curCard.AddD6Option(tempCard); //3
-			curCard.AddD6Option(null); //4
-			curCard.AddD6Option(null);
-			curCard.AddD6Option(null); //6
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 10},
+				{Skills.Survival, 3},
+				{Skills.Diplomacy, 4},
+				{Skills.Mechanical, 3},
+				{Skills.Technical, 2},
+				{Skills.Medical, 4}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1857,13 +1581,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(6);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Survival, 1}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2},
+				{Skills.Survival, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1874,13 +1596,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Axe);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(7);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 4},
-			{Skills.Survival, 2}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1891,15 +1611,13 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Mechanical, SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(6);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1},
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 1},
-			{Skills.Medical, 1}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1},
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 1},
+				{Skills.Medical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1910,12 +1628,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(13);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1926,23 +1642,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Fist);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(3);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.During_Gladiatorial_Events_Encounters
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1953,16 +1656,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Clothing);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(10);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Diplomacy, 5}
-		});
-			/* No statics */
-			/* No conditionals */
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Not_Used_With_Other_Armor,
-			Restrictions.Not_Used_With_Other_Clothing,
-			Restrictions.Equip_As_First_Item
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Diplomacy, 5}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1973,15 +1670,13 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Blunt, SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(12);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1},
-			{Skills.Survival, 2},
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 1}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1},
+				{Skills.Survival, 2},
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1992,36 +1687,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Medical);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(12);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Diplomacy, 2},
-			{Skills.Medical, 7}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(
-				new Dictionary<Gains, int>{ //Set 1
-				{Gains.Remove_Party_Physical_Damage, 4} //1.1
-				},
-				new Dictionary<Gains, int>{ //Set 2
-				{Gains.Prevent_Any_Character_Death_And_Set_HP_To, 1} //2.1
-				}
-			);
-			curCard.SetWhenUsable(
-				new List<Times>{ //Set 1
-				Times.Anytime //1.1
-				},
-				new List<Times>{ //Set 2
-				Times.Any_Party_Member_Death //2.1
-				}
-			);
-			curCard.SetNumberOfUses(
-				Uses.Unlimited,
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true,
-				true
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Diplomacy, 2},
+				{Skills.Medical, 7}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2032,19 +1702,15 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(18);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1},
-			{Skills.Survival, 1},
-			{Skills.Diplomacy, 1},
-			{Skills.Mechanical, 3},
-			{Skills.Technical, 5},
-			{Skills.Medical, 3}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 1}
-		});
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1},
+				{Skills.Survival, 1},
+				{Skills.Diplomacy, 1},
+				{Skills.Mechanical, 3},
+				{Skills.Technical, 5},
+				{Skills.Medical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2055,12 +1721,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2071,23 +1735,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(18);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 9}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Destroy_Oppenent_Vehicle, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.Before_PvP
-		});
-			curCard.SetNumberOfUses(
-				Uses.Once_Per_Game
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 9}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2098,13 +1749,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Camping_Gear, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(10);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Survival, 3},
-			{Skills.Medical, 2}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Survival, 3},
+				{Skills.Medical, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2115,43 +1764,15 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(0);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Survival, 2},
-			{Skills.Diplomacy, 1},
-			{Skills.Mechanical, 2},
-			{Skills.Technical, 1},
-			{Skills.Medical, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 1},
-			{Gains.Stacks_With_Other_Vehicles, 1}
-		});
-			curCard.SetConditionalGains_dep(
-				new Dictionary<Gains, int>{ //set 1
-				{Gains.Gain_Kurtis_Wyatt_Character_Card, VALUE_NOT_NEEDED} //1.1
-				},
-				new Dictionary<Gains, int>{ //set 2
-				{Gains.Choose_Which_Vehicle_To_Discard, VALUE_NOT_NEEDED} //2.1
-				}
-			);
-			curCard.SetWhenUsable(
-				new List<Times>{ //set 1
-				Times.Immediately //1.1
-				},
-				new List<Times>{ //set 2
-				Times.Vehicle_Destroyed //2.1
-				}
-			);
-			curCard.SetNumberOfUses(
-				Uses.Unlimited, //1.1
-				Uses.Unlimited //2.1
-			);
-			curCard.SetDiscard(
-				false,
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2},
+				{Skills.Survival, 2},
+				{Skills.Diplomacy, 1},
+				{Skills.Mechanical, 2},
+				{Skills.Technical, 1},
+				{Skills.Medical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2162,35 +1783,15 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Zero_Wheeled);
 			curCard.SetCarryWeight(16);
 			curCard.SetSellValue(0);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 6},
-			{Skills.Survival, 3},
-			{Skills.Diplomacy, 3},
-			{Skills.Mechanical, 3},
-			{Skills.Technical, 3},
-			{Skills.Medical, 3}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 8},
-			{Gains.All_Hex_Movement_Cost, 1},
-			{Gains.Discard_If_Not_Purchased, VALUE_NOT_NEEDED}
-		});
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Optional_Pay_Salvage, 10}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.Immediately
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Cannot_Be_Sold,
-			Restrictions.Discard_If_Not_Purchased
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 6},
+				{Skills.Survival, 3},
+				{Skills.Diplomacy, 3},
+				{Skills.Mechanical, 3},
+				{Skills.Technical, 3},
+				{Skills.Medical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2201,25 +1802,12 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(11);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 4},
-			{Skills.Survival, 2},
-			{Skills.Mechanical, 1}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Gain_Individual_Combat_Skill_Check_Successes, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.During_Rad_Zombie_Encounters
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 2},
+				{Skills.Mechanical, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2230,55 +1818,12 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Zero_Wheeled); //May not be a zero wheel vehicle?
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(25);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Survival, 1},
-			{Skills.Mechanical, 4}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Stacks_With_Other_Vehicles, 1},
-			{Gains.Gain_Movement, 1}
-		});
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Roll_D6, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Each_Movement
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			curCard.SetRestrictions(new List<Restrictions>()
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
 			{
-
+				{Skills.Combat, 2},
+				{Skills.Survival, 1},
+				{Skills.Mechanical, 4}
 			});
-			tempCard = new SpoilsCard("Gyrocopter");
-			tempCard.SetTitleSubString("Roll - 1-2");
-			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Draw_Encounter_Cards, 2},
-			{Gains.Keep_Encounter_Cards, 1}
-		});
-			tempCard.SetWhenUsable(new List<Times>(){
-			Times.After_Any_Skill_Critical_Failure
-		});
-			tempCard.SetNumberOfUses(
-				Uses.Once_Per_Turn
-			);
-			tempCard.SetDiscard(
-				true
-			);
-			tempCard.SetWhenTempEnd(
-				Times.After_Party_Exploits_Phase
-			);
-			curCard.AddD6Option(tempCard); //1
-			curCard.AddD6Option(tempCard); //2
-			curCard.AddD6Option(null);  //3
-			curCard.AddD6Option(null);
-			curCard.AddD6Option(null);
-			curCard.AddD6Option(null); //6
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2289,13 +1834,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Technical, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Technical, 4},
-			{Skills.Medical, 3}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Technical, 4},
+				{Skills.Medical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2307,29 +1850,14 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(12);
 			curCard.SetSellValue(19);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 4},
-			{Skills.Survival, 2},
-			{Skills.Diplomacy, 1},
-			{Skills.Mechanical, 1},
-			{Skills.Medical, 3}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 2}
-		});
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Steal_D10_Salvage, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.Within_1_Hex_Of_Enemy_Town
-		});
-			curCard.SetNumberOfUses(
-				Uses.Once_Per_Turn
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 2},
+				{Skills.Diplomacy, 1},
+				{Skills.Mechanical, 1},
+				{Skills.Medical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2340,39 +1868,9 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(9);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Technical, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Ignore_Radiation_Damage_From_Hexes, VALUE_NOT_NEEDED}
-		});
-			curCard.SetConditionalGains_dep(
-				new Dictionary<Gains, int>{ //set 1
-				{Gains.Gain_Spoils_Cards, 1} //1.1
-				},
-				new Dictionary<Gains, int>{ //set 2
-				{Gains.Gain_Action_Cards, 1} //2.1
-				}
-			);
-			curCard.SetWhenUsable(
-				new List<Times>{ //set 1
-				Times.Before_Drawing_City_Rad_Encounter_Card //1.1
-				},
-				new List<Times>{ //set 2
-				Times.Before_Drawing_City_Rad_Encounter_Card //2.1
-				}
-			);
-			curCard.SetNumberOfUses(
-				Uses.Unlimited,
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false,
-				false
-			);
-			curCard.SetRestrictions(new List<Restrictions>()
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
 			{
-
+				{Skills.Technical, 2}
 			});
 			curCard.SetId(curID);
 			curID++;
@@ -2384,19 +1882,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment, SpoilsTypes.Armor);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(25);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Diplomacy, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Armor, 1}
-		});
-			/* No conditionals */
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Equip_To_All_Party_Members_Or_None,
-			Restrictions.Not_Used_With_Other_Armor,
-			Restrictions.Not_Used_With_Other_Clothing
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2},
+				{Skills.Diplomacy, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2408,30 +1898,15 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Relic, SpoilsTypes.Four_Wheeled, SpoilsTypes.Motorized);
 			curCard.SetCarryWeight(20);
 			curCard.SetSellValue(24);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 3},
-			{Skills.Survival, 3},
-			{Skills.Diplomacy, 1},
-			{Skills.Mechanical, 3},
-			{Skills.Technical, 3},
-			{Skills.Medical, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 2}
-		});
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Reroll_Any_Skill_Check, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Any_Skill_Check_Fail_Mission
-		});
-			curCard.SetNumberOfUses(
-				Uses.Once_Per_Turn
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 3},
+				{Skills.Survival, 3},
+				{Skills.Diplomacy, 1},
+				{Skills.Mechanical, 3},
+				{Skills.Technical, 3},
+				{Skills.Medical, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2442,15 +1917,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Camping_Gear, SpoilsTypes.Stowable);
 			curCard.SetCarryWeight(2);
 			curCard.SetSellValue(7);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Survival, 3}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Psych_Resistence, 1},
-			{Gains.Auto_Succeed_Perishable_Encounters, VALUE_NOT_NEEDED}
-		});
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Survival, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2479,24 +1949,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(10);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Mechanical, 3},
-			{Skills.Technical, 2}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Mechanical_Skill_Checks_Automatic_Pass, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Mechanical_Skill_Check_Failure
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Mechanical, 3},
+				{Skills.Technical, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2507,25 +1964,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(4);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Survival, 3},
-			{Skills.Diplomacy, 1}
-		});
-
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Survival_Skill_Checks_Automatic_Pass, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Survival_Skill_Check_Failure
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Survival, 3},
+				{Skills.Diplomacy, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2536,19 +1979,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Armor);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(15);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 3},
-			{Skills.Diplomacy, 2}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Armor, 2}
-		});
-			/* No conditionals */
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Not_Used_With_Other_Armor,
-			Restrictions.Not_Used_With_Other_Clothing,
-			Restrictions.Equip_As_First_Item
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 3},
+				{Skills.Diplomacy, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2559,25 +1994,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Book);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(7);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Medical, 3}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Medical_Skill_Checks_Automatic_Pass, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Medical_Skill_Check_Failure
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true
-			);
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Excludes_Healing_Deed
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Medical, 3}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2588,26 +2008,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Melee_Weapon, SpoilsTypes.Heavy_Weapon, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(24);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 10}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Auto_Succeed_Combat_Encounters, VALUE_NOT_NEEDED}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.During_Combat_Encounter_Card
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				true
-			);
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Not_Used_With_Backback,
-			Restrictions.Excludes_World_Cards
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 10}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2618,12 +2022,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Submachine_Gun);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(17);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 6}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 6}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2634,19 +2036,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Party_Equipment);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, -1},
-			{Skills.Survival, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Lose_Movement, 1},
-			{Gains.Ignore_Radiation_Damage, VALUE_NOT_NEEDED},
-			{Gains.Infected_Damage_Treated_As_Physical, VALUE_NOT_NEEDED}
-		});
-			/* No conditionals */
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Equip_To_All_Party_Members_Or_None
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, -1},
+				{Skills.Survival, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2657,12 +2051,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Handgun);
 			curCard.SetCarryWeight(3);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 4}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2673,13 +2065,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Bow);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(7);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 3},
-			{Skills.Survival, 2}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 3},
+				{Skills.Survival, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2690,26 +2080,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt, SpoilsTypes.Sporting_Goods, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(15);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5},
-			{Skills.Diplomacy, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Psych_Resistence, 1}
-		});
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Gain_Spoils_Cards, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Combat_Encounter_Success
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5},
+				{Skills.Diplomacy, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2720,13 +2095,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(8);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 4},
-			{Skills.Survival, 2}
-		});
-			/* No statics */
-			/* No conditionals */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 4},
+				{Skills.Survival, 2}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2737,46 +2110,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Melee_Weapon, SpoilsTypes.Blunt);
 			curCard.SetCarryWeight(1);
 			curCard.SetSellValue(5);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 1}
-		});
-			/* No statics */
-			curCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Roll_D6, 1}
-		});
-			curCard.SetWhenUsable(new List<Times>{
-			Times.After_Successful_Mission_Or_Encounter
-		});
-			curCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			curCard.SetDiscard(
-				false
-			);
-			/* No restrictions */
-			tempCard = new SpoilsCard("Leather Bull Whip");
-			tempCard.SetTitleSubString("Roll - 1");
-			tempCard.SetConditionalGains_dep(new Dictionary<Gains, int>{
-			{Gains.Gain_Spoils_Cards, 1}
-		});
-			tempCard.SetWhenUsable(new List<Times>(){
-			Times.Immediately
-		});
-			tempCard.SetNumberOfUses(
-				Uses.Unlimited
-			);
-			tempCard.SetDiscard(
-				true
-			);
-			tempCard.SetWhenTempEnd(
-				Times.Never
-			);
-			curCard.AddD6Option(tempCard); //1
-			curCard.AddD6Option(null); //2
-			curCard.AddD6Option(null);
-			curCard.AddD6Option(null); //4
-			curCard.AddD6Option(null);
-			curCard.AddD6Option(null); //6
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2787,15 +2124,11 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Rifle);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(15);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5},
-			{Skills.Survival, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.First_Strike, VALUE_NOT_NEEDED}
-		});
-			/* No conditional */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5},
+				{Skills.Survival, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2806,12 +2139,10 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Shotgun);
 			curCard.SetCarryWeight(4);
 			curCard.SetSellValue(10);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 5}
-		});
-			/* No statics */
-			/* No conditional */
-			/* No restrictions */
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 5}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2822,21 +2153,12 @@ namespace FallenLand
 			curCard.SetSpoilsTypes(SpoilsTypes.Equipment, SpoilsTypes.Clothing, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(14);
-			curCard.SetBaseSkills(new Dictionary<Skills, int>{
-			{Skills.Combat, 2},
-			{Skills.Survival, 4},
-			{Skills.Diplomacy, 1}
-		});
-			curCard.SetStaticGains(new Dictionary<Gains, int>{
-			{Gains.Gain_Movement, 1},
-			{Gains.Gain_Psych_Resistence, 1}
-		});
-			/* No conditionals */
-			curCard.SetRestrictions(new List<Restrictions>(){
-			Restrictions.Equip_As_First_Item,
-			Restrictions.Not_Used_With_Other_Armor,
-			Restrictions.Not_Used_With_Other_Clothing
-		});
+			curCard.SetBaseSkills(new Dictionary<Skills, int>
+			{
+				{Skills.Combat, 2},
+				{Skills.Survival, 4},
+				{Skills.Diplomacy, 1}
+			});
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
