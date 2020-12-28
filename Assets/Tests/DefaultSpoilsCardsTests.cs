@@ -34,15 +34,7 @@ namespace Tests
 
 				Assert.IsNotNull(curCard.GetAttachments());
 				Assert.IsNotNull(curCard.GetBaseSkills());
-				Assert.IsNotNull(curCard.GetConditionalGains_dep());
-				Assert.IsNotNull(curCard.GetD10Options());
-				Assert.IsNotNull(curCard.GetD6Options());
-				Assert.IsNotNull(curCard.GetDiscard());
-				Assert.IsNotNull(curCard.GetNumberOfUses());
-				Assert.IsNotNull(curCard.GetRestrictions());
-				Assert.IsNotNull(curCard.GetStaticGains());
 				Assert.IsNotNull(curCard.GetSpoilsTypes());
-				Assert.IsNotNull(curCard.GetWhenUsable());
 
 				Assert.IsTrue(DefaultSpoilsDeck[i].GetSpoilsTypes().Count > 0);
 
@@ -62,16 +54,6 @@ namespace Tests
 						Assert.IsTrue(containsNonZero);
 					}
 				}
-
-				//Ensure that for the # of conditional abilities, there are equal numbers of times, uses, and discards.
-				int sizeOfConditionals = DefaultSpoilsDeck[i].GetConditionalGains_dep().Count;
-				Assert.AreEqual(sizeOfConditionals, curCard.GetNumberOfUses().Count);
-				Assert.AreEqual(sizeOfConditionals, curCard.GetWhenUsable().Count);
-				Assert.AreEqual(sizeOfConditionals, curCard.GetDiscard().Count);
-
-				Assert.IsTrue(curCard.GetD6Options().Count == 0 || curCard.GetD6Options().Count == 6);
-
-				Assert.IsTrue(curCard.GetD10Options().Count == 0 || curCard.GetD10Options().Count == 10);
 
 				Assert.IsTrue(curCard.GetSellValue() >= 0);
 

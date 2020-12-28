@@ -18,11 +18,8 @@ namespace FallenLand
 			//Initialize the lists for the cards
 			SpoilsCardsDeck = new List<SpoilsCard>();
 
-			const int VALUE_NOT_NEEDED = -1;
-
 			//Add the cards to the list
 			SpoilsCard curCard;
-			SpoilsCard tempCard;
 			int curID = 0;
 
 			Debug.Log("Instantiating spoils cards...");
