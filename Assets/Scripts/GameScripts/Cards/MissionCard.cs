@@ -17,32 +17,9 @@ namespace FallenLand
 			initText();
 		}
 
-		public MissionCard(string title, Dictionary<Skills, int> optionalSkillChecks) : base(title)
-		{
-			initOptionalSkillChecks(optionalSkillChecks);
-			initText();
-		}
-
 		public MissionCard(string title, int salvageReward) : base(title, salvageReward)
 		{
 			initOptionalSkillChecks(null);
-			initText();
-		}
-
-		public MissionCard(string title, Dictionary<Skills, int> requiredSkillChecks, Dictionary<Skills, int> optionalSkillChecks) : base(title, requiredSkillChecks)
-		{
-			initOptionalSkillChecks(optionalSkillChecks);
-			initText();
-		}
-		public MissionCard(string title, int salvageReward, Dictionary<Skills, int> optionalSkillChecks) : base(title, salvageReward)
-		{
-			initOptionalSkillChecks(optionalSkillChecks);
-			initText();
-		}
-
-		public MissionCard(string title, int salvageReward, Dictionary<Skills, int> requiredSkillChecks, Dictionary<Skills, int> optionalSkillChecks) : base(title, salvageReward, requiredSkillChecks)
-		{
-			initOptionalSkillChecks(optionalSkillChecks);
 			initText();
 		}
 

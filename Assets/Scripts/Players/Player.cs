@@ -26,8 +26,8 @@ namespace FallenLand
 		private bool PlayerIsDoingAnEncounter;
 		private int EncounterType;
 		private int ActiveVehicleUsedCarryWeight;
-		private List<Dictionary<Skills, List<int>>> CharacterDiceRolls;
-		private Dictionary<Skills, List<int>> VehicleDiceRolls;
+		private List<List<List<int>>> CharacterDiceRolls;
+		private List<List<int>> VehicleDiceRolls;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -573,134 +573,146 @@ namespace FallenLand
 			return ActiveVehicleTotalStats[skill];
 		}
 
-		public int GetCharacterAutoSuccesses(int characterIndex, Skills skill)
+		public int GetCharacterAutoSuccesses(int characterIndex, int skillIndex, Skills skill)
 		{
 			int autoSuccesses = 0;
-			if (!CharacterDiceRolls[characterIndex][skill].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
-			{
-				autoSuccesses = (int)(ActiveCharacterTotalStats[characterIndex][skill] / 10);
-			}
-			return autoSuccesses;
-		}
-
-		public int GetCharacterRolledSuccesses(int characterIndex, Skills skill)
-		{
-			int rolledSuccesses = 0;
-			if (!CharacterDiceRolls[characterIndex][skill].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
-			{
-				int numberToRollBelow = ActiveCharacterTotalStats[characterIndex][skill] % 10;
-				for (int rolledIndex = 0; rolledIndex < CharacterDiceRolls[characterIndex][skill].Count; rolledIndex++)
-				{
-					if (CharacterDiceRolls[characterIndex][skill][rolledIndex] == Constants.CRIT_SUCCESS || CharacterDiceRolls[characterIndex][skill][rolledIndex] <= numberToRollBelow)
-					{
-						rolledSuccesses += 1;
-					}
-				}
-			}
-			return rolledSuccesses;
-		}
-
-		public int GetVehicleAutoSuccesses(Skills skill)
-		{
-			int autoSuccesses = 0;
-			if (!VehicleDiceRolls[skill].Contains(Constants.CRIT_FAIL) && Vehicle != null)
-			{
-				autoSuccesses = (int)(ActiveVehicleTotalStats[skill] / 10);
-			}
-			return autoSuccesses;
-		}
-
-		public int GetVehicleRolledSuccesses(Skills skill)
-		{
-			int rolledSuccesses = 0;
-            if (!VehicleDiceRolls[skill].Contains(Constants.CRIT_FAIL) && Vehicle != null)
+            if (!CharacterDiceRolls[characterIndex][skillIndex].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
             {
-				int numberToRollBelow = ActiveVehicleTotalStats[skill] % 10;
-				for (int rolledIndex = 0; rolledIndex < VehicleDiceRolls[skill].Count; rolledIndex++)
-				{
-					if (VehicleDiceRolls[skill][rolledIndex] == Constants.CRIT_SUCCESS || VehicleDiceRolls[skill][rolledIndex] <= numberToRollBelow)
-					{
-						rolledSuccesses += 1;
-					}
-				}
-			}
-			return rolledSuccesses;
+                autoSuccesses = (int)(ActiveCharacterTotalStats[characterIndex][skill] / 10);
+            }
+            return autoSuccesses;
 		}
 
-		public int GetTotalSuccesses(Skills skill)
+		public int GetCharacterRolledSuccesses(int characterIndex, int skillIndex, Skills skill)
+		{
+			int rolledSuccesses = 0;
+            if (!CharacterDiceRolls[characterIndex][skillIndex].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
+            {
+                int numberToRollBelow = ActiveCharacterTotalStats[characterIndex][skill] % 10;
+                for (int rolledIndex = 0; rolledIndex < CharacterDiceRolls[characterIndex][skillIndex].Count; rolledIndex++)
+                {
+                    if (CharacterDiceRolls[characterIndex][skillIndex][rolledIndex] == Constants.CRIT_SUCCESS || CharacterDiceRolls[characterIndex][skillIndex][rolledIndex] <= numberToRollBelow)
+                    {
+                        rolledSuccesses += 1;
+                    }
+                }
+            }
+            return rolledSuccesses;
+		}
+
+		public int GetVehicleAutoSuccesses(int skillIndex, Skills skill)
+		{
+			int autoSuccesses = 0;
+            if (!VehicleDiceRolls[skillIndex].Contains(Constants.CRIT_FAIL) && Vehicle != null)
+            {
+                autoSuccesses = (int)(ActiveVehicleTotalStats[skill] / 10);
+            }
+            return autoSuccesses;
+		}
+
+		public int GetVehicleRolledSuccesses(int skillIndex, Skills skill)
+		{
+			int rolledSuccesses = 0;
+            if (!VehicleDiceRolls[skillIndex].Contains(Constants.CRIT_FAIL) && Vehicle != null)
+            {
+                int numberToRollBelow = ActiveVehicleTotalStats[skill] % 10;
+                for (int rolledIndex = 0; rolledIndex < VehicleDiceRolls[skillIndex].Count; rolledIndex++)
+                {
+                    if (VehicleDiceRolls[skillIndex][rolledIndex] == Constants.CRIT_SUCCESS || VehicleDiceRolls[skillIndex][rolledIndex] <= numberToRollBelow)
+                    {
+                        rolledSuccesses += 1;
+                    }
+                }
+            }
+            return rolledSuccesses;
+		}
+
+		public int GetTotalSuccesses(int skillIndex, Skills skill)
 		{
 			int totalSuccesses = 0;
-			for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
-			{
-				totalSuccesses += GetCharacterAutoSuccesses(characterIndex, skill);
-				totalSuccesses += GetCharacterRolledSuccesses(characterIndex, skill);
-			}
-			totalSuccesses += GetVehicleAutoSuccesses(skill);
-			totalSuccesses += GetVehicleRolledSuccesses(skill);
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                totalSuccesses += GetCharacterAutoSuccesses(characterIndex, skillIndex, skill);
+                totalSuccesses += GetCharacterRolledSuccesses(characterIndex, skillIndex, skill);
+            }
+            totalSuccesses += GetVehicleAutoSuccesses(skillIndex, skill);
+            totalSuccesses += GetVehicleRolledSuccesses(skillIndex, skill);
 
-			return totalSuccesses;
+            return totalSuccesses;
 		}
 
-		public void AddCharacterDiceRoll(int characterIndex, Skills skill, int diceRoll)
+		public void AddCharacterDiceRoll(int characterIndex, int skillCheckIndex, int diceRoll)
 		{
-			CharacterDiceRolls[characterIndex][skill].Add(diceRoll);
+			CharacterDiceRolls[characterIndex][skillCheckIndex].Add(diceRoll);
 		}
 
-		public void AddVehicleDiceRoll(Skills skill, int diceRoll)
+		public void AddVehicleDiceRoll(int skillIndex, int diceRoll)
 		{
-			VehicleDiceRolls[skill].Add(diceRoll);
+			VehicleDiceRolls[skillIndex].Add(diceRoll);
 		}
 
-		public int GetLastCharacterDiceRoll(int characterIndex, Skills skill)
-		{
-			int lastRoll = Constants.HAS_NOT_ROLLED;
-			int numRollsInList = CharacterDiceRolls[characterIndex][skill].Count;
-
-			if (numRollsInList > 0)
-			{
-				lastRoll = CharacterDiceRolls[characterIndex][skill][numRollsInList - 1];
-			}
-			else if (ActiveCharacters[characterIndex] == null)
-			{
-				lastRoll = Constants.CRIT_FAIL;
-			}
-
-			return lastRoll;
-		}
-
-		public int GetLastVehicleDiceRoll(Skills skill)
+		public int GetLastCharacterDiceRoll(int characterIndex, int skillIndex)
 		{
 			int lastRoll = Constants.HAS_NOT_ROLLED;
-			int numRollsInList = VehicleDiceRolls[skill].Count;
+            int numRollsInList = CharacterDiceRolls[characterIndex][skillIndex].Count;
 
-			if (numRollsInList > 0)
-			{
-				lastRoll = VehicleDiceRolls[skill][numRollsInList - 1];
-			}
-			else if (Vehicle == null)
-			{
-				lastRoll = Constants.CRIT_FAIL;
-			}
+            if (numRollsInList > 0)
+            {
+                lastRoll = CharacterDiceRolls[characterIndex][skillIndex][numRollsInList - 1];
+            }
+            else if (ActiveCharacters[characterIndex] == null)
+            {
+                lastRoll = Constants.CRIT_FAIL;
+            }
 
-			return lastRoll;
+            return lastRoll;
+		}
+
+		public int GetLastVehicleDiceRoll(int skillIndex)
+		{
+			int lastRoll = Constants.HAS_NOT_ROLLED;
+            int numRollsInList = VehicleDiceRolls[skillIndex].Count;
+
+            if (numRollsInList > 0)
+            {
+                lastRoll = VehicleDiceRolls[skillIndex][numRollsInList - 1];
+            }
+            else if (Vehicle == null)
+            {
+                lastRoll = Constants.CRIT_FAIL;
+            }
+
+            return lastRoll;
 		}
 
 		public void ResetAllCharacterDiceRolls()
 		{
 			for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
 			{
-				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-				{
-					CharacterDiceRolls[characterIndex][skill] = new List<int>();
-				}
+				CharacterDiceRolls[characterIndex] = new List<List<int>>();
 			}
 		}
 
 		public void ResetAllVehicleDiceRolls()
 		{
-			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+			VehicleDiceRolls = new List<List<int>>();
+		}
+
+		public void SetNumberOfSkillChecks(int numChecks)
+		{
+			//Set for characters
+			for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
 			{
-				VehicleDiceRolls[skill] = new List<int>();
+				for (int checkIndex = 0; checkIndex < numChecks; checkIndex++)
+				{
+					CharacterDiceRolls[characterIndex].Add(new List<int>());
+				}
+			}
+
+			//Set for vehicles
+			for (int checkIndex = 0; checkIndex < numChecks; checkIndex++)
+			{
+				VehicleDiceRolls.Add(new List<int>());
 			}
 		}
 
@@ -745,18 +757,17 @@ namespace FallenLand
 			OwnedResourceLocations = new List<Coordinates>();
 			ActiveVehicleTotalStats = new Dictionary<Skills, int>();
 			ActiveCharacterTotalStats = new List<Dictionary<Skills, int>>();
-			CharacterDiceRolls = new List<Dictionary<Skills, List<int>>>();
-			VehicleDiceRolls = new Dictionary<Skills, List<int>>();
+			CharacterDiceRolls = new List<List<List<int>>>();
+			VehicleDiceRolls = new List<List<int>>();
 
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
 				ActiveCharacters.Add(null);
 				ActiveCharacterTotalStats.Add(new Dictionary<Skills, int>());
-				CharacterDiceRolls.Add(new Dictionary<Skills, List<int>>());
+				CharacterDiceRolls.Add(new List<List<int>>());
 				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 				{
 					ActiveCharacterTotalStats[i].Add(skill, 0);
-					CharacterDiceRolls[i].Add(skill, new List<int>());
 				}
 				ActiveCharacterRemainingCarryWeights.Add(0);
 				ActiveCharacterUsedCarryWeights.Add(0);
@@ -765,7 +776,6 @@ namespace FallenLand
 			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 			{
 				ActiveVehicleTotalStats.Add(skill, 0);
-				VehicleDiceRolls.Add(skill, new List<int>());
 			}
 		}
 

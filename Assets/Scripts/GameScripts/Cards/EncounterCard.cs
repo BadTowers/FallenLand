@@ -5,8 +5,7 @@ namespace FallenLand
 	public abstract class EncounterCard : Card
 	{
 		private int SalvageReward;
-		private Dictionary<Skills, int> SkillChecksRequired;
-		private Dictionary<Skills, bool> ArePartySkillChecks = new Dictionary<Skills, bool>();
+		private List<(Skills, int)> SkillChecksRequired = new List<(Skills, int)>();
 		private string DescriptionText;
 		private bool PsychCheckAfterEncounter;
 		List<Reward> Rewards = new List<Reward>();
@@ -21,27 +20,12 @@ namespace FallenLand
 
 		public EncounterCard(string title) : base(title)
 		{
-			initSkillChecks(null);
-			initText();
-		}
-
-		public EncounterCard(string title, Dictionary<Skills, int> skillChecks) : base(title)
-		{
-			initSkillChecks(skillChecks);
 			initText();
 		}
 
 		public EncounterCard(string title, int salvageReward) : base(title)
 		{
 			initSalvageReward(salvageReward);
-			initSkillChecks(null);
-			initText();
-		}
-
-		public EncounterCard(string title, int salvageReward, Dictionary<Skills, int> skillChecks) : base(title)
-		{
-			initSalvageReward(salvageReward);
-			initSkillChecks(skillChecks);
 			initText();
 		}
 
@@ -49,31 +33,28 @@ namespace FallenLand
 		{
 			if (skillChecks != null)
 			{
-				SkillChecksRequired = skillChecks;
-				//Assume all the checks are party checks by default
+				//Convert the input dictionary to a list of tuples for backwards compatibility
 				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
 				{
-                    if (SkillChecksRequired.ContainsKey(skill))
+                    if (skillChecks.ContainsKey(skill))
                     {
-						ArePartySkillChecks[skill] = true;
-                    }
+						SkillChecksRequired.Add((skill, skillChecks[skill]));
+					}
 				}
 			}
 		}
 
-		public Dictionary<Skills, int> GetSkillChecks()
+		public void SetSkillChecks(List<(Skills, int)> skillChecks)
+		{
+            if (skillChecks != null)
+			{
+				SkillChecksRequired = skillChecks;
+			}
+		}
+
+		public List<(Skills, int)> GetSkillChecks()
 		{
 			return SkillChecksRequired;
-		}
-
-		public void SetArePartySkillCheck(Dictionary<Skills, bool> arePartySkillChecks)
-		{
-			ArePartySkillChecks = arePartySkillChecks;
-		}
-
-		public Dictionary<Skills, bool> GetArePartySkillCheck()
-		{
-			return ArePartySkillChecks;
 		}
 
 		public void SetMakePsychCheckAfterEncounter(bool psychCheck)
@@ -203,15 +184,6 @@ namespace FallenLand
 		{
 			FailureHeaderText = "";
 			SuccessHeaderText = "";
-		}
-
-		private void initSkillChecks(Dictionary<Skills, int> skillChecks)
-		{
-			if (skillChecks == null)
-			{
-				skillChecks = new Dictionary<Skills, int>();
-			}
-			SkillChecksRequired = skillChecks;
 		}
 
 		private void initSalvageReward(int salvageReward)

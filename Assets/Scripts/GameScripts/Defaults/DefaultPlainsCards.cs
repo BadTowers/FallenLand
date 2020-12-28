@@ -608,9 +608,10 @@ namespace FallenLand
 			curCard = new PlainsCard("Wild Horses");
 			curCard.SetSalvageReward(4);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Survival] = 3 //TODO Needs to be performed twice to be a success
+				(Skills.Survival, 3),
+				(Skills.Survival, 3)
 			});
 			curCard.AddClassification(EncounterTypes.WildAnimals);
 			curCard.SetMakePsychCheckAfterEncounter(false);

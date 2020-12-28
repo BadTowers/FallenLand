@@ -36,39 +36,6 @@ namespace Tests
 		{
 			Assert.IsNotNull(MissionCardInstance.GetOptionalSkillChecks());
 
-			MissionCard missionCardOptionalSkillChecks = new MissionCard("title", new Dictionary<Skills, int>() { { Skills.Medical, 2 } });
-			Assert.AreEqual(1, missionCardOptionalSkillChecks.GetOptionalSkillChecks().Count);
-			Assert.AreEqual(Skills.Medical, missionCardOptionalSkillChecks.GetOptionalSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(2, missionCardOptionalSkillChecks.GetOptionalSkillChecks().ElementAt(0).Value);
-
-			Dictionary<Skills, int> optionalSkillCheck = new Dictionary<Skills, int>() { { Skills.Diplomacy, 3 } };
-			Dictionary<Skills, int> requiredSkillCheck = new Dictionary<Skills, int>() { { Skills.Technical, 5 } };
-			MissionCard missionCardTwoDictionaryConstructor = new MissionCard("title", requiredSkillCheck, optionalSkillCheck);
-			Assert.AreEqual(1, missionCardTwoDictionaryConstructor.GetOptionalSkillChecks().Count);
-			Assert.AreEqual(Skills.Diplomacy, missionCardTwoDictionaryConstructor.GetOptionalSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(3, missionCardTwoDictionaryConstructor.GetOptionalSkillChecks().ElementAt(0).Value);
-			Assert.AreEqual(1, missionCardTwoDictionaryConstructor.GetSkillChecks().Count);
-			Assert.AreEqual(Skills.Technical, missionCardTwoDictionaryConstructor.GetSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(5, missionCardTwoDictionaryConstructor.GetSkillChecks().ElementAt(0).Value);
-			Assert.AreEqual(0, missionCardTwoDictionaryConstructor.GetSalvageReward());
-
-			MissionCard missionCardTwoDictionaryConstructorAndSalvageValue = new MissionCard("title", 9, requiredSkillCheck, optionalSkillCheck);
-			Assert.AreEqual(1, missionCardTwoDictionaryConstructorAndSalvageValue.GetOptionalSkillChecks().Count);
-			Assert.AreEqual(Skills.Diplomacy, missionCardTwoDictionaryConstructorAndSalvageValue.GetOptionalSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(3, missionCardTwoDictionaryConstructorAndSalvageValue.GetOptionalSkillChecks().ElementAt(0).Value);
-			Assert.AreEqual(1, missionCardTwoDictionaryConstructorAndSalvageValue.GetSkillChecks().Count);
-			Assert.AreEqual(Skills.Technical, missionCardTwoDictionaryConstructorAndSalvageValue.GetSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(5, missionCardTwoDictionaryConstructorAndSalvageValue.GetSkillChecks().ElementAt(0).Value);
-			Assert.AreEqual(9, missionCardTwoDictionaryConstructorAndSalvageValue.GetSalvageReward());
-
-			MissionCard missionCardOptionalDictionaryConstructorAndSalvageValue = new MissionCard("title", 4, optionalSkillCheck);
-			Assert.AreEqual(1, missionCardOptionalDictionaryConstructorAndSalvageValue.GetOptionalSkillChecks().Count);
-			Assert.AreEqual(Skills.Diplomacy, missionCardOptionalDictionaryConstructorAndSalvageValue.GetOptionalSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(3, missionCardOptionalDictionaryConstructorAndSalvageValue.GetOptionalSkillChecks().ElementAt(0).Value);
-			Assert.IsNotNull(missionCardOptionalDictionaryConstructorAndSalvageValue.GetSkillChecks());
-			Assert.AreEqual(0, missionCardOptionalDictionaryConstructorAndSalvageValue.GetSkillChecks().Count);
-			Assert.AreEqual(4, missionCardOptionalDictionaryConstructorAndSalvageValue.GetSalvageReward());
-
 			MissionCard missionCardSalvageValueConstructor = new MissionCard("title", 8);
 			Assert.IsNotNull(missionCardSalvageValueConstructor.GetOptionalSkillChecks());
 			Assert.AreEqual(0, missionCardSalvageValueConstructor.GetOptionalSkillChecks().Count);
@@ -87,14 +54,10 @@ namespace Tests
 
 			MissionCardInstance.SetSkillChecks(new Dictionary<Skills, int>() { { Skills.Combat, 3 }, { Skills.Medical, 4 } });
 			Assert.AreEqual(2, MissionCardInstance.GetSkillChecks().Count);
-			Assert.AreEqual(Skills.Combat, MissionCardInstance.GetSkillChecks().ElementAt(0).Key);
-			Assert.AreEqual(3, MissionCardInstance.GetSkillChecks().ElementAt(0).Value);
-			Assert.AreEqual(Skills.Medical, MissionCardInstance.GetSkillChecks().ElementAt(1).Key);
-			Assert.AreEqual(4, MissionCardInstance.GetSkillChecks().ElementAt(1).Value);
-
-			MissionCardInstance.SetSkillChecks(null);
-			Assert.IsNotNull(MissionCardInstance.GetSkillChecks());
-			Assert.AreEqual(2, MissionCardInstance.GetSkillChecks().Count);
+			Assert.AreEqual(Skills.Combat, MissionCardInstance.GetSkillChecks().ElementAt(0).Item1);
+			Assert.AreEqual(3, MissionCardInstance.GetSkillChecks().ElementAt(0).Item2);
+			Assert.AreEqual(Skills.Medical, MissionCardInstance.GetSkillChecks().ElementAt(1).Item1);
+			Assert.AreEqual(4, MissionCardInstance.GetSkillChecks().ElementAt(1).Item2);
 
 			yield return null;
 		}

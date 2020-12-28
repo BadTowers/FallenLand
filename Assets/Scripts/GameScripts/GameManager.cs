@@ -1218,120 +1218,127 @@ namespace FallenLand
 			return encounterType;
 		}
 
-		public int GetSkillTotalForCharacter(int playerIndex, int characterIndex, Skills skill)
+		public int GetSkillTotalForCharacter(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int skillValue = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				skillValue = Players[playerIndex].GetTotalForCharacterSkill(characterIndex, skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				skillValue = Players[playerIndex].GetTotalForCharacterSkill(characterIndex, requestedSkill);
 			}
 			return skillValue;
 		}
 
-		public int GetSkillTotalForVehicle(int playerIndex, Skills skill)
+		public int GetSkillTotalForVehicle(int playerIndex, int skillIndex)
 		{
 			int skillValue = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				skillValue = Players[playerIndex].GetTotalForVehicleSkill(skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				skillValue = Players[playerIndex].GetTotalForVehicleSkill(requestedSkill);
 			}
 			return skillValue;
 		}
 
-		public int GetCharacterAutoSuccesses(int playerIndex, int characterIndex, Skills skill)
+		public int GetCharacterAutoSuccesses(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int autoSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				autoSuccesses = Players[playerIndex].GetCharacterAutoSuccesses(characterIndex, skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				autoSuccesses = Players[playerIndex].GetCharacterAutoSuccesses(characterIndex, skillIndex, requestedSkill);
 			}
 			return autoSuccesses;
 		}
 
-		public int GetCharacterRolledSuccesses(int playerIndex, int characterIndex, Skills skill)
+		public int GetCharacterRolledSuccesses(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int rolledSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				rolledSuccesses = Players[playerIndex].GetCharacterRolledSuccesses(characterIndex, skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				rolledSuccesses = Players[playerIndex].GetCharacterRolledSuccesses(characterIndex, skillIndex, requestedSkill);
 			}
 			return rolledSuccesses;
 		}
 
-		public int GetVehicleAutoSuccesses(int playerIndex, Skills skill)
+		public int GetVehicleAutoSuccesses(int playerIndex, int skillIndex)
 		{
 			int autoSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				autoSuccesses = Players[playerIndex].GetVehicleAutoSuccesses(skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				autoSuccesses = Players[playerIndex].GetVehicleAutoSuccesses(skillIndex, requestedSkill);
 			}
 			return autoSuccesses;
 		}
 
-		public int GetVehicleRolledSuccesses(int playerIndex, Skills skill)
+		public int GetVehicleRolledSuccesses(int playerIndex, int skillIndex)
 		{
 			int rolledSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				rolledSuccesses = Players[playerIndex].GetVehicleRolledSuccesses(skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				rolledSuccesses = Players[playerIndex].GetVehicleRolledSuccesses(skillIndex, requestedSkill);
 			}
 			return rolledSuccesses;
 		}
 
-		public int GetTotalSuccesses(int playerIndex, Skills skill)
+		public int GetTotalSuccesses(int playerIndex, int skillIndex)
 		{
 			int totalSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				totalSuccesses = Players[playerIndex].GetTotalSuccesses(skill);
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				totalSuccesses = Players[playerIndex].GetTotalSuccesses(skillIndex, requestedSkill);
 			}
 			return totalSuccesses;
 		}
 
-		public int GetLastCharacterRoll(int playerIndex, int characterIndex, Skills skill)
+		public int GetLastCharacterRoll(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int lastRoll = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				lastRoll = Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skill);
+				lastRoll = Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skillIndex);
 			}
 			return lastRoll;
 		}
 
-		public int GetLastVehicleRoll(int playerIndex, Skills skill)
+		public int GetLastVehicleRoll(int playerIndex, int skillIndex)
 		{
 			int lastRoll = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				lastRoll = Players[playerIndex].GetLastVehicleDiceRoll(skill);
+				lastRoll = Players[playerIndex].GetLastVehicleDiceRoll(skillIndex);
 			}
 			return lastRoll;
 		}
 
-		public void RollCharacterEncounter(int playerIndex, int characterIndex, Skills skill)
+		public void RollCharacterEncounter(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int diceRoll = DiceRoller.RollDice(Constants.D10);
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].AddCharacterDiceRoll(characterIndex, skill, diceRoll);
+				Players[playerIndex].AddCharacterDiceRoll(characterIndex, skillIndex, diceRoll);
 			}
 		}
 
-		public void RollVehicleEncounter(int playerIndex, Skills skill)
+		public void RollVehicleEncounter(int playerIndex, int skillIndex)
 		{
 			int diceRoll = DiceRoller.RollDice(Constants.D10);
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].AddVehicleDiceRoll(skill, diceRoll);
+				Players[playerIndex].AddVehicleDiceRoll(skillIndex, diceRoll);
 			}
 		}
 
-		public bool DoesCharacterHaveRollsRemainingForSkill(int playerIndex, int characterIndex, Skills skill)
+		public bool DoesCharacterHaveRollsRemainingForSkill(int playerIndex, int characterIndex, int skillIndex)
 		{
 			bool hasRemaining = false;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				int lastRoll = Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skill);
+				int lastRoll = Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skillIndex);
                 if (lastRoll == Constants.HAS_NOT_ROLLED || lastRoll == Constants.CRIT_SUCCESS)
                 {
 					hasRemaining = true;
@@ -1340,12 +1347,12 @@ namespace FallenLand
             return hasRemaining;
 		}
 
-        public bool DoesVehicleHaveRollsRemainingForSkill(int playerIndex, Skills skill)
+        public bool DoesVehicleHaveRollsRemainingForSkill(int playerIndex, int skillIndex)
         {
 			bool hasRemaining = false;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				int lastRoll = Players[playerIndex].GetLastVehicleDiceRoll(skill);
+				int lastRoll = Players[playerIndex].GetLastVehicleDiceRoll(skillIndex);
 				if (lastRoll == Constants.HAS_NOT_ROLLED || lastRoll == Constants.CRIT_SUCCESS)
 				{
 					hasRemaining = true;
@@ -1362,12 +1369,13 @@ namespace FallenLand
 			{
                 if (!EncounterWasSuccessful(playerIndex))
                 {
+					List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
 					//Check all characters
 					for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
 					{
-						foreach (Skills skill in CurrentPlayerEncounter[playerIndex].GetSkillChecks().Keys)
+						for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 						{
-							if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skill))
+							if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skillIndex))
 							{
 								isFinished = false;
 								break;
@@ -1376,9 +1384,9 @@ namespace FallenLand
 					}
 
 					//Check vehicle
-					foreach (Skills skill in CurrentPlayerEncounter[playerIndex].GetSkillChecks().Keys)
+					for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 					{
-						if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skill))
+						if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skillIndex))
 						{
 							isFinished = false;
 							break;
@@ -1396,10 +1404,10 @@ namespace FallenLand
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Dictionary<Skills, int> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
-				foreach (Skills skill in skillChecks.Keys)
+				List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
+				for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 				{
-					if (GetTotalSuccesses(playerIndex, skill) < skillChecks[skill])
+					if (GetTotalSuccesses(playerIndex, skillIndex) < skillChecks[skillIndex].Item2)
 					{
 						wasSuccessful = false;
 						break;
@@ -2140,6 +2148,9 @@ namespace FallenLand
 
 		private void handlePartyExploitsEncounter(int playerIndex, byte encounterType, string encounterCardName)
 		{
+			Players[playerIndex].ResetAllCharacterDiceRolls();
+			Players[playerIndex].ResetAllVehicleDiceRolls();
+
 			if (encounterType == Constants.ENCOUNTER_PLAINS)
 			{
 				CurrentPlayerEncounter[playerIndex] = PlainsCard.FindCardInDeckByTitle(encounterCardName, PlainsDeck);
@@ -2147,6 +2158,7 @@ namespace FallenLand
 				{
 					Debug.LogError("Error. Couldn't find plains encounter card with title " + encounterCardName);
 				}
+				Players[playerIndex].SetNumberOfSkillChecks(CurrentPlayerEncounter[playerIndex].GetSkillChecks().Count);
 			}
 			else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
 			{

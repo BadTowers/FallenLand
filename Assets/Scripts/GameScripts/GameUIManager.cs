@@ -75,7 +75,6 @@ namespace FallenLand
         private GameObject VehicleEncounterCurrentStatText;
         private GameObject VehicleEncounterPanel;
         private List<GameObject> CurrentEncounterRollSymbols;
-        private Dictionary<int, Skills> PageToSkillMapping;
         private int CurrentEncounterSkillPage;
         private List<GameObject> CurrentEncounterCharacterAutoSuccesses;
         private List<GameObject> CurrentEncounterCharacterRolledSuccesses;
@@ -655,36 +654,36 @@ namespace FallenLand
         public void OnCharacter1RollPress()
         {
             int characterIndex = 0;
-            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage);
         }
 
         public void OnCharacter2RollPress()
         {
             int characterIndex = 1;
-            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage);
         }
 
         public void OnCharacter3RollPress()
         {
             int characterIndex = 2;
-            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage);
         }
 
         public void OnCharacter4RollPress()
         {
             int characterIndex = 3;
-            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage);
         }
 
         public void OnCharacter5RollPress()
         {
             int characterIndex = 4;
-            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage);
         }
 
         public void OnVehicleRollPress()
         {
-            GameManagerInstance.RollVehicleEncounter(GameManagerInstance.GetIndexForMyPlayer(), PageToSkillMapping[CurrentEncounterSkillPage]);
+            GameManagerInstance.RollVehicleEncounter(GameManagerInstance.GetIndexForMyPlayer(), CurrentEncounterSkillPage);
         }
 
         public void OnRollAllPress()
@@ -693,23 +692,23 @@ namespace FallenLand
             //characters
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, CurrentEncounterSkillPage))
                 {
-                    GameManagerInstance.RollCharacterEncounter(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                    GameManagerInstance.RollCharacterEncounter(myIndex, characterIndex, CurrentEncounterSkillPage);
                 }
             }
 
             //vehicle
-            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, CurrentEncounterSkillPage))
             {
-                GameManagerInstance.RollVehicleEncounter(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                GameManagerInstance.RollVehicleEncounter(myIndex, CurrentEncounterSkillPage);
             }
         }
 
         public void OnPreviousEncounterStatPress()
         {
             CurrentEncounterSkillPage++;
-            if (CurrentEncounterSkillPage >= PageToSkillMapping.Count())
+            if (CurrentEncounterSkillPage >= GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count)
             {
                 CurrentEncounterSkillPage = 0;
             }
@@ -721,7 +720,7 @@ namespace FallenLand
             CurrentEncounterSkillPage--;
             if (CurrentEncounterSkillPage < 0)
             {
-                CurrentEncounterSkillPage = PageToSkillMapping.Count() - 1;
+                CurrentEncounterSkillPage = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count - 1;
             }
             updateSkillIcons();
         }
@@ -737,7 +736,6 @@ namespace FallenLand
             EncounterStatsPanel.SetActive(false);
             EncounterFinishedPanel.SetActive(false);
             EncounterHasBegun = false;
-            PageToSkillMapping = null;
         }
 
         public void OnDiscardPanelOkPress()
@@ -1264,7 +1262,6 @@ namespace FallenLand
             }
             else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
             {
-                createSkillToPageMappingIfNeeded(encounterCard);
                 updateSkillIcons();
                 updateSkillValues();
 
@@ -1417,31 +1414,14 @@ namespace FallenLand
             CurrentEncounterVehicleRolledSuccesses = GameObject.Find("NumberOfRolledSuccessesTextV");
         }
 
-        private void createSkillToPageMappingIfNeeded(EncounterCard encounterCard)
-        {
-            if (PageToSkillMapping == null)
-            {
-                PageToSkillMapping = new Dictionary<int, Skills>();
-                int currentPageIndex = 0;
-                Dictionary<Skills, int> skillChecks = encounterCard.GetSkillChecks();
-                foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-                {
-                    if (skillChecks.ContainsKey(skill))
-                    {
-                        PageToSkillMapping[currentPageIndex] = skill;
-                        currentPageIndex += 1;
-                    }
-                }
-                CurrentEncounterSkillPage = 0;
-            }
-        }
-
         private void updateSkillIcons()
         {
             //Determine sprite
             string spriteString = "Cards/CardInformation/";
             Sprite sprite;
-            switch (PageToSkillMapping[CurrentEncounterSkillPage])
+            EncounterCard card = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
+            (Skills skill, int _) = card.GetSkillChecks()[CurrentEncounterSkillPage];
+            switch (skill)
             {
                 case Skills.Combat:
                     spriteString += "Combat";
@@ -1482,33 +1462,36 @@ namespace FallenLand
             //Update character values
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+                CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage).ToString();
             }
 
             //Update vehicle value
-            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(GameManagerInstance.GetIndexForMyPlayer(), PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(GameManagerInstance.GetIndexForMyPlayer(), CurrentEncounterSkillPage).ToString();
         }
 
         private void updateEncounterSkillPanel()
         {
-            GameObject.Find("StatPageTitleText").GetComponent<Text>().text = PageToSkillMapping[CurrentEncounterSkillPage].ToString();
-
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            (Skills currentSkill, int valueNeeded) = GameManagerInstance.GetCurrentEncounter(myIndex).GetSkillChecks()[CurrentEncounterSkillPage];
+
+            //Update page title
+            GameObject.Find("StatPageTitleText").GetComponent<Text>().text = currentSkill.ToString();
+
             //Update character success values
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterAutoSuccesses(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
-                CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterRolledSuccesses(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+                CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterAutoSuccesses(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterRolledSuccesses(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
             }
             //Update vehicle success values
-            CurrentEncounterVehicleAutoSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleAutoSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
-            CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+            CurrentEncounterVehicleAutoSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleAutoSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
+            CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
 
             //Update total successes needed
-            TotalSuccessesNeededText.GetComponent<Text>().text = GameManagerInstance.GetCurrentEncounter(myIndex).GetSkillChecks()[PageToSkillMapping[CurrentEncounterSkillPage]].ToString();
+            TotalSuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
 
             //Update number of successes had
-            NumberOfTotalSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetTotalSuccesses(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]).ToString();
+            NumberOfTotalSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetTotalSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
         }
 
         private void updateEncounterRollButtons()
@@ -1520,8 +1503,8 @@ namespace FallenLand
             {
                 if (activeCharacters[characterIndex] != null)
                 {
-                    int previousCharacterRoll = GameManagerInstance.GetLastCharacterRoll(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
-                    CharacterEncounterRollButtons[characterIndex].GetComponent<Button>().interactable = GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                    int previousCharacterRoll = GameManagerInstance.GetLastCharacterRoll(myIndex, characterIndex, CurrentEncounterSkillPage);
+                    CharacterEncounterRollButtons[characterIndex].GetComponent<Button>().interactable = GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, CurrentEncounterSkillPage);
                     if (previousCharacterRoll == Constants.HAS_NOT_ROLLED)
                     {
                         LastCharacterDiceRollText[characterIndex].GetComponent<Text>().text = "--";
@@ -1536,8 +1519,8 @@ namespace FallenLand
             //Update vehicle roll button
             if (GameManagerInstance.GetActiveVehicle(myIndex) != null)
             {
-                int previousVehicleRoll = GameManagerInstance.GetLastVehicleRoll(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
-                VehicleRollButton.GetComponent<Button>().interactable = GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]);
+                int previousVehicleRoll = GameManagerInstance.GetLastVehicleRoll(myIndex, CurrentEncounterSkillPage);
+                VehicleRollButton.GetComponent<Button>().interactable = GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, CurrentEncounterSkillPage);
                 if (previousVehicleRoll == Constants.HAS_NOT_ROLLED)
                 {
                     LastVehicleDiceRollText.GetComponent<Text>().text = "--";
@@ -1552,13 +1535,13 @@ namespace FallenLand
             bool enableRollAllButton = false;
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, CurrentEncounterSkillPage))
                 {
                     enableRollAllButton = true;
                     break;
                 }
             }
-            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, PageToSkillMapping[CurrentEncounterSkillPage]))
+            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, CurrentEncounterSkillPage))
             {
                 enableRollAllButton = true;
             }
@@ -1587,14 +1570,33 @@ namespace FallenLand
             EncounterCard card = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
             if (card != null)
             {
-                Dictionary<Skills, int> skillChecks = card.GetSkillChecks();
-                Dictionary<Skills, bool> partySkillChecks = card.GetArePartySkillCheck();
+                List<(Skills, int)> skillChecks = card.GetSkillChecks();
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
                 {
                     foreach (Skills skill in Enum.GetValues(typeof(Skills)))
                     {
                         Color color = OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color;
-                        if (skillChecks.ContainsKey(skill) && partySkillChecks.ContainsKey(skill) && partySkillChecks[skill]) //TODO doesn't handle character specific checks
+                        foreach ((Skills skillInCheck, int _) in skillChecks)
+                        {
+                            if (skill == skillInCheck)
+                            {
+                                color.a = 128;
+                            }
+                            else
+                            {
+                                color.a = 0;
+                            }
+                            OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
+                            break;
+                        }
+                    }
+                }
+                foreach (Skills skill in Enum.GetValues(typeof(Skills)))
+                {
+                    Color color = OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color;
+                    foreach ((Skills skillInCheck, int _) in skillChecks)
+                    {
+                        if (skill == skillInCheck)
                         {
                             color.a = 128;
                         }
@@ -1602,21 +1604,9 @@ namespace FallenLand
                         {
                             color.a = 0;
                         }
-                        OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
+                        OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color = color;
+                        break;
                     }
-                }
-                foreach (Skills skill in Enum.GetValues(typeof(Skills)))
-                {
-                    Color color = OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color;
-                    if (skillChecks.ContainsKey(skill) && partySkillChecks.ContainsKey(skill) && partySkillChecks[skill]) //TODO doesn't handle vehicle specific checks 
-                    {
-                        color.a = 128;
-                    }
-                    else
-                    {
-                        color.a = 0;
-                    }
-                    OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color = color;
                 }
             }
         }
