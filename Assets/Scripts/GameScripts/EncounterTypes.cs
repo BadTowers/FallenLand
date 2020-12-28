@@ -6,6 +6,7 @@ namespace FallenLand
 		BikerGang,
 		EnvironmentalHazard,
 		Mystery,
+		Perishables,
 		Special,
 		TheBrotherhood,
 		VehicleCombat,

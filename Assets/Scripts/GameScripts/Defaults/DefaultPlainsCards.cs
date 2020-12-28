@@ -605,6 +605,32 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Tainted Supplies");
+			curCard.SetSalvageReward(1);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			{
+				[Skills.Medical] = 3,
+				[Skills.Survival] = 4
+			});
+			curCard.SetArePartySkillCheck(new Dictionary<Skills, bool>
+			{
+				[Skills.Medical] = true,
+				[Skills.Survival] = true
+			});
+			curCard.AddClassification(EncounterTypes.Perishables);
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(1));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new LoseMostValuableSpoilsThatAreNotVehicle(1));
+			//TODO punishment -- 2 week delay chip
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
