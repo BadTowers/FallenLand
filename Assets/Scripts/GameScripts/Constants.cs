@@ -30,6 +30,7 @@ namespace FallenLand
 		public const byte SPOILS_CARD = 1;
 		public const byte CHARACTER_CARD = 2;
 		public const byte ACTION_CARD = 3;
+		public const byte SPECIAL_SPOILS_CARD = 4;
 
 		//Used for EvSendPlayerInformation
 		public const byte REMOVE_FROM_TOWN_ROSTER = 1;

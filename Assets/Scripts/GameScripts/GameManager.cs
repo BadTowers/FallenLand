@@ -9,6 +9,7 @@ namespace FallenLand
 	public class GameManager : MonoBehaviour, IMyTurnManagerCallbacks, IOnEventCallback
 	{
 		private List<SpoilsCard> SpoilsDeck = new List<SpoilsCard>();
+		private List<SpoilsCard> SpecialSpoilsDeck = new List<SpoilsCard>();
 		private List<CharacterCard> CharacterDeck = new List<CharacterCard>();
 		private List<ActionCard> ActionDeck = new List<ActionCard>();
 		private List<PlainsCard> PlainsDeck = new List<PlainsCard>();
@@ -149,6 +150,8 @@ namespace FallenLand
 
 			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
 			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
+
+			SpecialSpoilsDeck = (new DefaultSpecialSpoilsCards()).GetSpoilsCards(); //No need to shuffle these as they won't be dealt out normally.
 
 			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
 			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
@@ -367,6 +370,10 @@ namespace FallenLand
 				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
 				{
 					dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
+				}
+				else if (cardInfo.GetCardByte() == Constants.SPECIAL_SPOILS_CARD)
+				{
+					dealSpecificSpoilToPlayerFromSpecialDeck(playerIndex, cardName);
 				}
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
@@ -1107,6 +1114,13 @@ namespace FallenLand
 			dealSpecificSpoilToPlayerFromDeck(playerIndex, cardName);
 		}
 
+		public void DealSpecificSpecialSpoilToPlayer(int playerIndex, string cardName)
+		{
+			object content = new CardNetworking(cardName, playerIndex, Constants.SPECIAL_SPOILS_CARD);
+			sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+			dealSpecificSpoilToPlayerFromSpecialDeck(playerIndex, cardName);
+		}
+
 		public int RollTownEvents(int playerIndex)
 		{
 			int d10Roll = 0;
@@ -1520,7 +1534,7 @@ namespace FallenLand
 				{
 					damage += DiceRoller.RollDice(Constants.D6);
 				}
-				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, damage);
+				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, damage, false);
 				sendNetworkEvent(characterHealth, ReceiverGroup.Others, Constants.EvCharacterHealth);
 				int remainingHp = -1;
 				if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null)
@@ -1528,7 +1542,7 @@ namespace FallenLand
 					remainingHp = Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() - damage;
 				}
 				handleCharacterHealthEvent(characterHealth);
-				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage, damageType, remainingHp);
+				EventManager.CharacterCrownHasTakenDamage(characterIndex, damage, damageType, remainingHp, false);
 			}
 		}
 
@@ -1536,7 +1550,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
             {
-				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, amountOfDamage);
+				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, damageType, amountOfDamage, false);
 				sendNetworkEvent(characterHealth, ReceiverGroup.Others, Constants.EvCharacterHealth);
 				int remainingHp = -1;
 				if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null)
@@ -1544,7 +1558,7 @@ namespace FallenLand
 					remainingHp = Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() - amountOfDamage;
 				}
 				handleCharacterHealthEvent(characterHealth);
-				EventManager.CharacterCrownHasTakenDamage(characterIndex, amountOfDamage, damageType, remainingHp);
+				EventManager.CharacterCrownHasTakenDamage(characterIndex, amountOfDamage, damageType, remainingHp, false);
 			}
 		}
 
@@ -1575,6 +1589,23 @@ namespace FallenLand
 					}
 				}
 			}
+		}
+
+		public void CharacterCrownDiesAndLosesEquipment(int playerIndex, int characterCrownIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterHealthNetworking healthNetworking = new CharacterHealthNetworking(playerIndex, characterCrownIndex, Constants.DAMAGE_PHYSICAL, 1000, true);
+				sendNetworkEvent(healthNetworking, ReceiverGroup.Others, Constants.EvCharacterHealth);
+				int remainingHp = (Players[playerIndex].GetActiveCharacters()[characterCrownIndex] != null) ? 0 : -1;
+				handleCharacterHealthEvent(healthNetworking);
+				EventManager.CharacterCrownHasTakenDamage(characterCrownIndex, 1000, Constants.DAMAGE_PHYSICAL, remainingHp, true);
+			}
+		}
+
+		public Dice GetDiceRoller()
+		{
+			return DiceRoller;
 		}
 		#endregion
 
@@ -1683,6 +1714,25 @@ namespace FallenLand
 			if (!found)
 			{
 				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+			}
+		}
+
+		private void dealSpecificSpoilToPlayerFromSpecialDeck(int playerIndex, string cardName)
+		{
+			bool found = false;
+			for (int i = 0; i < SpecialSpoilsDeck.Count; i++)
+			{
+				if (SpecialSpoilsDeck[i].GetTitle() == cardName)
+				{
+					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpecialSpoilsDeck[i]);
+					SpecialSpoilsDeck.RemoveAt(i);
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				Debug.LogError("Tried to deal specific SPECIAL SPOILS card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -2241,10 +2291,10 @@ namespace FallenLand
 				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, characterHealth.GetAmountOfDamage());
 			}
 
-			handleCharacterDeathIfNecessary(playerIndex, characterIndex);
+			handleCharacterDeathIfNecessary(playerIndex, characterIndex, characterHealth.GetShouldDiscardEquipmentIfDead());
 		}
 
-		private void handleCharacterDeathIfNecessary(int playerIndex, int characterIndex)
+		private void handleCharacterDeathIfNecessary(int playerIndex, int characterIndex, bool shouldDiscardEquipmentOnDeath)
 		{
 			if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null && Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() <= 0)
 			{
@@ -2252,9 +2302,17 @@ namespace FallenLand
 				List<SpoilsCard> equippedSpoilsToMoveBackToAuctionHouse = Players[playerIndex].GetActiveCharacters()[characterIndex].GetEquippedSpoils();
 				for (int spoilsIndex = equippedSpoilsToMoveBackToAuctionHouse.Count - 1; spoilsIndex >= 0; spoilsIndex--)
 				{
-					string cardName = equippedSpoilsToMoveBackToAuctionHouse[spoilsIndex].GetTitle();
-					removeSpecificSpoilsFromSlot(playerIndex, characterIndex, cardName);
-					addSpecificCardToAuctionHouse(playerIndex, cardName);
+					SpoilsCard card = equippedSpoilsToMoveBackToAuctionHouse[spoilsIndex];
+					removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
+					if (shouldDiscardEquipmentOnDeath)
+					{
+						SpoilsDeck.Remove(card);
+						DiscardedSpoils.Add(card);
+					}
+					else
+					{
+						addSpecificCardToAuctionHouse(playerIndex, card.GetTitle());
+					}
 				}
 
 				//Remove character

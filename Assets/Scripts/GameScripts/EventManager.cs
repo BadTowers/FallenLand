@@ -25,11 +25,11 @@ namespace FallenLand
             OnD6HealingNeedsDistributed?.Invoke(numD6s);
         }
 
-        public delegate void CharacterCrownTakesDamage(int characterCrown, int amountOfDamage, byte damageType, int remainingHp);
+        public delegate void CharacterCrownTakesDamage(int characterCrown, int amountOfDamage, byte damageType, int remainingHp, bool equipmentDiscarded);
         public static event CharacterCrownTakesDamage OnCharacterCrownTakesDamage;
-        public static void CharacterCrownHasTakenDamage(int characterCrown, int amountOfDamage, byte damageType, int remainingHp)
+        public static void CharacterCrownHasTakenDamage(int characterCrown, int amountOfDamage, byte damageType, int remainingHp, bool equipmentDiscarded)
         {
-            OnCharacterCrownTakesDamage?.Invoke(characterCrown, amountOfDamage, damageType, remainingHp);
+            OnCharacterCrownTakesDamage?.Invoke(characterCrown, amountOfDamage, damageType, remainingHp, equipmentDiscarded);
         }
 
         public delegate void VehicleDestroyed();

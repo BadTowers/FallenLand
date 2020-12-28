@@ -36,6 +36,7 @@ namespace FallenLand
 		Rifle,
 		Shotgun,
 		Six_Wheeled,
+		Special,
 		Sporting_Goods,
 		Stowable,
 		Submachine_Gun,

@@ -768,35 +768,39 @@ namespace FallenLand
             Debug.LogError("TODO onDistributeD6HealingPopup");
         }
 
-        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType, int remainingHp)
+        private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType, int remainingHp, bool discardsEquipment)
         {
             GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
             if (GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer())[characterIndex] == null && remainingHp == -1)
             {
-                GenericPopupText.GetComponent<Text>().text = "Character crown " + (characterIndex + 1) + " was empty. No damage taken!";
+                GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " was empty. No damage taken!";
             }
             else
             {
                 if (damageType == Constants.DAMAGE_PHYSICAL)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " physical damage!";
+                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " physical damage!";
                 }
                 else if (damageType == Constants.DAMAGE_RADIATION)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " radiation damage!";
+                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " radiation damage!";
                 }
                 else if (damageType == Constants.DAMAGE_INFECTED)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " infected damage!";
+                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " infected damage!";
                 }
                 else if (damageType == Constants.DAMAGE_PSYCHOLOGICAL)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Character " + (characterIndex + 1) + " has taken " + amountOfDamage + " psychological damage!";
+                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " psychological damage!";
                 }
 
                 if (remainingHp <= 0)
                 {
                     GenericPopupText.GetComponent<Text>().text = GenericPopupText.GetComponent<Text>().text + " They died...";
+                }
+                if (discardsEquipment)
+                {
+                    GenericPopupText.GetComponent<Text>().text = GenericPopupText.GetComponent<Text>().text + " Equipment lost!";
                 }
             }
             showPopup(GenericPopupTextPanel);
