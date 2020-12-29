@@ -736,6 +736,7 @@ namespace FallenLand
             EncounterStatsPanel.SetActive(false);
             EncounterFinishedPanel.SetActive(false);
             EncounterHasBegun = false;
+            CurrentEncounterSkillPage = 0;
         }
 
         public void OnDiscardPanelOkPress()
