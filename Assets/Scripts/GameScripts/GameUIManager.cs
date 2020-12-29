@@ -517,7 +517,7 @@ namespace FallenLand
         {
             int d10Roll = GameManagerInstance.RollTownEvents(GameManagerInstance.GetIndexForMyPlayer());
             UserRolledTownEventsThisTurn = true;
-            string eventsText = "";
+            string eventsText;
             switch (d10Roll)
             {
                 case 1:
