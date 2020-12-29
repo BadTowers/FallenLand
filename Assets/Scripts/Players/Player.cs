@@ -28,6 +28,7 @@ namespace FallenLand
 		private int ActiveVehicleUsedCarryWeight;
 		private List<List<List<int>>> CharacterDiceRolls;
 		private List<List<int>> VehicleDiceRolls;
+		private readonly List<Resource> ResourcesOwned = new List<Resource>();
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -743,6 +744,25 @@ namespace FallenLand
 				ActiveCharacters[characterIndex].AddPhysicalDamage(amountOfPhysicalDamage);
 			}
 		}
+
+		public void AddResourceOwned(Resource resource)
+		{
+			ResourcesOwned.Add(resource);
+		}
+
+		public void RemoveResourceOwned(Resource resource)
+        {
+			ResourcesOwned.Remove(resource);
+		}
+
+		public List<Resource> GetAllResourcesOwned()
+		{
+			return ResourcesOwned;
+		}
+
+
+
+
 
 
 		private void initDataStructures()

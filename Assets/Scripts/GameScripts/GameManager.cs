@@ -30,6 +30,7 @@ namespace FallenLand
 		private const int MaxNumberOfPlayers = 5;
 		private const int MovementWeekCost = 1;
 		private const int EncounterWeekCost = 1;
+		private const int ResourceWeekCost = 2;
 		private List<TownTech> TownTechs;
 		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
@@ -1160,11 +1161,11 @@ namespace FallenLand
 			return isItMyTurn;
 		}
 
-		public void SetPlayerIsMoving(int playerIndex)
+		public void SetPlayerIsMoving(int playerIndex, bool isMoving)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].SetPlayerIsMoving(true);
+				Players[playerIndex].SetPlayerIsMoving(isMoving);
 				MouseManagerInst.ClearLastHexClickedCoodinates();
 			}
 		}
@@ -1193,7 +1194,8 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].SetPlayerIsDoingAnEncounter(true);
+				bool isDoingEncounter = (encounterType != Constants.ENCOUNTER_NONE);
+				Players[playerIndex].SetPlayerIsDoingAnEncounter(isDoingEncounter);
 				Players[playerIndex].SetEncounterType(encounterType);
 			}
 		}
@@ -1418,22 +1420,22 @@ namespace FallenLand
 			return wasSuccessful;
 		}
 
-		public void SetEncounterResultAccepted(int playerIndex)
+		public void SetEncounterResultAccepted(int playerIndex, bool wasResourceEncounter)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				byte status = (EncounterWasSuccessful(playerIndex)) ? Constants.STATUS_PASSED : Constants.STATUS_FAILED;
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, CurrentPlayerEncounter[playerIndex].GetTitle());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
 		}
 
-		public void AddSalvageAtStartOfEncounter(int playerIndex)
+		public void AddSalvageAtStartOfEncounter(int playerIndex, bool wasResourceEncounter)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, CurrentPlayerEncounter[playerIndex].GetTitle());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
@@ -1650,6 +1652,24 @@ namespace FallenLand
 			}
 
 			return isInDeck;
+		}
+
+		public bool IsResourceOwned(Coordinates location)
+		{
+			bool isOwned = false;
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			{
+				List<Resource> resourcesOwned = Players[playerIndex].GetAllResourcesOwned();
+				for (int resourceIndex = 0; resourceIndex < resourcesOwned.Count; resourceIndex++)
+				{
+					if (location.Equals(resourcesOwned[resourceIndex].GetLocation()))
+					{
+						isOwned = true;
+						break;
+					}
+				}
+			}
+			return isOwned;
 		}
 
 		public Dice GetDiceRoller()
@@ -2203,11 +2223,23 @@ namespace FallenLand
 					EncounterWasSent = false;
 
 					int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
-					Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
+					if (!eventStatus.GetWasResourceEncounter())
+					{
+						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
+					}
+					else
+                    {
+						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - ResourceWeekCost);
+					}
 
 					if (status == Constants.STATUS_PASSED)
 					{
 						EncounterResultsHandler.HandleSuccess(this, playerIndex);
+						if(eventStatus.GetWasResourceEncounter())
+                        {
+							//TODO award resource
+							Debug.LogError("The user gained a resource. TODO implement this");
+						}
 					}
 					else
 					{

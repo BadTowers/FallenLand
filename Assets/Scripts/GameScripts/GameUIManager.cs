@@ -97,6 +97,10 @@ namespace FallenLand
         private GameObject GenericPopupWithTwoLinesOfTextPanel;
         private GameObject GenericPopupTextPanel;
         private GameObject GenericPopupText;
+        private GameObject EncounterButton;
+        private GameObject ResourceButton;
+        private bool WasResourceClicked;
+        private bool WasEncounterClicked;
 
         #region UnityFunctions
         void Awake()
@@ -137,6 +141,8 @@ namespace FallenLand
             GenericPopupWithTwoLinesOfTextPanel = GameObject.Find("GenericPopupWithTwoLinesOfTextPanel");
             GenericPopupTextPanel = GameObject.Find("GenericPopupTextPanel");
             GenericPopupText = GameObject.Find("GenericPopupText");
+            EncounterButton = GameObject.Find("EncounterButton");
+            ResourceButton = GameObject.Find("ResourceButton");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -560,49 +566,108 @@ namespace FallenLand
         public void OnMovementDeedPress()
         {
             Debug.Log("Movement deed selected");
-            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the hex you would like your party to move to.";
-            GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer());
+            WasResourceClicked = false;
+            WasEncounterClicked = false;
+            EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to movement
+
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            bool moving = GameManagerInstance.GetPlayerIsMoving(myIndex);
+            moving = !moving;
+            GameManagerInstance.SetPlayerIsMoving(myIndex, moving);
+            if (moving)
+            {
+                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the hex you would like your party to move to.";
+            }
+            else
+            {
+                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+            }
         }
 
         public void OnEncounterDeedPress()
         {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            //Cleanup other party exploits stuff
             Debug.Log("Encounter deed selected");
-            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the encounter type...";
-            EncounterSelectionPanel.SetActive(true);
-            Coordinates partyLocation = GameManagerInstance.GetPartyLocation(GameManagerInstance.GetIndexForMyPlayer());
-            MapLayout mapLayout = GameManagerInstance.GetMapLayout();
-            if (mapLayout.IsPlains(partyLocation) || mapLayout.IsResource(partyLocation))
+            WasResourceClicked = false;
+            GameManagerInstance.SetPlayerIsMoving(myIndex, false); //cancel movement if it was happening
+
+            WasEncounterClicked = !WasEncounterClicked;
+            EncounterSelectionPanel.SetActive(WasEncounterClicked);
+            if (WasEncounterClicked)
             {
-                GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = true;
+                Coordinates partyLocation = GameManagerInstance.GetPartyLocation(myIndex);
+                MapLayout mapLayout = GameManagerInstance.GetMapLayout();
+                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the encounter type...";
+                GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = mapLayout.IsPlains(partyLocation);
+                GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = mapLayout.IsMountain(partyLocation);
+                GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = (mapLayout.IsCity(partyLocation) || mapLayout.IsRad(partyLocation));
             }
-            if (mapLayout.IsMountain(partyLocation) || mapLayout.IsResource(partyLocation))
+            else
             {
-                GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = true;
-            }
-            if (mapLayout.IsCity(partyLocation) || mapLayout.IsRad(partyLocation) || mapLayout.IsResource(partyLocation))
-            {
-                GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = true;
+                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
             }
         }
 
         public void OnPvpDeedPress()
         {
-        
+            //Cleanup other party exploits stuff
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            WasResourceClicked = false;
+            WasEncounterClicked = false;
+            GameManagerInstance.SetPlayerIsMoving(myIndex, false); //cancel movement if it was happening
+            EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to pvp
+            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+
+            //TODO
         }
 
         public void OnResourceDeedPress()
         {
-        
+            Debug.Log("Resource deed selected");
+
+            //Cleanup other party exploits stuff
+            WasEncounterClicked = false;
+            GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer(), false); //cancel movement if it was happening
+
+            WasResourceClicked = !WasResourceClicked;
+            EncounterSelectionPanel.SetActive(WasResourceClicked);
+            if (WasResourceClicked)
+            {
+                GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
+                GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
+                GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
+                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the encounter type...";
+            }
+            else
+            {
+                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+            }
         }
 
         public void OnHealingDeedPress()
         {
-        
+            //Cleanup other party exploits stuff
+            WasResourceClicked = false;
+            WasEncounterClicked = false;
+            GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer(), false); //cancel movement if it was happening
+            EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to healing
+            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+
+            //TODO
         }
 
         public void OnMissionDeedPress()
         {
-            
+            //Cleanup other party exploits stuff
+            WasResourceClicked = false;
+            WasEncounterClicked = false;
+            GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer(), false); //cancel movement if it was happening
+            EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to mission
+            PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+
+            //TODO
         }
 
         public void OnPlainEncounterPress()
@@ -619,12 +684,12 @@ namespace FallenLand
 
         public void OnMountainEncounterPress()
         {
-
+            Debug.LogError("Mountain encounters are not implemented currently. Please select another.");
         }
 
         public void OnCityRadEncounterPress()
         {
-        
+            Debug.LogError("City/Rad encounters are not implemented currently. Please select another.");
         }
 
         public void OnVerticalCardClosePress()
@@ -647,7 +712,7 @@ namespace FallenLand
             EncounterStatsPanel.SetActive(true);
             MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
             EncounterHasBegun = true;
-            GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer());
+            GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
             GameManagerInstance.HandleActionsOnBegin();
         }
 
@@ -727,7 +792,7 @@ namespace FallenLand
 
         public void OnAcceptEncounterResultsPress()
         {
-            GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer());
+            GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
 
             MainPartyOverviewPanel.SetActive(true);
             MainEncounterCardImage.SetActive(false);
@@ -737,6 +802,7 @@ namespace FallenLand
             EncounterFinishedPanel.SetActive(false);
             EncounterHasBegun = false;
             CurrentEncounterSkillPage = 0;
+            WasResourceClicked = false;
         }
 
         public void OnDiscardPanelOkPress()
@@ -1339,15 +1405,18 @@ namespace FallenLand
                 GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
 
                 MapLayout mapLayout = GameManagerInstance.GetMapLayout();
-                bool shouldEnableEncounterDeedButton = !mapLayout.IsFactionBase(GameManagerInstance.GetPartyLocation(GameManagerInstance.GetIndexForMyPlayer()));
-                GameObject.Find("EncounterButton").GetComponent<Button>().interactable = shouldEnableEncounterDeedButton;
+                Coordinates partyLocation = GameManagerInstance.GetPartyLocation(GameManagerInstance.GetIndexForMyPlayer());
+                bool shouldEnableEncounterDeedButton = !mapLayout.IsFactionBase(partyLocation);
+                EncounterButton.GetComponent<Button>().interactable = shouldEnableEncounterDeedButton;
+                bool shouldEnableResourceDeedButton = (mapLayout.IsResource(partyLocation) && !GameManagerInstance.IsResourceOwned(partyLocation)); //don't allow taking owned resource at this time
+                ResourceButton.GetComponent<Button>().interactable = shouldEnableResourceDeedButton;
             }
             else
             {
                 GameObject.Find("MovementButton").GetComponent<Button>().interactable = false;
-                GameObject.Find("EncounterButton").GetComponent<Button>().interactable = false;
+                EncounterButton.GetComponent<Button>().interactable = false;
                 GameObject.Find("PVPButton").GetComponent<Button>().interactable = false;
-                GameObject.Find("ResourceButton").GetComponent<Button>().interactable = false;
+                ResourceButton.GetComponent<Button>().interactable = false;
                 GameObject.Find("HealingButton").GetComponent<Button>().interactable = false;
                 GameObject.Find("MissionButton").GetComponent<Button>().interactable = false;
             }
