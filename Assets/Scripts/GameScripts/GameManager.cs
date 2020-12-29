@@ -1690,6 +1690,7 @@ namespace FallenLand
 		private void dealSpoilsCardsToPlayers()
 		{
 			moveStartingCardsToTheEndOfTheDeck(); //Ensure we don't deal away someone's starting card
+			moveEventCardsToTheEndOfTheDeck();
 			for (int i = 0; i < StartingSpoilsCards; i++)
 			{
 				for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
@@ -1734,11 +1735,24 @@ namespace FallenLand
 			}
 		}
 
-		private void moveStartingCardsToTheEndOfTheDeck()
-		{
+        private void moveStartingCardsToTheEndOfTheDeck()
+        {
+            for (int i = 0; i < SpoilsDeck.Count; i++)
+            {
+                if (SpoilsDeck[i].GetIsStartingCard())
+                {
+                    SpoilsCard card = SpoilsDeck[i];
+                    SpoilsDeck.RemoveAt(i);
+                    SpoilsDeck.Add(card);
+                }
+            }
+        }
+
+		private void moveEventCardsToTheEndOfTheDeck()
+        {
 			for (int i = 0; i < SpoilsDeck.Count; i++)
 			{
-				if (SpoilsDeck[i].GetIsStartingCard())
+				if (SpoilsDeck[i].GetSpoilsTypes().Contains(SpoilsTypes.Event))
 				{
 					SpoilsCard card = SpoilsDeck[i];
 					SpoilsDeck.RemoveAt(i);
