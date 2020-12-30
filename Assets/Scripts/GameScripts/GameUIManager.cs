@@ -555,7 +555,7 @@ namespace FallenLand
                     break;
                 default:
                     eventsText = "Roll glitched. No effect";
-                    //No efect
+                    //No effect
                     break;
             }
 
