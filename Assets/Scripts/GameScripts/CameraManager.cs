@@ -90,10 +90,7 @@ namespace FallenLand
         #region PublicAPI
         public void MoveCameraToFactionBaseLocation(MapCreation map, Faction faction)
         {
-            Debug.LogError("MoveCameraToFactionBaseLocation");
             GameWorldCoordinates gameCoords = map.GetFactionGameLocationFromCoordinates(faction.GetBaseLocation());
-            Debug.LogError(gameCoords.GetX());
-            Debug.LogError(gameCoords.GetY());
             Camera.main.transform.position = new Vector3(gameCoords.GetX(), MinZoom + ZoomSpeed, gameCoords.GetY());
         }
         #endregion
