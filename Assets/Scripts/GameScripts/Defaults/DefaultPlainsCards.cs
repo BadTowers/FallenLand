@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
@@ -624,6 +624,26 @@ namespace FallenLand
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishment(new TakeD6PhysicalDamage(3));
 			//todo punishment -- you are delayed 1 week
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("The Hitchhiker");
+			curCard.SetSalvageReward(2);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Diplomacy, 4)
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.AddPrecheck(new HasMotorizedVehicle());
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainCharacterCards(1));
+			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new VehicleDestroyed());
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
