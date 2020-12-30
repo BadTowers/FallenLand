@@ -631,18 +631,26 @@ namespace FallenLand
             WasEncounterClicked = false;
             GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer(), false); //cancel movement if it was happening
 
-            WasResourceClicked = !WasResourceClicked;
-            EncounterSelectionPanel.SetActive(WasResourceClicked);
-            if (WasResourceClicked)
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            if (GameManagerInstance.GetNumberOfResourcesOwned(myIndex) < Constants.MAX_NUM_RESOURCES_OWNED)
             {
-                GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
-                GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
-                GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
-                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the encounter type...";
+                WasResourceClicked = !WasResourceClicked;
+                EncounterSelectionPanel.SetActive(WasResourceClicked);
+                if (WasResourceClicked)
+                {
+                    GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
+                    GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
+                    GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = WasResourceClicked;
+                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the encounter type...";
+                }
+                else
+                {
+                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+                }
             }
             else
             {
-                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+                onShowGenericPopup("You cannot own more than 5 resources!");
             }
         }
 
@@ -1403,9 +1411,10 @@ namespace FallenLand
             if (GameManagerInstance.GetIsItMyTurn() && GameManagerInstance.GetRemainingPartyExploitWeeks(GameManagerInstance.GetIndexForMyPlayer()) > 0 && CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer())
             {
                 GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
+                int myIndex = GameManagerInstance.GetIndexForMyPlayer();
 
                 MapLayout mapLayout = GameManagerInstance.GetMapLayout();
-                Coordinates partyLocation = GameManagerInstance.GetPartyLocation(GameManagerInstance.GetIndexForMyPlayer());
+                Coordinates partyLocation = GameManagerInstance.GetPartyLocation(myIndex);
                 bool shouldEnableEncounterDeedButton = !mapLayout.IsFactionBase(partyLocation);
                 EncounterButton.GetComponent<Button>().interactable = shouldEnableEncounterDeedButton;
                 bool shouldEnableResourceDeedButton = (mapLayout.IsResource(partyLocation) && !GameManagerInstance.IsResourceOwned(partyLocation)); //don't allow taking owned resource at this time
