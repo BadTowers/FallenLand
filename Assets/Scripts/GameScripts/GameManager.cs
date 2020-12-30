@@ -53,6 +53,7 @@ namespace FallenLand
 		private List<EncounterCard> CurrentPlayerEncounter;
 		private bool EncounterWasSent;
 		private ResourcePieceManager ResourcePieceManagerInst;
+		private List<bool> HasDoneEncounterSinceMovement;
 
 		#region UnityFunctions
 		void Awake()
@@ -72,6 +73,7 @@ namespace FallenLand
 			MouseManagerInst = GameObject.Find("MouseManager").GetComponent<MouseManager>();
 			MapLayoutInst = new DefaultMapLayout();
 			CurrentPlayerEncounter = new List<EncounterCard>();
+			HasDoneEncounterSinceMovement = new List<bool>();
 
 			registerPhotonCallbacks();
 
@@ -81,7 +83,7 @@ namespace FallenLand
 				Faction faction = new Faction("Dummy", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
 				Players.Add(new HumanPlayer(faction, StartingSalvage));
 				CurrentPlayerEncounter.Add(null);
-
+				HasDoneEncounterSinceMovement.Add(false);
 			}
 
             //Figure out our user ID
@@ -1691,6 +1693,11 @@ namespace FallenLand
 			return isOwned;
 		}
 
+		public bool HasDoneEncounterSinceLastMove(int playerIndex)
+		{
+			return HasDoneEncounterSinceMovement[playerIndex];
+		}
+
 		public Dice GetDiceRoller()
 		{
 			return DiceRoller;
@@ -2197,6 +2204,7 @@ namespace FallenLand
 			Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - MovementWeekCost);
 			PlayerPieceManagerInst.MovePiece(playerIndex, coords);
 			Players[playerIndex].SetPartyLocation(coords);
+			HasDoneEncounterSinceMovement[playerIndex] = false;
 		}
 
 		private void handlePartyExploitsEncounter(int playerIndex, byte encounterType, string encounterCardName)
@@ -2268,8 +2276,10 @@ namespace FallenLand
 
 					Players[playerIndex].ResetAllCharacterDiceRolls();
 					Players[playerIndex].ResetAllVehicleDiceRolls();
+					HasDoneEncounterSinceMovement[playerIndex] = true;
 
-                    if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_PLAINS)
+
+					if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_PLAINS)
                     {
 						PlainsCard card = PlainsCard.FindCardInDeckByTitle(eventStatus.GetCardName(), PlainsDeck);
 						DiscardedPlainsCards.Add(card);

@@ -571,15 +571,26 @@ namespace FallenLand
             EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to movement
 
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            bool moving = GameManagerInstance.GetPlayerIsMoving(myIndex);
-            moving = !moving;
-            GameManagerInstance.SetPlayerIsMoving(myIndex, moving);
-            if (moving)
+            MapLayout mapLayout = GameManagerInstance.GetMapLayout();
+            Coordinates partyLocation = GameManagerInstance.GetPartyLocation(myIndex);
+
+            if (GameManagerInstance.HasDoneEncounterSinceLastMove(myIndex) || mapLayout.IsFactionBase(partyLocation))
             {
-                PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the hex you would like your party to move to.";
+                bool moving = GameManagerInstance.GetPlayerIsMoving(myIndex);
+                moving = !moving;
+                GameManagerInstance.SetPlayerIsMoving(myIndex, moving);
+                if (moving)
+                {
+                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the hex you would like your party to move to.";
+                }
+                else
+                {
+                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
+                }
             }
             else
             {
+                EventManager.ShowGenericPopup("You have to do an encounter, resource, or mission before you can move again!");
                 PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
             }
         }
@@ -1410,11 +1421,11 @@ namespace FallenLand
         {
             if (GameManagerInstance.GetIsItMyTurn() && GameManagerInstance.GetRemainingPartyExploitWeeks(GameManagerInstance.GetIndexForMyPlayer()) > 0 && CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer())
             {
-                GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
                 int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-
                 MapLayout mapLayout = GameManagerInstance.GetMapLayout();
                 Coordinates partyLocation = GameManagerInstance.GetPartyLocation(myIndex);
+
+                GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
                 bool shouldEnableEncounterDeedButton = !mapLayout.IsFactionBase(partyLocation);
                 EncounterButton.GetComponent<Button>().interactable = shouldEnableEncounterDeedButton;
                 bool shouldEnableResourceDeedButton = (mapLayout.IsResource(partyLocation) && !GameManagerInstance.IsResourceOwned(partyLocation)); //don't allow taking owned resource at this time
