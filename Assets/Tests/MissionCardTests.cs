@@ -52,7 +52,7 @@ namespace Tests
 			Assert.IsNotNull(MissionCardInstance.GetSkillChecks());
 			Assert.AreEqual(0, MissionCardInstance.GetSkillChecks().Count);
 
-			MissionCardInstance.SetSkillChecks(new Dictionary<Skills, int>() { { Skills.Combat, 3 }, { Skills.Medical, 4 } });
+			MissionCardInstance.SetSkillChecks(new List<(Skills, int)> { ( Skills.Combat, 3 ), ( Skills.Medical, 4 ) });
 			Assert.AreEqual(2, MissionCardInstance.GetSkillChecks().Count);
 			Assert.AreEqual(Skills.Combat, MissionCardInstance.GetSkillChecks().ElementAt(0).Item1);
 			Assert.AreEqual(3, MissionCardInstance.GetSkillChecks().ElementAt(0).Item2);

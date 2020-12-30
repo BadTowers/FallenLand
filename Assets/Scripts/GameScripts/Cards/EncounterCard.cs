@@ -29,21 +29,6 @@ namespace FallenLand
 			initText();
 		}
 
-		public void SetSkillChecks(Dictionary<Skills, int> skillChecks)
-		{
-			if (skillChecks != null)
-			{
-				//Convert the input dictionary to a list of tuples for backwards compatibility
-				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-				{
-                    if (skillChecks.ContainsKey(skill))
-                    {
-						SkillChecksRequired.Add((skill, skillChecks[skill]));
-					}
-				}
-			}
-		}
-
 		public void SetSkillChecks(List<(Skills, int)> skillChecks)
 		{
             if (skillChecks != null)
