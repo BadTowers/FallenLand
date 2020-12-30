@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
@@ -381,9 +381,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Hungry Locals");
 			curCard.SetSalvageReward(3);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Medical] = 4
+				(Skills.Medical, 4)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -401,9 +401,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Brotherhood of the Apocalypse");
 			curCard.SetSalvageReward(5);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Combat] = 7
+				(Skills.Combat, 7)
 			});
 			curCard.AddClassification(EncounterTypes.TheBrotherhood);
 			curCard.AddPrecheck(new NotPlayingBrotherhood());
@@ -421,10 +421,10 @@ namespace FallenLand
 			curCard = new PlainsCard("Don't Drink the Punch");
 			curCard.SetSalvageReward(2);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Technical] = 3,
-				[Skills.Combat] = 5
+				(Skills.Technical, 3),
+				(Skills.Combat, 5)
 			});
 			curCard.AddClassification(EncounterTypes.TheBrotherhood);
 			curCard.AddClassification(EncounterTypes.Mystery);
@@ -445,9 +445,9 @@ namespace FallenLand
 			curCard = new PlainsCard("A Shining Example");
 			curCard.SetSalvageReward(5);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Survival] = 3
+				(Skills.Survival, 3)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -464,9 +464,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Ronin");
 			curCard.SetSalvageReward(3);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Diplomacy] = 5
+				(Skills.Diplomacy, 5)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -482,9 +482,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Blood on the Highway");
 			curCard.SetSalvageReward(4);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Combat] = 7
+				(Skills.Combat, 7)
 			});
 			curCard.AddClassification(EncounterTypes.VehicleCombat);
 			curCard.AddClassification(EncounterTypes.BikerGang);
@@ -504,10 +504,10 @@ namespace FallenLand
 			curCard = new PlainsCard("Tainted Supplies");
 			curCard.SetSalvageReward(1);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Medical] = 3,
-				[Skills.Survival] = 4
+				(Skills.Medical, 3),
+				(Skills.Survival, 4)
 			});
 			curCard.AddClassification(EncounterTypes.Perishables);
 			curCard.SetMakePsychCheckAfterEncounter(true);
@@ -525,9 +525,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Orphans, How Cute!");
 			curCard.SetSalvageReward(3);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Combat] = 6
+				(Skills.Combat, 6)
 			});
 			int characterCrownIndex = 0;
 			int amountOfDamage = 3;
@@ -546,9 +546,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Destitute Enclave");
 			curCard.SetSalvageReward(3);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Combat] = 5
+				(Skills.Combat, 5)
 			});
 			characterCrownIndex = 2;
 			amountOfDamage = 3;
@@ -567,11 +567,11 @@ namespace FallenLand
 			curCard = new PlainsCard("Extra Terrestrial");
 			curCard.SetSalvageReward(5);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Diplomacy] = 4,
-				[Skills.Technical] = 4,
-				[Skills.Mechanical] = 4
+				(Skills.Diplomacy, 4),
+				(Skills.Technical, 4),
+				(Skills.Mechanical, 4)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
@@ -587,9 +587,9 @@ namespace FallenLand
 			curCard = new PlainsCard("Scare Crow");
 			curCard.SetSalvageReward(3);
 			curCard.SetDescriptionText("");
-			curCard.SetSkillChecks(new Dictionary<Skills, int>
+			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				[Skills.Combat] = 5
+				(Skills.Combat, 5)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			int numD6s = 2;
