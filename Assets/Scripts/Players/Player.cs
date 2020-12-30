@@ -17,7 +17,6 @@ namespace FallenLand
 		private List<int> ActiveCharacterUsedCarryWeights;
 		private Dictionary<Skills, int> ActiveVehicleTotalStats;
 		private int ActiveVehicleRemainingCarryWeight;
-		private List<Coordinates> OwnedResourceLocations;
 		private int TownHealth;
 		private int Prestige;
 		private int RemainingPartyExploitWeeks;
@@ -225,11 +224,6 @@ namespace FallenLand
             return carryWeight;
         }
 
-        public List<Coordinates> GetOwnedResources()
-		{
-			return OwnedResourceLocations;
-		}
-
 		public Coordinates GetPartyLocation()
 		{
 			return PartyLocation;
@@ -399,26 +393,6 @@ namespace FallenLand
 		{
 			Vehicle = null;
 			updateVehicleSlotTotals();
-		}
-
-		public void RemoveOwnedResource(Coordinates coord)
-		{
-			for (int i = 0; i < OwnedResourceLocations.Count; i++)
-			{
-                if (OwnedResourceLocations[i].GetX() == coord.GetX() && OwnedResourceLocations[i].GetY() == coord.GetY())
-                {
-					OwnedResourceLocations.RemoveAt(i);
-					break;
-				}
-			}
-		}
-
-		public void AddOwnedResource(Coordinates coord)
-		{
-			if (coord != null)
-			{
-				OwnedResourceLocations.Add(coord);
-			}
 		}
 
 		public void AddSalvageToPlayer(int salvageToAdd)
@@ -748,11 +722,13 @@ namespace FallenLand
 		public void AddResourceOwned(Resource resource)
 		{
 			ResourcesOwned.Add(resource);
+			Prestige += 1;
 		}
 
 		public void RemoveResourceOwned(Resource resource)
         {
 			ResourcesOwned.Remove(resource);
+			Prestige -= 1;
 		}
 
 		public List<Resource> GetAllResourcesOwned()
@@ -774,7 +750,6 @@ namespace FallenLand
 			TownTechs = new List<TownTech>();
 			ActiveCharacterRemainingCarryWeights = new List<int>();
 			ActiveCharacterUsedCarryWeights = new List<int>();
-			OwnedResourceLocations = new List<Coordinates>();
 			ActiveVehicleTotalStats = new Dictionary<Skills, int>();
 			ActiveCharacterTotalStats = new List<Dictionary<Skills, int>>();
 			CharacterDiceRolls = new List<List<List<int>>>();

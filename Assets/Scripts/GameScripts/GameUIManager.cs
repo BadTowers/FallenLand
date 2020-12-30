@@ -1886,6 +1886,7 @@ namespace FallenLand
                     PlayerPanels[currentPlayerIndex].transform.Find("PrestigeActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetPrestige(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("TownHealthActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetTownHealth(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("SalvageActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetSalvage(currentPlayerIndex).ToString();
+                    PlayerPanels[currentPlayerIndex].transform.Find("ResourceActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetNumberOfResourcesOwned(currentPlayerIndex).ToString();
                 }
                 else
                 {

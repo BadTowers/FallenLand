@@ -17,14 +17,15 @@ namespace FallenLand
 		public const int CRIT_FAIL = 10;
 		public const int HAS_NOT_ROLLED = -1;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
-			{
-				{ Skills.Mechanical, 0 },
-				{ Skills.Diplomacy, 0 },
-				{ Skills.Technical, 0 },
-				{ Skills.Combat, 0 },
-				{ Skills.Survival, 0 },
-				{ Skills.Medical, 0 }
-			};
+		{
+			{ Skills.Mechanical, 0 },
+			{ Skills.Diplomacy, 0 },
+			{ Skills.Technical, 0 },
+			{ Skills.Combat, 0 },
+			{ Skills.Survival, 0 },
+			{ Skills.Medical, 0 }
+		};
+		public const int MAX_NUM_RESOURCES_OWNED = 5;
 
 		//Used for EvDealCard
 		public const byte SPOILS_CARD = 1;

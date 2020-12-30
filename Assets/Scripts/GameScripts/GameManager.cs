@@ -52,6 +52,7 @@ namespace FallenLand
 		private MapLayout MapLayoutInst;
 		private List<EncounterCard> CurrentPlayerEncounter;
 		private bool EncounterWasSent;
+		private ResourcePieceManager ResourcePieceManagerInst;
 
 		#region UnityFunctions
 		void Awake()
@@ -65,6 +66,7 @@ namespace FallenLand
 			CurrentPhase = Phases.Game_Start_Setup;
 			NumHumanPlayers = PhotonNetwork.PlayerList.Length; //TODO account for single player when that's implemented
 			PlayerPieceManagerInst = this.gameObject.AddComponent<PlayerPieceManager>();
+			ResourcePieceManagerInst = this.gameObject.AddComponent<ResourcePieceManager>();
 			MissionManagerInst = new MissionManager();
 			DiceRoller = new Dice();
 			MouseManagerInst = GameObject.Find("MouseManager").GetComponent<MouseManager>();
@@ -103,6 +105,7 @@ namespace FallenLand
 			mapCreation.CreateMap(MapLayoutInst);
 			PlayerPieceManagerInst.SetMap(mapCreation);
 			MissionManagerInst.SetMap(mapCreation);
+			ResourcePieceManagerInst.SetMap(mapCreation);
 
 			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
 			NewGameState = GameObject.Find("GameCreation");
@@ -141,6 +144,9 @@ namespace FallenLand
 					Players[playerIndex].SetPartyLocation(faction.GetBaseLocation());
 				}
 				ReceivedMyFactionInformation = true;
+
+				CameraManager mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
+				mainCamera.MoveCameraToFactionBaseLocation(mapCreation, Players[GetIndexForMyPlayer()].GetPlayerFaction());
 
 				generateMissionLocations();
 				sendMissionLocationsToOtherPlayers();
@@ -503,6 +509,16 @@ namespace FallenLand
 				prestige = Players[playerIndex].GetPrestige();
 			}
 			return prestige;
+		}
+
+		public int GetNumberOfResourcesOwned(int playerIndex)
+		{
+			int numberOfResourcesOwned = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				numberOfResourcesOwned = Players[playerIndex].GetAllResourcesOwned().Count;
+			}
+			return numberOfResourcesOwned;
 		}
 
 		public Faction GetFaction(int playerIndex)
@@ -2217,7 +2233,6 @@ namespace FallenLand
                 }
                 else if (status == Constants.STATUS_FAILED || status == Constants.STATUS_PASSED)
                 {
-					//todo encounter card from deck and place it into discard once more encounters are implemented
 					Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
 					Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
 					EncounterWasSent = false;
@@ -2235,10 +2250,12 @@ namespace FallenLand
 					if (status == Constants.STATUS_PASSED)
 					{
 						EncounterResultsHandler.HandleSuccess(this, playerIndex);
-						if(eventStatus.GetWasResourceEncounter())
+						if (eventStatus.GetWasResourceEncounter())
                         {
-							//TODO award resource
-							Debug.LogError("The user gained a resource. TODO implement this");
+							Coordinates resourceLocation = Players[playerIndex].GetPartyLocation();
+							Resource resourceGained = new Resource(new Coordinates(resourceLocation.GetX(), resourceLocation.GetY()));
+							Players[playerIndex].AddResourceOwned(resourceGained);
+							ResourcePieceManagerInst.CreatePiece(playerIndex, Players[playerIndex].GetPlayerFaction(), resourceGained.GetLocation());
 						}
 					}
 					else

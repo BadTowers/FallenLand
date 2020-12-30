@@ -24,11 +24,6 @@ namespace FallenLand
         {
             PauseMenu = GameObject.Find("PauseMenu");
             CharacterSpoilsOverlay = GameObject.Find("CharacterAndSpoilsAssigningPanel");
-        }
-
-        void Start()
-        {
-            //Center the camera
             Camera.main.transform.position = new Vector3(12 * MapCreation.HEX_PREFAB_SCALE, MinZoom, 5 * MapCreation.HEX_PREFAB_SCALE);
         }
 
@@ -89,6 +84,17 @@ namespace FallenLand
             {
                 zoomOut();
             }
+        }
+        #endregion
+
+        #region PublicAPI
+        public void MoveCameraToFactionBaseLocation(MapCreation map, Faction faction)
+        {
+            Debug.LogError("MoveCameraToFactionBaseLocation");
+            GameWorldCoordinates gameCoords = map.GetFactionGameLocationFromCoordinates(faction.GetBaseLocation());
+            Debug.LogError(gameCoords.GetX());
+            Debug.LogError(gameCoords.GetY());
+            Camera.main.transform.position = new Vector3(gameCoords.GetX(), MinZoom + ZoomSpeed, gameCoords.GetY());
         }
         #endregion
 

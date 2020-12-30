@@ -131,6 +131,32 @@ namespace FallenLand
 			return worldCoords;
 		}
 
+		public GameWorldCoordinates GetResourceGameLocationFromCoordinates(Coordinates coords)
+		{
+			GameWorldCoordinates worldCoords = null;
+			for (int LR = 0; LR < MAP_WIDTH; LR++)
+			{
+				for (int UD = 0; UD < MAP_HEIGHT; UD++)
+				{
+					GameObject go = MapOfHexes[LR, UD];
+					if (go != null)
+					{
+						Hex hex = go.GetComponent<Hex>();
+						if (hex != null && hex.IsResource())
+						{
+							Coordinates resourceLoc = hex.GetCoordinates();
+							if (resourceLoc.Equals(coords))
+							{
+								worldCoords = hex.GetGameWorldCoords();
+							}
+						}
+					}
+				}
+			}
+
+			return worldCoords;
+		}
+
 		public GameWorldCoordinates GetGameLocationFromCoordinates(Coordinates coords)
 		{
 			GameWorldCoordinates worldCoords = null;

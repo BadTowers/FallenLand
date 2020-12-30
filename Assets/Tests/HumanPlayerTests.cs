@@ -468,20 +468,22 @@ namespace Tests
 		{
 			Coordinates loc1 = new Coordinates(1, 2);
 			Coordinates loc2 = new Coordinates(2, 3);
+			Resource resource1 = new Resource(loc1);
+			Resource resource2 = new Resource(loc2);
 
-			Assert.IsNotNull(HumanPlayerInstance.GetOwnedResources());
-			Assert.AreEqual(0, HumanPlayerInstance.GetOwnedResources().Count);
+			Assert.IsNotNull(HumanPlayerInstance.GetAllResourcesOwned());
+			Assert.AreEqual(0, HumanPlayerInstance.GetAllResourcesOwned().Count);
 
-			HumanPlayerInstance.AddOwnedResource(loc1);
-			Assert.AreEqual(1, HumanPlayerInstance.GetOwnedResources().Count);
-			Assert.AreEqual(loc1, HumanPlayerInstance.GetOwnedResources()[0]);
+			HumanPlayerInstance.AddResourceOwned(resource1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetAllResourcesOwned().Count);
+			Assert.AreEqual(loc1, HumanPlayerInstance.GetAllResourcesOwned()[0].GetLocation());
 
-			HumanPlayerInstance.RemoveOwnedResource(loc2);
-			Assert.AreEqual(1, HumanPlayerInstance.GetOwnedResources().Count);
-			Assert.AreEqual(loc1, HumanPlayerInstance.GetOwnedResources()[0]);
+			HumanPlayerInstance.RemoveResourceOwned(resource2);
+			Assert.AreEqual(1, HumanPlayerInstance.GetAllResourcesOwned().Count);
+			Assert.AreEqual(loc1, HumanPlayerInstance.GetAllResourcesOwned()[0].GetLocation());
 
-			HumanPlayerInstance.RemoveOwnedResource(loc1);
-			Assert.AreEqual(0, HumanPlayerInstance.GetOwnedResources().Count);
+			HumanPlayerInstance.RemoveResourceOwned(resource1);
+			Assert.AreEqual(0, HumanPlayerInstance.GetAllResourcesOwned().Count);
 
 			yield return null;
 		}
