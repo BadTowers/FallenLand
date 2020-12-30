@@ -650,7 +650,7 @@ namespace FallenLand
             }
             else
             {
-                onShowGenericPopup("You cannot own more than 5 resources!");
+                onShowGenericPopup("You cannot own more than " + Constants.MAX_NUM_RESOURCES_OWNED + " resources!");
             }
         }
 
