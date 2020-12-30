@@ -101,6 +101,7 @@ namespace FallenLand
         private GameObject ResourceButton;
         private bool WasResourceClicked;
         private bool WasEncounterClicked;
+        private GameObject SelectCardPanel;
 
         #region UnityFunctions
         void Awake()
@@ -143,6 +144,7 @@ namespace FallenLand
             GenericPopupText = GameObject.Find("GenericPopupText");
             EncounterButton = GameObject.Find("EncounterButton");
             ResourceButton = GameObject.Find("ResourceButton");
+            SelectCardPanel = GameObject.Find("SelectCardPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -313,6 +315,7 @@ namespace FallenLand
             DiscardPopupPanel.SetActive(false);
             DistributeD6DamagePopupPanel.SetActive(false);
             GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
+            SelectCardPanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -516,12 +519,12 @@ namespace FallenLand
         public void OnRollTownEventsPress()
         {
             int d10Roll = GameManagerInstance.RollTownEvents(GameManagerInstance.GetIndexForMyPlayer());
-            UserRolledTownEventsThisTurn = true;
             string eventsText;
             switch (d10Roll)
             {
                 case 1:
                     eventsText = "1! You gain 2 prestige, 4 town health, and get to choose either an action card, spoils card, or character card.";
+                    SelectCardPanel.SetActive(true);
                     break;
                 case 2:
                     eventsText = "2. You gain 1 prestige and 2 town health.";
@@ -554,6 +557,12 @@ namespace FallenLand
                     eventsText = "Roll glitched. No effect";
                     //No efect
                     break;
+            }
+
+            //For a 1, the user needs to pick a card first
+            if (d10Roll != 1)
+            {
+                UserRolledTownEventsThisTurn = true;
             }
 
             //Update description for user to see the effects
@@ -809,6 +818,27 @@ namespace FallenLand
             updateSkillIcons();
         }
 
+        public void OnCharacterCardChosenButtonPress()
+        {
+            SelectCardPanel.SetActive(false);
+            GameManagerInstance.DealCharacterCardsToPlayer(GameManagerInstance.GetIndexForMyPlayer(), 1);
+            UserRolledTownEventsThisTurn = true;
+        }
+
+        public void OnSpoilsCardChosenButtonPress()
+        {
+            SelectCardPanel.SetActive(false);
+            GameManagerInstance.DealSpoilsCardsToPlayer(GameManagerInstance.GetIndexForMyPlayer(), 1);
+            UserRolledTownEventsThisTurn = true;
+        }
+
+        public void OnActionCardChosenButtonPress()
+        {
+            SelectCardPanel.SetActive(false);
+            GameManagerInstance.DealActionCardsToPlayer(GameManagerInstance.GetIndexForMyPlayer(), 1);
+            UserRolledTownEventsThisTurn = true;
+        }
+
         public void OnAcceptEncounterResultsPress()
         {
             GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
@@ -834,6 +864,14 @@ namespace FallenLand
             GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
         }
         #endregion
+
+
+
+
+
+
+
+
 
         #region HelperFunctions
         private void onShowSpoilsCardDiscardedPopup(SpoilsCard card)

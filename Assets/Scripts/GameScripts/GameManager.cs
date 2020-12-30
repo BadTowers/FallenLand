@@ -963,7 +963,7 @@ namespace FallenLand
 			}
 		}
 
-		public void DealSpoilsToPlayer(int playerIndex, int numberOfCardsToDeal)
+		public void DealSpoilsCardsToPlayer(int playerIndex, int numberOfCardsToDeal)
 		{
 			for (int i = 0; i < numberOfCardsToDeal; i++)
 			{
@@ -973,13 +973,26 @@ namespace FallenLand
 			}
 		}
 
-		public void DealCharactersToPlayer(int playerIndex, int numberOfCardsToDeal)
+		public void DealCharacterCardsToPlayer(int playerIndex, int numberOfCardsToDeal)
 		{
 			for (int i = 0; i < numberOfCardsToDeal; i++)
 			{
 				object content = new CardNetworking(CharacterDeck[0].GetTitle(), playerIndex, Constants.CHARACTER_CARD);
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 				dealSpecificCharacterToPlayerFromDeck(playerIndex, CharacterDeck[0].GetTitle());
+			}
+		}
+
+		public void DealActionCardsToPlayer(int playerIndex, int numberOfCardsToDeal)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				for (int i = 0; i < numberOfCardsToDeal; i++)
+				{
+					object content = new CardNetworking(ActionDeck[0].GetTitle(), playerIndex, Constants.ACTION_CARD);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+					dealSpecificActionCardToPlayerFromDeck(playerIndex, ActionDeck[0].GetTitle());
+				}
 			}
 		}
 
@@ -1158,10 +1171,10 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				d10Roll = DiceRoller.RollDice(Constants.D10);
-				object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
-				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvTownEventRoll);
-				handleTownEventRoll(GetIndexForMyPlayer(), d10Roll);
-			}
+                object content = new TownEventNetworking(GetIndexForMyPlayer(), d10Roll);
+                sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvTownEventRoll);
+                handleTownEventRoll(GetIndexForMyPlayer(), d10Roll);
+            }
 
 			return d10Roll;
 		}

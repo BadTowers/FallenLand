@@ -12,7 +12,7 @@ namespace FallenLand
             int myIndex = gameManager.GetIndexForMyPlayer();
             if (playerIndex == myIndex)
             {
-                gameManager.DealSpoilsToPlayer(myIndex, base.GetRewardAmount());
+                gameManager.DealSpoilsCardsToPlayer(myIndex, base.GetRewardAmount());
             }
         }
     }
