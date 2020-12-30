@@ -13,9 +13,7 @@ namespace FallenLand
         public PlayerPieceManager()
         {
             PlayerPieces = new List<GameObject>();
-            //GameManager GameManagerInst = GameObject.Find("GameManager").GetComponent<GameManager>();
-            //for (int i = 0; i < GameManagerInst.GetMaxNumberOfPlayers(); i++)
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < Constants.MAX_NUM_PLAYERS; i++)
             {
                 PlayerPieces.Add(null);
             }
