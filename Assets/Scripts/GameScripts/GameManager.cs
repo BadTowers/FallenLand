@@ -309,6 +309,9 @@ namespace FallenLand
 						endPhaseForAllPlayers();
 					}
 					break;
+				case Phases.Town_Business_Resource_Production:
+					handleResourceProduction();
+					break;
 				case Phases.End_Turn_Adjust_Turn_Marker: //Auto phase that require no user input
 					Debug.Log("Move turn marker chip!");
 					//TODO
@@ -2468,9 +2471,51 @@ namespace FallenLand
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 				ActionDeck.RemoveAt(0);
 			}
-        }
+		}
 
-        private void endPhaseForAllPlayers()
+		private void handleResourceProduction()
+        {
+			for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
+			{
+				int numberOfOwnedResources = Players[playerIndex].GetAllResourcesOwned().Count;
+				int salvageToGain = 0;
+				int townHealthToGain = 0;
+                if (numberOfOwnedResources == 1)
+                {
+					salvageToGain = 1;
+					townHealthToGain = 1;
+				}
+                else if (numberOfOwnedResources == 2)
+                {
+					salvageToGain = 2;
+					townHealthToGain = 4;
+				}
+				else if (numberOfOwnedResources == 3)
+				{
+					salvageToGain = 3;
+					townHealthToGain = 9;
+				}
+				else if (numberOfOwnedResources == 4)
+				{
+					salvageToGain = 4;
+					townHealthToGain = 16;
+				}
+				else if (numberOfOwnedResources == 5)
+				{
+					salvageToGain = 5;
+					townHealthToGain = 25;
+				}
+				Players[playerIndex].AddSalvageToPlayer(salvageToGain);
+				Players[playerIndex].AddTownHealth(townHealthToGain);
+
+				if (playerIndex == GetIndexForMyPlayer() && numberOfOwnedResources > 0)
+				{
+					EventManager.ShowGenericPopup("You gained " + salvageToGain + " salvage coins and " + townHealthToGain + " town health because you own " + numberOfOwnedResources + " resources!");
+				}
+			}
+		}
+
+		private void endPhaseForAllPlayers()
         {
 			TurnManager.BeginNextPhase();
 		}
