@@ -102,6 +102,7 @@ namespace FallenLand
         private bool WasResourceClicked;
         private bool WasEncounterClicked;
         private GameObject SelectCardPanel;
+        private GameObject CannotModifyPanel;
 
         #region UnityFunctions
         void Awake()
@@ -145,6 +146,7 @@ namespace FallenLand
             EncounterButton = GameObject.Find("EncounterButton");
             ResourceButton = GameObject.Find("ResourceButton");
             SelectCardPanel = GameObject.Find("SelectCardPanel");
+            CannotModifyPanel = GameObject.Find("CannotModifyPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -316,6 +318,7 @@ namespace FallenLand
             DistributeD6DamagePopupPanel.SetActive(false);
             GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
             SelectCardPanel.SetActive(false);
+            CannotModifyPanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -992,17 +995,21 @@ namespace FallenLand
 
         private void updateCharacterSpoilsScreen()
         {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             updateAuctionHouseUi(false);
             updateTownRosterUi(false);
-            AuctionHouseTradeButton.interactable = (CurrentViewedID != GameManagerInstance.GetIndexForMyPlayer());
+            AuctionHouseTradeButton.interactable = (CurrentViewedID != myIndex);
+            CannotModifyPanel.SetActive(GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex));
         }
 
         private void redrawCharacterSpoilsScreen()
         {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             updateTownRosterUi(true);
             updateAuctionHouseUi(true);
             updateCharacterPanels(true);
             updateVehiclePanel(true);
+            CannotModifyPanel.SetActive(GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex));
         }
 
         private void redrawActionCardsScreen(bool forceRedraw)
@@ -1134,7 +1141,7 @@ namespace FallenLand
                 for (int i = 0; i < auctionHouse.Count; i++)
                 {
                     GameObject imageObj = Instantiate(ImageGameObject);
-                    if (playerIndex != CurrentViewedID)
+                    if (playerIndex != CurrentViewedID || GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
                     {
                         Destroy(imageObj.GetComponent<CardMovementHandler>());
                     }
@@ -1181,6 +1188,10 @@ namespace FallenLand
                 for (int i = 0; i < townRoster.Count; i++)
                 {
                     GameObject imageObj = Instantiate(ImageGameObject);
+                    if (GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
+                    {
+                        Destroy(imageObj.GetComponent<CardMovementHandler>());
+                    }
                     Image image = imageObj.GetComponent<Image>();
                     image.sprite = townRoster[i].GetCardImage();
                     imageObj.name = "CharacterCard" + townRoster[i].GetId().ToString();
@@ -1217,7 +1228,7 @@ namespace FallenLand
                     {
                         //Add character back to slot
                         GameObject imageObj = Instantiate(ImageGameObject);
-                        if (CurrentViewedID != playerIndex)
+                        if (CurrentViewedID != playerIndex || GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
                         {
                             Destroy(imageObj.GetComponent<CardMovementHandler>());
                         }
@@ -1236,7 +1247,7 @@ namespace FallenLand
                         for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                         {
                             GameObject imageObj2 = Instantiate(ImageGameObject);
-                            if (CurrentViewedID != playerIndex)
+                            if (CurrentViewedID != playerIndex || GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
                             {
                                 Destroy(imageObj2.GetComponent<CardMovementHandler>());
                             }
@@ -1293,7 +1304,7 @@ namespace FallenLand
                 {
                     //Add vehicle back to slot
                     GameObject imageObj = Instantiate(ImageGameObject);
-                    if (CurrentViewedID != playerIndex)
+                    if (CurrentViewedID != playerIndex || GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
                     {
                         Destroy(imageObj.GetComponent<CardMovementHandler>());
                     }
@@ -1313,7 +1324,7 @@ namespace FallenLand
                     for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                     {
                         GameObject imageObj2 = Instantiate(ImageGameObject);
-                        if (CurrentViewedID != playerIndex)
+                        if (CurrentViewedID != playerIndex || GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
                         {
                             Destroy(imageObj2.GetComponent<CardMovementHandler>());
                         }
