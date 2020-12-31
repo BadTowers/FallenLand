@@ -6,6 +6,7 @@ namespace FallenLand
 	{
 		public const int DONT_CARE = 0;
 		public const int INVALID_LOCATION = -1;
+		public const int INVALID_INDEX = -1;
 		public const int NUM_PARTY_MEMBERS = 5;
 		public const int VEHICLE_INDEX = 5;
 		public const int MAX_NUM_PLAYERS = 5;
@@ -91,5 +92,6 @@ namespace FallenLand
 		public const byte EvEncounterStatus = 10;
 		public const byte EvMovement = 11;
 		public const byte EvCharacterHealth = 12;
+		public const byte EvResource = 13;
 	}
 }

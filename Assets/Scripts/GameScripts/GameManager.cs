@@ -272,7 +272,6 @@ namespace FallenLand
 		public void OnTurnBegins(int turn)
         {
 			Debug.Log("OnTurnBegins: " + turn);
-			Players[GetIndexForMyPlayer()].SetRemainingPartyExploitWeeks(4);
 		}
 
         public void OnTurnCompleted(int turn)
@@ -290,15 +289,11 @@ namespace FallenLand
 
 			switch (phase)
             {
-				case Phases.Effects_Resolve_Subphase: //Auto phase that require no user input
+				case Phases.Effects_Resolve_Subphase:
 					Debug.Log("Resolve effects and move on!");
 					//TODO resolve effects
-					if(PhotonNetwork.IsMasterClient)
-                    {
-						endPhaseForAllPlayers();
-					}
 					break;
-				case Phases.Town_Business_Deal: //Auto phase that require no user input
+				case Phases.Town_Business_Deal:
 					Debug.Log("Deal action cards!");
 					if (PhotonNetwork.IsMasterClient)
 					{
@@ -306,28 +301,21 @@ namespace FallenLand
 					}
 					TownTechManager.HandlePhase(this);
 					techsHandled = true;
-					if (PhotonNetwork.IsMasterClient)
-					{
-						endPhaseForAllPlayers();
-					}
 					break;
 				case Phases.Town_Business_Resource_Production:
 					handleResourceProduction();
 					break;
-				case Phases.End_Turn_Adjust_Turn_Marker: //Auto phase that require no user input
+				case Phases.End_Turn_Adjust_Turn_Marker:
 					Debug.Log("Move turn marker chip!");
 					//TODO
-					if (PhotonNetwork.IsMasterClient)
-					{
-						endPhaseForAllPlayers();
-					}
 					break;
-				case Phases.End_Turn_Pass_First_Player: //Auto phase that require no user input
+				case Phases.End_Turn_Pass_First_Player:
 					Debug.Log("Next player becomes first player!");
 					//TODO
-					if (PhotonNetwork.IsMasterClient)
+					//Reset party exploits for the next turn
+					for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
 					{
-						endPhaseForAllPlayers();
+						Players[playerIndex].SetRemainingPartyExploitWeeks(4);
 					}
 					break;
 				default:
@@ -409,6 +397,9 @@ namespace FallenLand
 				if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
 				{
 					ReceivedMyFactionInformation = true;
+					MapCreation mapCreation = GameObject.Find("Map").GetComponent<MapCreation>();
+					CameraManager mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
+					mainCamera.MoveCameraToFactionBaseLocation(mapCreation, Players[GetIndexForMyPlayer()].GetPlayerFaction());
 				}
 
 				PlayerPieceManagerInst.CreatePiece(faction, factionInfo.GetPlayerIndex());
@@ -453,6 +444,10 @@ namespace FallenLand
 			else if (eventCode == Constants.EvCharacterHealth)
 			{
 				handleCharacterHealthEvent(photonEvent.CustomData);
+			}
+			else if(eventCode == Constants.EvResource)
+            {
+				handleResourceEvent((ResourceNetworking)photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -1706,9 +1701,80 @@ namespace FallenLand
 			return isOwned;
 		}
 
+		public bool IsResourceOwnedByPlayer(Coordinates location, int playerIndexToCheck)
+		{
+			bool isOwned = false;
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			{
+				List<Resource> resourcesOwned = Players[playerIndex].GetAllResourcesOwned();
+				for (int resourceIndex = 0; resourceIndex < resourcesOwned.Count; resourceIndex++)
+				{
+					if (location.Equals(resourcesOwned[resourceIndex].GetLocation()) && playerIndexToCheck == playerIndex)
+					{
+						isOwned = true;
+						break;
+					}
+				}
+			}
+			return isOwned;
+		}
+
+		public int WhichIndexOwnsResouce(Coordinates location)
+		{
+			int ownerIndex = Constants.INVALID_INDEX;
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			{
+				List<Resource> resourcesOwned = Players[playerIndex].GetAllResourcesOwned();
+				for (int resourceIndex = 0; resourceIndex < resourcesOwned.Count; resourceIndex++)
+				{
+					if (location.Equals(resourcesOwned[resourceIndex].GetLocation()))
+					{
+						ownerIndex = playerIndex;
+						break;
+					}
+				}
+			}
+			return ownerIndex;
+		}
+
+        public Resource GetResource(int ownerIndex, Coordinates locationOfResource)
+        {
+			Resource resource = null;
+
+			if (isPlayerIndexInRange(ownerIndex))
+			{
+				List<Resource> resourcesOwned = Players[ownerIndex].GetAllResourcesOwned();
+				for (int resourceIndex = 0; resourceIndex < resourcesOwned.Count; resourceIndex++)
+				{
+					if (resourcesOwned[resourceIndex].GetLocation().Equals(locationOfResource))
+					{
+						resource = resourcesOwned[resourceIndex];
+						break;
+					}
+				}
+			}
+
+			return resource;
+        }
+
 		public bool HasDoneEncounterSinceLastMove(int playerIndex)
 		{
 			return HasDoneEncounterSinceMovement[playerIndex];
+		}
+
+		public void CaptureResource(Coordinates locationOfResource, int indexOfCapturingPlayer)
+		{
+			int indexOfResourceOwner = WhichIndexOwnsResouce(locationOfResource);
+			if (isPlayerIndexInRange(indexOfResourceOwner) && isPlayerIndexInRange(indexOfCapturingPlayer))
+			{
+				ResourceNetworking resourceNetworking = new ResourceNetworking(indexOfResourceOwner, locationOfResource, indexOfCapturingPlayer);
+				sendNetworkEvent(resourceNetworking, ReceiverGroup.Others, Constants.EvResource);
+				handleResourceEvent(resourceNetworking);
+			}
+			else
+			{
+				Debug.LogError("CaptureResource: One of the indices was out of bounds: owner--" + indexOfResourceOwner + " or capturer--" + indexOfCapturingPlayer);
+			}
 		}
 
 		public Dice GetDiceRoller()
@@ -2171,7 +2237,18 @@ namespace FallenLand
 			}
 		}
 
-        private void handleTownEventRoll(int playerIndex, int townEventRoll)
+		private void applyTownDefenseDamage(Resource resource, int capturingPlayerIndex)
+		{
+			int numChips = resource.GetNumberOfTownDefenseChips();
+			List<CharacterCard> characters = Players[capturingPlayerIndex].GetActiveCharacters();
+			for (int characterIndex = 0; characterIndex < characters.Count; characterIndex++)
+            {
+				characters[characterIndex].AddPhysicalDamage(numChips);
+			}
+		}
+
+
+		private void handleTownEventRoll(int playerIndex, int townEventRoll)
         {
 			switch (townEventRoll)
 			{
@@ -2325,6 +2402,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(EncounterStatusNetworking), Constants.EvEncounterStatus, EncounterStatusNetworking.SerializeEncounterStatus, EncounterStatusNetworking.DeserializeEncounterStatus);
 			PhotonPeer.RegisterType(typeof(MovementNetworking), Constants.EvMovement, MovementNetworking.SerializeMovement, MovementNetworking.DeserializeMovement);
 			PhotonPeer.RegisterType(typeof(CharacterHealthNetworking), Constants.EvCharacterHealth, CharacterHealthNetworking.SerializeCharacterHealth, CharacterHealthNetworking.DeserializeCharacterHealth);
+			PhotonPeer.RegisterType(typeof(ResourceNetworking), Constants.EvResource, ResourceNetworking.SerializeResource, ResourceNetworking.DeserializeResource);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -2536,6 +2614,22 @@ namespace FallenLand
 					EventManager.ShowGenericPopup("You gained " + salvageToGain + " salvage coins and " + townHealthToGain + " town health because you own " + numberOfOwnedResources + " resources!");
 				}
 			}
+		}
+
+		private void handleResourceEvent(ResourceNetworking resourceNetworking)
+		{
+			int indexOfResourceOwner = resourceNetworking.GetOwnerIndex();
+			Coordinates locationOfResource = resourceNetworking.GetResourceLocation();
+			int indexOfCapturingPlayer = resourceNetworking.GetCaptorIndex();
+
+			HasDoneEncounterSinceMovement[indexOfCapturingPlayer] = true;
+
+			Resource resourceToExchange = GetResource(indexOfResourceOwner, locationOfResource);
+			applyTownDefenseDamage(resourceToExchange, indexOfCapturingPlayer);
+			Players[indexOfResourceOwner].RemoveResourceOwned(resourceToExchange);
+			ResourcePieceManagerInst.RemovePiece(indexOfResourceOwner, locationOfResource);
+			Players[indexOfCapturingPlayer].AddResourceOwned(resourceToExchange);
+			ResourcePieceManagerInst.CreatePiece(indexOfCapturingPlayer, Players[indexOfCapturingPlayer].GetPlayerFaction(), locationOfResource);
 		}
 
 		private void endPhaseForAllPlayers()

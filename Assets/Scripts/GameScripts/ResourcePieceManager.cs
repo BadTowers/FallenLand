@@ -6,6 +6,7 @@ namespace FallenLand
     public class ResourcePieceManager : MonoBehaviour
     {
         private List<List<GameObject>> PlayerResourcePieces;
+        private List<List<Coordinates>> PlayerResourcePiecesLocations;
         private MapCreation Map;
         private const float X_OFFSET = 0.04f;
         private const float Y_OFFSET = 0f;
@@ -13,9 +14,11 @@ namespace FallenLand
         public ResourcePieceManager()
         {
             PlayerResourcePieces = new List<List<GameObject>>();
+            PlayerResourcePiecesLocations = new List<List<Coordinates>>();
             for (int playerIndex = 0; playerIndex < Constants.MAX_NUM_PLAYERS; playerIndex++)
             {
                 PlayerResourcePieces.Add(new List<GameObject>());
+                PlayerResourcePiecesLocations.Add(new List<Coordinates>());
             }
         }
 
@@ -38,6 +41,7 @@ namespace FallenLand
                 if (playerIndex < PlayerResourcePieces.Count)
                 {
                     PlayerResourcePieces[playerIndex].Add(curPiece);
+                    PlayerResourcePiecesLocations[playerIndex].Add(resourceLocation);
                 }
                 else
                 {
@@ -50,9 +54,28 @@ namespace FallenLand
             }
         }
 
-        public void RemovePiece(int playerIndex)
+        public void RemovePiece(int playerIndex, Coordinates resourceLocation)
         {
-            //TODO
+            int resourceIndex = Constants.INVALID_INDEX;
+            for (int resourcePieceIndex = 0; resourcePieceIndex < PlayerResourcePiecesLocations[playerIndex].Count; resourcePieceIndex++)
+            {
+                Coordinates curCoords = PlayerResourcePiecesLocations[playerIndex][resourcePieceIndex];
+                if (curCoords.Equals(resourceLocation))
+                {
+                    resourceIndex = resourcePieceIndex;
+                    break;
+                }
+            }
+            if (resourceIndex != Constants.INVALID_INDEX)
+            {
+                Destroy(PlayerResourcePieces[playerIndex][resourceIndex]);
+                PlayerResourcePieces[playerIndex].RemoveAt(resourceIndex);
+                PlayerResourcePiecesLocations[playerIndex].RemoveAt(resourceIndex);
+            }
+            else
+            {
+                Debug.LogError("RemovePiece was called for location " + resourceLocation.ToString() + ", but no such piece was found at this location");
+            }
         }
 
         public void SetMap(MapCreation map)
