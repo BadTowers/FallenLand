@@ -109,5 +109,22 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestWithinOneHexHelperFunction()
+		{
+			//Given we click on (18,14), then we would expect (17,14), (17, 15), (18, 15), (19, 14), (18, 13), and (17, 13) to be within one hex
+			Coordinates clicked = new Coordinates(18, 14);
+			Assert.IsTrue(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(17, 14))); //to the left
+			Assert.IsTrue(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(17, 15))); //to the top left
+			Assert.IsTrue(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(18, 15))); //to the top right
+			Assert.IsTrue(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(19, 14))); //to the right
+			Assert.IsTrue(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(18, 13))); //to the bottom right
+			Assert.IsTrue(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(17, 13))); //to the bottom left
+			Assert.IsFalse(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(19, 13)));
+			Assert.IsFalse(Coordinates.IsCoordinateWithinOneHex(clicked, new Coordinates(19, 15)));
+
+			yield return null;
+		}
 	}
 }

@@ -53,5 +53,47 @@ namespace FallenLand
         {
             return "(x, y) = (" + X.ToString() + ", " + Y.ToString() + ")";
         }
+
+        public static bool IsCoordinateWithinOneHex(Coordinates referenceLocation, Coordinates otherLocation)
+        {
+            bool isWithinOne = false;
+            int referenceLocationX = referenceLocation.GetX();
+            int referenceLocationY = referenceLocation.GetY();
+            int otherLocationX = otherLocation.GetX();
+            int otherLocationY = otherLocation.GetY();
+
+            //Left
+            if (referenceLocationX - otherLocationX == 1 && referenceLocationY - otherLocationY == 0)
+            {
+                isWithinOne = true;
+            }
+            //Top left
+            else if (referenceLocationX - otherLocationX == 1 && referenceLocationY - otherLocationY == -1)
+            {
+                isWithinOne = true;
+            }
+            //Top right
+            else if (referenceLocationX - otherLocationX == 0 && referenceLocationY - otherLocationY == -1)
+            {
+                isWithinOne = true;
+            }
+            //Right
+            else if (referenceLocationX - otherLocationX == -1 && referenceLocationY - otherLocationY == 0)
+            {
+                isWithinOne = true;
+            }
+            //Bottom right
+            else if (referenceLocationX - otherLocationX == 0 && referenceLocationY - otherLocationY == 1)
+            {
+                isWithinOne = true;
+            }
+            //Bottom left
+            else if (referenceLocationX - otherLocationX == 1 && referenceLocationY - otherLocationY == 1)
+            {
+                isWithinOne = true;
+            }
+
+            return isWithinOne;
+        }
     }
 }
