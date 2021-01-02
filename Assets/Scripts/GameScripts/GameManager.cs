@@ -1973,7 +1973,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+				Debug.LogError("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -1992,7 +1992,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to deal specific DISCARDED SPOILS card " + cardName + " to player, but it was not found in the deck");
+				Debug.LogError("Tried to deal specific DISCARDED SPOILS card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -2030,7 +2030,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+				Debug.LogError("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -2049,7 +2049,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
+				Debug.LogError("Tried to deal specific card " + cardName + " to player, but it was not found in the deck");
 			}
 		}
 
@@ -2070,7 +2070,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to remove specific character card " + cardName + " from player town roster, but it was not found");
+				Debug.LogError("Tried to remove specific character card " + cardName + " from player town roster, but it was not found");
 			}
 		}
 
@@ -2091,7 +2091,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to remove specific spoils card " + cardName + " from player auction house, but it was not found");
+				Debug.LogError("Tried to remove specific spoils card " + cardName + " from player auction house, but it was not found");
 			}
 		}
 
@@ -2113,7 +2113,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to remove specific spoils " + cardName + " from player slot, but it was not found");
+				Debug.LogError("Tried to remove specific spoils " + cardName + " from player slot, but it was not found");
 			}
 		}
 
@@ -2135,7 +2135,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to remove specific spoils " + cardName + " from vehicle slot, but it was not found");
+				Debug.LogError("Tried to remove specific spoils " + cardName + " from vehicle slot, but it was not found");
 			}
 		}
 
@@ -2154,7 +2154,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to add specific character " + cardName + " to player slot, but it was not found");
+				Debug.LogError("Tried to add specific character " + cardName + " to player slot, but it was not found");
 			}
 		}
 
@@ -2174,7 +2174,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to add specific spoils " + cardName + " to player slot, but it was not found");
+				Debug.LogError("Tried to add specific spoils " + cardName + " to player slot, but it was not found");
 			}
 		}
 
@@ -2194,7 +2194,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to add specific spoils " + cardName + " to vehicle slot, but it was not found");
+				Debug.LogError("Tried to add specific spoils " + cardName + " to vehicle slot, but it was not found");
 			}
 		}
 
@@ -2214,7 +2214,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to add specific character card " + cardName + " to player town roster, but it was not found");
+				Debug.LogError("Tried to add specific character card " + cardName + " to player town roster, but it was not found");
 			}
 		}
 
@@ -2234,7 +2234,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to add specific spoils card " + cardName + " to player auction house, but it was not found");
+				Debug.LogError("Tried to add specific spoils card " + cardName + " to player auction house, but it was not found");
 			}
 		}
 
@@ -2255,7 +2255,7 @@ namespace FallenLand
 			}
 			if (!found)
 			{
-				Debug.Log("Tried to add specific vehicle card " + cardName + " to player party, but it was not found");
+				Debug.LogError("Tried to add specific vehicle card " + cardName + " to player party, but it was not found");
 			}
 		}
 
