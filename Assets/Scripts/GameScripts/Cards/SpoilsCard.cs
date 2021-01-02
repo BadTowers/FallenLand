@@ -12,6 +12,10 @@ namespace FallenLand
 		private List<SpoilsCard> EquippedSpoils;
 		private bool IsStartingCard;
 		private UnityEngine.Sprite CardImage;
+		private List<Reward> RewardsWhenEquipped = new List<Reward>();
+		private List<Punishment> PunishmentsWhenEquipped = new List<Punishment>();
+		private List<Reward> RewardsWhenUnequipped = new List<Reward>();
+		private List<Punishment> PunishmentsWhenUnequipped = new List<Punishment>();
 
 		public SpoilsCard(string title) : base(title)
 		{
@@ -144,6 +148,47 @@ namespace FallenLand
 			}
 			return CardImage;
 		}
+
+        public void AddRewardWhenEquipped(Reward reward)
+        {
+			RewardsWhenEquipped.Add(reward);
+		}
+
+		public List<Reward> GetRewardsWhenEquipped()
+		{
+			return RewardsWhenEquipped;
+		}
+
+		public void AddPunishmentWhenEquipped(Punishment loss)
+		{
+			PunishmentsWhenEquipped.Add(loss);
+		}
+
+		public List<Punishment> GetPunishmentsWhenEquipped()
+		{
+			return PunishmentsWhenEquipped;
+		}
+
+		public void AddPunishmentWhenUnequipped(Punishment loss)
+		{
+			PunishmentsWhenUnequipped.Add(loss);
+		}
+
+		public List<Punishment> GetPunishmentsWhenUnequipped()
+		{
+			return PunishmentsWhenUnequipped;
+		}
+
+		public void AddRewardWhenUnequipped(Reward reward)
+		{
+			RewardsWhenUnequipped.Add(reward);
+		}
+
+		public List<Reward> GetRewardsWhenUnequipped()
+		{
+			return RewardsWhenUnequipped;
+		}
+
 
 		public SpoilsCard DeepCopy()
 		{

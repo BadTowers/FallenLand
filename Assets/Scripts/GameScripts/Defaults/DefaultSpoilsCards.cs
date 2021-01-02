@@ -51,6 +51,10 @@ namespace FallenLand
 				{Skills.Survival, 2},
 				{Skills.Diplomacy, 2}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			//Todo reward -- all hexes cost 1 movement
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
+			//Todo punishment -- all hexes cost normal movements
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -58,7 +62,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Fernando the Chauffer");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ally);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ally, SpoilsTypes.Vehicle_Equipment, SpoilsTypes.PayToKeep); //He must be equipped to a vehicle
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0); //Can't be sold
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -69,6 +73,8 @@ namespace FallenLand
 				{Skills.Mechanical, 4},
 				{Skills.Medical, 2}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -85,6 +91,8 @@ namespace FallenLand
 				{Skills.Mechanical, 3},
 				{Skills.Technical, 5}
 			});
+			curCard.AddPunishmentWhenEquipped(new LoseBonusMovement(1));
+			curCard.AddRewardWhenUnequipped(new GainBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -118,6 +126,10 @@ namespace FallenLand
 				{Skills.Mechanical, 1},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			//Todo reward -- all hexes cost 1 movement
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
+			//Todo punishment -- all hexes cost normal movements
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -147,6 +159,8 @@ namespace FallenLand
 			{
 				{Skills.Combat, 5}
 			});
+			//todo reward on add -- gain first strike on character
+			//todo punishment on remove -- remove first strike on character
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -164,6 +178,8 @@ namespace FallenLand
 				{Skills.Survival, 1},
 				{Skills.Diplomacy, 1}
 			});
+			//todo reward on add -- gain one armor
+			//todo punishment on remove -- lose one armor
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -183,6 +199,8 @@ namespace FallenLand
 				{Skills.Mechanical, 1},
 				{Skills.Medical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -444,6 +462,8 @@ namespace FallenLand
 				{Skills.Mechanical, 1},
 				{Skills.Medical, 2}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -477,6 +497,8 @@ namespace FallenLand
 				{Skills.Mechanical, 3},
 				{Skills.Medical, 3}
 			});
+			curCard.AddPunishmentWhenEquipped(new LoseBonusMovement(1));
+			curCard.AddRewardWhenUnequipped(new GainBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -484,7 +506,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Chris the Trophy Spouse");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ally);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ally, SpoilsTypes.PayToKeep);
 			curCard.SetCarryWeight(0);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -494,6 +516,12 @@ namespace FallenLand
 				{Skills.Diplomacy, 3},
 				{Skills.Medical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainCarryCapacity(4));
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseCarryCapacity(4));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -510,6 +538,8 @@ namespace FallenLand
 				{Skills.Diplomacy, 2},
 				{Skills.Technical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -555,6 +585,8 @@ namespace FallenLand
 			{
 				//No base skills
 			});
+			//TODO reward when equipped - gain 1 armor
+			//TODO punishment when unequipped - lose 1 armor
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -575,6 +607,8 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -625,6 +659,8 @@ namespace FallenLand
 				{Skills.Technical, 2},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -670,6 +706,9 @@ namespace FallenLand
 				{Skills.Survival, 2},
 				{Skills.Diplomacy, 1}
 			});
+			//TODO reward first strike
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -700,6 +739,8 @@ namespace FallenLand
 				{Skills.Survival, 3},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -734,6 +775,8 @@ namespace FallenLand
 				{Skills.Technical, 2},
 				{Skills.Medical, 9}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(3));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(3));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -779,6 +822,8 @@ namespace FallenLand
 				{Skills.Technical, 1},
 				{Skills.Medical, 1}
 			});
+			//TODO gain 1 armor when equipped
+			//todo lose 1 armor when unequipped
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -825,6 +870,8 @@ namespace FallenLand
 				{Skills.Diplomacy, 4},
 				{Skills.Medical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(3));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(3));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -855,6 +902,8 @@ namespace FallenLand
 				{Skills.Combat, 1},
 				{Skills.Diplomacy, 1}
 			});
+			//TODO reward add 1 armor
+			//todo punish lose 1 armor
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -918,6 +967,8 @@ namespace FallenLand
 				{Skills.Mechanical, 2},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(4));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(4));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -935,6 +986,8 @@ namespace FallenLand
 				{Skills.Mechanical, 5},
 				{Skills.Technical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -969,6 +1022,8 @@ namespace FallenLand
 				{Skills.Technical, 4},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -998,6 +1053,8 @@ namespace FallenLand
 			{
 				{Skills.Combat, 3}
 			});
+			curCard.AddPunishmentWhenEquipped(new LoseBonusMovement(1));
+			curCard.AddRewardWhenUnequipped(new GainBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1018,6 +1075,8 @@ namespace FallenLand
 				{Skills.Technical, 1},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1111,6 +1170,8 @@ namespace FallenLand
 				{Skills.Combat, 3},
 				{Skills.Survival, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1158,6 +1219,8 @@ namespace FallenLand
 				{Skills.Survival, 3},
 				{Skills.Diplomacy, 2}
 			});
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1176,6 +1239,8 @@ namespace FallenLand
 				{Skills.Mechanical, 1},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1190,6 +1255,8 @@ namespace FallenLand
 			{
 				{Skills.Combat, 3}
 			});
+			curCard.AddPunishmentWhenEquipped(new LoseBonusMovement(1));
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1209,6 +1276,8 @@ namespace FallenLand
 				{Skills.Technical, 1},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(4));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(4));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1229,6 +1298,10 @@ namespace FallenLand
 				{Skills.Technical, 2},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			//TODO gain 2 armor when equipped
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
+			//TODO lose 2 armor when unequipped
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1280,6 +1353,8 @@ namespace FallenLand
 				{Skills.Technical, 4},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1368,6 +1443,8 @@ namespace FallenLand
 			{
 				{Skills.Combat, 2}
 			});
+			//TODO reward when equipped -- gain 1 HP stat
+			//TODO punishment when removed -- lose 1 HP stat
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1506,6 +1583,8 @@ namespace FallenLand
 				{Skills.Combat, 5},
 				{Skills.Survival, 2}
 			});
+			//First strike when equipped
+			//lose first strike when unequipped
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1535,6 +1614,8 @@ namespace FallenLand
 			{
 				//No base skills
 			});
+			curCard.AddRewardWhenEquipped(new GainPrestige(2));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1549,6 +1630,8 @@ namespace FallenLand
 			{
 				{Skills.Combat, 2}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1568,6 +1651,10 @@ namespace FallenLand
 				{Skills.Technical, 2},
 				{Skills.Medical, 4}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddRewardWhenEquipped(new GainPrestige(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1708,6 +1795,8 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1770,6 +1859,8 @@ namespace FallenLand
 				{Skills.Technical, 1},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1777,7 +1868,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Chopper and Pilot");
-			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Zero_Wheeled);
+			curCard.SetSpoilsTypes(SpoilsTypes.Vehicle, SpoilsTypes.Zero_Wheeled, SpoilsTypes.PayToKeep);
 			curCard.SetCarryWeight(16);
 			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -1789,6 +1880,9 @@ namespace FallenLand
 				{Skills.Technical, 3},
 				{Skills.Medical, 3}
 			});
+			//Gain all hexes cost 1
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(8));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(8));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1821,6 +1915,8 @@ namespace FallenLand
 				{Skills.Survival, 1},
 				{Skills.Mechanical, 4}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1855,6 +1951,8 @@ namespace FallenLand
 				{Skills.Mechanical, 1},
 				{Skills.Medical, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1884,6 +1982,7 @@ namespace FallenLand
 				{Skills.Combat, 2},
 				{Skills.Diplomacy, 2}
 			});
+			//add 1 armor
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1904,6 +2003,8 @@ namespace FallenLand
 				{Skills.Technical, 3},
 				{Skills.Medical, 2}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1918,6 +2019,8 @@ namespace FallenLand
 			{
 				{Skills.Survival, 3}
 			});
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1935,6 +2038,9 @@ namespace FallenLand
 				{Skills.Diplomacy, 1},
 				{Skills.Medical, 1}
 			});
+			//all hexes cost 1 when equipped
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;
@@ -1981,6 +2087,7 @@ namespace FallenLand
 				{Skills.Combat, 3},
 				{Skills.Diplomacy, 2}
 			});
+			//Gain two armor when equipped
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2038,6 +2145,8 @@ namespace FallenLand
 				{Skills.Combat, -1},
 				{Skills.Survival, 1}
 			});
+			curCard.AddPunishmentWhenEquipped(new LoseBonusMovement(1));
+			curCard.AddRewardWhenUnequipped(new GainBonusMovement(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2082,6 +2191,8 @@ namespace FallenLand
 				{Skills.Combat, 5},
 				{Skills.Diplomacy, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2126,6 +2237,8 @@ namespace FallenLand
 				{Skills.Combat, 5},
 				{Skills.Survival, 1}
 			});
+
+			//first strike when equipped
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2156,6 +2269,10 @@ namespace FallenLand
 				{Skills.Survival, 4},
 				{Skills.Diplomacy, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -2174,6 +2291,8 @@ namespace FallenLand
 				{Skills.Mechanical, 3},
 				{Skills.Medical, 1}
 			});
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
 			curCard.SetIsStartingCard(true);
 			curCard.SetId(curID);
 			curID++;

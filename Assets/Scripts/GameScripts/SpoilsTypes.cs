@@ -30,6 +30,7 @@ namespace FallenLand
 		Melee_Weapon,
 		Motorized,
 		Party_Equipment,
+		PayToKeep,
 		Permenant,
 		Ranged_Weapon,
 		Relic,
