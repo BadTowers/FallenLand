@@ -9,7 +9,7 @@ namespace FallenLand
 
         public override void HandleReward(GameManager gameManager, int playerIndex)
         {
-            //TODO
+            UnityEngine.Debug.LogError("GainActionCards handle reward not implemented!");
         }
     }
 }
