@@ -103,6 +103,7 @@ namespace FallenLand
         private bool WasEncounterClicked;
         private GameObject SelectCardPanel;
         private GameObject CannotModifyPanel;
+        private GameObject EncounterFlightButton;
 
         #region UnityFunctions
         void Awake()
@@ -147,6 +148,7 @@ namespace FallenLand
             ResourceButton = GameObject.Find("ResourceButton");
             SelectCardPanel = GameObject.Find("SelectCardPanel");
             CannotModifyPanel = GameObject.Find("CannotModifyPanel");
+            EncounterFlightButton = GameObject.Find("EncounterFlightButton");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -761,6 +763,11 @@ namespace FallenLand
             EncounterHasBegun = true;
             GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
             GameManagerInstance.HandleActionsOnBegin();
+        }
+
+        public void OnFlightEncounterPress()
+        {
+            Debug.LogError("Flight is not yet implemented, sorry!");
         }
 
         public void OnCharacter1RollPress()
@@ -1406,6 +1413,7 @@ namespace FallenLand
                 if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && encounterCard != null && !EncounterHasBegun)
                 {
                     OverallEncounterPanelGameObject.SetActive(true);
+                    EncounterFlightButton.SetActive(encounterCard.GetFlightAllowed());
                     Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
                     cardImage.sprite = loadEncounterCard();
                     updateStatPanelsForOverallEncounterPage();
@@ -1972,6 +1980,7 @@ namespace FallenLand
                     PlayerPanels[currentPlayerIndex].transform.Find("TownHealthActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetTownHealth(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("SalvageActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetSalvage(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("ResourceActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetNumberOfResourcesOwned(currentPlayerIndex).ToString();
+                    PlayerPanels[currentPlayerIndex].transform.Find("BonusMovementActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetBonusMovement(currentPlayerIndex).ToString();
                 }
                 else
                 {
