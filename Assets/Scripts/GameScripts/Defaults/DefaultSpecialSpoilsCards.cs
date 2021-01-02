@@ -33,6 +33,8 @@ namespace FallenLand
 				{Skills.Technical, 10},
 				{Skills.Medical, 4}
 			});
+			//Add one armor when equipped
+			//lose one armor when unequipped
 			curCard.SetId(curID);
 			curID++;
 			SpecialSpoilsCardsDeck.Add(curCard); //Add the card to the list of all cards
