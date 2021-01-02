@@ -17,12 +17,6 @@ namespace FallenLand
 			initText();
 		}
 
-		public MissionCard(string title, int salvageReward) : base(title, salvageReward)
-		{
-			initOptionalSkillChecks(null);
-			initText();
-		}
-
 		public void SetOptionalSkillChecks(Dictionary<Skills, int> optionalSkillChecks)
 		{
 			if (optionalSkillChecks != null)

@@ -17,15 +17,10 @@ namespace FallenLand
 		private List<Action> ActionsOnBegin = new List<Action>();
 		private List<EncounterTypes> Classifications = new List<EncounterTypes>();
 		private List<Precheck> PrechecksAfterDraw = new List<Precheck>();
+		private bool FlightAllowed;
 
 		public EncounterCard(string title) : base(title)
 		{
-			initText();
-		}
-
-		public EncounterCard(string title, int salvageReward) : base(title)
-		{
-			initSalvageReward(salvageReward);
 			initText();
 		}
 
@@ -50,6 +45,16 @@ namespace FallenLand
 		public bool GetMakePsychCheckAfterEncounter()
 		{
 			return PsychCheckAfterEncounter;
+		}
+
+		public void SetFlightAllowed(bool isAllowed)
+		{
+			FlightAllowed = isAllowed;
+		}
+
+		public bool GetFlightAllowed()
+		{
+			return FlightAllowed;
 		}
 
 		public void SetDescriptionText(string text)

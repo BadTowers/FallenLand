@@ -36,7 +36,7 @@ namespace Tests
 		{
 			Assert.IsNotNull(MissionCardInstance.GetOptionalSkillChecks());
 
-			MissionCard missionCardSalvageValueConstructor = new MissionCard("title", 8);
+			MissionCard missionCardSalvageValueConstructor = new MissionCard("title");
 			Assert.IsNotNull(missionCardSalvageValueConstructor.GetOptionalSkillChecks());
 			Assert.AreEqual(0, missionCardSalvageValueConstructor.GetOptionalSkillChecks().Count);
 			Assert.IsNotNull(missionCardSalvageValueConstructor.GetSkillChecks());

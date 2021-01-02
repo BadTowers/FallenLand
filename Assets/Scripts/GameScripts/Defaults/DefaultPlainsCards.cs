@@ -71,6 +71,7 @@ namespace FallenLand
 				(Skills.Combat, 5)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(3));
@@ -112,6 +113,7 @@ namespace FallenLand
 				(Skills.Combat, 7)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(3));
@@ -131,6 +133,7 @@ namespace FallenLand
 				(Skills.Combat, 4)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(1));
@@ -150,6 +153,7 @@ namespace FallenLand
 				(Skills.Combat, 6)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(2));
@@ -306,6 +310,7 @@ namespace FallenLand
 				(Skills.Combat, 6)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(2));
@@ -325,6 +330,7 @@ namespace FallenLand
 				(Skills.Combat, 6)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(false);
 			curCard.AddActionOnBegin(new MovePartyToStartingTownLocation());
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
@@ -405,6 +411,7 @@ namespace FallenLand
 			{
 				(Skills.Combat, 7)
 			});
+			curCard.SetFlightAllowed(true);
 			curCard.AddClassification(EncounterTypes.TheBrotherhood);
 			curCard.AddPrecheck(new NotPlayingBrotherhood());
 			curCard.SetMakePsychCheckAfterEncounter(true);
@@ -426,6 +433,7 @@ namespace FallenLand
 				(Skills.Technical, 3),
 				(Skills.Combat, 5)
 			});
+			curCard.SetFlightAllowed(true);
 			curCard.AddClassification(EncounterTypes.TheBrotherhood);
 			curCard.AddClassification(EncounterTypes.Mystery);
 			curCard.AddPrecheck(new NotPlayingBrotherhood());
@@ -486,6 +494,7 @@ namespace FallenLand
 			{
 				(Skills.Combat, 7)
 			});
+			curCard.SetFlightAllowed(true);
 			curCard.AddClassification(EncounterTypes.VehicleCombat);
 			curCard.AddClassification(EncounterTypes.BikerGang);
 			curCard.AddPrecheck(new HasMotorizedVehicle());
@@ -533,6 +542,7 @@ namespace FallenLand
 			int amountOfDamage = 3;
 			curCard.AddActionOnBegin(new DealSetAmountOfPhysicalDamageToCharacterCrown(characterCrownIndex, amountOfDamage));
 			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetFlightAllowed(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(2));
@@ -554,6 +564,7 @@ namespace FallenLand
 			amountOfDamage = 3;
 			curCard.AddActionOnBegin(new DealSetAmountOfPhysicalDamageToCharacterCrown(characterCrownIndex, amountOfDamage));
 			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddReward(new GainSpoilsCards(2));
@@ -592,6 +603,7 @@ namespace FallenLand
 				(Skills.Combat, 5)
 			});
 			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetFlightAllowed(true);
 			int numD6s = 2;
 			characterCrownIndex = 2;
 			curCard.AddActionOnBegin(new DealD6PhysicalDamageToCharacterCrown(characterCrownIndex, numD6s));
