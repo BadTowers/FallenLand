@@ -87,6 +87,27 @@ namespace FallenLand
             return PsychResistance;
         }
 
+        public void AddPsychResistance(int amount)
+        {
+            if (amount > 0)
+            {
+                PsychResistance += amount;
+            }
+        }
+
+        public void SubtractPsychResistance(int amount)
+        {
+            if (amount > 0)
+            {
+                PsychResistance -= amount;
+            }
+
+            if (PsychResistance < 1)
+            {
+                PsychResistance = 1;
+            }
+        }
+
         public void SetCarryCapacity(int carryCapacity)
         {
             if (carryCapacity >= 0)
@@ -98,6 +119,26 @@ namespace FallenLand
         public int GetCarryCapacity()
         {
             return CarryCapacity;
+        }
+
+        public void AddCarryCapacity(int amount)
+        {
+            if (amount > 0)
+            {
+                CarryCapacity += amount;
+            }
+        }
+
+        public void SubtractCarryCapacity(int amount)
+        {
+            if (amount > 0)
+            {
+                CarryCapacity -= amount;
+            }
+            if (CarryCapacity < 0)
+            {
+                CarryCapacity = 0;
+            }
         }
 
         public List<SpoilsCard> GetEquippedSpoils()

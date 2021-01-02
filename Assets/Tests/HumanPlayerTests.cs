@@ -294,7 +294,7 @@ namespace Tests
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfActiveVehicles());
 			Assert.AreEqual(vehicleSpoils, HumanPlayerInstance.GetActiveVehicle());
 
-			HumanPlayerInstance.RemoveActiveVehicle();
+			HumanPlayerInstance.RemoveVehicleFromParty();
 			Assert.AreEqual(0, HumanPlayerInstance.GetNumberOfActiveVehicles());
 			Assert.AreEqual(null, HumanPlayerInstance.GetActiveVehicle());
 

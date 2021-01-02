@@ -521,6 +521,16 @@ namespace FallenLand
 			return numberOfResourcesOwned;
 		}
 
+		public int GetBonusMovement(int playerIndex)
+		{
+			int bonusMovement = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				bonusMovement = Players[playerIndex].GetBonusMovement();
+			}
+			return bonusMovement;
+		}
+
 		public Faction GetFaction(int playerIndex)
 		{
 			Faction faction = new Faction("dummy faction", new Coordinates(Constants.INVALID_LOCATION, Constants.INVALID_LOCATION));
@@ -804,6 +814,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
+				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, card);
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
 				handleNetworkingUpdatePlayerInfo(content);
@@ -824,6 +835,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
+				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, card);
 				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
@@ -834,7 +846,8 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].RemoveActiveVehicle();
+				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, Players[playerIndex].GetActiveVehicle());
+				Players[playerIndex].RemoveVehicleFromParty();
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_VEHICLE, "");
 				handleNetworkingUpdatePlayerInfo(content);
 			}
@@ -845,6 +858,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
+				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, characterIndex);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
 				handleNetworkingUpdatePlayerInfo(content);
 			}
@@ -885,6 +899,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddVehicleToParty(card);
+				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
@@ -895,6 +910,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToActiveVehicle(card);
+				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
 			}
@@ -1628,7 +1644,7 @@ namespace FallenLand
 					}
 
 					//Discard the vehicle
-					Players[playerIndex].RemoveActiveVehicle();
+					Players[playerIndex].RemoveVehicleFromParty();
 					DiscardedSpoilsDeck.Add(vehicle);
 
 					if (playerIndex == GetIndexForMyPlayer())
@@ -1774,6 +1790,62 @@ namespace FallenLand
 			else
 			{
 				Debug.LogError("CaptureResource: One of the indices was out of bounds: owner--" + indexOfResourceOwner + " or capturer--" + indexOfCapturingPlayer);
+			}
+		}
+
+		public void AddBonusMovement(int playerIndex, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddBonusMovement(amount);
+			}
+		}
+
+		public void SubtractBonusMovement(int playerIndex, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SubtractBonusMovement(amount);
+			}
+		}
+
+		public void GainPsychResistance(int playerIndex, int characterIndex, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddPsychResistance(characterIndex, amount);
+			}
+		}
+
+		public void LosePsychResistance(int playerIndex, int characterIndex, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SubtractPsychResistance(characterIndex, amount);
+			}
+		}
+
+		public void GainCarryWeight(int playerIndex, int characterIndex, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddCarryCapacityToCharacter(characterIndex, amount);
+			}
+			else if (characterIndex == Constants.VEHICLE_INDEX)
+			{
+				Debug.LogError("GainCarryWeight -- implement for vehicles");
+			}
+		}
+
+		public void LoseCarryWeight(int playerIndex, int characterIndex, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SubtractCarryCapacityFromCharacter(characterIndex, amount);
+			}
+			else if (characterIndex == Constants.VEHICLE_INDEX)
+			{
+				Debug.LogError("LoseCarryWeight -- implement for vehicles");
 			}
 		}
 
@@ -2033,6 +2105,7 @@ namespace FallenLand
 				{
 					SpoilsCard spoilsCard = equippedCards[i];
 					Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(slotIndex, equippedCards[i]);
+					handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, spoilsCard);
 					SpoilsDeck.Add(spoilsCard); //TODO don't add to the deck but rather some temp place
 					found = true;
 					break;
@@ -2054,6 +2127,7 @@ namespace FallenLand
 				{
 					SpoilsCard stowable = stowables[i];
 					Players[playerIndex].RemoveStowableFromActiveVehicle(stowables[i]);
+					handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, stowable);
 					SpoilsDeck.Add(stowable); //TODO don't add to spoils deck. Store in temp location
 					found = true;
 					break;
@@ -2092,6 +2166,7 @@ namespace FallenLand
 				if (SpoilsDeck[i].GetTitle() == cardName)
 				{
 					Players[playerIndex].AddSpoilsToCharacter(slotIndex, SpoilsDeck[i]);
+					handleOnSpoilsEquipRewardsAndPunishments(playerIndex, SpoilsDeck[i], slotIndex);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -2111,6 +2186,7 @@ namespace FallenLand
 				if (SpoilsDeck[i].GetTitle() == cardName)
 				{
 					Players[playerIndex].AddSpoilsToActiveVehicle(SpoilsDeck[i]);
+					handleOnSpoilsEquipRewardsAndPunishments(playerIndex, SpoilsDeck[i], Constants.VEHICLE_INDEX);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -2171,6 +2247,7 @@ namespace FallenLand
 				{
 					SpoilsCard spoilsCard = SpoilsDeck[i];
 					Players[playerIndex].AddVehicleToParty(spoilsCard);
+					handleOnSpoilsEquipRewardsAndPunishments(playerIndex, spoilsCard, Constants.VEHICLE_INDEX);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -2179,6 +2256,68 @@ namespace FallenLand
 			if (!found)
 			{
 				Debug.Log("Tried to add specific vehicle card " + cardName + " to player party, but it was not found");
+			}
+		}
+
+		private void handleOnSpoilsEquipRewardsAndPunishments(int playerIndex, SpoilsCard cardEquipped, int slotIndex)
+		{
+			//Rewards on equip
+			List<Reward> rewardsOnEquip = cardEquipped.GetRewardsWhenEquipped();
+			for (int i = 0; i < rewardsOnEquip.Count; i++)
+			{
+				rewardsOnEquip[i].SetCharacterIndex(slotIndex);
+				rewardsOnEquip[i].HandleReward(this, playerIndex);
+			}
+			//Punishments on equip
+			List<Punishment> punishmentsOnEquip = cardEquipped.GetPunishmentsWhenEquipped();
+			for (int i = 0; i < punishmentsOnEquip.Count; i++)
+			{
+				punishmentsOnEquip[i].SetCharacterIndex(slotIndex);
+				punishmentsOnEquip[i].HandlePunishment(this, playerIndex);
+			}
+
+			//Rewards on removal
+			List<Reward> rewardsOnUnequip = cardEquipped.GetRewardsWhenUnequipped();
+			for (int i = 0; i < rewardsOnUnequip.Count; i++)
+			{
+				rewardsOnUnequip[i].SetCharacterIndex(slotIndex);
+			}
+			//Punishments on removal
+			List<Punishment> punishmentsOnUnequip = cardEquipped.GetPunishmentsWhenUnequipped();
+			for (int i = 0; i < punishmentsOnUnequip.Count; i++)
+			{
+				punishmentsOnUnequip[i].SetCharacterIndex(slotIndex);
+			}
+		}
+
+		private void handleOnSpoilsUnequipRewardsAndPunishments(int playerIndex, SpoilsCard cardRemoved)
+		{
+			//Rewards on removal
+			List<Reward> rewardsOnRemoval = cardRemoved.GetRewardsWhenUnequipped();
+			for (int i = 0; i < rewardsOnRemoval.Count; i++)
+			{
+				rewardsOnRemoval[i].HandleReward(this, playerIndex);
+				rewardsOnRemoval[i].SetCharacterIndex(Constants.INVALID_INDEX);
+			}
+			//Punishments on removal
+			List<Punishment> punishmentsOnRemoval = cardRemoved.GetPunishmentsWhenUnequipped();
+			for (int i = 0; i < punishmentsOnRemoval.Count; i++)
+			{
+				punishmentsOnRemoval[i].HandlePunishment(this, playerIndex);
+				punishmentsOnRemoval[i].SetCharacterIndex(Constants.INVALID_INDEX);
+			}
+
+			//Rewards on equip
+			List<Reward> rewardsOnEquip = cardRemoved.GetRewardsWhenEquipped();
+			for (int i = 0; i < rewardsOnEquip.Count; i++)
+			{
+				rewardsOnEquip[i].SetCharacterIndex(Constants.INVALID_INDEX);
+			}
+			//Punishments on equip
+			List<Punishment> punishmentsOnEquip = cardRemoved.GetPunishmentsWhenEquipped();
+			for (int i = 0; i < punishmentsOnEquip.Count; i++)
+			{
+				punishmentsOnEquip[i].SetCharacterIndex(Constants.INVALID_INDEX);
 			}
 		}
 
@@ -2446,7 +2585,8 @@ namespace FallenLand
             else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
             {
 				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
-				Players[playerIndex].RemoveActiveVehicle();
+				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, vehicle);
+				Players[playerIndex].RemoveVehicleFromParty();
 				SpoilsDeck.Add(vehicle); //TODO don't add to spoils deck
 			}
             else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_SLOT)

@@ -28,6 +28,7 @@ namespace FallenLand
 		private List<List<List<int>>> CharacterDiceRolls;
 		private List<List<int>> VehicleDiceRolls;
 		private readonly List<Resource> ResourcesOwned = new List<Resource>();
+		private int BonusMovementGained;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -150,10 +151,26 @@ namespace FallenLand
 			return carryWeight;
 		}
 
+		public void AddCarryCapacityToCharacter(int characterIndex, int amount)
+		{
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].AddCarryCapacity(amount);
+			}
+		}
+
+		public void SubtractCarryCapacityFromCharacter(int characterIndex, int amount)
+		{
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].SubtractCarryCapacity(amount);
+			}
+		}
+
 		public int GetActiveCharacterRemainingPsych(int characterIndex)
 		{
 			int remainingPsych = 0;
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				remainingPsych = ActiveCharacters[characterIndex].GetPsychRemaning();
 			}
@@ -162,7 +179,7 @@ namespace FallenLand
 
 		public void SetActiveCharacterRemainingPsych(int characterIndex, int remaining)
 		{
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				ActiveCharacters[characterIndex].SetPsychRemaining(remaining);
 			}
@@ -171,7 +188,7 @@ namespace FallenLand
         public int GetActiveCharacterRemainingHealth(int characterIndex)
         {
 			int remainingHealth = 0;
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				remainingHealth = ActiveCharacters[characterIndex].GetHpRemaining();
 			}
@@ -181,7 +198,7 @@ namespace FallenLand
 		public int GetActiveCharacterMaxHealth(int characterIndex)
 		{
 			int maxHealth = 0;
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				maxHealth = ActiveCharacters[characterIndex].GetMaxHp();
 			}
@@ -191,7 +208,7 @@ namespace FallenLand
 		public int GetActiveCharacterPsychResistance(int characterIndex)
 		{
 			int psychRes = 0;
-			if (characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
 				psychRes = ActiveCharacters[characterIndex].GetPsychResistance();
 			}
@@ -389,7 +406,7 @@ namespace FallenLand
 			}
 		}
 
-		public void RemoveActiveVehicle()
+		public void RemoveVehicleFromParty()
 		{
 			Vehicle = null;
 			updateVehicleSlotTotals();
@@ -734,6 +751,37 @@ namespace FallenLand
 		public List<Resource> GetAllResourcesOwned()
 		{
 			return ResourcesOwned;
+		}
+
+		public void AddBonusMovement(int amountToAdd)
+		{
+			BonusMovementGained += amountToAdd;
+		}
+
+		public void SubtractBonusMovement(int amountToSubtract)
+		{
+			BonusMovementGained -= amountToSubtract;
+		}
+
+		public int GetBonusMovement()
+		{
+			return BonusMovementGained;
+		}
+
+		public void AddPsychResistance(int characterIndex, int amount)
+		{
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].AddPsychResistance(amount);
+			}
+		}
+
+		public void SubtractPsychResistance(int characterIndex, int amount)
+		{
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].SubtractPsychResistance(amount);
+			}
 		}
 
 
