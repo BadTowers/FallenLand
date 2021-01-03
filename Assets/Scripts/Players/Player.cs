@@ -565,14 +565,44 @@ namespace FallenLand
 			return ActiveVehicleTotalStats[skill];
 		}
 
+		public int GetCombatSkillMeleeOnly(int characterIndex)
+		{
+			int combatSkillAmountMeleeOnly = 0;
+			CharacterCard character = ActiveCharacters[characterIndex];
+			if (character != null)
+			{
+				combatSkillAmountMeleeOnly += character.GetBaseSkills()[Skills.Combat];
+				List<SpoilsCard> attachedSpoils = character.GetEquippedSpoils();
+				for (int i = 0; i < attachedSpoils.Count; i++)
+				{
+					if (!attachedSpoils[i].GetSpoilsTypes().Contains(SpoilsTypes.Ranged_Weapon))
+					{
+						combatSkillAmountMeleeOnly += attachedSpoils[i].GetBaseSkills()[Skills.Combat];
+					}
+				}
+			}
+
+			return combatSkillAmountMeleeOnly;
+		}
+
 		public int GetCharacterAutoSuccesses(int characterIndex, int skillIndex, Skills skill)
 		{
 			int autoSuccesses = 0;
             if (!CharacterDiceRolls[characterIndex][skillIndex].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
             {
-                autoSuccesses = (int)(ActiveCharacterTotalStats[characterIndex][skill] / 10);
+                autoSuccesses = (ActiveCharacterTotalStats[characterIndex][skill] / 10);
             }
             return autoSuccesses;
+		}
+
+		public int GetCharacterCombatAutoSuccessesMeleeOnly(int characterIndex, int skillIndex)
+		{
+			int autoSuccesses = 0;
+			if (!CharacterDiceRolls[characterIndex][skillIndex].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
+			{
+				autoSuccesses = GetCombatSkillMeleeOnly(characterIndex) / 10;
+			}
+			return autoSuccesses;
 		}
 
 		public int GetCharacterRolledSuccesses(int characterIndex, int skillIndex, Skills skill)
@@ -590,6 +620,23 @@ namespace FallenLand
                 }
             }
             return rolledSuccesses;
+		}
+
+		public int GetCharacterCombatRolledSuccessesMeleeOnly(int characterIndex, int skillIndex)
+		{
+			int rolledSuccesses = 0;
+			if (!CharacterDiceRolls[characterIndex][skillIndex].Contains(Constants.CRIT_FAIL) && ActiveCharacters[characterIndex] != null)
+			{
+				int numberToRollBelow = GetCombatSkillMeleeOnly(characterIndex) % 10;
+				for (int rolledIndex = 0; rolledIndex < CharacterDiceRolls[characterIndex][skillIndex].Count; rolledIndex++)
+				{
+					if (CharacterDiceRolls[characterIndex][skillIndex][rolledIndex] == Constants.CRIT_SUCCESS || CharacterDiceRolls[characterIndex][skillIndex][rolledIndex] <= numberToRollBelow)
+					{
+						rolledSuccesses += 1;
+					}
+				}
+			}
+			return rolledSuccesses;
 		}
 
 		public int GetVehicleAutoSuccesses(int skillIndex, Skills skill)

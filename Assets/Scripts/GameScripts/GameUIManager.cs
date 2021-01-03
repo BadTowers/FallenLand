@@ -1703,14 +1703,24 @@ namespace FallenLand
 
         private void updateSkillValues()
         {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            EncounterCard card = GameManagerInstance.GetCurrentEncounter(myIndex);
+            List<(Skills, int)> skillChecks = card.GetSkillChecks();
             //Update character values
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(GameManagerInstance.GetIndexForMyPlayer(), characterIndex, CurrentEncounterSkillPage).ToString();
+                if (skillChecks[CurrentEncounterSkillPage].Item1 == Skills.Combat && card.GetIsMeleeOnly())
+                {
+                    CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCombatSkillTotalForCharacterMeleeOnly(myIndex, characterIndex).ToString();
+                }
+                else
+                {
+                    CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                }
             }
 
             //Update vehicle value
-            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(GameManagerInstance.GetIndexForMyPlayer(), CurrentEncounterSkillPage).ToString();
+            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(myIndex, CurrentEncounterSkillPage).ToString();
         }
 
         private void updateEncounterSkillPanel()
@@ -1724,8 +1734,16 @@ namespace FallenLand
             //Update character success values
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterAutoSuccesses(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
-                CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterRolledSuccesses(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                if (GameManagerInstance.GetCurrentEncounter(myIndex).GetIsMeleeOnly() && currentSkill == Skills.Combat)
+                {
+                    CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterCombatAutoSuccessesMeleeOnly(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                    CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterCombatRolledSuccessesMeleeOnly(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                }
+                else
+                {
+                    CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterAutoSuccesses(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                    CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterRolledSuccesses(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                }
             }
             //Update vehicle success values
             CurrentEncounterVehicleAutoSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleAutoSuccesses(myIndex, CurrentEncounterSkillPage).ToString();

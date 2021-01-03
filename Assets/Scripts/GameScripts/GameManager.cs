@@ -1331,6 +1331,16 @@ namespace FallenLand
 			return skillValue;
 		}
 
+		public int GetCombatSkillTotalForCharacterMeleeOnly(int playerIndex, int characterIndex)
+		{
+			int skillValue = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				skillValue = Players[playerIndex].GetCombatSkillMeleeOnly(characterIndex);
+			}
+			return skillValue;
+		}
+
 		public int GetSkillTotalForVehicle(int playerIndex, int skillIndex)
 		{
 			int skillValue = 0;
@@ -1353,6 +1363,16 @@ namespace FallenLand
 			return autoSuccesses;
 		}
 
+		public int GetCharacterCombatAutoSuccessesMeleeOnly(int playerIndex, int characterIndex, int skillIndex)
+		{
+			int autoSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				autoSuccesses = Players[playerIndex].GetCharacterCombatAutoSuccessesMeleeOnly(characterIndex, skillIndex);
+			}
+			return autoSuccesses;
+		}
+
 		public int GetCharacterRolledSuccesses(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int rolledSuccesses = 0;
@@ -1360,6 +1380,16 @@ namespace FallenLand
 			{
 				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
 				rolledSuccesses = Players[playerIndex].GetCharacterRolledSuccesses(characterIndex, skillIndex, requestedSkill);
+			}
+			return rolledSuccesses;
+		}
+
+		public int GetCharacterCombatRolledSuccessesMeleeOnly(int playerIndex, int characterIndex, int skillIndex)
+		{
+			int rolledSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				rolledSuccesses = Players[playerIndex].GetCharacterCombatRolledSuccessesMeleeOnly(characterIndex, skillIndex);
 			}
 			return rolledSuccesses;
 		}

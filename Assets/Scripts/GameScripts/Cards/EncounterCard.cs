@@ -18,6 +18,7 @@ namespace FallenLand
 		private List<EncounterTypes> Classifications = new List<EncounterTypes>();
 		private List<Precheck> PrechecksAfterDraw = new List<Precheck>();
 		private bool FlightAllowed;
+		private bool IsMeleeOnly;
 
 		public EncounterCard(string title) : base(title)
 		{
@@ -55,6 +56,16 @@ namespace FallenLand
 		public bool GetFlightAllowed()
 		{
 			return FlightAllowed;
+		}
+
+		public void SetIsMeleeOnly(bool meleeOnly)
+		{
+			IsMeleeOnly = meleeOnly;
+		}
+
+		public bool GetIsMeleeOnly()
+		{
+			return IsMeleeOnly;
 		}
 
 		public void SetDescriptionText(string text)
