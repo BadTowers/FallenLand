@@ -1700,7 +1700,7 @@ namespace FallenLand
 
 					if (playerIndex == GetIndexForMyPlayer())
 					{
-						EventManager.VehicleIsDestroyed();
+						EventManager.ShowGenericPopup("Vehicle was destroyed with all its gear!");
 					}
 				}
 			}

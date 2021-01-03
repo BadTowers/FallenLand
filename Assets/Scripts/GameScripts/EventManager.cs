@@ -32,13 +32,6 @@ namespace FallenLand
             OnCharacterCrownTakesDamage?.Invoke(characterCrown, amountOfDamage, damageType, remainingHp, equipmentDiscarded);
         }
 
-        public delegate void VehicleDestroyed();
-        public static event VehicleDestroyed OnVehicleDestroyed;
-        public static void VehicleIsDestroyed()
-        {
-            OnVehicleDestroyed?.Invoke();
-        }
-
         public delegate void ShowTheGenericPopup(string textToShow);
         public static event ShowTheGenericPopup OnShowGenericPopup;
         public static void ShowGenericPopup(string textToShow)

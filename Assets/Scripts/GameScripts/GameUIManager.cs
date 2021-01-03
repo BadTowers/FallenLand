@@ -104,6 +104,7 @@ namespace FallenLand
         private GameObject SelectCardPanel;
         private GameObject CannotModifyPanel;
         private GameObject EncounterFlightButton;
+        private List<string> GenericPopupStringQueue = new List<string>();
 
         #region UnityFunctions
         void Awake()
@@ -345,7 +346,6 @@ namespace FallenLand
             EventManager.OnD6DamageNeedsToBeDistributed += onDistributeD6DamagePopup;
             EventManager.OnD6HealingNeedsDistributed += onDistributeD6HealingPopup;
             EventManager.OnCharacterCrownTakesDamage += onCharacterCrownTakesDamage;
-            EventManager.OnVehicleDestroyed += onVehicleDestroyed;
             EventManager.OnShowGenericPopup += onShowGenericPopup;
         }
 
@@ -356,7 +356,6 @@ namespace FallenLand
             EventManager.OnD6DamageNeedsToBeDistributed -= onDistributeD6DamagePopup;
             EventManager.OnD6HealingNeedsDistributed -= onDistributeD6HealingPopup;
             EventManager.OnCharacterCrownTakesDamage -= onCharacterCrownTakesDamage;
-            EventManager.OnVehicleDestroyed -= onVehicleDestroyed;
             EventManager.OnShowGenericPopup -= onShowGenericPopup;
         }
 
@@ -891,6 +890,12 @@ namespace FallenLand
         public void OnGenericPopupOkPress()
         {
             GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
+            if (GenericPopupStringQueue.Count > 0)
+            {
+                string newStringToShow = GenericPopupStringQueue[0];
+                GenericPopupStringQueue.RemoveAt(0);
+                onShowGenericPopup(newStringToShow);
+            }
         }
         #endregion
 
@@ -959,18 +964,18 @@ namespace FallenLand
             showPopup(GenericPopupTextPanel);
         }
 
-        private void onVehicleDestroyed()
-        {
-            GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
-            GenericPopupText.GetComponent<Text>().text = "Vehicle was destroyed with all its gear!";
-            showPopup(GenericPopupTextPanel);
-        }
-
         private void onShowGenericPopup(string text)
         {
-            GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
-            GenericPopupText.GetComponent<Text>().text = text;
-            showPopup(GenericPopupTextPanel);
+            if (!GenericPopupWithTwoLinesOfTextPanel.activeSelf)
+            {
+                GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
+                GenericPopupText.GetComponent<Text>().text = text;
+                showPopup(GenericPopupTextPanel);
+            }
+            else
+            {
+                GenericPopupStringQueue.Add(text);
+            }
         }
 
         private void showPopup(GameObject go)
@@ -1420,7 +1425,6 @@ namespace FallenLand
                     Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
                     cardImage.sprite = loadEncounterCard();
                     updateStatPanelsForOverallEncounterPage();
-                    //asdfasdf
                 }
             }
             else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
