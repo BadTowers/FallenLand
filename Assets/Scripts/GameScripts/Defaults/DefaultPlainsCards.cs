@@ -659,6 +659,47 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("A Breath of Fresh Air");
+			curCard.SetSalvageReward(0);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Diplomacy, 0)
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.AddClassification(EncounterTypes.Special);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			//TODO reward if the party has camping gear, auto heal to full health, else attempt heal with 2 auto successes
+			//TODO reward may draw another encounter at no cost in weeks
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			//There are no punishments on this card
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("A Midnight Visitation");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Combat, 6)
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(true);
+			curCard.AddClassification(EncounterTypes.Ambush);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6PhysicalDamage(6));
+			//TODO add punishment -- player to the left chooses 2 equipped spoils to discard
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
