@@ -2586,6 +2586,7 @@ namespace FallenLand
 					EncounterWasSent = false;
 					HasDoneEncounterSinceMovement[playerIndex] = false;
 
+					int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
 					if (!eventStatus.GetWasResourceEncounter())
 					{
 						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
