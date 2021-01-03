@@ -591,11 +591,14 @@ namespace FallenLand
             if (GameManagerInstance.HasDoneEncounterSinceLastMove(myIndex) || mapLayout.IsFactionBase(partyLocation))
             {
                 bool moving = GameManagerInstance.GetPlayerIsMoving(myIndex);
+                int d6Roll = GameManagerInstance.RollMovement(myIndex);
+                int bonusMovement = GameManagerInstance.GetBonusMovement(myIndex);
+                int totalMovement = d6Roll + bonusMovement;
                 moving = !moving;
                 GameManagerInstance.SetPlayerIsMoving(myIndex, moving);
                 if (moving)
                 {
-                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "Please select the hex you would like your party to move to.";
+                    PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "You have " + totalMovement + " movement(" + d6Roll + "+" + bonusMovement + "). Please select the hex you would like your party to move to.";
                 }
                 else
                 {
@@ -767,7 +770,15 @@ namespace FallenLand
 
         public void OnFlightEncounterPress()
         {
-            Debug.LogError("Flight is not yet implemented, sorry!");
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            GameManagerInstance.RollFlight(myIndex, WasResourceClicked);
+            MainPartyOverviewPanel.SetActive(true);
+            OverallEncounterPanelGameObject.SetActive(false);
+            MainEncounterCardImage.SetActive(false);
+            PartyExploitsPanel.SetActive(true);
+            EncounterHasBegun = false;
+            CurrentEncounterSkillPage = 0;
+            WasResourceClicked = false;
         }
 
         public void OnCharacter1RollPress()
@@ -869,15 +880,7 @@ namespace FallenLand
         {
             GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
 
-            MainPartyOverviewPanel.SetActive(true);
-            MainEncounterCardImage.SetActive(false);
-            PartyExploitsPanel.SetActive(true);
-            EncounterRollPanel.SetActive(false);
-            EncounterStatsPanel.SetActive(false);
-            EncounterFinishedPanel.SetActive(false);
-            EncounterHasBegun = false;
-            CurrentEncounterSkillPage = 0;
-            WasResourceClicked = false;
+            resetAfterEncounter();
         }
 
         public void OnDiscardPanelOkPress()
@@ -1417,6 +1420,7 @@ namespace FallenLand
                     Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
                     cardImage.sprite = loadEncounterCard();
                     updateStatPanelsForOverallEncounterPage();
+                    //asdfasdf
                 }
             }
             else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
@@ -2059,6 +2063,19 @@ namespace FallenLand
         {
             CardIsClicked = false;
             CardFullScreenGameObject.SetActive(false);
+        }
+
+        private void resetAfterEncounter()
+        {
+            MainPartyOverviewPanel.SetActive(true);
+            MainEncounterCardImage.SetActive(false);
+            PartyExploitsPanel.SetActive(true);
+            EncounterRollPanel.SetActive(false);
+            EncounterStatsPanel.SetActive(false);
+            EncounterFinishedPanel.SetActive(false);
+            EncounterHasBegun = false;
+            CurrentEncounterSkillPage = 0;
+            WasResourceClicked = false;
         }
         #endregion
     }

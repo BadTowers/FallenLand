@@ -1190,6 +1190,52 @@ namespace FallenLand
 			return d10Roll;
 		}
 
+		public int RollMovement(int playerIndex)
+		{
+			int d6Roll = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				d6Roll = DiceRoller.RollDice(Constants.D6);
+			}
+
+			return d6Roll;
+		}
+
+		public void RollFlight(int playerIndex, bool wasResourceEncounter)
+        {
+			int d6Roll = DiceRoller.RollDice(Constants.D6);
+			int bonusMovement = GetBonusMovement(playerIndex);
+			int totalMovement = d6Roll + bonusMovement;
+
+			//Get the highest combat value
+			EncounterCard curEncounter = GetCurrentEncounter(playerIndex);
+			List<(Skills, int)> skillChecks = curEncounter.GetSkillChecks();
+			int highestValue = 0;
+			foreach ((Skills skill, int value) in skillChecks)
+			{
+				if (skill == Skills.Combat && value > highestValue)
+				{
+					highestValue = value;
+				}
+			}
+
+			//Compare highest combat value to the flight movement value
+			byte status;
+			if (totalMovement > highestValue)
+			{
+				EventManager.ShowGenericPopup("Flight successful! You needed a " + highestValue + " and rolled a " + totalMovement + "(" + d6Roll + "+" + bonusMovement + ")");
+				status = Constants.STATUS_FLIGHT;
+			}
+			else
+			{
+				EventManager.ShowGenericPopup("Flight failed! You needed a " + highestValue + " but rolled a " + totalMovement + "(" + d6Roll + "+" + bonusMovement + ")");
+				status = Constants.STATUS_FAILED;
+			}
+			EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, curEncounter.GetTitle());
+			sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
+			handleEncounterStatusEvent(encounterStatus);
+		}
+
 		public bool GetIsItMyTurn()
 		{
 			bool isItMyTurn = false;
@@ -1263,6 +1309,11 @@ namespace FallenLand
 				encounterType = Players[playerIndex].GetEncounterType();
 			}
 			return encounterType;
+		}
+
+		public void SetPlayerDidFlight(bool wasSuccessful)
+        {
+			//TODO
 		}
 
 		public int GetSkillTotalForCharacter(int playerIndex, int characterIndex, int skillIndex)
@@ -2525,6 +2576,40 @@ namespace FallenLand
                     }
 
 					shuffleEncounterDecksIfNeeded();
+				}
+				else if(status == Constants.STATUS_FLIGHT)
+                {
+					Debug.LogError("When you flight, you should be able to move 1 hex away. This is not implemented at this time");
+
+					Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
+					Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
+					EncounterWasSent = false;
+					HasDoneEncounterSinceMovement[playerIndex] = false;
+
+					if (!eventStatus.GetWasResourceEncounter())
+					{
+						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - EncounterWeekCost);
+					}
+					else
+					{
+						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - ResourceWeekCost);
+					}
+
+					if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_PLAINS)
+					{
+						PlainsCard card = PlainsCard.FindCardInDeckByTitle(eventStatus.GetCardName(), PlainsDeck);
+						DiscardedPlainsCards.Add(card);
+						PlainsDeck.Remove(card);
+						CurrentPlayerEncounter[playerIndex] = null;
+					}
+					else if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_MOUNTAINS)
+					{
+						//TODO when implemented
+					}
+					else if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_CITY_RAD)
+					{
+						//TODO when implemented
+					}
 				}
 			}
 		}
