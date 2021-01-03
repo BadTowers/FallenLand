@@ -17,6 +17,8 @@ namespace FallenLand
 		public const int CRIT_SUCCESS = 1;
 		public const int CRIT_FAIL = 10;
 		public const int HAS_NOT_ROLLED = -1;
+		public const int SPOILS_PER_AUCTION_HOUSE_PAGE = 8;
+		public const int CHARACTERS_PER_TOWN_ROSTER_PAGE = 8;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 		{
 			{ Skills.Mechanical, 0 },

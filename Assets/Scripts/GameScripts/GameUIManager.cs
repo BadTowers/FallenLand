@@ -105,6 +105,8 @@ namespace FallenLand
         private GameObject CannotModifyPanel;
         private GameObject EncounterFlightButton;
         private List<string> GenericPopupStringQueue = new List<string>();
+        private int CurrentAuctionHouseStartingIndex;
+        private int CurrentTownRosterStartingIndex;
 
         #region UnityFunctions
         void Awake()
@@ -347,6 +349,8 @@ namespace FallenLand
             EventManager.OnD6HealingNeedsDistributed += onDistributeD6HealingPopup;
             EventManager.OnCharacterCrownTakesDamage += onCharacterCrownTakesDamage;
             EventManager.OnShowGenericPopup += onShowGenericPopup;
+            EventManager.OnAuctionHouseWasChanged += onAuctionHouseWasChanged;
+            EventManager.OnTownRosterWasChanged += onTownRosterWasChanged;
         }
 
         public override void OnDisable()
@@ -357,6 +361,8 @@ namespace FallenLand
             EventManager.OnD6HealingNeedsDistributed -= onDistributeD6HealingPopup;
             EventManager.OnCharacterCrownTakesDamage -= onCharacterCrownTakesDamage;
             EventManager.OnShowGenericPopup -= onShowGenericPopup;
+            EventManager.OnAuctionHouseWasChanged -= onAuctionHouseWasChanged;
+            EventManager.OnTownRosterWasChanged -= onTownRosterWasChanged;
         }
 
         void Update()
@@ -897,6 +903,48 @@ namespace FallenLand
                 onShowGenericPopup(newStringToShow);
             }
         }
+
+        public void OnPreviousTownRosterPress()
+        {
+            CurrentTownRosterStartingIndex -= Constants.CHARACTERS_PER_TOWN_ROSTER_PAGE;
+            if (CurrentTownRosterStartingIndex < 0)
+            {
+                int numCardsTotal = GameManagerInstance.GetTownRoster(CurrentViewedID).Count;
+                CurrentTownRosterStartingIndex = numCardsTotal - (numCardsTotal % Constants.CHARACTERS_PER_TOWN_ROSTER_PAGE);
+            }
+            onTownRosterWasChanged();
+        }
+
+        public void OnNextTownRosterPress()
+        {
+            CurrentTownRosterStartingIndex += Constants.CHARACTERS_PER_TOWN_ROSTER_PAGE;
+            if (CurrentTownRosterStartingIndex >= GameManagerInstance.GetTownRoster(CurrentViewedID).Count)
+            {
+                CurrentTownRosterStartingIndex = 0;
+            }
+            onTownRosterWasChanged();
+        }
+
+        public void OnPreviousAuctionHousePress()
+        {
+            CurrentAuctionHouseStartingIndex -= Constants.SPOILS_PER_AUCTION_HOUSE_PAGE;
+            if (CurrentAuctionHouseStartingIndex < 0)
+            {
+                int numCardsTotal = GameManagerInstance.GetAuctionHouse(CurrentViewedID).Count;
+                CurrentAuctionHouseStartingIndex = numCardsTotal - (numCardsTotal % Constants.SPOILS_PER_AUCTION_HOUSE_PAGE);
+            }
+            onAuctionHouseWasChanged();
+        }
+
+        public void OnNextAuctionHousePress()
+        {
+            CurrentAuctionHouseStartingIndex += Constants.SPOILS_PER_AUCTION_HOUSE_PAGE;
+            if (CurrentAuctionHouseStartingIndex >= GameManagerInstance.GetAuctionHouse(CurrentViewedID).Count)
+            {
+                CurrentAuctionHouseStartingIndex = 0;
+            }
+            onAuctionHouseWasChanged();
+        }
         #endregion
 
 
@@ -978,6 +1026,32 @@ namespace FallenLand
             }
         }
 
+        private void onAuctionHouseWasChanged()
+        {
+            if (CurrentAuctionHouseStartingIndex >= GameManagerInstance.GetAuctionHouse(CurrentViewedID).Count)
+            {
+                CurrentAuctionHouseStartingIndex -= Constants.SPOILS_PER_AUCTION_HOUSE_PAGE;
+                if (CurrentAuctionHouseStartingIndex < 0)
+                {
+                    CurrentAuctionHouseStartingIndex = 0;
+                }
+            }
+            redrawCharacterSpoilsScreen();
+        }
+
+        private void onTownRosterWasChanged()
+        {
+            if (CurrentTownRosterStartingIndex >= GameManagerInstance.GetTownRoster(CurrentViewedID).Count)
+            {
+                CurrentTownRosterStartingIndex -= Constants.CHARACTERS_PER_TOWN_ROSTER_PAGE;
+                if (CurrentTownRosterStartingIndex < 0)
+                {
+                    CurrentTownRosterStartingIndex = 0;
+                }
+            }
+            redrawCharacterSpoilsScreen();
+        }
+
         private void showPopup(GameObject go)
         {
             go.transform.localScale = new Vector3(0f, 0f, 0f);
@@ -1011,8 +1085,6 @@ namespace FallenLand
         private void updateCharacterSpoilsScreen()
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            updateAuctionHouseUi(false);
-            updateTownRosterUi(false);
             AuctionHouseTradeButton.interactable = (CurrentViewedID != myIndex);
             CannotModifyPanel.SetActive(GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex));
         }
@@ -1020,8 +1092,8 @@ namespace FallenLand
         private void redrawCharacterSpoilsScreen()
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            updateTownRosterUi(true);
-            updateAuctionHouseUi(true);
+            updateTownRosterUi();
+            updateAuctionHouseUi();
             updateCharacterPanels(true);
             updateVehiclePanel(true);
             CannotModifyPanel.SetActive(GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex));
@@ -1137,14 +1209,15 @@ namespace FallenLand
             }
         }
 
-        private void updateAuctionHouseUi(bool forceRedraw)
+        //Only call when needed
+        private void updateAuctionHouseUi()
         {
             const float OFFSET_X = 125;
             const float OFFSET_Y = 85;
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
             List<SpoilsCard> auctionHouse = GameManagerInstance.GetAuctionHouse(CurrentViewedID);
-            if ((AuctionHouseScrollContent.transform.childCount < auctionHouse.Count || forceRedraw) && !CardIsDragging)
+            if (!CardIsDragging)
             {
                 //Clear old
                 foreach (Transform child in AuctionHouseScrollContent.transform)
@@ -1153,7 +1226,7 @@ namespace FallenLand
                 }
 
                 //Add new
-                for (int i = 0; i < auctionHouse.Count; i++)
+                for (int i = CurrentAuctionHouseStartingIndex; i < CurrentAuctionHouseStartingIndex + Constants.SPOILS_PER_AUCTION_HOUSE_PAGE && i < auctionHouse.Count; i++)
                 {
                     GameObject imageObj = Instantiate(ImageGameObject);
                     if (playerIndex != CurrentViewedID || GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
@@ -1164,7 +1237,7 @@ namespace FallenLand
                     image.sprite = auctionHouse[i].GetCardImage();
                     imageObj.name = "SpoilsCard" + auctionHouse[i].GetId().ToString();
                     image.transform.SetParent(AuctionHouseScrollContent.transform);
-                    image.transform.localPosition = new Vector3(97f + (i % 8 * OFFSET_X), -64f - (i / 8 * OFFSET_Y), 0f);
+                    image.transform.localPosition = new Vector3(97f + ((i - CurrentAuctionHouseStartingIndex) % 8 * OFFSET_X), -64f - ((i - CurrentAuctionHouseStartingIndex) / 8 * OFFSET_Y), 0f);
                     image.transform.localScale = new Vector3(1f, 1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);
@@ -1174,7 +1247,7 @@ namespace FallenLand
             }
         }
 
-        private void updateTownRosterUi(bool forceRedraw)
+        private void updateTownRosterUi()
         {
             const float OFFSET_X = 125;
             const float OFFSET_Y = 85;
@@ -1190,7 +1263,7 @@ namespace FallenLand
                     GameObject.Destroy(child.gameObject);
                 }
             }
-            else if ((TownRosterScrollContent.transform.childCount < townRoster.Count || forceRedraw) && !CardIsDragging)
+            else if (!CardIsDragging)
             {
                 //Clear old
                 foreach (Transform child in TownRosterScrollContent.transform)
@@ -1200,7 +1273,7 @@ namespace FallenLand
                 }
 
                 //Add new
-                for (int i = 0; i < townRoster.Count; i++)
+                for (int i = CurrentTownRosterStartingIndex; i < CurrentTownRosterStartingIndex + Constants.CHARACTERS_PER_TOWN_ROSTER_PAGE && i < townRoster.Count; i++)
                 {
                     GameObject imageObj = Instantiate(ImageGameObject);
                     if (GameManagerInstance.GetPlayerIsDoingAnEncounter(playerIndex))
@@ -1211,7 +1284,7 @@ namespace FallenLand
                     image.sprite = townRoster[i].GetCardImage();
                     imageObj.name = "CharacterCard" + townRoster[i].GetId().ToString();
                     image.transform.SetParent(TownRosterScrollContent.transform);
-                    image.transform.localPosition = new Vector3(97f + (i % 8 * OFFSET_X), -64f - (i / 8 * OFFSET_Y), 0f);
+                    image.transform.localPosition = new Vector3(97f + ((i - CurrentTownRosterStartingIndex) % 8 * OFFSET_X), -64f - ((i - CurrentTownRosterStartingIndex) / 8 * OFFSET_Y), 0f);
                     image.transform.localScale = new Vector3(1f, 1f, 1f);
                     image.rectTransform.sizeDelta = new Vector2(75, 100);
                     image.transform.eulerAngles = new Vector3(0f, 0f, 90f);

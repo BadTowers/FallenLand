@@ -38,5 +38,19 @@ namespace FallenLand
         {
             OnShowGenericPopup?.Invoke(textToShow);
         }
+
+        public delegate void CardsInAuctionHouseChanged();
+        public static event CardsInAuctionHouseChanged OnAuctionHouseWasChanged;
+        public static void AuctionHouseChanged()
+        {
+            OnAuctionHouseWasChanged?.Invoke();
+        }
+
+        public delegate void CardsInTownRosterChanged();
+        public static event CardsInTownRosterChanged OnTownRosterWasChanged;
+        public static void TownRosterChanged()
+        {
+            OnTownRosterWasChanged?.Invoke();
+        }
     }
 }

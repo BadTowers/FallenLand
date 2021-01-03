@@ -797,6 +797,7 @@ namespace FallenLand
 				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_AUCTION_HOUSE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
+				EventManager.AuctionHouseChanged();
 			}
 		}
 
@@ -807,6 +808,7 @@ namespace FallenLand
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
+				EventManager.TownRosterChanged();
 			}
 		}
 
@@ -881,6 +883,7 @@ namespace FallenLand
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_AUCTION_HOUSE, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
+				EventManager.AuctionHouseChanged();
 			}
 		}
 
@@ -891,6 +894,7 @@ namespace FallenLand
 				Players[playerIndex].AddCharacterCardToTownRoster(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_TOWN_ROSTER, card.GetTitle());
 				handleNetworkingUpdatePlayerInfo(content);
+				EventManager.TownRosterChanged();
 			}
 		}
 
@@ -1948,6 +1952,7 @@ namespace FallenLand
 					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 					SpoilsDeck.RemoveAt(0);
+					EventManager.AuctionHouseChanged();
 				}
 			}
 			Card.ShuffleDeck(SpoilsDeck);
@@ -1964,6 +1969,7 @@ namespace FallenLand
 					object content = new CardNetworking(CharacterDeck[0].GetTitle(), j, Constants.CHARACTER_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 					CharacterDeck.RemoveAt(0);
+					EventManager.TownRosterChanged();
 				}
 			}
 		}
@@ -2019,6 +2025,7 @@ namespace FallenLand
 					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[i]);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
+					EventManager.AuctionHouseChanged();
 					break;
 				}
 			}
@@ -2038,6 +2045,7 @@ namespace FallenLand
 					Players[playerIndex].AddSpoilsCardToAuctionHouse(DiscardedSpoilsDeck[i]);
 					DiscardedSpoilsDeck.RemoveAt(i);
 					found = true;
+					EventManager.AuctionHouseChanged();
 					break;
 				}
 			}
@@ -2057,6 +2065,7 @@ namespace FallenLand
 					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpecialSpoilsDeck[i]);
 					SpecialSpoilsDeck.RemoveAt(i);
 					found = true;
+					EventManager.AuctionHouseChanged();
 					break;
 				}
 			}
@@ -2076,6 +2085,7 @@ namespace FallenLand
 					Players[playerIndex].AddCharacterCardToTownRoster(CharacterDeck[i]);
 					CharacterDeck.RemoveAt(i);
 					found = true;
+					EventManager.TownRosterChanged();
 					break;
 				}
 			}
@@ -2116,6 +2126,7 @@ namespace FallenLand
 					Players[playerIndex].RemoveCharacterFromTownRoster(characterCard);
 					CharacterDeck.Add(characterCard); //TODO something else with this later, like a temp holding place
 					found = true;
+					EventManager.TownRosterChanged();
 					break;
 				}
 			}
@@ -2137,6 +2148,7 @@ namespace FallenLand
 					Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(spoilsCard);
 					SpoilsDeck.Add(spoilsCard); //TODO something else with this later, like a temp holding place
 					found = true;
+					EventManager.AuctionHouseChanged();
 					break;
 				}
 			}
@@ -2260,6 +2272,7 @@ namespace FallenLand
 					Players[playerIndex].AddCharacterCardToTownRoster(characterCard);
 					CharacterDeck.RemoveAt(i);
 					found = true;
+					EventManager.TownRosterChanged();
 					break;
 				}
 			}
@@ -2280,6 +2293,7 @@ namespace FallenLand
 					Players[playerIndex].AddSpoilsCardToAuctionHouse(spoilsCard);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
+					EventManager.AuctionHouseChanged();
 					break;
 				}
 			}
