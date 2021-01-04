@@ -29,6 +29,7 @@ namespace FallenLand
 		private List<List<int>> VehicleDiceRolls;
 		private readonly List<Resource> ResourcesOwned = new List<Resource>();
 		private int BonusMovementGained;
+		private List<Effect> ActiveEffects = new List<Effect>();
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -829,6 +830,21 @@ namespace FallenLand
 			{
 				ActiveCharacters[characterIndex].SubtractPsychResistance(amount);
 			}
+		}
+
+		public void AddActiveEffect(Effect effectToAdd)
+        {
+			ActiveEffects.Add(effectToAdd);
+		}
+		
+		public void RemoveActiveEffect(Effect effectToRemove)
+        {
+			ActiveEffects.Remove(effectToRemove);
+		}
+
+		public List<Effect> GetActiveEffects()
+        {
+			return ActiveEffects;
 		}
 
 

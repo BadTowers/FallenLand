@@ -721,6 +721,31 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Monday Morning at 6AM");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Survival, 4),
+				(Skills.Combat, 4)
+			});
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetFlightAllowed(true);
+			curCard.SetIsMeleeOnly(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			Effect tempEffect = new GainSpoilsEffect("Return to town to gain spoils!");
+			tempEffect.SetEffectIsRemovedOnceRewardGiven(true);
+			tempEffect.SetWhenEffectEnds(new PartyInStartingLocation());
+			tempEffect.AddRewardWhenEffectEnds(new GainSpoilsCards(10));
+			curCard.AddPunishment(new LoseAllEquippedSpoilsAndGainEffect(tempEffect));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()

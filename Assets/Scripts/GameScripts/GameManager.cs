@@ -196,6 +196,8 @@ namespace FallenLand
 				GameIsSetUpAtStart = true;
             }
 
+			handleEffects();
+
 			int myIndex = GetIndexForMyPlayer();
 			if (isPlayerIndexInRange(myIndex) && Players[myIndex].GetPlayerIsMoving())
 			{
@@ -1530,6 +1532,19 @@ namespace FallenLand
 			return isFinished;
 		}
 
+		public bool IsPartyInStartingLocation(int playerIndex)
+		{
+			bool isInStartLocation = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				if (GetPartyLocation(playerIndex).Equals(GetFaction(playerIndex).GetBaseLocation()))
+				{
+					isInStartLocation = true;
+				}
+			}
+			return isInStartLocation;
+		}
+
 		public bool EncounterWasSuccessful(int playerIndex)
 		{
 			bool wasSuccessful = true;
@@ -1932,6 +1947,70 @@ namespace FallenLand
 			{
 				Debug.LogError("LoseCarryWeight -- implement for vehicles");
 			}
+		}
+
+		public void LoseAllEquippedSpoils(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<CharacterCard> charactersInParty = Players[playerIndex].GetActiveCharacters();
+				for (int characterIndex = 0; characterIndex < charactersInParty.Count; characterIndex++)
+				{
+					if (charactersInParty[characterIndex] != null)
+					{
+						List<SpoilsCard> equippedCharacterSpoils = charactersInParty[characterIndex].GetEquippedSpoils();
+						for (int spoilsIndex = equippedCharacterSpoils.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+						{
+							SpoilsCard card = equippedCharacterSpoils[spoilsIndex];
+							removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
+							SpoilsDeck.Remove(card);
+							DiscardedSpoilsDeck.Add(card);
+						}
+					}
+				}
+
+				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
+				if(vehicle != null)
+                {
+					List<SpoilsCard> equippedVehicleSpoils = vehicle.GetEquippedSpoils();
+					for (int spoilsIndex = equippedVehicleSpoils.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+					{
+						SpoilsCard card = equippedVehicleSpoils[spoilsIndex];
+						removeSpecificSpoilsFromVehicle(playerIndex, card.GetTitle());
+						SpoilsDeck.Remove(card);
+						DiscardedSpoilsDeck.Add(card);
+					}
+				}
+
+				EventManager.ShowGenericPopup("All equipped spoils have been discarded!");
+			}
+		}
+
+		public void ApplyEffectToPlayer(int playerIndex, Effect effectToApply)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddActiveEffect(effectToApply);
+			}
+		}
+
+		public void RemoveActiveEffect(int playerIndex, Effect effectToRemove)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].RemoveActiveEffect(effectToRemove);
+			}
+		}
+
+		public List<Effect> GetActiveEffects(int playerIndex)
+		{
+			List<Effect> effects = new List<Effect>();
+			if(isPlayerIndexInRange(playerIndex))
+            {
+				effects = Players[playerIndex].GetActiveEffects();
+            }
+
+			return effects;
 		}
 
 		public Dice GetDiceRoller()
@@ -2922,6 +3001,14 @@ namespace FallenLand
 			//todo for mountains
 
 			//todo for city/rad
+		}
+
+		private void handleEffects()
+		{
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			{
+				EffectsManager.HandleEffects(this, playerIndex);
+			}
 		}
 		#endregion
 
