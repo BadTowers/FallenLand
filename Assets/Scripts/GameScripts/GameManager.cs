@@ -1057,6 +1057,18 @@ namespace FallenLand
 			}
 		}
 
+		public void ApplyPhysicalDamageToWholeParty(int playerIndex, int amountOfDamage)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				{
+					Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, amountOfDamage);
+					handleCharacterDeathIfNecessary(playerIndex, characterIndex, false);
+				}
+			}
+		}
+
 		public void LoseMostValuableSpoilsThatAreNotVehicle(int playerIndex, int amountOfCardsToLose)
 		{
 			int mostExpensiveAmount = 0;
@@ -1543,6 +1555,24 @@ namespace FallenLand
 				}
 			}
 			return isInStartLocation;
+		}
+
+		public bool IsPartyInTown(int playerIndex)
+		{
+			bool isInTown = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<Faction> factions = (new DefaultFactionInfo()).GetDefaultFactionList();
+				for (int factionIndex = 0; factionIndex < factions.Count; factionIndex++)
+				{
+					if (GetPartyLocation(playerIndex).Equals(factions[factionIndex].GetBaseLocation()))
+					{
+						isInTown = true;
+						break;
+					}
+				}
+			}
+			return isInTown;
 		}
 
 		public bool EncounterWasSuccessful(int playerIndex)
@@ -2036,6 +2066,73 @@ namespace FallenLand
             }
 
 			return effects;
+		}
+
+		public void DiscardEquippedAllies(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				//Remove from characters
+				List<CharacterCard> partyMembers = Players[playerIndex].GetActiveCharacters();
+				for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+				{
+					if (partyMembers[characterIndex] != null)
+					{
+						List<SpoilsCard> equippedGear = partyMembers[characterIndex].GetEquippedSpoils();
+						for (int spoilsIndex = equippedGear.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+						{
+							SpoilsCard card = equippedGear[spoilsIndex];
+							if (card.GetSpoilsTypes().Contains(SpoilsTypes.Ally))
+							{
+								removeSpecificSpoilsFromVehicle(playerIndex, card.GetTitle());
+								SpoilsDeck.Remove(card);
+								DiscardedSpoilsDeck.Add(card);
+							}
+						}
+					}
+				}
+
+				//Remove from vehicle
+				SpoilsCard vehicle = GetActiveVehicle(playerIndex);
+				if (vehicle != null)
+				{
+					List<SpoilsCard> equippedGear = vehicle.GetAttachments();
+					for (int spoilsIndex = equippedGear.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+					{
+						SpoilsCard card = equippedGear[spoilsIndex];
+						if (card.GetSpoilsTypes().Contains(SpoilsTypes.Ally))
+						{
+							removeSpecificSpoilsFromVehicle(playerIndex, card.GetTitle());
+							SpoilsDeck.Remove(card);
+							DiscardedSpoilsDeck.Add(card);
+						}
+					}
+				}
+			}
+		}
+
+		public void DiscardEquippedHorses(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				SpoilsCard vehicle = GetActiveVehicle(playerIndex);
+				if (vehicle != null && vehicle.GetSpoilsTypes().Contains(SpoilsTypes.Horse))
+				{
+					//Equipment goes back to auction house
+					List<SpoilsCard> equippedGear = vehicle.GetAttachments();
+					for (int spoilsIndex = equippedGear.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+					{
+						SpoilsCard card = equippedGear[spoilsIndex];
+						removeSpecificSpoilsFromVehicle(playerIndex, card.GetTitle());
+						addSpecificCardToAuctionHouse(playerIndex, card.GetTitle());
+					}
+
+					//Remove horse
+					Players[playerIndex].RemoveVehicleFromParty();
+					SpoilsDeck.Remove(vehicle);
+					DiscardedSpoilsDeck.Add(vehicle);
+				}
+			}
 		}
 
 		public Dice GetDiceRoller()

@@ -1,7 +1,7 @@
 ﻿
 namespace FallenLand
 {
-    public class PartyInStartingLocation : PhaseState
+    public class PartyInStartingTown : PhaseState
     {
         private int PlayerIndex;
 

@@ -8,13 +8,18 @@ namespace FallenLand
         {
         }
 
-        public override void HandleEffect(GameManager gameManager, int playerIndex)
+        public override void OnActivate(GameManager gameManager, int playerIndex)
+        {
+            EventManager.ShowGenericPopup("Effect " + GetEffectName() + " has been applied.");
+        }
+
+        public override void OnDeactivate(GameManager gameManager, int playerIndex)
         {
             List<Reward> rewards = GetRewardsWhenEffectEnds();
             for (int i = 0; i < rewards.Count; i++)
             {
                 rewards[i].HandleReward(gameManager, playerIndex);
-                EventManager.ShowGenericPopup("Effect " + GetEffectName() + " has be completed or worn off.");
+                EventManager.ShowGenericPopup("Effect " + GetEffectName() + " has been completed or worn off.");
             }
         }
     }

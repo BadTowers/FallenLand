@@ -10,11 +10,20 @@ namespace FallenLand
 
             for (int i = activeEffects.Count - 1; i >= 0 ; i--)
             {
-                if(activeEffects[i].GetWhenEffectEnds().IsStateOccurring(gameManager))
+                //Handle effect begin
+                if (!activeEffects[i].GetHasBeenActivated())
                 {
-                    activeEffects[i].HandleEffect(gameManager, playerIndex);
+                    activeEffects[i].OnActivate(gameManager, playerIndex);
+                    activeEffects[i].SetHasBeenActivated(true);
+                }
+
+                //Handle effect end
+                if(activeEffects[i].GetWhenEffectDeactivates().IsStateOccurring(gameManager))
+                {
+                    activeEffects[i].OnDeactivate(gameManager, playerIndex);
                     if(activeEffects[i].GetEffectIsRemovedOnceEnded())
                     {
+                        activeEffects[i].SetHasBeenActivated(false);
                         gameManager.RemoveActiveEffect(playerIndex, activeEffects[i]);
                     }
                 }

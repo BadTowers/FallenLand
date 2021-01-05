@@ -13,6 +13,7 @@ namespace FallenLand
 
 			PlainsCard curCard;
 			int curID = 0;
+			Effect tempEffect;
 
 			Debug.Log("Instantiating plains cards...");
 
@@ -738,10 +739,10 @@ namespace FallenLand
 			curCard.AddReward(new GainSpoilsCards(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			Effect tempEffect = new GainSpoilsEffect("Return to town to gain spoils!");
-			tempEffect.SetEffectIsRemovedOnceRewardGiven(true);
-			tempEffect.SetWhenEffectEnds(new PartyInStartingLocation());
-			tempEffect.AddRewardWhenEffectEnds(new GainSpoilsCards(10));
+			tempEffect = new GainSpoilsEffect("Naked!");
+			tempEffect.SetEffectIsRemovedOnceDeactivated(true);
+			tempEffect.SetWhenEffectDeactivates(new PartyInStartingTown());
+			tempEffect.AddRewardToApplyOnDeactivate(new GainSpoilsCards(10));
 			curCard.AddPunishment(new LoseAllEquippedSpoilsAndGainEffect(tempEffect));
 			curCard.SetId(curID);
 			curID++;
@@ -766,6 +767,34 @@ namespace FallenLand
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishment(new TakeD6PhysicalDamage(4));
 			curCard.AddPunishment(new LoseAllEquippedRangedWeapons());
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Parched");
+			curCard.SetSalvageReward(1);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Survival, 4),
+				(Skills.Medical, 3)
+			});
+			curCard.AddClassification(EncounterTypes.Perishables);
+			curCard.AddActionOnBegin(new DiscardEquippedHorses());
+			curCard.AddActionOnBegin(new DiscardEquippedAllies());
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainActionCards(1));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new ApplyPhysicalDamageToWholeParty(3));
+			tempEffect = new LoseBonusMovementEffect("Parched!");
+			tempEffect.AddPunishmentToApplyOnActivate(new LoseBonusMovement(2));
+			tempEffect.SetEffectIsRemovedOnceDeactivated(true);
+			tempEffect.SetWhenEffectDeactivates(new PartyInAnyTown());
+			tempEffect.AddRewardToApplyOnDeactivate(new GainBonusMovement(2));
+			curCard.AddPunishment(new GainEffect(tempEffect));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
