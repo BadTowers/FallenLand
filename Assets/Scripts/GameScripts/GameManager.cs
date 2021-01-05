@@ -2745,6 +2745,7 @@ namespace FallenLand
 					Debug.LogError("Error. Couldn't find plains encounter card with title " + encounterCardName);
 				}
 				Players[playerIndex].SetNumberOfSkillChecks(CurrentPlayerEncounter[playerIndex].GetSkillChecks().Count);
+				HandleActionsOnBegin();
 			}
 			else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
 			{

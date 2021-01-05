@@ -770,7 +770,6 @@ namespace FallenLand
             MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
             EncounterHasBegun = true;
             GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
-            GameManagerInstance.HandleActionsOnBegin();
         }
 
         public void OnFlightEncounterPress()
