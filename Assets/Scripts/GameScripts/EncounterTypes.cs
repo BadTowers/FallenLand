@@ -5,6 +5,7 @@ namespace FallenLand
 	{
 		Ambush,
 		BikerGang,
+		Captured,
 		EnvironmentalHazard,
 		Mystery,
 		Perishables,

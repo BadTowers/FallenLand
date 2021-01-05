@@ -1986,6 +1986,31 @@ namespace FallenLand
 			}
 		}
 
+		public void LoseAllEquippedRangeWeapons(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<CharacterCard> charactersInParty = Players[playerIndex].GetActiveCharacters();
+				for (int characterIndex = 0; characterIndex < charactersInParty.Count; characterIndex++)
+				{
+					if (charactersInParty[characterIndex] != null)
+					{
+						List<SpoilsCard> equippedCharacterSpoils = charactersInParty[characterIndex].GetEquippedSpoils();
+						for (int spoilsIndex = equippedCharacterSpoils.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+						{
+							SpoilsCard card = equippedCharacterSpoils[spoilsIndex];
+							if(card.GetSpoilsTypes().Contains(SpoilsTypes.Ranged_Weapon))
+                            {
+								removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
+								SpoilsDeck.Remove(card);
+								DiscardedSpoilsDeck.Add(card);
+							}
+						}
+					}
+				}
+			}
+		}
+
 		public void ApplyEffectToPlayer(int playerIndex, Effect effectToApply)
 		{
 			if (isPlayerIndexInRange(playerIndex))

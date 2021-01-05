@@ -746,6 +746,29 @@ namespace FallenLand
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Boil and Bubble, Toil and Trouble");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Diplomacy, 4),
+				(Skills.Combat, 4)
+			});
+			curCard.AddClassification(EncounterTypes.Captured);
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetFlightAllowed(false);
+			curCard.SetIsMeleeOnly(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishment(new TakeD6PhysicalDamage(4));
+			curCard.AddPunishment(new LoseAllEquippedRangedWeapons());
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
 		}
 
 		public List<PlainsCard> GetPlainsCards()
