@@ -2034,11 +2034,14 @@ namespace FallenLand
                 {
                     CharacterCard card = (CharacterCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
                     //Move all spoils back to the auction house
-                    for (int i = card.GetEquippedSpoils().Count - 1; i >= 0; i--)
+                    List<SpoilsCard> equippedSpoils = card.GetEquippedSpoils();
+                    List<SpoilsCard> toReadd = new List<SpoilsCard>();
+                    for (int i = equippedSpoils.Count - 1; i >= 0; i--)
                     {
-                        SpoilsCard spoilsCardToMove = card.GetEquippedSpoils()[i];
+                        SpoilsCard spoilsCardToMove = equippedSpoils[i];
                         GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, spoilsCardToMove);
                         GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, spoilsCardToMove);
+                        toReadd.Add(spoilsCardToMove);
                     }
 
                     GameManagerInstance.RemoveCharacterFromActiveParty(playerIndex, characterSlotFoundIn);
@@ -2050,6 +2053,13 @@ namespace FallenLand
                     {
                         int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
                         GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, card);
+                        //Move spoils from auction house back to character
+                        for (int i = 0; i < toReadd.Count; i++)
+                        {
+                            SpoilsCard spoilsCardToMove = toReadd[i];
+                            GameManagerInstance.RemoveSpoilFromAuctionHouse(playerIndex, spoilsCardToMove);
+                            GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, spoilsCardToMove);
+                        }
                     }
                 }
             }
