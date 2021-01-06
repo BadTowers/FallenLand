@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
@@ -62,9 +62,9 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Fernando the Chauffer");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ally, SpoilsTypes.Vehicle_Equipment, SpoilsTypes.PayToKeep); //He must be equipped to a vehicle
+			curCard.SetSpoilsTypes(SpoilsTypes.Ally, SpoilsTypes.Vehicle_Equipment, SpoilsTypes.PayToKeep, SpoilsTypes.CannotBeSold); //He must be equipped to a vehicle
 			curCard.SetCarryWeight(0);
-			curCard.SetSellValue(0); //Can't be sold
+			curCard.SetSellValue(0);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
 			{
 				{Skills.Combat, 2},
