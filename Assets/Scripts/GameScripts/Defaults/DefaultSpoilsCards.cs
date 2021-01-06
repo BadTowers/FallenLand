@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FallenLand
@@ -74,7 +74,9 @@ namespace FallenLand
 				{Skills.Medical, 2}
 			});
 			curCard.AddRewardWhenEquipped(new GainBonusMovement(2));
+			curCard.AddRewardWhenEquipped(new GainCarryCapacity(4));
 			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(2));
+			curCard.AddPunishmentWhenUnequipped(new LoseCarryCapacity(4));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -498,7 +500,9 @@ namespace FallenLand
 				{Skills.Medical, 3}
 			});
 			curCard.AddPunishmentWhenEquipped(new LoseBonusMovement(1));
+			curCard.AddRewardWhenEquipped(new GainCarryCapacity(8));
 			curCard.AddRewardWhenUnequipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseCarryCapacity(8));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
@@ -1171,7 +1175,9 @@ namespace FallenLand
 				{Skills.Survival, 1}
 			});
 			curCard.AddRewardWhenEquipped(new GainPsychResistance(1));
+			curCard.AddRewardWhenEquipped(new GainCarryCapacity(2));
 			curCard.AddPunishmentWhenUnequipped(new LosePsychResistance(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseCarryCapacity(2));
 			curCard.SetId(curID);
 			curID++;
 			SpoilsCardsDeck.Add(curCard);
