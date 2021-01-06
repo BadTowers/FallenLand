@@ -111,13 +111,13 @@ namespace Tests
 			stowableSpoil.SetCarryWeight(expectedCarryWeight);
 			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(numPlayers+1, stowableSpoil, 0));
 			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(numPlayers+1, stowableSpoil));
-			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(numPlayers+1, 0));
+			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(numPlayers+1, 0, 0));
 			Assert.AreEqual(0, gameManager.GetNumberOfActiveVehicles(numPlayers+1));
 
 			//player index too low will tell us we aren't allowed to attach anything
 			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToCharacterSlot(-1, stowableSpoil, 0));
 			Assert.IsFalse(gameManager.IsAllowedToApplySpoilsToVehicleSlot(-1, stowableSpoil));
-			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(-1, 0));
+			Assert.IsFalse(gameManager.IsAllowedToApplyCharacterToCharacterSlot(-1, 0, 0));
 			Assert.AreEqual(0, gameManager.GetNumberOfActiveVehicles(-1));
 
 			Assert.AreEqual(MY_PLAYER_INDEX, gameManager.GetIndexForMyPlayer());
@@ -216,7 +216,7 @@ namespace Tests
 			const int SLOT_1 = 1;
 			Assert.IsNotNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX));
 			Assert.AreEqual(5, gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX).Count);
-			Assert.IsTrue(gameManager.IsAllowedToApplyCharacterToCharacterSlot(MY_PLAYER_INDEX, SLOT_0));
+			Assert.IsTrue(gameManager.IsAllowedToApplyCharacterToCharacterSlot(MY_PLAYER_INDEX, SLOT_0, 0));
 			Assert.IsNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0]);
 			gameManager.AssignCharacterToParty(MY_PLAYER_INDEX, SLOT_0, character);
 			Assert.IsNotNull(gameManager.GetActiveCharacterCards(MY_PLAYER_INDEX)[SLOT_0]);

@@ -206,27 +206,27 @@ namespace Tests
 				Assert.IsNull(HumanPlayerInstance.GetActiveCharacters()[characterIndex]);
 			}
 
-			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX));
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX, 0));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character1);
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
-			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX, 0));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, null);
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
-			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_2_INDEX));
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_2_INDEX, 0));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, null);
 			Assert.IsNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_2_INDEX]);
 			Assert.AreEqual(1, HumanPlayerInstance.GetNumberOfCharactersActive());
 
-			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_2_INDEX));
+			Assert.IsTrue(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_2_INDEX, 0));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_2_INDEX, character2);
 			Assert.IsNotNull(HumanPlayerInstance.GetActiveCharacters()[CHARACTER_2_INDEX]);
 			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());
 
-			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX));
+			Assert.IsFalse(HumanPlayerInstance.IsAllowedToAddCharacterToParty(CHARACTER_1_INDEX, 0));
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character2);
 			Assert.AreEqual(character1, HumanPlayerInstance.GetActiveCharacters()[CHARACTER_1_INDEX]);
 			Assert.AreEqual(2, HumanPlayerInstance.GetNumberOfCharactersActive());

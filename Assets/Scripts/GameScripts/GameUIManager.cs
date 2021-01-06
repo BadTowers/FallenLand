@@ -1921,7 +1921,7 @@ namespace FallenLand
                 try
                 {
                     int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                    if (!GameManagerInstance.IsAllowedToApplyCharacterToCharacterSlot(myIndex, characterIndex))
+                    if (!GameManagerInstance.IsAllowedToApplyCharacterToCharacterSlot(myIndex, characterIndex, card.GetCarryCapacity()))
                     {
                         isAllowed = false;
                         Debug.Log("Can't put a character card on a non-empty character slot");

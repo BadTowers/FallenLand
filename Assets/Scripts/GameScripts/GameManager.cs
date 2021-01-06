@@ -950,12 +950,12 @@ namespace FallenLand
 			return isAllowed;
 		}
 
-		public bool IsAllowedToApplyCharacterToCharacterSlot(int playerIndex, int characterIndex)
+		public bool IsAllowedToApplyCharacterToCharacterSlot(int playerIndex, int characterIndex, int carryCapacity)
 		{
 			bool isAllowed = false;
 			if (isPlayerIndexInRange(playerIndex) && characterIndex != Constants.VEHICLE_INDEX)
 			{
-				isAllowed = Players[playerIndex].IsAllowedToAddCharacterToParty(characterIndex);
+				isAllowed = Players[playerIndex].IsAllowedToAddCharacterToParty(characterIndex, carryCapacity);
 			}
 			return isAllowed;
 		}

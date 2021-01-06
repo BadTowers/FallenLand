@@ -30,6 +30,7 @@ namespace FallenLand
 		private readonly List<Resource> ResourcesOwned = new List<Resource>();
 		private int BonusMovementGained;
 		private List<Effect> ActiveEffects = new List<Effect>();
+		private List<SpoilsCard> PartyEquipment = new List<SpoilsCard>();
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -388,7 +389,15 @@ namespace FallenLand
 			if (ActiveCharacters[characterIndex].GetEquippedSpoils().Contains(card))
 			{
 				ActiveCharacters[characterIndex].RemoveSpoilsCard(card);
-				updateCharacterSlotTotals(characterIndex);
+				if (card.GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
+				{
+					removeGroupEquipment(card);
+					updateAllCharacterSlotTotals();
+				}
+				else
+				{
+					updateCharacterSlotTotals(characterIndex);
+				}
 			}
 		}
 
@@ -476,6 +485,10 @@ namespace FallenLand
 			if (character != null && ActiveCharacters[characterIndex] == null)
 			{
 				ActiveCharacters[characterIndex] = character;
+				for (int partyEquipmentIndex = 0; partyEquipmentIndex < PartyEquipment.Count; partyEquipmentIndex++)
+				{
+					ActiveCharacters[characterIndex].AttachSpoilsCard(PartyEquipment[partyEquipmentIndex]);
+				}
 				updateCharacterSlotTotals(characterIndex);
 			}
 		}
@@ -484,8 +497,16 @@ namespace FallenLand
 		{
 			if (ActiveCharacters[characterIndex] != null)
 			{
-				ActiveCharacters[characterIndex].AttachSpoilsCard(card);
-				updateCharacterSlotTotals(characterIndex);
+				if (card.GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
+				{
+					addGroupEquipment(card);
+					updateAllCharacterSlotTotals();
+				}
+				else
+				{
+					ActiveCharacters[characterIndex].AttachSpoilsCard(card);
+					updateCharacterSlotTotals(characterIndex);
+				}
 			}
 		}
 
@@ -497,6 +518,18 @@ namespace FallenLand
 				ActiveCharacterRemainingCarryWeights[characterIndex] - card.GetCarryWeight() >= 0)
 			{
 				isAllowed = true;
+				if (card.GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
+				{
+					//Check if all other characters have capacity
+					for (int charIndex = 0; charIndex < Constants.NUM_PARTY_MEMBERS; charIndex++)
+					{
+						if (ActiveCharacters[charIndex] != null && ActiveCharacterRemainingCarryWeights[charIndex] - card.GetCarryWeight() < 0)
+						{
+							isAllowed = false;
+							break;
+						}
+					}
+				}
 			}
 			return isAllowed;
 		}
@@ -522,12 +555,20 @@ namespace FallenLand
 			return isAllowed;
 		}
 
-		public bool IsAllowedToAddCharacterToParty(int characterIndex)
+		public bool IsAllowedToAddCharacterToParty(int characterIndex, int carryCapacity)
 		{
 			bool isAllowed = false;
 			if (ActiveCharacters[characterIndex] == null)
 			{
-				isAllowed = true;
+				for (int partyEquipmentIndex = 0; partyEquipmentIndex < PartyEquipment.Count; partyEquipmentIndex++)
+				{
+					carryCapacity -= PartyEquipment[partyEquipmentIndex].GetCarryWeight();
+				}
+
+				if (carryCapacity >= 0)
+				{
+					isAllowed = true;
+				}
 			}
 			return isAllowed;
 		}
@@ -931,6 +972,14 @@ namespace FallenLand
 			}
 		}
 
+		private void updateAllCharacterSlotTotals()
+        {
+			for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+			{
+				updateCharacterSlotTotals(characterIndex);
+			}
+		}
+
 		private void updateVehicleSlotTotals()
 		{
 			if (Vehicle != null)
@@ -961,6 +1010,30 @@ namespace FallenLand
 					ActiveVehicleTotalStats[skill] = 0;
 					ActiveVehicleRemainingCarryWeight = 0;
 					ActiveVehicleUsedCarryWeight = 0;
+				}
+			}
+		}
+
+		private void addGroupEquipment(SpoilsCard card)
+		{
+			PartyEquipment.Add(card);
+			for(int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+            {
+				if (ActiveCharacters[characterIndex] != null)
+				{
+					ActiveCharacters[characterIndex].AttachSpoilsCard(card);
+				}
+			}
+		}
+
+		private void removeGroupEquipment(SpoilsCard card)
+		{
+			PartyEquipment.Remove(card);
+			for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+			{
+				if (ActiveCharacters[characterIndex] != null)
+				{
+					ActiveCharacters[characterIndex].RemoveSpoilsCard(card);
 				}
 			}
 		}
