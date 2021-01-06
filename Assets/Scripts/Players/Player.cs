@@ -787,13 +787,13 @@ namespace FallenLand
 		public void AddResourceOwned(Resource resource)
 		{
 			ResourcesOwned.Add(resource);
-			Prestige += 1;
+			Prestige += Constants.PRESTIGE_GAINED_FOR_RESOURCE;
 		}
 
 		public void RemoveResourceOwned(Resource resource)
         {
 			ResourcesOwned.Remove(resource);
-			Prestige -= 1;
+			Prestige -= Constants.PRESTIGE_GAINED_FOR_RESOURCE;
 		}
 
 		public List<Resource> GetAllResourcesOwned()
