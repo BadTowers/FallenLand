@@ -13,6 +13,7 @@ namespace FallenLand
 		Book,
 		Bow,
 		Camping_Gear,
+		CannotBeSold,
 		Clothing,
 		Diplomacy,
 		Equipment,
