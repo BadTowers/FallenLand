@@ -2054,7 +2054,7 @@ namespace FallenLand
                         int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
                         GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, card);
                         //Move spoils from auction house back to character
-                        for (int i = 0; i < toReadd.Count; i++)
+                        for (int i = toReadd.Count - 1; i >= 0; i--)
                         {
                             SpoilsCard spoilsCardToMove = toReadd[i];
                             GameManagerInstance.RemoveSpoilFromAuctionHouse(playerIndex, spoilsCardToMove);
