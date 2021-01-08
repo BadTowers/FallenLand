@@ -410,14 +410,14 @@ namespace FallenLand
 			{
 				Debug.Log("Received updated player information");
 				PlayerCardNetworking playerInfo = (PlayerCardNetworking)photonEvent.CustomData;
-				handlePlayerNetworkUpdate(playerInfo);
+				handlePlayerCardNetworkUpdate(playerInfo);
 			}
 			else if (eventCode == Constants.EvRequestUpdateToPlayerInformation)
 			{
 				Debug.Log("Got a request to update player information");
 				object playerInfo = photonEvent.CustomData;
 				sendNetworkEvent(playerInfo, ReceiverGroup.Others, Constants.EvSendPlayerInformation);
-				handlePlayerNetworkUpdate((PlayerCardNetworking)playerInfo);
+				handlePlayerCardNetworkUpdate((PlayerCardNetworking)playerInfo);
 			}
 			else if (eventCode == Constants.EvMissionLocation)
 			{
@@ -2883,7 +2883,7 @@ namespace FallenLand
 			PhotonNetwork.RaiseEvent(eventCode, content, raiseEventOptions, sendOptions);
 		}
 
-		private void handlePlayerNetworkUpdate(PlayerCardNetworking playerInfo)
+		private void handlePlayerCardNetworkUpdate(PlayerCardNetworking playerInfo)
 		{
 			int playerIndex = playerInfo.GetPlayerIndex();
 			if (playerIndex == GetIndexForMyPlayer())
