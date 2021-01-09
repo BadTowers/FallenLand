@@ -51,6 +51,7 @@ namespace FallenLand
 		public const byte REMOVE_SPOILS_FROM_VEHICLE = 10;
 		public const byte ADD_TO_TOWN_ROSTER = 11;
 		public const byte ADD_TO_AUCTION_HOUSE = 12;
+		public const byte MOVE_CHARACTER_BETWEEN_SLOTS = 13;
 
 		//Used for EvPartyExploits
 		public const byte PARTY_EXPLOITS_MOVEMENT = 1;

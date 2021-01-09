@@ -2004,15 +2004,15 @@ namespace FallenLand
 
         private void handleCardComingFromCharacterSlot(Image cardImage, GameObject panelMovingInto)
         {
-            int characterSlotFoundIn = findCardInActiveCharacters(cardImage);
+            int characterSlotComingFrom = findCardInActiveCharacters(cardImage);
             int playerIndex = GameManagerInstance.GetIndexForMyPlayer();
 
-            if (characterSlotFoundIn != -1)
+            if (characterSlotComingFrom != -1)
             {
                 if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is SpoilsCard)
                 {
                     SpoilsCard card = (SpoilsCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
-                    GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, card);
+                    GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotComingFrom, card);
                     if (panelMovingInto.name.Contains("AuctionHouseScrollView"))
                     {
                         GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, card);
@@ -2033,33 +2033,16 @@ namespace FallenLand
                 else if (cardImage.GetComponentInChildren<MonoCard>().CardPtr is CharacterCard)
                 {
                     CharacterCard card = (CharacterCard)cardImage.GetComponentInChildren<MonoCard>().CardPtr;
-                    //Move all spoils back to the auction house
-                    List<SpoilsCard> equippedSpoils = card.GetEquippedSpoils();
-                    List<SpoilsCard> toReadd = new List<SpoilsCard>();
-                    for (int i = equippedSpoils.Count - 1; i >= 0; i--)
-                    {
-                        SpoilsCard spoilsCardToMove = equippedSpoils[i];
-                        GameManagerInstance.RemoveSpoilsCardFromPlayerActiveParty(playerIndex, characterSlotFoundIn, spoilsCardToMove);
-                        GameManagerInstance.AddSpoilsToAuctionHouse(playerIndex, spoilsCardToMove);
-                        toReadd.Add(spoilsCardToMove);
-                    }
 
-                    GameManagerInstance.RemoveCharacterFromActiveParty(playerIndex, characterSlotFoundIn);
                     if (panelMovingInto.name.Contains("TownRosterScrollView"))
                     {
+                        GameManagerInstance.RemoveCharacterFromActiveParty(playerIndex, characterSlotComingFrom);
                         GameManagerInstance.AddCharacterToTownRoster(playerIndex, card);
                     }
                     else
                     {
-                        int characterIndex = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
-                        GameManagerInstance.AssignCharacterToParty(playerIndex, characterIndex, card);
-                        //Move spoils from auction house back to character
-                        for (int i = toReadd.Count - 1; i >= 0; i--)
-                        {
-                            SpoilsCard spoilsCardToMove = toReadd[i];
-                            GameManagerInstance.RemoveSpoilFromAuctionHouse(playerIndex, spoilsCardToMove);
-                            GameManagerInstance.AssignSpoilsCardToCharacter(playerIndex, characterIndex, spoilsCardToMove);
-                        }
+                        int characterSlotMovingInto = int.Parse(panelMovingInto.name.Substring(panelMovingInto.name.Length - 1)) - 1;
+                        GameManagerInstance.MoveCharacterBetweenSlots(playerIndex, characterSlotComingFrom, characterSlotMovingInto);
                     }
                 }
             }

@@ -401,10 +401,41 @@ namespace FallenLand
 			}
 		}
 
-		public void RemoveCharacterFromParty(int characterIndex)
+		public void RemoveCharacterFromParty(int characterIndexToRemove)
 		{
-			ActiveCharacters[characterIndex] = null;
-			updateCharacterSlotTotals(characterIndex);
+            //Remove spoils from this character
+            List<SpoilsCard> equippedSpoils = ActiveCharacters[characterIndexToRemove].GetEquippedSpoils();
+            for (int i = equippedSpoils.Count - 1; i >= 0; i--)
+            {
+                SpoilsCard card = equippedSpoils[i];
+                if (!equippedSpoils[i].GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
+                {
+                    ActiveCharacters[characterIndexToRemove].RemoveSpoilsCard(card);
+                    AddSpoilsCardToAuctionHouse(card);
+                }
+                else
+                {
+                    ActiveCharacters[characterIndexToRemove].RemoveSpoilsCard(card);
+                    bool isOtherCharacterInParty = false;
+                    for (int x = 0; x < Constants.NUM_PARTY_MEMBERS; x++)
+                    {
+                        if (ActiveCharacters[x] != null && x != characterIndexToRemove)
+                        {
+                            isOtherCharacterInParty = true;
+                            break;
+                        }
+                    }
+                    if (!isOtherCharacterInParty)
+                    {
+                        AddSpoilsCardToAuctionHouse(card);
+                        PartyEquipment.Remove(card);
+                    }
+                }
+            }
+
+            //Remove character from party
+            ActiveCharacters[characterIndexToRemove] = null;
+			updateCharacterSlotTotals(characterIndexToRemove);
 		}
 
 		public void RemoveStowableFromActiveVehicle(SpoilsCard card)
@@ -491,6 +522,14 @@ namespace FallenLand
 				}
 				updateCharacterSlotTotals(characterIndex);
 			}
+		}
+
+		public void MoveCharacterBetweenSlots(int characterIndexFrom, int characterIndexTo)
+		{
+			ActiveCharacters[characterIndexTo] = ActiveCharacters[characterIndexFrom];
+			ActiveCharacters[characterIndexFrom] = null;
+			updateCharacterSlotTotals(characterIndexFrom);
+			updateCharacterSlotTotals(characterIndexTo);
 		}
 
 		public void AddSpoilsToCharacter(int characterIndex, SpoilsCard card)

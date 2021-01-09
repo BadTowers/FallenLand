@@ -798,7 +798,7 @@ namespace FallenLand
 			{
 				Players[playerIndex].RemoveSpoilsCardFromAuctionHouse(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_AUCTION_HOUSE, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 				EventManager.AuctionHouseChanged();
 			}
 		}
@@ -809,7 +809,7 @@ namespace FallenLand
 			{
 				Players[playerIndex].RemoveCharacterFromTownRoster(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_FROM_TOWN_ROSTER, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 				EventManager.TownRosterChanged();
 			}
 		}
@@ -821,7 +821,7 @@ namespace FallenLand
 				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, card);
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -829,9 +829,19 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].RemoveCharacterFromParty(characterSlotFoundIn);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_CHARACTER_FROM_SLOT, "", characterSlotFoundIn);
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
+				removeCharacterFromParty(playerIndex, characterSlotFoundIn);
+			}
+		}
+
+		public void MoveCharacterBetweenSlots(int playerIndex, int characterSlotFoundIn, int characterSlotMovingTo)
+        {
+			if (isPlayerIndexInRange(playerIndex))
+            {
+				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.MOVE_CHARACTER_BETWEEN_SLOTS, "", characterSlotFoundIn, characterSlotMovingTo);
+				handleSendingNetworkingUpdatePlayerInfo(content);
+				moveCharacterBetweenSlots(playerIndex, characterSlotFoundIn, characterSlotMovingTo);
 			}
 		}
 
@@ -842,7 +852,7 @@ namespace FallenLand
 				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, card);
 				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -853,7 +863,7 @@ namespace FallenLand
 				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, Players[playerIndex].GetActiveVehicle());
 				Players[playerIndex].RemoveVehicleFromParty();
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_VEHICLE, "");
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -864,7 +874,7 @@ namespace FallenLand
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
 				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, characterIndex);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -874,7 +884,7 @@ namespace FallenLand
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_CHARACTER_TO_SLOT, card.GetTitle(), characterIndex);
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -884,7 +894,7 @@ namespace FallenLand
 			{
 				Players[playerIndex].AddSpoilsCardToAuctionHouse(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_AUCTION_HOUSE, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 				EventManager.AuctionHouseChanged();
 			}
 		}
@@ -895,7 +905,7 @@ namespace FallenLand
 			{
 				Players[playerIndex].AddCharacterCardToTownRoster(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_TO_TOWN_ROSTER, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 				EventManager.TownRosterChanged();
 			}
 		}
@@ -907,7 +917,7 @@ namespace FallenLand
 				Players[playerIndex].AddVehicleToParty(card);
 				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -918,7 +928,7 @@ namespace FallenLand
 				Players[playerIndex].AddSpoilsToActiveVehicle(card);
 				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
-				handleNetworkingUpdatePlayerInfo(content);
+				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
 		}
 
@@ -2433,7 +2443,14 @@ namespace FallenLand
 			}
 		}
 
-		private void addSpecificCharacterToSlot(int playerIndex, int slotIndex, string cardName)
+		private void removeCharacterFromParty(int playerIndex, int characterIndex)
+		{
+            CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+            Players[playerIndex].RemoveCharacterFromParty(characterIndex);
+            CharacterDeck.Add(character); //TODO don't add to character deck
+        }
+
+        private void addSpecificCharacterToSlot(int playerIndex, int slotIndex, string cardName)
 		{
 			bool found = false;
 			for (int i = 0; i < CharacterDeck.Count; i++) //TODO don't grab from deck but some temp location (rework removeSpecificCardFromTownRoster)
@@ -2553,6 +2570,12 @@ namespace FallenLand
 			{
 				Debug.LogError("Tried to add specific vehicle card " + cardName + " to player party, but it was not found");
 			}
+		}
+
+		private void moveCharacterBetweenSlots(int playerIndex, int characterSlotFoundIn, int characterSlotMovingTo)
+		{
+			CharacterCard characterToMove = Players[playerIndex].GetActiveCharacters()[characterSlotFoundIn];
+			Players[playerIndex].MoveCharacterBetweenSlots(characterSlotFoundIn, characterSlotMovingTo);
 		}
 
 		private void handleOnSpoilsEquipRewardsAndPunishments(int playerIndex, SpoilsCard cardEquipped, int slotIndex)
@@ -2891,65 +2914,67 @@ namespace FallenLand
 				return;
 			}
 			string cardName = playerInfo.GetCardName();
-			int slotIndex = playerInfo.GetSlotIndex();
-            if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_TOWN_ROSTER)
-            {
-                removeSpecificCardFromTownRoster(playerIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_AUCTION_HOUSE)
-            {
-				removeSpecificCardFromAuctionHouse(playerIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.ADD_CHARACTER_TO_SLOT)
-            {
-                addSpecificCharacterToSlot(playerIndex, slotIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.REMOVE_CHARACTER_FROM_SLOT)
-            {
-				CharacterCard character = Players[playerIndex].GetActiveCharacters()[slotIndex];
-				Players[playerIndex].RemoveCharacterFromParty(slotIndex);
-				CharacterDeck.Add(character); //TODO don't add to character deck
+			int slotIndex = playerInfo.GetFirstSlotIndex();
+			if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_TOWN_ROSTER)
+			{
+				removeSpecificCardFromTownRoster(playerIndex, cardName);
 			}
-            else if (playerInfo.GetActionByte() == Constants.ADD_VEHICLE)
-            {
+			else if (playerInfo.GetActionByte() == Constants.REMOVE_FROM_AUCTION_HOUSE)
+			{
+				removeSpecificCardFromAuctionHouse(playerIndex, cardName);
+			}
+			else if (playerInfo.GetActionByte() == Constants.ADD_CHARACTER_TO_SLOT)
+			{
+				addSpecificCharacterToSlot(playerIndex, slotIndex, cardName);
+			}
+			else if (playerInfo.GetActionByte() == Constants.REMOVE_CHARACTER_FROM_SLOT)
+			{
+				removeCharacterFromParty(playerIndex, slotIndex);
+			}
+			else if (playerInfo.GetActionByte() == Constants.ADD_VEHICLE)
+			{
 				addSpecificVehicleToParty(playerIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
-            {
+			}
+			else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
+			{
 				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
 				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, vehicle);
 				Players[playerIndex].RemoveVehicleFromParty();
 				SpoilsDeck.Add(vehicle); //TODO don't add to spoils deck
 			}
-            else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_SLOT)
-            {
+			else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_SLOT)
+			{
 				addSpecificSpoilsToSlot(playerIndex, slotIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_SLOT)
-            {
+			}
+			else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_SLOT)
+			{
 				removeSpecificSpoilsFromSlot(playerIndex, slotIndex, cardName);
 			}
-            else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_VEHICLE)
-            {
+			else if (playerInfo.GetActionByte() == Constants.ADD_SPOILS_TO_VEHICLE)
+			{
 				addSpecificSpoilsToVehicle(playerIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_VEHICLE)
-            {
+			}
+			else if (playerInfo.GetActionByte() == Constants.REMOVE_SPOILS_FROM_VEHICLE)
+			{
 				removeSpecificSpoilsFromVehicle(playerIndex, cardName);
-            }
-            else if (playerInfo.GetActionByte() == Constants.ADD_TO_TOWN_ROSTER)
-            {
+			}
+			else if (playerInfo.GetActionByte() == Constants.ADD_TO_TOWN_ROSTER)
+			{
 				addSpecificCardToTownRoster(playerIndex, cardName);
 			}
 			else if (playerInfo.GetActionByte() == Constants.ADD_TO_AUCTION_HOUSE)
-            {
+			{
 				addSpecificCardToAuctionHouse(playerIndex, cardName);
+			}
+			else if (playerInfo.GetActionByte() == Constants.MOVE_CHARACTER_BETWEEN_SLOTS)
+			{
+				moveCharacterBetweenSlots(playerIndex, playerInfo.GetFirstSlotIndex(), playerInfo.GetSecondSlotIndex());
 			}
 
 			GameObject.Find("UIManager").GetComponent<GameUIManager>().ForceRedrawCharacterScreen();
 		}
 
-		private void handleNetworkingUpdatePlayerInfo(object content)
+		private void handleSendingNetworkingUpdatePlayerInfo(object content)
 		{
 			if (!PhotonNetwork.IsMasterClient)
 			{
@@ -3028,7 +3053,7 @@ namespace FallenLand
 
 				//Remove character
 				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
-				Players[playerIndex].RemoveCharacterFromParty(characterIndex);
+				removeCharacterFromParty(playerIndex, characterIndex);
 				CharacterDeck.Remove(character);
 				DiscardedCharacters.Add(character);
 			}
