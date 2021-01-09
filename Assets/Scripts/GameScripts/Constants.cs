@@ -82,6 +82,10 @@ namespace FallenLand
 		public const byte DAMAGE_PSYCHOLOGICAL = 1;
 		public const byte DAMAGE_INFECTED = 2;
 		public const byte DAMAGE_RADIATION = 3;
+		public const byte HEAL_PHYSICAL = 4;
+		public const byte HEAL_PSYCHOLOGICAL = 5;
+		public const byte HEAL_INFECTED = 6;
+		public const byte HEAL_RADIATION = 7;
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;

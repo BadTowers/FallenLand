@@ -1163,7 +1163,7 @@ namespace FallenLand
 		{
 			if (playerIndex == GetIndexForMyPlayer())
 			{
-				EventManager.D6DamageNeedsDistributing(numOfD6s); //TODO specify it's physical damage
+				EventManager.D6DamageNeedsDistributing(numOfD6s, Constants.DAMAGE_PHYSICAL);
 			}
 		}
 
@@ -1171,7 +1171,7 @@ namespace FallenLand
 		{
 			if (playerIndex == GetIndexForMyPlayer())
 			{
-				EventManager.D6DamageNeedsDistributing(numOfD6s); //TODO specify it's infected damage
+				EventManager.D6DamageNeedsDistributing(numOfD6s, Constants.DAMAGE_INFECTED);
 			}
 		}
 
@@ -2450,7 +2450,28 @@ namespace FallenLand
             CharacterDeck.Add(character); //TODO don't add to character deck
         }
 
-        private void addSpecificCharacterToSlot(int playerIndex, int slotIndex, string cardName)
+		private void removeCharacterFromPartyAndDiscardEquipment(int playerIndex, int characterIndex)
+		{
+			//Remove non-party spoils spoils
+			List<SpoilsCard> equippedSpoilsToMoveBackToAuctionHouse = Players[playerIndex].GetActiveCharacters()[characterIndex].GetEquippedSpoils();
+			for (int spoilsIndex = equippedSpoilsToMoveBackToAuctionHouse.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+			{
+				SpoilsCard card = equippedSpoilsToMoveBackToAuctionHouse[spoilsIndex];
+				if (!card.GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
+				{
+					removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
+					SpoilsDeck.Remove(card);
+					DiscardedSpoilsDeck.Add(card);
+				}
+			}
+
+			CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+			Players[playerIndex].RemoveCharacterFromParty(characterIndex);
+			character.ClearAllSpoils(); //Clears remaining party equipment from this card
+			CharacterDeck.Add(character); //TODO don't add to character deck
+		}
+
+		private void addSpecificCharacterToSlot(int playerIndex, int slotIndex, string cardName)
 		{
 			bool found = false;
 			for (int i = 0; i < CharacterDeck.Count; i++) //TODO don't grab from deck but some temp location (rework removeSpecificCardFromTownRoster)
@@ -3026,6 +3047,10 @@ namespace FallenLand
 			{
 				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, characterHealth.GetAmountOfDamage());
 			}
+			else if (characterHealth.GetDamageType() == Constants.DAMAGE_INFECTED)
+			{
+				Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, characterHealth.GetAmountOfDamage());
+			}
 
 			handleCharacterDeathIfNecessary(playerIndex, characterIndex, characterHealth.GetShouldDiscardEquipmentIfDead());
 		}
@@ -3034,26 +3059,16 @@ namespace FallenLand
 		{
 			if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null && Players[playerIndex].GetActiveCharacters()[characterIndex].GetHpRemaining() <= 0)
 			{
-				//Remove spoils
-				List<SpoilsCard> equippedSpoilsToMoveBackToAuctionHouse = Players[playerIndex].GetActiveCharacters()[characterIndex].GetEquippedSpoils();
-				for (int spoilsIndex = equippedSpoilsToMoveBackToAuctionHouse.Count - 1; spoilsIndex >= 0; spoilsIndex--)
-				{
-					SpoilsCard card = equippedSpoilsToMoveBackToAuctionHouse[spoilsIndex];
-					removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
-					if (shouldDiscardEquipmentOnDeath)
-					{
-						SpoilsDeck.Remove(card);
-						DiscardedSpoilsDeck.Add(card);
-					}
-					else
-					{
-						addSpecificCardToAuctionHouse(playerIndex, card.GetTitle());
-					}
-				}
-
 				//Remove character
 				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
-				removeCharacterFromParty(playerIndex, characterIndex);
+				if (shouldDiscardEquipmentOnDeath)
+				{
+					removeCharacterFromPartyAndDiscardEquipment(playerIndex, characterIndex);
+				}
+				else
+				{
+					removeCharacterFromParty(playerIndex, characterIndex);
+				}
 				CharacterDeck.Remove(character);
 				DiscardedCharacters.Add(character);
 			}

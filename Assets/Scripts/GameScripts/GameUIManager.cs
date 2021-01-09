@@ -91,7 +91,7 @@ namespace FallenLand
         private GameObject DiscardPopupPanel;
         private GameObject DiscardedCardImage;
         private GameObject DiscardedPanel;
-        private GameObject DistributeD6DamagePopupPanel;
+        private GameObject DistributeD6PopupPanel;
         private List<GameObject> PartyOverviewInfectedSymbols;
         private List<GameObject> PartyOverviewRadiationSymbols;
         private GameObject GenericPopupWithTwoLinesOfTextPanel;
@@ -107,6 +107,16 @@ namespace FallenLand
         private List<string> GenericPopupStringQueue = new List<string>();
         private int CurrentAuctionHouseStartingIndex;
         private int CurrentTownRosterStartingIndex;
+        private List<GameObject> DistributeD6CharacterPanels;
+        private GameObject DistributeD6DoneButton;
+        private GameObject D6DistributeRollButton;
+        private GameObject D6DistributeRemainingText;
+        private GameObject D6DistributeTitleText;
+        private bool HasRolledForDistributeD6;
+        private int NumD6sToDistribute;
+        private int AmountToDistribute;
+        private List<int> AmountsDistributedPerCharacter;
+        private byte DistributeD6Type;
 
         #region UnityFunctions
         void Awake()
@@ -143,7 +153,7 @@ namespace FallenLand
             DiscardPopupPanel = GameObject.Find("DiscardPopupPanel");
             DiscardedCardImage = GameObject.Find("DiscardedCardImage");
             DiscardedPanel = GameObject.Find("DiscardedPanel");
-            DistributeD6DamagePopupPanel = GameObject.Find("DistributeD6DamagePopupPanel");
+            DistributeD6PopupPanel = GameObject.Find("DistributeD6DamagePopupPanel");
             GenericPopupWithTwoLinesOfTextPanel = GameObject.Find("GenericPopupWithTwoLinesOfTextPanel");
             GenericPopupTextPanel = GameObject.Find("GenericPopupTextPanel");
             GenericPopupText = GameObject.Find("GenericPopupText");
@@ -155,6 +165,8 @@ namespace FallenLand
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
+
+            findDistributeD6GameObjects();
 
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
@@ -313,6 +325,12 @@ namespace FallenLand
 
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
 
+            AmountsDistributedPerCharacter = new List<int>();
+            for(int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+            {
+                AmountsDistributedPerCharacter.Add(0);
+            }
+
             OverallEncounterPanelGameObject.SetActive(false);
             CardFullScreenGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(false);
@@ -320,7 +338,7 @@ namespace FallenLand
             EncounterStatsPanel.SetActive(false);
             EncounterSelectionPanel.SetActive(false);
             DiscardPopupPanel.SetActive(false);
-            DistributeD6DamagePopupPanel.SetActive(false);
+            DistributeD6PopupPanel.SetActive(false);
             GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
             SelectCardPanel.SetActive(false);
             CannotModifyPanel.SetActive(false);
@@ -944,6 +962,92 @@ namespace FallenLand
             }
             onAuctionHouseWasChanged();
         }
+
+        public void OnRollD6DistributePress()
+        {
+            HasRolledForDistributeD6 = true;
+            D6DistributeRollButton.GetComponent<Button>().interactable = false;
+            AmountToDistribute = 0;
+            for (int i = 0; i < NumD6sToDistribute; i++)
+            {
+                AmountToDistribute += GameManagerInstance.GetDiceRoller().RollDice(Constants.D6);
+            }
+            updateDistributeD6Panel();
+        }
+
+        public void OnDistriubutePlus1()
+        {
+            distributeD6PlusCommon(0);
+        }
+
+        public void OnDistributeMinus1()
+        {
+            distributeD6MinusCommon(0);
+        }
+
+        public void OnDistriubutePlus2()
+        {
+            distributeD6PlusCommon(1);
+        }
+
+        public void OnDistributeMinus2()
+        {
+            distributeD6MinusCommon(1);
+        }
+
+        public void OnDistriubutePlus3()
+        {
+            distributeD6PlusCommon(2);
+        }
+
+        public void OnDistributeMinus3()
+        {
+            distributeD6MinusCommon(2);
+        }
+
+        public void OnDistriubutePlus4()
+        {
+            distributeD6PlusCommon(3);
+        }
+
+        public void OnDistributeMinus4()
+        {
+            distributeD6MinusCommon(3);
+        }
+
+        public void OnDistriubutePlus5()
+        {
+            distributeD6PlusCommon(4);
+        }
+
+        public void OnDistributeMinus5()
+        {
+            distributeD6MinusCommon(4);
+        }
+
+        public void OnDoneDistributingPress()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(myIndex);
+            for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+            {
+                if(party[characterIndex] != null && AmountsDistributedPerCharacter[characterIndex] > 0)
+                {
+                    GameManagerInstance.CharacterCrownTakesSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex], DistributeD6Type);
+                }
+            }
+
+            //Reset vars for next time
+            for(int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+            {
+                AmountsDistributedPerCharacter[characterIndex] = 0;
+            }
+            HasRolledForDistributeD6 = false;
+            DistributeD6PopupPanel.SetActive(false);
+            NumD6sToDistribute = 0;
+            DistributeD6DoneButton.GetComponent<Button>().interactable = false;
+            D6DistributeRollButton.GetComponent<Button>().interactable = true;
+        }
         #endregion
 
 
@@ -955,6 +1059,20 @@ namespace FallenLand
 
 
         #region HelperFunctions
+        private void distributeD6PlusCommon(int characterIndex)
+        {
+            AmountToDistribute -= 1;
+            AmountsDistributedPerCharacter[characterIndex] += 1;
+            updateDistributeD6Panel();
+        }
+
+        private void distributeD6MinusCommon(int characterIndex)
+        {
+            AmountToDistribute += 1;
+            AmountsDistributedPerCharacter[characterIndex] -= 1;
+            updateDistributeD6Panel();
+        }
+
         private void onShowSpoilsCardDiscardedPopup(SpoilsCard card)
         {
             DiscardPopupPanel.SetActive(true);
@@ -962,10 +1080,12 @@ namespace FallenLand
             showPopup(DiscardedPanel);
         }
 
-        private void onDistributeD6DamagePopup(int numD6s)
+        private void onDistributeD6DamagePopup(int numD6s, byte damageType)
         {
-            Debug.LogError("TODO onDistributeD6DamagePopup");
-            //eventually, show this panel and do the do's DistributeD6DamagePopupPanel
+            DistributeD6Type = damageType;
+            DistributeD6PopupPanel.SetActive(true);
+            NumD6sToDistribute = numD6s;
+            updateDistributeD6Panel();
         }
 
         private void onDistributeD6HealingPopup(int numD6s)
@@ -975,40 +1095,40 @@ namespace FallenLand
 
         private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType, int remainingHp, bool discardsEquipment)
         {
-            GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
+            string toShow = "";
             if (GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer())[characterIndex] == null && remainingHp == -1)
             {
-                GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " was empty. No damage taken!";
+                toShow = "Crown " + (characterIndex + 1) + " was empty. No damage taken!";
             }
             else
             {
                 if (damageType == Constants.DAMAGE_PHYSICAL)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " physical damage!";
+                    toShow = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " physical damage!";
                 }
                 else if (damageType == Constants.DAMAGE_RADIATION)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " radiation damage!";
+                    toShow = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " radiation damage!";
                 }
                 else if (damageType == Constants.DAMAGE_INFECTED)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " infected damage!";
+                    toShow = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " infected damage!";
                 }
                 else if (damageType == Constants.DAMAGE_PSYCHOLOGICAL)
                 {
-                    GenericPopupText.GetComponent<Text>().text = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " psychological damage!";
+                    toShow = "Crown " + (characterIndex + 1) + " takes " + amountOfDamage + " psychological damage!";
                 }
 
                 if (remainingHp <= 0)
                 {
-                    GenericPopupText.GetComponent<Text>().text = GenericPopupText.GetComponent<Text>().text + " They died...";
+                    toShow += " They died...";
                 }
                 if (discardsEquipment)
                 {
-                    GenericPopupText.GetComponent<Text>().text = GenericPopupText.GetComponent<Text>().text + " Equipment lost!";
+                    toShow += " Equipment lost!";
                 }
             }
-            showPopup(GenericPopupTextPanel);
+            onShowGenericPopup(toShow);
         }
 
         private void onShowGenericPopup(string text)
@@ -1655,6 +1775,110 @@ namespace FallenLand
             }
             CurrentEncounterVehicleAutoSuccesses = GameObject.Find("NumberOfAutoSuccessesTextV");
             CurrentEncounterVehicleRolledSuccesses = GameObject.Find("NumberOfRolledSuccessesTextV");
+        }
+
+        private void findDistributeD6GameObjects()
+        {
+            DistributeD6CharacterPanels = new List<GameObject>();
+
+            for (int curCharacterIndex = 0; curCharacterIndex < Constants.NUM_PARTY_MEMBERS; curCharacterIndex++)
+            {
+                DistributeD6CharacterPanels.Add(GameObject.Find("DistributeD6CharacterPanel" + (curCharacterIndex + 1).ToString()));
+            }
+            
+            DistributeD6DoneButton = GameObject.Find("DoneDistributingDamageButton");
+            DistributeD6DoneButton.GetComponent<Button>().interactable = false;
+
+            D6DistributeRollButton = GameObject.Find("RollD6DistributeButton");
+            D6DistributeRemainingText = GameObject.Find("AmountRemainingToDistributeText");
+            D6DistributeTitleText = GameObject.Find("DistributeTitleText");
+        }
+
+        private void updateDistributeD6Panel()
+        {
+            updateDistributeD6Title();
+            updateDistributeD6RollPanel();
+
+            DistributeD6DoneButton.GetComponent<Button>().interactable = (AmountToDistribute == 0 || wasMaxAmountDistributed());
+
+            List<CharacterCard> partyCharacters = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
+            for (int curCharacterIndex = 0; curCharacterIndex < Constants.NUM_PARTY_MEMBERS; curCharacterIndex++)
+            {
+                if (partyCharacters[curCharacterIndex] != null)
+                {
+                    DistributeD6CharacterPanels[curCharacterIndex].transform.Find("CharacterImage").GetComponentInChildren<Image>().sprite = partyCharacters[curCharacterIndex].GetCardImage();
+                    updateDistributeD6MinusButton(DistributeD6CharacterPanels[curCharacterIndex].transform.Find("MinusButton").GetComponentInChildren<Button>(), curCharacterIndex);
+                    updateDistributeD6PlusButton(DistributeD6CharacterPanels[curCharacterIndex].transform.Find("PlusButton").GetComponentInChildren<Button>(), curCharacterIndex, partyCharacters[curCharacterIndex]);
+                    DistributeD6CharacterPanels[curCharacterIndex].transform.Find("AmountDistributedText").GetComponentInChildren<Text>().text = AmountsDistributedPerCharacter[curCharacterIndex].ToString();
+                    int theoreticalNewHP = getTheoreticalCurrentHp(curCharacterIndex, partyCharacters[curCharacterIndex]);
+                    DistributeD6CharacterPanels[curCharacterIndex].transform.Find("RemainingHPActualText").GetComponentInChildren<Text>().text = theoreticalNewHP.ToString() + "/" + partyCharacters[curCharacterIndex].GetMaxHp();
+                }
+                else
+                {
+                    DistributeD6CharacterPanels[curCharacterIndex].SetActive(false);
+                }
+            }
+        }
+
+        private void updateDistributeD6Title()
+        {
+            if (DistributeD6Type == Constants.DAMAGE_PHYSICAL)
+            {
+                D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Physical Damage";
+            }
+            else if (DistributeD6Type == Constants.DAMAGE_INFECTED)
+            {
+                D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Infected Damage";
+            }
+        }
+
+        private void updateDistributeD6RollPanel()
+        {
+            D6DistributeRollButton.GetComponentInChildren<Text>().text = "Roll " + NumD6sToDistribute + "D6";
+            D6DistributeRemainingText.GetComponent<Text>().text = AmountToDistribute.ToString();
+        }
+
+        private void updateDistributeD6MinusButton(Button minusButton, int characterIndex)
+        {
+            if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
+            {
+                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] > 0;
+                minusButton.interactable = shouldEnable;
+            }
+        }
+
+        private void updateDistributeD6PlusButton(Button plusButton, int characterIndex, CharacterCard characterCard)
+        {
+            if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
+            {
+                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] < characterCard.GetHpRemaining() && AmountToDistribute > 0;
+                plusButton.interactable = shouldEnable;
+            }
+        }
+
+        private int getTheoreticalCurrentHp(int characterIndex, CharacterCard curCharacter)
+        {
+            int theoretical = 0;
+            if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
+            {
+                theoretical = curCharacter.GetHpRemaining() - AmountsDistributedPerCharacter[characterIndex];
+            }
+
+            return theoretical;
+        }
+
+        private bool wasMaxAmountDistributed()
+        {
+            bool wasMaxDistributed = true;
+            List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
+            for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+            {
+                if (party[characterIndex] != null && getTheoreticalCurrentHp(characterIndex, party[characterIndex]) > 0)
+                {
+                    wasMaxDistributed = false;
+                }
+            }
+            return wasMaxDistributed;
         }
 
         private void updateSkillIcons()

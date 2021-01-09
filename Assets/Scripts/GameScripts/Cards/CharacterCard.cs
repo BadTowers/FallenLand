@@ -42,6 +42,11 @@ namespace FallenLand
             return Encoding.ASCII.GetBytes(characterCard.GetTitle());
         }
 
+        public void ClearAllSpoils()
+        {
+            EquippedSpoils = new List<SpoilsCard>();
+        }
+
         public void SetMaxHp(int maxHp)
         {
             if (maxHp > 0)

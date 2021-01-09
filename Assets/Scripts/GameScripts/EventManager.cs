@@ -11,11 +11,11 @@ namespace FallenLand
             OnSpoilsCardDiscarded?.Invoke(card);
         }
 
-        public delegate void D6DamageNeedsToBeDistributed(int numD6s);
+        public delegate void D6DamageNeedsToBeDistributed(int numD6s, byte damageType);
         public static event D6DamageNeedsToBeDistributed OnD6DamageNeedsToBeDistributed;
-        public static void D6DamageNeedsDistributing(int numD6s)
+        public static void D6DamageNeedsDistributing(int numD6s, byte damageType)
         {
-            OnD6DamageNeedsToBeDistributed?.Invoke(numD6s);
+            OnD6DamageNeedsToBeDistributed?.Invoke(numD6s, damageType);
         }
 
         public delegate void D6HealingNeedsDistributed(int numD6s);
