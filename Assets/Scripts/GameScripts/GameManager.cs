@@ -1179,7 +1179,7 @@ namespace FallenLand
 		{
 			if (playerIndex == GetIndexForMyPlayer())
 			{
-				EventManager.D6HealingNeedsDistributing(numOfD6s); //TODO specify it's physical damage
+				EventManager.D6HealingNeedsDistributing(numOfD6s, Constants.HEAL_PHYSICAL);
 			}
 		}
 
@@ -1763,6 +1763,17 @@ namespace FallenLand
 				}
 				handleCharacterHealthEvent(characterHealth);
 				EventManager.CharacterCrownHasTakenDamage(characterIndex, amountOfDamage, damageType, remainingHp, false);
+			}
+		}
+
+		public void CharacterCrownHealsSetAmountOfDamage(int playerIndex, int characterIndex, int amountToHeal, byte healType)
+        {
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, healType, amountToHeal, false);
+				sendNetworkEvent(characterHealth, ReceiverGroup.Others, Constants.EvCharacterHealth);
+				handleCharacterHealthEvent(characterHealth);
+				EventManager.CharacterCrownHasHealed(characterIndex, amountToHeal, healType);
 			}
 		}
 
@@ -3043,13 +3054,17 @@ namespace FallenLand
 			CharacterHealthNetworking characterHealth = (CharacterHealthNetworking)content;
 			int playerIndex = characterHealth.GetPlayerIndex();
 			int characterIndex = characterHealth.GetCharacterIndex();
-			if (characterHealth.GetDamageType() == Constants.DAMAGE_PHYSICAL)
+			if (characterHealth.GetHealthEventType() == Constants.DAMAGE_PHYSICAL)
 			{
-				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, characterHealth.GetAmountOfDamage());
+				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, characterHealth.GetAmount());
 			}
-			else if (characterHealth.GetDamageType() == Constants.DAMAGE_INFECTED)
+			else if (characterHealth.GetHealthEventType() == Constants.DAMAGE_INFECTED)
 			{
-				Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, characterHealth.GetAmountOfDamage());
+				Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, characterHealth.GetAmount());
+			}
+			else if (characterHealth.GetHealthEventType() == Constants.HEAL_PHYSICAL)
+			{
+				Players[playerIndex].RemovePhysicalDamageFromCharacter(characterIndex, characterHealth.GetAmount());
 			}
 
 			handleCharacterDeathIfNecessary(playerIndex, characterIndex, characterHealth.GetShouldDiscardEquipmentIfDead());

@@ -864,6 +864,14 @@ namespace FallenLand
 			}
 		}
 
+		public void RemovePhysicalDamageFromCharacter(int characterIndex, int amountOfPhysicalHeal)
+		{
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].RemovePhysicalDamage(amountOfPhysicalHeal);
+			}
+		}
+
 		public void AddResourceOwned(Resource resource)
 		{
 			ResourcesOwned.Add(resource);

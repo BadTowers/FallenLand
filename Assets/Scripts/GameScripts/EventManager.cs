@@ -18,11 +18,11 @@ namespace FallenLand
             OnD6DamageNeedsToBeDistributed?.Invoke(numD6s, damageType);
         }
 
-        public delegate void D6HealingNeedsDistributed(int numD6s);
+        public delegate void D6HealingNeedsDistributed(int numD6s, byte healingType);
         public static event D6HealingNeedsDistributed OnD6HealingNeedsDistributed;
-        public static void D6HealingNeedsDistributing(int numD6s)
+        public static void D6HealingNeedsDistributing(int numD6s, byte healingType)
         {
-            OnD6HealingNeedsDistributed?.Invoke(numD6s);
+            OnD6HealingNeedsDistributed?.Invoke(numD6s, healingType);
         }
 
         public delegate void CharacterCrownTakesDamage(int characterCrown, int amountOfDamage, byte damageType, int remainingHp, bool equipmentDiscarded);
@@ -30,6 +30,13 @@ namespace FallenLand
         public static void CharacterCrownHasTakenDamage(int characterCrown, int amountOfDamage, byte damageType, int remainingHp, bool equipmentDiscarded)
         {
             OnCharacterCrownTakesDamage?.Invoke(characterCrown, amountOfDamage, damageType, remainingHp, equipmentDiscarded);
+        }
+
+        public delegate void CharacterCrownHeals(int characterCrown, int amountOfDamage, byte damageType);
+        public static event CharacterCrownHeals OnCharacterCrownHeals;
+        public static void CharacterCrownHasHealed(int characterCrown, int amountOfDamage, byte damageType)
+        {
+            OnCharacterCrownHeals?.Invoke(characterCrown, amountOfDamage, damageType);
         }
 
         public delegate void ShowTheGenericPopup(string textToShow);

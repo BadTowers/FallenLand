@@ -6,15 +6,15 @@ namespace FallenLand
 	{
 		private readonly int PlayerIndex;
 		private readonly int CharacterIndex;
-		private readonly byte DamageType;
+		private readonly byte HealthEventType;
 		private readonly int AmountOfDamage;
 		private readonly bool ShouldDiscardEquipmentIfDead;
 
-		public CharacterHealthNetworking(int playerIndex, int characterIndex, byte damageType, int amountOfDamage, bool shouldDiscardEquipmentIfDead)
+		public CharacterHealthNetworking(int playerIndex, int characterIndex, byte healthEventType, int amountOfDamage, bool shouldDiscardEquipmentIfDead)
 		{
 			PlayerIndex = playerIndex;
 			CharacterIndex = characterIndex;
-			DamageType = damageType;
+			HealthEventType = healthEventType;
 			AmountOfDamage = amountOfDamage;
 			ShouldDiscardEquipmentIfDead = shouldDiscardEquipmentIfDead;
 		}
@@ -41,8 +41,8 @@ namespace FallenLand
             {
                 (byte)encounterStatus.GetPlayerIndex(),
 				(byte)encounterStatus.GetCharacterIndex(),
-				encounterStatus.GetDamageType(),
-				(byte)encounterStatus.GetAmountOfDamage(),
+				encounterStatus.GetHealthEventType(),
+				(byte)encounterStatus.GetAmount(),
 				(byte)shouldDiscardEquipIfDead
 			};
 
@@ -59,12 +59,12 @@ namespace FallenLand
 			return CharacterIndex;
 		}
 
-		public byte GetDamageType()
+		public byte GetHealthEventType()
         {
-			return DamageType;
+			return HealthEventType;
 		}
 
-		public int GetAmountOfDamage()
+		public int GetAmount()
 		{
 			return AmountOfDamage;
 		}

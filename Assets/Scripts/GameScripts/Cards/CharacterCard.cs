@@ -13,6 +13,7 @@ namespace FallenLand
         private int CurrentPsychRemaning;
         private int CurrentHp;
         private int AmountOfInfectedDamage;
+        private int AmountOfRadiationDamage;
         //link. This would map some spoils card to some bonuses. ex) any two wheeled vehicle -> +1 movement and +6 carrying capacity TODO
         //specialAbilities. What bonuses the character card gets. TDC cost 3 less. Auto pass certain encounters. etc TODO
         private List<SpoilsCard> EquippedSpoils;
@@ -64,6 +65,11 @@ namespace FallenLand
         public int GetHpRemaining()
         {
             return CurrentHp;
+        }
+
+        public int GetMaxPhysicalHp()
+        {
+            return MaxHp - AmountOfInfectedDamage - AmountOfRadiationDamage;
         }
 
         public void SetHpRemaining(int hpRemaining)
@@ -244,6 +250,11 @@ namespace FallenLand
         public void AddPhysicalDamage(int amountOfDamage)
         {
             CurrentHp -= amountOfDamage;
+        }
+
+        public void RemovePhysicalDamage(int amountOfHeal)
+        {
+            CurrentHp += amountOfHeal;
         }
     }
 }

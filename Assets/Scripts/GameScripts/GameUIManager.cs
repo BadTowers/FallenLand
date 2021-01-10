@@ -1031,14 +1031,21 @@ namespace FallenLand
             List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(myIndex);
             for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
             {
-                if(party[characterIndex] != null && AmountsDistributedPerCharacter[characterIndex] > 0)
+                if (party[characterIndex] != null && AmountsDistributedPerCharacter[characterIndex] > 0)
                 {
-                    GameManagerInstance.CharacterCrownTakesSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex], DistributeD6Type);
+                    if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
+                    {
+                        GameManagerInstance.CharacterCrownTakesSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex], DistributeD6Type);
+                    }
+                    else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
+                    {
+                        GameManagerInstance.CharacterCrownHealsSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex], DistributeD6Type);
+                    }
                 }
             }
 
             //Reset vars for next time
-            for(int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+            for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
             {
                 AmountsDistributedPerCharacter[characterIndex] = 0;
             }
@@ -1088,9 +1095,12 @@ namespace FallenLand
             updateDistributeD6Panel();
         }
 
-        private void onDistributeD6HealingPopup(int numD6s)
+        private void onDistributeD6HealingPopup(int numD6s, byte healingType)
         {
-            Debug.LogError("TODO onDistributeD6HealingPopup");
+            DistributeD6Type = healingType;
+            DistributeD6PopupPanel.SetActive(true);
+            NumD6sToDistribute = numD6s;
+            updateDistributeD6Panel();
         }
 
         private void onCharacterCrownTakesDamage(int characterIndex, int amountOfDamage, byte damageType, int remainingHp, bool discardsEquipment)
@@ -1733,7 +1743,7 @@ namespace FallenLand
                 imageLocation += "CityRad/";
             }
             imageLocation += "Plains" + encounterCard.GetId().ToString();
-            return (Sprite)Resources.Load<Sprite>(imageLocation);
+            return Resources.Load<Sprite>(imageLocation);
         }
 
         private void findEncounterRollGameObjects()
@@ -1830,6 +1840,10 @@ namespace FallenLand
             {
                 D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Infected Damage";
             }
+            else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
+            {
+                D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Physical Healing";
+            }
         }
 
         private void updateDistributeD6RollPanel()
@@ -1845,6 +1859,11 @@ namespace FallenLand
                 bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] > 0;
                 minusButton.interactable = shouldEnable;
             }
+            else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
+            {
+                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] > 0;
+                minusButton.interactable = shouldEnable;
+            }
         }
 
         private void updateDistributeD6PlusButton(Button plusButton, int characterIndex, CharacterCard characterCard)
@@ -1852,6 +1871,11 @@ namespace FallenLand
             if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
             {
                 bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] < characterCard.GetHpRemaining() && AmountToDistribute > 0;
+                plusButton.interactable = shouldEnable;
+            }
+            else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
+            {
+                bool shouldEnable = HasRolledForDistributeD6 && (AmountsDistributedPerCharacter[characterIndex] + characterCard.GetHpRemaining() < characterCard.GetMaxPhysicalHp()) && AmountToDistribute > 0;
                 plusButton.interactable = shouldEnable;
             }
         }
@@ -1863,6 +1887,10 @@ namespace FallenLand
             {
                 theoretical = curCharacter.GetHpRemaining() - AmountsDistributedPerCharacter[characterIndex];
             }
+            else if(DistributeD6Type == Constants.HEAL_PHYSICAL)
+            {
+                theoretical = curCharacter.GetHpRemaining() + AmountsDistributedPerCharacter[characterIndex];
+            }
 
             return theoretical;
         }
@@ -1873,9 +1901,16 @@ namespace FallenLand
             List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
             for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
             {
-                if (party[characterIndex] != null && getTheoreticalCurrentHp(characterIndex, party[characterIndex]) > 0)
+                if (party[characterIndex] != null)
                 {
-                    wasMaxDistributed = false;
+                    if (getTheoreticalCurrentHp(characterIndex, party[characterIndex]) > 0 && (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED))
+                    {
+                        wasMaxDistributed = false;
+                    }
+                    else if (getTheoreticalCurrentHp(characterIndex, party[characterIndex]) < party[characterIndex].GetMaxPhysicalHp() && DistributeD6Type == Constants.HEAL_PHYSICAL)
+                    {
+                        wasMaxDistributed = false;
+                    }
                 }
             }
             return wasMaxDistributed;
