@@ -251,6 +251,7 @@ namespace FallenLand
 					}
 				}
 				while (cardIndex < PlainsDeck.Count && !prechecksHeld);
+				PlainsDeck[cardIndex].ResetState();
 				string nextPlainsEncounterCardName = PlainsDeck[cardIndex].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
 				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
@@ -1259,7 +1260,7 @@ namespace FallenLand
 				EventManager.ShowGenericPopup("Flight failed! You needed a " + highestValue + " but rolled a " + totalMovement + "(" + d6Roll + "+" + bonusMovement + ")");
 				status = Constants.STATUS_FAILED;
 			}
-			EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, curEncounter.GetTitle());
+			EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, curEncounter.GetTitle(), curEncounter.GetD6Rolls());
 			sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 			handleEncounterStatusEvent(encounterStatus);
 		}
@@ -1341,7 +1342,7 @@ namespace FallenLand
 
 		public void SetPlayerDidFlight(bool wasSuccessful)
         {
-			//TODO
+			Debug.LogError("TODO implement SetPlayerDidFlight");
 		}
 
 		public int GetSkillTotalForCharacter(int playerIndex, int characterIndex, int skillIndex)
@@ -1440,13 +1441,24 @@ namespace FallenLand
 			return rolledSuccesses;
 		}
 
-		public int GetTotalSuccesses(int playerIndex, int skillIndex)
+		public int GetPartyTotalSuccesses(int playerIndex, int skillIndex)
 		{
 			int totalSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
-				totalSuccesses = Players[playerIndex].GetTotalSuccesses(skillIndex, requestedSkill);
+				totalSuccesses = Players[playerIndex].GetTotalPartySuccesses(skillIndex, requestedSkill);
+			}
+			return totalSuccesses;
+		}
+
+		public int GetIndividualTotalSuccesses(int playerIndex, int characterIndex, int skillIndex)
+		{
+			int totalSuccesses = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				totalSuccesses = Players[playerIndex].GetTotalIndividualSuccesses(characterIndex, skillIndex, requestedSkill);
 			}
 			return totalSuccesses;
 		}
@@ -1517,35 +1529,53 @@ namespace FallenLand
 			return hasRemaining;
 		}
 
-		public bool IsEncounterFinished(int playerIndex)
+		public bool IsEncounterFinished(int playerIndex, int currentCharacterEncounterIndex)
 		{
 			bool isFinished = true;
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
-                if (!EncounterWasSuccessful(playerIndex))
-                {
-					List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
-					//Check all characters
-					for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
+				if (!CurrentPlayerEncounter[playerIndex].GetIsIndividualCheck())
+				{
+					if (!EncounterWasSuccessful(playerIndex))
 					{
+						//Check all characters
+						for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+						{
+							for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
+							{
+								if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skillIndex))
+								{
+									isFinished = false;
+									break;
+								}
+							}
+						}
+
+						//Check vehicle
 						for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 						{
-							if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skillIndex))
+							if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skillIndex))
 							{
 								isFinished = false;
 								break;
 							}
 						}
 					}
-
-					//Check vehicle
-					for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
+				}
+				else
+				{
+					if (!IndividualEncounterWasSuccessfull(playerIndex, currentCharacterEncounterIndex))
 					{
-						if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skillIndex))
+						//Check skills for the current individual character
+						for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 						{
-							isFinished = false;
-							break;
+							if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, currentCharacterEncounterIndex, skillIndex))
+							{
+								isFinished = false;
+								break;
+							}
 						}
 					}
 				}
@@ -1591,10 +1621,53 @@ namespace FallenLand
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
+				if (!CurrentPlayerEncounter[playerIndex].GetIsIndividualCheck())
+				{
+					List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
+					for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
+					{
+						if (GetPartyTotalSuccesses(playerIndex, skillIndex) < skillChecks[skillIndex].Item2)
+						{
+							wasSuccessful = false;
+							break;
+						}
+					}
+				}
+			}
+
+			return wasSuccessful;
+		}
+
+		public bool IndividualEncounterWasSuccessfull(int playerIndex, int currentCharacterIndex)
+		{
+			bool wasSuccessful = true;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
 				List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
 				for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 				{
-					if (GetTotalSuccesses(playerIndex, skillIndex) < skillChecks[skillIndex].Item2)
+					if (GetIndividualTotalSuccesses(playerIndex, currentCharacterIndex, skillIndex) < skillChecks[skillIndex].Item2)
+					{
+						wasSuccessful = false;
+						break;
+					}
+				}
+			}
+
+			return wasSuccessful;
+		}
+
+		public bool EncounterForIndividualWasSuccessful(int playerIndex, int characterIndex)
+		{
+			bool wasSuccessful = true;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
+				for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
+				{
+					if (GetIndividualTotalSuccesses(playerIndex, characterIndex, skillIndex) < skillChecks[skillIndex].Item2)
 					{
 						wasSuccessful = false;
 						break;
@@ -1610,7 +1683,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				byte status = (EncounterWasSuccessful(playerIndex)) ? Constants.STATUS_PASSED : Constants.STATUS_FAILED;
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
@@ -1620,7 +1693,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
@@ -1715,6 +1788,22 @@ namespace FallenLand
 				{
 					Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, amountOfDamage);
 				}
+			}
+		}
+
+		public void DealSetAmountOfPhysicalDamageToIndividual(int playerIndex, int characterIndex, int amountOfDamage)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, amountOfDamage);
+			}
+		}
+
+		public void DealSetAmountOfInfectedDamageToIndividual(int playerIndex, int characterIndex, int amountOfDamage)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, amountOfDamage);
 			}
 		}
 
@@ -2152,6 +2241,25 @@ namespace FallenLand
 					Players[playerIndex].RemoveVehicleFromParty();
 					SpoilsDeck.Remove(vehicle);
 					DiscardedSpoilsDeck.Add(vehicle);
+				}
+			}
+		}
+
+		public void RollD6ForEachCharacterForEncounter(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				for(int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+                {
+					int d6Roll = DiceRoller.RollDice(Constants.D6);
+					if (CurrentPlayerEncounter[playerIndex] != null)
+					{
+						CurrentPlayerEncounter[playerIndex].SetD6RollForCharacter(characterIndex, d6Roll);
+					}
+					else
+					{
+						Debug.LogError("Encounter was not set for " + playerIndex + " in RollD6ForEachCharacterForEncounter");
+					}
 				}
 			}
 		}
@@ -2839,7 +2947,7 @@ namespace FallenLand
 						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - ResourceWeekCost);
 					}
 
-					if (status == Constants.STATUS_PASSED)
+					if (status == Constants.STATUS_PASSED || CurrentPlayerEncounter[playerIndex].GetIsIndividualCheck())
 					{
 						EncounterResultsHandler.HandleSuccess(this, playerIndex);
 						if (eventStatus.GetWasResourceEncounter())
@@ -2850,7 +2958,7 @@ namespace FallenLand
 							ResourcePieceManagerInst.CreatePiece(playerIndex, Players[playerIndex].GetPlayerFaction(), resourceGained.GetLocation());
 						}
 					}
-					else
+					if (status == Constants.STATUS_FAILED || CurrentPlayerEncounter[playerIndex].GetIsIndividualCheck())
 					{
 						EncounterResultsHandler.HandleFailure(this, playerIndex);
 					}

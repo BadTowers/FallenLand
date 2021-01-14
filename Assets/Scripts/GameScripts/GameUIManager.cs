@@ -66,8 +66,6 @@ namespace FallenLand
         private GameObject MainPartyOverviewPanel;
         private GameObject MainEncounterCardImage;
         private bool EncounterHasBegun;
-        private GameObject EncounterRollPanel;
-        private GameObject EncounterStatsPanel;
         private List<GameObject> CharacterEncounterRollImages;
         private List<GameObject> CharacterEncounterCurrentStatText;
         private List<GameObject> CharacterEncounterPanels;
@@ -80,20 +78,18 @@ namespace FallenLand
         private List<GameObject> CurrentEncounterCharacterRolledSuccesses;
         private GameObject CurrentEncounterVehicleAutoSuccesses;
         private GameObject CurrentEncounterVehicleRolledSuccesses;
-        private GameObject TotalSuccessesNeededText;
-        private GameObject NumberOfTotalSuccessesText;
+        private GameObject TotalPartySuccessesNeededText;
+        private GameObject NumberOfTotalPartySuccessesText;
         private List<GameObject> CharacterEncounterRollButtons;
         private GameObject VehicleRollButton;
         private List<GameObject> LastCharacterDiceRollText;
         private GameObject LastVehicleDiceRollText;
         private GameObject RollAllButton;
-        private GameObject EncounterFinishedPanel;
+        private GameObject PartyEncounterFinishedPanel;
         private GameObject DiscardPopupPanel;
         private GameObject DiscardedCardImage;
         private GameObject DiscardedPanel;
         private GameObject DistributeD6PopupPanel;
-        private List<GameObject> PartyOverviewInfectedSymbols;
-        private List<GameObject> PartyOverviewRadiationSymbols;
         private GameObject GenericPopupWithTwoLinesOfTextPanel;
         private GameObject GenericPopupTextPanel;
         private GameObject GenericPopupText;
@@ -117,6 +113,22 @@ namespace FallenLand
         private int AmountToDistribute;
         private List<int> AmountsDistributedPerCharacter;
         private byte DistributeD6Type;
+        private GameObject PartyEncounterPanel;
+        private GameObject IndividualEncounterPanel;
+        private GameObject IndividualEncounterCharacterNumberText;
+        private GameObject IndividualCharacterStatText;
+        private GameObject IndividualStatPageTitleText;
+        private GameObject IndividualEncounterCharacter;
+        private GameObject IndividualEncounterFinishedPanel;
+        private GameObject IndividualCharacterCrownImage;
+        private GameObject IndividualLastDiceRollText;
+        private GameObject IndividualRollButton;
+        private GameObject TotalIndividualSuccessesNeededText;
+        private GameObject NumberOfTotalIndividualSuccessesText;
+        private GameObject IndividualNumberOfAutoSuccessesText;
+        private GameObject IndividualNumberOfRolledSuccessesText;
+        private List<GameObject> MainOverviewCharacterPanels;
+        private int CurrentIndividualEncounterCharacterIndex;
 
         #region UnityFunctions
         void Awake()
@@ -146,10 +158,8 @@ namespace FallenLand
             HorizontalCloseButton = GameObject.Find("HorizontalCloseButton");
             MainPartyOverviewPanel = GameObject.Find("MainPartyOverviewPanel");
             MainEncounterCardImage = GameObject.Find("MainEncounterCardImage");
-            EncounterRollPanel = GameObject.Find("EncounterRollPanel");
-            EncounterStatsPanel = GameObject.Find("EncounterStatsPanel");
-            TotalSuccessesNeededText = GameObject.Find("TotalSuccessesNeededText");
-            NumberOfTotalSuccessesText = GameObject.Find("NumberOfTotalSuccessesText");
+            TotalPartySuccessesNeededText = GameObject.Find("TotalPartySuccessesNeededText");
+            NumberOfTotalPartySuccessesText = GameObject.Find("NumberOfTotalPartySuccessesText");
             DiscardPopupPanel = GameObject.Find("DiscardPopupPanel");
             DiscardedCardImage = GameObject.Find("DiscardedCardImage");
             DiscardedPanel = GameObject.Find("DiscardedPanel");
@@ -162,16 +172,18 @@ namespace FallenLand
             SelectCardPanel = GameObject.Find("SelectCardPanel");
             CannotModifyPanel = GameObject.Find("CannotModifyPanel");
             EncounterFlightButton = GameObject.Find("EncounterFlightButton");
+            PartyEncounterPanel = GameObject.Find("PartyEncounterPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
 
             findDistributeD6GameObjects();
 
+            findIndividualEncounterGameObjects();
+
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
-            PartyOverviewInfectedSymbols = new List<GameObject>();
-            PartyOverviewRadiationSymbols = new List<GameObject>();
+            MainOverviewCharacterPanels = new List<GameObject>();
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
@@ -179,10 +191,7 @@ namespace FallenLand
             for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
-                PartyOverviewInfectedSymbols.Add(GameObject.Find("InfectedImage" + (i + 1).ToString()));
-                PartyOverviewRadiationSymbols.Add(GameObject.Find("RadiationImage" + (i + 1).ToString()));
-                PartyOverviewInfectedSymbols[i].SetActive(false);
-                PartyOverviewRadiationSymbols[i].SetActive(false);
+                MainOverviewCharacterPanels.Add(GameObject.Find("MainOverviewCharacterPanel" + (i + 1).ToString()));
             }
             VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
 
@@ -216,7 +225,7 @@ namespace FallenLand
 
                 GameObject[] medicalObjects = GameObject.FindGameObjectsWithTag("CharacterMedical" + (i + 1).ToString());
                 ActiveCharactersStatsText[i].Add(medicalObjects.OfType<GameObject>().ToList());
-                
+
                 GameObject[] psychResistanceObjects = GameObject.FindGameObjectsWithTag("CharacterPsychResistance" + (i + 1).ToString());
                 ActiveCharactersPsychResistance.Add(psychResistanceObjects.OfType<GameObject>().ToList());
 
@@ -300,7 +309,7 @@ namespace FallenLand
             }
             for (int i = 0; i < ActiveVehicleCarryWeightsText.Count; i++)
             {
-                ActiveVehicleCarryWeightsText[i].GetComponentInChildren<Text>().text = "0/0";            
+                ActiveVehicleCarryWeightsText[i].GetComponentInChildren<Text>().text = "0/0";
             }
 
             ActualTurnNumberText = GameObject.Find("ActualTurnNumberText").GetComponent<Text>();
@@ -326,7 +335,7 @@ namespace FallenLand
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
 
             AmountsDistributedPerCharacter = new List<int>();
-            for(int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+            for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
             {
                 AmountsDistributedPerCharacter.Add(0);
             }
@@ -334,8 +343,8 @@ namespace FallenLand
             OverallEncounterPanelGameObject.SetActive(false);
             CardFullScreenGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(false);
-            EncounterRollPanel.SetActive(false);
-            EncounterStatsPanel.SetActive(false);
+            IndividualEncounterPanel.SetActive(false);
+            PartyEncounterPanel.SetActive(false);
             EncounterSelectionPanel.SetActive(false);
             DiscardPopupPanel.SetActive(false);
             DistributeD6PopupPanel.SetActive(false);
@@ -524,7 +533,7 @@ namespace FallenLand
             string parentName = EventSystem.current.currentSelectedGameObject.transform.parent.name;
             string panelNumberString = parentName.Substring(parentName.Length - 1);
             int panelNumber = Int32.Parse(panelNumberString);
-            CurrentViewedID = panelNumber-1;
+            CurrentViewedID = panelNumber - 1;
         }
 
         public void OnTradeAuctionHousePress()
@@ -783,11 +792,29 @@ namespace FallenLand
             OverallEncounterPanelGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(true);
             PartyExploitsPanel.SetActive(false);
-            EncounterRollPanel.SetActive(true);
-            EncounterStatsPanel.SetActive(true);
             MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
             EncounterHasBegun = true;
             GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
+            if (!GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetIsIndividualCheck())
+            {
+                PartyEncounterPanel.SetActive(true);
+                IndividualEncounterPanel.SetActive(false);
+            }
+            else
+            {
+                IndividualEncounterPanel.SetActive(true);
+                PartyEncounterPanel.SetActive(false);
+                //Set the first character to make the individual check
+                List<CharacterCard> characters = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
+                for (int currentCharacterIndex = 0; currentCharacterIndex < Constants.NUM_PARTY_MEMBERS; currentCharacterIndex++)
+                {
+                    if (characters[currentCharacterIndex] != null)
+                    {
+                        CurrentIndividualEncounterCharacterIndex = currentCharacterIndex;
+                        break;
+                    }
+                }
+            }
         }
 
         public void OnFlightEncounterPress()
@@ -836,6 +863,11 @@ namespace FallenLand
         public void OnVehicleRollPress()
         {
             GameManagerInstance.RollVehicleEncounter(GameManagerInstance.GetIndexForMyPlayer(), CurrentEncounterSkillPage);
+        }
+
+        public void OnIndividualCharacterRollPress()
+        {
+            GameManagerInstance.RollCharacterEncounter(GameManagerInstance.GetIndexForMyPlayer(), CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage);
         }
 
         public void OnRollAllPress()
@@ -900,9 +932,42 @@ namespace FallenLand
 
         public void OnAcceptEncounterResultsPress()
         {
-            GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
-
-            resetAfterEncounter();
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter(myIndex);
+            if (!encounterCard.GetIsIndividualCheck())
+            {
+                GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
+                resetAfterEncounter();
+            }
+            else
+            {
+                IndividualEncounterFinishedPanel.SetActive(false);
+                if (GameManagerInstance.EncounterForIndividualWasSuccessful(myIndex, CurrentIndividualEncounterCharacterIndex))
+                {
+                    encounterCard.SetIndividualPassFail(CurrentIndividualEncounterCharacterIndex, Constants.STATUS_PASSED);
+                }
+                else
+                {
+                    encounterCard.SetIndividualPassFail(CurrentIndividualEncounterCharacterIndex, Constants.STATUS_FAILED);
+                }
+                //Get new character to do individual check, if necessary
+                bool foundNextCharacter = false;
+                for (int i = CurrentIndividualEncounterCharacterIndex + 1; i < Constants.NUM_PARTY_MEMBERS; i++)
+                {
+                    List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(myIndex);
+                    if (party[i] != null)
+                    {
+                        CurrentIndividualEncounterCharacterIndex = i;
+                        foundNextCharacter = true;
+                        break;
+                    }
+                }
+                if (!foundNextCharacter)
+                {
+                    GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
+                    resetAfterEncounter();
+                }
+            }
         }
 
         public void OnDiscardPanelOkPress()
@@ -1631,44 +1696,28 @@ namespace FallenLand
             }
             else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
             {
-                updateSkillIcons();
-                updateSkillValues();
-
-                //Enable character panels that have someone assigned to it
-                List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
-                for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+                if (encounterCard.GetSkillChecks().Count > 0)
                 {
-                    if (characterCards[i] != null)
-                    {
-                        CharacterEncounterPanels[i].SetActive(true);
-                        CharacterEncounterRollImages[i].GetComponent<Image>().sprite = characterCards[i].GetCardImage();
-                    }
-                    else
-                    {
-                        CharacterEncounterPanels[i].SetActive(false);
-                    }
-                }
+                    updateSkillIcons();
+                    updateSkillValues(encounterCard);
 
-                //Enable vehicle panel if something is assigned to it
-                SpoilsCard vehicleCard = GameManagerInstance.GetActiveVehicle(CurrentViewedID);
-                if (vehicleCard != null)
-                {
-                    VehicleEncounterPanel.SetActive(true);
-                    VehicleEncounterRollImage.GetComponent<Image>().sprite = vehicleCard.GetCardImage();
+                    updateCharacterImagesAndPanels(encounterCard);
+
+                    updateEncounterSkillPanel(encounterCard);
+                    updateEncounterRollButtons(encounterCard);
+                    updateEncounterFinishedPanel(encounterCard);
                 }
                 else
                 {
-                    VehicleEncounterPanel.SetActive(false);
+                    onShowGenericPopup("This card was an auto success!");
+                    OnAcceptEncounterResultsPress();
                 }
-
-                updateEncounterSkillPanel();
-                updateEncounterRollButtons();
-                updateEncounterFinishedPanel();
             }
             else
             {
                 PartyExploitsPanel.SetActive(false);
-                EncounterFinishedPanel.SetActive(false);
+                PartyEncounterFinishedPanel.SetActive(false);
+                IndividualEncounterFinishedPanel.SetActive(false);
             }
         }
 
@@ -1770,7 +1819,7 @@ namespace FallenLand
             CurrentEncounterRollSymbols = GameObject.FindGameObjectsWithTag("CurrentEncounterRollSymbol").ToList();
 
             RollAllButton = GameObject.Find("RollAllButton");
-            EncounterFinishedPanel = GameObject.Find("EncounterFinishedPanel");
+            PartyEncounterFinishedPanel = GameObject.Find("PartyEncounterFinishedPanel");
         }
 
         private void findEncounterStatGameObjects()
@@ -1802,6 +1851,23 @@ namespace FallenLand
             D6DistributeRollButton = GameObject.Find("RollD6DistributeButton");
             D6DistributeRemainingText = GameObject.Find("AmountRemainingToDistributeText");
             D6DistributeTitleText = GameObject.Find("DistributeTitleText");
+        }
+
+        private void findIndividualEncounterGameObjects()
+        {
+            IndividualEncounterPanel = GameObject.Find("IndividualEncounterPanel");
+            IndividualEncounterCharacterNumberText = GameObject.Find("IndividualEncounterCharacterNumberText");
+            IndividualCharacterStatText = GameObject.Find("IndividualCharacterStatText");
+            IndividualStatPageTitleText = GameObject.Find("IndividualStatPageTitleText");
+            IndividualEncounterCharacter = GameObject.Find("IndividualEncounterCharacter");
+            IndividualEncounterFinishedPanel = GameObject.Find("IndividualEncounterFinishedPanel");
+            IndividualCharacterCrownImage = GameObject.Find("IndividualCharacterCrownImage");
+            IndividualLastDiceRollText = GameObject.Find("IndividualLastDiceRollText");
+            IndividualRollButton = GameObject.Find("IndividualRollButton");
+            TotalIndividualSuccessesNeededText = GameObject.Find("TotalIndividualSuccessesNeededText");
+            NumberOfTotalIndividualSuccessesText = GameObject.Find("NumberOfTotalIndividualSuccessesText");
+            IndividualNumberOfAutoSuccessesText = GameObject.Find("IndividualNumberOfAutoSuccessesText");
+            IndividualNumberOfRolledSuccessesText = GameObject.Find("IndividualNumberOfRolledSuccessesText");
         }
 
         private void updateDistributeD6Panel()
@@ -1959,32 +2025,90 @@ namespace FallenLand
             }
         }
 
-        private void updateSkillValues()
+        private void updateSkillValues(EncounterCard encounterCard)
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            EncounterCard card = GameManagerInstance.GetCurrentEncounter(myIndex);
-            List<(Skills, int)> skillChecks = card.GetSkillChecks();
-            //Update character values
-            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            List<(Skills, int)> skillChecks = encounterCard.GetSkillChecks();
+
+            if (!encounterCard.GetIsIndividualCheck())
             {
-                if (skillChecks[CurrentEncounterSkillPage].Item1 == Skills.Combat && card.GetIsMeleeOnly())
+                //Update character values
+                for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
                 {
-                    CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCombatSkillTotalForCharacterMeleeOnly(myIndex, characterIndex).ToString();
+                    if (skillChecks[CurrentEncounterSkillPage].Item1 == Skills.Combat && encounterCard.GetIsMeleeOnly())
+                    {
+                        CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCombatSkillTotalForCharacterMeleeOnly(myIndex, characterIndex).ToString();
+                    }
+                    else
+                    {
+                        CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                    }
+                }
+
+                //Update vehicle value
+                VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(myIndex, CurrentEncounterSkillPage).ToString();
+            }
+            else
+            {
+                IndividualCharacterStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage).ToString();
+            }
+        }
+
+        private void updateCharacterImagesAndPanels(EncounterCard encounterCard)
+        {
+            List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
+            if (!encounterCard.GetIsIndividualCheck())
+            {
+                //Enable character panels that have someone assigned to it
+                for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+                {
+                    if (characterCards[i] != null)
+                    {
+                        CharacterEncounterPanels[i].SetActive(true);
+                        CharacterEncounterRollImages[i].GetComponent<Image>().sprite = characterCards[i].GetCardImage();
+                    }
+                    else
+                    {
+                        CharacterEncounterPanels[i].SetActive(false);
+                    }
+                }
+
+                //Enable vehicle panel if something is assigned to it
+                SpoilsCard vehicleCard = GameManagerInstance.GetActiveVehicle(CurrentViewedID);
+                if (vehicleCard != null)
+                {
+                    VehicleEncounterPanel.SetActive(true);
+                    VehicleEncounterRollImage.GetComponent<Image>().sprite = vehicleCard.GetCardImage();
                 }
                 else
                 {
-                    CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+                    VehicleEncounterPanel.SetActive(false);
                 }
             }
-
-            //Update vehicle value
-            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(myIndex, CurrentEncounterSkillPage).ToString();
+            else
+            {
+                IndividualEncounterCharacter.GetComponent<Image>().sprite = characterCards[CurrentIndividualEncounterCharacterIndex].GetCardImage();
+                IndividualEncounterCharacterNumberText.GetComponent<Text>().text = "Character " + (CurrentIndividualEncounterCharacterIndex + 1).ToString();
+                IndividualCharacterCrownImage.GetComponent<Image>().sprite = getIndividualCharacterCrownSprite();
+            }
         }
 
-        private void updateEncounterSkillPanel()
+        private void updateEncounterSkillPanel(EncounterCard encounterCard)
+        {
+            if (!GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetIsIndividualCheck())
+            {
+                updateEncounterSkillPanelForPartyEncounter(encounterCard);
+            }
+            else
+            {
+                updateEncounterSkillPanelForIndividualEncounter(encounterCard);
+            }
+        }
+
+        private void updateEncounterSkillPanelForPartyEncounter(EncounterCard encounterCard)
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            (Skills currentSkill, int valueNeeded) = GameManagerInstance.GetCurrentEncounter(myIndex).GetSkillChecks()[CurrentEncounterSkillPage];
+            (Skills currentSkill, int valueNeeded) = encounterCard.GetSkillChecks()[CurrentEncounterSkillPage];
 
             //Update page title
             GameObject.Find("StatPageTitleText").GetComponent<Text>().text = currentSkill.ToString();
@@ -2008,13 +2132,52 @@ namespace FallenLand
             CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
 
             //Update total successes needed
-            TotalSuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
+            TotalPartySuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
 
             //Update number of successes had
-            NumberOfTotalSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetTotalSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
+            NumberOfTotalPartySuccessesText.GetComponent<Text>().text = GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
         }
 
-        private void updateEncounterRollButtons()
+        private void updateEncounterSkillPanelForIndividualEncounter(EncounterCard encounterCard)
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            (Skills currentSkill, int valueNeeded) = encounterCard.GetSkillChecks()[CurrentEncounterSkillPage];
+
+            //Update page title
+            IndividualStatPageTitleText.GetComponent<Text>().text = currentSkill.ToString();
+
+            //Update character success values
+            if (GameManagerInstance.GetCurrentEncounter(myIndex).GetIsMeleeOnly() && currentSkill == Skills.Combat)
+            {
+                IndividualNumberOfAutoSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetCharacterCombatAutoSuccessesMeleeOnly(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage).ToString();
+                IndividualNumberOfRolledSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetCharacterCombatRolledSuccessesMeleeOnly(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage).ToString();
+            }
+            else
+            {
+                IndividualNumberOfAutoSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetCharacterAutoSuccesses(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage).ToString();
+                IndividualNumberOfRolledSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetCharacterRolledSuccesses(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage).ToString();
+            }
+
+            //Update total successes needed
+            TotalIndividualSuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
+
+            //Update number of successes had
+            NumberOfTotalIndividualSuccessesText.GetComponent<Text>().text = GameManagerInstance.GetIndividualTotalSuccesses(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage).ToString();
+        }
+
+        private void updateEncounterRollButtons(EncounterCard encounterCard)
+        {
+            if (!encounterCard.GetIsIndividualCheck())
+            {
+                updateEncounterRollButtonsForPartyEncounter();
+            }
+            else
+            {
+                updateEncounterRollButtonsForIndividualEncounter();
+            }
+        }
+
+        private void updateEncounterRollButtonsForPartyEncounter()
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             //Update character roll buttons
@@ -2068,19 +2231,71 @@ namespace FallenLand
             RollAllButton.GetComponent<Button>().interactable = enableRollAllButton;
         }
 
-        private void updateEncounterFinishedPanel()
+        private void updateEncounterRollButtonsForIndividualEncounter()
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex) && GameManagerInstance.IsEncounterFinished(myIndex))
+            //Update character roll button
+            List<CharacterCard> activeCharacters = GameManagerInstance.GetActiveCharacterCards(myIndex);
+            if (activeCharacters[CurrentIndividualEncounterCharacterIndex] != null)
             {
-                EncounterFinishedPanel.SetActive(true);
-                if (GameManagerInstance.EncounterWasSuccessful(myIndex))
+                int previousCharacterRoll = GameManagerInstance.GetLastCharacterRoll(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage);
+                IndividualRollButton.GetComponent<Button>().interactable = GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, CurrentIndividualEncounterCharacterIndex, CurrentEncounterSkillPage);
+                if (previousCharacterRoll == Constants.HAS_NOT_ROLLED)
                 {
-                    EncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter was successful!";
+                    IndividualLastDiceRollText.GetComponent<Text>().text = "--";
                 }
                 else
                 {
-                    EncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter failed!";
+                    IndividualLastDiceRollText.GetComponent<Text>().text = previousCharacterRoll.ToString();
+                }
+            }
+
+
+            //Update roll all button
+            bool enableRollAllButton = false;
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                if (GameManagerInstance.DoesCharacterHaveRollsRemainingForSkill(myIndex, characterIndex, CurrentEncounterSkillPage))
+                {
+                    enableRollAllButton = true;
+                    break;
+                }
+            }
+            if (GameManagerInstance.DoesVehicleHaveRollsRemainingForSkill(myIndex, CurrentEncounterSkillPage))
+            {
+                enableRollAllButton = true;
+            }
+            RollAllButton.GetComponent<Button>().interactable = enableRollAllButton;
+        }
+
+        private void updateEncounterFinishedPanel(EncounterCard encounterCard)
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex) && GameManagerInstance.IsEncounterFinished(myIndex, CurrentIndividualEncounterCharacterIndex))
+            {
+                if (!encounterCard.GetIsIndividualCheck())
+                {
+                    PartyEncounterFinishedPanel.SetActive(true);
+                    if (GameManagerInstance.EncounterWasSuccessful(myIndex))
+                    {
+                        PartyEncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter was successful!";
+                    }
+                    else
+                    {
+                        PartyEncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter failed!";
+                    }
+                }
+                else
+                {
+                    IndividualEncounterFinishedPanel.SetActive(true);
+                    if (GameManagerInstance.EncounterForIndividualWasSuccessful(myIndex, CurrentIndividualEncounterCharacterIndex))
+                    {
+                        IndividualEncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter for individual was successful!";
+                    }
+                    else
+                    {
+                        IndividualEncounterFinishedPanel.GetComponentInChildren<Text>().text = "Encounter for individual failed!";
+                    }
                 }
             }
         }
@@ -2129,6 +2344,13 @@ namespace FallenLand
                     }
                 }
             }
+        }
+
+        private Sprite getIndividualCharacterCrownSprite()
+        {
+            string fileName = "CharacterSlots/" + (CurrentIndividualEncounterCharacterIndex + 1);
+
+            return Resources.Load<Sprite>(fileName);
         }
 
         private bool isSpoilsCardAllowedToMoveHere(Image cardImage, GameObject panelMovingInto)
@@ -2346,9 +2568,17 @@ namespace FallenLand
 
         private void updatePartyOverviewValues()
         {
+            List<CharacterCard> currentParty = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                //Update psych
+                //Update psych resistance
+                int psychRes = GameManagerInstance.GetActiveCharacterPsychResistance(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersPsychText[characterIndex].Count; i++)
+                {
+                    ActiveCharactersPsychResistance[characterIndex][i].GetComponentInChildren<Text>().text = psychRes.ToString();
+                }
+
+                //Update psych remaining
                 int remainingPsych = GameManagerInstance.GetActiveCharacterRemainingPsych(CurrentViewedID, characterIndex);
                 int maxPsych = GameManagerInstance.GetMaxPsych();
                 for (int i = 0; i < ActiveCharactersPsychText[characterIndex].Count; i++)
@@ -2356,23 +2586,22 @@ namespace FallenLand
                     ActiveCharactersPsychText[characterIndex][i].GetComponentInChildren<Text>().text = remainingPsych.ToString() + "/" + maxPsych.ToString();
                 }
 
-                //Update health
+                //Update health remaining
                 int remainingHealth = GameManagerInstance.GetActiveCharacterRemainingHealth(CurrentViewedID, characterIndex);
-                int maxHealth = GameManagerInstance.GetActiveCharacterMaxHealth(CurrentViewedID, characterIndex);
                 for (int i = 0; i < ActiveCharactersHealthText[characterIndex].Count; i++)
                 {
-                    ActiveCharactersHealthText[characterIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString() + "/" + maxHealth.ToString();
+                    ActiveCharactersHealthText[characterIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString();
                 }
 
-                //Update infected symbol
-                if (GameManagerInstance.CharacterHasInfectedDamage(CurrentViewedID, characterIndex))
-                {
-                    PartyOverviewInfectedSymbols[characterIndex].SetActive(true);
-                }
-                else
-                {
-                    PartyOverviewInfectedSymbols[characterIndex].SetActive(false);
-                }
+                //Hide party panel if needed
+                MainOverviewCharacterPanels[characterIndex].SetActive(currentParty[characterIndex] != null);
+
+                //Update character portrait
+
+                //TODO asdfasdf 
+                //Update physical damage
+                //Update infected damage
+                //Update radiation damage
 
                 //Update carry weight
                 int totalCarryWeight = GameManagerInstance.GetActiveCharacterTotalCarryWeight(CurrentViewedID, characterIndex);
@@ -2416,9 +2645,9 @@ namespace FallenLand
             MainPartyOverviewPanel.SetActive(true);
             MainEncounterCardImage.SetActive(false);
             PartyExploitsPanel.SetActive(true);
-            EncounterRollPanel.SetActive(false);
-            EncounterStatsPanel.SetActive(false);
-            EncounterFinishedPanel.SetActive(false);
+            PartyEncounterPanel.SetActive(false);
+            IndividualEncounterPanel.SetActive(false);
+            PartyEncounterFinishedPanel.SetActive(false);
             EncounterHasBegun = false;
             CurrentEncounterSkillPage = 0;
             WasResourceClicked = false;

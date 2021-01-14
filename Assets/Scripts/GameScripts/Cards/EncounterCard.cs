@@ -8,8 +8,9 @@ namespace FallenLand
 		private List<(Skills, int)> SkillChecksRequired = new List<(Skills, int)>();
 		private string DescriptionText;
 		private bool PsychCheckAfterEncounter;
-		List<Reward> Rewards = new List<Reward>();
-		List<Punishment> Punishments = new List<Punishment>();
+		List<Reward> RewardsOnSuccess = new List<Reward>();
+		List<Punishment> PunishmentsOnSuccess = new List<Punishment>();
+		List<Punishment> PunishmentsOnFail = new List<Punishment>();
 		private string SuccessHeaderText;
 		private string SuccessDescriptionText;
 		private string FailureHeaderText;
@@ -19,10 +20,40 @@ namespace FallenLand
 		private List<Precheck> PrechecksAfterDraw = new List<Precheck>();
 		private bool FlightAllowed;
 		private bool IsMeleeOnly;
+		private bool IsIndividualCheck;
+		private List<int> D6Rolls;
+		private List<byte> IndividualPassFail;
 
 		public EncounterCard(string title) : base(title)
 		{
 			initText();
+			D6Rolls = new List<int>();
+			IndividualPassFail = new List<byte>();
+			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+			{
+				D6Rolls.Add(0);
+				IndividualPassFail.Add(Constants.STATUS_BEGIN);
+			}
+		}
+
+        public void ResetState()
+        {
+			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+			{
+				D6Rolls[i] = 0;
+				IndividualPassFail[i] = Constants.STATUS_BEGIN;
+			}
+		}
+
+
+		public void SetIndividualPassFail(int characterIndex, byte status)
+		{
+			IndividualPassFail[characterIndex] = status;
+		}
+
+		public List<byte> GetIndividualPassFail()
+		{
+			return IndividualPassFail;
 		}
 
 		public void SetSkillChecks(List<(Skills, int)> skillChecks)
@@ -36,6 +67,26 @@ namespace FallenLand
 		public List<(Skills, int)> GetSkillChecks()
 		{
 			return SkillChecksRequired;
+		}
+
+		public void SetIsIndividualCheck(bool isIndividual)
+		{
+			IsIndividualCheck = isIndividual;
+		}
+
+		public bool GetIsIndividualCheck()
+		{
+			return IsIndividualCheck;
+		}
+
+		public void SetD6RollForCharacter(int characterIndex, int roll)
+		{
+			D6Rolls[characterIndex] = roll;
+		}
+
+		public List<int> GetD6Rolls()
+		{
+			return D6Rolls;
 		}
 
 		public void SetMakePsychCheckAfterEncounter(bool psychCheck)
@@ -131,24 +182,34 @@ namespace FallenLand
 			return SalvageReward;
 		}
 
-        public void AddReward(Reward reward)
+        public void AddRewardOnSuccess(Reward reward)
         {
-			Rewards.Add(reward);
+			RewardsOnSuccess.Add(reward);
 		}
 
-		public List<Reward> GetRewards()
+		public List<Reward> GetRewardsOnSuccess()
 		{
-			return Rewards;
+			return RewardsOnSuccess;
 		}
 
-		public void AddPunishment(Punishment punishment)
+		public void AddPunishmentOnSuccess(Punishment punishment)
 		{
-			Punishments.Add(punishment);
+			PunishmentsOnSuccess.Add(punishment);
 		}
 
-		public List<Punishment> GetPunishments()
+		public List<Punishment> GetPunishmentsOnSuccess()
 		{
-			return Punishments;
+			return PunishmentsOnSuccess;
+		}
+
+		public void AddPunishmentOnFail(Punishment punishment)
+		{
+			PunishmentsOnFail.Add(punishment);
+		}
+
+		public List<Punishment> GetPunishmentsOnFail()
+		{
+			return PunishmentsOnFail;
 		}
 
 		public void AddActionOnBegin(Action action)

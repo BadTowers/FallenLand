@@ -747,7 +747,7 @@ namespace FallenLand
             return rolledSuccesses;
 		}
 
-		public int GetTotalSuccesses(int skillIndex, Skills skill)
+		public int GetTotalPartySuccesses(int skillIndex, Skills skill)
 		{
 			int totalSuccesses = 0;
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
@@ -759,6 +759,11 @@ namespace FallenLand
             totalSuccesses += GetVehicleRolledSuccesses(skillIndex, skill);
 
             return totalSuccesses;
+		}
+
+		public int GetTotalIndividualSuccesses(int characterIndex, int skillIndex, Skills skill)
+		{
+			return GetCharacterAutoSuccesses(characterIndex, skillIndex, skill) + GetCharacterRolledSuccesses(characterIndex, skillIndex, skill);
 		}
 
 		public void AddCharacterDiceRoll(int characterIndex, int skillCheckIndex, int diceRoll)

@@ -1,9 +1,9 @@
 ﻿
 namespace FallenLand
 {
-    public class TakeInfectedDamage : Punishment
+    public class PartyTakeInfectedDamage : Punishment
     {
-        public TakeInfectedDamage(int amountOfDamage) : base(amountOfDamage)
+        public PartyTakeInfectedDamage(int amountOfDamage) : base(amountOfDamage)
         {
         }
 

@@ -33,12 +33,12 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("Draw the next Relic Spoils card, discarding all others. You may place your party on the nearest Mission chip and attempt it at no cost in weeks.");
 			curCard.SetSuccessDescriptionText("Mac is filled with joy and smiling as he gives you the reward.");
-			curCard.AddReward(new GainNextRelicSpoilsCard());
+			curCard.AddRewardOnSuccess(new GainNextRelicSpoilsCard());
 			//TODO add success gain is that you have the ability to move to the nearest mission and do it at no weeks cost
 			curCard.SetFailureHeaderText("All Party members automatically suffer 1 point of Psychological Damage.");
 			curCard.SetFailureDescriptionText("Inconsolable at the loss of Ol' Betsy, a heartbroken Mac ushers you out. As you pass the rusted mailbox at the end of the drive, a lone gunshot " +
 				"echoes from within the house.");
-			curCard.AddPunishment(new ApplyPsychDamageToWholeParty(1));
+			curCard.AddPunishmentOnFail(new ApplyPsychDamageToWholeParty(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -54,10 +54,10 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LoseMostValuableSpoilsThatAreNotVehicle(1));
+			curCard.AddPunishmentOnFail(new LoseMostValuableSpoilsThatAreNotVehicle(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -75,11 +75,11 @@ namespace FallenLand
 			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(3));
-			curCard.AddReward(new GainActionCards(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(3));
+			curCard.AddRewardOnSuccess(new GainActionCards(1));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(5));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(5));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -95,12 +95,12 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(1));
-			curCard.AddReward(new GainPrestige(2));
-			curCard.AddReward(new GainTownHealth(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
+			curCard.AddRewardOnSuccess(new GainPrestige(2));
+			curCard.AddRewardOnSuccess(new GainTownHealth(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LosePrestige(1));
+			curCard.AddPunishmentOnFail(new LosePrestige(1));
 			//TODO add punishment for 2 week penalty chip when that is implemented
 			curCard.SetId(curID);
 			curID++;
@@ -117,11 +117,11 @@ namespace FallenLand
 			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(3));
-			curCard.AddReward(new GainActionCards(3));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(3));
+			curCard.AddRewardOnSuccess(new GainActionCards(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6InfectedDamage(6));
+			curCard.AddPunishmentOnFail(new TakeD6InfectedDamage(6));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -137,7 +137,7 @@ namespace FallenLand
 			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
 			//TODO add reward as gain the next alcohol spoils. If none are in the deck, gain 5 salvage
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
@@ -157,10 +157,10 @@ namespace FallenLand
 			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6InfectedDamage(4));
+			curCard.AddPunishmentOnFail(new TakeD6InfectedDamage(4));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -176,10 +176,10 @@ namespace FallenLand
 			curCard.AddClassification(EncounterTypes.EnvironmentalHazard);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainActionCards(1));
+			curCard.AddRewardOnSuccess(new GainActionCards(1));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6InfectedDamage(5));
+			curCard.AddPunishmentOnFail(new TakeD6InfectedDamage(5));
 			//TODO add punishment of 2 week penalty chip
 			curCard.SetId(curID);
 			curID++;
@@ -196,7 +196,7 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainTownHealth(2));
+			curCard.AddRewardOnSuccess(new GainTownHealth(2));
 			//TODO gain 2 town defense chips as a reward
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
@@ -215,10 +215,10 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainActionCards(2));
+			curCard.AddRewardOnSuccess(new GainActionCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(5));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(5));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -233,7 +233,7 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			//TODO punishment--CHOICE: pay 10 salvage or be delayed 2 weeks
@@ -252,12 +252,12 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainTownHealth(3));
-			curCard.AddReward(new GainPartyExploitsWeeks(2));
+			curCard.AddRewardOnSuccess(new GainTownHealth(3));
+			curCard.AddRewardOnSuccess(new GainPartyExploitsWeeks(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6InfectedDamage(4));
-			curCard.AddPunishment(new LoseTownHealth(2));
+			curCard.AddPunishmentOnFail(new TakeD6InfectedDamage(4));
+			curCard.AddPunishmentOnFail(new LoseTownHealth(2));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -272,10 +272,10 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(1));
-			curCard.AddReward(new GainActionCards(1));
-			curCard.AddReward(new GainCharacterCards(1));
-			curCard.AddReward(new GainPartyExploitsWeeks(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
+			curCard.AddRewardOnSuccess(new GainActionCards(1));
+			curCard.AddRewardOnSuccess(new GainCharacterCards(1));
+			curCard.AddRewardOnSuccess(new GainPartyExploitsWeeks(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			//No punishments for this card
@@ -293,11 +293,11 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
-			curCard.AddReward(new GainTownHealth(3));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainTownHealth(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LoseTownHealth(3));
+			curCard.AddPunishmentOnFail(new LoseTownHealth(3));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -314,11 +314,11 @@ namespace FallenLand
 			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LosePrestige(1));
-			curCard.AddPunishment(new TakeD6PhysicalDamage(6));
+			curCard.AddPunishmentOnFail(new LosePrestige(1));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(6));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -335,12 +335,12 @@ namespace FallenLand
 			curCard.AddActionOnBegin(new MovePartyToStartingTownLocation());
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
-			curCard.AddReward(new GainSalvageCoins(5));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSalvageCoins(5));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(6));
-			curCard.AddPunishment(new LoseTownHealth(3));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(6));
+			curCard.AddPunishmentOnFail(new LoseTownHealth(3));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -350,14 +350,14 @@ namespace FallenLand
 			curCard.SetDescriptionText("");
 			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				(Skills.Diplomacy, 0)
+				//No skill checks required
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.AddClassification(EncounterTypes.Special);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainPartyExploitsWeeks(1));
-			curCard.AddReward(new GainHealD6PhysicalDamage(2));
+			curCard.AddRewardOnSuccess(new GainPartyExploitsWeeks(1));
+			curCard.AddRewardOnSuccess(new GainHealD6PhysicalDamage(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			//No punishments for this card
@@ -375,12 +375,12 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(1));
-			curCard.AddReward(new GainCharacterCards(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
+			curCard.AddRewardOnSuccess(new GainCharacterCards(1));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeInfectedDamage(1));
-			curCard.AddPunishment(new EveryoneLoseTownHealth(3));
+			curCard.AddPunishmentOnFail(new PartyTakeInfectedDamage(1));
+			curCard.AddPunishmentOnFail(new EveryoneLoseTownHealth(3));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -395,11 +395,11 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainActionCards(2));
+			curCard.AddRewardOnSuccess(new GainActionCards(2));
 			//TODO reward -- draw the next 4 encounter cards for one deck and order them however you'd like
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LoseTownHealth(1));
+			curCard.AddPunishmentOnFail(new LoseTownHealth(1));
 			//TODO punishment -- discard all "ally" spoils cards
 			curCard.SetId(curID);
 			curID++;
@@ -418,10 +418,10 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(6));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(6));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -441,12 +441,12 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainPrestige(1));
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainPrestige(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(5));
-			curCard.AddPunishment(new LosePrestige(1));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(5));
+			curCard.AddPunishmentOnFail(new LosePrestige(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -461,11 +461,11 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
 			//TODO reward -- may place party on nearest mission chip and attempt it at no week cost
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new CharacterCrownTakesD6PhysicalDamage(1));
+			curCard.AddPunishmentOnFail(new CharacterCrownTakesD6PhysicalDamage(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -480,7 +480,7 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainNextMasterCharacterElseChoose());
+			curCard.AddRewardOnSuccess(new GainNextMasterCharacterElseChoose());
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			//This card has no punishments
@@ -502,11 +502,11 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(7));
-			curCard.AddPunishment(new VehicleDestroyed());
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(7));
+			curCard.AddPunishmentOnFail(new VehicleDestroyed());
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -523,10 +523,10 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LoseMostValuableSpoilsThatAreNotVehicle(1));
+			curCard.AddPunishmentOnFail(new LoseMostValuableSpoilsThatAreNotVehicle(1));
 			//TODO punishment -- 2 week delay chip
 			curCard.SetId(curID);
 			curID++;
@@ -546,10 +546,10 @@ namespace FallenLand
 			curCard.SetFlightAllowed(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(6));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(6));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -568,10 +568,10 @@ namespace FallenLand
 			curCard.SetFlightAllowed(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(5));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(5));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -588,10 +588,10 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainAlphaCentauriArmorSpoils());
+			curCard.AddRewardOnSuccess(new GainAlphaCentauriArmorSpoils());
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new LoseRandomCharacterCrownAndTheirEquipment());
+			curCard.AddPunishmentOnFail(new LoseRandomCharacterCrownAndTheirEquipment());
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -610,10 +610,10 @@ namespace FallenLand
 			curCard.AddActionOnBegin(new DealD6PhysicalDamageToCharacterCrown(characterCrownIndex, numD6s));
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(4));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(4));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -630,12 +630,12 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainPrestige(1));
-			curCard.AddReward(new GainTownHealth(3));
-			curCard.AddReward(new GainSpecificSpoilsElseSalvage("6 Fast Horses", 15));
+			curCard.AddRewardOnSuccess(new GainPrestige(1));
+			curCard.AddRewardOnSuccess(new GainTownHealth(3));
+			curCard.AddRewardOnSuccess(new GainSpecificSpoilsElseSalvage("6 Fast Horses", 15));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(3));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(3));
 			//todo punishment -- you are delayed 1 week
 			curCard.SetId(curID);
 			curID++;
@@ -652,11 +652,11 @@ namespace FallenLand
 			curCard.AddPrecheck(new HasMotorizedVehicle());
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainCharacterCards(1));
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainCharacterCards(1));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new VehicleDestroyed());
+			curCard.AddPunishmentOnFail(new VehicleDestroyed());
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -666,7 +666,7 @@ namespace FallenLand
 			curCard.SetDescriptionText("");
 			curCard.SetSkillChecks(new List<(Skills, int)>
 			{
-				(Skills.Diplomacy, 0)
+				//No skill checks required
 			});
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.AddClassification(EncounterTypes.Special);
@@ -693,10 +693,10 @@ namespace FallenLand
 			curCard.AddClassification(EncounterTypes.Ambush);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(6));
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(6));
 			//TODO add punishment -- player to the left chooses 2 equipped spoils to discard
 			curCard.SetId(curID);
 			curID++;
@@ -715,10 +715,10 @@ namespace FallenLand
 			curCard.AddClassification(EncounterTypes.WildAnimals);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6InfectedDamage(4));
+			curCard.AddPunishmentOnFail(new TakeD6InfectedDamage(4));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -736,14 +736,14 @@ namespace FallenLand
 			curCard.SetIsMeleeOnly(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(3));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(3));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			tempEffect = new GainSpoilsEffect("Naked!");
 			tempEffect.SetEffectIsRemovedOnceDeactivated(true);
 			tempEffect.SetWhenEffectDeactivates(new PartyInStartingTown());
 			tempEffect.AddRewardToApplyOnDeactivate(new GainSpoilsCards(10));
-			curCard.AddPunishment(new LoseAllEquippedSpoilsAndGainEffect(tempEffect));
+			curCard.AddPunishmentOnFail(new LoseAllEquippedSpoilsAndGainEffect(tempEffect));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -762,11 +762,11 @@ namespace FallenLand
 			curCard.SetIsMeleeOnly(true);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainSpoilsCards(2));
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new TakeD6PhysicalDamage(4));
-			curCard.AddPunishment(new LoseAllEquippedRangedWeapons());
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(4));
+			curCard.AddPunishmentOnFail(new LoseAllEquippedRangedWeapons());
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -785,16 +785,37 @@ namespace FallenLand
 			curCard.SetMakePsychCheckAfterEncounter(false);
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
-			curCard.AddReward(new GainActionCards(1));
+			curCard.AddRewardOnSuccess(new GainActionCards(1));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
-			curCard.AddPunishment(new ApplyPhysicalDamageToWholeParty(3));
+			curCard.AddPunishmentOnFail(new ApplyPhysicalDamageToWholeParty(3));
 			tempEffect = new LoseBonusMovementEffect("Parched!");
 			tempEffect.AddPunishmentToApplyOnActivate(new LoseBonusMovement(2));
 			tempEffect.SetEffectIsRemovedOnceDeactivated(true);
 			tempEffect.SetWhenEffectDeactivates(new PartyInAnyTown());
 			tempEffect.AddRewardToApplyOnDeactivate(new GainBonusMovement(2));
-			curCard.AddPunishment(new GainEffect(tempEffect));
+			curCard.AddPunishmentOnFail(new GainEffect(tempEffect));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Brackish Water");
+			curCard.SetSalvageReward(3);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Medical, 1)
+			});
+			curCard.SetIsIndividualCheck(true);
+			curCard.AddActionOnBegin(new RollD6ForEachCharacter());
+			curCard.SetMakePsychCheckAfterEncounter(true);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddRewardOnSuccess(new GainSalvageCoinPerD6(2));
+			curCard.AddPunishmentOnSuccess(new IndividualTakesSetPhysicalDamageIfPass(1));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishmentOnFail(new IndividualTakesD6InfectedDamageIfFail(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
