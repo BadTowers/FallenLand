@@ -21,6 +21,7 @@ namespace FallenLand
         ConditionalGain Link;
         private bool IsMaster;
         private Sprite CardImage;
+        private Sprite CardPortrait;
 
         public CharacterCard(string title) : base(title)
         {
@@ -229,6 +230,16 @@ namespace FallenLand
                 CardImage = Resources.Load<Sprite>(fileName);
             }
             return CardImage;
+        }
+
+        public Sprite GetCardPortrait()
+        {
+            if (CardPortrait == null)
+            {
+                string fileName = "Cards/CharacterPortraits/CharacterPortrait" + GetId().ToString();
+                CardPortrait = Resources.Load<Sprite>(fileName);
+            }
+            return CardPortrait;
         }
 
         public void AddInfectedDamage(int amountOfDamage)
