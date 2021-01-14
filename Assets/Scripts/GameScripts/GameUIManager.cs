@@ -128,6 +128,7 @@ namespace FallenLand
         private GameObject IndividualNumberOfAutoSuccessesText;
         private GameObject IndividualNumberOfRolledSuccessesText;
         private List<GameObject> MainOverviewCharacterPanels;
+        private List<Image> MainOverviewCharacterPortraits;
         private int CurrentIndividualEncounterCharacterIndex;
 
         #region UnityFunctions
@@ -184,6 +185,7 @@ namespace FallenLand
             ActiveCharactersScrollContent = new List<GameObject>();
             OverallEncounterVehicleStatPanels = new List<GameObject>();
             MainOverviewCharacterPanels = new List<GameObject>();
+            MainOverviewCharacterPortraits = new List<Image>();
 
             AuctionHouseScrollContent = GameObject.Find("AuctionHouseScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
             TownRosterScrollContent = GameObject.Find("TownRosterScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
@@ -192,6 +194,7 @@ namespace FallenLand
             {
                 ActiveCharactersScrollContent.Add(GameObject.Find("CharacterSlotScrollView" + (i + 1).ToString()).transform.Find("Viewport").transform.Find("Content").gameObject);
                 MainOverviewCharacterPanels.Add(GameObject.Find("MainOverviewCharacterPanel" + (i + 1).ToString()));
+                MainOverviewCharacterPortraits.Add(MainOverviewCharacterPanels[i].transform.Find("CharacterPortrait").GetComponentInChildren<Image>());
             }
             VehicleSlotScrollContent = GameObject.Find("VehicleSlotScrollView").transform.Find("Viewport").transform.Find("Content").gameObject;
 
@@ -2597,11 +2600,10 @@ namespace FallenLand
                 MainOverviewCharacterPanels[characterIndex].SetActive(currentParty[characterIndex] != null);
 
                 //Update character portrait
-
-                //TODO asdfasdf 
-                //Update physical damage
-                //Update infected damage
-                //Update radiation damage
+                if (currentParty[characterIndex] != null)
+                {
+                    MainOverviewCharacterPortraits[characterIndex].sprite = currentParty[characterIndex].GetCardPortrait();
+                }
 
                 //Update carry weight
                 int totalCarryWeight = GameManagerInstance.GetActiveCharacterTotalCarryWeight(CurrentViewedID, characterIndex);
