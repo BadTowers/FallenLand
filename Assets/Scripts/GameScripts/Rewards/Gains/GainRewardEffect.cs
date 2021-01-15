@@ -1,16 +1,16 @@
 ﻿
 namespace FallenLand
 {
-    public class GainEffect : Punishment
+    public class GainRewardEffect : Reward
     {
         private Effect EffectToApply;
 
-        public GainEffect(Effect effect) : base(0)
+        public GainRewardEffect(Effect effect) : base(0)
         {
             EffectToApply = effect;
         }
 
-        public override void HandlePunishment(GameManager gameManager, int playerIndex)
+        public override void HandleReward(GameManager gameManager, int playerIndex)
         {
             gameManager.ApplyEffectToPlayer(playerIndex, EffectToApply);
         }

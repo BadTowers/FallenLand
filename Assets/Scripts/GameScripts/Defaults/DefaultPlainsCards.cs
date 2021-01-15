@@ -794,7 +794,7 @@ namespace FallenLand
 			tempEffect.SetEffectIsRemovedOnceDeactivated(true);
 			tempEffect.SetWhenEffectDeactivates(new PartyInAnyTown());
 			tempEffect.AddRewardToApplyOnDeactivate(new GainBonusMovement(2));
-			curCard.AddPunishmentOnFail(new GainEffect(tempEffect));
+			curCard.AddPunishmentOnFail(new GainPunishmentEffect(tempEffect));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -816,6 +816,31 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishmentOnFail(new IndividualTakesD6InfectedDamageIfFail(1));
+			curCard.SetId(curID);
+			curID++;
+			PlainsCards.Add(curCard);
+			/****************************************************************************************************************************************************************/
+			curCard = new PlainsCard("Barb's Building Supply");
+			curCard.SetSalvageReward(5);
+			curCard.SetDescriptionText("");
+			curCard.SetSkillChecks(new List<(Skills, int)>
+			{
+				(Skills.Combat, 5),
+				(Skills.Mechanical, 3)
+			});
+			curCard.AddClassification(EncounterTypes.StoreLoot);
+			curCard.SetMakePsychCheckAfterEncounter(false);
+			curCard.SetSuccessHeaderText("");
+			curCard.SetSuccessDescriptionText("");
+			curCard.AddRewardOnSuccess(new GainSpoilsCards(2));
+			tempEffect = new GainTownHealthEffect("Barb's Building Supply");
+			tempEffect.SetEffectIsRemovedOnceDeactivated(true);
+			tempEffect.SetWhenEffectDeactivates(new PartyInStartingTown());
+			tempEffect.AddRewardToApplyOnDeactivate(new GainTownHealth(2));
+			curCard.AddRewardOnSuccess(new GainRewardEffect(tempEffect));
+			curCard.SetFailureHeaderText("");
+			curCard.SetFailureDescriptionText("");
+			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(5));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);

@@ -10,6 +10,7 @@ namespace FallenLand
 		Mystery,
 		Perishables,
 		Special,
+		StoreLoot,
 		TheBrotherhood,
 		VehicleCombat,
 		WildAnimals,
