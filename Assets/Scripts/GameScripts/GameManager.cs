@@ -1330,6 +1330,25 @@ namespace FallenLand
 			return isDoing;
 		}
 
+		public void SetPlayerIsHealing(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].SetPlayerIsHealing(true);
+				Players[playerIndex].SetNumberOfSkillChecks(1);
+			}
+		}
+
+		public bool GetPlayerIsHealing(int playerIndex)
+		{
+			bool isHealing = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				isHealing = Players[playerIndex].GetPlayerIsHealing();
+			}
+			return isHealing;
+		}
+
 		public int GetPlayerEncounterType(int playerIndex)
 		{
 			int encounterType = Constants.ENCOUNTER_NONE;
@@ -1350,7 +1369,12 @@ namespace FallenLand
 			int skillValue = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				skillValue = Players[playerIndex].GetTotalForCharacterSkill(characterIndex, requestedSkill);
 			}
 			return skillValue;
@@ -1371,7 +1395,12 @@ namespace FallenLand
 			int skillValue = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+                {
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				skillValue = Players[playerIndex].GetTotalForVehicleSkill(requestedSkill);
 			}
 			return skillValue;
@@ -1382,7 +1411,12 @@ namespace FallenLand
 			int autoSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+                {
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				autoSuccesses = Players[playerIndex].GetCharacterAutoSuccesses(characterIndex, skillIndex, requestedSkill);
 			}
 			return autoSuccesses;
@@ -1403,7 +1437,12 @@ namespace FallenLand
 			int rolledSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				rolledSuccesses = Players[playerIndex].GetCharacterRolledSuccesses(characterIndex, skillIndex, requestedSkill);
 			}
 			return rolledSuccesses;
@@ -1424,7 +1463,12 @@ namespace FallenLand
 			int autoSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+					
 				autoSuccesses = Players[playerIndex].GetVehicleAutoSuccesses(skillIndex, requestedSkill);
 			}
 			return autoSuccesses;
@@ -1435,7 +1479,12 @@ namespace FallenLand
 			int rolledSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				rolledSuccesses = Players[playerIndex].GetVehicleRolledSuccesses(skillIndex, requestedSkill);
 			}
 			return rolledSuccesses;
@@ -1446,7 +1495,12 @@ namespace FallenLand
 			int totalSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				totalSuccesses = Players[playerIndex].GetTotalPartySuccesses(skillIndex, requestedSkill);
 			}
 			return totalSuccesses;
@@ -1457,7 +1511,12 @@ namespace FallenLand
 			int totalSuccesses = 0;
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				(Skills requestedSkill, int _) = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex];
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
 				totalSuccesses = Players[playerIndex].GetTotalIndividualSuccesses(characterIndex, skillIndex, requestedSkill);
 			}
 			return totalSuccesses;
@@ -1578,6 +1637,32 @@ namespace FallenLand
 							}
 						}
 					}
+				}
+			}
+
+			return isFinished;
+		}
+
+		public bool IsHealingFinished(int playerIndex)
+        {
+			bool isFinished = true;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				//Check all characters
+				for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				{
+					if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, 0))
+					{
+						isFinished = false;
+						break;
+					}
+				}
+
+				//Check vehicle
+				if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, 0))
+				{
+					isFinished = false;
 				}
 			}
 

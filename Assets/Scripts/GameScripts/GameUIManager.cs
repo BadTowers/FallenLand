@@ -130,6 +130,12 @@ namespace FallenLand
         private List<GameObject> MainOverviewCharacterPanels;
         private List<Image> MainOverviewCharacterPortraits;
         private int CurrentIndividualEncounterCharacterIndex;
+        private GameObject GenericYesNoPopupPanel;
+        private bool HealingInNonStartingTown;
+        private bool HealingInStartingTown;
+        private bool HealingHasBegun;
+        private bool GenericYesPressed;
+        private bool GenericNoPressed;
 
         #region UnityFunctions
         void Awake()
@@ -137,6 +143,7 @@ namespace FallenLand
             EscapePressed = false;
             CurrentState = GameMenuStates.Resume;
             UserRolledTownEventsThisTurn = false;
+            CurrentEncounterSkillPage = 0;
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
             PauseMenu = GameObject.Find("PauseMenu");
@@ -174,6 +181,7 @@ namespace FallenLand
             CannotModifyPanel = GameObject.Find("CannotModifyPanel");
             EncounterFlightButton = GameObject.Find("EncounterFlightButton");
             PartyEncounterPanel = GameObject.Find("PartyEncounterPanel");
+            GenericYesNoPopupPanel = GameObject.Find("GenericYesNoPopupPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -352,6 +360,7 @@ namespace FallenLand
             DiscardPopupPanel.SetActive(false);
             DistributeD6PopupPanel.SetActive(false);
             GenericPopupWithTwoLinesOfTextPanel.SetActive(false);
+            GenericYesNoPopupPanel.SetActive(false);
             SelectCardPanel.SetActive(false);
             CannotModifyPanel.SetActive(false);
 
@@ -742,7 +751,32 @@ namespace FallenLand
             EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to healing
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
 
-            //TODO
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            if (GameManagerInstance.IsPartyInStartingLocation(myIndex))
+            {
+                HealingInStartingTown = true;
+                HealingHasBegun = true;
+                GameManagerInstance.SetPlayerIsHealing(myIndex);
+                showEncounterUi();
+            }
+            else if (GameManagerInstance.IsPartyInTown(myIndex))
+            {
+                if (GameManagerInstance.GetSalvage(myIndex) >= 5)
+                {
+                    HealingInNonStartingTown = true;
+                    onShowGenericYesNoPopup("Do you want to pay 5 salvage to heal?");
+                }
+                else
+                {
+                    onShowGenericPopup("You don't have 5 salvage to heal in this town!");
+                }
+            }
+            else
+            {
+                HealingHasBegun = true;
+                GameManagerInstance.SetPlayerIsHealing(myIndex);
+                showEncounterUi();
+            }
         }
 
         public void OnMissionDeedPress()
@@ -791,33 +825,7 @@ namespace FallenLand
 
         public void OnBeginEncounterPress()
         {
-            MainPartyOverviewPanel.SetActive(false);
-            OverallEncounterPanelGameObject.SetActive(false);
-            MainEncounterCardImage.SetActive(true);
-            PartyExploitsPanel.SetActive(false);
-            MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
-            EncounterHasBegun = true;
-            GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
-            if (!GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetIsIndividualCheck())
-            {
-                PartyEncounterPanel.SetActive(true);
-                IndividualEncounterPanel.SetActive(false);
-            }
-            else
-            {
-                IndividualEncounterPanel.SetActive(true);
-                PartyEncounterPanel.SetActive(false);
-                //Set the first character to make the individual check
-                List<CharacterCard> characters = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
-                for (int currentCharacterIndex = 0; currentCharacterIndex < Constants.NUM_PARTY_MEMBERS; currentCharacterIndex++)
-                {
-                    if (characters[currentCharacterIndex] != null)
-                    {
-                        CurrentIndividualEncounterCharacterIndex = currentCharacterIndex;
-                        break;
-                    }
-                }
-            }
+            showEncounterUi();
         }
 
         public void OnFlightEncounterPress()
@@ -894,20 +902,35 @@ namespace FallenLand
 
         public void OnPreviousEncounterStatPress()
         {
-            CurrentEncounterSkillPage++;
-            if (CurrentEncounterSkillPage >= GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count)
+            CurrentEncounterSkillPage--;
+            if (EncounterHasBegun)
+            {
+                if (CurrentEncounterSkillPage < 0)
+                {
+                    CurrentEncounterSkillPage = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count - 1;
+                }
+            }
+            else if (HealingHasBegun)
             {
                 CurrentEncounterSkillPage = 0;
             }
+
             updateSkillIcons();
         }
 
         public void OnNextEncounterStatPress()
         {
-            CurrentEncounterSkillPage--;
-            if (CurrentEncounterSkillPage < 0)
+            CurrentEncounterSkillPage++;
+            if (EncounterHasBegun)
             {
-                CurrentEncounterSkillPage = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count - 1;
+                if (CurrentEncounterSkillPage >= GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count)
+                {
+                    CurrentEncounterSkillPage = 0;
+                }
+            }
+            else if (HealingHasBegun)
+            {
+                CurrentEncounterSkillPage = 0;
             }
             updateSkillIcons();
         }
@@ -936,39 +959,60 @@ namespace FallenLand
         public void OnAcceptEncounterResultsPress()
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter(myIndex);
-            if (!encounterCard.GetIsIndividualCheck())
+            if (HealingHasBegun)
             {
-                GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
-                resetAfterEncounter();
+                int numD6ToRoll = GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage);
+                Dice diceRoller = GameManagerInstance.GetDiceRoller();
+                int amountToHeal = 0;
+                for (int i = 0; i < numD6ToRoll; i++)
+                {
+                    amountToHeal += diceRoller.RollDice(Constants.D6);
+                }
+                if (HealingInStartingTown)
+                {
+                    amountToHeal += 1;
+                }
+
+                onShowGenericPopup("You get to heal " + amountToHeal.ToString() + "!");
+
+                //TODO finish the rest
             }
             else
             {
-                IndividualEncounterFinishedPanel.SetActive(false);
-                if (GameManagerInstance.EncounterForIndividualWasSuccessful(myIndex, CurrentIndividualEncounterCharacterIndex))
-                {
-                    encounterCard.SetIndividualPassFail(CurrentIndividualEncounterCharacterIndex, Constants.STATUS_PASSED);
-                }
-                else
-                {
-                    encounterCard.SetIndividualPassFail(CurrentIndividualEncounterCharacterIndex, Constants.STATUS_FAILED);
-                }
-                //Get new character to do individual check, if necessary
-                bool foundNextCharacter = false;
-                for (int i = CurrentIndividualEncounterCharacterIndex + 1; i < Constants.NUM_PARTY_MEMBERS; i++)
-                {
-                    List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(myIndex);
-                    if (party[i] != null)
-                    {
-                        CurrentIndividualEncounterCharacterIndex = i;
-                        foundNextCharacter = true;
-                        break;
-                    }
-                }
-                if (!foundNextCharacter)
+                EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter(myIndex);
+                if (!encounterCard.GetIsIndividualCheck())
                 {
                     GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
                     resetAfterEncounter();
+                }
+                else
+                {
+                    IndividualEncounterFinishedPanel.SetActive(false);
+                    if (GameManagerInstance.EncounterForIndividualWasSuccessful(myIndex, CurrentIndividualEncounterCharacterIndex))
+                    {
+                        encounterCard.SetIndividualPassFail(CurrentIndividualEncounterCharacterIndex, Constants.STATUS_PASSED);
+                    }
+                    else
+                    {
+                        encounterCard.SetIndividualPassFail(CurrentIndividualEncounterCharacterIndex, Constants.STATUS_FAILED);
+                    }
+                    //Get new character to do individual check, if necessary
+                    bool foundNextCharacter = false;
+                    for (int i = CurrentIndividualEncounterCharacterIndex + 1; i < Constants.NUM_PARTY_MEMBERS; i++)
+                    {
+                        List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(myIndex);
+                        if (party[i] != null)
+                        {
+                            CurrentIndividualEncounterCharacterIndex = i;
+                            foundNextCharacter = true;
+                            break;
+                        }
+                    }
+                    if (!foundNextCharacter)
+                    {
+                        GameManagerInstance.SetEncounterResultAccepted(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
+                        resetAfterEncounter();
+                    }
                 }
             }
         }
@@ -1123,6 +1167,21 @@ namespace FallenLand
             DistributeD6DoneButton.GetComponent<Button>().interactable = false;
             D6DistributeRollButton.GetComponent<Button>().interactable = true;
         }
+
+        public void OnGenericYesNo_YesPress()
+        {
+            GenericYesNoPopupPanel.SetActive(false);
+            GenericYesPressed = true;
+        }
+
+        public void OnGenericYesNo_NoPress()
+        {
+            GenericYesNoPopupPanel.SetActive(false);
+            GenericNoPressed = true;
+            HealingInNonStartingTown = false;
+            HealingInStartingTown = false;
+            HealingHasBegun = false;
+        }
         #endregion
 
 
@@ -1220,6 +1279,21 @@ namespace FallenLand
             else
             {
                 GenericPopupStringQueue.Add(text);
+            }
+        }
+
+        private void onShowGenericYesNoPopup(string text)
+        {
+            if (!GenericYesNoPopupPanel.activeSelf)
+            {
+                GenericYesNoPopupPanel.SetActive(true);
+                GameObject yesNoTextPanel = GenericYesNoPopupPanel.transform.Find("GenericYesNoTextPanel").gameObject;
+                yesNoTextPanel.GetComponentInChildren<Text>().text = text;
+                showPopup(yesNoTextPanel);
+            }
+            else
+            {
+                Debug.LogError("Couldn't show two yes/no panels at the same time");
             }
         }
 
@@ -1679,16 +1753,27 @@ namespace FallenLand
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
             EncounterCard encounterCard = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
-            if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun)
+            if (currentPhase == Phases.Party_Exploits_Party && HealingInNonStartingTown && GenericYesPressed)
+            {
+                GenericYesPressed = false;
+                Debug.LogError("TODO, subtract 5 salvage from player");
+                Debug.LogError("TODO, add 5 salvage to other player if needed");
+                HealingHasBegun = true;
+                GameManagerInstance.SetPlayerIsHealing(GameManagerInstance.GetIndexForMyPlayer());
+                showEncounterUi();
+            }
+            
+            if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun && !HealingHasBegun)
             {
                 PartyExploitsPanel.SetActive(true);
                 ActualRemainingWeeksTextGameObject.GetComponent<Text>().text = GameManagerInstance.GetRemainingPartyExploitWeeks(CurrentViewedID).ToString();
                 changePartyExploitsButtonStatesAsNeeded();
-                if (!GameManagerInstance.GetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer()) && !GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()))
+                int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+                if (!GameManagerInstance.GetPlayerIsMoving(myIndex) && !GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex))
                 {
                     PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
                 }
-                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(GameManagerInstance.GetIndexForMyPlayer()) && encounterCard != null && !EncounterHasBegun)
+                if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex) && encounterCard != null && !EncounterHasBegun)
                 {
                     OverallEncounterPanelGameObject.SetActive(true);
                     EncounterFlightButton.SetActive(encounterCard.GetFlightAllowed());
@@ -1715,6 +1800,17 @@ namespace FallenLand
                     onShowGenericPopup("This card was an auto success!");
                     OnAcceptEncounterResultsPress();
                 }
+            }
+            else if (currentPhase == Phases.Party_Exploits_Party && HealingHasBegun)
+            {
+                updateSkillIcons();
+                updateHealingSkillValues();
+
+                updateCharacterImagesAndPanels(null);
+
+                updateEncounterSkillPanel(null);
+                updateEncounterRollButtons(null);
+                updateEncounterFinishedPanel(null);
             }
             else
             {
@@ -1985,13 +2081,61 @@ namespace FallenLand
             return wasMaxDistributed;
         }
 
+        private void showEncounterUi()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+            MainPartyOverviewPanel.SetActive(false);
+            OverallEncounterPanelGameObject.SetActive(false);
+            PartyExploitsPanel.SetActive(false);
+
+            if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex))
+            {
+                MainEncounterCardImage.SetActive(true);
+                MainEncounterCardImage.GetComponent<Image>().sprite = loadEncounterCard();
+                EncounterHasBegun = true;
+                GameManagerInstance.AddSalvageAtStartOfEncounter(GameManagerInstance.GetIndexForMyPlayer(), WasResourceClicked);
+                if (!GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetIsIndividualCheck())
+                {
+                    PartyEncounterPanel.SetActive(true);
+                    IndividualEncounterPanel.SetActive(false);
+                }
+                else
+                {
+                    IndividualEncounterPanel.SetActive(true);
+                    PartyEncounterPanel.SetActive(false);
+                    //Set the first character to make the individual check
+                    List<CharacterCard> characters = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
+                    for (int currentCharacterIndex = 0; currentCharacterIndex < Constants.NUM_PARTY_MEMBERS; currentCharacterIndex++)
+                    {
+                        if (characters[currentCharacterIndex] != null)
+                        {
+                            CurrentIndividualEncounterCharacterIndex = currentCharacterIndex;
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (GameManagerInstance.GetPlayerIsHealing(myIndex))
+            {
+                PartyEncounterPanel.SetActive(true);
+                IndividualEncounterPanel.SetActive(false);
+            }
+        }
+
         private void updateSkillIcons()
         {
             //Determine sprite
             string spriteString = "Cards/CardInformation/";
             Sprite sprite;
-            EncounterCard card = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
-            (Skills skill, int _) = card.GetSkillChecks()[CurrentEncounterSkillPage];
+            Skills skill = Skills.Medical;
+
+            if (EncounterHasBegun)
+            {
+                EncounterCard card = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
+                skill = card.GetSkillChecks()[CurrentEncounterSkillPage].Item1;
+            }
+
             switch (skill)
             {
                 case Skills.Combat:
@@ -2018,10 +2162,7 @@ namespace FallenLand
                     break;
             }
 
-            //Load sprite
-            sprite = (Sprite)Resources.Load<Sprite>(spriteString);
-
-            //Assign sprite
+            sprite = Resources.Load<Sprite>(spriteString);
             for (int i = 0; i < CurrentEncounterRollSymbols.Count; i++)
             {
                 CurrentEncounterRollSymbols[i].GetComponent<Image>().sprite = sprite;
@@ -2057,10 +2198,24 @@ namespace FallenLand
             }
         }
 
+        private void updateHealingSkillValues()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            //Update character values
+            for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+            {
+                CharacterEncounterCurrentStatText[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForCharacter(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
+            }
+
+            //Update vehicle value
+            VehicleEncounterCurrentStatText.GetComponent<Text>().text = GameManagerInstance.GetSkillTotalForVehicle(myIndex, CurrentEncounterSkillPage).ToString();
+        }
+
+
         private void updateCharacterImagesAndPanels(EncounterCard encounterCard)
         {
             List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
-            if (!encounterCard.GetIsIndividualCheck())
+            if (HealingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
             {
                 //Enable character panels that have someone assigned to it
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -2098,7 +2253,7 @@ namespace FallenLand
 
         private void updateEncounterSkillPanel(EncounterCard encounterCard)
         {
-            if (!GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetIsIndividualCheck())
+            if (HealingHasBegun || (encounterCard != null && encounterCard.GetIsIndividualCheck()))
             {
                 updateEncounterSkillPanelForPartyEncounter(encounterCard);
             }
@@ -2111,7 +2266,13 @@ namespace FallenLand
         private void updateEncounterSkillPanelForPartyEncounter(EncounterCard encounterCard)
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            (Skills currentSkill, int valueNeeded) = encounterCard.GetSkillChecks()[CurrentEncounterSkillPage];
+            Skills currentSkill = Skills.Medical;
+            int valueNeeded = -1;
+            if (encounterCard != null)
+            {
+                currentSkill = encounterCard.GetSkillChecks()[CurrentEncounterSkillPage].Item1;
+                valueNeeded = encounterCard.GetSkillChecks()[CurrentEncounterSkillPage].Item2;
+            }
 
             //Update page title
             GameObject.Find("StatPageTitleText").GetComponent<Text>().text = currentSkill.ToString();
@@ -2119,7 +2280,7 @@ namespace FallenLand
             //Update character success values
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
             {
-                if (GameManagerInstance.GetCurrentEncounter(myIndex).GetIsMeleeOnly() && currentSkill == Skills.Combat)
+                if (encounterCard != null && encounterCard.GetIsMeleeOnly() && currentSkill == Skills.Combat)
                 {
                     CurrentEncounterCharacterAutoSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterCombatAutoSuccessesMeleeOnly(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
                     CurrentEncounterCharacterRolledSuccesses[characterIndex].GetComponent<Text>().text = GameManagerInstance.GetCharacterCombatRolledSuccessesMeleeOnly(myIndex, characterIndex, CurrentEncounterSkillPage).ToString();
@@ -2135,7 +2296,14 @@ namespace FallenLand
             CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
 
             //Update total successes needed
-            TotalPartySuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
+            if (EncounterHasBegun)
+            {
+                TotalPartySuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
+            }
+            else if (HealingHasBegun)
+            {
+                TotalPartySuccessesNeededText.GetComponent<Text>().text = "-";
+            }
 
             //Update number of successes had
             NumberOfTotalPartySuccessesText.GetComponent<Text>().text = GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
@@ -2170,7 +2338,7 @@ namespace FallenLand
 
         private void updateEncounterRollButtons(EncounterCard encounterCard)
         {
-            if (!encounterCard.GetIsIndividualCheck())
+            if (HealingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
             {
                 updateEncounterRollButtonsForPartyEncounter();
             }
@@ -2274,9 +2442,14 @@ namespace FallenLand
         private void updateEncounterFinishedPanel(EncounterCard encounterCard)
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex) && GameManagerInstance.IsEncounterFinished(myIndex, CurrentIndividualEncounterCharacterIndex))
+            if (HealingHasBegun && GameManagerInstance.IsHealingFinished(myIndex))
             {
-                if (!encounterCard.GetIsIndividualCheck())
+                PartyEncounterFinishedPanel.SetActive(true);
+                PartyEncounterFinishedPanel.GetComponentInChildren<Text>().text = "Time to heal!";
+            }
+            else if (GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex) && GameManagerInstance.IsEncounterFinished(myIndex, CurrentIndividualEncounterCharacterIndex))
+            {
+                if (encounterCard != null && !encounterCard.GetIsIndividualCheck())
                 {
                     PartyEncounterFinishedPanel.SetActive(true);
                     if (GameManagerInstance.EncounterWasSuccessful(myIndex))

@@ -23,6 +23,7 @@ namespace FallenLand
 		private bool PlayerIsMoving;
 		private Coordinates PartyLocation;
 		private bool PlayerIsDoingAnEncounter;
+		private bool PlayerIsHealing;
 		private int EncounterType;
 		private int ActiveVehicleUsedCarryWeight;
 		private List<List<List<int>>> CharacterDiceRolls;
@@ -261,6 +262,16 @@ namespace FallenLand
 		public bool GetPlayerIsDoingAnEncounter()
 		{
 			return PlayerIsDoingAnEncounter;
+		}
+
+		public void SetPlayerIsHealing(bool isHealing)
+		{
+			PlayerIsHealing = isHealing;
+		}
+
+		public bool GetPlayerIsHealing()
+		{
+			return PlayerIsHealing;
 		}
 
 		public void SetEncounterType(int encounterType)
