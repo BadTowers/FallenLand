@@ -964,16 +964,21 @@ namespace FallenLand
                 int numD6ToRoll = GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage);
                 Dice diceRoller = GameManagerInstance.GetDiceRoller();
                 int amountToHeal = 0;
+                string individualHealString = "(";
                 for (int i = 0; i < numD6ToRoll; i++)
                 {
-                    amountToHeal += diceRoller.RollDice(Constants.D6);
+                    int curRoll = diceRoller.RollDice(Constants.D6);
+                    amountToHeal += curRoll;
+                    individualHealString = individualHealString + curRoll.ToString() + ",";
                 }
+                individualHealString = individualHealString.Remove(individualHealString.Length - 1);
+                individualHealString += ")";
                 if (HealingInStartingTown)
                 {
                     amountToHeal += 1;
                 }
 
-                onShowGenericPopup("You get to heal " + amountToHeal.ToString() + "!");
+                onShowGenericPopup("You get to heal " + amountToHeal.ToString() + individualHealString + "!");
 
                 //TODO finish the rest
             }
@@ -1178,9 +1183,6 @@ namespace FallenLand
         {
             GenericYesNoPopupPanel.SetActive(false);
             GenericNoPressed = true;
-            HealingInNonStartingTown = false;
-            HealingInStartingTown = false;
-            HealingHasBegun = false;
         }
         #endregion
 
@@ -1761,6 +1763,11 @@ namespace FallenLand
                 HealingHasBegun = true;
                 GameManagerInstance.SetPlayerIsHealing(GameManagerInstance.GetIndexForMyPlayer());
                 showEncounterUi();
+            }
+            else if (currentPhase == Phases.Party_Exploits_Party && HealingInNonStartingTown && GenericNoPressed)
+            {
+                GenericNoPressed = false;
+                HealingInNonStartingTown = false;
             }
             
             if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun && !HealingHasBegun)
