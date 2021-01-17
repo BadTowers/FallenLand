@@ -12,6 +12,7 @@ namespace FallenLand
         private int CarryCapacity;
         private int CurrentPsychRemaning;
         private int CurrentHp;
+        private int AmountOfPhysicalDamage;
         private int AmountOfInfectedDamage;
         private int AmountOfRadiationDamage;
         //link. This would map some spoils card to some bonuses. ex) any two wheeled vehicle -> +1 movement and +6 carrying capacity TODO
@@ -70,7 +71,17 @@ namespace FallenLand
 
         public int GetMaxPhysicalHp()
         {
-            return MaxHp - AmountOfInfectedDamage - AmountOfRadiationDamage;
+            return CurrentHp + AmountOfPhysicalDamage;
+        }
+
+        public int GetMaxInfectedHp()
+        {
+            return CurrentHp + AmountOfInfectedDamage;
+        }
+
+        public int GetMaxRadiationHp()
+        {
+            return CurrentHp + AmountOfRadiationDamage;
         }
 
         public void SetHpRemaining(int hpRemaining)
@@ -248,6 +259,12 @@ namespace FallenLand
             CurrentHp -= amountOfDamage;
         }
 
+        public void RemoveInfectedDamage(int amountOfHeal)
+        {
+            AmountOfInfectedDamage -= amountOfHeal;
+            CurrentHp += amountOfHeal;
+        }
+
         public bool CharacterHasInfectedDamage()
         {
             bool hasInfected = false;
@@ -260,11 +277,25 @@ namespace FallenLand
 
         public void AddPhysicalDamage(int amountOfDamage)
         {
+            AmountOfPhysicalDamage += amountOfDamage;
             CurrentHp -= amountOfDamage;
         }
 
         public void RemovePhysicalDamage(int amountOfHeal)
         {
+            AmountOfPhysicalDamage -= amountOfHeal;
+            CurrentHp += amountOfHeal;
+        }
+
+        public void AddRadiationDamage(int amountOfDamage)
+        {
+            AmountOfRadiationDamage += amountOfDamage;
+            CurrentHp -= amountOfDamage;
+        }
+
+        public void RemoveRadiationDamage(int amountOfHeal)
+        {
+            AmountOfRadiationDamage -= amountOfHeal;
             CurrentHp += amountOfHeal;
         }
     }

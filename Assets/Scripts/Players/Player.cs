@@ -860,6 +860,14 @@ namespace FallenLand
 			}
 		}
 
+		public void RemoveInfectedDamageFromCharacter(int characterIndex, int amountOfInfectedHeal)
+		{
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].RemoveInfectedDamage(amountOfInfectedHeal);
+			}
+		}
+
 		public bool CharacterHasInfectedDamage(int characterIndex)
 		{
 			bool hasInfected = false;
@@ -885,6 +893,22 @@ namespace FallenLand
 			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
 			{
 				ActiveCharacters[characterIndex].RemovePhysicalDamage(amountOfPhysicalHeal);
+			}
+		}
+
+		public void AddRadiationDamageToCharacter(int characterIndex, int amountOfRadiationDamage)
+		{
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].AddRadiationDamage(amountOfRadiationDamage);
+			}
+		}
+
+		public void RemoveRadiationDamageFromCharacter(int characterIndex, int amountOfRadiationHeal)
+		{
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				ActiveCharacters[characterIndex].RemoveRadiationDamage(amountOfRadiationHeal);
 			}
 		}
 

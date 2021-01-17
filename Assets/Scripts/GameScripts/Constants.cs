@@ -86,6 +86,22 @@ namespace FallenLand
 		public const byte HEAL_PSYCHOLOGICAL = 5;
 		public const byte HEAL_INFECTED = 6;
 		public const byte HEAL_RADIATION = 7;
+		public static List<byte> DISTRIBUTE_TYPES = new List<byte> 
+		{
+			DAMAGE_PHYSICAL,
+			DAMAGE_PSYCHOLOGICAL,
+			DAMAGE_INFECTED,
+			DAMAGE_RADIATION,
+			HEAL_PHYSICAL,
+			HEAL_PSYCHOLOGICAL,
+			HEAL_INFECTED,
+			HEAL_RADIATION
+		};
+
+		//Used for EvHealingDeed
+		public const byte HEALING_DEED_BEGIN = 0;
+		public const byte HEALING_DEED_COMPLETE = 1;
+
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
@@ -101,5 +117,6 @@ namespace FallenLand
 		public const byte EvMovement = 11;
 		public const byte EvCharacterHealth = 12;
 		public const byte EvResource = 13;
+		public const byte EvHealingDeed = 14;
 	}
 }

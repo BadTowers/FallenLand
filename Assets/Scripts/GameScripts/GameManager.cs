@@ -376,8 +376,8 @@ namespace FallenLand
 				{
 					dealSpecificSpoilToPlayerFromSpecialDeck(playerIndex, cardName);
 				}
-				else if(cardInfo.GetCardByte() == Constants.DISCARDED_SPOILS_CARD)
-                {
+				else if (cardInfo.GetCardByte() == Constants.DISCARDED_SPOILS_CARD)
+				{
 					dealSpecificSpoilToPlayerFromDiscardDeck(playerIndex, cardName);
 				}
 			}
@@ -448,9 +448,13 @@ namespace FallenLand
 			{
 				handleCharacterHealthEvent(photonEvent.CustomData);
 			}
-			else if(eventCode == Constants.EvResource)
-            {
+			else if (eventCode == Constants.EvResource)
+			{
 				handleResourceEvent((ResourceNetworking)photonEvent.CustomData);
+			}
+			else if (eventCode == Constants.EvHealingDeed)
+			{
+				handleHealingDeedEvent((HealingDeedNetworking)photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -1334,8 +1338,9 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				Players[playerIndex].SetPlayerIsHealing(true);
-				Players[playerIndex].SetNumberOfSkillChecks(1);
+				HealingDeedNetworking healingDeed = new HealingDeedNetworking(playerIndex, Constants.HEALING_DEED_BEGIN);
+				sendNetworkEvent(healingDeed, ReceiverGroup.Others, Constants.EvHealingDeed);
+				handleHealingDeedEvent(healingDeed);
 			}
 		}
 
@@ -1781,6 +1786,16 @@ namespace FallenLand
 				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
+			}
+		}
+
+		public void SetHealingResultAccepted(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				HealingDeedNetworking healingDeed = new HealingDeedNetworking(playerIndex, Constants.HEALING_DEED_COMPLETE);
+				sendNetworkEvent(healingDeed, ReceiverGroup.Others, Constants.EvHealingDeed);
+				handleHealingDeedEvent(healingDeed);
 			}
 		}
 
@@ -2936,8 +2951,6 @@ namespace FallenLand
 			switch (townEventRoll)
 			{
 				case 1:
-					//Gain 2 prestige, 4 town health, and 1 action/spoils/character (pick 1)
-					//TODO deal the card after the user picks which
 					Players[playerIndex].AddPrestige(2);
 					Players[playerIndex].AddTownHealth(4);
 					break;
@@ -3122,6 +3135,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(MovementNetworking), Constants.EvMovement, MovementNetworking.SerializeMovement, MovementNetworking.DeserializeMovement);
 			PhotonPeer.RegisterType(typeof(CharacterHealthNetworking), Constants.EvCharacterHealth, CharacterHealthNetworking.SerializeCharacterHealth, CharacterHealthNetworking.DeserializeCharacterHealth);
 			PhotonPeer.RegisterType(typeof(ResourceNetworking), Constants.EvResource, ResourceNetworking.SerializeResource, ResourceNetworking.DeserializeResource);
+			PhotonPeer.RegisterType(typeof(HealingDeedNetworking), Constants.EvHealingDeed, HealingDeedNetworking.SerializeHealingDeed, HealingDeedNetworking.DeserializeHealingDeed);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -3255,9 +3269,21 @@ namespace FallenLand
 			{
 				Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, characterHealth.GetAmount());
 			}
+			else if (characterHealth.GetHealthEventType() == Constants.DAMAGE_RADIATION)
+			{
+				Players[playerIndex].AddRadiationDamageToCharacter(characterIndex, characterHealth.GetAmount());
+			}
 			else if (characterHealth.GetHealthEventType() == Constants.HEAL_PHYSICAL)
 			{
 				Players[playerIndex].RemovePhysicalDamageFromCharacter(characterIndex, characterHealth.GetAmount());
+			}
+			else if (characterHealth.GetHealthEventType() == Constants.HEAL_INFECTED)
+			{
+				Players[playerIndex].RemoveInfectedDamageFromCharacter(characterIndex, characterHealth.GetAmount());
+			}
+			else if (characterHealth.GetHealthEventType() == Constants.HEAL_RADIATION)
+			{
+				Players[playerIndex].RemoveRadiationDamageFromCharacter(characterIndex, characterHealth.GetAmount());
 			}
 
 			handleCharacterDeathIfNecessary(playerIndex, characterIndex, characterHealth.GetShouldDiscardEquipmentIfDead());
@@ -3350,6 +3376,23 @@ namespace FallenLand
 			ResourcePieceManagerInst.RemovePiece(indexOfResourceOwner, locationOfResource);
 			Players[indexOfCapturingPlayer].AddResourceOwned(resourceToExchange);
 			ResourcePieceManagerInst.CreatePiece(indexOfCapturingPlayer, Players[indexOfCapturingPlayer].GetPlayerFaction(), locationOfResource);
+		}
+
+		public void handleHealingDeedEvent(HealingDeedNetworking healingDeedNetworking)
+		{
+			byte status = healingDeedNetworking.GetStatusByte();
+			int playerIndex = healingDeedNetworking.GetPlayerIndex();
+			if (status == Constants.HEALING_DEED_BEGIN)
+			{
+				Players[playerIndex].SetPlayerIsHealing(true);
+				Players[playerIndex].SetNumberOfSkillChecks(1);
+			}
+			else
+			{
+				Players[playerIndex].SetPlayerIsHealing(false);
+				Players[playerIndex].ResetAllCharacterDiceRolls();
+				Players[playerIndex].ResetAllVehicleDiceRolls();
+			}
 		}
 
 		private void endPhaseForAllPlayers()

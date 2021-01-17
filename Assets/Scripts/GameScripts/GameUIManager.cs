@@ -95,6 +95,7 @@ namespace FallenLand
         private GameObject GenericPopupText;
         private GameObject EncounterButton;
         private GameObject ResourceButton;
+        private GameObject HealingButton;
         private bool WasResourceClicked;
         private bool WasEncounterClicked;
         private GameObject SelectCardPanel;
@@ -111,7 +112,7 @@ namespace FallenLand
         private bool HasRolledForDistributeD6;
         private int NumD6sToDistribute;
         private int AmountToDistribute;
-        private List<int> AmountsDistributedPerCharacter;
+        private List<Dictionary<byte, int>> AmountsDistributedPerCharacter;
         private byte DistributeD6Type;
         private GameObject PartyEncounterPanel;
         private GameObject IndividualEncounterPanel;
@@ -133,9 +134,14 @@ namespace FallenLand
         private GameObject GenericYesNoPopupPanel;
         private bool HealingInNonStartingTown;
         private bool HealingInStartingTown;
-        private bool HealingHasBegun;
+        private bool HealingDeedRollingHasBegun;
+        private bool HealingDeedDistributingHasBegun;
         private bool GenericYesPressed;
         private bool GenericNoPressed;
+        private GameObject PreviousDistributionPageButton;
+        private GameObject NextDistributionPageButton;
+        private int CurrentDistributionPage;
+        private Dictionary<int, byte> DistributionPageToDistributeTypeMapping;
 
         #region UnityFunctions
         void Awake()
@@ -177,11 +183,14 @@ namespace FallenLand
             GenericPopupText = GameObject.Find("GenericPopupText");
             EncounterButton = GameObject.Find("EncounterButton");
             ResourceButton = GameObject.Find("ResourceButton");
+            HealingButton = GameObject.Find("HealingButton");
             SelectCardPanel = GameObject.Find("SelectCardPanel");
             CannotModifyPanel = GameObject.Find("CannotModifyPanel");
             EncounterFlightButton = GameObject.Find("EncounterFlightButton");
             PartyEncounterPanel = GameObject.Find("PartyEncounterPanel");
             GenericYesNoPopupPanel = GameObject.Find("GenericYesNoPopupPanel");
+            PreviousDistributionPageButton = GameObject.Find("PreviousDistributionPageButton");
+            NextDistributionPageButton = GameObject.Find("NextDistributionPageButton");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -345,10 +354,14 @@ namespace FallenLand
 
             PartyExploitsInformationTextGameObject.GetComponent<Text>().text = "";
 
-            AmountsDistributedPerCharacter = new List<int>();
-            for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+            AmountsDistributedPerCharacter = new List<Dictionary<byte, int>>();
+            for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
             {
-                AmountsDistributedPerCharacter.Add(0);
+                AmountsDistributedPerCharacter.Add(new Dictionary<byte, int>());
+                for (int distributeTypeIndex = 0; distributeTypeIndex < Constants.DISTRIBUTE_TYPES.Count; distributeTypeIndex++)
+                {
+                    AmountsDistributedPerCharacter[characterIndex][Constants.DISTRIBUTE_TYPES[distributeTypeIndex]] = 0;
+                }
             }
 
             OverallEncounterPanelGameObject.SetActive(false);
@@ -363,6 +376,8 @@ namespace FallenLand
             GenericYesNoPopupPanel.SetActive(false);
             SelectCardPanel.SetActive(false);
             CannotModifyPanel.SetActive(false);
+            PreviousDistributionPageButton.SetActive(false);
+            NextDistributionPageButton.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -755,7 +770,7 @@ namespace FallenLand
             if (GameManagerInstance.IsPartyInStartingLocation(myIndex))
             {
                 HealingInStartingTown = true;
-                HealingHasBegun = true;
+                HealingDeedRollingHasBegun = true;
                 GameManagerInstance.SetPlayerIsHealing(myIndex);
                 showEncounterUi();
             }
@@ -773,7 +788,7 @@ namespace FallenLand
             }
             else
             {
-                HealingHasBegun = true;
+                HealingDeedRollingHasBegun = true;
                 GameManagerInstance.SetPlayerIsHealing(myIndex);
                 showEncounterUi();
             }
@@ -910,7 +925,7 @@ namespace FallenLand
                     CurrentEncounterSkillPage = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer()).GetSkillChecks().Count - 1;
                 }
             }
-            else if (HealingHasBegun)
+            else if (HealingDeedRollingHasBegun)
             {
                 CurrentEncounterSkillPage = 0;
             }
@@ -928,7 +943,7 @@ namespace FallenLand
                     CurrentEncounterSkillPage = 0;
                 }
             }
-            else if (HealingHasBegun)
+            else if (HealingDeedRollingHasBegun)
             {
                 CurrentEncounterSkillPage = 0;
             }
@@ -959,28 +974,13 @@ namespace FallenLand
         public void OnAcceptEncounterResultsPress()
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            if (HealingHasBegun)
+            if (HealingDeedRollingHasBegun)
             {
-                int numD6ToRoll = GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage);
-                Dice diceRoller = GameManagerInstance.GetDiceRoller();
-                int amountToHeal = 0;
-                string individualHealString = "(";
-                for (int i = 0; i < numD6ToRoll; i++)
-                {
-                    int curRoll = diceRoller.RollDice(Constants.D6);
-                    amountToHeal += curRoll;
-                    individualHealString = individualHealString + curRoll.ToString() + ",";
-                }
-                individualHealString = individualHealString.Remove(individualHealString.Length - 1);
-                individualHealString += ")";
-                if (HealingInStartingTown)
-                {
-                    amountToHeal += 1;
-                }
+                resetAfterEncounter();
+                HealingDeedRollingHasBegun = false;
+                HealingDeedDistributingHasBegun = true;
 
-                onShowGenericPopup("You get to heal " + amountToHeal.ToString() + individualHealString + "!");
-
-                //TODO finish the rest
+                onDistributeD6HealingPopup(GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage), new List<byte> { Constants.HEAL_PHYSICAL, Constants.HEAL_INFECTED, Constants.HEAL_RADIATION});
             }
             else
             {
@@ -1089,6 +1089,10 @@ namespace FallenLand
             {
                 AmountToDistribute += GameManagerInstance.GetDiceRoller().RollDice(Constants.D6);
             }
+            if (HealingInStartingTown)
+            {
+                AmountToDistribute += 1;
+            }
             updateDistributeD6Panel();
         }
 
@@ -1146,17 +1150,26 @@ namespace FallenLand
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             List<CharacterCard> party = GameManagerInstance.GetActiveCharacterCards(myIndex);
+            if (HealingDeedDistributingHasBegun)
+            {
+                GameManagerInstance.SetHealingResultAccepted(myIndex);
+            }
+
             for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
             {
-                if (party[characterIndex] != null && AmountsDistributedPerCharacter[characterIndex] > 0)
+                for (int distributionTypeIndex = 0; distributionTypeIndex < Constants.DISTRIBUTE_TYPES.Count; distributionTypeIndex++)
                 {
-                    if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
+                    DistributeD6Type = Constants.DISTRIBUTE_TYPES[distributionTypeIndex];
+                    if (party[characterIndex] != null && AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] > 0)
                     {
-                        GameManagerInstance.CharacterCrownTakesSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex], DistributeD6Type);
-                    }
-                    else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
-                    {
-                        GameManagerInstance.CharacterCrownHealsSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex], DistributeD6Type);
+                        if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED || DistributeD6Type == Constants.DAMAGE_RADIATION)
+                        {
+                            GameManagerInstance.CharacterCrownTakesSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex][DistributeD6Type], DistributeD6Type);
+                        }
+                        else if (DistributeD6Type == Constants.HEAL_PHYSICAL || DistributeD6Type == Constants.HEAL_INFECTED || DistributeD6Type == Constants.HEAL_RADIATION)
+                        {
+                            GameManagerInstance.CharacterCrownHealsSetAmountOfDamage(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex][DistributeD6Type], DistributeD6Type);
+                        }
                     }
                 }
             }
@@ -1164,13 +1177,18 @@ namespace FallenLand
             //Reset vars for next time
             for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
             {
-                AmountsDistributedPerCharacter[characterIndex] = 0;
+                for (int distributionTypeIndex = 0; distributionTypeIndex < Constants.DISTRIBUTE_TYPES.Count; distributionTypeIndex++)
+                {
+                    AmountsDistributedPerCharacter[characterIndex][Constants.DISTRIBUTE_TYPES[distributionTypeIndex]] = 0;
+                }
             }
             HasRolledForDistributeD6 = false;
             DistributeD6PopupPanel.SetActive(false);
             NumD6sToDistribute = 0;
+            AmountToDistribute = 0;
             DistributeD6DoneButton.GetComponent<Button>().interactable = false;
             D6DistributeRollButton.GetComponent<Button>().interactable = true;
+            HealingDeedDistributingHasBegun = false;
         }
 
         public void OnGenericYesNo_YesPress()
@@ -1183,6 +1201,28 @@ namespace FallenLand
         {
             GenericYesNoPopupPanel.SetActive(false);
             GenericNoPressed = true;
+        }
+
+        public void OnPreviousDistributionPagePress()
+        {
+            CurrentDistributionPage--;
+            if (CurrentDistributionPage < 0)
+            {
+                CurrentDistributionPage = DistributionPageToDistributeTypeMapping.Count - 1;
+            }
+            DistributeD6Type = DistributionPageToDistributeTypeMapping[CurrentDistributionPage];
+            updateDistributeD6Panel();
+        }
+
+        public void OnNextDistributionPagePress()
+        {
+            CurrentDistributionPage++;
+            if (CurrentDistributionPage > DistributionPageToDistributeTypeMapping.Count - 1)
+            {
+                CurrentDistributionPage = 0;
+            }
+            DistributeD6Type = DistributionPageToDistributeTypeMapping[CurrentDistributionPage];
+            updateDistributeD6Panel();
         }
         #endregion
 
@@ -1198,14 +1238,14 @@ namespace FallenLand
         private void distributeD6PlusCommon(int characterIndex)
         {
             AmountToDistribute -= 1;
-            AmountsDistributedPerCharacter[characterIndex] += 1;
+            AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] += 1;
             updateDistributeD6Panel();
         }
 
         private void distributeD6MinusCommon(int characterIndex)
         {
             AmountToDistribute += 1;
-            AmountsDistributedPerCharacter[characterIndex] -= 1;
+            AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] -= 1;
             updateDistributeD6Panel();
         }
 
@@ -1218,6 +1258,8 @@ namespace FallenLand
 
         private void onDistributeD6DamagePopup(int numD6s, byte damageType)
         {
+            CurrentDistributionPage = 0;
+            DistributionPageToDistributeTypeMapping = new Dictionary<int, byte> { { 0, damageType } };
             DistributeD6Type = damageType;
             DistributeD6PopupPanel.SetActive(true);
             NumD6sToDistribute = numD6s;
@@ -1226,7 +1268,23 @@ namespace FallenLand
 
         private void onDistributeD6HealingPopup(int numD6s, byte healingType)
         {
+            CurrentDistributionPage = 0;
+            DistributionPageToDistributeTypeMapping = new Dictionary<int, byte> { { 0, healingType } };
             DistributeD6Type = healingType;
+            DistributeD6PopupPanel.SetActive(true);
+            NumD6sToDistribute = numD6s;
+            updateDistributeD6Panel();
+        }
+
+        private void onDistributeD6HealingPopup(int numD6s, List<byte> healingTypes)
+        {
+            CurrentDistributionPage = 0;
+            DistributionPageToDistributeTypeMapping = new Dictionary<int, byte>();
+            for (int pageIndex = 0; pageIndex < healingTypes.Count; pageIndex++)
+            {
+                DistributionPageToDistributeTypeMapping[pageIndex] = healingTypes[pageIndex];
+            }
+            DistributeD6Type = DistributionPageToDistributeTypeMapping[CurrentDistributionPage];
             DistributeD6PopupPanel.SetActive(true);
             NumD6sToDistribute = numD6s;
             updateDistributeD6Panel();
@@ -1760,7 +1818,7 @@ namespace FallenLand
                 GenericYesPressed = false;
                 Debug.LogError("TODO, subtract 5 salvage from player");
                 Debug.LogError("TODO, add 5 salvage to other player if needed");
-                HealingHasBegun = true;
+                HealingDeedRollingHasBegun = true;
                 GameManagerInstance.SetPlayerIsHealing(GameManagerInstance.GetIndexForMyPlayer());
                 showEncounterUi();
             }
@@ -1769,8 +1827,8 @@ namespace FallenLand
                 GenericNoPressed = false;
                 HealingInNonStartingTown = false;
             }
-            
-            if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun && !HealingHasBegun)
+
+            if (currentPhase == Phases.Party_Exploits_Party && !EncounterHasBegun && !HealingDeedRollingHasBegun)
             {
                 PartyExploitsPanel.SetActive(true);
                 ActualRemainingWeeksTextGameObject.GetComponent<Text>().text = GameManagerInstance.GetRemainingPartyExploitWeeks(CurrentViewedID).ToString();
@@ -1808,7 +1866,7 @@ namespace FallenLand
                     OnAcceptEncounterResultsPress();
                 }
             }
-            else if (currentPhase == Phases.Party_Exploits_Party && HealingHasBegun)
+            else if (currentPhase == Phases.Party_Exploits_Party && HealingDeedRollingHasBegun)
             {
                 updateSkillIcons();
                 updateHealingSkillValues();
@@ -1868,6 +1926,7 @@ namespace FallenLand
                 EncounterButton.GetComponent<Button>().interactable = shouldEnableEncounterDeedButton;
                 bool shouldEnableResourceDeedButton = mapLayout.IsResource(partyLocation);
                 ResourceButton.GetComponent<Button>().interactable = shouldEnableResourceDeedButton;
+                HealingButton.GetComponent<Button>().interactable = true;
             }
             else
             {
@@ -1875,7 +1934,7 @@ namespace FallenLand
                 EncounterButton.GetComponent<Button>().interactable = false;
                 GameObject.Find("PVPButton").GetComponent<Button>().interactable = false;
                 ResourceButton.GetComponent<Button>().interactable = false;
-                GameObject.Find("HealingButton").GetComponent<Button>().interactable = false;
+                HealingButton.GetComponent<Button>().interactable = false;
                 GameObject.Find("MissionButton").GetComponent<Button>().interactable = false;
             }
         }
@@ -1991,7 +2050,7 @@ namespace FallenLand
                     DistributeD6CharacterPanels[curCharacterIndex].transform.Find("CharacterImage").GetComponentInChildren<Image>().sprite = partyCharacters[curCharacterIndex].GetCardImage();
                     updateDistributeD6MinusButton(DistributeD6CharacterPanels[curCharacterIndex].transform.Find("MinusButton").GetComponentInChildren<Button>(), curCharacterIndex);
                     updateDistributeD6PlusButton(DistributeD6CharacterPanels[curCharacterIndex].transform.Find("PlusButton").GetComponentInChildren<Button>(), curCharacterIndex, partyCharacters[curCharacterIndex]);
-                    DistributeD6CharacterPanels[curCharacterIndex].transform.Find("AmountDistributedText").GetComponentInChildren<Text>().text = AmountsDistributedPerCharacter[curCharacterIndex].ToString();
+                    DistributeD6CharacterPanels[curCharacterIndex].transform.Find("AmountDistributedText").GetComponentInChildren<Text>().text = AmountsDistributedPerCharacter[curCharacterIndex][DistributeD6Type].ToString();
                     int theoreticalNewHP = getTheoreticalCurrentHp(curCharacterIndex, partyCharacters[curCharacterIndex]);
                     DistributeD6CharacterPanels[curCharacterIndex].transform.Find("RemainingHPActualText").GetComponentInChildren<Text>().text = theoreticalNewHP.ToString() + "/" + partyCharacters[curCharacterIndex].GetMaxHp();
                 }
@@ -2000,6 +2059,10 @@ namespace FallenLand
                     DistributeD6CharacterPanels[curCharacterIndex].SetActive(false);
                 }
             }
+
+            //Show the page arrows if there are multiple types of damage to distribute/heal
+            PreviousDistributionPageButton.SetActive(HealingDeedDistributingHasBegun);
+            NextDistributionPageButton.SetActive(HealingDeedDistributingHasBegun);
         }
 
         private void updateDistributeD6Title()
@@ -2016,6 +2079,14 @@ namespace FallenLand
             {
                 D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Physical Healing";
             }
+            else if (DistributeD6Type == Constants.HEAL_INFECTED)
+            {
+                D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Infected Healing";
+            }
+            else if (DistributeD6Type == Constants.HEAL_RADIATION)
+            {
+                D6DistributeTitleText.GetComponent<Text>().text = "Distribute D6 Radiation Healing";
+            }
         }
 
         private void updateDistributeD6RollPanel()
@@ -2028,12 +2099,12 @@ namespace FallenLand
         {
             if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
             {
-                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] > 0;
+                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] > 0;
                 minusButton.interactable = shouldEnable;
             }
-            else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
+            else if (DistributeD6Type == Constants.HEAL_PHYSICAL || DistributeD6Type == Constants.HEAL_INFECTED || DistributeD6Type == Constants.HEAL_RADIATION)
             {
-                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] > 0;
+                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] > 0;
                 minusButton.interactable = shouldEnable;
             }
         }
@@ -2042,12 +2113,22 @@ namespace FallenLand
         {
             if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
             {
-                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex] < characterCard.GetHpRemaining() && AmountToDistribute > 0;
+                bool shouldEnable = HasRolledForDistributeD6 && AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] < characterCard.GetHpRemaining() && AmountToDistribute > 0;
                 plusButton.interactable = shouldEnable;
             }
             else if (DistributeD6Type == Constants.HEAL_PHYSICAL)
             {
-                bool shouldEnable = HasRolledForDistributeD6 && (AmountsDistributedPerCharacter[characterIndex] + characterCard.GetHpRemaining() < characterCard.GetMaxPhysicalHp()) && AmountToDistribute > 0;
+                bool shouldEnable = HasRolledForDistributeD6 && (AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] + characterCard.GetHpRemaining() < characterCard.GetMaxPhysicalHp()) && AmountToDistribute > 0;
+                plusButton.interactable = shouldEnable;
+            }
+            else if (DistributeD6Type == Constants.HEAL_INFECTED)
+            {
+                bool shouldEnable = HasRolledForDistributeD6 && (AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] + characterCard.GetHpRemaining() < characterCard.GetMaxInfectedHp()) && AmountToDistribute > 0;
+                plusButton.interactable = shouldEnable;
+            }
+            else if (DistributeD6Type == Constants.HEAL_RADIATION)
+            {
+                bool shouldEnable = HasRolledForDistributeD6 && (AmountsDistributedPerCharacter[characterIndex][DistributeD6Type] + characterCard.GetHpRemaining() < characterCard.GetMaxRadiationHp()) && AmountToDistribute > 0;
                 plusButton.interactable = shouldEnable;
             }
         }
@@ -2055,18 +2136,23 @@ namespace FallenLand
         private int getTheoreticalCurrentHp(int characterIndex, CharacterCard curCharacter)
         {
             int theoretical = 0;
-            if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED)
+            if (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED || DistributeD6Type == Constants.DAMAGE_RADIATION)
             {
-                theoretical = curCharacter.GetHpRemaining() - AmountsDistributedPerCharacter[characterIndex];
+                theoretical = curCharacter.GetHpRemaining() - AmountsDistributedPerCharacter[characterIndex][Constants.DAMAGE_PHYSICAL];
+                theoretical -= AmountsDistributedPerCharacter[characterIndex][Constants.DAMAGE_INFECTED];
+                theoretical -= AmountsDistributedPerCharacter[characterIndex][Constants.DAMAGE_RADIATION];
             }
-            else if(DistributeD6Type == Constants.HEAL_PHYSICAL)
+            else if (DistributeD6Type == Constants.HEAL_PHYSICAL || DistributeD6Type == Constants.HEAL_INFECTED || DistributeD6Type == Constants.HEAL_RADIATION)
             {
-                theoretical = curCharacter.GetHpRemaining() + AmountsDistributedPerCharacter[characterIndex];
+                theoretical = curCharacter.GetHpRemaining() + AmountsDistributedPerCharacter[characterIndex][Constants.HEAL_PHYSICAL];
+                theoretical += AmountsDistributedPerCharacter[characterIndex][Constants.HEAL_INFECTED];
+                theoretical += AmountsDistributedPerCharacter[characterIndex][Constants.HEAL_RADIATION];
             }
 
             return theoretical;
         }
 
+        //Assume you will never have both damage and heal in the same set of pages for distributing
         private bool wasMaxAmountDistributed()
         {
             bool wasMaxDistributed = true;
@@ -2075,13 +2161,45 @@ namespace FallenLand
             {
                 if (party[characterIndex] != null)
                 {
-                    if (getTheoreticalCurrentHp(characterIndex, party[characterIndex]) > 0 && (DistributeD6Type == Constants.DAMAGE_PHYSICAL || DistributeD6Type == Constants.DAMAGE_INFECTED))
+                    int currentHp = party[characterIndex].GetHpRemaining();
+                    int maxHp = party[characterIndex].GetMaxHp();
+                    int runningCurrentHp = currentHp;
+                    bool shouldCheck = false;
+                    if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.DAMAGE_PHYSICAL))
                     {
-                        wasMaxDistributed = false;
+                        runningCurrentHp -= AmountsDistributedPerCharacter[characterIndex][Constants.DAMAGE_PHYSICAL];
+                        shouldCheck = true;
                     }
-                    else if (getTheoreticalCurrentHp(characterIndex, party[characterIndex]) < party[characterIndex].GetMaxPhysicalHp() && DistributeD6Type == Constants.HEAL_PHYSICAL)
+                    if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.DAMAGE_INFECTED))
+                    {
+                        runningCurrentHp -= AmountsDistributedPerCharacter[characterIndex][Constants.DAMAGE_INFECTED];
+                        shouldCheck = true;
+                    }
+                    if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.DAMAGE_RADIATION))
+                    {
+                        runningCurrentHp -= AmountsDistributedPerCharacter[characterIndex][Constants.DAMAGE_RADIATION];
+                        shouldCheck = true;
+                    }
+                    if (runningCurrentHp > 0 && shouldCheck)
                     {
                         wasMaxDistributed = false;
+                        break;
+                    }
+
+                    if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.HEAL_PHYSICAL) && currentHp + AmountsDistributedPerCharacter[characterIndex][Constants.HEAL_PHYSICAL] < party[characterIndex].GetMaxPhysicalHp())
+                    {
+                        wasMaxDistributed = false;
+                        break;
+                    }
+                    if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.HEAL_INFECTED) && currentHp + AmountsDistributedPerCharacter[characterIndex][Constants.HEAL_INFECTED] < party[characterIndex].GetMaxInfectedHp())
+                    {
+                        wasMaxDistributed = false;
+                        break;
+                    }
+                    if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.HEAL_RADIATION) && currentHp + AmountsDistributedPerCharacter[characterIndex][Constants.HEAL_RADIATION] < party[characterIndex].GetMaxRadiationHp())
+                    {
+                        wasMaxDistributed = false;
+                        break;
                     }
                 }
             }
@@ -2222,7 +2340,7 @@ namespace FallenLand
         private void updateCharacterImagesAndPanels(EncounterCard encounterCard)
         {
             List<CharacterCard> characterCards = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
-            if (HealingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
+            if (HealingDeedRollingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
             {
                 //Enable character panels that have someone assigned to it
                 for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -2260,7 +2378,7 @@ namespace FallenLand
 
         private void updateEncounterSkillPanel(EncounterCard encounterCard)
         {
-            if (HealingHasBegun || (encounterCard != null && encounterCard.GetIsIndividualCheck()))
+            if (HealingDeedRollingHasBegun || (encounterCard != null && encounterCard.GetIsIndividualCheck()))
             {
                 updateEncounterSkillPanelForPartyEncounter(encounterCard);
             }
@@ -2307,7 +2425,7 @@ namespace FallenLand
             {
                 TotalPartySuccessesNeededText.GetComponent<Text>().text = valueNeeded.ToString();
             }
-            else if (HealingHasBegun)
+            else if (HealingDeedRollingHasBegun)
             {
                 TotalPartySuccessesNeededText.GetComponent<Text>().text = "-";
             }
@@ -2345,7 +2463,7 @@ namespace FallenLand
 
         private void updateEncounterRollButtons(EncounterCard encounterCard)
         {
-            if (HealingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
+            if (HealingDeedRollingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
             {
                 updateEncounterRollButtonsForPartyEncounter();
             }
@@ -2449,7 +2567,7 @@ namespace FallenLand
         private void updateEncounterFinishedPanel(EncounterCard encounterCard)
         {
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            if (HealingHasBegun && GameManagerInstance.IsHealingFinished(myIndex))
+            if (HealingDeedRollingHasBegun && GameManagerInstance.IsHealingFinished(myIndex))
             {
                 PartyEncounterFinishedPanel.SetActive(true);
                 PartyEncounterFinishedPanel.GetComponentInChildren<Text>().text = "Time to heal!";
