@@ -226,7 +226,7 @@ namespace FallenLand
 				do
 				{
 					prechecksHeld = true;
-					List<Precheck> prechecks = PlainsDeck[cardIndex].GetPrechecks();
+					List<Precheck> prechecks = getPrechecks(GetPlayerEncounterType(myIndex), cardIndex);
 					if (prechecks.Count == 0)
 					{
 						break;
@@ -242,12 +242,19 @@ namespace FallenLand
 						}
 					}
 
-					if(cardIndex >= PlainsDeck.Count)
-                    {
-						Debug.LogError("Ran out of cards. Should shuffle and network to everyone else to shuffle!");
-						//TODO actually shuffle
+					if (cardIndex >= PlainsDeck.Count && DiscardedPlainsCards.Count > 0)
+					{
+						Debug.Log("Ran out of cards in the deck and there are discarded cards. Shuffling and networking to try to find a card where prechecks hold");
+						ShuffleNetworking shuffle = new ShuffleNetworking(getDeckToShuffleFromEncounterType(GetPlayerEncounterType(myIndex)));
+						sendNetworkEvent(shuffle, ReceiverGroup.Others, Constants.EvShuffle);
+						handleShuffleEvent(shuffle);
 						cardIndex = 0;
-						break; //for now
+					}
+					else
+					{
+						Debug.Log("There exists no cards in the discard deck, so we have to do the first card even though we didn't pass prechecks");
+						cardIndex = 0;
+						break;
 					}
 				}
 				while (cardIndex < PlainsDeck.Count && !prechecksHeld);
@@ -455,6 +462,10 @@ namespace FallenLand
 			else if (eventCode == Constants.EvHealingDeed)
 			{
 				handleHealingDeedEvent((HealingDeedNetworking)photonEvent.CustomData);
+			}
+			else if (eventCode == Constants.EvShuffle)
+			{
+				handleShuffleEvent((ShuffleNetworking)photonEvent.CustomData);
 			}
 		}
 		#endregion
@@ -3136,6 +3147,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(CharacterHealthNetworking), Constants.EvCharacterHealth, CharacterHealthNetworking.SerializeCharacterHealth, CharacterHealthNetworking.DeserializeCharacterHealth);
 			PhotonPeer.RegisterType(typeof(ResourceNetworking), Constants.EvResource, ResourceNetworking.SerializeResource, ResourceNetworking.DeserializeResource);
 			PhotonPeer.RegisterType(typeof(HealingDeedNetworking), Constants.EvHealingDeed, HealingDeedNetworking.SerializeHealingDeed, HealingDeedNetworking.DeserializeHealingDeed);
+			PhotonPeer.RegisterType(typeof(ShuffleNetworking), Constants.EvShuffle, ShuffleNetworking.SerializeShuffle, ShuffleNetworking.DeserializeShuffle);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -3378,7 +3390,7 @@ namespace FallenLand
 			ResourcePieceManagerInst.CreatePiece(indexOfCapturingPlayer, Players[indexOfCapturingPlayer].GetPlayerFaction(), locationOfResource);
 		}
 
-		public void handleHealingDeedEvent(HealingDeedNetworking healingDeedNetworking)
+		private void handleHealingDeedEvent(HealingDeedNetworking healingDeedNetworking)
 		{
 			byte status = healingDeedNetworking.GetStatusByte();
 			int playerIndex = healingDeedNetworking.GetPlayerIndex();
@@ -3392,6 +3404,35 @@ namespace FallenLand
 				Players[playerIndex].SetPlayerIsHealing(false);
 				Players[playerIndex].ResetAllCharacterDiceRolls();
 				Players[playerIndex].ResetAllVehicleDiceRolls();
+			}
+		}
+
+		private void handleShuffleEvent(ShuffleNetworking shuffle)
+		{
+			byte deckToShuffle = shuffle.GetDeckToShuffle();
+			if (deckToShuffle == Constants.SHUFFLE_ACTION)
+			{
+				
+			}
+			else if (deckToShuffle == Constants.SHUFFLE_CHARACTERS)
+			{
+			
+			}
+			else if (deckToShuffle == Constants.SHUFFLE_CITYRAD)
+			{
+
+			}
+			else if (deckToShuffle == Constants.SHUFFLE_MOUNTAINS)
+			{
+
+			}
+			else if (deckToShuffle == Constants.SHUFFLE_PLAINS)
+			{
+
+			}
+			else if (deckToShuffle == Constants.SHUFFLE_SPOILS)
+			{
+
 			}
 		}
 
@@ -3415,6 +3456,34 @@ namespace FallenLand
 			//todo for mountains
 
 			//todo for city/rad
+		}
+
+		private byte getDeckToShuffleFromEncounterType(int encounterType)
+		{
+			byte deckByte = Constants.SHUFFLE_PLAINS;
+			if (encounterType == Constants.ENCOUNTER_CITY_RAD)
+			{
+				deckByte = Constants.SHUFFLE_CITYRAD;
+			}
+			else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
+			{
+				deckByte = Constants.SHUFFLE_MOUNTAINS;
+			}
+			return deckByte;
+		}
+
+		private List<Precheck> getPrechecks(int encounterType, int cardIndex)
+		{
+			List<Precheck> prechecks = PlainsDeck[cardIndex].GetPrechecks();
+			if (encounterType == Constants.ENCOUNTER_CITY_RAD)
+			{
+				//prechecks = CityRadDeck[cardIndex].GetPrechecks();
+			}
+			else if (encounterType == Constants.ENCOUNTER_MOUNTAINS)
+			{
+				//prechecks = MountaisDeck[cardIndex].GetPrechecks();
+			}
+			return prechecks;
 		}
 
 		private void handleEffects()

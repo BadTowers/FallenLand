@@ -102,6 +102,14 @@ namespace FallenLand
 		public const byte HEALING_DEED_BEGIN = 0;
 		public const byte HEALING_DEED_COMPLETE = 1;
 
+		//Used for EvShuffle
+		public const byte SHUFFLE_SPOILS = 0;
+		public const byte SHUFFLE_CHARACTERS = 1;
+		public const byte SHUFFLE_ACTION = 2;
+		public const byte SHUFFLE_PLAINS = 3;
+		public const byte SHUFFLE_MOUNTAINS = 4;
+		public const byte SHUFFLE_CITYRAD = 5;
+
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
@@ -118,5 +126,6 @@ namespace FallenLand
 		public const byte EvCharacterHealth = 12;
 		public const byte EvResource = 13;
 		public const byte EvHealingDeed = 14;
+		public const byte EvShuffle = 15;
 	}
 }
