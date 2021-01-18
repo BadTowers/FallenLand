@@ -110,6 +110,10 @@ namespace FallenLand
 		public const byte SHUFFLE_MOUNTAINS = 4;
 		public const byte SHUFFLE_CITYRAD = 5;
 
+		//Used for EvSalvage
+		public const byte SALVAGE_GAIN = 0;
+		public const byte SALVAGE_LOSE = 1;
+
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
@@ -127,5 +131,6 @@ namespace FallenLand
 		public const byte EvResource = 13;
 		public const byte EvHealingDeed = 14;
 		public const byte EvShuffle = 15;
+		public const byte EvSalvage = 16;
 	}
 }

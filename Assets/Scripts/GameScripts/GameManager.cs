@@ -467,6 +467,10 @@ namespace FallenLand
 			{
 				handleShuffleEvent((ShuffleNetworking)photonEvent.CustomData);
 			}
+			else if (eventCode == Constants.EvSalvage)
+			{
+				handleSalvageNetworkingEvent((SalvageNetworking)photonEvent.CustomData);
+			}
 		}
 		#endregion
 
@@ -1041,13 +1045,13 @@ namespace FallenLand
 
 		public void DealNextRelicSpoilsToPlayer(int playerIndex)
 		{
-			for (int i = 0; i < SpoilsDeck.Count; i++)
+			for (int spoilsIndex = 0; spoilsIndex < SpoilsDeck.Count; spoilsIndex++)
 			{
-				if (SpoilsDeck[i].GetIsRelic())
+				if (SpoilsDeck[spoilsIndex].GetIsRelic())
 				{
-					object content = new CardNetworking(SpoilsDeck[i].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+					object content = new CardNetworking(SpoilsDeck[spoilsIndex].GetTitle(), playerIndex, Constants.SPOILS_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-					dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[i].GetTitle());
+					dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[spoilsIndex].GetTitle());
 					break;
 				}
 			}
@@ -1056,18 +1060,35 @@ namespace FallenLand
 		public bool DealNextMasterCharacterToPlayer(int playerIndex)
 		{
 			bool characterDealt = false;
-			for (int i = 0; i < CharacterDeck.Count; i++)
+			for (int characterDeckIndex = 0; characterDeckIndex < CharacterDeck.Count; characterDeckIndex++)
 			{
-				if (CharacterDeck[i].GetIsMaster())
+				if (CharacterDeck[characterDeckIndex].GetIsMaster())
 				{
-					object content = new CardNetworking(CharacterDeck[i].GetTitle(), playerIndex, Constants.CHARACTER_CARD);
+					object content = new CardNetworking(CharacterDeck[characterDeckIndex].GetTitle(), playerIndex, Constants.CHARACTER_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-					dealSpecificCharacterToPlayerFromDeck(playerIndex, CharacterDeck[i].GetTitle());
+					dealSpecificCharacterToPlayerFromDeck(playerIndex, CharacterDeck[characterDeckIndex].GetTitle());
 					characterDealt = true;
 					break;
 				}
 			}
 			return characterDealt;
+		}
+
+		public bool DealNextAlcoholSpoilsToPlayer(int playerIndex)
+		{
+			bool spoilsDealt = false;
+			for (int spoilsIndex = 0; spoilsIndex < SpoilsDeck.Count; spoilsIndex++)
+			{
+				if (SpoilsDeck[spoilsIndex].GetSpoilsTypes().Contains(SpoilsTypes.Alcohol))
+				{
+					object content = new CardNetworking(SpoilsDeck[spoilsIndex].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+                    dealSpecificSpoilToPlayerFromDeck(playerIndex, SpoilsDeck[spoilsIndex].GetTitle());
+					spoilsDealt = true;
+					break;
+				}
+			}
+			return spoilsDealt;
 		}
 
 		public void ApplyPsychDamageToWholeParty(int playerIndex, int amountOfDamage)
@@ -1826,6 +1847,16 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddSalvageToPlayer(amountToGain);
+			}
+		}
+
+		public void NetworkSalvage(int playerIndex, int amount, byte action)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				SalvageNetworking salvage = new SalvageNetworking(playerIndex, amount, action);
+				sendNetworkEvent(salvage, ReceiverGroup.Others, Constants.EvSalvage);
+				handleSalvageNetworkingEvent(salvage);
 			}
 		}
 
@@ -3143,6 +3174,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(ResourceNetworking), Constants.EvResource, ResourceNetworking.SerializeResource, ResourceNetworking.DeserializeResource);
 			PhotonPeer.RegisterType(typeof(HealingDeedNetworking), Constants.EvHealingDeed, HealingDeedNetworking.SerializeHealingDeed, HealingDeedNetworking.DeserializeHealingDeed);
 			PhotonPeer.RegisterType(typeof(ShuffleNetworking), Constants.EvShuffle, ShuffleNetworking.SerializeShuffle, ShuffleNetworking.DeserializeShuffle);
+			PhotonPeer.RegisterType(typeof(SalvageNetworking), Constants.EvSalvage, SalvageNetworking.SerializeSalvage, SalvageNetworking.DeserializeSalvage);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -3448,6 +3480,20 @@ namespace FallenLand
 					DiscardedSpoilsDeck.RemoveAt(cardIndex);
 				}
 				SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
+			}
+		}
+
+		private void handleSalvageNetworkingEvent(SalvageNetworking salvageNetworking)
+		{
+			int playerIndex = salvageNetworking.GetPlayerIndex();
+			byte action = salvageNetworking.GetAction();
+			if (action == Constants.SALVAGE_GAIN)
+			{
+				Players[playerIndex].AddSalvageToPlayer(salvageNetworking.GetAmount());
+			}
+			else if(action == Constants.SALVAGE_LOSE)
+            {
+				Players[playerIndex].RemoveSalvageFromPlayer(salvageNetworking.GetAmount());
 			}
 		}
 

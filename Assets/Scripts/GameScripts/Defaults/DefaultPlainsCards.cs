@@ -138,7 +138,7 @@ namespace FallenLand
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
-			//TODO add reward as gain the next alcohol spoils. If none are in the deck, gain 5 salvage
+			curCard.AddRewardOnSuccess(new GainNextAlchoholSpoilsElseSalvage(5));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			//TODO add punishment. roll 1d6 to determine character. If 6 or crown empty, ignore, else that crown sustains 2d6 physical damage
