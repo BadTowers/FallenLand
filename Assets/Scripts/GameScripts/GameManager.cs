@@ -1375,11 +1375,6 @@ namespace FallenLand
 			return encounterType;
 		}
 
-		public void SetPlayerDidFlight(bool wasSuccessful)
-        {
-			Debug.LogError("TODO implement SetPlayerDidFlight");
-		}
-
 		public int GetSkillTotalForCharacter(int playerIndex, int characterIndex, int skillIndex)
 		{
 			int skillValue = 0;
