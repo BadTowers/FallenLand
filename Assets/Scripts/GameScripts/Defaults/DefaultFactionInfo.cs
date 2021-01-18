@@ -81,7 +81,7 @@ namespace FallenLand
 				"of the Ten Towns. Frequently playing the role of peacekeeper and brokering deals among the other Factions, they prefer to assert themselves through the use of soft power. While they " +
 				"are considered less militant than the other factions, as they have proven many times, their militia is efficient and well-trained.\n";
 			curFac.SetLore(lore);
-			curTech = availableTownTechs.GetTownTechByName("Medical Center"); //TODO maybe make this be not a string
+			curTech = availableTownTechs.GetTownTechByName("Medical Center");
 			curFac.AddStartingTownTech(curTech);
 			curTech = availableTownTechs.GetTownTechByName("Learning Center");
 			curFac.AddStartingTownTech(curTech);
