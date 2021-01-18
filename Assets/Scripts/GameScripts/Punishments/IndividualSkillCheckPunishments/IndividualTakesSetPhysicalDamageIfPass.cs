@@ -11,7 +11,6 @@ namespace FallenLand
 
         public override void HandlePunishment(GameManager gameManager, int playerIndex)
         {
-            UnityEngine.Debug.LogError("TODO implement IndividualTakesInfectedDamage");
             EncounterCard encounter = gameManager.GetCurrentEncounter(playerIndex);
             List<int> d6Rolls = encounter.GetD6Rolls();
             List<byte> individualPassFailStates = encounter.GetIndividualPassFail();
