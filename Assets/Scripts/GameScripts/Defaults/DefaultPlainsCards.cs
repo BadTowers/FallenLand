@@ -400,7 +400,7 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishmentOnFail(new LoseTownHealth(1));
-			//TODO punishment -- discard all "ally" spoils cards
+			curCard.AddPunishmentOnFail(new LoseAllAllySpoilsCards());
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);

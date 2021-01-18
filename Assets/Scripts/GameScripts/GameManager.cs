@@ -2288,6 +2288,45 @@ namespace FallenLand
 			}
 		}
 
+		public void LoseAllAllySpoilsCards(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				//Remove allies from party
+				List<CharacterCard> charactersInParty = Players[playerIndex].GetActiveCharacters();
+				for (int characterIndex = 0; characterIndex < charactersInParty.Count; characterIndex++)
+				{
+					if (charactersInParty[characterIndex] != null)
+					{
+						List<SpoilsCard> equippedCharacterSpoils = charactersInParty[characterIndex].GetEquippedSpoils();
+						for (int spoilsIndex = equippedCharacterSpoils.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+						{
+							SpoilsCard card = equippedCharacterSpoils[spoilsIndex];
+							if (card.GetSpoilsTypes().Contains(SpoilsTypes.Ally))
+							{
+								removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
+								SpoilsDeck.Remove(card);
+								DiscardedSpoilsDeck.Add(card);
+							}
+						}
+					}
+				}
+
+				//Remove allies from auction house
+				List<SpoilsCard> auctionHouse = Players[playerIndex].GetAuctionHouseCards();
+				for (int spoilsIndex = auctionHouse.Count - 1; spoilsIndex >= 0; spoilsIndex--)
+				{
+					SpoilsCard card = auctionHouse[spoilsIndex];
+					if (card.GetSpoilsTypes().Contains(SpoilsTypes.Ally))
+					{
+						removeSpecificCardFromAuctionHouse(playerIndex, card.GetTitle());
+						SpoilsDeck.Remove(card);
+						DiscardedSpoilsDeck.Add(card);
+					}
+				}
+			}
+		}
+
 		public void ApplyEffectToPlayer(int playerIndex, Effect effectToApply)
 		{
 			if (isPlayerIndexInRange(playerIndex))
