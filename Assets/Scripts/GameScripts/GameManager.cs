@@ -3407,27 +3407,47 @@ namespace FallenLand
 			byte deckToShuffle = shuffle.GetDeckToShuffle();
 			if (deckToShuffle == Constants.SHUFFLE_ACTION)
 			{
-				
+				for (int cardIndex = DiscardedActionCards.Count - 1; cardIndex >= 0; cardIndex--)
+				{
+					ActionDeck.Add(DiscardedActionCards[cardIndex]);
+					DiscardedActionCards.RemoveAt(cardIndex);
+				}
+				ActionDeck = Card.ShuffleDeck(ActionDeck);
 			}
 			else if (deckToShuffle == Constants.SHUFFLE_CHARACTERS)
 			{
-			
+				for (int cardIndex = DiscardedCharacters.Count - 1; cardIndex >= 0; cardIndex--)
+				{
+					CharacterDeck.Add(DiscardedCharacters[cardIndex]);
+					DiscardedCharacters.RemoveAt(cardIndex);
+				}
+				CharacterDeck = Card.ShuffleDeck(CharacterDeck);
 			}
 			else if (deckToShuffle == Constants.SHUFFLE_CITYRAD)
 			{
-
+				//TODO when city rad encounter implemented
 			}
 			else if (deckToShuffle == Constants.SHUFFLE_MOUNTAINS)
 			{
-
+				//TODO when mountain encounter implemented
 			}
 			else if (deckToShuffle == Constants.SHUFFLE_PLAINS)
 			{
-
+				for (int cardIndex = DiscardedPlainsCards.Count - 1; cardIndex >= 0; cardIndex--)
+				{
+					PlainsDeck.Add(DiscardedPlainsCards[cardIndex]);
+					DiscardedPlainsCards.RemoveAt(cardIndex);
+				}
+				PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 			}
 			else if (deckToShuffle == Constants.SHUFFLE_SPOILS)
 			{
-
+				for (int cardIndex = DiscardedSpoilsDeck.Count - 1; cardIndex >= 0; cardIndex--)
+				{
+					SpoilsDeck.Add(DiscardedSpoilsDeck[cardIndex]);
+					DiscardedSpoilsDeck.RemoveAt(cardIndex);
+				}
+				SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
 			}
 		}
 
