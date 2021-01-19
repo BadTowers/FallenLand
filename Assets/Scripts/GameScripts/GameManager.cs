@@ -2027,7 +2027,7 @@ namespace FallenLand
 			}
 		}
 
-		public void CharacterCrownHealsSetAmountOfDamage(int playerIndex, int characterIndex, int amountToHeal, byte healType)
+		public void CharacterCrownetAmountOfHeal(int playerIndex, int characterIndex, int amountToHeal, byte healType)
         {
 			if (isPlayerIndexInRange(playerIndex))
 			{
