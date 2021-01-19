@@ -1166,7 +1166,7 @@ namespace FallenLand
                         }
                         else if (DistributeD6Type == Constants.HEAL_PHYSICAL || DistributeD6Type == Constants.HEAL_INFECTED || DistributeD6Type == Constants.HEAL_RADIATION)
                         {
-                            GameManagerInstance.CharacterCrownetAmountOfHeal(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex][DistributeD6Type], DistributeD6Type);
+                            GameManagerInstance.CharacterCrownTakesSetAmountOfHeal(myIndex, characterIndex, AmountsDistributedPerCharacter[characterIndex][DistributeD6Type], DistributeD6Type);
                         }
                     }
                 }
