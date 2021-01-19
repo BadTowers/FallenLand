@@ -1814,8 +1814,9 @@ namespace FallenLand
             if (currentPhase == Phases.Party_Exploits_Party && HealingInNonStartingTown && GenericYesPressed)
             {
                 GenericYesPressed = false;
-                GameManagerInstance.NetworkSalvage(GameManagerInstance.GetIndexForMyPlayer(), 5, Constants.SALVAGE_LOSE);
-                Debug.LogError("TODO, add 5 salvage to other player if needed");
+                int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+                GameManagerInstance.NetworkSalvage(myIndex, 5, Constants.SALVAGE_LOSE);
+                GameManagerInstance.NetworkSalvage(GameManagerInstance.GetPlayerIndexForFaction(GameManagerInstance.GetFactionTownPartyIsIn(myIndex)), 5, Constants.SALVAGE_GAIN);
                 HealingDeedRollingHasBegun = true;
                 GameManagerInstance.SetPlayerIsHealing(GameManagerInstance.GetIndexForMyPlayer());
                 showEncounterUi();

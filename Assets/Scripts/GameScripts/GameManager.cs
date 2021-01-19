@@ -1732,6 +1732,41 @@ namespace FallenLand
 			return isInTown;
 		}
 
+		public Faction GetFactionTownPartyIsIn(int playerIndex)
+		{
+			Faction faction = null;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<Faction> factions = (new DefaultFactionInfo()).GetDefaultFactionList();
+				for (int factionIndex = 0; factionIndex < factions.Count; factionIndex++)
+				{
+					if (GetPartyLocation(playerIndex).Equals(factions[factionIndex].GetBaseLocation()))
+					{
+						faction = factions[factionIndex];
+						break;
+					}
+				}
+			}
+			return faction;
+		}
+
+		public int GetPlayerIndexForFaction(Faction faction)
+		{
+			int index = -1;
+			if (faction != null)
+			{
+				for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+				{
+					if (Players[playerIndex].GetPlayerFaction().GetName().Equals(faction.GetName()))
+					{
+						index = playerIndex;
+						break;
+					}
+				}
+			}
+			return index;
+		}
+
 		public bool EncounterWasSuccessful(int playerIndex)
 		{
 			bool wasSuccessful = true;
