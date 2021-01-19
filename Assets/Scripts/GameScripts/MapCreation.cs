@@ -241,7 +241,7 @@ namespace FallenLand
 		private void createBoard()
 		{
 			GameBoardPrefab = (GameObject)Resources.Load("Prefabs/GameBoard", typeof(GameObject));
-			GameObject boardObject = (GameObject)Instantiate(GameBoardPrefab, new Vector3(44.5f, -0.01f, 24.6f), Quaternion.identity);
+			GameObject boardObject = (GameObject)Instantiate(GameBoardPrefab, new Vector3(44.56f, .28f, 24.6f), Quaternion.identity);
 			boardObject.transform.Rotate(-90, 0, -90);
 		}
 	}
