@@ -2034,7 +2034,6 @@ namespace FallenLand
 				CharacterHealthNetworking characterHealth = new CharacterHealthNetworking(playerIndex, characterIndex, healType, amountToHeal, false);
 				sendNetworkEvent(characterHealth, ReceiverGroup.Others, Constants.EvCharacterHealth);
 				handleCharacterHealthEvent(characterHealth);
-				EventManager.CharacterCrownHasHealed(characterIndex, amountToHeal, healType);
 			}
 		}
 

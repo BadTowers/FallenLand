@@ -32,13 +32,6 @@ namespace FallenLand
             OnCharacterCrownTakesDamage?.Invoke(characterCrown, amountOfDamage, damageType, remainingHp, equipmentDiscarded);
         }
 
-        public delegate void CharacterCrownHeals(int characterCrown, int amountOfDamage, byte damageType);
-        public static event CharacterCrownHeals OnCharacterCrownHeals;
-        public static void CharacterCrownHasHealed(int characterCrown, int amountOfDamage, byte damageType)
-        {
-            OnCharacterCrownHeals?.Invoke(characterCrown, amountOfDamage, damageType);
-        }
-
         public delegate void ShowTheGenericPopup(string textToShow);
         public static event ShowTheGenericPopup OnShowGenericPopup;
         public static void ShowGenericPopup(string textToShow)
