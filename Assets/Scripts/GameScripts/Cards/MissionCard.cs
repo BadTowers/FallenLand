@@ -15,6 +15,7 @@ namespace FallenLand
 		{
 			initOptionalSkillChecks(null);
 			initText();
+			SetSalvageReward(0);
 		}
 
 		public void SetOptionalSkillChecks(Dictionary<Skills, int> optionalSkillChecks)

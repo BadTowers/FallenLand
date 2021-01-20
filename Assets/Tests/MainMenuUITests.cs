@@ -20,6 +20,8 @@ namespace Tests
 		private List<GameObject> FactionSelectionObjectList;
 		private GameObject StartMultiplayerButtonObject;
 		private GameObject LoadingPanel;
+		private GameObject JoinGameButton;
+		private GameObject CreateLobbyButton;
 
 		[SetUp]
 		public void Setup()
@@ -33,6 +35,8 @@ namespace Tests
 			FactionSelectionObjectList = new List<GameObject>();
 			StartMultiplayerButtonObject = new GameObject();
 			LoadingPanel = new GameObject();
+			JoinGameButton = new GameObject();
+			CreateLobbyButton = new GameObject();
 
 			for (int i = 0; i < MAX_NUM_PLAYERS; i++)
 			{
@@ -51,6 +55,10 @@ namespace Tests
 			StartMultiplayerButtonObject.name = "StartGameButton";
 
 			LoadingPanel.name = "LoadingPanel";
+			JoinGameButton.name = "JoinGameButton";
+			JoinGameButton.AddComponent<Button>();
+			CreateLobbyButton.name = "CreateLobbyButton";
+			CreateLobbyButton.AddComponent<Button>();
 
 			addFactionSelectionElements();
 

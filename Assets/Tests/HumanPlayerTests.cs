@@ -497,7 +497,7 @@ namespace Tests
 			Assert.AreEqual(20, HumanPlayerInstance.GetTownHealth());
 
 			HumanPlayerInstance.SetTownHealth(-10);
-			Assert.AreEqual(20, HumanPlayerInstance.GetTownHealth());
+			Assert.AreEqual(1, HumanPlayerInstance.GetTownHealth());
 
 			HumanPlayerInstance.SetTownHealth(0);
 			Assert.AreEqual(1, HumanPlayerInstance.GetTownHealth()); //Cannot set TH below 1
@@ -541,7 +541,7 @@ namespace Tests
 			Assert.AreEqual(20, HumanPlayerInstance.GetPrestige());
 
 			HumanPlayerInstance.SetPrestige(-10);
-			Assert.AreEqual(20, HumanPlayerInstance.GetPrestige());
+			Assert.AreEqual(1, HumanPlayerInstance.GetPrestige());
 
 			HumanPlayerInstance.SetPrestige(0);
 			Assert.AreEqual(1, HumanPlayerInstance.GetPrestige()); //Cannot set prestige below 1

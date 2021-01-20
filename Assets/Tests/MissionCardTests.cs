@@ -36,12 +36,12 @@ namespace Tests
 		{
 			Assert.IsNotNull(MissionCardInstance.GetOptionalSkillChecks());
 
-			MissionCard missionCardSalvageValueConstructor = new MissionCard("title");
-			Assert.IsNotNull(missionCardSalvageValueConstructor.GetOptionalSkillChecks());
-			Assert.AreEqual(0, missionCardSalvageValueConstructor.GetOptionalSkillChecks().Count);
-			Assert.IsNotNull(missionCardSalvageValueConstructor.GetSkillChecks());
-			Assert.AreEqual(0, missionCardSalvageValueConstructor.GetSkillChecks().Count);
-			Assert.AreEqual(8, missionCardSalvageValueConstructor.GetSalvageReward());
+			MissionCard missionCard = new MissionCard("title");
+			Assert.IsNotNull(missionCard.GetOptionalSkillChecks());
+			Assert.AreEqual(0, missionCard.GetOptionalSkillChecks().Count);
+			Assert.IsNotNull(missionCard.GetSkillChecks());
+			Assert.AreEqual(0, missionCard.GetSkillChecks().Count);
+			Assert.AreEqual(0, missionCard.GetSalvageReward());
 
 			yield return null;
 		}
