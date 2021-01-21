@@ -257,5 +257,123 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestRewardsOnSuccess()
+		{
+			Assert.AreEqual(0, MissionCardInstance.GetRewardsOnSuccess().Count);
+
+			Reward reward = new GainActionCards(2);
+			MissionCardInstance.AddRewardOnSuccess(reward);
+			Assert.AreEqual(1, MissionCardInstance.GetRewardsOnSuccess().Count);
+			Assert.AreEqual(reward, MissionCardInstance.GetRewardsOnSuccess()[0]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPunishmentsOnSuccess()
+		{
+			Assert.AreEqual(0, MissionCardInstance.GetPunishmentsOnSuccess().Count);
+
+			Punishment punishment = new LosePrestige(2);
+			MissionCardInstance.AddPunishmentOnSuccess(punishment);
+			Assert.AreEqual(1, MissionCardInstance.GetPunishmentsOnSuccess().Count);
+			Assert.AreEqual(punishment, MissionCardInstance.GetPunishmentsOnSuccess()[0]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPunishmentOnFail()
+		{
+			Assert.AreEqual(0, MissionCardInstance.GetPunishmentsOnFail().Count);
+
+			Punishment punishment = new LosePrestige(2);
+			MissionCardInstance.AddPunishmentOnFail(punishment);
+			Assert.AreEqual(1, MissionCardInstance.GetPunishmentsOnFail().Count);
+			Assert.AreEqual(punishment, MissionCardInstance.GetPunishmentsOnFail()[0]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestIndividualCheck()
+		{
+			Assert.IsFalse(MissionCardInstance.GetIsIndividualCheck());
+
+			MissionCardInstance.SetIsIndividualCheck(true);
+			Assert.IsTrue(MissionCardInstance.GetIsIndividualCheck());
+
+			MissionCardInstance.SetIsIndividualCheck(false);
+			Assert.IsFalse(MissionCardInstance.GetIsIndividualCheck());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestD6Roll()
+		{
+			Assert.AreEqual(5, MissionCardInstance.GetD6Rolls().Count);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[0]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[1]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[2]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[3]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[4]);
+
+			MissionCardInstance.SetD6RollForCharacter(0, 5);
+			Assert.AreEqual(5, MissionCardInstance.GetD6Rolls()[0]);
+
+			MissionCardInstance.SetD6RollForCharacter(2, 3);
+			Assert.AreEqual(3, MissionCardInstance.GetD6Rolls()[2]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestIndividualPassFail()
+		{
+			Assert.AreEqual(5, MissionCardInstance.GetIndividualPassFail().Count);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[0]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[1]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[2]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[3]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[4]);
+
+			MissionCardInstance.SetIndividualPassFail(0, Constants.STATUS_FAILED);
+			Assert.AreEqual(Constants.STATUS_FAILED, MissionCardInstance.GetIndividualPassFail()[0]);
+
+			MissionCardInstance.SetIndividualPassFail(2, Constants.STATUS_PASSED);
+			Assert.AreEqual(Constants.STATUS_PASSED, MissionCardInstance.GetIndividualPassFail()[2]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestResetState()
+		{
+			MissionCardInstance.SetIndividualPassFail(0, Constants.STATUS_FAILED);
+			MissionCardInstance.SetIndividualPassFail(1, Constants.STATUS_FAILED);
+			MissionCardInstance.SetIndividualPassFail(2, Constants.STATUS_PASSED);
+			MissionCardInstance.SetD6RollForCharacter(2, 4);
+			MissionCardInstance.SetD6RollForCharacter(3, 3);
+			MissionCardInstance.SetD6RollForCharacter(0, 1);
+
+			MissionCardInstance.ResetState();
+
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[0]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[1]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[2]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[3]);
+			Assert.AreEqual(0, MissionCardInstance.GetD6Rolls()[4]);
+
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[0]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[1]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[2]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[3]);
+			Assert.AreEqual(Constants.STATUS_BEGIN, MissionCardInstance.GetD6Rolls()[4]);
+
+			yield return null;
+		}
 	}
 }
