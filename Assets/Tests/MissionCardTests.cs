@@ -154,5 +154,108 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestPassDescriptionText()
+		{
+			MissionCardInstance.SetSuccessDescriptionText("You passed!");
+			Assert.AreEqual("You passed!", MissionCardInstance.GetSuccessDescriptionText());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestFailDescriptionText()
+		{
+			MissionCardInstance.SetFailureDescriptionText("You failed");
+			Assert.AreEqual("You failed", MissionCardInstance.GetFailureDescriptionText());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestDescriptionText()
+		{
+			MissionCardInstance.SetDescriptionText("This is a description");
+			Assert.AreEqual("This is a description", MissionCardInstance.GetDescriptionText());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestFlightAllowed()
+		{
+			MissionCardInstance.SetFlightAllowed(true);
+			Assert.IsTrue(MissionCardInstance.GetFlightAllowed());
+
+			MissionCardInstance.SetFlightAllowed(false);
+			Assert.IsFalse(MissionCardInstance.GetFlightAllowed());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestMeleeOnly()
+		{
+			MissionCardInstance.SetIsMeleeOnly(true);
+			Assert.IsTrue(MissionCardInstance.GetIsMeleeOnly());
+
+			MissionCardInstance.SetIsMeleeOnly(false);
+			Assert.IsFalse(MissionCardInstance.GetIsMeleeOnly());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPsychCheckAfter()
+		{
+			Assert.IsFalse(MissionCardInstance.GetMakePsychCheckAfterEncounter());
+
+			MissionCardInstance.SetMakePsychCheckAfterEncounter(true);
+			Assert.IsTrue(MissionCardInstance.GetMakePsychCheckAfterEncounter());
+
+			MissionCardInstance.SetMakePsychCheckAfterEncounter(false);
+			Assert.IsFalse(MissionCardInstance.GetMakePsychCheckAfterEncounter());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPrechecks()
+		{
+			Assert.AreEqual(0, MissionCardInstance.GetPrechecks().Count);
+
+			Precheck precheck = new HasMotorizedVehicle();
+			MissionCardInstance.AddPrecheck(precheck);
+			Assert.AreEqual(1, MissionCardInstance.GetPrechecks().Count);
+			Assert.AreEqual(precheck, MissionCardInstance.GetPrechecks()[0]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestActionsOnBegin()
+		{
+			Assert.AreEqual(0, MissionCardInstance.GetActionsOnBegin().Count);
+
+			Action actionOnBegin = new DiscardEquippedAllies();
+			MissionCardInstance.AddActionOnBegin(actionOnBegin);
+			Assert.AreEqual(1, MissionCardInstance.GetActionsOnBegin().Count);
+			Assert.AreEqual(actionOnBegin, MissionCardInstance.GetActionsOnBegin()[0]);
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestClassifications()
+		{
+			Assert.AreEqual(0, MissionCardInstance.GetClassifications().Count);
+
+			MissionCardInstance.AddClassification(EncounterTypes.Ambush);
+			Assert.AreEqual(1, MissionCardInstance.GetClassifications().Count);
+			Assert.AreEqual(EncounterTypes.Ambush, MissionCardInstance.GetClassifications()[0]);
+
+			yield return null;
+		}
 	}
 }

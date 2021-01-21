@@ -26,7 +26,8 @@ namespace FallenLand
 
 		public EncounterCard(string title) : base(title)
 		{
-			initText();
+			FailureHeaderText = "";
+			SuccessHeaderText = "";
 			D6Rolls = new List<int>();
 			IndividualPassFail = new List<byte>();
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
@@ -240,20 +241,6 @@ namespace FallenLand
 		public List<Precheck> GetPrechecks()
 		{
 			return PrechecksAfterDraw;
-		}
-
-		private void initText()
-		{
-			FailureHeaderText = "";
-			SuccessHeaderText = "";
-		}
-
-		private void initSalvageReward(int salvageReward)
-		{
-			if (salvageReward >= 0)
-			{
-				SalvageReward = salvageReward;
-			}
 		}
 	}
 }
