@@ -84,19 +84,6 @@ namespace FallenLand
             return CurrentHp + AmountOfRadiationDamage;
         }
 
-        public void SetHpRemaining(int hpRemaining)
-        {
-            if (hpRemaining < 0)
-            {
-                hpRemaining = 0;
-            }
-            else if (hpRemaining > MaxHp)
-            {
-                hpRemaining = MaxHp;
-            }
-            CurrentHp = hpRemaining;
-        }
-
         public void SetPsychResistance(int psychResistance)
         {
             if (psychResistance > 0)
@@ -263,16 +250,6 @@ namespace FallenLand
         {
             AmountOfInfectedDamage -= amountOfHeal;
             CurrentHp += amountOfHeal;
-        }
-
-        public bool CharacterHasInfectedDamage()
-        {
-            bool hasInfected = false;
-            if (AmountOfInfectedDamage > 0)
-            {
-                hasInfected = true;
-            }
-            return hasInfected;
         }
 
         public void AddPhysicalDamage(int amountOfDamage)

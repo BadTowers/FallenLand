@@ -871,18 +871,6 @@ namespace FallenLand
 			}
 		}
 
-		public bool CharacterHasInfectedDamage(int characterIndex)
-		{
-			bool hasInfected = false;
-
-			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
-			{
-				hasInfected = ActiveCharacters[characterIndex].CharacterHasInfectedDamage();
-			}
-
-			return hasInfected;
-		}
-
 		public void AddPhysicalDamageToCharacter(int characterIndex, int amountOfPhysicalDamage)
 		{
 			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)

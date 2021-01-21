@@ -1979,17 +1979,6 @@ namespace FallenLand
 			}
 		}
 
-		public bool CharacterHasInfectedDamage(int playerIndex, int characterIndex)
-		{
-			bool hasInfected = false;
-			if (isPlayerIndexInRange(playerIndex))
-			{
-				hasInfected = Players[playerIndex].CharacterHasInfectedDamage(characterIndex);
-			}
-
-			return hasInfected;
-		}
-
 		public void CharacterCrownTakesD6Damage(int playerIndex, int characterIndex, int numOfD6s, byte damageType)
         {
 			if (isPlayerIndexInRange(playerIndex))
