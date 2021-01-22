@@ -26,7 +26,7 @@ namespace Tests
 			Reward reward = new Gain68mmAdvancedRifle();
 			reward.HandleReward(mockGameManager.Object, 0);
 
-			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "6.8mm Advanced Rifle")), Moq.Times.Once());
+			mockGameManager.Verify(mock => mock.DealSpecificSpoilToPlayer(Moq.It.IsAny<int>(), Moq.It.Is<string>(arg => arg == "68mm Advanced Rifle")), Moq.Times.Once());
 
 			yield return null;
 		}

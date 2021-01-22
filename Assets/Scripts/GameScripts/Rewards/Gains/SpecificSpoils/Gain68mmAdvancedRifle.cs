@@ -12,7 +12,7 @@ namespace FallenLand
             int myIndex = gameManager.GetIndexForMyPlayer();
             if (playerIndex == myIndex)
             {
-                gameManager.DealSpecificSpoilToPlayer(myIndex, "6.8mm Advanced Rifle");
+                gameManager.DealSpecificSpoilToPlayer(myIndex, "68mm Advanced Rifle");
             }
         }
     }

@@ -1472,7 +1472,7 @@ namespace FallenLand
 
 
 			/****************************************************************************************************************************************************************/
-			curCard = new SpoilsCard("6.8mm Advanced Rifle");
+			curCard = new SpoilsCard("68mm Advanced Rifle");
 			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Assault_Rifle);
 			curCard.SetCarryWeight(5);
 			curCard.SetSellValue(15);

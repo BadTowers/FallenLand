@@ -2514,7 +2514,7 @@ namespace FallenLand
 					EventManager.AuctionHouseChanged();
 				}
 			}
-			Card.ShuffleDeck(SpoilsDeck);
+			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
 		}
 
 		private void dealCharacterCardsToPlayers()
@@ -2550,7 +2550,7 @@ namespace FallenLand
 
         private void moveStartingCardsToTheEndOfTheDeck()
         {
-            for (int i = 0; i < SpoilsDeck.Count; i++)
+            for (int i = SpoilsDeck.Count - 1; i >= 0 ; i--)
             {
                 if (SpoilsDeck[i].GetIsStartingCard())
                 {
@@ -2563,7 +2563,7 @@ namespace FallenLand
 
 		private void moveEventCardsToTheEndOfTheDeck()
         {
-			for (int i = 0; i < SpoilsDeck.Count; i++)
+			for (int i = SpoilsDeck.Count - 1; i >= 0; i--)
 			{
 				if (SpoilsDeck[i].GetSpoilsTypes().Contains(SpoilsTypes.Event))
 				{
