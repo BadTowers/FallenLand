@@ -87,17 +87,6 @@ namespace FallenLand
 				}
 				Debug.Log("Clicked a hex");
 
-				MeshRenderer mr;
-				//Each hex is made of 2 hexes, and inner and an outer. Get the mesh of the inner hex.
-				if (go.name == "OuterHex")
-				{
-					mr = go.transform.parent.Find("InnerHex").GetComponentInChildren<MeshRenderer>();
-				}
-				else
-				{
-					mr = go.GetComponentInChildren<MeshRenderer>();
-				}
-
 				if (go.GetComponentInParent<Hex>() != null)
 				{
 					LastClickHexCoodinates = go.GetComponentInParent<Hex>().GetCoordinates();
