@@ -2377,7 +2377,7 @@ namespace FallenLand
 
         private void updateEncounterSkillPanel(EncounterCard encounterCard)
         {
-            if (HealingDeedRollingHasBegun || (encounterCard != null && encounterCard.GetIsIndividualCheck()))
+            if (HealingDeedRollingHasBegun || (encounterCard != null && !encounterCard.GetIsIndividualCheck()))
             {
                 updateEncounterSkillPanelForPartyEncounter(encounterCard);
             }
