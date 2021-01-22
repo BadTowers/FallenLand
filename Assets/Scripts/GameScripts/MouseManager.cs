@@ -98,7 +98,6 @@ namespace FallenLand
 					mr = go.GetComponentInChildren<MeshRenderer>();
 				}
 
-				toggleColor(mr);
 				if (go.GetComponentInParent<Hex>() != null)
 				{
 					LastClickHexCoodinates = go.GetComponentInParent<Hex>().GetCoordinates();
@@ -108,18 +107,6 @@ namespace FallenLand
 			{
 				string info = getHexInfoString(go.transform.GetComponentInParent<Hex>());
 				enableHexInfo(info);
-			}
-		}
-
-		private void toggleColor(MeshRenderer mr)
-		{
-			if (mr.material.color == Color.white)
-			{
-				mr.material.color = Color.blue;
-			}
-			else
-			{
-				mr.material.color = Color.white;
 			}
 		}
 
