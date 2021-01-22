@@ -746,12 +746,7 @@ namespace FallenLand
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Veritable Fortress");
 			curPerk.SetPerkDescription("Begin the game with 2 TOWN DEFENSE CHIPS. All other town defense chips cost 4 extra salvage coins.");
-			conditionalGain = new ConditionalGain();
-			//rewardChoice = new Reward();
-			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
-			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
-			curPerk.SetConditionalGain(conditionalGain);
+			//
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Excavation");
 			curPerk.SetPerkDescription("If any player draws a mission card with the word SIGMA IN THE TITLE, YOU GAIN 3 TOWN HEALTH.");
