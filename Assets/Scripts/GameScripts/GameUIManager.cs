@@ -427,7 +427,7 @@ namespace FallenLand
                 EscapePressed = true;
             }
 
-            updateActionButton();
+            //updateActionButton(); //Will add back later when we implement action cards
 
             updatePartyOverviewValues();
 

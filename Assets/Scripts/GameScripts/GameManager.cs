@@ -377,7 +377,7 @@ namespace FallenLand
 				}
 				else if (cardInfo.GetCardByte() == Constants.ACTION_CARD)
 				{
-					dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
+					//dealSpecificActionCardToPlayerFromDeck(playerIndex, cardName);
 				}
 				else if (cardInfo.GetCardByte() == Constants.SPECIAL_SPOILS_CARD)
 				{
@@ -1036,9 +1036,9 @@ namespace FallenLand
 			{
 				for (int i = 0; i < numberOfCardsToDeal; i++)
 				{
-					object content = new CardNetworking(ActionDeck[0].GetTitle(), playerIndex, Constants.ACTION_CARD);
-					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-					dealSpecificActionCardToPlayerFromDeck(playerIndex, ActionDeck[0].GetTitle());
+					//object content = new CardNetworking(ActionDeck[0].GetTitle(), playerIndex, Constants.ACTION_CARD);
+					//sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+					//dealSpecificActionCardToPlayerFromDeck(playerIndex, ActionDeck[0].GetTitle());
 				}
 			}
 		}
@@ -2493,7 +2493,7 @@ namespace FallenLand
 				Debug.Log("dealCardsToPlayers as master");
 				dealSpoilsCardsToPlayers();
 				dealCharacterCardsToPlayers();
-				dealActionCardsToPlayers();
+				//dealActionCardsToPlayers();
 			}
 		}
 
