@@ -2611,37 +2611,29 @@ namespace FallenLand
                     foreach (Skills skill in Enum.GetValues(typeof(Skills)))
                     {
                         Color color = OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color;
+                        color.a = 0;
                         foreach ((Skills skillInCheck, int _) in skillChecks)
                         {
                             if (skill == skillInCheck)
                             {
                                 color.a = 128;
                             }
-                            else
-                            {
-                                color.a = 0;
-                            }
-                            OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
-                            break;
                         }
+                        OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
                     }
                 }
                 foreach (Skills skill in Enum.GetValues(typeof(Skills)))
                 {
                     Color color = OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color;
+                    color.a = 0;
                     foreach ((Skills skillInCheck, int _) in skillChecks)
                     {
                         if (skill == skillInCheck)
                         {
                             color.a = 128;
                         }
-                        else
-                        {
-                            color.a = 0;
-                        }
-                        OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color = color;
-                        break;
                     }
+                    OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color = color;
                 }
             }
         }
