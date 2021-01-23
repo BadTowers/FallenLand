@@ -54,6 +54,7 @@ namespace FallenLand
 		private bool EncounterWasSent;
 		private ResourcePieceManager ResourcePieceManagerInst;
 		private List<bool> HasDoneEncounterSinceMovement;
+		bool ShouldSkipPhase;
 
 		#region UnityFunctions
 		void Awake()
@@ -199,7 +200,7 @@ namespace FallenLand
 			handleEffects();
 
 			int myIndex = GetIndexForMyPlayer();
-			if (isPlayerIndexInRange(myIndex) && Players[myIndex].GetPlayerIsMoving())
+			if (Players[myIndex].GetPlayerIsMoving())
 			{
 				Coordinates lastClickedHexCoordinates = MouseManagerInst.GetLastHexClickedCoodinates();
 				if (lastClickedHexCoordinates != null)
@@ -210,13 +211,13 @@ namespace FallenLand
 					{
 						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
 						content.SetMoveToLocation(lastClickedHexCoordinates);
-						
+
 						sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
 						handlePartyExploitsNetworkUpdate(content);
 					}
 				}
 			}
-			else if (isPlayerIndexInRange(myIndex) && Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
+			else if (Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
 			{
 				Debug.Log("Picking an encounter card to do");
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
@@ -265,6 +266,11 @@ namespace FallenLand
 				handlePartyExploitsNetworkUpdate(content);
 				EncounterWasSent = true;
 			}
+			else if (GetIsItMyTurn() && ShouldSkipPhase)
+			{
+				EndPhase(myIndex);
+				ShouldSkipPhase = false;
+			}
 		}
 
 		public void OnEnable()
@@ -299,36 +305,34 @@ namespace FallenLand
 
 			switch (phase)
             {
-				case Phases.Effects_Resolve_Subphase:
-					Debug.Log("Resolve effects and move on!");
-					//TODO resolve effects
+                case Phases.Town_Business_Deal:
+                    Debug.Log("Deal action cards!");
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        //townBusinessPhase_DealSubphase();
+                    }
+                    TownTechManager.HandlePhase(this);
+                    techsHandled = true;
+					ShouldSkipPhase = true;
 					break;
-				case Phases.Town_Business_Deal:
-					Debug.Log("Deal action cards!");
-					if (PhotonNetwork.IsMasterClient)
-					{
-						//townBusinessPhase_DealSubphase();
-					}
-					TownTechManager.HandlePhase(this);
-					techsHandled = true;
-					break;
-				case Phases.Town_Business_Resource_Production:
+                case Phases.Town_Business_Resource_Production:
 					handleResourceProduction();
 					break;
-				case Phases.End_Turn_Adjust_Turn_Marker:
-					Debug.Log("Move turn marker chip!");
-					//TODO
-					break;
 				case Phases.End_Turn_Pass_First_Player:
-					Debug.Log("Next player becomes first player!");
-					//TODO
 					//Reset party exploits for the next turn
 					for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
 					{
 						Players[playerIndex].SetRemainingPartyExploitWeeks(4);
 					}
+					ShouldSkipPhase = true;
+					break;
+				case Phases.Party_Exploits_Party:
+				case Phases.Town_Business_Town_Events_Chart:
+				case Phases.Game_Start_Setup:
 					break;
 				default:
+					//For now, end the phase--there is nothing to do if it isn't one of them from above
+					ShouldSkipPhase = true;
 					break;
             }
 
