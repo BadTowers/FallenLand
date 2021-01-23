@@ -1972,6 +1972,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddPhysicalDamageToCharacter(characterIndex, amountOfDamage);
+				handleCharacterDeathIfNecessary(playerIndex, characterIndex, false);
 			}
 		}
 
@@ -1980,6 +1981,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].AddInfectedDamageToCharacter(characterIndex, amountOfDamage);
+				handleCharacterDeathIfNecessary(playerIndex, characterIndex, false);
 			}
 		}
 
