@@ -3171,7 +3171,7 @@ namespace FallenLand
 
 					if (eventStatus.GetEncounterType() == Constants.ENCOUNTER_PLAINS)
                     {
-						PlainsCard card = PlainsCard.FindCardInDeckByTitle(eventStatus.GetCardName(), PlainsDeck);
+						PlainsCard card = PlainsCard.FindCardInDeckByTitle(CurrentPlayerEncounter[playerIndex].GetTitle(), PlainsDeck);
 						DiscardedPlainsCards.Add(card);
                         PlainsDeck.Remove(card);
                         CurrentPlayerEncounter[playerIndex] = null;
