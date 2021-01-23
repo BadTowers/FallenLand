@@ -2393,7 +2393,7 @@ namespace FallenLand
 							SpoilsCard card = equippedGear[spoilsIndex];
 							if (card.GetSpoilsTypes().Contains(SpoilsTypes.Ally))
 							{
-								removeSpecificSpoilsFromVehicle(playerIndex, card.GetTitle());
+								removeSpecificSpoilsFromSlot(playerIndex, characterIndex, card.GetTitle());
 								SpoilsDeck.Remove(card);
 								DiscardedSpoilsDeck.Add(card);
 							}
@@ -2405,7 +2405,7 @@ namespace FallenLand
 				SpoilsCard vehicle = GetActiveVehicle(playerIndex);
 				if (vehicle != null)
 				{
-					List<SpoilsCard> equippedGear = vehicle.GetAttachments();
+					List<SpoilsCard> equippedGear = vehicle.GetEquippedSpoils();
 					for (int spoilsIndex = equippedGear.Count - 1; spoilsIndex >= 0; spoilsIndex--)
 					{
 						SpoilsCard card = equippedGear[spoilsIndex];
