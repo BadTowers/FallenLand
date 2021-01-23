@@ -30224,7 +30224,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1489648904}
   m_HandleRect: {fileID: 1489648903}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -61690,7 +61690,7 @@ GameObject:
   - component: {fileID: 1863540097}
   - component: {fileID: 1863540096}
   m_Layer: 5
-  m_Name: GenericPopupText
+  m_Name: GenericPopupYesNoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
