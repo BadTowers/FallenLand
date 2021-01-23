@@ -143,6 +143,7 @@ namespace FallenLand
         private int CurrentDistributionPage;
         private Dictionary<int, byte> DistributionPageToDistributeTypeMapping;
         bool DistributionWasRolled;
+        bool HasFocusedThisPartyExploits;
 
         #region UnityFunctions
         void Awake()
@@ -1837,6 +1838,7 @@ namespace FallenLand
             {
                 PartyExploitsPanel.SetActive(true);
                 ActualRemainingWeeksTextGameObject.GetComponent<Text>().text = GameManagerInstance.GetRemainingPartyExploitWeeks(CurrentViewedID).ToString();
+                changeViewBackToPlayersIfNeeded();
                 changePartyExploitsButtonStatesAsNeeded();
                 int myIndex = GameManagerInstance.GetIndexForMyPlayer();
                 if (!GameManagerInstance.GetPlayerIsMoving(myIndex) && !GameManagerInstance.GetPlayerIsDoingAnEncounter(myIndex))
@@ -1887,6 +1889,7 @@ namespace FallenLand
                 PartyExploitsPanel.SetActive(false);
                 PartyEncounterFinishedPanel.SetActive(false);
                 IndividualEncounterFinishedPanel.SetActive(false);
+                HasFocusedThisPartyExploits = false;
             }
         }
 
@@ -1915,6 +1918,15 @@ namespace FallenLand
             {
                 EndPhaseButton.interactable = false;
                 EndPhaseButton.GetComponentInChildren<Text>().text = "Waiting...";
+            }
+        }
+
+        private void changeViewBackToPlayersIfNeeded()
+        {
+            if (GameManagerInstance.GetIsItMyTurn() && !HasFocusedThisPartyExploits)
+            {
+                CurrentViewedID = GameManagerInstance.GetIndexForMyPlayer();
+                HasFocusedThisPartyExploits = true;
             }
         }
 
