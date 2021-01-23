@@ -307,7 +307,7 @@ namespace FallenLand
 					Debug.Log("Deal action cards!");
 					if (PhotonNetwork.IsMasterClient)
 					{
-						townBusinessPhase_DealSubphase();
+						//townBusinessPhase_DealSubphase();
 					}
 					TownTechManager.HandlePhase(this);
 					techsHandled = true;
