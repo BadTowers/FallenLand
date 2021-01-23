@@ -142,6 +142,7 @@ namespace FallenLand
         private GameObject NextDistributionPageButton;
         private int CurrentDistributionPage;
         private Dictionary<int, byte> DistributionPageToDistributeTypeMapping;
+        bool DistributionWasRolled;
 
         #region UnityFunctions
         void Awake()
@@ -1091,6 +1092,7 @@ namespace FallenLand
             {
                 AmountToDistribute += 1;
             }
+            DistributionWasRolled = true;
             updateDistributeD6Panel();
         }
 
@@ -1184,6 +1186,7 @@ namespace FallenLand
             DistributeD6PopupPanel.SetActive(false);
             NumD6sToDistribute = 0;
             AmountToDistribute = 0;
+            DistributionWasRolled = false;
             DistributeD6DoneButton.GetComponent<Button>().interactable = false;
             D6DistributeRollButton.GetComponent<Button>().interactable = true;
             HealingDeedDistributingHasBegun = false;
@@ -1260,6 +1263,7 @@ namespace FallenLand
             DistributionPageToDistributeTypeMapping = new Dictionary<int, byte> { { 0, damageType } };
             DistributeD6Type = damageType;
             DistributeD6PopupPanel.SetActive(true);
+            DistributionWasRolled = false;
             NumD6sToDistribute = numD6s;
             updateDistributeD6Panel();
         }
@@ -1270,6 +1274,7 @@ namespace FallenLand
             DistributionPageToDistributeTypeMapping = new Dictionary<int, byte> { { 0, healingType } };
             DistributeD6Type = healingType;
             DistributeD6PopupPanel.SetActive(true);
+            DistributionWasRolled = false;
             NumD6sToDistribute = numD6s;
             updateDistributeD6Panel();
         }
@@ -1284,6 +1289,7 @@ namespace FallenLand
             }
             DistributeD6Type = DistributionPageToDistributeTypeMapping[CurrentDistributionPage];
             DistributeD6PopupPanel.SetActive(true);
+            DistributionWasRolled = false;
             NumD6sToDistribute = numD6s;
             updateDistributeD6Panel();
         }
@@ -2039,7 +2045,7 @@ namespace FallenLand
             updateDistributeD6Title();
             updateDistributeD6RollPanel();
 
-            DistributeD6DoneButton.GetComponent<Button>().interactable = (AmountToDistribute == 0 || wasMaxAmountDistributed());
+            DistributeD6DoneButton.GetComponent<Button>().interactable = (AmountToDistribute == 0 || wasMaxAmountDistributed()) && DistributionWasRolled;
 
             List<CharacterCard> partyCharacters = GameManagerInstance.GetActiveCharacterCards(GameManagerInstance.GetIndexForMyPlayer());
             for (int curCharacterIndex = 0; curCharacterIndex < Constants.NUM_PARTY_MEMBERS; curCharacterIndex++)
