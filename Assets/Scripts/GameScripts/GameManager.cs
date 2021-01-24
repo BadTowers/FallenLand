@@ -3494,6 +3494,9 @@ namespace FallenLand
 			ResourcePieceManagerInst.RemovePiece(indexOfResourceOwner, locationOfResource);
 			Players[indexOfCapturingPlayer].AddResourceOwned(resourceToExchange);
 			ResourcePieceManagerInst.CreatePiece(indexOfCapturingPlayer, Players[indexOfCapturingPlayer].GetPlayerFaction(), locationOfResource);
+
+			int remainingWeeks = Players[indexOfCapturingPlayer].GetRemainingPartyExploitWeeks();
+			Players[indexOfCapturingPlayer].SetRemainingPartyExploitWeeks(remainingWeeks - ResourceWeekCost);
 		}
 
 		private void handleHealingDeedEvent(HealingDeedNetworking healingDeedNetworking)
