@@ -31,6 +31,7 @@ namespace FallenLand
 		private const int MovementWeekCost = 1;
 		private const int EncounterWeekCost = 1;
 		private const int ResourceWeekCost = 2;
+		private const int HealingWeekCost = 2;
 		private List<TownTech> TownTechs;
 		private Dictionary<string, int> TechsUsed;
 		private const int MaxOfEachTech = 5;
@@ -3509,6 +3510,8 @@ namespace FallenLand
 				Players[playerIndex].SetPlayerIsHealing(false);
 				Players[playerIndex].ResetAllCharacterDiceRolls();
 				Players[playerIndex].ResetAllVehicleDiceRolls();
+				int previousWeeksCost = Players[playerIndex].GetRemainingPartyExploitWeeks();
+				Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksCost - HealingWeekCost);
 			}
 		}
 
