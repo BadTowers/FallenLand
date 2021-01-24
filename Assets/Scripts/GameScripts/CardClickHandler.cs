@@ -19,7 +19,6 @@ namespace FallenLand
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                Debug.Log("Mouse click");
                 if (MovementHandler == null || !MovementHandler.GetIsDragging())
                 {
                     //tell ui manager to show window for this card

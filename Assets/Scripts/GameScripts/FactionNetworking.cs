@@ -29,12 +29,10 @@ namespace FallenLand
 		public static byte[] SerializeFaction(object customType)
 		{
 			FactionNetworking factionInfo = (FactionNetworking)customType;
-			UnityEngine.Debug.Log("Serialization: index is " + factionInfo.GetPlayerIndex());
             List<byte> byteListFinal = new List<byte> //pack index first
             {
                 (byte)factionInfo.GetPlayerIndex()
             };
-            UnityEngine.Debug.Log("Serialization: size is " + byteListFinal.Count);
 			List<byte> byteListString = new List<byte>(Encoding.ASCII.GetBytes(factionInfo.GetFactionName()));
 
 			for (int i = 0; i < byteListString.Count; i++) //append faction name next

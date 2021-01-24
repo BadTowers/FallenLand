@@ -40,7 +40,6 @@ namespace FallenLand
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                Debug.Log("Dragging");
                 if (!IsDragging)
                 {
                     UiManager.SetCardIsDragging(true);
@@ -50,10 +49,10 @@ namespace FallenLand
                 IsDragging = true;
                 figureOutCurrentParent();
                 setNewTemporaryParent();
-                Canvas myCanvas = this.GetComponentInParent<Canvas>();
+                Canvas myCanvas = GetComponentInParent<Canvas>();
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(myCanvas.transform as RectTransform, Input.mousePosition, myCanvas.worldCamera, out Vector2 pos);
                 transform.position = myCanvas.transform.TransformPoint(pos);
-                this.GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
+                GetComponentInParent<Image>().rectTransform.sizeDelta = new Vector2(ImageSize.x, ImageSize.y);
                 transform.SetAsLastSibling(); //move to the front (on parent)
             }
         }
@@ -64,7 +63,7 @@ namespace FallenLand
             {
                 UiManager.SetCardIsDragging(false);
                 IsDragging = false;
-                Image cardImage = this.GetComponentInParent<Image>();
+                Image cardImage = GetComponentInParent<Image>();
                 if (HoveredOverPanel != null && UiManager.CardIsAllowedToMoveHere(cardImage, HoveredOverPanel))
                 {
                     Transform viewportTransform = HoveredOverPanel.transform.Find("Viewport");
@@ -90,9 +89,8 @@ namespace FallenLand
 
         private void figureOutCurrentParent()
         {
-            if (this.GetComponentInParent<Image>().rectTransform.parent != null && !IsOldParentSet)
+            if (GetComponentInParent<Image>().rectTransform.parent != null && !IsOldParentSet)
             {
-                Debug.Log("Figured out old parent for " + this.GetComponentInParent<Image>().name);
                 OldParent = this.GetComponentInParent<Image>().rectTransform.parent.gameObject;
                 IsOldParentSet = true;
             }
@@ -100,14 +98,12 @@ namespace FallenLand
 
         private void setNewTemporaryParent()
         {
-            Debug.Log("Set new temporary parent for " + this.GetComponentInParent<Image>().name);
-            this.GetComponentInParent<Image>().rectTransform.SetParent(GameObject.Find("CharacterAndSpoilsAssigningPanel").transform);
+            GetComponentInParent<Image>().rectTransform.SetParent(GameObject.Find("CharacterAndSpoilsAssigningPanel").transform);
         }
 
         private void resetParent()
         {
-            Debug.Log("Reset parent for " + this.GetComponentInParent<Image>().name);
-            this.GetComponentInParent<Image>().rectTransform.SetParent(OldParent.transform);
+            GetComponentInParent<Image>().rectTransform.SetParent(OldParent.transform);
             transform.SetSiblingIndex(SiblingOrder);
         }
 

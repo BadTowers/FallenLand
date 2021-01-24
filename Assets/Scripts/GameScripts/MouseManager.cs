@@ -82,10 +82,8 @@ namespace FallenLand
 				if (EventSystem.current.IsPointerOverGameObject())
 				{
 					//It is, so let's not do any game click code
-					Debug.Log("Clicked a game object");
 					return;
 				}
-				Debug.Log("Clicked a hex");
 
 				if (go.GetComponentInParent<Hex>() != null)
 				{

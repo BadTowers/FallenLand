@@ -4,7 +4,6 @@
  */
 
 using System.Collections.Generic;
-using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace FallenLand
@@ -71,7 +70,7 @@ namespace FallenLand
         {
             get
             {
-                return this.FinishedPlayers.Contains(Photon.Pun.PhotonNetwork.LocalPlayer);
+                return FinishedPlayers.Contains(Photon.Pun.PhotonNetwork.LocalPlayer);
             }
         }
 
@@ -89,7 +88,6 @@ namespace FallenLand
         public void BeginNextTurn()
         {
             TurnManagerListener.OnTurnCompleted(Turn);
-            Debug.Log("TurnManager: BeginNextTurn");
             if (Turn > 0) //Don't move current player the first turn
             {
                 CurrentFirstPlayerIndex = (CurrentFirstPlayerIndex + 1) % Photon.Pun.PhotonNetwork.PlayerList.Length;
@@ -102,7 +100,6 @@ namespace FallenLand
 
         public void BeginNextPhase()
         {
-            Debug.Log("TurnManager: BeginNextPhase");
             if (Phase == Phases.After_End_Turn_Phase)
             {
                 Phase = Phases.Before_Effects_Phase;

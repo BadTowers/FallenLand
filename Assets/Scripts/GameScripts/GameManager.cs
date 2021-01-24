@@ -288,12 +288,10 @@ namespace FallenLand
 		#region TurnManagerCallbacks
 		public void OnTurnBegins(int turn)
         {
-			Debug.Log("OnTurnBegins: " + turn);
 		}
 
         public void OnTurnCompleted(int turn)
 		{
-			Debug.Log("OnTurnCompleted: " + turn);
         }
 
 		public void OnPhaseBegins(Phases phase)
@@ -301,8 +299,6 @@ namespace FallenLand
 			bool techsHandled = false;
 			CurrentPhase = phase;
 			IsMyPhaseEnded = false;
-
-			Debug.Log("OnPhaseBegins: " + phase.ToString());
 
 			switch (phase)
             {

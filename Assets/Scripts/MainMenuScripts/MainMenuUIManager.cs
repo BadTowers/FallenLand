@@ -939,7 +939,6 @@ namespace FallenLand
 			    PlayerTexts[playerIndex].GetComponent<Text>().color.g != g ||
 			    PlayerTexts[playerIndex].GetComponent<Text>().color.b != b)
 			{
-				Debug.Log("Changing color");
 				PlayerTexts[playerIndex].GetComponent<Text>().color = new Color(r, g, b);
 			}
 		}

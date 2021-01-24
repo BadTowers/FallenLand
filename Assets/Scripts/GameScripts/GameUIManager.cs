@@ -506,24 +506,20 @@ namespace FallenLand
         public void OnResume()
         {
             CurrentState = GameMenuStates.Resume;
-            Debug.Log("Resume");
         }
 
         public void OnOptions()
         {
             CurrentState = GameMenuStates.Options;
-            Debug.Log("Options");
         }
 
         public void OnSave()
         {
             CurrentState = GameMenuStates.Save;
-            Debug.Log("Save");
         }
 
         public void OnQuit()
         {
-            Debug.Log("Quit");
         }
 
         public void OnOpenCharacterAndSpoilsScreenPress()
@@ -638,7 +634,6 @@ namespace FallenLand
 
         public void OnMovementDeedPress()
         {
-            Debug.Log("Movement deed selected");
             WasResourceClicked = false;
             WasEncounterClicked = false;
             EncounterSelectionPanel.SetActive(false); //Close this panel if the user was going to do an encounter but switched to movement
@@ -676,7 +671,6 @@ namespace FallenLand
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
 
             //Cleanup other party exploits stuff
-            Debug.Log("Encounter deed selected");
             WasResourceClicked = false;
             GameManagerInstance.SetPlayerIsMoving(myIndex, false); //cancel movement if it was happening
 
@@ -712,8 +706,6 @@ namespace FallenLand
 
         public void OnResourceDeedPress()
         {
-            Debug.Log("Resource deed selected");
-
             //Cleanup other party exploits stuff
             WasEncounterClicked = false;
             GameManagerInstance.SetPlayerIsMoving(GameManagerInstance.GetIndexForMyPlayer(), false); //cancel movement if it was happening
@@ -815,7 +807,6 @@ namespace FallenLand
 
         public void OnPlainEncounterPress()
         {
-            Debug.Log("On plains encounter selected.");
             GameObject.Find("PlainsEncounterButton").GetComponent<Button>().interactable = false;
             GameObject.Find("MountainEncounterButton").GetComponent<Button>().interactable = false;
             GameObject.Find("CityRadEncounterButton").GetComponent<Button>().interactable = false;
@@ -1454,8 +1445,7 @@ namespace FallenLand
                 //Clear old
                 foreach (Transform child in ActionCardsScrollContent.transform)
                 {
-                    Debug.Log("Deleting old action cards");
-                    GameObject.Destroy(child.gameObject);
+                    Destroy(child.gameObject);
                 }
 
                 //Add new
@@ -1602,7 +1592,6 @@ namespace FallenLand
                 //Clear old
                 foreach (Transform child in TownRosterScrollContent.transform)
                 {
-                    Debug.Log("Deleting old town roster cards");
                     GameObject.Destroy(child.gameObject);
                 }
             }
@@ -1611,7 +1600,6 @@ namespace FallenLand
                 //Clear old
                 foreach (Transform child in TownRosterScrollContent.transform)
                 {
-                    Debug.Log("Deleting old town roster cards");
                     GameObject.Destroy(child.gameObject);
                 }
 
@@ -1751,7 +1739,6 @@ namespace FallenLand
 
                     //Add spoils back to slot
                     List<SpoilsCard> curSlotSpoils = activeVehicle.GetEquippedSpoils();
-                    Debug.Log("There are currently " + curSlotSpoils.Count + " spoils attached to the vehicle");
                     for (int curSpoilIndex = 0; curSpoilIndex < curSlotSpoils.Count; curSpoilIndex++)
                     {
                         GameObject imageObj2 = Instantiate(ImageGameObject);
@@ -2682,7 +2669,6 @@ namespace FallenLand
             }
             else if (panelMovingInto.name.Contains("VehicleSlotScrollView"))
             {
-                Debug.Log("Is a spoils trying to move into a vehicle slot");
                 isAllowed = GameManagerInstance.IsAllowedToApplySpoilsToVehicleSlot(myIndex, card);
             }
             else
@@ -2693,12 +2679,10 @@ namespace FallenLand
                     if (!GameManagerInstance.IsAllowedToApplySpoilsToCharacterSlot(myIndex, card, characterIndex))
                     {
                         isAllowed = false;
-                        Debug.Log("Can't put a spoils card on an empty character slot");
                     }
                 }
                 catch
                 {
-                    Debug.Log("Wasn't over a character card. No need to check that part");
                 }
             }
             return isAllowed;
@@ -2722,12 +2706,10 @@ namespace FallenLand
                     if (!GameManagerInstance.IsAllowedToApplyCharacterToCharacterSlot(myIndex, characterIndex, card.GetCarryCapacity()))
                     {
                         isAllowed = false;
-                        Debug.Log("Can't put a character card on a non-empty character slot");
                     }
                 }
                 catch
                 {
-                    Debug.Log("Wasn't over a character card. No need to check that part");
                 }
             }
             return isAllowed;
