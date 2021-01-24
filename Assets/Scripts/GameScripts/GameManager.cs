@@ -220,7 +220,6 @@ namespace FallenLand
 			}
 			else if (Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
 			{
-				Debug.Log("Picking an encounter card to do");
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
 				int cardIndex = 0;
@@ -252,14 +251,15 @@ namespace FallenLand
 						handleShuffleEvent(shuffle);
 						cardIndex = 0;
 					}
-					else
+					else if (cardIndex >= PlainsDeck.Count && DiscardedPlainsCards.Count == 0)
 					{
-						Debug.Log("There exists no cards in the discard deck, so we have to do the first card even though we didn't pass prechecks");
+						Debug.Log("Ran out of cards in the deck, but there are no cards int he discard deck, so we have to do the first card even though we didn't pass prechecks");
 						cardIndex = 0;
 						break;
 					}
 				}
 				while (cardIndex < PlainsDeck.Count && !prechecksHeld);
+
 				PlainsDeck[cardIndex].ResetState();
 				string nextPlainsEncounterCardName = PlainsDeck[cardIndex].GetTitle();
 				content.SetEncounterCardName(nextPlainsEncounterCardName);
@@ -303,7 +303,6 @@ namespace FallenLand
 			switch (phase)
             {
                 case Phases.Town_Business_Deal:
-                    Debug.Log("Deal action cards!");
                     if (PhotonNetwork.IsMasterClient)
                     {
                         //townBusinessPhase_DealSubphase();
