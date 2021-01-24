@@ -3472,7 +3472,7 @@ namespace FallenLand
 				Players[playerIndex].AddSalvageToPlayer(salvageToGain);
 				Players[playerIndex].AddTownHealth(townHealthToGain);
 
-				if (playerIndex == GetIndexForMyPlayer() && numberOfOwnedResources > 0)
+				if (playerIndex == GetIndexForMyPlayer())
 				{
 					EventManager.ShowGenericPopup("You gained " + salvageToGain + " salvage coins and " + townHealthToGain + " town health because you own " + numberOfOwnedResources + " resources!");
 				}
