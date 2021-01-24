@@ -46,7 +46,6 @@ namespace FallenLand
 			List<byte> passFail = new List<byte>();
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
-				UnityEngine.Debug.LogError("Pass/fail received for " + i + " was " + byteList[0]);
 				passFail.Add(byteList[0]);
 				byteList.RemoveAt(0);
 			}
