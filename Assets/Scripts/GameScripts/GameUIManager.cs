@@ -748,7 +748,14 @@ namespace FallenLand
             {
                 if (!GameManagerInstance.IsResourceOwnedByPlayer(partyLocation, myIndex))
                 {
-                    GameManagerInstance.CaptureResource(partyLocation, myIndex);
+                    if (GameManagerInstance.GetNumberOfResourcesOwned(myIndex) < Constants.MAX_NUM_RESOURCES_OWNED)
+                    {
+                        GameManagerInstance.CaptureResource(partyLocation, myIndex);
+                    }
+                    else
+                    {
+                        onShowGenericPopup("You cannot own more than " + Constants.MAX_NUM_RESOURCES_OWNED + " resources!");
+                    }
                 }
                 else
                 {
