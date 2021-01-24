@@ -118,7 +118,6 @@ namespace FallenLand
 
         public void SendMove(object move, bool finished)
         {
-            Debug.Log("SendMove");
             if (!IsFinishedByMe)
             {
                 Hashtable moveHt = new Hashtable
@@ -131,7 +130,6 @@ namespace FallenLand
                 Photon.Pun.PhotonNetwork.RaiseEvent(evCode, moveHt, new Photon.Realtime.RaiseEventOptions() { CachingOption = Photon.Realtime.EventCaching.AddToRoomCache }, ExitGames.Client.Photon.SendOptions.SendReliable);
                 if (finished)
                 {
-                    Debug.Log("Local player is finished");
                     Photon.Pun.PhotonNetwork.LocalPlayer.SetFinishedTurn(Turn);
                 }
 
@@ -198,10 +196,8 @@ namespace FallenLand
 
         public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
-            Debug.Log("OnRoomPropertiesUpdate in TurnManager");
             if (propertiesThatChanged.ContainsKey("Phase"))
             {
-                Debug.Log("propertiesThatChanged contains Phase");
                 FinishedPlayers.Clear();
                 TurnManagerListener.OnPhaseBegins(Phase);
             }

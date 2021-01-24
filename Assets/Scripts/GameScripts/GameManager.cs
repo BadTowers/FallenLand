@@ -346,7 +346,6 @@ namespace FallenLand
 
 		public void OnPhaseCompleted(Phases phase)
 		{
-			Debug.Log("OnPhaseCompleted: " + phase.ToString());
 		}
 
 		public void OnPlayerMove(Photon.Realtime.Player player, Phases phase, object move)
