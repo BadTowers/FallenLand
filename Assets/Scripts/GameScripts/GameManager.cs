@@ -1300,7 +1300,7 @@ namespace FallenLand
 				EventManager.ShowGenericPopup("Flight failed! You needed a " + highestValue + " but rolled a " + totalMovement + "(" + d6Roll + "+" + bonusMovement + ")");
 				status = Constants.STATUS_FAILED;
 			}
-			EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, curEncounter.GetTitle(), curEncounter.GetD6Rolls());
+			EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, curEncounter.GetTitle(), curEncounter.GetD6Rolls(), curEncounter.GetIndividualPassFail());
 			sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 			handleEncounterStatusEvent(encounterStatus);
 		}
@@ -1839,7 +1839,8 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				byte status = (EncounterWasSuccessful(playerIndex)) ? Constants.STATUS_PASSED : Constants.STATUS_FAILED;
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), status, wasResourceEncounter, 
+					CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls(), CurrentPlayerEncounter[playerIndex].GetIndividualPassFail());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
@@ -1849,7 +1850,8 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, wasResourceEncounter, CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls());
+				EncounterStatusNetworking encounterStatus = new EncounterStatusNetworking(playerIndex, (byte)GetPlayerEncounterType(playerIndex), Constants.STATUS_BEGIN, wasResourceEncounter, 
+					CurrentPlayerEncounter[playerIndex].GetTitle(), CurrentPlayerEncounter[playerIndex].GetD6Rolls(), CurrentPlayerEncounter[playerIndex].GetIndividualPassFail());
 				sendNetworkEvent(encounterStatus, ReceiverGroup.Others, Constants.EvEncounterStatus);
 				handleEncounterStatusEvent(encounterStatus);
 			}
@@ -3135,10 +3137,18 @@ namespace FallenLand
 					Players[playerIndex].AddSalvageToPlayer(CurrentPlayerEncounter[playerIndex].GetSalvageReward());
                 }
                 else if (status == Constants.STATUS_FAILED || status == Constants.STATUS_PASSED)
-                {
+				{
 					Players[playerIndex].SetPlayerIsDoingAnEncounter(false);
 					Players[playerIndex].SetEncounterType(Constants.ENCOUNTER_NONE);
 					EncounterWasSent = false;
+
+					List<int> d6Rolls = eventStatus.GetD6Rolls();
+					List<byte> passFail = eventStatus.GetIndividualPassFail();
+					for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+					{
+						CurrentPlayerEncounter[playerIndex].SetD6RollForCharacter(characterIndex, d6Rolls[characterIndex]);
+						CurrentPlayerEncounter[playerIndex].SetIndividualPassFail(characterIndex, passFail[characterIndex]);
+					}
 
 					int previousWeeksRemaining = Players[playerIndex].GetRemainingPartyExploitWeeks();
 					if (!eventStatus.GetWasResourceEncounter())

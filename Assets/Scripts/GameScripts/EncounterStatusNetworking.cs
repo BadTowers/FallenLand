@@ -11,8 +11,9 @@ namespace FallenLand
 		private readonly string CardName;
 		private readonly bool WasResourceEncounter;
 		private readonly List<int> D6Rolls;
+		private readonly List<byte> IndividualPassFails;
 
-		public EncounterStatusNetworking(int playerIndex, byte encounterType, byte status, bool wasResourceEncounter, string cardName, List<int> d6Rolls)
+		public EncounterStatusNetworking(int playerIndex, byte encounterType, byte status, bool wasResourceEncounter, string cardName, List<int> d6Rolls, List<byte> individualPassFails)
 		{
 			PlayerIndex = playerIndex;
 			EncounterType = encounterType;
@@ -20,6 +21,7 @@ namespace FallenLand
 			CardName = cardName;
 			WasResourceEncounter = wasResourceEncounter;
 			D6Rolls = d6Rolls;
+			IndividualPassFails = individualPassFails;
 		}
 
 		public static object DeserializeEncounterStatus(byte[] data)
@@ -33,6 +35,7 @@ namespace FallenLand
 			byteList.RemoveAt(0);
 			byteList.RemoveAt(0);
 			byteList.RemoveAt(0);
+			byteList.RemoveAt(0);
 			List<int> rolls = new List<int>();
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
@@ -40,10 +43,17 @@ namespace FallenLand
 				byteList.RemoveAt(0);
 
 			}
+			List<byte> passFail = new List<byte>();
+			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+			{
+				UnityEngine.Debug.LogError("Pass/fail received for " + i + " was " + byteList[0]);
+				passFail.Add(byteList[0]);
+				byteList.RemoveAt(0);
+			}
 			byte[] byteArray = byteList.ToArray();
 			string cardName = Encoding.ASCII.GetString(byteArray);
 
-			EncounterStatusNetworking result = new EncounterStatusNetworking(playerIndex, encounterType, status, wasResourceEncounter, cardName, rolls);
+			EncounterStatusNetworking result = new EncounterStatusNetworking(playerIndex, encounterType, status, wasResourceEncounter, cardName, rolls, passFail);
 
 			return result;
 		}
@@ -64,6 +74,11 @@ namespace FallenLand
 			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
 			{
 				byteListFinal.Add((byte)rolls[i]);
+			}
+			List<byte> passFail = encounterStatus.GetIndividualPassFail();
+			for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+			{
+				byteListFinal.Add(passFail[i]);
 			}
 
 			List<byte> byteListString = new List<byte>(Encoding.ASCII.GetBytes(encounterStatus.GetCardName()));
@@ -104,6 +119,11 @@ namespace FallenLand
 		public List<int> GetD6Rolls()
 		{
 			return D6Rolls;
+		}
+
+		public List<byte> GetIndividualPassFail()
+		{
+			return IndividualPassFails;
 		}
 	}
 }
