@@ -362,7 +362,6 @@ namespace FallenLand
 
 			if (eventCode == Constants.EvDealCard)
 			{
-				Debug.Log("Card we sent to me!");
 				CardNetworking cardInfo = (CardNetworking)photonEvent.CustomData;
 				int playerIndex = cardInfo.GetPlayerIndex();
 				string cardName = cardInfo.GetCardName();
@@ -389,7 +388,6 @@ namespace FallenLand
 			}
 			else if (eventCode == Constants.EvSendFactionInformation)
 			{
-				Debug.Log("Got faction info sent to me!");
 				FactionNetworking factionInfo = (FactionNetworking)photonEvent.CustomData;
 				DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
 				Faction faction = defaultFactionInfo.GetFactionFromName(factionInfo.GetFactionName());
@@ -415,31 +413,26 @@ namespace FallenLand
 			}
 			else if (eventCode == Constants.EvSendPlayerInformation)
 			{
-				Debug.Log("Received updated player information");
 				PlayerCardNetworking playerInfo = (PlayerCardNetworking)photonEvent.CustomData;
 				handlePlayerCardNetworkUpdate(playerInfo);
 			}
 			else if (eventCode == Constants.EvRequestUpdateToPlayerInformation)
 			{
-				Debug.Log("Got a request to update player information");
 				object playerInfo = photonEvent.CustomData;
 				sendNetworkEvent(playerInfo, ReceiverGroup.Others, Constants.EvSendPlayerInformation);
 				handlePlayerCardNetworkUpdate((PlayerCardNetworking)playerInfo);
 			}
 			else if (eventCode == Constants.EvMissionLocation)
 			{
-				Debug.Log("Received mission location information");
 				MissionLocationNetworking missionLocationInfo = (MissionLocationNetworking)photonEvent.CustomData;
 				MissionManagerInst.AddMissionLocation(missionLocationInfo.GetMissionNumber(), missionLocationInfo.GetRandomLocationNumber());
 			}
 			else if (eventCode == Constants.EvTownEventRoll)
 			{
-				Debug.Log("Received a town event roll networking event");
 				handleTownEventRollNetworkUpdate(photonEvent.CustomData);
 			}
 			else if (eventCode == Constants.EvPartyExploits)
 			{
-				Debug.Log("Received a party exploits event");
 				handlePartyExploitsNetworkUpdate(photonEvent.CustomData);
 			}
 			else if (eventCode == Constants.EvEncounterStatus)
