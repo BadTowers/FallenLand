@@ -199,6 +199,7 @@ namespace FallenLand
             }
 
 			handleEffects();
+			shuffleDecksIfNeeded();
 
 			int myIndex = GetIndexForMyPlayer();
 			if (Players[myIndex].GetPlayerIsMoving())
@@ -222,7 +223,6 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				shuffleEncounterDecksIfNeeded();
 				int cardIndex = 0;
 				bool prechecksHeld;
 				do
@@ -3574,7 +3574,20 @@ namespace FallenLand
 			TurnManager.BeginNextPhase();
 		}
 
-		private void shuffleEncounterDecksIfNeeded()
+		private void shuffleDecksIfNeeded()
+		{
+			shuffleEncounterDecksIfNeeded();
+			if (CharacterDeck.Count == 0)
+			{
+				shuffleCharacterDeck();
+			}
+			if (SpoilsDeck.Count == 0)
+			{
+				shuffleSpoilsDeck();
+			}
+		}
+
+		private void shuffleEncounterDecksIfNeeded() //asdfasdf
         {
 			if (PlainsDeck.Count == 0)
 			{
@@ -3595,6 +3608,28 @@ namespace FallenLand
 			}
 			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
 			Debug.Log("Shuffled plains encounter deck");
+		}
+
+		private void shuffleCharacterDeck()
+		{
+			while (DiscardedCharacters.Count > 0)
+			{
+				CharacterDeck.Add(DiscardedCharacters[0]);
+				DiscardedCharacters.RemoveAt(0);
+			}
+			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
+			Debug.Log("Shuffled characters deck");
+		}
+
+		private void shuffleSpoilsDeck()
+		{
+			while (DiscardedSpoilsDeck.Count > 0)
+			{
+				SpoilsDeck.Add(DiscardedSpoilsDeck[0]);
+				DiscardedSpoilsDeck.RemoveAt(0);
+			}
+			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
+			Debug.Log("Shuffled spoils deck");
 		}
 
 		private byte getDeckToShuffleFromEncounterType(int encounterType)
