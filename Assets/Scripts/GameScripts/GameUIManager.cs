@@ -978,7 +978,14 @@ namespace FallenLand
                 HealingDeedRollingHasBegun = false;
                 HealingDeedDistributingHasBegun = true;
 
-                onDistributeD6HealingPopup(GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage), new List<byte> { Constants.HEAL_PHYSICAL, Constants.HEAL_INFECTED, Constants.HEAL_RADIATION});
+                if (HealingInStartingTown || HealingInNonStartingTown)
+                {
+                    onDistributeD6HealingPopup(GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage), new List<byte> { Constants.HEAL_PHYSICAL, Constants.HEAL_INFECTED, Constants.HEAL_RADIATION });
+                }
+                else
+                {
+                    onDistributeD6HealingPopup(GameManagerInstance.GetPartyTotalSuccesses(myIndex, CurrentEncounterSkillPage), new List<byte> { Constants.HEAL_PHYSICAL });
+                }
             }
             else
             {
