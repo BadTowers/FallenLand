@@ -222,6 +222,7 @@ namespace FallenLand
 			{
 				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
 				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
+				shuffleEncounterDecksIfNeeded();
 				int cardIndex = 0;
 				bool prechecksHeld;
 				do
@@ -3577,17 +3578,23 @@ namespace FallenLand
         {
 			if (PlainsDeck.Count == 0)
 			{
-				while (DiscardedPlainsCards.Count > 0)
-				{
-					PlainsDeck.Add(DiscardedPlainsCards[0]);
-					DiscardedPlainsCards.RemoveAt(0);
-				}
-				PlainsDeck = Card.ShuffleDeck(PlainsDeck);
+				shufflePlainsDeck();
 			}
 
 			//todo for mountains
 
 			//todo for city/rad
+		}
+
+		private void shufflePlainsDeck()
+		{
+			while (DiscardedPlainsCards.Count > 0)
+			{
+				PlainsDeck.Add(DiscardedPlainsCards[0]);
+				DiscardedPlainsCards.RemoveAt(0);
+			}
+			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
+			Debug.Log("Shuffled plains encounter deck");
 		}
 
 		private byte getDeckToShuffleFromEncounterType(int encounterType)
