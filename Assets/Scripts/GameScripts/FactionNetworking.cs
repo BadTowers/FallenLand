@@ -17,7 +17,6 @@ namespace FallenLand
 		public static object DeserializeFaction(byte[] data)
 		{
             int playerIndex = data[0]; //grab index first
-			UnityEngine.Debug.Log("Deserialization: index is " + playerIndex);
             List<byte> byteList = new List<byte>(data);
             byteList.RemoveAt(0);
             byte[] byteArray = byteList.ToArray(); //grab faction name next

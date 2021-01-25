@@ -17,7 +17,6 @@ namespace FallenLand
 		{
 			int playerIndex = data[0];
 			int townEventRoll = data[1];
-			UnityEngine.Debug.Log("Deserialization: town event roll is " + townEventRoll);
 			TownEventNetworking result = new TownEventNetworking(playerIndex, townEventRoll);
 			return result;
 		}
