@@ -2176,7 +2176,6 @@ namespace FallenLand
                 if (party[characterIndex] != null)
                 {
                     int currentHp = party[characterIndex].GetHpRemaining();
-                    int maxHp = party[characterIndex].GetMaxHp();
                     int runningCurrentHp = currentHp;
                     bool shouldCheck = false;
                     if (DistributionPageToDistributeTypeMapping.ContainsValue(Constants.DAMAGE_PHYSICAL))
