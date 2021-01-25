@@ -3037,7 +3037,10 @@ namespace FallenLand
 			List<CharacterCard> characters = Players[capturingPlayerIndex].GetActiveCharacters();
 			for (int characterIndex = 0; characterIndex < characters.Count; characterIndex++)
             {
-				characters[characterIndex].AddPhysicalDamage(numChips);
+				if (characters[characterIndex] != null)
+				{
+					characters[characterIndex].AddPhysicalDamage(numChips);
+				}
 			}
 		}
 
