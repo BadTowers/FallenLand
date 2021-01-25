@@ -1189,6 +1189,8 @@ namespace FallenLand
             DistributeD6DoneButton.GetComponent<Button>().interactable = false;
             D6DistributeRollButton.GetComponent<Button>().interactable = true;
             HealingDeedDistributingHasBegun = false;
+            HealingInStartingTown = false;
+            HealingInNonStartingTown = false;
         }
 
         public void OnGenericYesNo_YesPress()
@@ -2072,8 +2074,9 @@ namespace FallenLand
             }
 
             //Show the page arrows if there are multiple types of damage to distribute/heal
-            PreviousDistributionPageButton.SetActive(HealingDeedDistributingHasBegun);
-            NextDistributionPageButton.SetActive(HealingDeedDistributingHasBegun);
+            bool shouldEnableArrows = HealingDeedDistributingHasBegun && (HealingInStartingTown || HealingInNonStartingTown);
+            PreviousDistributionPageButton.SetActive(shouldEnableArrows);
+            NextDistributionPageButton.SetActive(shouldEnableArrows);
         }
 
         private void updateDistributeD6Title()
