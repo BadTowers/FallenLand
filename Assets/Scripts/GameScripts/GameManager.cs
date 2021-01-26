@@ -3078,7 +3078,7 @@ namespace FallenLand
 					//TODO for now, no effect
 					break;
 				default:
-					//No efect
+					//No effect
 					break;
 			}
 		}
