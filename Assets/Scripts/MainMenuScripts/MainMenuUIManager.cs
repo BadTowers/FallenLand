@@ -657,7 +657,7 @@ namespace FallenLand
 			}
 
 			//Load it
-			img = (Sprite)Resources.Load<Sprite>(FACTION_SYMBOL_URI + "FactionSymbol" + CurrentFactionNumber.ToString());
+			img = Resources.Load<Sprite>(FACTION_SYMBOL_URI + "FactionSymbol" + CurrentFactionNumber.ToString());
 
 			//Apply it
 			if (TownSymbolImage != null)
@@ -734,7 +734,7 @@ namespace FallenLand
 
 			//Set up town techs TODO rework so this is not hardcoded to two
 			//Load tech 1
-			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[0].GetId().ToString());
+			img = Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[0].GetId().ToString());
 			//Apply it
 			if (TownTech1Image != null)
 			{
@@ -745,7 +745,7 @@ namespace FallenLand
 				Debug.Log("Town tech image 1 container not set");
 			}
 			//Load tech 2
-			img = (Sprite)Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[1].GetId().ToString());
+			img = Resources.Load<Sprite>(TOWN_TECH_IMAGE_URI + "TownTech" + CurrentFaction.GetStartingTownTechs()[1].GetId().ToString());
 			//Apply it
 			if (TownTech2Image != null)
 			{
