@@ -730,5 +730,62 @@ namespace Tests
 
 			yield return null;
 		}
+
+		[UnityTest]
+		public IEnumerator TestHealth()
+		{
+			CharacterCard character = new CharacterCard("character");
+			character.SetMaxHp(10);
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.SetMaxHp(-10);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.AddPhysicalDamage(4);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(6, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.RemovePhysicalDamage(3);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(9, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.AddInfectedDamage(4);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(5, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.RemoveInfectedDamage(2);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(7, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.AddRadiationDamage(6);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			character.RemoveRadiationDamage(4);
+			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterMaxHealth(CHARACTER_1_INDEX));
+			Assert.AreEqual(5, HumanPlayerInstance.GetActiveCharacterRemainingHealth(CHARACTER_1_INDEX));
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestEffects()
+		{
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveEffects().Count);
+
+			Effect effect = new GainSpoilsEffect("Gain Spoils Effect");
+			HumanPlayerInstance.AddActiveEffect(effect);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveEffects().Count);
+			Assert.AreEqual(effect, HumanPlayerInstance.GetActiveEffects()[0]);
+
+			HumanPlayerInstance.RemoveActiveEffect(effect);
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveEffects().Count);
+
+			yield return null;
+		}
 	}
 }
