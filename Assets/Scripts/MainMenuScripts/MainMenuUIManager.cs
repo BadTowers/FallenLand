@@ -67,7 +67,7 @@ namespace FallenLand
 		private bool ConnectedToRoom;
 		private bool ConnectedToMaster;
 		private bool FailedToConnectToRoom;
-		private string MyOnlineUserId;
+		private string MyOnlineUserId = "";
         private bool LoadingGame;
 		private const string CURRENT_SCENE_PROPERTY = "curScn";
 		private const string MAIN_MENU_SCENE_NAME = "MainMenu";
@@ -149,6 +149,14 @@ namespace FallenLand
 			//Limit the frame rate
 			QualitySettings.vSyncCount = 0;  // VSync must be disabled
 			Application.targetFrameRate = 144;
+
+			if (System.IO.File.Exists("UserId"))
+			{
+				System.IO.StreamReader reader = new System.IO.StreamReader("UserId");
+				MyOnlineUserId = reader.ReadLine();
+				reader.Close();
+				PhotonNetwork.AuthValues = new AuthenticationValues(MyOnlineUserId);
+			}
 		}
 
 		void Update()
@@ -303,13 +311,22 @@ namespace FallenLand
 
 		public override void OnJoinRoomFailed(short returnCode, string message)
 		{
-			Debug.LogWarningFormat("OnJoinRoomFailed() was called by PUN with reason {0}", message);
-			Debug.Log("OnJoinRoomFailed() was called by PUN with reason " + message);
-			FailedToConnectToRoom = true;
-			ConnectedToRoom = false;
-			FeedbackText.text = "Failed to join lobby: " + message;
-			CreateLobbyButton.GetComponent<Button>().interactable = true;
-			JoinGameButton.GetComponent<Button>().interactable = true;
+			if (returnCode == ErrorCode.JoinFailedFoundInactiveJoiner || returnCode == ErrorCode.GameClosed)
+			{
+				RoomNameInputField roomNameInputField = GameObject.Find("RoomNameInputField").GetComponent<RoomNameInputField>();
+				PhotonNetwork.RejoinRoom(roomNameInputField.GetRoomName());
+				FeedbackText.text = "Attempting to rejoin...";
+			}
+			else
+			{
+				Debug.LogWarningFormat("OnJoinRoomFailed() was called by PUN with code {0} with reason {1}", returnCode, message);
+				Debug.Log("OnJoinRoomFailed() was called by PUN with reason " + message);
+				FailedToConnectToRoom = true;
+				ConnectedToRoom = false;
+				FeedbackText.text = "Failed to join lobby: " + message;
+				CreateLobbyButton.GetComponent<Button>().interactable = true;
+				JoinGameButton.GetComponent<Button>().interactable = true;
+			}
 		}
 
 		public override void OnJoinedRoom()
@@ -322,7 +339,11 @@ namespace FallenLand
 			{
 				CurrentPlayerIndex = PhotonNetwork.PlayerList.Length - 1;
 			}
-			MyOnlineUserId = PhotonNetwork.PlayerList[CurrentPlayerIndex].UserId;
+			if (MyOnlineUserId != PhotonNetwork.PlayerList[CurrentPlayerIndex].UserId)
+			{
+				MyOnlineUserId = PhotonNetwork.PlayerList[CurrentPlayerIndex].UserId;
+				System.IO.File.WriteAllText("UserId", MyOnlineUserId);
+			}
 			UserIdText.text = MyOnlineUserId;
 
 			currentState = MainMenuStates.MultiplayerLobby;
@@ -598,6 +619,8 @@ namespace FallenLand
 				Debug.Log("PhotonNetwork : Loading game");
 
 				gatherDataForNextScene();
+
+			    PhotonNetwork.CurrentRoom.IsOpen = false; //Lock the room so no one else can join
 
 				//Show loading screen
 				LoadingGame = true;
