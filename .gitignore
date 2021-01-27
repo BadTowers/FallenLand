@@ -50,3 +50,5 @@ CodeCoverage/Report/*
 *.zip
 *.7z
 debug.log
+
+UserId
