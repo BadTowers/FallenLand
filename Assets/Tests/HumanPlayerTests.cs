@@ -445,20 +445,31 @@ namespace Tests
 			spoils2.SetCarryWeight(5);
 
 			HumanPlayerInstance.AddCharacterToParty(CHARACTER_INDEX, character);
+            Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterTotalCarryWeight(CHARACTER_INDEX));
+            HumanPlayerInstance.AddCarryCapacityToCharacter(CHARACTER_INDEX, 3);
+            Assert.AreEqual(13, HumanPlayerInstance.GetActiveCharacterTotalCarryWeight(CHARACTER_INDEX));
+            HumanPlayerInstance.SubtractCarryCapacityFromCharacter(CHARACTER_INDEX, 2);
+            Assert.AreEqual(11, HumanPlayerInstance.GetActiveCharacterTotalCarryWeight(CHARACTER_INDEX));
+            HumanPlayerInstance.SubtractCarryCapacityFromCharacter(CHARACTER_INDEX, 1);
+            Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterTotalCarryWeight(CHARACTER_INDEX));
+
 			CollectionAssert.AreEquivalent(Constants.ALL_SKILLS_ZERO, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
 			Assert.AreEqual(10, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils1);
 			CollectionAssert.AreEquivalent(spoils1Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10-2, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10 - spoils1.GetCarryWeight(), HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(spoils1.GetCarryWeight(), HumanPlayerInstance.GetActiveCharacterUsedCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.AddSpoilsToCharacter(CHARACTER_INDEX, spoils2);
 			CollectionAssert.AreEquivalent(totalExpected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10-2-5, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10 - spoils1.GetCarryWeight() - spoils2.GetCarryWeight(), HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(spoils1.GetCarryWeight() + spoils2.GetCarryWeight(), HumanPlayerInstance.GetActiveCharacterUsedCarryWeight(CHARACTER_INDEX));
 
 			HumanPlayerInstance.RemoveSpoilsCardFromActiveCharacter(CHARACTER_INDEX, spoils1);
 			CollectionAssert.AreEquivalent(spoils2Expected, HumanPlayerInstance.GetActiveCharacterStats(CHARACTER_INDEX));
-			Assert.AreEqual(10-5, HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(10 - spoils2.GetCarryWeight(), HumanPlayerInstance.GetActiveCharacterRemainingCarryWeight(CHARACTER_INDEX));
+			Assert.AreEqual(spoils2.GetCarryWeight(), HumanPlayerInstance.GetActiveCharacterUsedCarryWeight(CHARACTER_INDEX));
 
 			yield return null;
 		}
@@ -572,6 +583,150 @@ namespace Tests
 
 			HumanPlayerInstance.SubtractPrestige(8);
 			Assert.AreEqual(1, HumanPlayerInstance.GetPrestige()); //Minimum prestige is 1
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPsych()
+		{
+			CharacterCard character = new CharacterCard("character");
+			character.SetCarryCapacity(10);
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character);
+			Assert.AreEqual(3, HumanPlayerInstance.GetActiveCharacterRemainingPsych(CHARACTER_1_INDEX)); //Default to 3
+
+			HumanPlayerInstance.SetActiveCharacterRemainingPsych(CHARACTER_1_INDEX, 5);
+			Assert.AreEqual(3, HumanPlayerInstance.GetActiveCharacterRemainingPsych(CHARACTER_1_INDEX));
+			HumanPlayerInstance.SetActiveCharacterRemainingPsych(CHARACTER_1_INDEX, 2);
+			Assert.AreEqual(2, HumanPlayerInstance.GetActiveCharacterRemainingPsych(CHARACTER_1_INDEX));
+			HumanPlayerInstance.SetActiveCharacterRemainingPsych(CHARACTER_1_INDEX, -10);
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacterRemainingPsych(CHARACTER_1_INDEX));
+
+			//Null characters return 0
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacterRemainingPsych(CHARACTER_2_INDEX));
+			Assert.AreEqual(0, HumanPlayerInstance.GetActiveCharacterRemainingPsych(CHARACTER_3_INDEX));
+
+			yield return null;
+		}
+
+        [UnityTest]
+        public IEnumerator TestPlayerIsMoving()
+        {
+			Assert.IsFalse(HumanPlayerInstance.GetPlayerIsMoving());
+			HumanPlayerInstance.SetPlayerIsMoving(true);
+			Assert.IsTrue(HumanPlayerInstance.GetPlayerIsMoving());
+			HumanPlayerInstance.SetPlayerIsMoving(false);
+			Assert.IsFalse(HumanPlayerInstance.GetPlayerIsMoving());
+
+            yield return null;
+        }
+
+		[UnityTest]
+		public IEnumerator TestPlayerIsHealing()
+		{
+			Assert.IsFalse(HumanPlayerInstance.GetPlayerIsHealing());
+			HumanPlayerInstance.SetPlayerIsHealing(true);
+			Assert.IsTrue(HumanPlayerInstance.GetPlayerIsHealing());
+			HumanPlayerInstance.SetPlayerIsHealing(false);
+			Assert.IsFalse(HumanPlayerInstance.GetPlayerIsHealing());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPlayerIsDoingEncounter()
+		{
+			Assert.IsFalse(HumanPlayerInstance.GetPlayerIsDoingAnEncounter());
+			HumanPlayerInstance.SetPlayerIsDoingAnEncounter(true);
+			Assert.IsTrue(HumanPlayerInstance.GetPlayerIsDoingAnEncounter());
+			HumanPlayerInstance.SetPlayerIsDoingAnEncounter(false);
+			Assert.IsFalse(HumanPlayerInstance.GetPlayerIsDoingAnEncounter());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPartyLocation()
+		{
+			Assert.IsNull(HumanPlayerInstance.GetPartyLocation());
+			HumanPlayerInstance.SetPartyLocation(new Coordinates(10, 20));
+			Assert.IsNotNull(HumanPlayerInstance.GetPartyLocation());
+			Assert.AreEqual(10, HumanPlayerInstance.GetPartyLocation().GetX());
+			Assert.AreEqual(20, HumanPlayerInstance.GetPartyLocation().GetY());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestEncounterType()
+		{
+			Assert.AreEqual(Constants.ENCOUNTER_NONE, HumanPlayerInstance.GetEncounterType());
+			HumanPlayerInstance.SetEncounterType(Constants.ENCOUNTER_PLAINS);
+			Assert.AreEqual(Constants.ENCOUNTER_PLAINS, HumanPlayerInstance.GetEncounterType());
+			HumanPlayerInstance.SetEncounterType(Constants.ENCOUNTER_CITY_RAD);
+			Assert.AreEqual(Constants.ENCOUNTER_CITY_RAD, HumanPlayerInstance.GetEncounterType());
+			HumanPlayerInstance.SetEncounterType(Constants.ENCOUNTER_MOUNTAINS);
+			Assert.AreEqual(Constants.ENCOUNTER_MOUNTAINS, HumanPlayerInstance.GetEncounterType());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPartyExploitsWeeks()
+		{
+			Assert.AreEqual(4, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+			HumanPlayerInstance.SetRemainingPartyExploitWeeks(3);
+			Assert.AreEqual(3, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+			HumanPlayerInstance.SetRemainingPartyExploitWeeks(2);
+			Assert.AreEqual(2, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+			HumanPlayerInstance.SetRemainingPartyExploitWeeks(1);
+			Assert.AreEqual(1, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+			HumanPlayerInstance.SetRemainingPartyExploitWeeks(0);
+			Assert.AreEqual(0, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+			HumanPlayerInstance.SetRemainingPartyExploitWeeks(-10);
+			Assert.AreEqual(0, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+			HumanPlayerInstance.SetRemainingPartyExploitWeeks(10);
+			Assert.AreEqual(10, HumanPlayerInstance.GetRemainingPartyExploitWeeks());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestBonusMovement()
+		{
+			Assert.AreEqual(0, HumanPlayerInstance.GetBonusMovement());
+			HumanPlayerInstance.AddBonusMovement(14);
+			Assert.AreEqual(14, HumanPlayerInstance.GetBonusMovement());
+			HumanPlayerInstance.SubtractBonusMovement(5);
+			Assert.AreEqual(9, HumanPlayerInstance.GetBonusMovement());
+			HumanPlayerInstance.SubtractBonusMovement(15);
+			Assert.AreEqual(-6, HumanPlayerInstance.GetBonusMovement());
+			HumanPlayerInstance.AddBonusMovement(2);
+			Assert.AreEqual(-4, HumanPlayerInstance.GetBonusMovement());
+
+			yield return null;
+		}
+
+		[UnityTest]
+		public IEnumerator TestPsychResistance()
+		{
+			CharacterCard character = new CharacterCard("character");
+			character.SetPsychResistance(6);
+
+			HumanPlayerInstance.AddCharacterToParty(CHARACTER_1_INDEX, character);
+			Assert.AreEqual(6, HumanPlayerInstance.GetActiveCharacterPsychResistance(CHARACTER_1_INDEX));
+
+			HumanPlayerInstance.AddPsychResistance(CHARACTER_1_INDEX, 2);
+			Assert.AreEqual(8, HumanPlayerInstance.GetActiveCharacterPsychResistance(CHARACTER_1_INDEX));
+			HumanPlayerInstance.AddPsychResistance(CHARACTER_1_INDEX, -12);
+			Assert.AreEqual(8, HumanPlayerInstance.GetActiveCharacterPsychResistance(CHARACTER_1_INDEX));
+			HumanPlayerInstance.SubtractPsychResistance(CHARACTER_1_INDEX, 2);
+			Assert.AreEqual(6, HumanPlayerInstance.GetActiveCharacterPsychResistance(CHARACTER_1_INDEX));
+			HumanPlayerInstance.SubtractPsychResistance(CHARACTER_1_INDEX, 15);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacterPsychResistance(CHARACTER_1_INDEX));
+			HumanPlayerInstance.SubtractPsychResistance(CHARACTER_1_INDEX, -4);
+			Assert.AreEqual(1, HumanPlayerInstance.GetActiveCharacterPsychResistance(CHARACTER_1_INDEX));
 
 			yield return null;
 		}
