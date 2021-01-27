@@ -277,7 +277,8 @@ namespace FallenLand
 				RoomOptions roomOptions = new RoomOptions
 				{
 					MaxPlayers = maxPlayersPerRoom,
-					PublishUserId = true
+					PublishUserId = true,
+					PlayerTtl=60000*5 //5 mins
 				};
 				PhotonNetwork.CreateRoom(roomNameInputField.GetRoomName(), roomOptions);
 				IsCreatingRoom = false;
