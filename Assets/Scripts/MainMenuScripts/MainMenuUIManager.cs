@@ -8,6 +8,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Castle.Core.Internal;
+using System.Linq;
 
 namespace FallenLand
 {
@@ -851,18 +852,18 @@ namespace FallenLand
 
 		private void updatePlayerList()
 		{
-			for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+			for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
 			{
-				Photon.Realtime.Player player = PhotonNetwork.PlayerList[i];
+				Photon.Realtime.Player player = PhotonNetwork.PlayerList[playerIndex];
 				Hashtable playerHashTable = player.CustomProperties;
 
-				PlayerTexts[i].GetComponent<Text>().text = player.NickName;
-				PlayerTexts[i].SetActive(true);
-				FactionLabels[i].SetActive(true);
+				PlayerTexts[playerIndex].GetComponent<Text>().text = player.NickName;
+				PlayerTexts[playerIndex].SetActive(true);
+				FactionLabels[playerIndex].SetActive(true);
 
-				if (i == CurrentPlayerIndex)
+				if (playerIndex == CurrentPlayerIndex)
 				{
-					updateMultiplayerNameColor(i, 37f / 255f, 135f / 255f, 6f / 255f);
+					updateMultiplayerNameColor(playerIndex, 37f / 255f, 135f / 255f, 6f / 255f);
 					if ((string)playerHashTable["FactionName"] != CurrentFaction.GetName())
 					{
 						Hashtable properties = new Hashtable
@@ -874,13 +875,13 @@ namespace FallenLand
 				}
 				else
 				{
-					updateMultiplayerNameColor(i, 0f, 0f, 0f);
+					updateMultiplayerNameColor(playerIndex, 0f, 0f, 0f);
 				}
 
 				if (!playerHashTable.IsNullOrEmpty())
 				{
 					string currentPlayerFaction = (string)playerHashTable["FactionName"];
-					FactionLabels[i].GetComponent<Text>().text = currentPlayerFaction;
+					FactionLabels[playerIndex].GetComponent<Text>().text = currentPlayerFaction;
 				}
 			}
 
@@ -898,7 +899,21 @@ namespace FallenLand
 
 		private void updateStartButton()
 		{
-			MultiplayerStartButton.interactable = (PhotonNetwork.IsMasterClient) && (PhotonNetwork.PlayerList.Length > 1);
+			//Check if two players are on the same faction
+			List<string> factions = new List<string>();
+			for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
+			{
+				Photon.Realtime.Player player = PhotonNetwork.PlayerList[playerIndex];
+				Hashtable playerHashTable = player.CustomProperties;
+
+                if (!playerHashTable.IsNullOrEmpty())
+                {
+                    factions.Add((string)playerHashTable["FactionName"]);
+                }
+            }
+			IEnumerable<string> duplicates = factions.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key);
+
+			MultiplayerStartButton.interactable = (PhotonNetwork.IsMasterClient) && (PhotonNetwork.PlayerList.Length > 1) && (duplicates.Count() == 0);
 		}
 
 		private void instantiateGameObjects()
