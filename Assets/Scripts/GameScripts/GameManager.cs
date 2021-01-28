@@ -1622,6 +1622,11 @@ namespace FallenLand
 				List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
 				if (!CurrentPlayerEncounter[playerIndex].GetIsIndividualCheck())
 				{
+					List<bool> skillHasRollsRemaining = new List<bool>();
+					for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
+					{
+						skillHasRollsRemaining.Add(false);
+					}
 					if (!EncounterWasSuccessful(playerIndex))
 					{
 						//Check all characters
@@ -1631,8 +1636,7 @@ namespace FallenLand
 							{
 								if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, skillIndex))
 								{
-									isFinished = false;
-									break;
+									skillHasRollsRemaining[skillIndex] = true;
 								}
 							}
 						}
@@ -1642,10 +1646,22 @@ namespace FallenLand
 						{
 							if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, skillIndex))
 							{
-								isFinished = false;
+								skillHasRollsRemaining[skillIndex] = true;
 								break;
 							}
 						}
+
+						//If any particular skill is out of rolls and the encounter wasn't successful, then we should say fail
+						bool skillCheckFailed = false;
+						for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
+						{
+							if (!skillHasRollsRemaining[skillIndex] && GetPartyTotalSuccesses(playerIndex, skillIndex) < skillChecks[skillIndex].Item2)
+							{
+								skillCheckFailed = true;
+								break;
+							}
+						}
+						isFinished = skillCheckFailed;
 					}
 				}
 				else
