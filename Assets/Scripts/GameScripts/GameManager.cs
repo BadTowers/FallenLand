@@ -1771,7 +1771,7 @@ namespace FallenLand
 					List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
 					for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 					{
-						if (GetPartyTotalSuccesses(playerIndex, skillIndex) < skillChecks[skillIndex].Item2)
+						if (GetPartyTotalSuccesses(playerIndex, skillIndex) < skillChecks[skillIndex].Item2 || !haveAllCharactersRolledOnce(playerIndex, skillIndex))
 						{
 							wasSuccessful = false;
 							break;
@@ -3648,6 +3648,21 @@ namespace FallenLand
 			{
 				EffectsManager.HandleEffects(this, playerIndex);
 			}
+		}
+
+		private bool haveAllCharactersRolledOnce(int playerIndex, int skillIndex)
+		{
+			bool allHaveRolledOnce = true;
+			for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+			{
+				if (Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skillIndex) == Constants.HAS_NOT_ROLLED)
+				{
+					allHaveRolledOnce = false;
+					break;
+				}
+			}
+
+			return allHaveRolledOnce;
 		}
 		#endregion
 
