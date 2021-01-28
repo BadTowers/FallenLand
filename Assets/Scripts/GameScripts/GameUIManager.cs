@@ -142,8 +142,9 @@ namespace FallenLand
         private GameObject NextDistributionPageButton;
         private int CurrentDistributionPage;
         private Dictionary<int, byte> DistributionPageToDistributeTypeMapping;
-        bool DistributionWasRolled;
-        bool HasFocusedThisPartyExploits;
+        private bool DistributionWasRolled;
+        private bool HasFocusedThisPartyExploits;
+        private GameObject GenericOkButton;
 
         #region UnityFunctions
         void Awake()
@@ -183,6 +184,7 @@ namespace FallenLand
             GenericPopupWithTwoLinesOfTextPanel = GameObject.Find("GenericPopupWithTwoLinesOfTextPanel");
             GenericPopupTextPanel = GameObject.Find("GenericPopupTextPanel");
             GenericPopupText = GameObject.Find("GenericPopupText");
+            GenericOkButton = GameObject.Find("GenericOkButton");
             EncounterButton = GameObject.Find("EncounterButton");
             ResourceButton = GameObject.Find("ResourceButton");
             HealingButton = GameObject.Find("HealingButton");
@@ -1346,6 +1348,7 @@ namespace FallenLand
             {
                 GenericPopupWithTwoLinesOfTextPanel.SetActive(true);
                 GenericPopupText.GetComponent<Text>().text = text;
+                GenericOkButton.GetComponent<Button>().interactable = false;
                 showPopup(GenericPopupTextPanel);
             }
             else
@@ -1398,7 +1401,12 @@ namespace FallenLand
         private void showPopup(GameObject go)
         {
             go.transform.localScale = new Vector3(0f, 0f, 0f);
-            LeanTween.scale(go, new Vector3(1f, 1f, 1f), 1f).setEase(LeanTweenType.easeOutCubic);
+            LeanTween.scale(go, new Vector3(1f, 1f, 1f), 0.5f).setEase(LeanTweenType.easeOutCubic).setOnComplete(enablePopUpButtons);
+        }
+
+        private void enablePopUpButtons()
+        {
+            GenericOkButton.GetComponent<Button>().interactable = true;
         }
 
         //A function to display and hide menus as needed
