@@ -3569,7 +3569,7 @@ namespace FallenLand
 			}
 		}
 
-		private void shuffleEncounterDecksIfNeeded() //asdfasdf
+		private void shuffleEncounterDecksIfNeeded()
         {
 			if (PlainsDeck.Count == 0)
 			{
