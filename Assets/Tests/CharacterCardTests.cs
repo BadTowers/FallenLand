@@ -230,7 +230,7 @@ namespace Tests
 			Assert.AreEqual(5, CharacterCardInstance.GetPsychResistance());
 			Assert.AreEqual(3, CharacterCardInstance.GetPsychRemaning());
 			CharacterCardInstance.SetPsychResistance(-5);
-			Assert.AreEqual(1, CharacterCardInstance.GetPsychResistance());
+			Assert.AreEqual(5, CharacterCardInstance.GetPsychResistance());
 
 			CharacterCardInstance.SetPsychResistance(5);
 			CharacterCardInstance.AddPsychResistance(1);
