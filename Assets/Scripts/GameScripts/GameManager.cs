@@ -2487,7 +2487,6 @@ namespace FallenLand
 		{
 			if (PhotonNetwork.IsMasterClient)
 			{
-				Debug.Log("dealCardsToPlayers as master");
 				dealSpoilsCardsToPlayers();
 				dealCharacterCardsToPlayers();
 				//dealActionCardsToPlayers();
