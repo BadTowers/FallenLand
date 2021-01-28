@@ -145,6 +145,7 @@ namespace FallenLand
         private bool DistributionWasRolled;
         private bool HasFocusedThisPartyExploits;
         private GameObject GenericOkButton;
+        private GameObject EncounterOverviewBonusMovementText;
 
         #region UnityFunctions
         void Awake()
@@ -195,6 +196,7 @@ namespace FallenLand
             GenericYesNoPopupPanel = GameObject.Find("GenericYesNoPopupPanel");
             PreviousDistributionPageButton = GameObject.Find("PreviousDistributionPageButton");
             NextDistributionPageButton = GameObject.Find("NextDistributionPageButton");
+            EncounterOverviewBonusMovementText = GameObject.Find("EncounterOverviewBonusMovementText");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -2631,7 +2633,8 @@ namespace FallenLand
 
         private void updateStatPanelsForOverallEncounterPage()
         {
-            EncounterCard card = GameManagerInstance.GetCurrentEncounter(GameManagerInstance.GetIndexForMyPlayer());
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            EncounterCard card = GameManagerInstance.GetCurrentEncounter(myIndex);
             if (card != null)
             {
                 List<(Skills, int)> skillChecks = card.GetSkillChecks();
@@ -2664,6 +2667,7 @@ namespace FallenLand
                     }
                     OverallEncounterVehicleStatPanels[(int)skill].GetComponent<Image>().color = color;
                 }
+                EncounterOverviewBonusMovementText.GetComponent<Text>().text = GameManagerInstance.GetBonusMovement(myIndex).ToString();
             }
         }
 
