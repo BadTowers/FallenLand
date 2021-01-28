@@ -2496,21 +2496,27 @@ namespace FallenLand
 		//Only called by master client
 		private void dealSpoilsCardsToPlayers()
 		{
-			moveStartingCardsToTheEndOfTheDeck(); //Ensure we don't deal away someone's starting card
-			moveEventCardsToTheEndOfTheDeck();
+			int dealingIndex = 0;
 			for (int i = 0; i < StartingSpoilsCards; i++)
 			{
 				for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
 				{
-					Players[playerIndex].AddSpoilsCardToAuctionHouse(SpoilsDeck[0]);
-					Debug.Log("Dealt spoils card " + SpoilsDeck[0].GetTitle());
-					object content = new CardNetworking(SpoilsDeck[0].GetTitle(), playerIndex, Constants.SPOILS_CARD);
+					SpoilsCard curSpoilsCard = SpoilsDeck[dealingIndex];
+					if (curSpoilsCard.GetIsStartingCard() || curSpoilsCard.GetSpoilsTypes().Contains(SpoilsTypes.Event))
+					{
+						Debug.Log("NOT DEALING " + curSpoilsCard.GetTitle());
+						dealingIndex++;
+						continue;
+					}
+
+					Players[playerIndex].AddSpoilsCardToAuctionHouse(curSpoilsCard);
+					Debug.Log("Dealt spoils card " + curSpoilsCard.GetTitle() + " to player " + playerIndex);
+					object content = new CardNetworking(curSpoilsCard.GetTitle(), playerIndex, Constants.SPOILS_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-					SpoilsDeck.RemoveAt(0);
+					SpoilsDeck.RemoveAt(dealingIndex);
 					EventManager.AuctionHouseChanged();
 				}
 			}
-			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
 		}
 
 		private void dealCharacterCardsToPlayers()
@@ -2540,32 +2546,6 @@ namespace FallenLand
 					object content = new CardNetworking(ActionDeck[0].GetTitle(), j, Constants.ACTION_CARD);
 					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
 					ActionDeck.RemoveAt(0);
-				}
-			}
-		}
-
-        private void moveStartingCardsToTheEndOfTheDeck()
-        {
-            for (int i = SpoilsDeck.Count - 1; i >= 0 ; i--)
-            {
-                if (SpoilsDeck[i].GetIsStartingCard())
-                {
-                    SpoilsCard card = SpoilsDeck[i];
-                    SpoilsDeck.RemoveAt(i);
-                    SpoilsDeck.Add(card);
-                }
-            }
-        }
-
-		private void moveEventCardsToTheEndOfTheDeck()
-        {
-			for (int i = SpoilsDeck.Count - 1; i >= 0; i--)
-			{
-				if (SpoilsDeck[i].GetSpoilsTypes().Contains(SpoilsTypes.Event))
-				{
-					SpoilsCard card = SpoilsDeck[i];
-					SpoilsDeck.RemoveAt(i);
-					SpoilsDeck.Add(card);
 				}
 			}
 		}
