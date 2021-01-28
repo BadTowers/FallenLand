@@ -2638,11 +2638,11 @@ namespace FallenLand
             if (card != null)
             {
                 List<(Skills, int)> skillChecks = card.GetSkillChecks();
-                for (int i = 0; i < Constants.NUM_PARTY_MEMBERS; i++)
+                for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
                 {
                     foreach (Skills skill in Enum.GetValues(typeof(Skills)))
                     {
-                        Color color = OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color;
+                        Color color = OverallEncounterPlayerStatPanels[characterIndex][(int)skill].GetComponent<Image>().color;
                         color.a = 0;
                         foreach ((Skills skillInCheck, int _) in skillChecks)
                         {
@@ -2651,7 +2651,7 @@ namespace FallenLand
                                 color.a = 128;
                             }
                         }
-                        OverallEncounterPlayerStatPanels[i][(int)skill].GetComponent<Image>().color = color;
+                        OverallEncounterPlayerStatPanels[characterIndex][(int)skill].GetComponent<Image>().color = color;
                     }
                 }
                 foreach (Skills skill in Enum.GetValues(typeof(Skills)))
