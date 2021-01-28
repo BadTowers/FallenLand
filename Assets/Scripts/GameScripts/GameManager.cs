@@ -1650,7 +1650,7 @@ namespace FallenLand
 				}
 				else
 				{
-					if (!IndividualEncounterWasSuccessfull(playerIndex, currentCharacterEncounterIndex))
+					if (!IndividualEncounterWasSuccessful(playerIndex, currentCharacterEncounterIndex))
 					{
 						//Check skills for the current individual character
 						for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
@@ -1783,7 +1783,7 @@ namespace FallenLand
 			return wasSuccessful;
 		}
 
-		public bool IndividualEncounterWasSuccessfull(int playerIndex, int currentCharacterIndex)
+		public bool IndividualEncounterWasSuccessful(int playerIndex, int currentCharacterIndex)
 		{
 			bool wasSuccessful = true;
 
