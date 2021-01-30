@@ -724,6 +724,26 @@ namespace FallenLand
 			return psychRes;
 		}
 
+		public int GetAmountOfInfectedDamageForCharacter(int playerIndex, int characterIndex)
+		{
+			int amountOfInfectedDamage = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				amountOfInfectedDamage = Players[playerIndex].GetAmountOfInfectedDamageForCharacter(characterIndex);
+			}
+			return amountOfInfectedDamage;
+		}
+
+		public int GetAmountOfRadiationDamageForCharacter(int playerIndex, int characterIndex)
+		{
+			int amountOfRadiationDamage = 0;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				amountOfRadiationDamage = Players[playerIndex].GetAmountOfRadiationDamageForCharacter(characterIndex);
+			}
+			return amountOfRadiationDamage;
+		}
+
 		public int GetRemainingPartyExploitWeeks(int playerIndex)
 		{
 			int remainingWeeks = 0;

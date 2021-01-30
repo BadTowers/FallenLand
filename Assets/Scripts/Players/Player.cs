@@ -871,6 +871,26 @@ namespace FallenLand
 			}
 		}
 
+		public int GetAmountOfInfectedDamageForCharacter(int characterIndex)
+		{
+			int amountOfInfectedDamage = 0;
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				amountOfInfectedDamage = ActiveCharacters[characterIndex].GetAmountOfInfectedDamage();
+			}
+			return amountOfInfectedDamage;
+		}
+
+		public int GetAmountOfRadiationDamageForCharacter(int characterIndex)
+		{
+			int amountOfRadiationDamage = 0;
+			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)
+			{
+				amountOfRadiationDamage = ActiveCharacters[characterIndex].GetAmountOfRadiationDamage();
+			}
+			return amountOfRadiationDamage;
+		}
+
 		public void AddPhysicalDamageToCharacter(int characterIndex, int amountOfPhysicalDamage)
 		{
 			if (characterIndex >= 0 && characterIndex < Constants.MAX_NUM_PLAYERS && ActiveCharacters[characterIndex] != null)

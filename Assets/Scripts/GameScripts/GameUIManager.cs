@@ -31,6 +31,8 @@ namespace FallenLand
         private List<List<GameObject>> ActiveCharactersCarryWeightsText;
         private List<List<GameObject>> ActiveCharactersHealthText;
         private List<List<GameObject>> ActiveCharactersPsychText;
+        private List<List<GameObject>> ActiveCharactersInfectedText;
+        private List<List<GameObject>> ActiveCharactersRadiationText;
         private List<List<GameObject>> ActiveVehicleStatsText;
         private List<GameObject> ActiveVehicleCarryWeightsText;
         private GameObject MainOverlay;
@@ -226,6 +228,8 @@ namespace FallenLand
             ActiveCharactersPsychResistance = new List<List<GameObject>>();
             ActiveCharactersHealthText = new List<List<GameObject>>();
             ActiveCharactersPsychText = new List<List<GameObject>>();
+            ActiveCharactersInfectedText = new List<List<GameObject>>();
+            ActiveCharactersRadiationText = new List<List<GameObject>>();
             ActiveVehicleStatsText = new List<List<GameObject>>();
             OverallEncounterPlayerStatPanels = new List<List<GameObject>>();
             //Get the UI stuff for the 5 characters
@@ -264,6 +268,12 @@ namespace FallenLand
                 GameObject[] psychObjects = GameObject.FindGameObjectsWithTag("CharacterPsych" + (i + 1).ToString());
                 ActiveCharactersPsychText.Add(psychObjects.OfType<GameObject>().ToList());
 
+                GameObject[] infectedDamageObjects = GameObject.FindGameObjectsWithTag("CharacterInfectedDamage" + (i + 1).ToString());
+                ActiveCharactersInfectedText.Add(infectedDamageObjects.OfType<GameObject>().ToList());
+
+                GameObject[] radiationDamageObjects = GameObject.FindGameObjectsWithTag("CharacterRadiationDamage" + (i + 1).ToString());
+                ActiveCharactersRadiationText.Add(radiationDamageObjects.OfType<GameObject>().ToList());
+
                 OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("CombatPanel" + (i + 1).ToString()));
                 OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("SurvivalPanel" + (i + 1).ToString()));
                 OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("DiplomacyPanel" + (i + 1).ToString()));
@@ -289,11 +299,19 @@ namespace FallenLand
                 }
                 for (int j = 0; j < ActiveCharactersHealthText[i].Count; j++)
                 {
-                    ActiveCharactersHealthText[i][j].GetComponentInChildren<Text>().text = "0/0";
+                    ActiveCharactersHealthText[i][j].GetComponentInChildren<Text>().text = "0";
                 }
                 for (int j = 0; j < ActiveCharactersPsychText[i].Count; j++)
                 {
                     ActiveCharactersPsychText[i][j].GetComponentInChildren<Text>().text = "0/0";
+                }
+                for (int j = 0; j < ActiveCharactersInfectedText[i].Count; j++)
+                {
+                    ActiveCharactersInfectedText[i][j].GetComponentInChildren<Text>().text = "0";
+                }
+                for (int j = 0; j < ActiveCharactersRadiationText[i].Count; j++)
+                {
+                    ActiveCharactersRadiationText[i][j].GetComponentInChildren<Text>().text = "0";
                 }
             }
 
@@ -2911,6 +2929,20 @@ namespace FallenLand
                 for (int i = 0; i < ActiveCharactersHealthText[characterIndex].Count; i++)
                 {
                     ActiveCharactersHealthText[characterIndex][i].GetComponentInChildren<Text>().text = remainingHealth.ToString();
+                }
+
+                //Update infected damage
+                int infectedDamage = GameManagerInstance.GetAmountOfInfectedDamageForCharacter(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersInfectedText[characterIndex].Count; i++)
+                {
+                    ActiveCharactersInfectedText[characterIndex][i].GetComponentInChildren<Text>().text = infectedDamage.ToString();
+                }
+
+                //Update radiation damage
+                int radiationDamage = GameManagerInstance.GetAmountOfRadiationDamageForCharacter(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersRadiationText[characterIndex].Count; i++)
+                {
+                    ActiveCharactersRadiationText[characterIndex][i].GetComponentInChildren<Text>().text = radiationDamage.ToString();
                 }
 
                 //Hide party panel if needed

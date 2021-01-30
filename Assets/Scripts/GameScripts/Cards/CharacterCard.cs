@@ -252,6 +252,11 @@ namespace FallenLand
             CurrentHp += amountOfHeal;
         }
 
+        public int GetAmountOfInfectedDamage()
+        {
+            return AmountOfInfectedDamage;
+        }
+
         public void AddPhysicalDamage(int amountOfDamage)
         {
             AmountOfPhysicalDamage += amountOfDamage;
@@ -274,6 +279,11 @@ namespace FallenLand
         {
             AmountOfRadiationDamage -= amountOfHeal;
             CurrentHp += amountOfHeal;
+        }
+
+        public int GetAmountOfRadiationDamage()
+        {
+            return AmountOfRadiationDamage;
         }
     }
 }

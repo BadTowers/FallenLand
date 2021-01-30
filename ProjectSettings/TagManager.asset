@@ -62,6 +62,16 @@ TagManager:
   - CharacterCarryWeight5
   - CharacterCarryWeightV
   - CurrentEncounterRollSymbol
+  - CharacterInfectedDamage1
+  - CharacterInfectedDamage2
+  - CharacterInfectedDamage3
+  - CharacterInfectedDamage4
+  - CharacterInfectedDamage5
+  - CharacterRadiationDamage1
+  - CharacterRadiationDamage2
+  - CharacterRadiationDamage3
+  - CharacterRadiationDamage4
+  - CharacterRadiationDamage5
   layers:
   - Default
   - TransparentFX
