@@ -404,7 +404,7 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 8}
 			});
-			//TODO add link
+			//Link doubles medical skill bonuses and medical equipment can be used twice instead of once before discarding
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -428,7 +428,10 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 8}
 			});
-			//TODO add link
+			currentLink = new Link("Camping Gear or Knife", new CampingGearOrKnifeEquipped());
+			currentLink.AddRewardOnActivate(new GainSurvival(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -452,7 +455,12 @@ namespace FallenLand
 				{Skills.Medical, 6}
 			});
 			curCard.SetIsMaster(true);
-			//TODO add link
+			currentLink = new Link("Motorized Vehicle in Party", new MotorizedVehicleInParty());
+			currentLink.AddRewardOnActivate(new GainBonusMovement(2));
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseBonusMovement(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -475,7 +483,7 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 7}
 			});
-			//TODO add link
+			//Link doubles medical skill bonus and may use med equip twice before discarding
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -498,7 +506,7 @@ namespace FallenLand
 				{Skills.Technical, 4},
 				{Skills.Medical, 6}
 			});
-			//TODO add link
+			//No link
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -521,7 +529,10 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 6}
 			});
-			//TODO add link
+			currentLink = new Link("Melee Weapon", new MeleeWeaponEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -544,6 +555,7 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 4}
 			});
+			//No link
 			//TODO add conditional gain (choose 1)
 			curCard.SetId(curID);
 			curID++;
