@@ -602,6 +602,7 @@ namespace FallenLand
 			return weight;
 		}
 
+		//TODO rework so that it doesn't look at photon all the time. This will fix a player disconnecting and reconnecting. We can create an order and just stick to it
 		public int GetIndexForMyPlayer()
 		{
 			int returnIndex = 0;
