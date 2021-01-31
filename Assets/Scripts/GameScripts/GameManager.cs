@@ -552,6 +552,18 @@ namespace FallenLand
 			return psychRes;
 		}
 
+		public bool GetActiveCharacterLinkActive(int playerIndex, int characterIndex)
+		{
+			bool isActive = false;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				isActive = Players[playerIndex].GetActiveCharacterLinkActive(characterIndex);
+			}
+
+			return isActive;
+		}
+
 		public int GetAmountOfInfectedDamageForCharacter(int playerIndex, int characterIndex)
 		{
 			int amountOfInfectedDamage = 0;

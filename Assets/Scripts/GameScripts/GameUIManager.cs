@@ -33,6 +33,7 @@ namespace FallenLand
         private List<List<GameObject>> ActiveCharactersPsychText;
         private List<List<GameObject>> ActiveCharactersInfectedText;
         private List<List<GameObject>> ActiveCharactersRadiationText;
+        private List<List<GameObject>> ActiveCharactersLinkActiveImage;
         private List<List<GameObject>> ActiveVehicleStatsText;
         private List<GameObject> ActiveVehicleCarryWeightsText;
         private GameObject MainOverlay;
@@ -230,6 +231,7 @@ namespace FallenLand
             ActiveCharactersPsychText = new List<List<GameObject>>();
             ActiveCharactersInfectedText = new List<List<GameObject>>();
             ActiveCharactersRadiationText = new List<List<GameObject>>();
+            ActiveCharactersLinkActiveImage = new List<List<GameObject>>();
             ActiveVehicleStatsText = new List<List<GameObject>>();
             OverallEncounterPlayerStatPanels = new List<List<GameObject>>();
             //Get the UI stuff for the 5 characters
@@ -274,6 +276,9 @@ namespace FallenLand
                 GameObject[] radiationDamageObjects = GameObject.FindGameObjectsWithTag("CharacterRadiationDamage" + (i + 1).ToString());
                 ActiveCharactersRadiationText.Add(radiationDamageObjects.OfType<GameObject>().ToList());
 
+                GameObject[] linkActiveObjects = GameObject.FindGameObjectsWithTag("LinkActive" + (i + 1).ToString());
+                ActiveCharactersLinkActiveImage.Add(linkActiveObjects.OfType<GameObject>().ToList());
+
                 OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("CombatPanel" + (i + 1).ToString()));
                 OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("SurvivalPanel" + (i + 1).ToString()));
                 OverallEncounterPlayerStatPanels[i].Add(GameObject.Find("DiplomacyPanel" + (i + 1).ToString()));
@@ -312,6 +317,10 @@ namespace FallenLand
                 for (int j = 0; j < ActiveCharactersRadiationText[i].Count; j++)
                 {
                     ActiveCharactersRadiationText[i][j].GetComponentInChildren<Text>().text = "0";
+                }
+                for (int j = 0; j < ActiveCharactersLinkActiveImage[i].Count; j++)
+                {
+                    ActiveCharactersLinkActiveImage[i][j].SetActive(false);
                 }
             }
 
@@ -2960,6 +2969,13 @@ namespace FallenLand
                 for (int i = 0; i < ActiveCharactersPsychResistance[characterIndex].Count; i++)
                 {
                     ActiveCharactersPsychResistance[characterIndex][i].GetComponentInChildren<Text>().text = psychResistance.ToString();
+                }
+
+                //Update link image
+                bool linkActive = GameManagerInstance.GetActiveCharacterLinkActive(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersLinkActiveImage[characterIndex].Count; i++)
+                {
+                    ActiveCharactersLinkActiveImage[characterIndex][i].SetActive(linkActive);
                 }
             }
         }

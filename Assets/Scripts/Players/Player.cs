@@ -218,6 +218,21 @@ namespace FallenLand
 			return psychRes;
 		}
 
+		public bool GetActiveCharacterLinkActive(int characterIndex)
+		{
+			bool isActive = false;
+
+			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
+			{
+				Link link = ActiveCharacters[characterIndex].GetCharacterLink();
+				if (link != null)
+				{
+					isActive = link.GetLinkIsActive();
+				}
+			}
+
+			return isActive;
+		}
 
 		public Dictionary<Skills, int> GetActiveVehicleStats()
 		{
