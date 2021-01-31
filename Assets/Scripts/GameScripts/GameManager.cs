@@ -1668,7 +1668,7 @@ namespace FallenLand
 				List<(Skills, int)> skillChecks = CurrentPlayerEncounter[playerIndex].GetSkillChecks();
 				for (int skillIndex = 0; skillIndex < skillChecks.Count; skillIndex++)
 				{
-					if (GetIndividualTotalSuccesses(playerIndex, currentCharacterIndex, skillIndex) < skillChecks[skillIndex].Item2)
+					if (GetIndividualTotalSuccesses(playerIndex, currentCharacterIndex, skillIndex) < skillChecks[skillIndex].Item2 || !hasIndividualRolledOnce(playerIndex, currentCharacterIndex, skillIndex))
 					{
 						wasSuccessful = false;
 						break;
@@ -3852,7 +3852,7 @@ namespace FallenLand
 			bool allHaveRolledOnce = true;
 			for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
 			{
-				if (Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skillIndex) == Constants.HAS_NOT_ROLLED)
+				if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null && Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skillIndex) == Constants.HAS_NOT_ROLLED)
 				{
 					allHaveRolledOnce = false;
 					break;
@@ -3860,6 +3860,18 @@ namespace FallenLand
 			}
 
 			return allHaveRolledOnce;
+		}
+
+		private bool hasIndividualRolledOnce(int playerIndex, int characterIndex, int skillIndex)
+		{
+			bool hasRolledOnceForSkill = true;
+
+			if (Players[playerIndex].GetActiveCharacters()[characterIndex] != null && Players[playerIndex].GetLastCharacterDiceRoll(characterIndex, skillIndex) == Constants.HAS_NOT_ROLLED)
+			{
+				hasRolledOnceForSkill = false;
+			}
+
+			return hasRolledOnceForSkill;
 		}
 		#endregion
 	}
