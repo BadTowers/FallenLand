@@ -3812,3 +3812,5 @@ namespace FallenLand
 			return allHaveRolledOnce;
 		}
 		#endregion
+	}
+}
