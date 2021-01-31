@@ -582,7 +582,6 @@ namespace FallenLand
 			return remainingWeeks;
 		}
 
-
 		public Dictionary<Skills, int> GetActiveVehicleStats(int playerIndex)
 		{
 			Dictionary<Skills, int> stats = new Dictionary<Skills, int>();
