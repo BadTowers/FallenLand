@@ -72,6 +72,11 @@ TagManager:
   - CharacterRadiationDamage3
   - CharacterRadiationDamage4
   - CharacterRadiationDamage5
+  - LinkActive1
+  - LinkActive2
+  - LinkActive3
+  - LinkActive4
+  - LinkActive5
   layers:
   - Default
   - TransparentFX
