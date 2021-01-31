@@ -998,7 +998,10 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Wrist Rocker Slingshot, Flare Gun Pistol, or Sporting Goods", new WristRockerSlingshotOrFlareGunOrSportingGoodsEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1021,7 +1024,12 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 4}
 			});
-			//TODO add link
+			currentLink = new Link("Sledge Hammer", new SledgeHammerEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddRewardOnActivate(new GainMechanical(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseMechanical(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1044,7 +1052,10 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 4}
 			});
-			//TODO add link
+			currentLink = new Link("Backpack", new BackpackEquipped());
+			currentLink.AddRewardOnActivate(new GainCarryCapacity(4));
+			currentLink.AddPunishmentOnDeactivate(new LoseCarryCapacity(4));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1068,7 +1079,12 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Two Wheeled Vehicle in Party", new Any2WheelVehicleInParty());
+			currentLink.AddRewardOnActivate(new GainBonusMovement(1));
+			currentLink.AddRewardOnActivate(new GainCarryCapacity(6));
+			currentLink.AddPunishmentOnDeactivate(new LoseBonusMovement(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseCarryCapacity(6));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1092,7 +1108,10 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Clothing", new ClothingEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1115,7 +1134,12 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Laptop Computer, Knife, or Nifty Multi-Tool", new LaptopComputerOrKnifeOrMultitoolEquipped());
+			currentLink.AddRewardOnActivate(new GainMechanical(2));
+			currentLink.AddRewardOnActivate(new GainTechnical(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseMechanical(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseTechnical(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1138,7 +1162,10 @@ namespace FallenLand
 				{Skills.Technical, 8},
 				{Skills.Medical, 7}
 			});
-			//TODO add link
+			currentLink = new Link("Flame Thrower", new FlamethrowerEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(6));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(6));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1161,7 +1188,10 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Melee Weapon", new MeleeWeaponEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1185,7 +1215,7 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 9}
 			});
-			//TODO add link
+			//Link doubles medical skill bonuses. May use twice before discarding
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1208,7 +1238,12 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Ranged Weapon", new RangedWeaponEquipped());
+			currentLink.AddRewardOnActivate(new GainDiplomacy(1));
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1232,7 +1267,12 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Assault Rife", new AssaultRifleEquipped());
+			currentLink.AddRewardOnActivate(new GainSurvival(1));
+			currentLink.AddRewardOnActivate(new GainDiplomacy(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1255,7 +1295,10 @@ namespace FallenLand
 				{Skills.Technical, 8},
 				{Skills.Medical, 6}
 			});
-			//TODO add link
+			currentLink = new Link("Melee Weapon", new MeleeWeaponEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1279,6 +1322,7 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
+			//No link
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1303,7 +1347,10 @@ namespace FallenLand
 				{Skills.Medical, 4}
 			});
 			curCard.SetHasFirstStrike(true);
-			//TODO add link
+			currentLink = new Link("Assault Rifle or Submachine Gun", new AssaultRifleOrSubmachineGunEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1326,7 +1373,12 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 7}
 			});
-			//TODO add link
+			currentLink = new Link("Espressor Van, Knife, or Sword", new EspressoVanInPartyOrKnifeOrSwordEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddRewardOnActivate(new GainSurvival(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1349,7 +1401,12 @@ namespace FallenLand
 				{Skills.Technical, 4},
 				{Skills.Medical, 6}
 			});
-			//TODO add link
+			currentLink = new Link("Melee Weapon", new MeleeWeaponEquipped());
+			currentLink.AddRewardOnActivate(new GainSurvival(1));
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1372,7 +1429,12 @@ namespace FallenLand
 				{Skills.Technical, 8},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Designer Suit or Sunglasses", new DesignerSuitOrSunglassesEquipped());
+			currentLink.AddRewardOnActivate(new GainDiplomacy(2));
+			currentLink.AddRewardOnActivate(new GainMedical(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseMedical(1));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1395,7 +1457,11 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Sporting Goods", new SportingGoodsEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			currentLink.SetIsCumulative(true);
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1418,7 +1484,7 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			//Link Macho Tow Truck, roll D6, on a 1-4, salvage a vehicle
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1441,6 +1507,7 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
+			//No link
 			//TODO add conditional gain
 			//TODO add conditional gain
 			//TODO add conditional gain

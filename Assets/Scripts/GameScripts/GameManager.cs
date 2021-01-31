@@ -2430,6 +2430,25 @@ namespace FallenLand
 			return isOfCertainType;
 		}
 
+		public bool IsSpecificVehicleInParty(int playerIndex, string vehicleName)
+		{
+			bool isSpecificVehicleInParty = false;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
+				if (vehicle != null)
+				{
+					if (vehicle.GetTitle().Equals(vehicleName))
+					{
+						isSpecificVehicleInParty = true;
+					}
+				}
+			}
+
+			return isSpecificVehicleInParty;
+		}
+
 		public void UpdateCharacterSlotTotals(int playerIndex, int characterIndex)
 		{
 			if (isPlayerIndexInRange(playerIndex))
