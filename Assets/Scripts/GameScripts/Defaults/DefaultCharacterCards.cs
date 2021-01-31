@@ -578,7 +578,12 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 4}
 			});
-			//TODO add link
+			currentLink = new Link("Ultimate Set of Tools", new UltimateSetOfToolsEquipped());
+			currentLink.AddRewardOnActivate(new GainMechanical(2));
+			currentLink.AddRewardOnActivate(new GainTechnical(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseMechanical(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseTechnical(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
