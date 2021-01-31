@@ -63,7 +63,13 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 6}
 			});
-			curCard.AddPassiveGain(Gains.Gain_Party_Survival_Skill_Check_Successes, 1);
+			currentLink = new Link("Rifle or Shotgun", new RifleOrShotgunEquipped());
+			currentLink.AddRewardOnActivate(new GainBonusMovement(1));
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseBonusMovement(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			curCard.SetCharacterLink(currentLink);
+			//curCard.AddPassiveGain(Gains.Gain_Party_Survival_Skill_Check_Successes, 1);
 			curCard.SetId(curID);
 			curID++;
 			CharacterCards.Add(curCard);
@@ -85,6 +91,10 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 6}
 			});
+			currentLink = new Link("Rifle or Shotgun", new IndestructibleTennisRacquetOrSledgeHammerOrSockMonkeyPuppet());
+			currentLink.AddRewardOnActivate(new GainDiplomacy(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(2));
+			curCard.SetCharacterLink(currentLink);
 			curCard.SetId(curID);
 			curID++;
 			CharacterCards.Add(curCard);
