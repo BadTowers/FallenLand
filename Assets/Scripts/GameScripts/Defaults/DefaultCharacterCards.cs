@@ -607,7 +607,7 @@ namespace FallenLand
 				{Skills.Medical, 10}
 			});
 			curCard.SetIsMaster(true);
-			//TODO add link
+			//Link doubles medical equipment bonuses. Can use twice before discarding
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -630,7 +630,10 @@ namespace FallenLand
 				{Skills.Technical, 4},
 				{Skills.Medical, 6}
 			});
-			//TODO add link
+			currentLink = new Link("The Industrial Chainsaw, Extra Rusty Cleaver, or Scary Hockey Mask", new IndustrialChainSawOrExtraRustyCleaverOrScaryHockeyMaskEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -653,7 +656,10 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Sock Monkey, Shotgun, or Alcohol", new SockMonkeyOrShotgunOrAlcoholEquipped());
+			currentLink.AddRewardOnActivate(new GainDiplomacy(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -676,6 +682,7 @@ namespace FallenLand
 				{Skills.Technical, 4},
 				{Skills.Medical, 4}
 			});
+			//No link
 			//TODO add conditional gain
 			//TODO add conditional gain
 			//TODO add conditional gain
@@ -700,7 +707,10 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Kempo Gloves or Brass Knuckles", new KempoKnucklesOrBrassKnucklesEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -724,7 +734,10 @@ namespace FallenLand
 				{Skills.Technical, 9},
 				{Skills.Medical, 7}
 			});
-			//TODO add link
+			currentLink = new Link("Top Secret Weapon", new TopSecretWeaponEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -747,7 +760,12 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 4}
 			});
-			//TODO add link
+			currentLink = new Link("Fang", new FangEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddRewardOnActivate(new GainSurvival(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -771,7 +789,12 @@ namespace FallenLand
 				{Skills.Technical, 8},
 				{Skills.Medical, 6}
 			});
-			//TODO add link
+			currentLink = new Link("Multi-tool or Knife", new MultiToolOrKnifeEquipped());
+			currentLink.AddRewardOnActivate(new GainMechanical(1));
+			currentLink.AddRewardOnActivate(new GainTechnical(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseMechanical(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseTechnical(2));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
