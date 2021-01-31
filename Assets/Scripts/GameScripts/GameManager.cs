@@ -3812,36 +3812,3 @@ namespace FallenLand
 			return allHaveRolledOnce;
 		}
 		#endregion
-
-
-
-		/*
-		 *
-		 * THOUGHTS ON GAME MANAGER AND GAME UI MANAGER INTERACTION
-		 *
-		 * ENUM CLASS
-		 *      Would contain reasons for why something could not be returned
-		 *      If you want to view action cards of another player, this would return that those are private
-		 *          Perhaps request to view them has to be granted by another player
-		 *
-		 * SINGLE PLAYER
-		 *      Give the GameUIManager the list of player IDs
-		 *      Inform the GameUIManager which player it is
-		 *          Useful for requesting to view info of a different player
-		 *          For single player with one human player, it would be the only human
-		 *          If I want to see another player's auction house, that would be allowed
-		 *          If I want to see another player's town roster, that would not be allowed
-		 *              The GameManager would inform the GameUIManager with an enum why it wasn't allowed to see it
-		 *              For the town roster, it would return that this must be shared with the player (since it is hidden by default)
-		 *              The UI could then show in the UI why it cannot view the information so the player can fulfil requirements to do so
-		 *
-		 * MULTIPLAYER
-		 *      Give the GameUIManager the list of player IDs
-		 *      Inform the GameUIManager which player it is
-		 *          The GameManger knows this from the list of IPs, which map to their IDs
-		 *      For internet multiplayer, this would be told to the GameUIManager upon initialization
-		 *          This would then never change throughout the game since each PC connected would be one player
-		 *
-		 */
-	}
-}
