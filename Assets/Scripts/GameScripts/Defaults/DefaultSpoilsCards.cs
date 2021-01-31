@@ -1463,7 +1463,7 @@ namespace FallenLand
 			curCard.SetSellValue(6);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
 			{
-				{Skills.Combat, 1},
+				{Skills.Combat, 3},
 				{Skills.Survival, 1}
 			});
 			curCard.SetId(curID);
