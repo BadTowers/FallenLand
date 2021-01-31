@@ -817,7 +817,8 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 7}
 			});
-			curCard.AddPassiveGain(Gains.Gain_Movement, 1);
+			//No link
+			//curCard.AddPassiveGain(Gains.Gain_Movement, 1);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -841,7 +842,8 @@ namespace FallenLand
 				{Skills.Technical, 9},
 				{Skills.Medical, 8}
 			});
-			curCard.AddPassiveGain(Gains.Gain_Armor, 2);
+			//No link
+			//curCard.AddPassiveGain(Gains.Gain_Armor, 2);
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -865,7 +867,13 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Handguns - Cumulative", new HandgunEquipped());
+			currentLink.AddRewardOnActivate(new GainCombat(2));
+			currentLink.AddRewardOnActivate(new GainSurvival(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
+			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(1));
+			currentLink.SetIsCumulative(true);
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -888,6 +896,7 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 4}
 			});
+			//No link
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -911,7 +920,7 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			//Link gives 2 free spoils cards when Luxury SUV in party
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -934,7 +943,12 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
-			//TODO add link
+			currentLink = new Link("Mechanical Equipment", new MechanicalEquipmentEquipped());
+			currentLink.AddRewardOnActivate(new GainMechanical(3));
+			currentLink.AddRewardOnActivate(new GainTechnical(1));
+			currentLink.AddPunishmentOnDeactivate(new LoseMechanical(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseTechnical(1));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -957,8 +971,11 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 4}
 			});
-			curCard.AddPassiveGain(Gains.Gain_Prestige, 1);
-			//TODO add link
+			//curCard.AddPassiveGain(Gains.Gain_Prestige, 1);
+			currentLink = new Link("Pristine American Flag", new PristineAmericanFlagEquipped());
+			currentLink.AddRewardOnActivate(new GainDiplomacy(3));
+			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(3));
+			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;

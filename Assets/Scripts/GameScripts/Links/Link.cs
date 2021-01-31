@@ -11,6 +11,8 @@ namespace FallenLand
         private readonly List<Punishment> PunishmentsOnDeactivate = new List<Punishment>();
         private bool IsActive;
         private readonly State WhenLinkStarts;
+        private bool IsCumulative;
+        private int NumCumulativeAccountedFor;
 
         public Link(string title, State whenLinkStarts)
         {
@@ -78,6 +80,16 @@ namespace FallenLand
             return IsActive;
         }
 
+        public void SetIsCumulative(bool isCumulative)
+        {
+            IsCumulative = isCumulative;
+        }
+
+        public bool GetIsCumulative()
+        {
+            return IsCumulative;
+        }
+
         public void OnActivate(GameManager gameManager, int playerIndex, int characterIndex)
         {
             if (!GetLinkIsActive())
@@ -117,6 +129,16 @@ namespace FallenLand
                 punishmentsOnDeactivate[punishmentIndex].SetCharacterIndex(characterIndex);
                 punishmentsOnDeactivate[punishmentIndex].HandlePunishment(gameManager, playerIndex);
             }
+        }
+
+        public void SetNumCumulativeAccountedFor(int amount)
+        {
+            NumCumulativeAccountedFor = amount;
+        }
+
+        public int GetNumCumulativeAccountedFor()
+        {
+            return NumCumulativeAccountedFor;
         }
     }
 }

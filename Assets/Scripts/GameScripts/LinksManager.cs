@@ -15,16 +15,23 @@ namespace FallenLand
                     Link link = characters[characterIndex].GetCharacterLink();
                     if (link != null)
                     {
-                        //See if link started or ended
-                        if (!link.GetLinkIsActive() && link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
+                        if (!link.GetIsCumulative())
                         {
-                            link.OnActivate(gameManager, playerIndex, characterIndex);
-                            gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
+                            //See if link started or ended
+                            if (!link.GetLinkIsActive() && link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
+                            {
+                                link.OnActivate(gameManager, playerIndex, characterIndex);
+                                gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
+                            }
+                            else if (link.GetLinkIsActive() && !link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
+                            {
+                                link.OnDeactivate(gameManager, playerIndex, characterIndex);
+                                gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
+                            }
                         }
-                        else if(link.GetLinkIsActive() && !link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
+                        else
                         {
-                            link.OnDeactivate(gameManager, playerIndex, characterIndex);
-                            gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
+                            UnityEngine.Debug.LogError("Cumulative links are not implemented yet at this time");
                         }
                     }
                 }
