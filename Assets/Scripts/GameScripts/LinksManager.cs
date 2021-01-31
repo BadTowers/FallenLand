@@ -31,7 +31,7 @@ namespace FallenLand
                         }
                         else
                         {
-                            UnityEngine.Debug.LogError("Cumulative links are not implemented yet at this time");
+                            //TODO
                         }
                     }
                 }
