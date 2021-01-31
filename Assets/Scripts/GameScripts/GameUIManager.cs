@@ -453,7 +453,7 @@ namespace FallenLand
 
             //updateActionButton(); //Will add back later when we implement action cards
 
-            updatePartyOverviewValues();
+            updateDisplayedPartyValues();
 
             updateCharacterSpoilsScreen();
 
@@ -1719,23 +1719,6 @@ namespace FallenLand
                             image2.transform.SetAsFirstSibling(); //move to the back (on parent)
                         }
                     }
-
-                    //Update stats
-                    Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(CurrentViewedID, activeIndex);
-                    foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-                    {
-                        for (int i = 0; i < ActiveCharactersStatsText[activeIndex][(int)skill].Count; i++)
-                        {
-                            ActiveCharactersStatsText[activeIndex][(int)skill][i].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
-                        }
-                    }
-
-                    //Update psych resistance
-                    int psychResistance = GameManagerInstance.GetActiveCharacterPsychResistance(CurrentViewedID, activeIndex);
-                    for (int i = 0; i < ActiveCharactersPsychResistance[activeIndex].Count; i++)
-                    {
-                        ActiveCharactersPsychResistance[activeIndex][i].GetComponentInChildren<Text>().text = psychResistance.ToString();
-                    }
                 }
             }
         }
@@ -2904,7 +2887,7 @@ namespace FallenLand
             ActionCardsButton.interactable = (CurrentViewedID == GameManagerInstance.GetIndexForMyPlayer());
         }
 
-        private void updatePartyOverviewValues()
+        private void updateDisplayedPartyValues()
         {
             List<CharacterCard> currentParty = GameManagerInstance.GetActiveCharacterCards(CurrentViewedID);
             for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
@@ -2960,6 +2943,23 @@ namespace FallenLand
                 for (int i = 0; i < ActiveCharactersCarryWeightsText[characterIndex].Count; i++)
                 {
                     ActiveCharactersCarryWeightsText[characterIndex][i].GetComponentInChildren<Text>().text = usedCarryWeight.ToString() + "/" + totalCarryWeight.ToString();
+                }
+
+                //Update stats
+                Dictionary<Skills, int> curCharacterSlotStats = GameManagerInstance.GetActiveCharacterStats(CurrentViewedID, characterIndex);
+                foreach (Skills skill in Enum.GetValues(typeof(Skills)))
+                {
+                    for (int i = 0; i < ActiveCharactersStatsText[characterIndex][(int)skill].Count; i++)
+                    {
+                        ActiveCharactersStatsText[characterIndex][(int)skill][i].GetComponentInChildren<Text>().text = curCharacterSlotStats[skill].ToString();
+                    }
+                }
+
+                //Update psych resistance
+                int psychResistance = GameManagerInstance.GetActiveCharacterPsychResistance(CurrentViewedID, characterIndex);
+                for (int i = 0; i < ActiveCharactersPsychResistance[characterIndex].Count; i++)
+                {
+                    ActiveCharactersPsychResistance[characterIndex][i].GetComponentInChildren<Text>().text = psychResistance.ToString();
                 }
             }
         }

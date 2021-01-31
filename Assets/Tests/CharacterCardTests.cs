@@ -137,16 +137,6 @@ namespace Tests
 		}
 
 		[UnityTest]
-		public IEnumerator TestLink()
-		{
-			Assert.IsNull(CharacterCardInstance.GetLink());
-			CharacterCardInstance.SetLink(new ConditionalGain());
-			Assert.IsNotNull(CharacterCardInstance.GetLink());
-
-			yield return null;
-		}
-
-		[UnityTest]
 		public IEnumerator TestSerializeAndDeserialize()
 		{
 			byte[] byteArray = CharacterCard.SerializeCharacterCard(CharacterCardInstance);

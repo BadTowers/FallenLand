@@ -407,7 +407,7 @@ namespace FallenLand
 				}
 				else
 				{
-					updateCharacterSlotTotals(characterIndex);
+					UpdateCharacterSlotTotals(characterIndex);
 				}
 			}
 		}
@@ -448,7 +448,7 @@ namespace FallenLand
 
 				//Remove character from party
 				ActiveCharacters[characterIndexToRemove] = null;
-				updateCharacterSlotTotals(characterIndexToRemove);
+				UpdateCharacterSlotTotals(characterIndexToRemove);
 			}
 		}
 
@@ -534,7 +534,7 @@ namespace FallenLand
 				{
 					ActiveCharacters[characterIndex].AttachSpoilsCard(PartyEquipment[partyEquipmentIndex]);
 				}
-				updateCharacterSlotTotals(characterIndex);
+				UpdateCharacterSlotTotals(characterIndex);
 			}
 		}
 
@@ -542,8 +542,8 @@ namespace FallenLand
 		{
 			ActiveCharacters[characterIndexTo] = ActiveCharacters[characterIndexFrom];
 			ActiveCharacters[characterIndexFrom] = null;
-			updateCharacterSlotTotals(characterIndexFrom);
-			updateCharacterSlotTotals(characterIndexTo);
+			UpdateCharacterSlotTotals(characterIndexFrom);
+			UpdateCharacterSlotTotals(characterIndexTo);
 		}
 
 		public void AddSpoilsToCharacter(int characterIndex, SpoilsCard card)
@@ -558,7 +558,7 @@ namespace FallenLand
 				else
 				{
 					ActiveCharacters[characterIndex].AttachSpoilsCard(card);
-					updateCharacterSlotTotals(characterIndex);
+					UpdateCharacterSlotTotals(characterIndex);
 				}
 			}
 		}
@@ -986,6 +986,43 @@ namespace FallenLand
 			return ActiveEffects;
 		}
 
+		public void UpdateCharacterSlotTotals(int indexToUpdate)
+		{
+			if (ActiveCharacters[indexToUpdate] != null)
+			{
+				Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills();
+				List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					int tempSum = currentCharacterSkills[skill];
+					for (int i = 0; i < equippedSpoils.Count; i++)
+					{
+						tempSum += equippedSpoils[i].GetBaseSkills()[skill];
+					}
+
+					ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
+				}
+				int remainingCarryWeightTemp = ActiveCharacters[indexToUpdate].GetCarryCapacity();
+				int usedCarryWeightTemp = 0;
+				for (int i = 0; i < equippedSpoils.Count; i++)
+				{
+					remainingCarryWeightTemp -= equippedSpoils[i].GetCarryWeight();
+					usedCarryWeightTemp += equippedSpoils[i].GetCarryWeight();
+				}
+				ActiveCharacterRemainingCarryWeights[indexToUpdate] = remainingCarryWeightTemp;
+				ActiveCharacterUsedCarryWeights[indexToUpdate] = usedCarryWeightTemp;
+			}
+			else
+			{
+				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+				{
+					ActiveCharacterTotalStats[indexToUpdate][skill] = 0;
+					ActiveCharacterRemainingCarryWeights[indexToUpdate] = 0;
+					ActiveCharacterUsedCarryWeights[indexToUpdate] = 0;
+				}
+			}
+		}
+
 
 
 
@@ -1033,48 +1070,11 @@ namespace FallenLand
 			}
 		}
 
-		private void updateCharacterSlotTotals(int indexToUpdate)
-		{
-			if (ActiveCharacters[indexToUpdate] != null)
-			{
-				Dictionary<Skills, int> currentCharacterSkills = ActiveCharacters[indexToUpdate].GetBaseSkills();
-				List<SpoilsCard> equippedSpoils = ActiveCharacters[indexToUpdate].GetEquippedSpoils();
-				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-				{
-					int tempSum = currentCharacterSkills[skill];
-					for (int i = 0; i < equippedSpoils.Count; i++)
-					{
-						tempSum += equippedSpoils[i].GetBaseSkills()[skill];
-					}
-
-					ActiveCharacterTotalStats[indexToUpdate][skill] = tempSum;
-				}
-				int remainingCarryWeightTemp = ActiveCharacters[indexToUpdate].GetCarryCapacity();
-				int usedCarryWeightTemp = 0;
-				for (int i = 0; i < equippedSpoils.Count; i++)
-				{
-					remainingCarryWeightTemp -= equippedSpoils[i].GetCarryWeight();
-					usedCarryWeightTemp += equippedSpoils[i].GetCarryWeight();
-				}
-				ActiveCharacterRemainingCarryWeights[indexToUpdate] = remainingCarryWeightTemp;
-				ActiveCharacterUsedCarryWeights[indexToUpdate] = usedCarryWeightTemp;
-			}
-			else
-			{
-				foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
-				{
-					ActiveCharacterTotalStats[indexToUpdate][skill] = 0;
-					ActiveCharacterRemainingCarryWeights[indexToUpdate] = 0;
-					ActiveCharacterUsedCarryWeights[indexToUpdate] = 0;
-				}
-			}
-		}
-
 		private void updateAllCharacterSlotTotals()
         {
 			for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
 			{
-				updateCharacterSlotTotals(characterIndex);
+				UpdateCharacterSlotTotals(characterIndex);
 			}
 		}
 

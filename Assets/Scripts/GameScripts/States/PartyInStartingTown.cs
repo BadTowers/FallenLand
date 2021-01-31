@@ -1,23 +1,11 @@
 ﻿
 namespace FallenLand
 {
-    public class PartyInStartingTown : PhaseState
+    public class PartyInStartingTown : State
     {
-        private int PlayerIndex;
-
-        public void SetPlayerIndex(int playerIndex)
+        public override bool IsStateOccurring(GameManager gameManager, int playerIndex, int _)
         {
-            PlayerIndex = playerIndex;
-        }
-
-        public int GetPlayerIndex()
-        {
-            return PlayerIndex;
-        }
-
-        public override bool IsStateOccurring(GameManager gameManager)
-        {
-            return gameManager.IsPartyInStartingLocation(PlayerIndex);
+            return gameManager.IsPartyInStartingLocation(playerIndex);
         }
     }
 }

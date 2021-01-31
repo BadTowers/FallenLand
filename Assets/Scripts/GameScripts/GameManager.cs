@@ -88,191 +88,19 @@ namespace FallenLand
 				HasDoneEncounterSinceMovement.Add(false);
 			}
 
-            //Figure out our user ID
-            Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
-			for (int i = 0; i < allPlayers.Length; i++)
-			{
-				if (allPlayers[i].IsLocal)
-				{
-					MyUserId = allPlayers[i].UserId;
-					break;
-				}
-			}
-			if (MyUserId == "")
-			{
-				Debug.LogError("Didn't find user's id...");
-			}
-
-			//Create the map layout according to the game state that was passed in
-			GameObject mapCreationGO = GameObject.Find("Map");
-			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
-			mapCreation.CreateMap(MapLayoutInst);
-			PlayerPieceManagerInst.SetMap(mapCreation);
-			MissionManagerInst.SetMap(mapCreation);
-			ResourcePieceManagerInst.SetMap(mapCreation);
-
-			//Get the game object from the main menu that knows the game mode, all the modifiers, and the factions picked
-			NewGameState = GameObject.Find("GameCreation");
-
-			if (NewGameState != null && PhotonNetwork.IsMasterClient)
-			{
-				extractGameModeFromGameCreationObject(NewGameState);
-
-				//Extract the Solo II difficulty if needed
-				//if(gameMode == GameInformation.GameModes.SoloII) {
-				//	soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
-				//}
-
-				//Send the factions to the other players
-				Dictionary<int, string> factions = NewGameState.GetComponent<GameCreation>().GetFactions();
-				foreach (KeyValuePair<int, string> entry in factions)
-				{
-					int playerIndex = entry.Key;
-					string factionName = entry.Value;
-
-					//Send faction information to other players
-					object content = new FactionNetworking(factionName, playerIndex);
-					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvSendFactionInformation);
-
-					DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
-					Faction faction = defaultFactionInfo.GetFactionFromName(factionName);
-					if (faction == null)
-					{
-						Debug.LogError("Faction info passed in was bad... We got " + factionName + " but couldn't find such a faction.");
-					}
-					Player newPlayer = new HumanPlayer(faction, StartingSalvage);
-					newPlayer.SetTownHealth(StartingTownHealth);
-					newPlayer.SetPrestige(StartingPrestige);
-					Players[playerIndex] = newPlayer;
-					PlayerPieceManagerInst.CreatePiece(faction, playerIndex);
-					Players[playerIndex].SetPartyLocation(faction.GetBaseLocation());
-				}
-				ReceivedMyFactionInformation = true;
-
-				CameraManager mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
-				mainCamera.MoveCameraToFactionBaseLocation(mapCreation, Players[GetIndexForMyPlayer()].GetPlayerFaction());
-
-				generateMissionLocations();
-				sendMissionLocationsToOtherPlayers();
-
-				//Interpret any modifiers
-				//TODO when these are implemented
-			}
-
-			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
-			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
-
-			SpecialSpoilsDeck = (new DefaultSpecialSpoilsCards()).GetSpoilsCards(); //No need to shuffle these as they won't be dealt out normally.
-
-			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
-			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
-
-			ActionDeck = (new DefaultActionCards()).GetActionCards();
-			ActionDeck = Card.ShuffleDeck(ActionDeck);
-
-			PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
-			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
-
-			//TODO create the deck of mission cards
-
-
-			//TODO create the deck of mountain cards
-
-
-			//TODO create the deck of city/rad cards
+			figureOutMyUserId();
+			createMap();
+			handleNewGameNetworkingIfNeeded();
+			createDecks();
 		}
 
 		void Update()
 		{
-            if (!GameIsSetUpAtStart && ReceivedMyFactionInformation)
-			{
-				FactionPerkManager.HandlePhase(this);
-
-				if (PhotonNetwork.IsMasterClient)
-				{
-					dealCardsToPlayers();
-					countTownTechsThatAreInUse();
-					StartTurn();
-				}
-
-				GameIsSetUpAtStart = true;
-            }
-
+			handleGameStartIfNeeded();
 			handleEffects();
+			handleLinks();
 			shuffleDecksIfNeeded();
-
-			int myIndex = GetIndexForMyPlayer();
-			if (Players[myIndex].GetPlayerIsMoving())
-			{
-				Coordinates lastClickedHexCoordinates = MouseManagerInst.GetLastHexClickedCoodinates();
-				if (lastClickedHexCoordinates != null)
-				{
-					MouseManagerInst.ClearLastHexClickedCoodinates();
-					Players[myIndex].SetPlayerIsMoving(false);
-					if (isAllowedToMoveHere(myIndex, lastClickedHexCoordinates))
-					{
-						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
-						content.SetMoveToLocation(lastClickedHexCoordinates);
-
-						sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
-						handlePartyExploitsNetworkUpdate(content);
-					}
-				}
-			}
-			else if (Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
-			{
-				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
-				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
-				int cardIndex = 0;
-				bool prechecksHeld;
-				do
-				{
-					prechecksHeld = true;
-					List<Precheck> prechecks = getPrechecks(GetPlayerEncounterType(myIndex), cardIndex);
-					if (prechecks.Count == 0)
-					{
-						break;
-					}
-					for (int precheckIndex = 0; precheckIndex < prechecks.Count; precheckIndex++)
-					{
-						if (!prechecks[precheckIndex].PrechecksHold(this, myIndex))
-						{
-							Debug.Log("Precheck didn't hold. Moving to next encounter card.");
-							cardIndex++;
-							prechecksHeld = false;
-							break;
-						}
-					}
-
-					if (cardIndex >= PlainsDeck.Count && DiscardedPlainsCards.Count > 0)
-					{
-						Debug.Log("Ran out of cards in the deck and there are discarded cards. Shuffling and networking to try to find a card where prechecks hold");
-						ShuffleNetworking shuffle = new ShuffleNetworking(getDeckToShuffleFromEncounterType(GetPlayerEncounterType(myIndex)));
-						sendNetworkEvent(shuffle, ReceiverGroup.Others, Constants.EvShuffle);
-						handleShuffleEvent(shuffle);
-						cardIndex = 0;
-					}
-					else if (cardIndex >= PlainsDeck.Count && DiscardedPlainsCards.Count == 0)
-					{
-						Debug.Log("Ran out of cards in the deck, but there are no cards int he discard deck, so we have to do the first card even though we didn't pass prechecks");
-						cardIndex = 0;
-						break;
-					}
-				}
-				while (cardIndex < PlainsDeck.Count && !prechecksHeld);
-
-				PlainsDeck[cardIndex].ResetState();
-				string nextPlainsEncounterCardName = PlainsDeck[cardIndex].GetTitle();
-				content.SetEncounterCardName(nextPlainsEncounterCardName);
-				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
-				handlePartyExploitsNetworkUpdate(content);
-				EncounterWasSent = true;
-			}
-			else if (GetIsItMyTurn() && ShouldSkipPhase)
-			{
-				EndPhase(myIndex);
-				ShouldSkipPhase = false;
-			}
+			handlePhase();
 		}
 
 		public void OnEnable()
@@ -2500,6 +2328,84 @@ namespace FallenLand
 		{
 			return DiceRoller;
 		}
+
+		public void GainSkillAmount(int playerIndex, int characterIndex, Skills skill, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+				if (character != null)
+				{
+					character.GainSkillAmount(skill, amount);
+				}
+			}
+		}
+
+		public void LoseSkillAmount(int playerIndex, int characterIndex, Skills skill, int amount)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+				if (character != null)
+				{
+					character.LoseSkillAmount(skill, amount);
+				}
+			}
+		}
+
+		public bool IsSpoilsTypeEquipped(int playerIndex, int characterIndex, SpoilsTypes spoilsType)
+		{
+			bool isEquipped = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+				if (character != null)
+				{
+					List<SpoilsCard> spoils = character.GetEquippedSpoils();
+					for (int spoilsIndex = 0; spoilsIndex < spoils.Count; spoilsIndex++)
+					{
+						if (spoils[spoilsIndex].GetSpoilsTypes().Contains(spoilsType))
+						{
+							isEquipped = true;
+							break;
+						}
+					}
+				}
+			}
+
+			return isEquipped;
+		}
+
+		public bool IsSpecificSpoilsEquipped(int playerIndex, int characterIndex, string spoilsName)
+		{
+			bool isEquipped = false;
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+				if (character != null)
+				{
+					List<SpoilsCard> spoils = character.GetEquippedSpoils();
+					for (int spoilsIndex = 0; spoilsIndex < spoils.Count; spoilsIndex++)
+					{
+						if (spoils[spoilsIndex].GetTitle().Equals(spoilsName))
+						{
+							isEquipped = true;
+							break;
+						}
+					}
+				}
+			}
+
+			return isEquipped;
+		}
+
+		public void UpdateCharacterSlotTotals(int playerIndex, int characterIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].UpdateCharacterSlotTotals(characterIndex);
+			}
+		}
 		#endregion
 
 
@@ -3678,11 +3584,216 @@ namespace FallenLand
 			return prechecks;
 		}
 
+		private void figureOutMyUserId()
+		{
+			Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
+			for (int i = 0; i < allPlayers.Length; i++)
+			{
+				if (allPlayers[i].IsLocal)
+				{
+					MyUserId = allPlayers[i].UserId;
+					break;
+				}
+			}
+			if (MyUserId == "")
+			{
+				Debug.LogError("Didn't find user's id...");
+			}
+		}
+
+		private void createMap()
+		{
+			GameObject mapCreationGO = GameObject.Find("Map");
+			MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
+			mapCreation.CreateMap(MapLayoutInst);
+			PlayerPieceManagerInst.SetMap(mapCreation);
+			MissionManagerInst.SetMap(mapCreation);
+			ResourcePieceManagerInst.SetMap(mapCreation);
+		}
+
+		private void handleNewGameNetworkingIfNeeded()
+		{
+			NewGameState = GameObject.Find("GameCreation");
+			if (NewGameState != null && PhotonNetwork.IsMasterClient)
+			{
+				GameObject mapCreationGO = GameObject.Find("Map");
+				MapCreation mapCreation = mapCreationGO.GetComponent<MapCreation>();
+
+				extractGameModeFromGameCreationObject(NewGameState);
+
+				//Extract the Solo II difficulty if needed
+				//if(gameMode == GameInformation.GameModes.SoloII) {
+				//	soloIIDifficulty = newGameState.GetComponent<GameCreation>().soloIIDifficulty;
+				//}
+
+				//Send the factions to the other players
+				Dictionary<int, string> factions = NewGameState.GetComponent<GameCreation>().GetFactions();
+				foreach (KeyValuePair<int, string> entry in factions)
+				{
+					int playerIndex = entry.Key;
+					string factionName = entry.Value;
+
+					//Send faction information to other players
+					object content = new FactionNetworking(factionName, playerIndex);
+					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvSendFactionInformation);
+
+					DefaultFactionInfo defaultFactionInfo = new DefaultFactionInfo();
+					Faction faction = defaultFactionInfo.GetFactionFromName(factionName);
+					if (faction == null)
+					{
+						Debug.LogError("Faction info passed in was bad... We got " + factionName + " but couldn't find such a faction.");
+					}
+					Player newPlayer = new HumanPlayer(faction, StartingSalvage);
+					newPlayer.SetTownHealth(StartingTownHealth);
+					newPlayer.SetPrestige(StartingPrestige);
+					Players[playerIndex] = newPlayer;
+					PlayerPieceManagerInst.CreatePiece(faction, playerIndex);
+					Players[playerIndex].SetPartyLocation(faction.GetBaseLocation());
+				}
+				ReceivedMyFactionInformation = true;
+
+				CameraManager mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraManager>();
+				mainCamera.MoveCameraToFactionBaseLocation(mapCreation, Players[GetIndexForMyPlayer()].GetPlayerFaction());
+
+				generateMissionLocations();
+				sendMissionLocationsToOtherPlayers();
+
+				//Interpret any modifiers
+				//TODO when these are implemented
+			}
+		}
+
+		private void createDecks()
+		{
+			SpoilsDeck = (new DefaultSpoilsCards()).GetSpoilsCards();
+			SpoilsDeck = Card.ShuffleDeck(SpoilsDeck);
+
+			SpecialSpoilsDeck = (new DefaultSpecialSpoilsCards()).GetSpoilsCards(); //No need to shuffle these as they won't be dealt out normally.
+
+			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
+			//CharacterDeck = Card.ShuffleDeck(CharacterDeck);
+
+			ActionDeck = (new DefaultActionCards()).GetActionCards();
+			ActionDeck = Card.ShuffleDeck(ActionDeck);
+
+			PlainsDeck = (new DefaultPlainsCards()).GetPlainsCards();
+			PlainsDeck = Card.ShuffleDeck(PlainsDeck);
+
+			//TODO create the deck of mission cards
+
+
+			//TODO create the deck of mountain cards
+
+
+			//TODO create the deck of city/rad cards
+		}
+
+		private void handleGameStartIfNeeded()
+		{
+			if (!GameIsSetUpAtStart && ReceivedMyFactionInformation)
+			{
+				FactionPerkManager.HandlePhase(this);
+
+				if (PhotonNetwork.IsMasterClient)
+				{
+					dealCardsToPlayers();
+					countTownTechsThatAreInUse();
+					StartTurn();
+				}
+
+				GameIsSetUpAtStart = true;
+			}
+		}
+
 		private void handleEffects()
 		{
 			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
 			{
 				EffectsManager.HandleEffects(this, playerIndex);
+			}
+		}
+
+		private void handleLinks()
+		{
+			for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
+			{
+				LinksManager.HandleLinks(this, playerIndex);
+			}
+		}
+
+		private void handlePhase()
+		{
+			int myIndex = GetIndexForMyPlayer();
+			if (Players[myIndex].GetPlayerIsMoving())
+			{
+				Coordinates lastClickedHexCoordinates = MouseManagerInst.GetLastHexClickedCoodinates();
+				if (lastClickedHexCoordinates != null)
+				{
+					MouseManagerInst.ClearLastHexClickedCoodinates();
+					Players[myIndex].SetPlayerIsMoving(false);
+					if (isAllowedToMoveHere(myIndex, lastClickedHexCoordinates))
+					{
+						PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_MOVEMENT);
+						content.SetMoveToLocation(lastClickedHexCoordinates);
+
+						sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
+						handlePartyExploitsNetworkUpdate(content);
+					}
+				}
+			}
+			else if (Players[myIndex].GetPlayerIsDoingAnEncounter() && !EncounterWasSent)
+			{
+				PartyExploitsNetworking content = new PartyExploitsNetworking(myIndex, Constants.PARTY_EXPLOITS_ENCOUNTER);
+				content.SetEncounterType((byte)GetPlayerEncounterType(myIndex));
+				int cardIndex = 0;
+				bool prechecksHeld;
+				do
+				{
+					prechecksHeld = true;
+					List<Precheck> prechecks = getPrechecks(GetPlayerEncounterType(myIndex), cardIndex);
+					if (prechecks.Count == 0)
+					{
+						break;
+					}
+					for (int precheckIndex = 0; precheckIndex < prechecks.Count; precheckIndex++)
+					{
+						if (!prechecks[precheckIndex].PrechecksHold(this, myIndex))
+						{
+							Debug.Log("Precheck didn't hold. Moving to next encounter card.");
+							cardIndex++;
+							prechecksHeld = false;
+							break;
+						}
+					}
+
+					if (cardIndex >= PlainsDeck.Count && DiscardedPlainsCards.Count > 0)
+					{
+						Debug.Log("Ran out of cards in the deck and there are discarded cards. Shuffling and networking to try to find a card where prechecks hold");
+						ShuffleNetworking shuffle = new ShuffleNetworking(getDeckToShuffleFromEncounterType(GetPlayerEncounterType(myIndex)));
+						sendNetworkEvent(shuffle, ReceiverGroup.Others, Constants.EvShuffle);
+						handleShuffleEvent(shuffle);
+						cardIndex = 0;
+					}
+					else if (cardIndex >= PlainsDeck.Count && DiscardedPlainsCards.Count == 0)
+					{
+						Debug.Log("Ran out of cards in the deck, but there are no cards int he discard deck, so we have to do the first card even though we didn't pass prechecks");
+						cardIndex = 0;
+						break;
+					}
+				}
+				while (cardIndex < PlainsDeck.Count && !prechecksHeld);
+
+				PlainsDeck[cardIndex].ResetState();
+				string nextPlainsEncounterCardName = PlainsDeck[cardIndex].GetTitle();
+				content.SetEncounterCardName(nextPlainsEncounterCardName);
+				sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvPartyExploits);
+				handlePartyExploitsNetworkUpdate(content);
+				EncounterWasSent = true;
+			}
+			else if (GetIsItMyTurn() && ShouldSkipPhase)
+			{
+				EndPhase(myIndex);
+				ShouldSkipPhase = false;
 			}
 		}
 

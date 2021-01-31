@@ -83,6 +83,27 @@ namespace FallenLand
 		{
 			return PassiveGains;
 		}
+
+		public void AddSkillAmount(Skills skill, int amount)
+		{
+			if (amount > 0)
+			{
+				BaseSkills[skill] += amount;
+			}
+		}
+
+		public void RemoveSkillAmount(Skills skill, int amount)
+		{
+			if (amount > 0)
+			{
+				BaseSkills[skill] -= amount;
+				if (BaseSkills[skill] < 0)
+				{
+					BaseSkills[skill] = 0;
+					UnityEngine.Debug.LogWarning("Tried to set skill below 0: " + skill.ToString());
+				}
+			}
+        }
 	}
 
 }

@@ -14,7 +14,7 @@ namespace FallenLand
             for (int i = 0; i < townTechs.Count; i++)
             {
                 ConditionalGain conditionalGain = townTechs[i].GetConditionalGain();
-                ConditionalGainHelpers.HandleConditionalGain(gameManager, conditionalGain);
+                ConditionalGainHelpers.HandleConditionalGain(gameManager, conditionalGain, myIndex);
             }
         }
     }

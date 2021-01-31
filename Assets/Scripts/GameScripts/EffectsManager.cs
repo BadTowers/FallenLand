@@ -18,7 +18,7 @@ namespace FallenLand
                 }
 
                 //Handle effect end
-                if(activeEffects[i].GetWhenEffectDeactivates().IsStateOccurring(gameManager))
+                if(activeEffects[i].GetWhenEffectDeactivates().IsStateOccurring(gameManager, playerIndex, Constants.DONT_CARE))
                 {
                     activeEffects[i].OnDeactivate(gameManager, playerIndex);
                     if(activeEffects[i].GetEffectIsRemovedOnceEnded())

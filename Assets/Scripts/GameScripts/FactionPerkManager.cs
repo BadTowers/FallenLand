@@ -14,7 +14,7 @@ namespace FallenLand
             for (int i = 0; i < perks.Count; i++)
             {
                 ConditionalGain conditionalGain = perks[i].GetConditionalGain();
-                ConditionalGainHelpers.HandleConditionalGain(gameManager, conditionalGain);
+                ConditionalGainHelpers.HandleConditionalGain(gameManager, conditionalGain, myIndex);
             }
         }
     }

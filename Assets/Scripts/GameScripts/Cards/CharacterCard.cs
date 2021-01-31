@@ -15,14 +15,13 @@ namespace FallenLand
         private int AmountOfPhysicalDamage;
         private int AmountOfInfectedDamage;
         private int AmountOfRadiationDamage;
-        //link. This would map some spoils card to some bonuses. ex) any two wheeled vehicle -> +1 movement and +6 carrying capacity TODO
         //specialAbilities. What bonuses the character card gets. TDC cost 3 less. Auto pass certain encounters. etc TODO
         private List<SpoilsCard> EquippedSpoils;
         private bool HasFirstStrike;
-        ConditionalGain Link;
         private bool IsMaster;
         private Sprite CardImage;
         private Sprite CardPortrait;
+        private Link CharacterLink;
 
         public CharacterCard(string title) : base(title)
         {
@@ -30,6 +29,7 @@ namespace FallenLand
             HasFirstStrike = false;
             IsMaster = false;
             CurrentPsychRemaning = 3;
+            CharacterLink = null;
         }
 
         public static object DeserializeCharacterCard(byte[] data)
@@ -48,6 +48,16 @@ namespace FallenLand
         public void ClearAllSpoils()
         {
             EquippedSpoils = new List<SpoilsCard>();
+        }
+
+        public void SetCharacterLink(Link link)
+        {
+            CharacterLink = link;
+        }
+
+        public Link GetCharacterLink()
+        {
+            return CharacterLink;
         }
 
         public void SetMaxHp(int maxHp)
@@ -172,16 +182,6 @@ namespace FallenLand
             }
         }
 
-        public void SetLink(ConditionalGain link)
-        {
-            Link = link;
-        }
-
-        public ConditionalGain GetLink()
-        {
-            return Link;
-        }
-
         public void SetHasFirstStrike(bool hasFirstStrike)
         {
             HasFirstStrike = hasFirstStrike;
@@ -284,6 +284,16 @@ namespace FallenLand
         public int GetAmountOfRadiationDamage()
         {
             return AmountOfRadiationDamage;
+        }
+
+        public void GainSkillAmount(Skills skill, int amount)
+        {
+            AddSkillAmount(skill, amount);
+        }
+
+        public void LoseSkillAmount(Skills skill, int amount)
+        {
+            RemoveSkillAmount(skill, amount);
         }
     }
 }

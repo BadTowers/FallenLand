@@ -99,9 +99,9 @@ namespace FallenLand
 
     public class ConditionalGainHelpers
     {
-        public static void HandleConditionalGain(GameManager gameManager, ConditionalGain conditionalGain)
+        public static void HandleConditionalGain(GameManager gameManager, ConditionalGain conditionalGain, int playerIndex)
         {
-            if (conditionalGain != null && conditionalGain.GetWhenRewardCanBeClaimed() != null && conditionalGain.GetWhenRewardCanBeClaimed().IsStateOccurring(gameManager))
+            if (conditionalGain != null && conditionalGain.GetWhenRewardCanBeClaimed() != null && conditionalGain.GetWhenRewardCanBeClaimed().IsStateOccurring(gameManager, playerIndex, Constants.DONT_CARE))
             {
                 List<List<Reward>> rewards = conditionalGain.GetRewardChoices();
                 if (rewards.Count == 1)
