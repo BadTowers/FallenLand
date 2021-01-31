@@ -2411,6 +2411,25 @@ namespace FallenLand
 			return isEquipped;
 		}
 
+		public bool IsVehicleOfCertainType(int playerIndex, SpoilsTypes type)
+		{
+			bool isOfCertainType = false;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
+				if (vehicle != null)
+				{
+					if (vehicle.GetSpoilsTypes().Contains(type))
+					{
+						isOfCertainType = true;
+					}
+				}
+			}
+
+			return isOfCertainType;
+		}
+
 		public void UpdateCharacterSlotTotals(int playerIndex, int characterIndex)
 		{
 			if (isPlayerIndexInRange(playerIndex))

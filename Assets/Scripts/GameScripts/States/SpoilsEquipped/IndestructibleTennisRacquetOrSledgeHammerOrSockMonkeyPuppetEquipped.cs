@@ -1,7 +1,7 @@
 ﻿
 namespace FallenLand
 {
-    public class IndestructibleTennisRacquetOrSledgeHammerOrSockMonkeyPuppet : State
+    public class IndestructibleTennisRacquetOrSledgeHammerOrSockMonkeyPuppetEquipped : State
     {
         public override bool IsStateOccurring(GameManager gameManager, int playerIndex, int characterIndex)
         {
