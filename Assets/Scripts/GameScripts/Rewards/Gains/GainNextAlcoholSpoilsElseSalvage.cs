@@ -1,9 +1,9 @@
 ﻿
 namespace FallenLand
 {
-    public class GainNextAlchoholSpoilsElseSalvage : Reward
+    public class GainNextAlcoholSpoilsElseSalvage : Reward
     {
-        public GainNextAlchoholSpoilsElseSalvage(int amount) : base(amount)
+        public GainNextAlcoholSpoilsElseSalvage(int amount) : base(amount)
         {
         }
 

@@ -138,7 +138,7 @@ namespace FallenLand
 			curCard.SetSuccessHeaderText("");
 			curCard.SetSuccessDescriptionText("");
 			curCard.AddRewardOnSuccess(new GainSpoilsCards(1));
-			curCard.AddRewardOnSuccess(new GainNextAlchoholSpoilsElseSalvage(5));
+			curCard.AddRewardOnSuccess(new GainNextAlcoholSpoilsElseSalvage(5));
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			//TODO add punishment. roll 1d6 to determine character. If 6 or crown empty, ignore, else that crown sustains 2d6 physical damage
