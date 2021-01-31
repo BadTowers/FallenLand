@@ -287,7 +287,7 @@ namespace FallenLand
 				{
 					MaxPlayers = maxPlayersPerRoom,
 					PublishUserId = true,
-					PlayerTtl=60000*5 //5 mins
+					PlayerTtl=0
 				};
 				PhotonNetwork.CreateRoom(roomNameInputField.GetRoomName(), roomOptions);
 				IsCreatingRoom = false;
@@ -622,6 +622,7 @@ namespace FallenLand
 				gatherDataForNextScene();
 
 			    PhotonNetwork.CurrentRoom.IsOpen = false; //Lock the room so no one else can join
+				PhotonNetwork.CurrentRoom.PlayerTtl = 60000 * 5; //Once the game starts, then we keep player data in the server
 
 				//Show loading screen
 				LoadingGame = true;
