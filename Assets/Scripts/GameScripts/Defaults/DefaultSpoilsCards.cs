@@ -620,7 +620,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Heavy Rocket Launcher");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy_Weapon, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(8);
 			curCard.SetSellValue(21);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -651,7 +651,7 @@ namespace FallenLand
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Experimental Laser Rifle");
 			curCard.SetTitleSubString("Top Secret Weapon");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Top_Secret, SpoilsTypes.Heavy);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Top_Secret, SpoilsTypes.Heavy_Weapon);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(24);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -850,7 +850,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Grenades");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy_Weapon);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(16);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -1382,7 +1382,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard(".50 Caliber Sniper Rifle");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy_Weapon, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(6);
 			curCard.SetSellValue(22);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
@@ -1824,7 +1824,7 @@ namespace FallenLand
 
 			/****************************************************************************************************************************************************************/
 			curCard = new SpoilsCard("Rocket Launcher");
-			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy, SpoilsTypes.Relic);
+			curCard.SetSpoilsTypes(SpoilsTypes.Ranged_Weapon, SpoilsTypes.Heavy_Weapon, SpoilsTypes.Relic);
 			curCard.SetCarryWeight(7);
 			curCard.SetSellValue(18);
 			curCard.SetBaseSkills(new Dictionary<Skills, int>
