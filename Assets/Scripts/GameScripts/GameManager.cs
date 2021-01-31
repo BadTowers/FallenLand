@@ -3671,7 +3671,7 @@ namespace FallenLand
 			SpecialSpoilsDeck = (new DefaultSpecialSpoilsCards()).GetSpoilsCards(); //No need to shuffle these as they won't be dealt out normally.
 
 			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
-			//CharacterDeck = Card.ShuffleDeck(CharacterDeck);
+			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
 
 			ActionDeck = (new DefaultActionCards()).GetActionCards();
 			ActionDeck = Card.ShuffleDeck(ActionDeck);
