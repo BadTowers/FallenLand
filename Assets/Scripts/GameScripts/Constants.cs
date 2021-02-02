@@ -20,6 +20,7 @@ namespace FallenLand
 		public const int SPOILS_PER_AUCTION_HOUSE_PAGE = 8;
 		public const int CHARACTERS_PER_TOWN_ROSTER_PAGE = 8;
 		public const int PRESTIGE_GAINED_FOR_RESOURCE = 1;
+		public const int NUM_PAGES_IN_RULEBOOK = 23;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 		{
 			{ Skills.Mechanical, 0 },

@@ -10,7 +10,7 @@ namespace FallenLand
 {
     public class GameUIManager : UIManager
     {
-        public enum GameMenuStates { Pause, Options, Resume, Save };
+        public enum GameMenuStates { Pause, Options, Resume, Save, Rules };
         public GameObject GameManagerGameObject;
         public GameObject ImageGameObject;
         public GameObject ImageNoDragGameObject;
@@ -149,6 +149,9 @@ namespace FallenLand
         private bool HasFocusedThisPartyExploits;
         private GameObject GenericOkButton;
         private GameObject EncounterOverviewBonusMovementText;
+        private int CurrentRulesPageIndex;
+        private GameObject RulesPageImage;
+        private GameObject RulesPanel;
 
         #region UnityFunctions
         void Awake()
@@ -200,6 +203,8 @@ namespace FallenLand
             PreviousDistributionPageButton = GameObject.Find("PreviousDistributionPageButton");
             NextDistributionPageButton = GameObject.Find("NextDistributionPageButton");
             EncounterOverviewBonusMovementText = GameObject.Find("EncounterOverviewBonusMovementText");
+            RulesPageImage = GameObject.Find("CurrentRulePageImage");
+            RulesPanel = GameObject.Find("RulesPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -417,6 +422,7 @@ namespace FallenLand
             ActionCardsScreen.SetActive(true);
             CharacterAndSpoilsScreen.SetActive(true);
             TradeOverlay.SetActive(false);
+            RulesPanel.SetActive(false);
 
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
@@ -537,6 +543,12 @@ namespace FallenLand
         public void OnResume()
         {
             CurrentState = GameMenuStates.Resume;
+        }
+
+        public void OnRuleBookPress()
+        {
+            CurrentState = GameMenuStates.Rules;
+            RulesPanel.SetActive(true);
         }
 
         public void OnOptions()
@@ -1264,6 +1276,26 @@ namespace FallenLand
             DistributeD6Type = DistributionPageToDistributeTypeMapping[CurrentDistributionPage];
             updateDistributeD6Panel();
         }
+
+        public void OnPreviousRulePagePress()
+        {
+            CurrentRulesPageIndex--;
+            if (CurrentRulesPageIndex < 0)
+            {
+                CurrentRulesPageIndex = 0;
+            }
+            updateRulesPageImage();
+        }
+
+        public void OnNextRulePagePress()
+        {
+            CurrentRulesPageIndex++;
+            if (CurrentRulesPageIndex > Constants.NUM_PAGES_IN_RULEBOOK)
+            {
+                CurrentRulesPageIndex = Constants.NUM_PAGES_IN_RULEBOOK;
+            }
+            updateRulesPageImage();
+        }
         #endregion
 
 
@@ -1452,6 +1484,12 @@ namespace FallenLand
                     break;
                 case GameMenuStates.Resume:
                     updateUiOnUnpuase();
+                    if (EscapePressed)
+                    {
+                        CurrentState = GameMenuStates.Pause;
+                    }
+                    break;
+                case GameMenuStates.Rules:
                     if (EscapePressed)
                     {
                         CurrentState = GameMenuStates.Pause;
@@ -2781,6 +2819,7 @@ namespace FallenLand
         private void updateUiOnPause()
         {
             MainOverlay.SetActive(false);
+            RulesPanel.SetActive(false);
             PauseMenu.SetActive(true);
         }
 
@@ -3018,6 +3057,11 @@ namespace FallenLand
             EncounterHasBegun = false;
             CurrentEncounterSkillPage = 0;
             WasResourceClicked = false;
+        }
+
+        private void updateRulesPageImage()
+        {
+            RulesPageImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Rules/" + CurrentRulesPageIndex.ToString());
         }
         #endregion
     }
