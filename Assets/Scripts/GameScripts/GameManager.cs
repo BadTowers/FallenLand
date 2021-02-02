@@ -131,6 +131,10 @@ namespace FallenLand
 
 			switch (phase)
             {
+				case Phases.Effects_Resolve_Subphase:
+					handleEffectsResolveSubphase();
+					ShouldSkipPhase = true;
+					break;
                 case Phases.Town_Business_Deal:
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -142,6 +146,7 @@ namespace FallenLand
 					break;
                 case Phases.Town_Business_Resource_Production:
 					handleResourceProduction();
+					ShouldSkipPhase = true;
 					break;
 				case Phases.End_Turn_Pass_First_Player:
 					//Reset party exploits for the next turn
@@ -3736,6 +3741,27 @@ namespace FallenLand
 
 
 			//TODO create the deck of city/rad cards
+		}
+
+		private void handleEffectsResolveSubphase()
+		{
+			int myIndex = GetIndexForMyPlayer();
+			for (int playerIndex = 0; playerIndex < PhotonNetwork.PlayerList.Length; playerIndex++)
+			{
+				List<CharacterCard> party = Players[playerIndex].GetActiveCharacters();
+				for (int characterIndex = 0; characterIndex < Constants.NUM_PARTY_MEMBERS; characterIndex++)
+				{
+					if (party[characterIndex] != null && party[characterIndex].GetAmountOfInfectedDamage() > 0)
+					{
+						int remainingHp = party[characterIndex].GetHpRemaining() - 1;
+						DealSetAmountOfInfectedDamageToIndividual(myIndex, characterIndex, 1);
+						if (playerIndex == myIndex)
+						{
+							EventManager.CharacterCrownHasTakenDamage(characterIndex, 1, Constants.DAMAGE_INFECTED, remainingHp, false);
+						}
+					}
+				}
+			}
 		}
 
 		private void handleGameStartIfNeeded()
