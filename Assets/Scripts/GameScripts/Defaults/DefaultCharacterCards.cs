@@ -1456,10 +1456,9 @@ namespace FallenLand
 				{Skills.Technical, 6},
 				{Skills.Medical, 5}
 			});
-			currentLink = new Link("Sporting Goods", new SportingGoodsEquipped());
+			currentLink = new CumulativeLink("Sporting Goods - Cumulative", new SportingGoodsEquipped());
 			currentLink.AddRewardOnActivate(new GainCombat(2));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
-			//currentLink.SetIsCumulative(true);
 			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1984,12 +1983,11 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 7}
 			});
-			currentLink = new Link("Top Secret Weapons", new TopSecretWeaponEquipped());
+			currentLink = new CumulativeLink("Top Secret Weapons - Cumulative", new TopSecretWeaponEquipped());
 			currentLink.AddRewardOnActivate(new GainCombat(3));
 			currentLink.AddRewardOnActivate(new GainPrestige(1));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
 			currentLink.AddPunishmentOnDeactivate(new LosePrestige(1));
-			//currentLink.SetIsCumulative(true);
 			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
