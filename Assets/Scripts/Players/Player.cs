@@ -224,7 +224,7 @@ namespace FallenLand
 
 			if (characterIndex >= 0 && characterIndex < ActiveCharacters.Count && ActiveCharacters[characterIndex] != null)
 			{
-				Link link = ActiveCharacters[characterIndex].GetCharacterLink();
+				LinkCommon link = ActiveCharacters[characterIndex].GetCharacterLink();
 				if (link != null)
 				{
 					isActive = link.GetLinkIsActive();

@@ -2,95 +2,13 @@
 
 namespace FallenLand
 {
-    public class Link
+    public class Link : LinkCommon
     {
-        private readonly string LinkTitle;
-        private readonly List<Reward> RewardsOnActivate = new List<Reward>();
-        private readonly List<Punishment> PunishmentsOnActivate = new List<Punishment>();
-        private readonly List<Reward> RewardsOnDeactivate = new List<Reward>();
-        private readonly List<Punishment> PunishmentsOnDeactivate = new List<Punishment>();
-        private bool IsActive;
-        private readonly State WhenLinkStarts;
-        private bool IsCumulative;
-        private int NumCumulativeAccountedFor;
-
-        public Link(string title, State whenLinkStarts)
+        public Link(string title, State whenLinkStarts) : base(title, whenLinkStarts)
         {
-            LinkTitle = title;
-            WhenLinkStarts = whenLinkStarts;
         }
 
-        public string GetTitle()
-        {
-            return LinkTitle;
-        }
-
-        public State GetWhenLinkStarts()
-        {
-            return WhenLinkStarts;
-        }
-
-        public void AddRewardOnActivate(Reward reward)
-        {
-            RewardsOnActivate.Add(reward);
-        }
-
-        public void AddPunishmentOnActivate(Punishment punishment)
-        {
-            PunishmentsOnActivate.Add(punishment);
-        }
-
-        public void AddRewardOnDeactivate(Reward reward)
-        {
-            RewardsOnDeactivate.Add(reward);
-        }
-
-        public void AddPunishmentOnDeactivate(Punishment punishment)
-        {
-            PunishmentsOnDeactivate.Add(punishment);
-        }
-
-        public List<Reward> GetRewardsOnActivate()
-        {
-            return RewardsOnActivate;
-        }
-
-        public List<Punishment> GetPunishmentsOnActivate()
-        {
-            return PunishmentsOnActivate;
-        }
-
-        public List<Reward> GetRewardsOnDeactivate()
-        {
-            return RewardsOnDeactivate;
-        }
-
-        public List<Punishment> GetPunishmentsOnDeactivate()
-        {
-            return PunishmentsOnDeactivate;
-        }
-
-        public void SetLinkIsActive(bool isActive)
-        {
-            IsActive = isActive;
-        }
-
-        public bool GetLinkIsActive()
-        {
-            return IsActive;
-        }
-
-        public void SetIsCumulative(bool isCumulative)
-        {
-            IsCumulative = isCumulative;
-        }
-
-        public bool GetIsCumulative()
-        {
-            return IsCumulative;
-        }
-
-        public void OnActivate(GameManager gameManager, int playerIndex, int characterIndex)
+        public override void OnActivate(GameManager gameManager, int playerIndex, int characterIndex)
         {
             if (!GetLinkIsActive())
             {
@@ -112,7 +30,7 @@ namespace FallenLand
             }
         }
 
-        public void OnDeactivate(GameManager gameManager, int playerIndex, int characterIndex)
+        public override void OnDeactivate(GameManager gameManager, int playerIndex, int characterIndex)
         {
             SetLinkIsActive(false);
 
@@ -129,16 +47,6 @@ namespace FallenLand
                 punishmentsOnDeactivate[punishmentIndex].SetCharacterIndex(characterIndex);
                 punishmentsOnDeactivate[punishmentIndex].HandlePunishment(gameManager, playerIndex);
             }
-        }
-
-        public void SetNumCumulativeAccountedFor(int amount)
-        {
-            NumCumulativeAccountedFor = amount;
-        }
-
-        public int GetNumCumulativeAccountedFor()
-        {
-            return NumCumulativeAccountedFor;
         }
     }
 }

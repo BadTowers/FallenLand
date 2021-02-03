@@ -2393,6 +2393,29 @@ namespace FallenLand
 			return isEquipped;
 		}
 
+		public int GetNumberOfSpoilsTypeEquippedToCharacter(int playerIndex, int characterIndex, SpoilsTypes spoilsType)
+		{
+			int numEquipped = 0;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+				if (character != null)
+				{
+					List<SpoilsCard> spoils = character.GetEquippedSpoils();
+					for (int spoilsIndex = 0; spoilsIndex < spoils.Count; spoilsIndex++)
+					{
+						if (spoils[spoilsIndex].GetSpoilsTypes().Contains(spoilsType))
+						{
+							numEquipped++;
+						}
+					}
+				}
+			}
+
+			return numEquipped;
+		}
+
 		public bool IsSpecificSpoilsEquipped(int playerIndex, int characterIndex, string spoilsName)
 		{
 			bool isEquipped = false;

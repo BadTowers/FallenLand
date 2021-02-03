@@ -14,7 +14,7 @@ namespace FallenLand
 
 			//Add the cards to the list
 			CharacterCard curCard;
-			Link currentLink;
+			LinkCommon currentLink;
 
 			Debug.Log("Instantiating character cards...");
 
@@ -867,12 +867,11 @@ namespace FallenLand
 				{Skills.Technical, 5},
 				{Skills.Medical, 5}
 			});
-			currentLink = new Link("Handguns - Cumulative", new HandgunEquipped());
+			currentLink = new CumulativeLink("Handguns - Cumulative", new HandgunEquipped());
 			currentLink.AddRewardOnActivate(new GainCombat(2));
 			currentLink.AddRewardOnActivate(new GainSurvival(1));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
 			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(1));
-			currentLink.SetIsCumulative(true);
 			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1460,7 +1459,7 @@ namespace FallenLand
 			currentLink = new Link("Sporting Goods", new SportingGoodsEquipped());
 			currentLink.AddRewardOnActivate(new GainCombat(2));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
-			currentLink.SetIsCumulative(true);
+			//currentLink.SetIsCumulative(true);
 			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -1990,7 +1989,7 @@ namespace FallenLand
 			currentLink.AddRewardOnActivate(new GainPrestige(1));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(3));
 			currentLink.AddPunishmentOnDeactivate(new LosePrestige(1));
-			currentLink.SetIsCumulative(true);
+			//currentLink.SetIsCumulative(true);
 			curCard.SetCharacterLink(currentLink);
 			//TODO add conditional gain
 			curCard.SetId(curID);

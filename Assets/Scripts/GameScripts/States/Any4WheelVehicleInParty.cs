@@ -7,5 +7,10 @@ namespace FallenLand
         {
             return gameManager.IsVehicleOfCertainType(playerIndex, SpoilsTypes.Four_Wheeled);
         }
+
+        public override int NumberOfInstancesOfStateOccurring(GameManager _, int __, int ___)
+        {
+            return 0;
+        }
     }
 }

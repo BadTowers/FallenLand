@@ -21,7 +21,7 @@ namespace FallenLand
         private bool IsMaster;
         private Sprite CardImage;
         private Sprite CardPortrait;
-        private Link CharacterLink;
+        private LinkCommon CharacterLink;
 
         public CharacterCard(string title) : base(title)
         {
@@ -50,12 +50,12 @@ namespace FallenLand
             EquippedSpoils = new List<SpoilsCard>();
         }
 
-        public void SetCharacterLink(Link link)
+        public void SetCharacterLink(LinkCommon link)
         {
             CharacterLink = link;
         }
 
-        public Link GetCharacterLink()
+        public LinkCommon GetCharacterLink()
         {
             return CharacterLink;
         }

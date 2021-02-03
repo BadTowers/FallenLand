@@ -12,10 +12,10 @@ namespace FallenLand
             {
                 if (characters[characterIndex] != null)
                 {
-                    Link link = characters[characterIndex].GetCharacterLink();
+                    LinkCommon link = characters[characterIndex].GetCharacterLink();
                     if (link != null)
                     {
-                        if (!link.GetIsCumulative())
+                        if (link is Link)
                         {
                             //See if link started or ended
                             if (!link.GetLinkIsActive() && link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
@@ -29,9 +29,19 @@ namespace FallenLand
                                 gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
                             }
                         }
-                        else
+                        else if (link is CumulativeLink)
                         {
-                            //TODO
+                            //See if link started or ended
+                            if (link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
+                            {
+                                link.OnActivate(gameManager, playerIndex, characterIndex);
+                                gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
+                            }
+                            else if (link.GetLinkIsActive() && !link.GetWhenLinkStarts().IsStateOccurring(gameManager, playerIndex, characterIndex))
+                            {
+                                link.OnDeactivate(gameManager, playerIndex, characterIndex);
+                                gameManager.UpdateCharacterSlotTotals(playerIndex, characterIndex);
+                            }
                         }
                     }
                 }

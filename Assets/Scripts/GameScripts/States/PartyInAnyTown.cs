@@ -7,5 +7,10 @@ namespace FallenLand
         {
             return gameManager.IsPartyInTown(playerIndex);
         }
+
+        public override int NumberOfInstancesOfStateOccurring(GameManager _, int __, int ___)
+        {
+            return 0;
+        }
     }
 }
