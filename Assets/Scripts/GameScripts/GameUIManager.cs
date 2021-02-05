@@ -152,6 +152,9 @@ namespace FallenLand
         private int CurrentRulesPageIndex;
         private GameObject RulesPageImage;
         private GameObject RulesPanel;
+        private GameObject PartyExploitsMovementButton;
+        private GameObject PartyExploitsPvPButton;
+        private GameObject PartyExploitsMissionButton;
 
         #region UnityFunctions
         void Awake()
@@ -205,6 +208,9 @@ namespace FallenLand
             EncounterOverviewBonusMovementText = GameObject.Find("EncounterOverviewBonusMovementText");
             RulesPageImage = GameObject.Find("CurrentRulePageImage");
             RulesPanel = GameObject.Find("RulesPanel");
+            PartyExploitsMovementButton = GameObject.Find("MovementButton");
+            PartyExploitsPvPButton = GameObject.Find("PVPButton");
+            PartyExploitsMissionButton = GameObject.Find("MissionButton");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -1999,7 +2005,7 @@ namespace FallenLand
                 MapLayout mapLayout = GameManagerInstance.GetMapLayout();
                 Coordinates partyLocation = GameManagerInstance.GetPartyLocation(myIndex);
 
-                GameObject.Find("MovementButton").GetComponent<Button>().interactable = true;
+                PartyExploitsMovementButton.GetComponent<Button>().interactable = true;
                 bool shouldEnableEncounterDeedButton = !mapLayout.IsFactionBase(partyLocation);
                 EncounterButton.GetComponent<Button>().interactable = shouldEnableEncounterDeedButton;
                 bool shouldEnableResourceDeedButton = mapLayout.IsResource(partyLocation);
@@ -2008,12 +2014,12 @@ namespace FallenLand
             }
             else
             {
-                GameObject.Find("MovementButton").GetComponent<Button>().interactable = false;
+                PartyExploitsMovementButton.GetComponent<Button>().interactable = false;
                 EncounterButton.GetComponent<Button>().interactable = false;
-                GameObject.Find("PVPButton").GetComponent<Button>().interactable = false;
+                PartyExploitsPvPButton.GetComponent<Button>().interactable = false;
                 ResourceButton.GetComponent<Button>().interactable = false;
                 HealingButton.GetComponent<Button>().interactable = false;
-                GameObject.Find("MissionButton").GetComponent<Button>().interactable = false;
+                PartyExploitsMissionButton.GetComponent<Button>().interactable = false;
             }
         }
 
