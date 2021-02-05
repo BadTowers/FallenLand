@@ -42,7 +42,7 @@ namespace FallenLand
                 List<Reward> rewardsOnDeactivate = GetRewardsOnDeactivate();
                 List<Punishment> punishmentsOnDeactivate = GetPunishmentsOnDeactivate();
                 differencesOfInstances *= -1;
-                for (int numToAdd = 0; numToAdd < differencesOfInstances; numToAdd++)
+                for (int numToRemove = 0; numToRemove < differencesOfInstances; numToRemove++)
                 {
                     for (int rewardIndex = 0; rewardIndex < rewardsOnDeactivate.Count; rewardIndex++)
                     {
@@ -64,18 +64,25 @@ namespace FallenLand
         {
             SetLinkIsActive(false);
 
-            List<Reward> rewardsOnDeactivate = GetRewardsOnDeactivate();
-            for (int rewardIndex = 0; rewardIndex < rewardsOnDeactivate.Count; rewardIndex++)
-            {
-                rewardsOnDeactivate[rewardIndex].SetCharacterIndex(characterIndex);
-                rewardsOnDeactivate[rewardIndex].HandleReward(gameManager, playerIndex);
-            }
+            //Compute number of cumulative stacks
+            int numInstances = GetWhenLinkStarts().NumberOfInstancesOfStateOccurring(gameManager, playerIndex, characterIndex);
+            int differencesOfInstances = -1 * (numInstances - NumCumulativeAccountedFor);
 
+            List<Reward> rewardsOnDeactivate = GetRewardsOnDeactivate();
             List<Punishment> punishmentsOnDeactivate = GetPunishmentsOnDeactivate();
-            for (int punishmentIndex = 0; punishmentIndex < punishmentsOnDeactivate.Count; punishmentIndex++)
+            for (int numToRemove = 0; numToRemove < differencesOfInstances; numToRemove++)
             {
-                punishmentsOnDeactivate[punishmentIndex].SetCharacterIndex(characterIndex);
-                punishmentsOnDeactivate[punishmentIndex].HandlePunishment(gameManager, playerIndex);
+                for (int rewardIndex = 0; rewardIndex < rewardsOnDeactivate.Count; rewardIndex++)
+                {
+                    rewardsOnDeactivate[rewardIndex].SetCharacterIndex(characterIndex);
+                    rewardsOnDeactivate[rewardIndex].HandleReward(gameManager, playerIndex);
+                }
+
+                for (int punishmentIndex = 0; punishmentIndex < punishmentsOnDeactivate.Count; punishmentIndex++)
+                {
+                    punishmentsOnDeactivate[punishmentIndex].SetCharacterIndex(characterIndex);
+                    punishmentsOnDeactivate[punishmentIndex].HandlePunishment(gameManager, playerIndex);
+                }
             }
             NumCumulativeAccountedFor = 0;
         }
