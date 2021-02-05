@@ -427,41 +427,42 @@ namespace FallenLand
 			}
 		}
 
+		public void RemoveAllSpoilsFromActiveCharacter(int characterIndexToRemove)
+		{
+			List<SpoilsCard> equippedSpoils = ActiveCharacters[characterIndexToRemove].GetEquippedSpoils();
+			for (int i = equippedSpoils.Count - 1; i >= 0; i--)
+			{
+				SpoilsCard card = equippedSpoils[i];
+				if (!equippedSpoils[i].GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
+				{
+					ActiveCharacters[characterIndexToRemove].RemoveSpoilsCard(card);
+					AddSpoilsCardToAuctionHouse(card);
+				}
+				else
+				{
+					ActiveCharacters[characterIndexToRemove].RemoveSpoilsCard(card);
+					bool isOtherCharacterInParty = false;
+					for (int x = 0; x < Constants.NUM_PARTY_MEMBERS; x++)
+					{
+						if (ActiveCharacters[x] != null && x != characterIndexToRemove)
+						{
+							isOtherCharacterInParty = true;
+							break;
+						}
+					}
+					if (!isOtherCharacterInParty)
+					{
+						AddSpoilsCardToAuctionHouse(card);
+						PartyEquipment.Remove(card);
+					}
+				}
+			}
+		}
+
 		public void RemoveCharacterFromParty(int characterIndexToRemove)
 		{
 			if (ActiveCharacters[characterIndexToRemove] != null)
 			{
-				//Remove spoils from this character
-				List<SpoilsCard> equippedSpoils = ActiveCharacters[characterIndexToRemove].GetEquippedSpoils();
-				for (int i = equippedSpoils.Count - 1; i >= 0; i--)
-				{
-					SpoilsCard card = equippedSpoils[i];
-					if (!equippedSpoils[i].GetSpoilsTypes().Contains(SpoilsTypes.Party_Equipment))
-					{
-						ActiveCharacters[characterIndexToRemove].RemoveSpoilsCard(card);
-						AddSpoilsCardToAuctionHouse(card);
-					}
-					else
-					{
-						ActiveCharacters[characterIndexToRemove].RemoveSpoilsCard(card);
-						bool isOtherCharacterInParty = false;
-						for (int x = 0; x < Constants.NUM_PARTY_MEMBERS; x++)
-						{
-							if (ActiveCharacters[x] != null && x != characterIndexToRemove)
-							{
-								isOtherCharacterInParty = true;
-								break;
-							}
-						}
-						if (!isOtherCharacterInParty)
-						{
-							AddSpoilsCardToAuctionHouse(card);
-							PartyEquipment.Remove(card);
-						}
-					}
-				}
-
-				//Remove character from party
 				ActiveCharacters[characterIndexToRemove] = null;
 				UpdateCharacterSlotTotals(characterIndexToRemove);
 			}

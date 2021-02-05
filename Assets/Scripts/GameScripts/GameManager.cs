@@ -2760,7 +2760,9 @@ namespace FallenLand
 		private void removeCharacterFromParty(int playerIndex, int characterIndex)
 		{
             CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
-            Players[playerIndex].RemoveCharacterFromParty(characterIndex);
+			Players[playerIndex].RemoveAllSpoilsFromActiveCharacter(characterIndex);
+			LinksManager.HandleLinks(this, playerIndex);
+			Players[playerIndex].RemoveCharacterFromParty(characterIndex);
             CharacterDeck.Add(character); //TODO don't add to character deck
         }
 
@@ -2780,6 +2782,8 @@ namespace FallenLand
 			}
 
 			CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+			Players[playerIndex].RemoveAllSpoilsFromActiveCharacter(characterIndex);
+			LinksManager.HandleLinks(this, playerIndex);
 			Players[playerIndex].RemoveCharacterFromParty(characterIndex);
 			character.ClearAllSpoils(); //Clears remaining party equipment from this card
 			CharacterDeck.Add(character); //TODO don't add to character deck
