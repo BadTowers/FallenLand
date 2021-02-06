@@ -3781,7 +3781,7 @@ namespace FallenLand
 					if (party[characterIndex] != null && party[characterIndex].GetAmountOfInfectedDamage() > 0)
 					{
 						int remainingHp = party[characterIndex].GetHpRemaining() - 1;
-						DealSetAmountOfInfectedDamageToIndividual(myIndex, characterIndex, 1);
+						DealSetAmountOfInfectedDamageToIndividual(playerIndex, characterIndex, 1);
 						if (playerIndex == myIndex)
 						{
 							EventManager.CharacterCrownHasTakenDamage(characterIndex, 1, Constants.DAMAGE_INFECTED, remainingHp, false);
