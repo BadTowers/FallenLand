@@ -3098,6 +3098,7 @@ namespace FallenLand
 				if (characters[characterIndex] != null)
 				{
 					characters[characterIndex].AddPhysicalDamage(numChips);
+					handleCharacterDeathIfNecessary(capturingPlayerIndex, characterIndex, false);
 				}
 			}
 		}
@@ -3535,15 +3536,34 @@ namespace FallenLand
 			int indexOfResourceOwner = resourceNetworking.GetOwnerIndex();
 			Coordinates locationOfResource = resourceNetworking.GetResourceLocation();
 			int indexOfCapturingPlayer = resourceNetworking.GetCaptorIndex();
+			int myIndex = GetIndexForMyPlayer();
 
 			HasDoneEncounterSinceMovement[indexOfCapturingPlayer] = true;
 
 			Resource resourceToExchange = GetResource(indexOfResourceOwner, locationOfResource);
 			applyTownDefenseDamage(indexOfCapturingPlayer);
-			Players[indexOfResourceOwner].RemoveResourceOwned(resourceToExchange);
-			ResourcePieceManagerInst.RemovePiece(indexOfResourceOwner, locationOfResource);
-			Players[indexOfCapturingPlayer].AddResourceOwned(resourceToExchange);
-			ResourcePieceManagerInst.CreatePiece(indexOfCapturingPlayer, Players[indexOfCapturingPlayer].GetPlayerFaction(), locationOfResource);
+			if (Players[indexOfCapturingPlayer].GetNumberOfCharactersActive() > 0)
+			{
+				Players[indexOfResourceOwner].RemoveResourceOwned(resourceToExchange);
+				ResourcePieceManagerInst.RemovePiece(indexOfResourceOwner, locationOfResource);
+				Players[indexOfCapturingPlayer].AddResourceOwned(resourceToExchange);
+				ResourcePieceManagerInst.CreatePiece(indexOfCapturingPlayer, Players[indexOfCapturingPlayer].GetPlayerFaction(), locationOfResource);
+				if (myIndex == indexOfCapturingPlayer)
+				{
+					EventManager.ShowGenericPopup("You've stolen the resource!");
+				}
+				else if (myIndex == indexOfResourceOwner)
+				{
+					EventManager.ShowGenericPopup("You've had a resource stolen!");
+				}
+			}
+			else
+			{
+				if (indexOfCapturingPlayer == myIndex)
+				{
+					EventManager.ShowGenericPopup("You didn't capture the resource because everyone in your party died!");
+				}
+			}
 
 			int remainingWeeks = Players[indexOfCapturingPlayer].GetRemainingPartyExploitWeeks();
 			Players[indexOfCapturingPlayer].SetRemainingPartyExploitWeeks(remainingWeeks - ResourceWeekCost);
