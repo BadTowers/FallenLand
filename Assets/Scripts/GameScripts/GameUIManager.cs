@@ -155,6 +155,9 @@ namespace FallenLand
         private GameObject PartyExploitsMovementButton;
         private GameObject PartyExploitsPvPButton;
         private GameObject PartyExploitsMissionButton;
+        private GameObject FinancialPurchasePanel;
+        private GameObject BuyTownDefenseChipButton;
+        private bool UserHasPurchasedTownDefenseChipThisTurn;
 
         #region UnityFunctions
         void Awake()
@@ -211,6 +214,8 @@ namespace FallenLand
             PartyExploitsMovementButton = GameObject.Find("MovementButton");
             PartyExploitsPvPButton = GameObject.Find("PVPButton");
             PartyExploitsMissionButton = GameObject.Find("MissionButton");
+            FinancialPurchasePanel = GameObject.Find("FinancialPurchasePanel");
+            BuyTownDefenseChipButton = GameObject.Find("BuyTownDefenseChipButton");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -422,6 +427,7 @@ namespace FallenLand
             CannotModifyPanel.SetActive(false);
             PreviousDistributionPageButton.SetActive(false);
             NextDistributionPageButton.SetActive(false);
+            FinancialPurchasePanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -481,6 +487,8 @@ namespace FallenLand
             updateTurnInformation();
 
             updateTownEventsUi();
+
+            updateFinancialPurchaseUi();
 
             updatePartyExploitsUi();
 
@@ -1302,6 +1310,21 @@ namespace FallenLand
             }
             updateRulesPageImage();
         }
+
+        public void OnPurchaseTownDefenseChipPress()
+        {
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            int cost = GameManagerInstance.GetCostOfTownDefenseChip(myIndex);
+            int amountOfSalvage = GameManagerInstance.GetSalvage(myIndex);
+            if (amountOfSalvage < cost)
+            {
+                onShowGenericPopup("You need " + cost + " salvage, but only have " + amountOfSalvage + "!");
+            }
+            else
+            {
+                onShowGenericYesNoPopup("Would you like to spend " + cost + " salvage to purchase a Town Defense Chip?");
+            }
+        }
         #endregion
 
 
@@ -1859,7 +1882,7 @@ namespace FallenLand
         private void updateTownEventsUi()
         {
             Phases currentPhase = GameManagerInstance.GetPhase();
-            if (currentPhase == Phases.Town_Business_Town_Events_Chart || currentPhase == Phases.After_Town_Business_Town_Events_Chart)
+            if (currentPhase == Phases.Town_Business_Town_Events_Chart)
             {
                 TownEventsRollPanel.SetActive(true);
                 if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && !UserRolledTownEventsThisTurn)
@@ -1878,6 +1901,40 @@ namespace FallenLand
                 RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
                 RollTownEventTextGameObject.GetComponent<Text>().text = "Roll to see effects...";
                 UserRolledTownEventsThisTurn = false;
+            }
+        }
+
+        private void updateFinancialPurchaseUi()
+        {
+            Phases currentPhase = GameManagerInstance.GetPhase();
+            if (currentPhase == Phases.Town_Business_Financial_Purchase)
+            {
+                FinancialPurchasePanel.SetActive(true);
+
+                if (GenericYesPressed)
+                {
+                    UserHasPurchasedTownDefenseChipThisTurn = true;
+                    int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+                    GameManagerInstance.PurchaseTownDefenseChip(myIndex);
+                    GenericYesPressed = false;
+                }
+
+                if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() 
+                    && !UserHasPurchasedTownDefenseChipThisTurn && GameManagerInstance.IsPlayerAllowedToBuyTownDefenseChip(GameManagerInstance.GetIndexForMyPlayer()))
+                {
+                    BuyTownDefenseChipButton.GetComponent<Button>().interactable = true;
+                }
+                else
+                {
+                    BuyTownDefenseChipButton.GetComponent<Button>().interactable = false;
+                }
+            }
+            else
+            {
+                FinancialPurchasePanel.SetActive(false);
+                //Reset the UI once it's deactivated so it's ready for next time it shows
+                BuyTownDefenseChipButton.GetComponent<Button>().interactable = true;
+                UserHasPurchasedTownDefenseChipThisTurn = false;
             }
         }
 
@@ -2928,6 +2985,7 @@ namespace FallenLand
                     PlayerPanels[currentPlayerIndex].transform.Find("SalvageActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetSalvage(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("ResourceActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetNumberOfResourcesOwned(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("BonusMovementActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetBonusMovement(currentPlayerIndex).ToString();
+                    PlayerPanels[currentPlayerIndex].transform.Find("TownDefenseActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetNumberOfTownDefenseChipsOwned(currentPlayerIndex).ToString();
                 }
                 else
                 {

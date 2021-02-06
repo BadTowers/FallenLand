@@ -32,6 +32,7 @@ namespace FallenLand
 		private int BonusMovementGained;
 		private List<Effect> ActiveEffects = new List<Effect>();
 		private List<SpoilsCard> PartyEquipment = new List<SpoilsCard>();
+		private int NumberOfTownDefenseChips;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -1036,6 +1037,19 @@ namespace FallenLand
 					ActiveCharacterRemainingCarryWeights[indexToUpdate] = 0;
 					ActiveCharacterUsedCarryWeights[indexToUpdate] = 0;
 				}
+			}
+		}
+
+		public int GetNumberOfTownDefenseChips()
+		{
+			return NumberOfTownDefenseChips;
+		}
+
+		public void SetNumberOfTownDefenseChips(int numChips)
+		{
+			if(numChips >= 0 && numChips <= 5)
+            {
+				NumberOfTownDefenseChips = numChips;
 			}
 		}
 

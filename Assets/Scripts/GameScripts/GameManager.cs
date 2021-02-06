@@ -156,6 +156,7 @@ namespace FallenLand
 					}
 					ShouldSkipPhase = true;
 					break;
+				case Phases.Town_Business_Financial_Purchase:
 				case Phases.Party_Exploits_Party:
 				case Phases.Town_Business_Town_Events_Chart:
 				case Phases.Game_Start_Setup:
@@ -297,6 +298,10 @@ namespace FallenLand
 			{
 				handleSalvageNetworkingEvent((SalvageNetworking)photonEvent.CustomData);
 			}
+			else if(eventCode == Constants.EvTownDefense)
+            {
+				handleTownDefenseEvent((TownDefenseNetworking)photonEvent.CustomData);
+            }
 		}
 		#endregion
 
@@ -2484,6 +2489,56 @@ namespace FallenLand
 				Players[playerIndex].UpdateCharacterSlotTotals(characterIndex);
 			}
 		}
+
+		public bool IsPlayerAllowedToBuyTownDefenseChip(int playerIndex)
+		{
+			bool isAllowed = false;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				if(Players[playerIndex].GetNumberOfTownDefenseChips() < Constants.MAX_TOWN_DEFENSE_CHIPS_ALLOWED_TO_OWN)
+                {
+					isAllowed = true;
+				}
+			}
+
+			return isAllowed;
+		}
+
+		public int GetCostOfTownDefenseChip(int playerIndex)
+		{
+			int cost = Constants.INVALID_COST;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				int numChipsOwned = Players[playerIndex].GetNumberOfTownDefenseChips();
+				cost = Constants.TOWN_DEFENSE_CHIP_COST[numChipsOwned];
+			}
+
+			return cost;
+		}
+
+		public void PurchaseTownDefenseChip(int playerIndex)
+		{
+            if (isPlayerIndexInRange(playerIndex))
+            {
+				TownDefenseNetworking townDefense = new TownDefenseNetworking(playerIndex, Constants.BUY_TOWN_DEFENSE);
+				sendNetworkEvent(townDefense, ReceiverGroup.Others, Constants.EvTownDefense);
+				handleTownDefenseEvent(townDefense);
+			}
+		}
+
+		public int GetNumberOfTownDefenseChipsOwned(int playerIndex)
+		{
+			int numOwned = 0;
+
+			if(isPlayerIndexInRange(playerIndex))
+            {
+				numOwned = Players[playerIndex].GetNumberOfTownDefenseChips();
+			}
+
+			return numOwned;
+		}
 		#endregion
 
 
@@ -3034,9 +3089,9 @@ namespace FallenLand
 			}
 		}
 
-		private void applyTownDefenseDamage(Resource resource, int capturingPlayerIndex)
+		private void applyTownDefenseDamage(int capturingPlayerIndex)
 		{
-			int numChips = resource.GetNumberOfTownDefenseChips();
+			int numChips = Players[capturingPlayerIndex].GetNumberOfTownDefenseChips();
 			List<CharacterCard> characters = Players[capturingPlayerIndex].GetActiveCharacters();
 			for (int characterIndex = 0; characterIndex < characters.Count; characterIndex++)
             {
@@ -3248,6 +3303,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(HealingDeedNetworking), Constants.EvHealingDeed, HealingDeedNetworking.SerializeHealingDeed, HealingDeedNetworking.DeserializeHealingDeed);
 			PhotonPeer.RegisterType(typeof(ShuffleNetworking), Constants.EvShuffle, ShuffleNetworking.SerializeShuffle, ShuffleNetworking.DeserializeShuffle);
 			PhotonPeer.RegisterType(typeof(SalvageNetworking), Constants.EvSalvage, SalvageNetworking.SerializeSalvage, SalvageNetworking.DeserializeSalvage);
+			PhotonPeer.RegisterType(typeof(TownDefenseNetworking), Constants.EvTownDefense, TownDefenseNetworking.SerializeTownDefense, TownDefenseNetworking.DeserializeTownDefense);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -3483,7 +3539,7 @@ namespace FallenLand
 			HasDoneEncounterSinceMovement[indexOfCapturingPlayer] = true;
 
 			Resource resourceToExchange = GetResource(indexOfResourceOwner, locationOfResource);
-			applyTownDefenseDamage(resourceToExchange, indexOfCapturingPlayer);
+			applyTownDefenseDamage(indexOfCapturingPlayer);
 			Players[indexOfResourceOwner].RemoveResourceOwned(resourceToExchange);
 			ResourcePieceManagerInst.RemovePiece(indexOfResourceOwner, locationOfResource);
 			Players[indexOfCapturingPlayer].AddResourceOwned(resourceToExchange);
@@ -3572,6 +3628,27 @@ namespace FallenLand
 			else if(action == Constants.SALVAGE_LOSE)
             {
 				Players[playerIndex].RemoveSalvageFromPlayer(salvageNetworking.GetAmount());
+			}
+		}
+
+		private void handleTownDefenseEvent(TownDefenseNetworking townDefenseNetworking)
+		{
+			int playerIndex = townDefenseNetworking.GetPlayerIndex();
+			byte action = townDefenseNetworking.GetAction();
+			if (action == Constants.BUY_TOWN_DEFENSE)
+			{
+				int numberOwned = Players[playerIndex].GetNumberOfTownDefenseChips();
+				int cost = Constants.TOWN_DEFENSE_CHIP_COST[numberOwned];
+				Players[playerIndex].SetNumberOfTownDefenseChips(Players[playerIndex].GetNumberOfTownDefenseChips() + 1);
+				Players[playerIndex].RemoveSalvageFromPlayer(cost);
+			}
+			else if (action == Constants.SELL_TOWN_DEFENSE)
+			{
+				//TODO in future story
+			}
+			else if (action == Constants.USE_TOWN_DEFENSE_FOR_TOWN_HEALTH)
+			{
+				//TODO in future story
 			}
 		}
 

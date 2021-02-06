@@ -7,6 +7,7 @@ namespace FallenLand
 		public const int DONT_CARE = 0;
 		public const int INVALID_LOCATION = -1;
 		public const int INVALID_INDEX = -1;
+		public const int INVALID_COST = -1;
 		public const int NUM_PARTY_MEMBERS = 5;
 		public const int VEHICLE_INDEX = 5;
 		public const int MAX_NUM_PLAYERS = 5;
@@ -21,6 +22,7 @@ namespace FallenLand
 		public const int CHARACTERS_PER_TOWN_ROSTER_PAGE = 8;
 		public const int PRESTIGE_GAINED_FOR_RESOURCE = 1;
 		public const int NUM_PAGES_IN_RULEBOOK = 23;
+		public const int MAX_TOWN_DEFENSE_CHIPS_ALLOWED_TO_OWN = 5;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 		{
 			{ Skills.Mechanical, 0 },
@@ -31,6 +33,14 @@ namespace FallenLand
 			{ Skills.Medical, 0 }
 		};
 		public const int MAX_NUM_RESOURCES_OWNED = 5;
+		public static readonly Dictionary<int, int> TOWN_DEFENSE_CHIP_COST = new Dictionary<int, int>
+		{
+			{ 0, 10 },
+			{ 1, 15 },
+			{ 2, 20 },
+			{ 3, 25 },
+			{ 4, 30 }
+		};
 
 		//Used for EvDealCard
 		public const byte SPOILS_CARD = 1;
@@ -115,6 +125,11 @@ namespace FallenLand
 		public const byte SALVAGE_GAIN = 0;
 		public const byte SALVAGE_LOSE = 1;
 
+		//Used for EvTownDefense
+		public const byte BUY_TOWN_DEFENSE = 0;
+		public const byte SELL_TOWN_DEFENSE = 1;
+		public const byte USE_TOWN_DEFENSE_FOR_TOWN_HEALTH = 2;
+
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
@@ -133,5 +148,6 @@ namespace FallenLand
 		public const byte EvHealingDeed = 14;
 		public const byte EvShuffle = 15;
 		public const byte EvSalvage = 16;
+		public const byte EvTownDefense = 17;
 	}
 }
