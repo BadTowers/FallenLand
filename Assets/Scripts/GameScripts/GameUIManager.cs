@@ -158,6 +158,7 @@ namespace FallenLand
         private GameObject FinancialPurchasePanel;
         private GameObject BuyTownDefenseChipButton;
         private bool UserHasPurchasedTownDefenseChipThisTurn;
+        private bool IsCapturingSomeonesResource;
 
         #region UnityFunctions
         void Awake()
@@ -799,7 +800,10 @@ namespace FallenLand
                 {
                     if (GameManagerInstance.GetNumberOfResourcesOwned(myIndex) < Constants.MAX_NUM_RESOURCES_OWNED)
                     {
-                        GameManagerInstance.CaptureResource(partyLocation, myIndex);
+                        int indexOfResourceOwner = GameManagerInstance.WhichIndexOwnsResouce(partyLocation);
+                        int numTownDefenseChips = GameManagerInstance.GetNumberOfTownDefenseChipsOwned(indexOfResourceOwner);
+                        onShowGenericYesNoPopup("Doing this will deal " + numTownDefenseChips + " physical damage to every party member, ignoring armor! Proceed?");
+                        IsCapturingSomeonesResource = true;
                     }
                     else
                     {
@@ -1976,6 +1980,21 @@ namespace FallenLand
                     Image cardImage = GameObject.Find("EncounterCardImage").GetComponent<Image>();
                     cardImage.sprite = loadEncounterCard();
                     updateStatPanelsForOverallEncounterPage();
+                }
+                if (IsCapturingSomeonesResource)
+                {
+                    if (GenericYesPressed)
+                    {
+                        Coordinates partyLocation = GameManagerInstance.GetPartyLocation(myIndex);
+                        GenericYesPressed = false;
+                        IsCapturingSomeonesResource = false;
+                        GameManagerInstance.CaptureResource(partyLocation, myIndex);
+                    }
+                    else if (GenericNoPressed)
+                    {
+                        GenericNoPressed = false;
+                        IsCapturingSomeonesResource = false;
+                    }
                 }
             }
             else if (currentPhase == Phases.Party_Exploits_Party && EncounterHasBegun)
