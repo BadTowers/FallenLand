@@ -14,7 +14,7 @@ namespace FallenLand
 {
 	public class MainMenuUIManager : UIManager
 	{
-		public enum MainMenuStates { Main, Options, SinglePlayer, SetUpNewGame, MultiplayerCreation, MultiplayerLobby };
+		public enum MainMenuStates { Main, Options, SinglePlayer, SetUpNewGame, MultiplayerCreation, MultiplayerLobby, Rules };
 		public MainMenuStates currentState;
 
 		//Menu game objects
@@ -74,6 +74,9 @@ namespace FallenLand
 		private const string MAIN_MENU_SCENE_NAME = "MainMenu";
 		private GameObject CreateLobbyButton;
 		private GameObject JoinGameButton;
+		private GameObject RulesPanel;
+		private int CurrentRulesPageIndex;
+		private GameObject RulesPageImage;
 		[SerializeField]
 		private byte maxPlayersPerRoom = 5;
 
@@ -108,6 +111,8 @@ namespace FallenLand
 
 			instantiateGameObjects();
 
+			RulesPanel = GameObject.Find("RulesPanel");
+
 			//Add all of the menu game objects to the array list (ADD NEW MENU PANELS HERE)
 			AddToMenuList(MainMenu);
 			AddToMenuList(OptionsMenu);
@@ -115,6 +120,7 @@ namespace FallenLand
 			AddToMenuList(SetUpNewGameMenu);
 			AddToMenuList(MultiplayerCreation);
 			AddToMenuList(MultiplayerLobby);
+			AddToMenuList(RulesPanel);
 
 			currentState = MainMenuStates.Main;
 			IsCreatingRoom = false;
@@ -144,6 +150,7 @@ namespace FallenLand
 			LoadingPanel = GameObject.Find("LoadingPanel");
 			CreateLobbyButton = GameObject.Find("CreateLobbyButton");
 			JoinGameButton = GameObject.Find("JoinGameButton");
+			RulesPageImage = GameObject.Find("RulesPageImage");
 
 			LoadingPanel.SetActive(false);
 
@@ -197,6 +204,9 @@ namespace FallenLand
 					updatePlayerList();
 					updatePing();
 					updateStartButton();
+					break;
+				case MainMenuStates.Rules:
+					SetActiveMenu(RulesPanel);
 					break;
 				default:
 					//Default will be to show the main menu in case of error
@@ -416,6 +426,11 @@ namespace FallenLand
 		{
 			Debug.Log("Multiplayer creation");
 			currentState = MainMenuStates.MultiplayerCreation;
+		}
+
+		public void OnRulesButtonPressed()
+		{
+			currentState = MainMenuStates.Rules;
 		}
 
 		public void OnQuitButtonPressed()
@@ -646,6 +661,26 @@ namespace FallenLand
 			}
 
 			FeedbackText.text = "";
+		}
+
+        public void OnRulesPreviousPress()
+        {
+			CurrentRulesPageIndex--;
+			if (CurrentRulesPageIndex < 0)
+			{
+				CurrentRulesPageIndex = 0;
+			}
+			updateRulesPageImage();
+		}
+
+		public void OnRulesNextPress()
+		{
+			CurrentRulesPageIndex++;
+			if (CurrentRulesPageIndex > Constants.NUM_PAGES_IN_RULEBOOK)
+			{
+				CurrentRulesPageIndex = Constants.NUM_PAGES_IN_RULEBOOK;
+			}
+			updateRulesPageImage();
 		}
         #endregion
 
@@ -989,6 +1024,11 @@ namespace FallenLand
 			{
 				LoadingPanel.SetActive(true);
 			}
+		}
+
+		private void updateRulesPageImage()
+		{
+			RulesPageImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Rules/" + CurrentRulesPageIndex.ToString());
 		}
 		#endregion
 	}
