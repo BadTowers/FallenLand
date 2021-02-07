@@ -23,6 +23,9 @@ namespace FallenLand
 		public const int PRESTIGE_GAINED_FOR_RESOURCE = 1;
 		public const int NUM_PAGES_IN_RULEBOOK = 23;
 		public const int MAX_TOWN_DEFENSE_CHIPS_ALLOWED_TO_OWN = 5;
+		public const int NUM_UNIQUE_TOWN_TECHS = 9;
+		public const int TIER_1 = 1;
+		public const int TIER_2 = 2;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 		{
 			{ Skills.Mechanical, 0 },
@@ -40,6 +43,18 @@ namespace FallenLand
 			{ 2, 20 },
 			{ 3, 25 },
 			{ 4, 30 }
+		};
+		public static readonly Dictionary<string, int> TOWN_TECH_NAME_TO_NUMBER = new Dictionary<string, int>
+		{
+			{ "Energy Production", 1 },
+			{ "Garrison", 2 },
+			{ "Law and Order", 3 },
+			{ "Learning Center", 4 },
+			{ "Machinist Shop", 5 },
+			{ "Marketplace", 6 },
+			{ "Medical Center", 7 },
+			{ "Communication Center", 8 },
+			{ "Water and Supplies", 9 }
 		};
 
 		//Used for EvDealCard

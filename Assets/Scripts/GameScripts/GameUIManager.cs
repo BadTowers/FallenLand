@@ -159,6 +159,7 @@ namespace FallenLand
         private GameObject BuyTownDefenseChipButton;
         private bool UserHasPurchasedTownDefenseChipThisTurn;
         private bool IsCapturingSomeonesResource;
+        private List<GameObject> TownTechImages;
 
         #region UnityFunctions
         void Awake()
@@ -414,6 +415,12 @@ namespace FallenLand
                 }
             }
 
+            TownTechImages = new List<GameObject>();
+            for (int townTechNumber = 1; townTechNumber <= Constants.NUM_UNIQUE_TOWN_TECHS; townTechNumber++)
+            {
+                TownTechImages.Add(GameObject.Find("TownTechImage" + townTechNumber.ToString()));
+            }
+
             OverallEncounterPanelGameObject.SetActive(false);
             CardFullScreenGameObject.SetActive(false);
             MainEncounterCardImage.SetActive(false);
@@ -486,6 +493,8 @@ namespace FallenLand
             updateCharacterSpoilsScreen();
 
             updateTurnInformation();
+
+            updateTownTechImages();
 
             updateTownEventsUi();
 
@@ -1881,6 +1890,35 @@ namespace FallenLand
         {
             ActualTurnNumberText.text = GameManagerInstance.GetTurn().ToString();
             ActualTurnPhaseText.text = PhasesHelpers.PhaseToString(GameManagerInstance.GetPhase());
+        }
+
+        private void updateTownTechImages()
+        {
+            //Color owned ones
+            List<TownTech> townTechs = GameManagerInstance.GetTownTechs(CurrentViewedID);
+            List<int> townTechNumbersOwned = new List<int>();
+            for (int townTechIndex = 0; townTechIndex < townTechs.Count; townTechIndex++)
+            {
+                int techNumber = Constants.TOWN_TECH_NAME_TO_NUMBER[townTechs[townTechIndex].GetTechName()];
+                townTechNumbersOwned.Add(techNumber);
+                TownTechImages[techNumber - 1].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                if (townTechs[townTechIndex].GetTier() == Constants.TIER_1)
+                {
+                    TownTechImages[techNumber - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTech" + techNumber.ToString());
+                }
+                else if (townTechs[townTechIndex].GetTier() == Constants.TIER_2)
+                {
+                    TownTechImages[techNumber - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTechUpgraded" + techNumber.ToString());
+                }
+            }
+            //Color not owned ones
+            for (int townTechNumber = 1; townTechNumber <= Constants.NUM_UNIQUE_TOWN_TECHS; townTechNumber++)
+            {
+                if (!townTechNumbersOwned.Contains(townTechNumber))
+                {
+                    TownTechImages[townTechNumber - 1].GetComponent<Image>().color = new Color(1f, 1f, 1f, 50f/255f);
+                }
+            }
         }
 
         private void updateTownEventsUi()

@@ -10,19 +10,18 @@ namespace FallenLand
 		private int Tier; //tier 1 or 2
 		private int SellCost;
 		private ConditionalGain ConditionalGains;
-		private Dictionary<Gains, int> PassiveGains;
 		private bool IsStartingTech;
 		private int Id;
 
 		public TownTech(string name)
 		{
 			TechName = name;
-			PassiveGains = new Dictionary<Gains, int>();
+			Tier = Constants.TIER_1;
 		}
 
-		public void SetTechName(string n)
+		public void SetTechName(string name)
 		{
-			TechName = n;
+			TechName = name;
 		}
 
 		public string GetTechName()
@@ -30,9 +29,9 @@ namespace FallenLand
 			return TechName;
 		}
 
-		public void SetPurchaseCost(int c)
+		public void SetPurchaseCost(int purchaseCost)
 		{
-			PurchaseCost = c;
+			PurchaseCost = purchaseCost;
 		}
 
 		public int GetPurchaseCost()
@@ -40,9 +39,9 @@ namespace FallenLand
 			return PurchaseCost;
 		}
 
-		public void SetUpgradeCost(int c)
+		public void SetUpgradeCost(int upgradeCost)
 		{
-			UpgradeCost = c;
+			UpgradeCost = upgradeCost;
 		}
 
 		public int GetUpgradeCost()
@@ -50,9 +49,9 @@ namespace FallenLand
 			return UpgradeCost;
 		}
 
-		public void SetTier(int t)
+		public void SetTier(int tier)
 		{
-			Tier = t;
+			Tier = tier;
 		}
 
 		public int GetTier()
@@ -60,9 +59,9 @@ namespace FallenLand
 			return Tier;
 		}
 
-		public void SetSellCost(int s)
+		public void SetSellCost(int sellCost)
 		{
-			SellCost = s;
+			SellCost = sellCost;
 		}
 
 		public int GetSellCost()
@@ -83,21 +82,9 @@ namespace FallenLand
 			return ConditionalGains;
 		}
 
-        public void AddPassiveGain(Gains gain, int amount)
-        {
-			PassiveGains.Add(gain, amount);
-
-		}
-
-		public Dictionary<Gains, int> GetPassiveGains()
+		public void SetIsStartingTech(bool isStartingTownTech)
 		{
-			return PassiveGains;
-
-		}
-
-		public void SetIsStartingTech(bool b)
-		{
-			IsStartingTech = b;
+			IsStartingTech = isStartingTownTech;
 		}
 
 		public bool GetIsStartingTech()
