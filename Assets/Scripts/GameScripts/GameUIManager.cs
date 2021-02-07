@@ -1901,7 +1901,7 @@ namespace FallenLand
             {
                 int techNumber = Constants.TOWN_TECH_NAME_TO_NUMBER[townTechs[townTechIndex].GetTechName()];
                 townTechNumbersOwned.Add(techNumber);
-                TownTechImages[techNumber - 1].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                TownTechImages[techNumber - 1].GetComponent<Image>().color = Constants.OWNED_TOWN_TECH_COLOR;
                 if (townTechs[townTechIndex].GetTier() == Constants.TIER_1)
                 {
                     TownTechImages[techNumber - 1].GetComponent<Image>().sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTech" + techNumber.ToString());
@@ -1916,7 +1916,7 @@ namespace FallenLand
             {
                 if (!townTechNumbersOwned.Contains(townTechNumber))
                 {
-                    TownTechImages[townTechNumber - 1].GetComponent<Image>().color = new Color(1f, 1f, 1f, 50f/255f);
+                    TownTechImages[townTechNumber - 1].GetComponent<Image>().color = Constants.NOT_OWNED_TOWN_TECH_COLOR;
                 }
             }
         }

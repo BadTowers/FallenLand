@@ -56,6 +56,8 @@ namespace FallenLand
 			{ "Communication Center", 8 },
 			{ "Water and Supplies", 9 }
 		};
+		public static readonly UnityEngine.Color OWNED_TOWN_TECH_COLOR = new UnityEngine.Color(1f, 1f, 1f, 1f);
+		public static readonly UnityEngine.Color NOT_OWNED_TOWN_TECH_COLOR = new UnityEngine.Color(1f, 1f, 1f, 50f/255f);
 
 		//Used for EvDealCard
 		public const byte SPOILS_CARD = 1;
