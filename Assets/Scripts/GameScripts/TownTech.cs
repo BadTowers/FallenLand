@@ -7,7 +7,7 @@ namespace FallenLand
 		private string TechName;
 		private int PurchaseCost;
 		private int UpgradeCost;
-		private int Tier; //tier 1 or 2
+		private int Tier;
 		private int SellCost;
 		private ConditionalGain ConditionalGains;
 		private bool IsStartingTech;
