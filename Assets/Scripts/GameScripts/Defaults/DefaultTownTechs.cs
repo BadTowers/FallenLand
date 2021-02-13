@@ -10,24 +10,19 @@ namespace FallenLand
 		{
 			Techs = new List<TownTech>();
 
-			//Vars
 			TownTech curTech;
-			//ConditionalGain conditionalGain;
-			//List<Reward> reward;
+			ConditionalGain conditionalGain;
+			List<Reward> reward;
 
 			/***************************************************/
 			curTech = new TownTech("Energy Production");
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward>
-			//{ 
-			//	//{ Gains.Gain_Party_Technical_Skill_Check_Successes, 1 }
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Technical_Skill_Check });
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainTownTechPartyTechnicalSuccesses(1));
+			curTech.AddOnSellPunishment(new LoseTownTechPartyTechnicalSuccesses(1));
+			curTech.AddOnUpgradeReward(new GainTownTechPartyTechnicalSuccesses(1));
+			curTech.AddOnDowngradePunishment(new LoseTownTechPartyTechnicalSuccesses(1));
 			curTech.SetId(1);
 			Techs.Add(curTech);
 
@@ -36,14 +31,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward> 
-			//{ 
-			//	//{ Gains.Gain_Party_Combat_Skill_Check_Successes, 1 }
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Combat_Skill_Check });
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainTownTechPartyCombatSuccesses(1));
+			curTech.AddOnSellPunishment(new LoseTownTechPartyCombatSuccesses(1));
+			curTech.AddOnUpgradeReward(new GainTownTechPartyCombatSuccesses(1));
+			curTech.AddOnDowngradePunishment(new LoseTownTechPartyCombatSuccesses(1));
 			curTech.SetId(2);
 			Techs.Add(curTech);
 
@@ -52,15 +43,12 @@ namespace FallenLand
 			curTech.SetPurchaseCost(40);
 			curTech.SetUpgradeCost(40);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward>
-			//{
-			//	new GainActionCards(1)
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Deal_Subphase });
-			//curTech.SetConditionalGains(conditionalGain);
-			curTech.SetId(3);
+            reward = new List<Reward> { new GainActionCards(1) };
+            conditionalGain = new ConditionalGain();
+            conditionalGain.AddRewardChoice(reward);
+			conditionalGain.SetWhenRewardCanBeClaimed(new DuringDealPhase());
+			curTech.SetConditionalGains(conditionalGain);
+            curTech.SetId(3);
 			Techs.Add(curTech);
 
 			/***************************************************/
@@ -68,14 +56,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward> 
-			//{ 
-			//	//{ Gains.Gain_Party_Diplomacy_Skill_Check_Successes, 1 }
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Diplomacy_Skill_Check });
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainTownTechPartyDiplomacySuccesses(1));
+			curTech.AddOnSellPunishment(new LoseTownTechPartyDiplomacySuccesses(1));
+			curTech.AddOnUpgradeReward(new GainTownTechPartyDiplomacySuccesses(1));
+			curTech.AddOnDowngradePunishment(new LoseTownTechPartyDiplomacySuccesses(1));
 			curTech.SetId(4);
 			Techs.Add(curTech);
 
@@ -84,14 +68,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward>
-			//{
-			//	//{ Gains.Gain_Party_Mechanical_Skill_Check_Successes, 1 }
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Mechanical_Skill_Check });
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainTownTechPartyMechanicalSuccesses(1));
+			curTech.AddOnSellPunishment(new LoseTownTechPartyMechanicalSuccesses(1));
+			curTech.AddOnUpgradeReward(new GainTownTechPartyMechanicalSuccesses(1));
+			curTech.AddOnDowngradePunishment(new LoseTownTechPartyMechanicalSuccesses(1));
 			curTech.SetId(5);
 			Techs.Add(curTech);
 
@@ -100,16 +80,12 @@ namespace FallenLand
 			curTech.SetPurchaseCost(40);
 			curTech.SetUpgradeCost(40);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward>
-			//{
-			//	new GainSpoilsCards(1)
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Deal_Subphase });
-			//conditionalGain.SetWhenRewardCanBeClaimed(new DuringDealPhase());
-			//curTech.SetConditionalGains(conditionalGain);
-			curTech.SetId(6);
+            reward = new List<Reward> { new GainSpoilsCards(1) };
+            conditionalGain = new ConditionalGain();
+            conditionalGain.AddRewardChoice(reward);
+            conditionalGain.SetWhenRewardCanBeClaimed(new DuringDealPhase());
+            curTech.SetConditionalGains(conditionalGain);
+            curTech.SetId(6);
 			Techs.Add(curTech);
 
 			/***************************************************/
@@ -117,14 +93,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward>
-			//{
-			//	//{ Gains.Gain_Party_Medical_Skill_Check_Successes, 1 } 
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Medical_Skill_Check });
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainTownTechPartyMedicalSuccesses(1));
+			curTech.AddOnSellPunishment(new LoseTownTechPartyMedicalSuccesses(1));
+			curTech.AddOnUpgradeReward(new GainTownTechPartyMedicalSuccesses(1));
+			curTech.AddOnDowngradePunishment(new LoseTownTechPartyMedicalSuccesses(1));
 			curTech.SetId(7);
 			Techs.Add(curTech);
 
@@ -133,8 +105,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//curTech.AddPassiveGain(Gains.Gain_Movement, 1);
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainBonusMovement(1));
+			curTech.AddOnSellPunishment(new LoseBonusMovement(1));
+			curTech.AddOnUpgradeReward(new GainBonusMovement(1));
+			curTech.AddOnDowngradePunishment(new LoseBonusMovement(1));
 			curTech.SetId(8);
 			Techs.Add(curTech);
 
@@ -143,14 +117,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			//reward = new List<Reward>
-			//{ 
-			//	//{ Gains.Gain_Party_Survival_Skill_Check_Successes, 1 } 
-			//};
-			//conditionalGain = new ConditionalGain();
-			//conditionalGain.AddRewardChoice(reward);
-			//conditionalGain.AddWhenRewardCanBeGained(new List<Times>() { Times.During_Survival_Skill_Check });
-			//curTech.SetConditionalGains(conditionalGain);
+			curTech.AddOnPurchaseReward(new GainTownTechPartySurvivalSuccesses(1));
+			curTech.AddOnSellPunishment(new LoseTownTechPartySurvivalSuccesses(1));
+			curTech.AddOnUpgradeReward(new GainTownTechPartySurvivalSuccesses(1));
+			curTech.AddOnDowngradePunishment(new LoseTownTechPartySurvivalSuccesses(1));
 			curTech.SetId(9);
 			Techs.Add(curTech);
 		}

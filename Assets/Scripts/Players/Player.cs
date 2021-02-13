@@ -33,6 +33,7 @@ namespace FallenLand
 		private List<Effect> ActiveEffects = new List<Effect>();
 		private List<SpoilsCard> PartyEquipment = new List<SpoilsCard>();
 		private int NumberOfTownDefenseChips;
+		private readonly Dictionary<Skills, int> TownTechSuccesses = new Dictionary<Skills, int>();
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -56,6 +57,11 @@ namespace FallenLand
 			RemainingPartyExploitWeeks = 4;
 			PlayerIsDoingAnEncounter = false;
 			EncounterType = Constants.ENCOUNTER_NONE;
+
+			foreach (Skills skill in System.Enum.GetValues(typeof(Skills)))
+			{
+				TownTechSuccesses[skill] = 0;
+			}
 		}
 
 		public List<SpoilsCard> GetAuctionHouseCards()
@@ -778,6 +784,11 @@ namespace FallenLand
             return rolledSuccesses;
 		}
 
+		public int GetTownTechSuccesses(Skills skill)
+		{
+			 return TownTechSuccesses[skill];
+		}
+
 		public int GetTotalPartySuccesses(int skillIndex, Skills skill)
 		{
 			int totalSuccesses = 0;
@@ -788,6 +799,8 @@ namespace FallenLand
             }
             totalSuccesses += GetVehicleAutoSuccesses(skillIndex, skill);
             totalSuccesses += GetVehicleRolledSuccesses(skillIndex, skill);
+
+			totalSuccesses += GetTownTechSuccesses(skill);
 
             return totalSuccesses;
 		}
@@ -1050,6 +1063,25 @@ namespace FallenLand
 			if(numChips >= 0 && numChips <= 5)
             {
 				NumberOfTownDefenseChips = numChips;
+			}
+		}
+
+		public void AddTownTechSuccesses(Skills skill, int amount)
+		{
+			TownTechSuccesses[skill] += amount;
+		}
+
+		public void RemoveTownTechSuccesses(Skills skill, int amount)
+		{
+			int oldAmount = TownTechSuccesses[skill];
+			TownTechSuccesses[skill] -= amount;
+
+			if (TownTechSuccesses[skill] < 0)
+			{
+				TownTechSuccesses[skill] = 0;
+				UnityEngine.Debug.LogWarning("Town tech successes were tried to be removed, but that put it below 0. Skill was " + skill.ToString() 
+					+ ", value before was " + oldAmount.ToString()
+					+ ", and amount to be removed was " + amount.ToString());
 			}
 		}
 

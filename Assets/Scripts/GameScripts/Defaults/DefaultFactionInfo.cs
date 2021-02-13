@@ -28,7 +28,6 @@ namespace FallenLand
 			rewardChoice = new GainParamedicMedKit();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Information Crossroads");
@@ -99,7 +98,6 @@ namespace FallenLand
 			rewardChoice = new GainCompoundHuntingBow();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Diplomatic Connections");
@@ -168,7 +166,6 @@ namespace FallenLand
 			//rewardChoice = new Reward();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("High Rollers");
@@ -255,7 +252,6 @@ namespace FallenLand
 			//rewardChoice = new Reward();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Southern Ingenuity");
@@ -327,7 +323,6 @@ namespace FallenLand
 			rewardChoice = new GainMilitiaRifle();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Weapons Bazaar");
@@ -413,7 +408,6 @@ namespace FallenLand
 			rewardChoice = new GainSixFastHorses();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Cattle Drivers");
@@ -487,7 +481,6 @@ namespace FallenLand
 			rewardChoice = new GainAmericanIronCustomChoppers();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Caravan Escort");
@@ -561,7 +554,6 @@ namespace FallenLand
 			rewardChoice = new GainVendettaDaggers();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Wasteland Scavengers");
@@ -659,7 +651,6 @@ namespace FallenLand
 			//rewardChoice = new Reward();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("River Traders");
@@ -730,8 +721,6 @@ namespace FallenLand
 			curFac.SetId(tempID);
 			tempID++;
 			Factions.Add(curFac);
-
-
 			/***************************************************/
 			curFac = new Faction("Sigma Corporation", new Coordinates(28, 14));
 			curFac.SetBaseLocationString("Emporium, Pennsylvania");
@@ -741,7 +730,6 @@ namespace FallenLand
 			rewardChoice = new Gain68mmAdvancedRifle();
 			conditionalGain.AddRewardChoice(new List<Reward>() { rewardChoice });
 			conditionalGain.SetWhenRewardCanBeClaimed(new DuringGameStartSetup());
-			conditionalGain.SetNumberOfTimesThisRewardCanBeClaimed(Uses.Once_Per_Game);
 			curPerk.SetConditionalGain(conditionalGain);
 			curFac.AddPerk(curPerk);
 			curPerk = new Perk("Veritable Fortress");

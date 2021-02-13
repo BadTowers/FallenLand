@@ -125,7 +125,6 @@ namespace FallenLand
 
 		public void OnPhaseBegins(Phases phase)
 		{
-			bool techsHandled = false;
 			CurrentPhase = phase;
 			IsMyPhaseEnded = false;
 
@@ -140,8 +139,6 @@ namespace FallenLand
                     {
                         //townBusinessPhase_DealSubphase();
                     }
-                    TownTechManager.HandlePhase(this);
-                    techsHandled = true;
 					ShouldSkipPhase = true;
 					break;
                 case Phases.Town_Business_Resource_Production:
@@ -168,10 +165,7 @@ namespace FallenLand
             }
 
 			FactionPerkManager.HandlePhase(this);
-			if (!techsHandled)
-			{
-				TownTechManager.HandlePhase(this);
-			}
+			TownTechManager.HandlePhase(this);
 		}
 
 		public void OnPhaseCompleted(Phases phase)
@@ -235,6 +229,7 @@ namespace FallenLand
 				newPlayer.SetPrestige(StartingPrestige);
 				Players[factionInfo.GetPlayerIndex()] = newPlayer;
 				Players[factionInfo.GetPlayerIndex()].SetPartyLocation(faction.GetBaseLocation());
+				handleTownTechsOnStart(factionInfo.GetPlayerIndex());
 
 				if (factionInfo.GetPlayerIndex() == GetIndexForMyPlayer())
 				{
@@ -1383,6 +1378,24 @@ namespace FallenLand
 				rolledSuccesses = Players[playerIndex].GetVehicleRolledSuccesses(skillIndex, requestedSkill);
 			}
 			return rolledSuccesses;
+		}
+
+		public int GetTownTechSuccesses(int playerIndex, int skillIndex)
+		{
+			int townTechSuccesses = 0;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Skills requestedSkill = Skills.Medical;
+				if (GetPlayerIsDoingAnEncounter(playerIndex))
+				{
+					requestedSkill = CurrentPlayerEncounter[playerIndex].GetSkillChecks()[skillIndex].Item1;
+				}
+
+				townTechSuccesses = Players[playerIndex].GetTownTechSuccesses(requestedSkill);
+			}
+
+			return townTechSuccesses;
 		}
 
 		public int GetPartyTotalSuccesses(int playerIndex, int skillIndex)
@@ -2539,6 +2552,22 @@ namespace FallenLand
 
 			return numOwned;
 		}
+
+		public void GainTownTechSuccesses(int playerIndex, Skills skill, int amountGained)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].AddTownTechSuccesses(skill, amountGained);
+			}
+		}
+
+		public void LoseTownTechSuccesses(int playerIndex, Skills skill, int amountLost)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				Players[playerIndex].RemoveTownTechSuccesses(skill, amountLost);
+			}
+		}
 		#endregion
 
 
@@ -3061,6 +3090,22 @@ namespace FallenLand
 		{
 			//TODO implement this function
 			return true;
+		}
+
+		private void handleTownTechsOnStart(int playerIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				{
+					TownTechManager.HandleTownTechPurchase(this, playerIndex, townTechs[townTechIndex]);
+					if (townTechs[townTechIndex].GetTier() == Constants.TIER_2)
+					{
+						TownTechManager.HandleTownTechUpgrade(this, playerIndex, townTechs[townTechIndex]);
+					}
+				}
+			}
 		}
 
 		private void generateMissionLocations()
@@ -3828,6 +3873,7 @@ namespace FallenLand
 					Players[playerIndex] = newPlayer;
 					PlayerPieceManagerInst.CreatePiece(faction, playerIndex);
 					Players[playerIndex].SetPartyLocation(faction.GetBaseLocation());
+					handleTownTechsOnStart(playerIndex);
 				}
 				ReceivedMyFactionInformation = true;
 

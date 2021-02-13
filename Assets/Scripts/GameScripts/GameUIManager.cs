@@ -81,6 +81,7 @@ namespace FallenLand
         private List<GameObject> CurrentEncounterCharacterRolledSuccesses;
         private GameObject CurrentEncounterVehicleAutoSuccesses;
         private GameObject CurrentEncounterVehicleRolledSuccesses;
+        private GameObject CurrentEncounterTownTechAutoSuccesses;
         private GameObject TotalPartySuccessesNeededText;
         private GameObject NumberOfTotalPartySuccessesText;
         private List<GameObject> CharacterEncounterRollButtons;
@@ -2197,6 +2198,7 @@ namespace FallenLand
             }
             CurrentEncounterVehicleAutoSuccesses = GameObject.Find("NumberOfAutoSuccessesTextV");
             CurrentEncounterVehicleRolledSuccesses = GameObject.Find("NumberOfRolledSuccessesTextV");
+            CurrentEncounterTownTechAutoSuccesses = GameObject.Find("NumberOfAutoSuccessesTextTT");
         }
 
         private void findDistributeD6GameObjects()
@@ -2617,6 +2619,9 @@ namespace FallenLand
             //Update vehicle success values
             CurrentEncounterVehicleAutoSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleAutoSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
             CurrentEncounterVehicleRolledSuccesses.GetComponent<Text>().text = GameManagerInstance.GetVehicleRolledSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
+
+            //Update town tech success values
+            CurrentEncounterTownTechAutoSuccesses.GetComponent<Text>().text = GameManagerInstance.GetTownTechSuccesses(myIndex, CurrentEncounterSkillPage).ToString();
 
             //Update total successes needed
             if (EncounterHasBegun)

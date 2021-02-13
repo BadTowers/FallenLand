@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace FallenLand
 {
 	public class TownTech
@@ -11,6 +12,10 @@ namespace FallenLand
 		private ConditionalGain ConditionalGains;
 		private bool IsStartingTech;
 		private int Id;
+		private readonly List<Reward> OnPurchaseRewards = new List<Reward>();
+		private readonly List<Punishment> OnSellPunishments = new List<Punishment>();
+		private readonly List<Reward> OnUpgradeRewards = new List<Reward>();
+		private readonly List<Punishment> OnDowngradePunishments = new List<Punishment>();
 
 		public TownTech(string name)
 		{
@@ -18,9 +23,9 @@ namespace FallenLand
 			Tier = Constants.TIER_1;
 		}
 
-		public void SetTechName(string name)
+		public void SetTechName(string techName)
 		{
-			TechName = name;
+			TechName = techName;
 		}
 
 		public string GetTechName()
@@ -81,9 +86,9 @@ namespace FallenLand
 			return ConditionalGains;
 		}
 
-		public void SetIsStartingTech(bool isStartingTownTech)
+		public void SetIsStartingTech(bool isStartingTech)
 		{
-			IsStartingTech = isStartingTownTech;
+			IsStartingTech = isStartingTech;
 		}
 
 		public bool GetIsStartingTech()
@@ -99,6 +104,46 @@ namespace FallenLand
 		public int GetId()
 		{
 			return Id;
+		}
+
+		public void AddOnPurchaseReward(Reward reward)
+		{
+			OnPurchaseRewards.Add(reward);
+		}
+
+		public List<Reward> GetOnPurchaseRewards()
+		{
+			return OnPurchaseRewards;
+		}
+
+		public void AddOnSellPunishment(Punishment punishment)
+		{
+			OnSellPunishments.Add(punishment);
+		}
+
+		public List<Punishment> GetOnSellPunishments()
+		{
+			return OnSellPunishments;
+		}
+
+		public void AddOnUpgradeReward(Reward reward)
+		{
+			OnUpgradeRewards.Add(reward);
+		}
+
+		public List<Reward> GetOnUpgradeRewards()
+		{
+			return OnUpgradeRewards;
+		}
+
+		public void AddOnDowngradePunishment(Punishment punishment)
+		{
+			OnDowngradePunishments.Add(punishment);
+		}
+
+		public List<Punishment> GetOnDowngradePunishments()
+		{
+			return OnDowngradePunishments;
 		}
 	}
 }

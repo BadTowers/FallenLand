@@ -89,32 +89,19 @@ namespace Tests
 			yield return null;
 		}
 
-		//[UnityTest]
-		//public IEnumerator TestConditionalGains()
-		//{
-		//	Assert.Null(TownTech.GetConditionalGain());
+		[UnityTest]
+        public IEnumerator TestConditionalGains()
+        {
+            Assert.Null(TownTech.GetConditionalGain());
 
-		//	ConditionalGain conditionalGain = new ConditionalGain();
-		//	TownTech.SetConditionalGains(conditionalGain);
-		//	Assert.NotNull(TownTech.GetConditionalGain());
+            ConditionalGain conditionalGain = new ConditionalGain();
+            TownTech.SetConditionalGains(conditionalGain);
+            Assert.NotNull(TownTech.GetConditionalGain());
 
-		//	TownTech.SetConditionalGains(null);
-		//	Assert.NotNull(TownTech.GetConditionalGain());
+            TownTech.SetConditionalGains(null);
+            Assert.NotNull(TownTech.GetConditionalGain());
 
-		//	yield return null;
-		//}
-
-		//[UnityTest]
-		//public IEnumerator TestPassiveGains()
-		//{
-		//	Assert.NotNull(TownTech.GetPassiveGains());
-
-		//	TownTech.AddPassiveGain(Gains.Add_To_Roll, 2);
-		//	Assert.AreEqual(1, TownTech.GetPassiveGains().Count);
-		//	Assert.AreEqual(Gains.Add_To_Roll, TownTech.GetPassiveGains().Keys.ElementAt(0));
-		//	Assert.AreEqual(2, TownTech.GetPassiveGains().Values.ElementAt(0));
-
-		//	yield return null;
-		//}
-	}
+            yield return null;
+        }
+    }
 }
