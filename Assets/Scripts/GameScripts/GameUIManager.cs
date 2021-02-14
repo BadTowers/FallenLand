@@ -158,9 +158,12 @@ namespace FallenLand
         private GameObject PartyExploitsMissionButton;
         private GameObject FinancialPurchasePanel;
         private GameObject BuyTownDefenseChipButton;
+        private GameObject BuyTownTechsButton;
         private bool UserHasPurchasedTownDefenseChipThisTurn;
         private bool IsCapturingSomeonesResource;
         private List<GameObject> TownTechImages;
+        private GameObject TownTechBuyPanel;
+        private bool UserHasPurchasedOrUpgradedTownTechThisTurn;
 
         #region UnityFunctions
         void Awake()
@@ -219,6 +222,8 @@ namespace FallenLand
             PartyExploitsMissionButton = GameObject.Find("MissionButton");
             FinancialPurchasePanel = GameObject.Find("FinancialPurchasePanel");
             BuyTownDefenseChipButton = GameObject.Find("BuyTownDefenseChipButton");
+            BuyTownTechsButton = GameObject.Find("BuyTownTechsButton");
+            TownTechBuyPanel = GameObject.Find("TownTechBuyPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -437,6 +442,7 @@ namespace FallenLand
             PreviousDistributionPageButton.SetActive(false);
             NextDistributionPageButton.SetActive(false);
             FinancialPurchasePanel.SetActive(false);
+            TownTechBuyPanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -1339,6 +1345,30 @@ namespace FallenLand
                 onShowGenericYesNoPopup("Would you like to spend " + cost + " salvage to purchase a Town Defense Chip?");
             }
         }
+
+        public void OnPurchaseTownTechPress()
+        {
+            if (!UserHasPurchasedOrUpgradedTownTechThisTurn)
+            {
+                TownTechBuyPanel.SetActive(true);
+            }
+            else
+            {
+                onShowGenericPopup("You may only purchase or upgrade one town tech per turn!");
+            }
+        }
+
+        public void OnBuyTownTechPress()
+        {
+            string buttonName = EventSystem.current.currentSelectedGameObject.transform.name;
+            string buttonNumberString = buttonName.Substring(buttonName.Length - 1);
+            int townTechNumber = Int32.Parse(buttonNumberString);
+
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            GameManagerInstance.PurchaseTownTech(myIndex, townTechNumber);
+            TownTechBuyPanel.SetActive(false);
+            UserHasPurchasedOrUpgradedTownTechThisTurn = true;
+        }
         #endregion
 
 
@@ -1953,17 +1983,17 @@ namespace FallenLand
             if (currentPhase == Phases.Town_Business_Financial_Purchase)
             {
                 FinancialPurchasePanel.SetActive(true);
+                int myIndex = GameManagerInstance.GetIndexForMyPlayer();
 
                 if (GenericYesPressed)
                 {
                     UserHasPurchasedTownDefenseChipThisTurn = true;
-                    int myIndex = GameManagerInstance.GetIndexForMyPlayer();
                     GameManagerInstance.PurchaseTownDefenseChip(myIndex);
                     GenericYesPressed = false;
                 }
 
                 if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() 
-                    && !UserHasPurchasedTownDefenseChipThisTurn && GameManagerInstance.IsPlayerAllowedToBuyTownDefenseChip(GameManagerInstance.GetIndexForMyPlayer()))
+                    && !UserHasPurchasedTownDefenseChipThisTurn && GameManagerInstance.IsPlayerAllowedToBuyTownDefenseChip(myIndex))
                 {
                     BuyTownDefenseChipButton.GetComponent<Button>().interactable = true;
                 }
@@ -1971,13 +2001,24 @@ namespace FallenLand
                 {
                     BuyTownDefenseChipButton.GetComponent<Button>().interactable = false;
                 }
+
+                if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && !UserHasPurchasedOrUpgradedTownTechThisTurn)
+                {
+                    BuyTownTechsButton.GetComponent<Button>().interactable = GameManagerInstance.IsPlayerAllowedToBuyTownTech(myIndex);
+                }
+                else
+                {
+                    BuyTownTechsButton.GetComponent<Button>().interactable = false;
+                }
             }
             else
             {
                 FinancialPurchasePanel.SetActive(false);
+                TownTechBuyPanel.SetActive(false);
                 //Reset the UI once it's deactivated so it's ready for next time it shows
                 BuyTownDefenseChipButton.GetComponent<Button>().interactable = true;
                 UserHasPurchasedTownDefenseChipThisTurn = false;
+                UserHasPurchasedOrUpgradedTownTechThisTurn = false;
             }
         }
 

@@ -26,6 +26,7 @@ namespace FallenLand
 		private const int StartingCharacterCards = 6;
 		private const int StartingSpoilsCards = 10;
 		private const int MaxActionCards = 7;
+		private const int MaxTownTechs = 7;
 		private const int MaxPsych = 3;
 		private const int MaxNumberOfPlayers = 5;
 		private const int MovementWeekCost = 1;
@@ -2518,6 +2519,18 @@ namespace FallenLand
 			return isAllowed;
 		}
 
+		public bool IsPlayerAllowedToBuyTownTech(int playerIndex)
+		{
+			bool isAllowed = false;
+
+			if (Players[playerIndex].GetTownTechs().Count < MaxTownTechs)
+			{
+				isAllowed = true;
+			}
+
+			return isAllowed;
+		}
+
 		public int GetCostOfTownDefenseChip(int playerIndex)
 		{
 			int cost = Constants.INVALID_COST;
@@ -2566,6 +2579,15 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				Players[playerIndex].RemoveTownTechSuccesses(skill, amountLost);
+			}
+		}
+
+		public void PurchaseTownTech(int playerIndex, int townTechNumber)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				//Networking stuff TODO TownTechNetworking
+				Players[playerIndex].AddTownTech(Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]));
 			}
 		}
 		#endregion
@@ -3065,7 +3087,7 @@ namespace FallenLand
 
 		private void countTownTechsThatAreInUse()
 		{
-			TownTechs = (new DefaultTownTechs()).GetDefaultTownTechList();
+			TownTechs = Constants.DEFAULT_TOWN_TECHS.GetDefaultTownTechList();
 			TechsUsed = new Dictionary<string, int>();
 			foreach (TownTech tt in TownTechs)
 			{

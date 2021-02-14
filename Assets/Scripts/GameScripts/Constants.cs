@@ -56,8 +56,21 @@ namespace FallenLand
 			{ "Communication Center", 8 },
 			{ "Water and Supplies", 9 }
 		};
+		public static readonly Dictionary<int, string> TOWN_TECH_NUMBER_TO_NAME = new Dictionary<int, string>
+		{
+			{ 1, "Energy Production" },
+			{ 2, "Garrison" },
+			{ 3, "Law and Order" },
+			{ 4, "Learning Center" },
+			{ 5, "Machinist Shop" },
+			{ 6, "Marketplace" },
+			{ 7, "Medical Center" },
+			{ 8, "Communication Center" },
+			{ 9, "Water and Supplies" }
+		};
 		public static readonly UnityEngine.Color OWNED_TOWN_TECH_COLOR = new UnityEngine.Color(1f, 1f, 1f, 1f);
 		public static readonly UnityEngine.Color NOT_OWNED_TOWN_TECH_COLOR = new UnityEngine.Color(1f, 1f, 1f, 50f/255f);
+		public static readonly DefaultTownTechs DEFAULT_TOWN_TECHS = new DefaultTownTechs();
 
 		//Used for EvDealCard
 		public const byte SPOILS_CARD = 1;
