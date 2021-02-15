@@ -26,6 +26,7 @@ namespace FallenLand
 		public const int NUM_UNIQUE_TOWN_TECHS = 9;
 		public const int TIER_1 = 1;
 		public const int TIER_2 = 2;
+		public const int MAX_OF_EACH_TECH_ALLOWED = 5;
 		public static readonly Dictionary<Skills, int> ALL_SKILLS_ZERO = new Dictionary<Skills, int>
 		{
 			{ Skills.Mechanical, 0 },

@@ -1371,6 +1371,10 @@ namespace FallenLand
             {
                 onShowGenericPopup("You cannot afford! It costs " + costOfTownTech.ToString() + " but you only have " + amountOfSalvage.ToString() + ".");
             }
+            else if (GameManagerInstance.GetNumberOfTownTechsSold(townTechNumber) >= Constants.MAX_OF_EACH_TECH_ALLOWED)
+            {
+                onShowGenericPopup("All " + Constants.MAX_OF_EACH_TECH_ALLOWED.ToString() + " of these tech have already been sold!");
+            }
             else
             {
                 GameManagerInstance.PurchaseTownTech(myIndex, townTechNumber);

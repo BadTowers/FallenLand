@@ -21,7 +21,7 @@ namespace FallenLand
 		private GameInformation.GameModes GameMode;
 		//private List<GameInformation.GameModifier> modifiers = new List<GameInformation.GameModifier>();
 		//private GameInformation.SoloII soloIIDifficulty;
-		private List<Player> Players = new List<Player>();
+		private readonly List<Player> Players = new List<Player>();
 		private const int StartingActionCards = 3;
 		private const int StartingCharacterCards = 6;
 		private const int StartingSpoilsCards = 10;
@@ -35,7 +35,6 @@ namespace FallenLand
 		private const int HealingWeekCost = 2;
 		private List<TownTech> TownTechs;
 		private Dictionary<string, int> TechsUsed;
-		private const int MaxOfEachTech = 5;
 		private const int StartingSalvage = 10;
 		private const int StartingTownHealth = 30;
 		private const int StartingPrestige = 1;
@@ -2600,6 +2599,11 @@ namespace FallenLand
 				handleTownTechEvent(townTechNetworking);
 			}
 		}
+
+		public int GetNumberOfTownTechsSold(int townTechNumber)
+		{
+			return TechsUsed[Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]];
+		}
 		#endregion
 
 
@@ -3761,6 +3765,7 @@ namespace FallenLand
 				TownTech townTechToBuy = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(townTechName);
 				Players[playerIndex].AddTownTech(townTechToBuy);
 				Players[playerIndex].RemoveSalvageFromPlayer(townTechToBuy.GetPurchaseCost());
+				TechsUsed[townTechName]++;
 				TownTechManager.HandleTownTechPurchase(this, playerIndex, townTechToBuy);
 			}
 			else if (action == Constants.SELL_TOWN_TECH)
