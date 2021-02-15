@@ -3570,23 +3570,23 @@ namespace FallenLand
 				}
                 else if (numberOfOwnedResources == 2)
                 {
-					salvageToGain = 2;
-					townHealthToGain = 4;
+					salvageToGain = 4;
+					townHealthToGain = 2;
 				}
 				else if (numberOfOwnedResources == 3)
 				{
-					salvageToGain = 3;
-					townHealthToGain = 9;
+					salvageToGain = 9;
+					townHealthToGain = 3;
 				}
 				else if (numberOfOwnedResources == 4)
 				{
-					salvageToGain = 4;
-					townHealthToGain = 16;
+					salvageToGain = 16;
+					townHealthToGain = 4;
 				}
 				else if (numberOfOwnedResources == 5)
 				{
-					salvageToGain = 5;
-					townHealthToGain = 25;
+					salvageToGain = 25;
+					townHealthToGain = 5;
 				}
 				Players[playerIndex].AddSalvageToPlayer(salvageToGain);
 				Players[playerIndex].AddTownHealth(townHealthToGain);
