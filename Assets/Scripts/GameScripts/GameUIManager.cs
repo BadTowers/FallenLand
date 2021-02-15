@@ -1365,9 +1365,19 @@ namespace FallenLand
             int townTechNumber = Int32.Parse(buttonNumberString);
 
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            GameManagerInstance.PurchaseTownTech(myIndex, townTechNumber);
+            int costOfTownTech = GameManagerInstance.GetPurchaseCostOfTownTech(townTechNumber);
+            int amountOfSalvage = GameManagerInstance.GetSalvage(myIndex);
+            if (amountOfSalvage < costOfTownTech)
+            {
+                onShowGenericPopup("You cannot afford! It costs " + costOfTownTech.ToString() + " but you only have " + amountOfSalvage.ToString() + ".");
+            }
+            else
+            {
+                GameManagerInstance.PurchaseTownTech(myIndex, townTechNumber);
+                UserHasPurchasedOrUpgradedTownTechThisTurn = true;
+            }
+
             TownTechBuyPanel.SetActive(false);
-            UserHasPurchasedOrUpgradedTownTechThisTurn = true;
         }
         #endregion
 

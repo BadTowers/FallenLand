@@ -2582,12 +2582,20 @@ namespace FallenLand
 			}
 		}
 
+		public int GetPurchaseCostOfTownTech(int townTechNumber)
+		{
+			return Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]).GetPurchaseCost();
+		}
+
 		public void PurchaseTownTech(int playerIndex, int townTechNumber)
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				//Networking stuff TODO TownTechNetworking
-				Players[playerIndex].AddTownTech(Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]));
+				TownTech townTechToBuy = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]);
+				Players[playerIndex].AddTownTech(townTechToBuy);
+				Players[playerIndex].RemoveSalvageFromPlayer(townTechToBuy.GetPurchaseCost());
+				TownTechManager.HandleTownTechPurchase(this, playerIndex, townTechToBuy);
 			}
 		}
 		#endregion
