@@ -160,6 +160,12 @@ namespace FallenLand
 		public const byte SELL_TOWN_DEFENSE = 1;
 		public const byte USE_TOWN_DEFENSE_FOR_TOWN_HEALTH = 2;
 
+		//Used for EvTownTech
+		public const byte BUY_TOWN_TECH = 0;
+		public const byte SELL_TOWN_TECH = 1;
+		public const byte UPGRADE_TOWN_TECH = 2;
+		public const byte DOWNGRADE_TOWN_TECH = 3;
+
 
 		//Used for both callbacks and for event code
 		public const byte EvMove = 1;
@@ -179,5 +185,6 @@ namespace FallenLand
 		public const byte EvShuffle = 15;
 		public const byte EvSalvage = 16;
 		public const byte EvTownDefense = 17;
+		public const byte EvTownTech = 18;
 	}
 }

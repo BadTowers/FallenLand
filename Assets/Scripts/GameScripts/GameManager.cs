@@ -298,6 +298,10 @@ namespace FallenLand
             {
 				handleTownDefenseEvent((TownDefenseNetworking)photonEvent.CustomData);
             }
+			else if(eventCode == Constants.EvTownTech)
+            {
+				handleTownTechEvent((TownTechNetworking)photonEvent.CustomData);
+			}
 		}
 		#endregion
 
@@ -2591,11 +2595,9 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				//Networking stuff TODO TownTechNetworking
-				TownTech townTechToBuy = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]);
-				Players[playerIndex].AddTownTech(townTechToBuy);
-				Players[playerIndex].RemoveSalvageFromPlayer(townTechToBuy.GetPurchaseCost());
-				TownTechManager.HandleTownTechPurchase(this, playerIndex, townTechToBuy);
+				TownTechNetworking townTechNetworking = new TownTechNetworking(playerIndex, Constants.BUY_TOWN_TECH, Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]);
+				sendNetworkEvent(townTechNetworking, ReceiverGroup.Others, Constants.EvTownTech);
+				handleTownTechEvent(townTechNetworking);
 			}
 		}
 		#endregion
@@ -3380,6 +3382,7 @@ namespace FallenLand
 			PhotonPeer.RegisterType(typeof(ShuffleNetworking), Constants.EvShuffle, ShuffleNetworking.SerializeShuffle, ShuffleNetworking.DeserializeShuffle);
 			PhotonPeer.RegisterType(typeof(SalvageNetworking), Constants.EvSalvage, SalvageNetworking.SerializeSalvage, SalvageNetworking.DeserializeSalvage);
 			PhotonPeer.RegisterType(typeof(TownDefenseNetworking), Constants.EvTownDefense, TownDefenseNetworking.SerializeTownDefense, TownDefenseNetworking.DeserializeTownDefense);
+			PhotonPeer.RegisterType(typeof(TownTechNetworking), Constants.EvTownTech, TownTechNetworking.SerializeTownTech, TownTechNetworking.DeserializeTownTech);
 		}
 
 		private void sendNetworkEvent(object content, ReceiverGroup group, byte eventCode)
@@ -3742,6 +3745,33 @@ namespace FallenLand
 				//TODO in future story
 			}
 			else if (action == Constants.USE_TOWN_DEFENSE_FOR_TOWN_HEALTH)
+			{
+				//TODO in future story
+			}
+		}
+
+		private void handleTownTechEvent(TownTechNetworking townTechNetworking)
+		{
+			int playerIndex = townTechNetworking.GetPlayerIndex();
+			byte action = townTechNetworking.GetActionByte();
+			string townTechName = townTechNetworking.GetTechName();
+
+			if (action == Constants.BUY_TOWN_TECH)
+			{
+				TownTech townTechToBuy = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(townTechName);
+				Players[playerIndex].AddTownTech(townTechToBuy);
+				Players[playerIndex].RemoveSalvageFromPlayer(townTechToBuy.GetPurchaseCost());
+				TownTechManager.HandleTownTechPurchase(this, playerIndex, townTechToBuy);
+			}
+			else if (action == Constants.SELL_TOWN_TECH)
+			{
+				//TODO in future story
+			}
+			else if (action == Constants.UPGRADE_TOWN_TECH)
+			{
+				//TODO in future story
+			}
+			else if (action == Constants.DOWNGRADE_TOWN_TECH)
 			{
 				//TODO in future story
 			}
