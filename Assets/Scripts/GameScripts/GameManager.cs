@@ -1577,20 +1577,23 @@ namespace FallenLand
 
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				//Check all characters
-				for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+				if (!haveAllCharactersRolledOnce(playerIndex, 0))
 				{
-					if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, 0))
+					//Check all characters
+					for (int characterIndex = 0; characterIndex < Constants.MAX_NUM_PLAYERS; characterIndex++)
+					{
+						if (DoesCharacterHaveRollsRemainingForSkill(playerIndex, characterIndex, 0))
+						{
+							isFinished = false;
+							break;
+						}
+					}
+
+					//Check vehicle
+					if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, 0))
 					{
 						isFinished = false;
-						break;
 					}
-				}
-
-				//Check vehicle
-				if (DoesVehicleHaveRollsRemainingForSkill(playerIndex, 0))
-				{
-					isFinished = false;
 				}
 			}
 
