@@ -2538,16 +2538,13 @@ namespace FallenLand
 		{
 			bool isAllowed = false;
 
-			if (Players[playerIndex].GetTownTechs().Count < MaxTownTechs)
+			List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+			for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
 			{
-				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
-				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				if (townTechs[townTechIndex].GetTier() != Constants.TIER_2)
 				{
-					if (townTechs[townTechIndex].GetTier() != Constants.TIER_2)
-					{
-						isAllowed = true;
-						break;
-					}
+					isAllowed = true;
+					break;
 				}
 			}
 
