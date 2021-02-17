@@ -105,10 +105,10 @@ namespace FallenLand
 			curTech.SetPurchaseCost(30);
 			curTech.SetUpgradeCost(30);
 			curTech.SetSellCost(25);
-			curTech.AddOnPurchaseReward(new GainBonusMovement(1));
-			curTech.AddOnSellPunishment(new LoseBonusMovement(1));
-			curTech.AddOnUpgradeReward(new GainBonusMovement(1));
-			curTech.AddOnDowngradePunishment(new LoseBonusMovement(1));
+			curTech.AddOnPurchaseReward(new GainBonusMovement(2));
+			curTech.AddOnSellPunishment(new LoseBonusMovement(2));
+			curTech.AddOnUpgradeReward(new GainBonusMovement(2));
+			curTech.AddOnDowngradePunishment(new LoseBonusMovement(2));
 			curTech.SetId(8);
 			Techs.Add(curTech);
 

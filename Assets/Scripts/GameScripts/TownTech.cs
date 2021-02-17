@@ -9,7 +9,7 @@ namespace FallenLand
 		private int UpgradeCost;
 		private int Tier;
 		private int SellCost;
-		private ConditionalGain ConditionalGains;
+		private ConditionalGain ConditionalGainInst;
 		private bool IsStartingTech;
 		private int Id;
 		private readonly List<Reward> OnPurchaseRewards = new List<Reward>();
@@ -21,6 +21,21 @@ namespace FallenLand
 		{
 			TechName = name;
 			Tier = Constants.TIER_1;
+		}
+
+		public TownTech(TownTech townTechToCopyFrom)
+		{
+			TechName = townTechToCopyFrom.GetTechName();
+			Tier = Constants.TIER_1;
+			PurchaseCost = townTechToCopyFrom.GetPurchaseCost();
+			UpgradeCost = townTechToCopyFrom.GetUpgradeCost();
+			SellCost = townTechToCopyFrom.GetSellCost();
+			Id = townTechToCopyFrom.GetId();
+            ConditionalGainInst = townTechToCopyFrom.GetConditionalGain();
+			OnPurchaseRewards = townTechToCopyFrom.GetOnPurchaseRewards();
+			OnSellPunishments = townTechToCopyFrom.GetOnSellPunishments();
+			OnUpgradeRewards = townTechToCopyFrom.GetOnUpgradeRewards();
+			OnDowngradePunishments = townTechToCopyFrom.GetOnDowngradePunishments();
 		}
 
 		public void SetTechName(string techName)
@@ -77,13 +92,13 @@ namespace FallenLand
 		{
 			if (condGains != null)
 			{
-				ConditionalGains = condGains;
+				ConditionalGainInst = condGains;
 			}
 		}
 
 		public ConditionalGain GetConditionalGain()
 		{
-			return ConditionalGains;
+			return ConditionalGainInst;
 		}
 
 		public void SetIsStartingTech(bool isStartingTech)

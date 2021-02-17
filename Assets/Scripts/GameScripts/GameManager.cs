@@ -2534,6 +2534,26 @@ namespace FallenLand
 			return isAllowed;
 		}
 
+		public bool IsPlayerAllowedToUpgradeTownTech(int playerIndex)
+		{
+			bool isAllowed = false;
+
+			if (Players[playerIndex].GetTownTechs().Count < MaxTownTechs)
+			{
+				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				{
+					if (townTechs[townTechIndex].GetTier() != Constants.TIER_2)
+					{
+						isAllowed = true;
+						break;
+					}
+				}
+			}
+
+			return isAllowed;
+		}
+
 		public int GetCostOfTownDefenseChip(int playerIndex)
 		{
 			int cost = Constants.INVALID_COST;
@@ -2590,6 +2610,11 @@ namespace FallenLand
 			return Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]).GetPurchaseCost();
 		}
 
+		public int GetUpgradeCostOfTownTech(int townTechNumber)
+		{
+			return Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]).GetUpgradeCost();
+		}
+
 		public void PurchaseTownTech(int playerIndex, int townTechNumber)
 		{
 			if (isPlayerIndexInRange(playerIndex))
@@ -2600,9 +2625,39 @@ namespace FallenLand
 			}
 		}
 
+		public void UpgradeTownTech(int playerIndex, int townTechNumber)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				TownTechNetworking townTechNetworking = new TownTechNetworking(playerIndex, Constants.UPGRADE_TOWN_TECH, Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]);
+				sendNetworkEvent(townTechNetworking, ReceiverGroup.Others, Constants.EvTownTech);
+				handleTownTechEvent(townTechNetworking);
+			}
+		}
+
 		public int GetNumberOfTownTechsSold(int townTechNumber)
 		{
 			return TechsUsed[Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]];
+		}
+
+		public bool DoesPlayerOwnTownTechOfTier(int playerIndex, int townTechNumber, int tier)
+		{
+			bool owns = false;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				{
+					if (Constants.TOWN_TECH_NAME_TO_NUMBER[townTechs[townTechIndex].GetTechName()] == townTechNumber && townTechs[townTechIndex].GetTier() == tier)
+					{
+						owns = true;
+						break;
+					}
+				}
+			}
+
+			return owns;
 		}
 		#endregion
 
@@ -3762,7 +3817,7 @@ namespace FallenLand
 
 			if (action == Constants.BUY_TOWN_TECH)
 			{
-				TownTech townTechToBuy = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(townTechName);
+				TownTech townTechToBuy = new TownTech(Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(townTechName));
 				Players[playerIndex].AddTownTech(townTechToBuy);
 				Players[playerIndex].RemoveSalvageFromPlayer(townTechToBuy.GetPurchaseCost());
 				TechsUsed[townTechName]++;
@@ -3774,7 +3829,10 @@ namespace FallenLand
 			}
 			else if (action == Constants.UPGRADE_TOWN_TECH)
 			{
-				//TODO in future story
+				TownTech townTechToUpgrade = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(townTechName);
+				Players[playerIndex].UpgradeTownTech(townTechToUpgrade);
+				Players[playerIndex].RemoveSalvageFromPlayer(townTechToUpgrade.GetUpgradeCost());
+				TownTechManager.HandleTownTechUpgrade(this, playerIndex, townTechToUpgrade);
 			}
 			else if (action == Constants.DOWNGRADE_TOWN_TECH)
 			{

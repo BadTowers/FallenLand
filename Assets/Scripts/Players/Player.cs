@@ -548,6 +548,31 @@ namespace FallenLand
 			}
 		}
 
+		public void UpgradeTownTech(TownTech techToUpgrade)
+		{
+			bool wasUpgraded = false;
+			if (techToUpgrade != null)
+			{
+				for (int townTechOwnedIndex = 0; townTechOwnedIndex < TownTechs.Count; ++townTechOwnedIndex)
+				{
+					if (TownTechs[townTechOwnedIndex].GetTechName().Equals(techToUpgrade.GetTechName()) && TownTechs[townTechOwnedIndex].GetTier() == Constants.TIER_1)
+					{
+						TownTechs[townTechOwnedIndex].SetTier(Constants.TIER_2);
+						wasUpgraded = true;
+						break;
+					}
+				}
+				if (!wasUpgraded)
+				{
+					UnityEngine.Debug.LogWarning("UpgradeTownTech was called with town tech " + techToUpgrade.GetTechName() + " but we didn't find any techs of that name or techs of that name at tier 1 in this player's class...");
+				}
+			}
+			else
+			{
+				UnityEngine.Debug.LogWarning("UpgradeTownTech was called with a null town tech.");
+			}
+		}
+
 		public void AddCharacterToParty(int characterIndex, CharacterCard character)
 		{
 			if (character != null && ActiveCharacters[characterIndex] == null)
