@@ -153,6 +153,7 @@ namespace FallenLand
 					}
 					ShouldSkipPhase = true;
 					break;
+				case Phases.Town_Business_Financial_Sell:
 				case Phases.Town_Business_Financial_Purchase:
 				case Phases.Party_Exploits_Party:
 				case Phases.Town_Business_Town_Events_Chart:
