@@ -163,9 +163,14 @@ namespace FallenLand
         private bool UserHasPurchasedTownDefenseChipThisTurn;
         private bool IsCapturingSomeonesResource;
         private List<GameObject> TownTechImages;
+        private List<Image> TownTechSellImages;
+        private List<GameObject> TownTechSellPanels;
+        private List<Button> SellTownTechButtons;
         private GameObject TownTechBuyPanel;
         private GameObject TownTechsUpgradePanel;
         private bool UserHasPurchasedOrUpgradedTownTechThisTurn;
+        private GameObject FinancialSellPanel;
+        private GameObject TownTechSellPanel;
 
         #region UnityFunctions
         void Awake()
@@ -228,6 +233,8 @@ namespace FallenLand
             UpgradeTownTechsButton = GameObject.Find("UpgradeTownTechsButton");
             TownTechBuyPanel = GameObject.Find("TownTechBuyPanel");
             TownTechsUpgradePanel = GameObject.Find("TownTechsUpgradePanel");
+            FinancialSellPanel = GameObject.Find("FinancialSellPanel");
+            TownTechSellPanel = GameObject.Find("TownTechSellPanel");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -426,9 +433,15 @@ namespace FallenLand
             }
 
             TownTechImages = new List<GameObject>();
+            TownTechSellImages = new List<Image>();
+            TownTechSellPanels = new List<GameObject>();
+            SellTownTechButtons = new List<Button>();
             for (int townTechNumber = 1; townTechNumber <= Constants.NUM_UNIQUE_TOWN_TECHS; townTechNumber++)
             {
                 TownTechImages.Add(GameObject.Find("TownTechImage" + townTechNumber.ToString()));
+                TownTechSellImages.Add(GameObject.Find("TownTechSellImagePanel" + townTechNumber.ToString()).GetComponentInChildren<Image>());
+                TownTechSellPanels.Add(GameObject.Find("TownTechSellPanel" + townTechNumber.ToString()));
+                SellTownTechButtons.Add(GameObject.Find("SellTownTechButton" + townTechNumber.ToString()).GetComponent<Button>());
             }
 
             OverallEncounterPanelGameObject.SetActive(false);
@@ -448,6 +461,8 @@ namespace FallenLand
             FinancialPurchasePanel.SetActive(false);
             TownTechBuyPanel.SetActive(false);
             TownTechsUpgradePanel.SetActive(false);
+            FinancialSellPanel.SetActive(false);
+            TownTechSellPanel.SetActive(false);
 
             PauseMenu.SetActive(false);
             MainOverlay.SetActive(false);
@@ -509,6 +524,8 @@ namespace FallenLand
             updateTownTechImages();
 
             updateTownEventsUi();
+
+            updateFinancialSellUi();
 
             updateFinancialPurchaseUi();
 
@@ -1422,6 +1439,50 @@ namespace FallenLand
                 TownTechsUpgradePanel.SetActive(false);
             }
         }
+
+        public void OnSellOrDowngradeTownTechButtonPress()
+        {
+            TownTechSellPanel.SetActive(true);
+
+            int currentTechImageIndex = 0;
+            List<TownTech> townTechs = GameManagerInstance.GetTownTechs(GameManagerInstance.GetIndexForMyPlayer());
+            for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+            {
+                int currentTownTechNumber = Constants.TOWN_TECH_NAME_TO_NUMBER[townTechs[townTechIndex].GetTechName()];
+                if (townTechs[townTechIndex].GetTier() == Constants.TIER_1)
+                {
+                    TownTechSellPanels[currentTechImageIndex].SetActive(true);
+                    TownTechSellImages[currentTechImageIndex].sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTech" + currentTownTechNumber.ToString());
+                    SellTownTechButtons[currentTechImageIndex].interactable = !townTechs[townTechIndex].GetIsStartingTech();
+                    SellTownTechButtons[currentTechImageIndex].GetComponentInChildren<Text>().text = "Sell";
+                    currentTechImageIndex++;
+                }
+                else if (townTechs[townTechIndex].GetTier() == Constants.TIER_2)
+                {
+                    TownTechSellPanels[currentTechImageIndex].SetActive(true);
+                    TownTechSellImages[currentTechImageIndex].sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTechUpgraded" + currentTownTechNumber.ToString());
+                    SellTownTechButtons[currentTechImageIndex].interactable = !townTechs[townTechIndex].GetIsStartingTech();
+                    SellTownTechButtons[currentTechImageIndex].GetComponentInChildren<Text>().text = "Downgrade";
+                    currentTechImageIndex++;
+                }
+            }
+
+            //Hide panels that aren't used
+            for (; currentTechImageIndex < Constants.NUM_UNIQUE_TOWN_TECHS; currentTechImageIndex++)
+            {
+                TownTechSellPanels[currentTechImageIndex].SetActive(false);
+            }
+        }
+
+        public void OnSellOrDowngradeSpecificTownTechButtonPress()
+        {
+            //TODO
+        }
+
+        public void OnSellTownDefenseChipsPress()
+        {
+        
+        }
         #endregion
 
 
@@ -2025,6 +2086,20 @@ namespace FallenLand
                 RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
                 RollTownEventTextGameObject.GetComponent<Text>().text = "Roll to see effects...";
                 UserRolledTownEventsThisTurn = false;
+            }
+        }
+
+        private void updateFinancialSellUi()
+        {
+            Phases currentPhase = GameManagerInstance.GetPhase();
+            if (currentPhase == Phases.Town_Business_Financial_Sell)
+            {
+                FinancialSellPanel.SetActive(true);
+            }
+            else
+            {
+                FinancialSellPanel.SetActive(false);
+                TownTechSellPanel.SetActive(false);
             }
         }
 
