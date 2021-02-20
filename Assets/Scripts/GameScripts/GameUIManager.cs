@@ -164,13 +164,19 @@ namespace FallenLand
         private bool IsCapturingSomeonesResource;
         private List<GameObject> TownTechImages;
         private List<Image> TownTechSellImages;
+        private List<Image> TownTechUpgradeImages;
         private List<GameObject> TownTechSellPanels;
+        private List<GameObject> TownTechUpgradePanels;
         private List<Button> SellTownTechButtons;
+        private List<Button> UpgradeTownTechButtons;
+        private List<Text> UpgradeTownTechCostTexts;
         private GameObject TownTechBuyPanel;
         private GameObject TownTechsUpgradePanel;
         private bool UserHasPurchasedOrUpgradedTownTechThisTurn;
         private GameObject FinancialSellPanel;
         private GameObject TownTechSellPanel;
+        private GameObject SellTownDefenseChipButton;
+        private GameObject SellDowngradeTownTechButton;
 
         #region UnityFunctions
         void Awake()
@@ -235,6 +241,8 @@ namespace FallenLand
             TownTechsUpgradePanel = GameObject.Find("TownTechsUpgradePanel");
             FinancialSellPanel = GameObject.Find("FinancialSellPanel");
             TownTechSellPanel = GameObject.Find("TownTechSellPanel");
+            SellTownDefenseChipButton = GameObject.Find("SellTownDefenseChipButton");
+            SellDowngradeTownTechButton = GameObject.Find("SellDowngradeTownTechButton");
 
             findEncounterRollGameObjects();
             findEncounterStatGameObjects();
@@ -434,14 +442,22 @@ namespace FallenLand
 
             TownTechImages = new List<GameObject>();
             TownTechSellImages = new List<Image>();
+            TownTechUpgradeImages = new List<Image>();
             TownTechSellPanels = new List<GameObject>();
+            TownTechUpgradePanels = new List<GameObject>();
             SellTownTechButtons = new List<Button>();
+            UpgradeTownTechButtons = new List<Button>();
+            UpgradeTownTechCostTexts = new List<Text>();
             for (int townTechNumber = 1; townTechNumber <= Constants.NUM_UNIQUE_TOWN_TECHS; townTechNumber++)
             {
                 TownTechImages.Add(GameObject.Find("TownTechImage" + townTechNumber.ToString()));
                 TownTechSellImages.Add(GameObject.Find("TownTechSellImagePanel" + townTechNumber.ToString()).GetComponentInChildren<Image>());
+                TownTechUpgradeImages.Add(GameObject.Find("TownTechUpgradeImagePanel" + townTechNumber.ToString()).GetComponentInChildren<Image>());
                 TownTechSellPanels.Add(GameObject.Find("TownTechSellPanel" + townTechNumber.ToString()));
+                TownTechUpgradePanels.Add(GameObject.Find("TownTechUpgradePanel" + townTechNumber.ToString()));
                 SellTownTechButtons.Add(GameObject.Find("SellTownTechButton" + townTechNumber.ToString()).GetComponent<Button>());
+                UpgradeTownTechButtons.Add(GameObject.Find("UpgradeTownTechButton" + townTechNumber.ToString()).GetComponent<Button>());
+                UpgradeTownTechCostTexts.Add(GameObject.Find("TownTechUpgradeCostText" + townTechNumber.ToString()).GetComponent<Text>());
             }
 
             OverallEncounterPanelGameObject.SetActive(false);
@@ -1387,6 +1403,35 @@ namespace FallenLand
             {
                 TownTechsUpgradePanel.SetActive(true);
                 TownTechBuyPanel.SetActive(false);
+
+                int currentTechImageIndex = 0;
+                List<TownTech> townTechs = GameManagerInstance.GetTownTechs(GameManagerInstance.GetIndexForMyPlayer());
+                for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+                {
+                    int currentTownTechNumber = Constants.TOWN_TECH_NAME_TO_NUMBER[townTechs[townTechIndex].GetTechName()];
+                    if (townTechs[townTechIndex].GetTier() == Constants.TIER_1)
+                    {
+                        TownTechUpgradePanels[currentTechImageIndex].SetActive(true);
+                        TownTechUpgradeImages[currentTechImageIndex].sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTechUpgraded" + currentTownTechNumber.ToString());
+                        UpgradeTownTechButtons[currentTechImageIndex].interactable = true;
+                        UpgradeTownTechCostTexts[currentTechImageIndex].text = GameManagerInstance.GetUpgradeCostOfTownTech(currentTownTechNumber).ToString() + " Salvage";
+                        currentTechImageIndex++;
+                    }
+                    else if (townTechs[townTechIndex].GetTier() == Constants.TIER_2)
+                    {
+                        TownTechUpgradePanels[currentTechImageIndex].SetActive(true);
+                        TownTechUpgradeImages[currentTechImageIndex].sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTechUpgraded" + currentTownTechNumber.ToString());
+                        UpgradeTownTechCostTexts[currentTechImageIndex].text = GameManagerInstance.GetUpgradeCostOfTownTech(currentTownTechNumber).ToString() + " Salvage";
+                        UpgradeTownTechButtons[currentTechImageIndex].interactable = false;
+                        currentTechImageIndex++;
+                    }
+                }
+
+                //Hide panels that aren't used
+                for (; currentTechImageIndex < Constants.NUM_UNIQUE_TOWN_TECHS; ++currentTechImageIndex)
+                {
+                    TownTechUpgradePanels[currentTechImageIndex].SetActive(false);
+                }
             }
         }
 
@@ -1419,22 +1464,24 @@ namespace FallenLand
         {
             string buttonName = EventSystem.current.currentSelectedGameObject.transform.name;
             string buttonNumberString = buttonName.Substring(buttonName.Length - 1);
-            int townTechNumber = Int32.Parse(buttonNumberString);
-
+            int townTechIndex = Int32.Parse(buttonNumberString) - 1; //asdfasdf
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
-            int costOfTownTech = GameManagerInstance.GetUpgradeCostOfTownTech(townTechNumber);
+            TownTech techToUpgrade = GameManagerInstance.GetTownTechs(myIndex)[townTechIndex];
+            string techName = techToUpgrade.GetTechName();
+
+            int costOfTownTech = GameManagerInstance.GetUpgradeCostOfTownTech(Constants.TOWN_TECH_NAME_TO_NUMBER[techName]);
             int amountOfSalvage = GameManagerInstance.GetSalvage(myIndex);
             if (amountOfSalvage < costOfTownTech)
             {
                 onShowGenericPopup("You cannot afford! It costs " + costOfTownTech.ToString() + " but you only have " + amountOfSalvage.ToString() + ".");
             }
-            else if (!GameManagerInstance.DoesPlayerOwnTownTechOfTier(myIndex, townTechNumber, Constants.TIER_1))
+            else if (!GameManagerInstance.DoesPlayerOwnTownTechOfTier(myIndex, Constants.TOWN_TECH_NAME_TO_NUMBER[techName], Constants.TIER_1))
             {
                 onShowGenericPopup("You don't own this town tech to upgrade it or it's already upgraded!");
             }
             else
             {
-                GameManagerInstance.UpgradeTownTech(myIndex, townTechNumber);
+                GameManagerInstance.UpgradeTownTech(myIndex, Constants.TOWN_TECH_NAME_TO_NUMBER[techName]);
                 UserHasPurchasedOrUpgradedTownTechThisTurn = true;
                 TownTechsUpgradePanel.SetActive(false);
             }
@@ -1461,7 +1508,7 @@ namespace FallenLand
                 {
                     TownTechSellPanels[currentTechImageIndex].SetActive(true);
                     TownTechSellImages[currentTechImageIndex].sprite = Resources.Load<Sprite>("Chips/TownTechs/TownTechUpgraded" + currentTownTechNumber.ToString());
-                    SellTownTechButtons[currentTechImageIndex].interactable = !townTechs[townTechIndex].GetIsStartingTech();
+                    SellTownTechButtons[currentTechImageIndex].interactable = true;
                     SellTownTechButtons[currentTechImageIndex].GetComponentInChildren<Text>().text = "Downgrade";
                     currentTechImageIndex++;
                 }
@@ -1476,12 +1523,29 @@ namespace FallenLand
 
         public void OnSellOrDowngradeSpecificTownTechButtonPress()
         {
-            //TODO
+            string buttonName = EventSystem.current.currentSelectedGameObject.transform.name;
+            string buttonNumberString = buttonName.Substring(buttonName.Length - 1);
+            int townTechIndex = Int32.Parse(buttonNumberString) - 1;
+
+            int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+            TownTech techToSell = GameManagerInstance.GetTownTechs(myIndex)[townTechIndex];
+            if (techToSell.GetTier() == Constants.TIER_1)
+            {
+                GameManagerInstance.SellTownTech(myIndex, townTechIndex);
+                TownTechSellPanel.SetActive(false);
+            }
+            else if (techToSell.GetTier() == Constants.TIER_2)
+            {
+                GameManagerInstance.DowngradeTownTech(myIndex, townTechIndex);
+                TownTechSellPanel.SetActive(false);
+            }
         }
 
         public void OnSellTownDefenseChipsPress()
         {
-        
+            TownTechSellPanel.SetActive(false);
+
+            onShowGenericYesNoPopup("Are you sure you would like to sell a town defense chip for 10 salvage?");
         }
         #endregion
 
@@ -2095,6 +2159,16 @@ namespace FallenLand
             if (currentPhase == Phases.Town_Business_Financial_Sell)
             {
                 FinancialSellPanel.SetActive(true);
+                int myIndex = GameManagerInstance.GetIndexForMyPlayer();
+
+                if (GenericYesPressed)
+                {
+                    GameManagerInstance.SellTownDefenseChip(myIndex);
+                    GenericYesPressed = false;
+                }
+
+                SellTownDefenseChipButton.GetComponent<Button>().interactable = (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && GameManagerInstance.IsPlayerAllowedToSellTownDefenseChip(myIndex));
+                SellDowngradeTownTechButton.GetComponent<Button>().interactable = (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId());
             }
             else
             {

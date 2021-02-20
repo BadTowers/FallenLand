@@ -1306,7 +1306,7 @@ GameObject:
   - component: {fileID: 21414421}
   - component: {fileID: 21414420}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10420,7 +10420,7 @@ GameObject:
   - component: {fileID: 241414827}
   - component: {fileID: 241414828}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12829,7 +12829,7 @@ GameObject:
   - component: {fileID: 293439123}
   - component: {fileID: 293439124}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17708,7 +17708,7 @@ GameObject:
   - component: {fileID: 417425477}
   - component: {fileID: 417425478}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19260,7 +19260,7 @@ GameObject:
   - component: {fileID: 441412537}
   - component: {fileID: 441412538}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19785,7 +19785,7 @@ GameObject:
   - component: {fileID: 452342615}
   - component: {fileID: 452342616}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27295,7 +27295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -140.1}
+  m_AnchoredPosition: {x: 0, y: -140.09998}
   m_SizeDelta: {x: -40.408783, y: -486.06445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617205097
@@ -28507,7 +28507,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -367.50003, y: 0}
+  m_AnchoredPosition: {x: -367.5, y: 0}
   m_SizeDelta: {x: -735.069, y: -61.988525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &638020353
@@ -30377,7 +30377,7 @@ GameObject:
   - component: {fileID: 683223574}
   - component: {fileID: 683223575}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33101,7 +33101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -109.120026, y: -192.69995}
+  m_AnchoredPosition: {x: -109.120026, y: -192.69992}
   m_SizeDelta: {x: -374.98245, y: -444.86145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &728809224
@@ -38663,7 +38663,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -182.08997}
+  m_AnchoredPosition: {x: 0, y: -182.08994}
   m_SizeDelta: {x: -0.000030517578, y: -364.17303}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &827103908
@@ -42431,7 +42431,7 @@ GameObject:
   - component: {fileID: 906514621}
   - component: {fileID: 906514622}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43814,7 +43814,7 @@ GameObject:
   - component: {fileID: 940475834}
   - component: {fileID: 940475833}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47936,7 +47936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -239.14005, y: -236.03995}
+  m_AnchoredPosition: {x: -239.14001, y: -236.03992}
   m_SizeDelta: {x: -481.04047, y: -478.26712}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1025334658
@@ -56119,7 +56119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -118.889984, y: -192.69995}
+  m_AnchoredPosition: {x: -118.889984, y: -192.69992}
   m_SizeDelta: {x: -498.28152, y: -444.86145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1180904905
@@ -59621,7 +59621,7 @@ GameObject:
   - component: {fileID: 1248034739}
   - component: {fileID: 1248034740}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60201,7 +60201,7 @@ GameObject:
   - component: {fileID: 1260431957}
   - component: {fileID: 1260431956}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60934,7 +60934,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -443.00003, y: 172}
+  m_AnchoredPosition: {x: -443, y: 172}
   m_SizeDelta: {x: -881.3198, y: -344.02097}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1275946716
@@ -69190,7 +69190,7 @@ GameObject:
   - component: {fileID: 1441214223}
   - component: {fileID: 1441214222}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72570,7 +72570,7 @@ GameObject:
   - component: {fileID: 1508404317}
   - component: {fileID: 1508404316}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84117,7 +84117,7 @@ GameObject:
   - component: {fileID: 1776761797}
   - component: {fileID: 1776761796}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88850,7 +88850,7 @@ GameObject:
   - component: {fileID: 1873074741}
   - component: {fileID: 1873074740}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88953,7 +88953,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -229.28995}
+  m_AnchoredPosition: {x: 0, y: -229.28992}
   m_SizeDelta: {x: -712.38727, y: -550.5049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873749132
@@ -91451,7 +91451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -449.33, y: -175.14005}
+  m_AnchoredPosition: {x: -449.32996, y: -175.14001}
   m_SizeDelta: {x: -915.4871, y: -374.3719}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1924032254
@@ -93738,7 +93738,7 @@ GameObject:
   - component: {fileID: 1980666340}
   - component: {fileID: 1980666341}
   m_Layer: 5
-  m_Name: TownTechUpgradeImagePanel
+  m_Name: TownTechUpgradeImagePanel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95429,7 +95429,7 @@ GameObject:
   - component: {fileID: 2012591353}
   - component: {fileID: 2012591352}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97435,7 +97435,7 @@ GameObject:
   - component: {fileID: 2043488588}
   - component: {fileID: 2043488587}
   m_Layer: 5
-  m_Name: TownTechCostText
+  m_Name: TownTechUpgradeCostText6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100077,7 +100077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 417.07, y: -128.24002}
+  m_AnchoredPosition: {x: 417.07, y: -128.23999}
   m_SizeDelta: {x: -884.2635, y: -402.33704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2100511060

@@ -548,28 +548,27 @@ namespace FallenLand
 			}
 		}
 
-		public void UpgradeTownTech(TownTech techToUpgrade)
+		public void SellTownTech(int techIndexToSell)
 		{
-			bool wasUpgraded = false;
-			if (techToUpgrade != null)
+			if (techIndexToSell >= 0 && techIndexToSell < TownTechs.Count)
 			{
-				for (int townTechOwnedIndex = 0; townTechOwnedIndex < TownTechs.Count; ++townTechOwnedIndex)
-				{
-					if (TownTechs[townTechOwnedIndex].GetTechName().Equals(techToUpgrade.GetTechName()) && TownTechs[townTechOwnedIndex].GetTier() == Constants.TIER_1)
-					{
-						TownTechs[townTechOwnedIndex].SetTier(Constants.TIER_2);
-						wasUpgraded = true;
-						break;
-					}
-				}
-				if (!wasUpgraded)
-				{
-					UnityEngine.Debug.LogWarning("UpgradeTownTech was called with town tech " + techToUpgrade.GetTechName() + " but we didn't find any techs of that name or techs of that name at tier 1 in this player's class...");
-				}
+				TownTechs.RemoveAt(techIndexToSell);
 			}
-			else
+		}
+
+		public void UpgradeTownTech(int techIndexToUpgrade)
+		{
+			if(techIndexToUpgrade >= 0 && techIndexToUpgrade < TownTechs.Count)
+            {
+				TownTechs[techIndexToUpgrade].SetTier(Constants.TIER_2);
+			}
+		}
+
+		public void DowngradeTownTech(int techIndexToDowngrade)
+		{
+			if (techIndexToDowngrade >= 0 && techIndexToDowngrade < TownTechs.Count)
 			{
-				UnityEngine.Debug.LogWarning("UpgradeTownTech was called with a null town tech.");
+				TownTechs[techIndexToDowngrade].SetTier(Constants.TIER_1);
 			}
 		}
 

@@ -2526,6 +2526,21 @@ namespace FallenLand
 			return isAllowed;
 		}
 
+		public bool IsPlayerAllowedToSellTownDefenseChip(int playerIndex)
+		{
+			bool isAllowed = false;
+
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				if (Players[playerIndex].GetNumberOfTownDefenseChips() > 0)
+				{
+					isAllowed = true;
+				}
+			}
+
+			return isAllowed;
+		}			
+
 		public bool IsPlayerAllowedToBuyTownTech(int playerIndex)
 		{
 			bool isAllowed = false;
@@ -2573,6 +2588,16 @@ namespace FallenLand
             if (isPlayerIndexInRange(playerIndex))
             {
 				TownDefenseNetworking townDefense = new TownDefenseNetworking(playerIndex, Constants.BUY_TOWN_DEFENSE);
+				sendNetworkEvent(townDefense, ReceiverGroup.Others, Constants.EvTownDefense);
+				handleTownDefenseEvent(townDefense);
+			}
+		}
+
+		public void SellTownDefenseChip(int playerIndex)
+        {
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				TownDefenseNetworking townDefense = new TownDefenseNetworking(playerIndex, Constants.SELL_TOWN_DEFENSE);
 				sendNetworkEvent(townDefense, ReceiverGroup.Others, Constants.EvTownDefense);
 				handleTownDefenseEvent(townDefense);
 			}
@@ -2631,6 +2656,26 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex))
 			{
 				TownTechNetworking townTechNetworking = new TownTechNetworking(playerIndex, Constants.UPGRADE_TOWN_TECH, Constants.TOWN_TECH_NUMBER_TO_NAME[townTechNumber]);
+				sendNetworkEvent(townTechNetworking, ReceiverGroup.Others, Constants.EvTownTech);
+				handleTownTechEvent(townTechNetworking);
+			}
+		}
+
+		public void DowngradeTownTech(int playerIndex, int townTechIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				TownTechNetworking townTechNetworking = new TownTechNetworking(playerIndex, Constants.DOWNGRADE_TOWN_TECH, Players[playerIndex].GetTownTechs()[townTechIndex].GetTechName());
+				sendNetworkEvent(townTechNetworking, ReceiverGroup.Others, Constants.EvTownTech);
+				handleTownTechEvent(townTechNetworking);
+			}
+		}
+
+		public void SellTownTech(int playerIndex, int townTechIndex)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				TownTechNetworking townTechNetworking = new TownTechNetworking(playerIndex, Constants.SELL_TOWN_TECH, Players[playerIndex].GetTownTechs()[townTechIndex].GetTechName());
 				sendNetworkEvent(townTechNetworking, ReceiverGroup.Others, Constants.EvTownTech);
 				handleTownTechEvent(townTechNetworking);
 			}
@@ -3797,12 +3842,13 @@ namespace FallenLand
 			{
 				int numberOwned = Players[playerIndex].GetNumberOfTownDefenseChips();
 				int cost = Constants.TOWN_DEFENSE_CHIP_COST[numberOwned];
-				Players[playerIndex].SetNumberOfTownDefenseChips(Players[playerIndex].GetNumberOfTownDefenseChips() + 1);
+				Players[playerIndex].SetNumberOfTownDefenseChips(numberOwned + 1);
 				Players[playerIndex].RemoveSalvageFromPlayer(cost);
 			}
 			else if (action == Constants.SELL_TOWN_DEFENSE)
 			{
-				//TODO in future story
+				Players[playerIndex].SetNumberOfTownDefenseChips(Players[playerIndex].GetNumberOfTownDefenseChips() - 1);
+				Players[playerIndex].AddSalvageToPlayer(Constants.SALVAGE_FOR_SELLING_TOWN_DEFENSE_CHIP);
 			}
 			else if (action == Constants.USE_TOWN_DEFENSE_FOR_TOWN_HEALTH)
 			{
@@ -3822,22 +3868,55 @@ namespace FallenLand
 				Players[playerIndex].AddTownTech(townTechToBuy);
 				Players[playerIndex].RemoveSalvageFromPlayer(townTechToBuy.GetPurchaseCost());
 				TechsUsed[townTechName]++;
+				Players[playerIndex].AddPrestige(1);
+				Players[playerIndex].AddTownHealth(5);
+				EventManager.ShowGenericPopup("For purchasing a town tech, you also gained 1 prestige and 5 town health!");
 				TownTechManager.HandleTownTechPurchase(this, playerIndex, townTechToBuy);
 			}
 			else if (action == Constants.SELL_TOWN_TECH)
 			{
-				//TODO in future story
+				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				{
+					if (townTechs[townTechIndex].GetTechName().Equals(townTechName))
+					{
+						Players[playerIndex].AddSalvageToPlayer(townTechs[townTechIndex].GetSellCost());
+						TownTechManager.HandleTownTechSell(this, playerIndex, townTechs[townTechIndex]);
+						Players[playerIndex].SellTownTech(townTechIndex);
+						Players[playerIndex].SubtractPrestige(1);
+						Players[playerIndex].SubtractTownHealth(5);
+						EventManager.ShowGenericPopup("For selling a town tech, you also lost 1 prestige and 5 town health!");
+						break;
+					}
+				}
 			}
 			else if (action == Constants.UPGRADE_TOWN_TECH)
 			{
-				TownTech townTechToUpgrade = Constants.DEFAULT_TOWN_TECHS.GetTownTechByName(townTechName);
-				Players[playerIndex].UpgradeTownTech(townTechToUpgrade);
-				Players[playerIndex].RemoveSalvageFromPlayer(townTechToUpgrade.GetUpgradeCost());
-				TownTechManager.HandleTownTechUpgrade(this, playerIndex, townTechToUpgrade);
+				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				{
+					if (townTechs[townTechIndex].GetTechName().Equals(townTechName))
+					{
+						Players[playerIndex].UpgradeTownTech(townTechIndex);
+						Players[playerIndex].RemoveSalvageFromPlayer(townTechs[townTechIndex].GetUpgradeCost());
+						TownTechManager.HandleTownTechUpgrade(this, playerIndex, townTechs[townTechIndex]);
+						break;
+					}
+				}
 			}
 			else if (action == Constants.DOWNGRADE_TOWN_TECH)
 			{
-				//TODO in future story
+				List<TownTech> townTechs = Players[playerIndex].GetTownTechs();
+				for (int townTechIndex = 0; townTechIndex < townTechs.Count; ++townTechIndex)
+				{
+					if (townTechs[townTechIndex].GetTechName().Equals(townTechName))
+					{
+						Players[playerIndex].DowngradeTownTech(townTechIndex);
+						Players[playerIndex].AddSalvageToPlayer(townTechs[townTechIndex].GetSellCost());
+						TownTechManager.HandleTownTechDowngrade(this, playerIndex, townTechs[townTechIndex]);
+						break;
+					}
+				}
 			}
 		}
 
