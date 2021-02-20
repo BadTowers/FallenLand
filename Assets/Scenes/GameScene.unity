@@ -49944,7 +49944,7 @@ GameObject:
   - component: {fileID: 1074881335}
   m_Layer: 5
   m_Name: SurvivalSumV
-  m_TagString: CharacterSurvival5
+  m_TagString: CharacterSurvivalV
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89726,7 +89726,7 @@ GameObject:
   - component: {fileID: 1891135048}
   - component: {fileID: 1891135047}
   m_Layer: 5
-  m_Name: SellTownTechButton
+  m_Name: SellDowngradeTownTechButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
