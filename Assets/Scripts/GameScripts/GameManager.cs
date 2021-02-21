@@ -2742,20 +2742,26 @@ namespace FallenLand
 			{
 				for (int playerIndex = 0; playerIndex < Players.Count; playerIndex++)
 				{
-					SpoilsCard curSpoilsCard = SpoilsDeck[dealingIndex];
-					if (curSpoilsCard.GetIsStartingCard() || curSpoilsCard.GetSpoilsTypes().Contains(SpoilsTypes.Event))
+					bool cardWasDealt = false;
+					do
 					{
-						Debug.Log("NOT DEALING " + curSpoilsCard.GetTitle());
-						dealingIndex++;
-						continue;
-					}
-
-					Players[playerIndex].AddSpoilsCardToAuctionHouse(curSpoilsCard);
-					Debug.Log("Dealt spoils card " + curSpoilsCard.GetTitle() + " to player " + playerIndex);
-					object content = new CardNetworking(curSpoilsCard.GetTitle(), playerIndex, Constants.SPOILS_CARD);
-					sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
-					SpoilsDeck.RemoveAt(dealingIndex);
-					EventManager.AuctionHouseChanged();
+						SpoilsCard curSpoilsCard = SpoilsDeck[dealingIndex];
+						if (curSpoilsCard.GetIsStartingCard() || curSpoilsCard.GetSpoilsTypes().Contains(SpoilsTypes.Event))
+						{
+							Debug.Log("NOT DEALING " + curSpoilsCard.GetTitle());
+							dealingIndex++;
+						}
+						else
+						{
+							cardWasDealt = true;
+							Players[playerIndex].AddSpoilsCardToAuctionHouse(curSpoilsCard);
+							Debug.Log("Dealt spoils card " + curSpoilsCard.GetTitle() + " to player " + playerIndex);
+							object content = new CardNetworking(curSpoilsCard.GetTitle(), playerIndex, Constants.SPOILS_CARD);
+							sendNetworkEvent(content, ReceiverGroup.Others, Constants.EvDealCard);
+							SpoilsDeck.RemoveAt(dealingIndex);
+							EventManager.AuctionHouseChanged();
+						}
+					} while (!cardWasDealt);
 				}
 			}
 		}
