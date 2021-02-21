@@ -3134,7 +3134,6 @@ namespace FallenLand
 
 		private void moveCharacterBetweenSlots(int playerIndex, int characterSlotFoundIn, int characterSlotMovingTo)
 		{
-			CharacterCard characterToMove = Players[playerIndex].GetActiveCharacters()[characterSlotFoundIn];
 			Players[playerIndex].MoveCharacterBetweenSlots(characterSlotFoundIn, characterSlotMovingTo);
 		}
 
