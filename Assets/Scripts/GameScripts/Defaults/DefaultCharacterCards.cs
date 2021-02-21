@@ -117,8 +117,9 @@ namespace FallenLand
 				{Skills.Medical, 5}
 			});
 			//No link
-			curCard.AddPassiveGain(Gains.Gain_Movement, 1);
-            curCard.SetId(curID);
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
+			curCard.SetId(curID);
 			curID++;
 			CharacterCards.Add(curCard);
 
@@ -818,7 +819,8 @@ namespace FallenLand
 				{Skills.Medical, 7}
 			});
 			//No link
-			//curCard.AddPassiveGain(Gains.Gain_Movement, 1);
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);
@@ -970,7 +972,8 @@ namespace FallenLand
 				{Skills.Technical, 7},
 				{Skills.Medical, 4}
 			});
-			//curCard.AddPassiveGain(Gains.Gain_Prestige, 1);
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
 			currentLink = new Link("Pristine American Flag", new PristineAmericanFlagEquipped());
 			currentLink.AddRewardOnActivate(new GainDiplomacy(3));
 			currentLink.AddPunishmentOnDeactivate(new LoseDiplomacy(3));
@@ -1903,7 +1906,8 @@ namespace FallenLand
 				{Skills.Medical, 6}
 			});
 			//Link motorized vehicle. After each round of pvp, gain +1 flight or deal 1d6 physical damage
-			//curCard.AddPassiveGain(Gains.Gain_Movement, 1);
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -1960,7 +1964,8 @@ namespace FallenLand
 			currentLink.AddPunishmentOnDeactivate(new LoseSurvival(2));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
 			curCard.SetCharacterLink(currentLink);
-			//curCard.AddPassiveGain(Gains.Gain_Prestige, 1);
+			curCard.AddRewardWhenEquipped(new GainPrestige(1));
+			curCard.AddPunishmentWhenUnequipped(new LosePrestige(1));
 			//TODO add conditional gain
 			curCard.SetId(curID);
 			curID++;
@@ -2044,7 +2049,8 @@ namespace FallenLand
 			currentLink.AddRewardOnActivate(new GainCombat(2));
 			currentLink.AddPunishmentOnDeactivate(new LoseCombat(2));
 			curCard.SetCharacterLink(currentLink);
-			//curCard.AddPassiveGain(Gains.Gain_Movement, 1);
+			curCard.AddRewardWhenEquipped(new GainBonusMovement(1));
+			curCard.AddPunishmentWhenUnequipped(new LoseBonusMovement(1));
 			//TODO add conditional gain
 			//TODO add conditional gain
 			curCard.SetId(curID);

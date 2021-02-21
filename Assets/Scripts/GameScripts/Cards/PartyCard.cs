@@ -10,6 +10,10 @@ namespace FallenLand
 		private string Quote;
 		private List<ConditionalGain> ConditionalGains;
 		private Dictionary<Gains, int> PassiveGains;
+		private readonly List<Reward> RewardsWhenEquipped = new List<Reward>();
+		private readonly List<Punishment> PunishmentsWhenEquipped = new List<Punishment>();
+		private readonly List<Reward> RewardsWhenUnequipped = new List<Reward>();
+		private readonly List<Punishment> PunishmentsWhenUnequipped = new List<Punishment>();
 
 		public PartyCard(string text) : base(text)
 		{
@@ -104,6 +108,46 @@ namespace FallenLand
 				}
 			}
         }
+
+		public void AddRewardWhenEquipped(Reward reward)
+		{
+			RewardsWhenEquipped.Add(reward);
+		}
+
+		public List<Reward> GetRewardsWhenEquipped()
+		{
+			return RewardsWhenEquipped;
+		}
+
+		public void AddPunishmentWhenEquipped(Punishment loss)
+		{
+			PunishmentsWhenEquipped.Add(loss);
+		}
+
+		public List<Punishment> GetPunishmentsWhenEquipped()
+		{
+			return PunishmentsWhenEquipped;
+		}
+
+		public void AddPunishmentWhenUnequipped(Punishment loss)
+		{
+			PunishmentsWhenUnequipped.Add(loss);
+		}
+
+		public List<Punishment> GetPunishmentsWhenUnequipped()
+		{
+			return PunishmentsWhenUnequipped;
+		}
+
+		public void AddRewardWhenUnequipped(Reward reward)
+		{
+			RewardsWhenUnequipped.Add(reward);
+		}
+
+		public List<Reward> GetRewardsWhenUnequipped()
+		{
+			return RewardsWhenUnequipped;
+		}
 	}
 
 }

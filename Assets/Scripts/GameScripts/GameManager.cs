@@ -701,7 +701,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
-				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, card);
+				handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, card);
 				Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(characterSlotIndex, card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_SLOT, card.GetTitle(), characterSlotIndex);
 				handleSendingNetworkingUpdatePlayerInfo(content);
@@ -732,7 +732,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
-				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, card);
+				handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, card);
 				Players[playerIndex].RemoveStowableFromActiveVehicle(card);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_SPOILS_FROM_VEHICLE, card.GetTitle());
 				handleSendingNetworkingUpdatePlayerInfo(content);
@@ -743,7 +743,7 @@ namespace FallenLand
 		{
 			if (isPlayerIndexInRange(playerIndex))
 			{
-				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, Players[playerIndex].GetActiveVehicle());
+				handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, Players[playerIndex].GetActiveVehicle());
 				Players[playerIndex].RemoveVehicleFromParty();
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.REMOVE_VEHICLE, "");
 				handleSendingNetworkingUpdatePlayerInfo(content);
@@ -755,7 +755,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToCharacter(characterIndex, card);
-				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, characterIndex);
+				handleOnPartyCardEquipRewardsAndPunishments(playerIndex, card, characterIndex);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_SLOT, card.GetTitle(), characterIndex);
 				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
@@ -766,6 +766,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddCharacterToParty(characterIndex, card);
+				handleOnPartyCardEquipRewardsAndPunishments(playerIndex, card, characterIndex);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_CHARACTER_TO_SLOT, card.GetTitle(), characterIndex);
 				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
@@ -798,7 +799,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddVehicleToParty(card);
-				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
+				handleOnPartyCardEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_VEHICLE, card.GetTitle());
 				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
@@ -809,7 +810,7 @@ namespace FallenLand
 			if (isPlayerIndexInRange(playerIndex) && card != null)
 			{
 				Players[playerIndex].AddSpoilsToActiveVehicle(card);
-				handleOnSpoilsEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
+				handleOnPartyCardEquipRewardsAndPunishments(playerIndex, card, Constants.VEHICLE_INDEX);
 				object content = new PlayerCardNetworking(GetIndexForMyPlayer(), Constants.ADD_SPOILS_TO_VEHICLE, card.GetTitle());
 				handleSendingNetworkingUpdatePlayerInfo(content);
 			}
@@ -2950,7 +2951,7 @@ namespace FallenLand
 				{
 					SpoilsCard spoilsCard = equippedCards[i];
 					Players[playerIndex].RemoveSpoilsCardFromActiveCharacter(slotIndex, equippedCards[i]);
-					handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, spoilsCard);
+					handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, spoilsCard);
 					SpoilsDeck.Add(spoilsCard); //TODO don't add to the deck but rather some temp place
 					found = true;
 					break;
@@ -2972,7 +2973,7 @@ namespace FallenLand
 				{
 					SpoilsCard stowable = stowables[i];
 					Players[playerIndex].RemoveStowableFromActiveVehicle(stowables[i]);
-					handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, stowable);
+					handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, stowable);
 					SpoilsDeck.Add(stowable); //TODO don't add to spoils deck. Store in temp location
 					found = true;
 					break;
@@ -2987,6 +2988,7 @@ namespace FallenLand
 		private void removeCharacterFromParty(int playerIndex, int characterIndex)
 		{
             CharacterCard character = Players[playerIndex].GetActiveCharacters()[characterIndex];
+			handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, character);
 			Players[playerIndex].RemoveAllSpoilsFromActiveCharacter(characterIndex);
 			LinksManager.HandleLinks(this, playerIndex, characterIndex);
 			Players[playerIndex].RemoveCharacterFromParty(characterIndex);
@@ -3024,6 +3026,7 @@ namespace FallenLand
 				if (CharacterDeck[i].GetTitle() == cardName)
 				{
 					Players[playerIndex].AddCharacterToParty(slotIndex, CharacterDeck[i]);
+					handleOnPartyCardEquipRewardsAndPunishments(playerIndex, CharacterDeck[i], slotIndex);
 					CharacterDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -3043,7 +3046,7 @@ namespace FallenLand
 				if (SpoilsDeck[i].GetTitle() == cardName)
 				{
 					Players[playerIndex].AddSpoilsToCharacter(slotIndex, SpoilsDeck[i]);
-					handleOnSpoilsEquipRewardsAndPunishments(playerIndex, SpoilsDeck[i], slotIndex);
+					handleOnPartyCardEquipRewardsAndPunishments(playerIndex, SpoilsDeck[i], slotIndex);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -3063,7 +3066,7 @@ namespace FallenLand
 				if (SpoilsDeck[i].GetTitle() == cardName)
 				{
 					Players[playerIndex].AddSpoilsToActiveVehicle(SpoilsDeck[i]);
-					handleOnSpoilsEquipRewardsAndPunishments(playerIndex, SpoilsDeck[i], Constants.VEHICLE_INDEX);
+					handleOnPartyCardEquipRewardsAndPunishments(playerIndex, SpoilsDeck[i], Constants.VEHICLE_INDEX);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -3126,7 +3129,7 @@ namespace FallenLand
 				{
 					SpoilsCard spoilsCard = SpoilsDeck[i];
 					Players[playerIndex].AddVehicleToParty(spoilsCard);
-					handleOnSpoilsEquipRewardsAndPunishments(playerIndex, spoilsCard, Constants.VEHICLE_INDEX);
+					handleOnPartyCardEquipRewardsAndPunishments(playerIndex, spoilsCard, Constants.VEHICLE_INDEX);
 					SpoilsDeck.RemoveAt(i);
 					found = true;
 					break;
@@ -3143,7 +3146,7 @@ namespace FallenLand
 			Players[playerIndex].MoveCharacterBetweenSlots(characterSlotFoundIn, characterSlotMovingTo);
 		}
 
-		private void handleOnSpoilsEquipRewardsAndPunishments(int playerIndex, SpoilsCard cardEquipped, int slotIndex)
+		private void handleOnPartyCardEquipRewardsAndPunishments(int playerIndex, PartyCard cardEquipped, int slotIndex)
 		{
 			//Rewards on equip
 			List<Reward> rewardsOnEquip = cardEquipped.GetRewardsWhenEquipped();
@@ -3174,7 +3177,7 @@ namespace FallenLand
 			}
 		}
 
-		private void handleOnSpoilsUnequipRewardsAndPunishments(int playerIndex, SpoilsCard cardRemoved)
+		private void handleOnPartyCardUnequipRewardsAndPunishments(int playerIndex, PartyCard cardRemoved)
 		{
 			//Rewards on removal
 			List<Reward> rewardsOnRemoval = cardRemoved.GetRewardsWhenUnequipped();
@@ -3534,7 +3537,7 @@ namespace FallenLand
 			else if (playerInfo.GetActionByte() == Constants.REMOVE_VEHICLE)
 			{
 				SpoilsCard vehicle = Players[playerIndex].GetActiveVehicle();
-				handleOnSpoilsUnequipRewardsAndPunishments(playerIndex, vehicle);
+				handleOnPartyCardUnequipRewardsAndPunishments(playerIndex, vehicle);
 				Players[playerIndex].RemoveVehicleFromParty();
 				SpoilsDeck.Add(vehicle); //TODO don't add to spoils deck
 			}
@@ -4104,7 +4107,7 @@ namespace FallenLand
 			SpecialSpoilsDeck = (new DefaultSpecialSpoilsCards()).GetSpoilsCards(); //No need to shuffle these as they won't be dealt out normally.
 
 			CharacterDeck = (new DefaultCharacterCards()).GetCharacterCards();
-			CharacterDeck = Card.ShuffleDeck(CharacterDeck);
+			//CharacterDeck = Card.ShuffleDeck(CharacterDeck);
 
 			ActionDeck = (new DefaultActionCards()).GetActionCards();
 			ActionDeck = Card.ShuffleDeck(ActionDeck);
