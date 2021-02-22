@@ -4264,6 +4264,12 @@ namespace FallenLand
 					allHaveRolledOnce = false;
 					break;
 				}
+
+				if (Players[playerIndex].GetActiveVehicle() != null && Players[playerIndex].GetLastVehicleDiceRoll(skillIndex) == Constants.HAS_NOT_ROLLED)
+				{
+					allHaveRolledOnce = false;
+					break;
+				}
 			}
 
 			return allHaveRolledOnce;
