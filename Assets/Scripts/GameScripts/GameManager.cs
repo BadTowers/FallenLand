@@ -153,9 +153,23 @@ namespace FallenLand
 					}
 					ShouldSkipPhase = true;
 					break;
+				case Phases.Party_Exploits_Party:
+					for (int playerIndex = 0; playerIndex < Players.Count; ++playerIndex)
+					{
+						int penaltyAmount = Players[playerIndex].GetWeekPenaltyAmount();
+						if (penaltyAmount > 0)
+						{
+							Players[playerIndex].SetRemainingPartyExploitWeeks(Players[playerIndex].GetRemainingPartyExploitWeeks() - penaltyAmount);
+							if (playerIndex == GetIndexForMyPlayer())
+							{
+								EventManager.ShowGenericPopup("Your delay of " + penaltyAmount.ToString() + " weeks has been applied.");
+							}
+							Players[playerIndex].ResetWeekPenalty();
+						}
+					}
+					break;
 				case Phases.Town_Business_Financial_Sell:
 				case Phases.Town_Business_Financial_Purchase:
-				case Phases.Party_Exploits_Party:
 				case Phases.Town_Business_Town_Events_Chart:
 				case Phases.Game_Start_Setup:
 					break;
