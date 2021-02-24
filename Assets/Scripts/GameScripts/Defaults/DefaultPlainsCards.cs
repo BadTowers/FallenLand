@@ -101,7 +101,7 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishmentOnFail(new LosePrestige(1));
-			//TODO add punishment for 2 week penalty chip when that is implemented
+			curCard.AddPunishmentOnFail(new AddWeekPenalty(2));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -180,7 +180,7 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishmentOnFail(new TakeD6InfectedDamage(5));
-			//TODO add punishment of 2 week penalty chip
+			curCard.AddPunishmentOnFail(new AddWeekPenalty(2));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -527,7 +527,7 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishmentOnFail(new LoseMostValuableSpoilsThatAreNotVehicle(1));
-			//TODO punishment -- 2 week delay chip
+			curCard.AddPunishmentOnFail(new AddWeekPenalty(2));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
@@ -636,7 +636,7 @@ namespace FallenLand
 			curCard.SetFailureHeaderText("");
 			curCard.SetFailureDescriptionText("");
 			curCard.AddPunishmentOnFail(new TakeD6PhysicalDamage(3));
-			//todo punishment -- you are delayed 1 week
+			curCard.AddPunishmentOnFail(new AddWeekPenalty(1));
 			curCard.SetId(curID);
 			curID++;
 			PlainsCards.Add(curCard);
