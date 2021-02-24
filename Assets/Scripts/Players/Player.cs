@@ -34,6 +34,7 @@ namespace FallenLand
 		private List<SpoilsCard> PartyEquipment = new List<SpoilsCard>();
 		private int NumberOfTownDefenseChips;
 		private readonly Dictionary<Skills, int> TownTechSuccesses = new Dictionary<Skills, int>();
+		private int WeekPenalty;
 
 		public Player(Faction faction, int startingSalvage)
 		{
@@ -680,11 +681,16 @@ namespace FallenLand
 
 		public void SetRemainingPartyExploitWeeks(int remainingWeeks)
 		{
-            if (remainingWeeks < 0)
-            {
-				remainingWeeks = 0;
-            }
-			RemainingPartyExploitWeeks = remainingWeeks;
+			if (remainingWeeks >= 0)
+			{
+				RemainingPartyExploitWeeks = remainingWeeks;
+			}
+			else
+			{
+				WeekPenalty = System.Math.Abs(remainingWeeks);
+				RemainingPartyExploitWeeks = 0;
+				EventManager.ShowGenericPopup("You've overspent " + WeekPenalty.ToString() + " weeks! Delay added.");
+			}
 		}
 
 		public void SetPlayerIsMoving(bool isMoving)
@@ -1107,6 +1113,24 @@ namespace FallenLand
 					+ ", value before was " + oldAmount.ToString()
 					+ ", and amount to be removed was " + amount.ToString());
 			}
+		}
+
+		public int GetWeekPenaltyAmount()
+        {
+			return WeekPenalty;
+		}
+
+		public void AddWeekPenalty(int amountToAdd)
+        {
+			if (amountToAdd > 0)
+			{
+				WeekPenalty += amountToAdd;
+			}
+		}
+
+		public void ResetWeekPenalty()
+        {
+			WeekPenalty = 0;
 		}
 
 
