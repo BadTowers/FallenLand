@@ -1829,6 +1829,10 @@ namespace FallenLand
 				int currentRemainingWeeks = Players[playerIndex].GetRemainingPartyExploitWeeks();
 				currentRemainingWeeks += weeksToGain;
 				Players[playerIndex].SetRemainingPartyExploitWeeks(currentRemainingWeeks);
+				if (playerIndex == GetIndexForMyPlayer())
+				{
+					EventManager.ShowGenericPopup("You've gained " + weeksToGain.ToString() + " weeks!");
+				}
 			}
 		}
 
