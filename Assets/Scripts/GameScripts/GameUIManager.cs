@@ -3292,6 +3292,7 @@ namespace FallenLand
                     PlayerPanels[currentPlayerIndex].transform.Find("ResourceActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetNumberOfResourcesOwned(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("BonusMovementActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetBonusMovement(currentPlayerIndex).ToString();
                     PlayerPanels[currentPlayerIndex].transform.Find("TownDefenseActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetNumberOfTownDefenseChipsOwned(currentPlayerIndex).ToString();
+                    PlayerPanels[currentPlayerIndex].transform.Find("WeekPenaltyActualText").GetComponentInChildren<Text>().text = GameManagerInstance.GetWeekPenaltyAmount(currentPlayerIndex).ToString();
                 }
                 else
                 {
