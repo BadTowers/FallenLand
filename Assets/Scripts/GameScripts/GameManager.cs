@@ -157,7 +157,7 @@ namespace FallenLand
 					for (int playerIndex = 0; playerIndex < Players.Count; ++playerIndex)
 					{
 						int penaltyAmount = Players[playerIndex].GetWeekPenaltyAmount();
-						if (penaltyAmount > 0)
+						if (penaltyAmount > 0 && Players[playerIndex].GetRemainingPartyExploitWeeks() > 0)
 						{
 							Players[playerIndex].SetRemainingPartyExploitWeeks(Players[playerIndex].GetRemainingPartyExploitWeeks() - penaltyAmount);
 							if (playerIndex == GetIndexForMyPlayer())
@@ -4290,6 +4290,18 @@ namespace FallenLand
 			{
 				EndPhase(myIndex);
 				ShouldSkipPhase = false;
+			}
+			else if (CurrentPhase == Phases.Party_Exploits_Party)
+			{
+				for (int playerIndex = 0; playerIndex < Players.Count; ++playerIndex)
+				{
+					int penaltyAmount = Players[playerIndex].GetWeekPenaltyAmount();
+					if (penaltyAmount > 0 && Players[playerIndex].GetRemainingPartyExploitWeeks() > 0)
+					{
+						Players[playerIndex].SetRemainingPartyExploitWeeks(Players[playerIndex].GetRemainingPartyExploitWeeks() - penaltyAmount);
+						Players[playerIndex].ResetWeekPenalty();
+					}
+				}
 			}
 		}
 
