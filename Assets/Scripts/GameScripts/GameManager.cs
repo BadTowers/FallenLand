@@ -3440,6 +3440,11 @@ namespace FallenLand
 						Players[playerIndex].SetRemainingPartyExploitWeeks(previousWeeksRemaining - ResourceWeekCost);
 					}
 
+					if (Players[playerIndex].GetWeekPenaltyAmount() > 0 && playerIndex == GetIndexForMyPlayer())
+					{
+						EventManager.ShowGenericPopup("You've overspent " + Players[playerIndex].GetWeekPenaltyAmount().ToString() + " weeks! Delay added.");
+					}
+
 					if (status == Constants.STATUS_PASSED || CurrentPlayerEncounter[playerIndex].GetIsIndividualCheck())
 					{
 						EncounterResultsHandler.HandleSuccess(this, playerIndex);
@@ -3932,7 +3937,10 @@ namespace FallenLand
 						Players[playerIndex].SellTownTech(townTechIndex);
 						Players[playerIndex].SubtractPrestige(1);
 						Players[playerIndex].SubtractTownHealth(5);
-						EventManager.ShowGenericPopup("For selling a town tech, you also lost 1 prestige and 5 town health!");
+						if (playerIndex == GetIndexForMyPlayer())
+						{
+							EventManager.ShowGenericPopup("For selling a town tech, you also lost 1 prestige and 5 town health!");
+						}
 						break;
 					}
 				}

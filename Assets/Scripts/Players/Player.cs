@@ -689,7 +689,6 @@ namespace FallenLand
 			{
 				WeekPenalty = System.Math.Abs(remainingWeeks);
 				RemainingPartyExploitWeeks = 0;
-				EventManager.ShowGenericPopup("You've overspent " + WeekPenalty.ToString() + " weeks! Delay added.");
 			}
 		}
 

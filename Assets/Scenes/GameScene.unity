@@ -11399,7 +11399,7 @@ GameObject:
   - component: {fileID: 266323845}
   - component: {fileID: 266323844}
   m_Layer: 5
-  m_Name: TownTechSellPanel
+  m_Name: TownTechOverallSellPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11430,7 +11430,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 32, y: 13.549988}
+  m_AnchoredPosition: {x: 31.5, y: 14.200012}
   m_SizeDelta: {x: -509.13214, y: -305.1438}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &266323844

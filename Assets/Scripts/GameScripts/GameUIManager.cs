@@ -240,7 +240,7 @@ namespace FallenLand
             TownTechBuyPanel = GameObject.Find("TownTechBuyPanel");
             TownTechsUpgradePanel = GameObject.Find("TownTechsUpgradePanel");
             FinancialSellPanel = GameObject.Find("FinancialSellPanel");
-            TownTechSellPanel = GameObject.Find("TownTechSellPanel");
+            TownTechSellPanel = GameObject.Find("TownTechOverallSellPanel");
             SellTownDefenseChipButton = GameObject.Find("SellTownDefenseChipButton");
             SellDowngradeTownTechButton = GameObject.Find("SellDowngradeTownTechButton");
 
@@ -1464,7 +1464,7 @@ namespace FallenLand
         {
             string buttonName = EventSystem.current.currentSelectedGameObject.transform.name;
             string buttonNumberString = buttonName.Substring(buttonName.Length - 1);
-            int townTechIndex = Int32.Parse(buttonNumberString) - 1; //asdfasdf
+            int townTechIndex = Int32.Parse(buttonNumberString) - 1;
             int myIndex = GameManagerInstance.GetIndexForMyPlayer();
             TownTech techToUpgrade = GameManagerInstance.GetTownTechs(myIndex)[townTechIndex];
             string techName = techToUpgrade.GetTechName();
@@ -2169,6 +2169,11 @@ namespace FallenLand
 
                 SellTownDefenseChipButton.GetComponent<Button>().interactable = (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && GameManagerInstance.IsPlayerAllowedToSellTownDefenseChip(myIndex));
                 SellDowngradeTownTechButton.GetComponent<Button>().interactable = (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId());
+
+                if (!GameManagerInstance.GetIsItMyTurn())
+                {
+                    TownTechSellPanel.SetActive(false);
+                }
             }
             else
             {
@@ -2211,6 +2216,12 @@ namespace FallenLand
                 {
                     BuyTownTechsButton.GetComponent<Button>().interactable = false;
                     UpgradeTownTechsButton.GetComponent<Button>().interactable = false;
+                }
+
+                if (!GameManagerInstance.GetIsItMyTurn())
+                {
+                    TownTechBuyPanel.SetActive(false);
+                    TownTechsUpgradePanel.SetActive(false);
                 }
             }
             else
