@@ -2706,6 +2706,27 @@ namespace FallenLand
 
 			return owns;
 		}
+
+		public void AddWeekPenalty(int playerIndex, int amountOfWeeksToPenalize)
+		{
+			if (isPlayerIndexInRange(playerIndex))
+			{
+				EventManager.ShowGenericPopup("You've been delayed " + amountOfWeeksToPenalize.ToString() + " weeks!");
+				Players[playerIndex].AddWeekPenalty(amountOfWeeksToPenalize);
+			}
+		}
+
+		public int GetWeekPenaltyAmount(int playerIndex)
+		{
+			int penaltyAmount = 0;
+
+			if(isPlayerIndexInRange(playerIndex))
+			{
+				penaltyAmount = Players[playerIndex].GetWeekPenaltyAmount();
+			}
+
+			return penaltyAmount;
+		}
 		#endregion
 
 
