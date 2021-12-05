@@ -12,7 +12,18 @@ namespace FallenLand
     {
         Photon.Realtime.Player Sender;
         private bool _MovedToNextPlayerAlready = false;
-        private int CurrentFirstPlayerIndex;
+
+        public int CurrentFirstPlayerIndex
+        {
+            get
+            {
+                return Photon.Pun.PhotonNetwork.CurrentRoom.GetCurrentFirstPlayerIndex();
+            }
+            private set
+            {
+                Photon.Pun.PhotonNetwork.CurrentRoom.SetCurrentFirstPlayerIndex(value);
+            }
+        }
 
         public int Turn
         {
@@ -230,6 +241,7 @@ namespace FallenLand
         public static readonly string TurnStartPropKey = "TStart";
         public static readonly string FinishedTurnPropKey = "FToA";
         public static readonly string CurrentPlayerKey = "CurPlayer";
+        public static readonly string CurrentFirstPlayerKey = "CurFirstPlayer";
 
         public static void SetTurn(this Photon.Realtime.Room room, int turn)
         {
@@ -238,6 +250,19 @@ namespace FallenLand
                 Hashtable turnProps = new Hashtable
                 {
                     [TurnPropKey] = turn
+                };
+
+                room.SetCustomProperties(turnProps);
+            }
+        }
+
+        public static void SetCurrentFirstPlayerIndex(this Photon.Realtime.Room room, int currentFirstPlayerIndex)
+        {
+            if (room != null && room.CustomProperties != null)
+            {
+                Hashtable turnProps = new Hashtable
+                {
+                    [CurrentFirstPlayerKey] = currentFirstPlayerIndex
                 };
 
                 room.SetCustomProperties(turnProps);
@@ -266,6 +291,18 @@ namespace FallenLand
             }
 
             return turn;
+        }
+
+        public static int GetCurrentFirstPlayerIndex(this Photon.Realtime.RoomInfo room)
+        {
+            int currentIndex = 0;
+
+            if (room != null && room.CustomProperties != null && room.CustomProperties.ContainsKey(CurrentFirstPlayerKey))
+            {
+                currentIndex = (int)room.CustomProperties[CurrentFirstPlayerKey];
+            }
+
+            return currentIndex;
         }
 
         public static Phases GetPhase(this Photon.Realtime.RoomInfo room)

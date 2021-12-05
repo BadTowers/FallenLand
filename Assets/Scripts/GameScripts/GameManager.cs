@@ -674,6 +674,11 @@ namespace FallenLand
 			return TurnManager.Phase;
 		}
 
+		public int GetCurrentFirstPlayerIndex()
+        {
+			return TurnManager.CurrentFirstPlayerIndex;
+        }
+
         public List<Player> GetPlayers()
         {
 			return Players;
