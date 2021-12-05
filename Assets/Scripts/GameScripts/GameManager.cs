@@ -2747,17 +2747,6 @@ namespace FallenLand
 		}
 		#endregion
 
-
-
-
-
-
-
-
-
-
-
-
 		#region HelperFunctions
 		private void extractGameModeFromGameCreationObject(GameObject newGameState)
 		{
