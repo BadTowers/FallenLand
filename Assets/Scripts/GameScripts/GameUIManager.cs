@@ -52,6 +52,7 @@ namespace FallenLand
         private GameObject RollTownEventTextGameObject;
         private GameObject PartyExploitsPanel;
         private bool UserRolledTownEventsThisTurn;
+        private bool UserSelectedRewardForRollingOne;
         private GameObject ActualRemainingWeeksTextGameObject;
         private GameObject PartyExploitsInformationTextGameObject;
         private GameObject EncounterSelectionPanel;
@@ -184,6 +185,7 @@ namespace FallenLand
             EscapePressed = false;
             CurrentState = GameMenuStates.Resume;
             UserRolledTownEventsThisTurn = false;
+            UserSelectedRewardForRollingOne = false;
             CurrentEncounterSkillPage = 0;
 
             GameManagerInstance = GameManagerGameObject.GetComponentInChildren<GameManager>();
@@ -731,10 +733,11 @@ namespace FallenLand
                     break;
             }
 
+            UserRolledTownEventsThisTurn = true;
             //For a 1, the user needs to pick a card first
             if (d10Roll != 1)
             {
-                UserRolledTownEventsThisTurn = true;
+                UserSelectedRewardForRollingOne = true;
             }
 
             //Update description for user to see the effects
@@ -1067,21 +1070,21 @@ namespace FallenLand
         {
             SelectCardPanel.SetActive(false);
             GameManagerInstance.DealCharacterCardsToPlayer(GameManagerInstance.GetIndexForMyPlayer(), 1);
-            UserRolledTownEventsThisTurn = true;
+            UserSelectedRewardForRollingOne = true;
         }
 
         public void OnSpoilsCardChosenButtonPress()
         {
             SelectCardPanel.SetActive(false);
             GameManagerInstance.DealSpoilsCardsToPlayer(GameManagerInstance.GetIndexForMyPlayer(), 1);
-            UserRolledTownEventsThisTurn = true;
+            UserSelectedRewardForRollingOne = true;
         }
 
         public void OnActionCardChosenButtonPress()
         {
             SelectCardPanel.SetActive(false);
             GameManagerInstance.DealActionCardsToPlayer(GameManagerInstance.GetIndexForMyPlayer(), 1);
-            UserRolledTownEventsThisTurn = true;
+            UserSelectedRewardForRollingOne = true;
         }
 
         public void OnAcceptEncounterResultsPress()
@@ -2134,14 +2137,8 @@ namespace FallenLand
             if (currentPhase == Phases.Town_Business_Town_Events_Chart)
             {
                 TownEventsRollPanel.SetActive(true);
-                if (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && !UserRolledTownEventsThisTurn)
-                {
-                    RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    RollTownEventButtonGameObject.GetComponent<Button>().interactable = false;
-                }
+                bool shouldRollTownEventButtonBeActive = (GameManagerInstance.GetCurrentPlayer() != null && GameManagerInstance.GetCurrentPlayer().UserId == GameManagerInstance.GetMyUserId() && !UserRolledTownEventsThisTurn);
+                RollTownEventButtonGameObject.GetComponent<Button>().interactable = shouldRollTownEventButtonBeActive;
             }
             else
             {
@@ -2150,6 +2147,7 @@ namespace FallenLand
                 RollTownEventButtonGameObject.GetComponent<Button>().interactable = true;
                 RollTownEventTextGameObject.GetComponent<Text>().text = "Roll to see effects...";
                 UserRolledTownEventsThisTurn = false;
+                UserSelectedRewardForRollingOne = false;
             }
         }
 
@@ -2335,7 +2333,7 @@ namespace FallenLand
             if (GameManagerInstance.GetIsItMyTurn())
             {
                 Phases currentPhase = GameManagerInstance.GetCurrentPhase();
-                if (currentPhase == Phases.Town_Business_Town_Events_Chart && !UserRolledTownEventsThisTurn)
+                if (currentPhase == Phases.Town_Business_Town_Events_Chart && (!UserRolledTownEventsThisTurn || !UserSelectedRewardForRollingOne))
                 {
                     EndPhaseButton.interactable = false;
                     EndPhaseButton.GetComponentInChildren<Text>().text = "Roll...";
